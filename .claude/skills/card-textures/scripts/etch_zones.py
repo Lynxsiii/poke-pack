@@ -15,6 +15,9 @@ This gate scores the two zones of every engraved face apart:
     tex    fine-detail change the lit layers make in the zone (the engraving reading as lines), 0-255
     lift   mean absolute change in the zone (how much the foil repaints the print), 0-255
 
+and the whole card: gain (how much lighter the lit card is, 0-255), white (the share of it blown to white) and sat
+(its colourfulness lit over unlit: under 1 the foil is greying the print). `--every` scores every face of a family.
+
 For each family it takes the faces with the largest ink zone (the worst case for the class), renders them at phone
 size in Safari's engine twice (as the site draws them, and with every foil layer hidden) and fails:
 
@@ -112,6 +115,7 @@ def main():
     ap.add_argument("--min-ink", type=float, default=0.12, help="smallest ink zone (share of the card) worth scoring")
     ap.add_argument("--min-ink-tex", type=float, default=2.5)
     ap.add_argument("--max-ink-lift", type=float, default=30.0)
+    ap.add_argument("--every", action="store_true", help="score every face of the chosen families, not the worst cases")
     ap.add_argument("--css", help="extra CSS for the lit render (to try a change)")
     args = ap.parse_args()
     os.makedirs(os.path.join(args.out, "crops"), exist_ok=True)
@@ -133,13 +137,13 @@ def main():
         if z is None:
             continue
         ink = float(z[0].mean())
-        if ink >= args.min_ink or want:
+        if ink >= args.min_ink or want or args.every:
             by_fam[fam].append((ink, f))
     picks = []
     for fam, rows in sorted(by_fam.items()):
         rows.sort(key=lambda r: -r[0])
         # the worst case and one from the middle of the family's ink-heavy faces
-        chosen = rows if want else [rows[i] for i in sorted({0, *[len(rows) * k // args.per for k in range(1, args.per)]})]
+        chosen = rows if want or args.every else [rows[i] for i in sorted({0, *[len(rows) * k // args.per for k in range(1, args.per)]})]
         picks += [(fam, ink, f) for ink, f in chosen]
         print(f"{fam}: {len(rows)} faces with an ink zone, scoring {len(chosen)}", file=sys.stderr)
     per_set = collections.OrderedDict()
@@ -172,7 +176,11 @@ def main():
                        "inkTex": float(np.abs(d - blur)[zi].mean()) if zi.any() else 0.0,
                        "inkLift": float(np.abs(a - o).mean(axis=2)[zi].mean()) if zi.any() else 0.0,
                        "foilTex": float(np.abs(d - blur)[zf].mean()) if zf.any() else 0.0,
-                       "foilLift": float(np.abs(a - o).mean(axis=2)[zf].mean()) if zf.any() else 0.0}
+                       "foilLift": float(np.abs(a - o).mean(axis=2)[zf].mean()) if zf.any() else 0.0,
+                       # the whole card: how much lighter it gets, the share blown to white, and the colour it loses
+                       "gain": float((a - o).mean()),
+                       "white": float(((a.min(axis=2) > 244) & (o.min(axis=2) < 225)).mean()),
+                       "sat": float(((a.max(axis=2) - a.min(axis=2)).mean() + 1) / ((o.max(axis=2) - o.min(axis=2)).mean() + 1))}
                 results.append(row)
                 if b["pose"] == POSES.split(",")[0]:
                     on.crop((x, y, x + w, y + h)).save(os.path.join(args.out, "crops", f["id"] + ".png"))
@@ -181,18 +189,18 @@ def main():
     for r in results:
         by_card.setdefault(r["id"], []).append(r)
     failed = 0
-    print(f"{'card':16} {'family':24} {'ink':>5} {'inkTex':>7} {'inkLift':>8} {'foilTex':>8} {'foilLift':>9}")
+    print(f"{'card':16} {'family':24} {'ink':>5} {'inkTex':>7} {'inkLift':>8} {'foilTex':>8} {'foilLift':>9} {'gain':>6} {'white':>6} {'sat':>5}")
     for cid, rows in sorted(by_card.items(), key=lambda kv: (kv[1][0]["family"], kv[0])):
         g = lambda k: sum(r[k] for r in rows) / len(rows)
         fam = rows[0]["family"]
         flag = ""
         if fam not in allow and cid not in allow:
-            if g("inkTex") < args.min_ink_tex:
+            if g("inkTex") < args.min_ink_tex and rows[0]["ink"] >= args.min_ink:
                 flag += "  NO ENGRAVING OVER THE PAINTING"
             if g("inkLift") > args.max_ink_lift:
                 flag += "  FOIL TAKES THE PAINTING OVER"
         failed += bool(flag)
-        print(f"{cid:16} {fam:24} {rows[0]['ink']:5.2f} {g('inkTex'):7.2f} {g('inkLift'):8.2f} {g('foilTex'):8.2f} {g('foilLift'):9.2f}{flag}")
+        print(f"{cid:16} {fam:24} {rows[0]['ink']:5.2f} {g('inkTex'):7.2f} {g('inkLift'):8.2f} {g('foilTex'):8.2f} {g('foilLift'):9.2f} {g('gain'):6.1f} {g('white'):6.3f} {g('sat'):5.2f}{flag}")
     print(f"{failed} of {len(by_card)} cards fail; zones.json and crops in {args.out}", file=sys.stderr)
     return 1 if failed else 0
 

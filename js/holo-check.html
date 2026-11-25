@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>Holo check</title>
+<!--
+  One card, lit and moving, drawn a dozen ways at once: a phone test for holo glitches that the test browsers do not
+  show (2026-11-25: on an iPhone the lit card's blended layers painted as plain grey and rainbow; Linux WebKit never
+  drew it). Open /js/holo-check.html on the phone and screenshot it; the cells that look right name the cause.
+  ?card=me6-138 picks the card. Uses the site's own stylesheets (read from index.html) and classifier.
+-->
+<style>
+  html { background: #14141b; }
+  body { display: block !important; min-height: 0 !important; margin: 0; padding: 10px 8px 40px; background: #14141b; color: #e8e8ee; font: 11px/1.3 system-ui, sans-serif; }
+  .hc-wrap { width: 100% !important; height: auto !important; aspect-ratio: 63 / 88; }
+  #grid .tcg { margin: 0 !important; }
+  h1 { font-size: 14px; margin: 0 0 8px; }
+  #grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px 12px; align-items: start; padding: 6px; }
+  figure { margin: 0; }
+  figcaption { margin-top: 6px; }
+  figcaption b { font-size: 13px; }
+  #grid .tcg { position: relative; width: 100% !important; height: auto !important; aspect-ratio: 63 / 88; }
+  .tcg img { display: block; width: 100%; height: 100%; }
+</style>
+<style id="variants">
+  /* B: no tilt at all */
+  .v-b .tcg.tcg.tcg.tcg.tcg { transform: none !important; will-change: auto !important; }
+  /* C: tilt, but no will-change */
+  .v-c .tcg.tcg.tcg.tcg.tcg { will-change: auto !important; }
+  /* D: no shadow filter on the scan */
+  .v-d .tcg.tcg.tcg.tcg.tcg img { filter: none !important; }
+  /* E, F, G: without the new layers */
+  .v-e .tcg .shine, .v-e .tcg .relief { display: none !important; }
+  .v-f .tcg .relief { display: none !important; }
+  .v-g .tcg .shine { display: none !important; }
+  /* H: the card as an isolated group */
+  .v-h .tcg.tcg.tcg.tcg.tcg { isolation: isolate; }
+  /* I: tilt on a wrapper instead of the card */
+  .v-i .hc-wrap { transform: perspective(600px) rotateY(var(--wx, 0deg)) rotateX(var(--wy, 0deg)); }
+  .v-i .tcg.tcg.tcg.tcg.tcg { transform: none !important; will-change: auto !important; }
+  /* J: no shadow filter and no will-change */
+  .v-j .tcg.tcg.tcg.tcg.tcg { will-change: auto !important; }
+  .v-j .tcg.tcg.tcg.tcg.tcg img { filter: none !important; }
+  /* K: 2D tilt only (no perspective) */
+  .v-k .tcg.tcg.tcg.tcg.tcg { transform: scale(var(--card-scale)) !important; will-change: auto !important; }
+  /* L: resting card, nothing lit */
+</style>
+</head>
+<body class="fx-holo">
+<h1>Holo check <span id="what"></span></h1>
+<div id="grid"></div>
+<p id="note">Screenshot this page while the cards move and send it over.</p>
+<script type="module">
+const links = [...(await (await fetch("/index.html")).text()).matchAll(/<link rel="stylesheet" href="(css\/[^"]+)"/g)].map((m) => m[1]);
+await Promise.all(links.map((href) => new Promise((done) => {
+  const l = document.createElement("link"); l.rel = "stylesheet"; l.href = "/" + href; l.onload = l.onerror = done;
+  document.head.insertBefore(l, document.querySelector("style"));
+})));
+const { rarityKey, SET_BY_ID } = await import("/js/catalog.js");
+const { foilExtras, foilClass, foilLayout, foilLook, foilPattern, reverseKindOf, dataFinish } = await import("/js/foil-maps.js");
+const id = new URLSearchParams(location.search).get("card") || "me6-138";
+const setId = id.slice(0, id.indexOf("-"));
+const data = await (await fetch(`/data/${setId}.json`)).json();
+const raw = (Array.isArray(data) ? data : data.cards).find((c) => c.id === id);
+document.getElementById("what").textContent = raw ? `${raw.name} ${raw.number}` : `no card ${id}`;
+const set = SET_BY_ID[setId];
+const c = foilLook(raw);
+const extra = foilExtras(c, (p) => `/${p}`, reverseKindOf(c, set));
+const classes = ["tcg", rarityKey(c.rarity), foilClass(c, set), foilPattern(c, set), foilLayout(c), extra.classes].filter(Boolean).join(" ");
+const vars = [`--art:url('/${c.image}')`, extra.style].filter(Boolean).join(";");
+const face = () => `<div class="hc-wrap"><div class="${classes}" data-finish="${dataFinish(c)}" style="${vars}">
+  <img src="/${c.image}" alt="" /><span class="foil"></span>${extra.cure ? `<span class="cure"></span>` : ""}<span class="glare"></span>
+  ${/\bhas-etch-map\b/.test(extra.classes) ? `<span class="shine"></span><span class="relief"></span>` : ""}</div></div>`;
+const VARIANTS = [
+  ["a", "as the site draws it"], ["b", "no tilt"], ["c", "tilt, no will-change"],
+  ["d", "no shadow on the scan"], ["e", "no shine, no relief"], ["f", "no relief"],
+  ["g", "no shine"], ["h", "isolated card"], ["i", "tilt on a wrapper"],
+  ["j", "no shadow, no will-change"], ["k", "flat tilt (scale only)"], ["l", "resting card"],
+];
+document.getElementById("grid").innerHTML = VARIANTS.map(([k, label]) =>
+  `<figure class="v-${k}">${face()}<figcaption><b>${k.toUpperCase()}</b> ${label}</figcaption></figure>`).join("");
+// The same writes js/card-motion.js makes each frame, on a slow walk of the light.
+const lit = [...document.querySelectorAll("figure:not(.v-l) .tcg")];
+for (const el of lit) el.classList.add("lit");
+function frame(now) {
+  const t = now / 1000, x = 50 + 40 * Math.sin(t * 1.1), y = 45 + 30 * Math.sin(t * 0.8 + 0.9);
+  const px = x / 100, py = y / 100, radius = Math.min(1, Math.hypot(px - 0.5, py - 0.5) * 2);
+  const rx = (0.5 - px) * 28, ry = (py - 0.5) * 28;
+  const set = {
+    "--pointer-x": `${x}%`, "--pointer-y": `${y}%`, "--pointer-from-left": px, "--pointer-from-top": py, "--pointer-from-center": radius,
+    "--card-opacity": 1, "--card-scale": 1, "--rotate-x": `${rx}deg`, "--rotate-y": `${ry}deg`,
+    "--background-x": `${37 + px * 26}%`, "--background-y": `${33 + py * 34}%`, "--mx": `${x}%`, "--my": `${y}%`, "--px": px, "--py": py,
+    "--hyp": radius, "--tilt-x": `${ry}deg`, "--tilt-y": `${rx}deg`, "--wx": `${rx}deg`, "--wy": `${ry}deg`,
+  };
+  for (const el of lit) for (const [k, v] of Object.entries(set)) { el.style.setProperty(k, String(v)); el.parentElement.style.setProperty(k, String(v)); }
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
