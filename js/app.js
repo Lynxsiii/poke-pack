@@ -786,6 +786,7 @@ function tcgFace(card, { small = false, stamp = true, lazy = false } = {}) {
     <span class="foil" aria-hidden="true"></span>
     ${extra.cure ? `<span class="cure" aria-hidden="true"></span>` : ""}
     <span class="glare" aria-hidden="true"></span>
+    ${/\bhas-etch-map\b/.test(extra.classes) ? `<span class="shine" aria-hidden="true"></span>` : ""}
     ${stamp ? rarityStamp(shown) : ""}
   </div>`;
 }
@@ -4944,6 +4945,8 @@ async function renderSocial() {
       if (!text || !dmHandle) return;
       try {
         await api("/api/dms", { method: "POST", body: JSON.stringify({ handle: dmHandle, body: text }) });
+        // Clear the box first: the repaint keeps whatever is typed as a draft.
+        if (input) input.value = "";
         renderSocial();
       } catch (err) {
         toast(err.message || "Couldn't send.");

@@ -71,6 +71,13 @@ function foldRecent(store, recent) {
 }
 
 /**
+ * Sets with no committed price file: their cards and products sit in other
+ * sets' files, so asking for one only earns a 404 on every visit. The Worker's
+ * recorded days are still asked for.
+ */
+const NO_PRICE_FILE = new Set(["mep", "hsp"]);
+
+/**
  * Fetch a set's price history once: the committed file, then the days the
  * Worker recorded since. Either can fail on its own; only both failing marks
  * the set as failed, and a failed fetch is not cached, so the next call tries
@@ -81,8 +88,7 @@ export function loadPriceHistory(setId) {
   if (loaded.has(setId)) return Promise.resolve(loaded.get(setId));
   if (!pending.has(setId)) {
     const id = encodeURIComponent(setId);
-    const request = getJson(`data/prices/${id}.json`, { cache: "no-cache" })
-      .catch(() => null)
+    const request = (NO_PRICE_FILE.has(setId) ? Promise.resolve(null) : getJson(`data/prices/${id}.json`, { cache: "no-cache" }).catch(() => null))
       .then(async (file) => {
         const since = /^\d{4}-\d{2}-\d{2}$/.test(file?.updated || "") ? `?since=${file.updated}` : "";
         const recent = await getJson(`/api/prices/${id}${since}`).catch(() => null);

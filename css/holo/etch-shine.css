@@ -1,0 +1,73 @@
+/*
+ * The etch shine: one shared layer for every engraved card (2026-11-25).
+ *
+ * Noah, 2026-11-25: "the texture is showing up on the card, but it's not really having a holo effect, and it doesn't
+ * really give that glittery, rainbowy kind of holo ... I just need more of a shine" (Charizard-GX, Burning Shadows and
+ * Hidden Fates). The families drew each card's engraving as relief with a white pool of light; nothing coloured moved.
+ *
+ * `.shine` is a span of its own (tcgFace() in js/app.js adds it to every face with `has-etch-map`, after `.glare`), so
+ * it costs no family a layer and one recipe serves every era:
+ *   .shine::before  a saturated spectrum overlaid on the engraving's lines only (art x foil map x etch map), sliding a
+ *                   whole card's width as the light crosses the card: the lines change colour as the card turns
+ *   .shine::after   glitter flecks screened on round the light (art x foil map), drifting against the tilt
+ * Nothing at rest, nothing with the shine setting off, nothing in the Classic engine. A family tunes it with
+ * --shine-line (0..1, the rainbow on the lines) and --shine-glit (0..1, the glitter); 0 turns a part off.
+ * Enabled per era below, each after a WebKit render at phone size (.claude/skills/card-textures SKILL.md).
+ */
+.tcg .shine {
+  display: none;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map:is(.lit, .settling):is(.era-sm) .shine {
+  display: block;
+  position: absolute;
+  inset: 0;
+  /* no z-index: one would make this span a stacking context and the two layers below could not blend with the card */
+  pointer-events: none;
+  --shine-spectrum: repeating-linear-gradient(118deg, hsl(350, 100%, 58%) 0%, hsl(35, 100%, 52%) 5%, hsl(60, 100%, 48%) 10%,
+    hsl(130, 95%, 45%) 15%, hsl(185, 100%, 46%) 20%, hsl(225, 100%, 60%) 25%, hsl(280, 100%, 62%) 30%, hsl(350, 100%, 58%) 35%);
+  --shine-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #fff 0%, rgb(215, 215, 215) 25%,
+    rgb(120, 120, 120) 50%, rgb(50, 50, 50) 80%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map:is(.lit, .settling):is(.era-sm) .shine::before,
+body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map:is(.lit, .settling):is(.era-sm) .shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mask-mode: alpha;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map:is(.lit, .settling):is(.era-sm) .shine::before {
+  background-image: var(--shine-spectrum);
+  background-size: 300% 300%;
+  background-position: calc(var(--pointer-from-left) * 100%) calc(var(--pointer-from-top) * 100%);
+  mix-blend-mode: overlay;
+  -webkit-mask-image: var(--art), var(--foil-map, linear-gradient(#000, #000)), var(--shine-etch, var(--etch-map));
+  mask-image: var(--art), var(--foil-map, linear-gradient(#000, #000)), var(--shine-etch, var(--etch-map));
+  -webkit-mask-composite: source-in, source-in, source-over;
+  mask-composite: intersect, intersect, add;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
+  opacity: calc(var(--card-opacity, 0) * var(--shine-line, 0.45) * min(1, var(--foil-strength, 1)));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map:is(.lit, .settling):is(.era-sm) .shine::after {
+  background-image: url("/assets/foil/glitter-flecks.webp"), var(--shine-pool);
+  background-size: 30% auto, 100% 100%;
+  background-position: calc(var(--seed-x, 0.5) * 100% + var(--pointer-from-left) * 8px) calc(var(--seed-y, 0.5) * 100% + var(--pointer-from-top) * 8px), center;
+  background-repeat: repeat, no-repeat;
+  background-blend-mode: multiply, normal;
+  filter: brightness(1.9);
+  mix-blend-mode: screen;
+  -webkit-mask-image: var(--art), var(--foil-map, linear-gradient(#000, #000));
+  mask-image: var(--art), var(--foil-map, linear-gradient(#000, #000));
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  opacity: calc(var(--card-opacity, 0) * var(--shine-glit, 1) * min(1, var(--foil-strength, 1)));
+}
+body.fx-holo.fx-holo.fx-holo.no-shine .tcg.tcg .shine {
+  display: none;
+}

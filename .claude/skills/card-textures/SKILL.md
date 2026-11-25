@@ -72,6 +72,7 @@ cure"). The surface gloss throws a soft highlight.
 | Where the foil is | `mask-image` on `.foil` and `.glare` | `--art` (the scan's alpha) plus window, stamp and per-card masks |
 | Cast-and-cure coat (clear UV pattern over ink and foil alike) | `.cure` | a texture tile masked by the scan only, never by the foil map; `screen` |
 | Surface gloss, specular | `.glare`, `.glare::after` | `radial-gradient` at `--pointer-x/y`, `overlay` or `soft-light` |
+| The etch shine (every face with `has-etch-map`, 2026-11-25) | `.shine`, `.shine::before`, `.shine::after` | `css/holo/etch-shine.css`: a spectrum overlaid on the engraving that slides with the light, and glitter round the pointer; one recipe for every era, tuned per family with `--shine-line` and `--shine-glit`; the span has no z-index so its layers blend with the card |
 
 ## The site's rules (read before writing CSS)
 
@@ -183,6 +184,10 @@ cure"). The surface gloss throws a soft highlight.
    (reference/finishes.md, generated) and `--check` names the ones no
    family owns; on 2026-11-25 those were the Mega Evolution Ultra Rares and
    reverses and the Sun & Moon reverses, the next families to build.
+   `scripts/foil_assets.mjs` checks that every map, mask and tile a face
+   asks for (era and family code included) exists in the checkout; a
+   missing one paints nothing without an error, so run it after adding
+   cards or maps (it must print nothing).
    Then run the visibility sweep on what you touched
    (`scripts/foil_visibility.py --family <fam>` or `--sets <set>`; no
    arguments sweeps every finish signature on the site in about an hour):

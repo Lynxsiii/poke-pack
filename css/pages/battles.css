@@ -752,6 +752,10 @@ body.hl-in-hall::after { display: none; }
 }
 @media (max-width: 559px) {
   #view-battles .hl-tray-inner:not(.is-rules) .hl-tray-stack { width: 42px; }
+  /* The empty tray's two lines wrap beside the button instead of running under it. */
+  #view-battles .hl-tray-copy .hl-tray-count:only-child { white-space: normal; }
+  #view-battles .hl-tray-copy .hl-tray-count:only-child b { font-size: 16px; }
+  #view-battles .hl-tray-copy .hl-tray-count:only-child > span { line-height: 1.2; }
   #view-battles .hl-tray-inner:not(.is-rules) .hl-tray-stack .hl-stack { --h: 44px; }
   #view-battles .hl-tray-inner:not(.is-rules) .hl-tray-entry .bt-coins { font-size: 21px; }
   #view-battles .hl-tray-copy .hl-tray-count:only-child b { font-size: 15px; }
