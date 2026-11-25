@@ -146,15 +146,12 @@ body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map:is(.special-illustration-rare, .h
 }
 body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map:is(.double-rare, .rare-holo-v, .rare-holo, .shiny-rare, .rare-shiny, .ace-spec-rare, .radiant-rare,
     .amazing-rare, .mega-attack-rare) {
-  --relief: 0.5;
+  --relief: 0.65;
 }
 /* Before Scarlet & Violet the engraving is a coarser pattern (rings, bars, a crinkle) and reads as a print screen at
    a strength the fine modern fingerprint needs (the Sword & Shield rings most of all). */
 body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map.era-swsh {
-  --relief-era: 0.55;
-}
-body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map:is(.era-sm, .era-xy, .era-bw) {
-  --relief-era: 0.85;
+  --relief-era: 0.7;
 }
 /* Families that already light their engraving over the ink by their own layers (etch_zones.py scored the painting at
    3 or more before the relief existed): a touch only, or the painting is lit twice. */
@@ -164,4 +161,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map:is(.fam-swsh-fullart, .fam-swsh-g
 /* The Black & White secrets were tuned photo by photo, and their etch maps are broad shapes, not lines. */
 body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map.fam-bw-secret .relief {
   display: none;
+}
+/* The Mega EX of XY: the engraving is sparse sparkle strokes, so it takes the relief in full to read at all. */
+body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map.fam-xy-ex-mega {
+  --relief: 1;
 }

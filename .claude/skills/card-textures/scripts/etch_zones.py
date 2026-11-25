@@ -110,7 +110,7 @@ def main():
     ap.add_argument("--per", type=int, default=2, help="faces per family, largest ink zone first")
     ap.add_argument("--out", default="/tmp/etch-zones")
     ap.add_argument("--min-ink", type=float, default=0.12, help="smallest ink zone (share of the card) worth scoring")
-    ap.add_argument("--min-ink-tex", type=float, default=3.0)
+    ap.add_argument("--min-ink-tex", type=float, default=2.5)
     ap.add_argument("--max-ink-lift", type=float, default=30.0)
     ap.add_argument("--css", help="extra CSS for the lit render (to try a change)")
     args = ap.parse_args()
