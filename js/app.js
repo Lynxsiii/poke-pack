@@ -4857,6 +4857,8 @@ async function renderSocial() {
       if (!text || !dmHandle) return;
       try {
         await api("/api/dms", { method: "POST", body: JSON.stringify({ handle: dmHandle, body: text }) });
+        // Clear the box first: the repaint keeps whatever is typed as a draft.
+        if (input) input.value = "";
         renderSocial();
       } catch (err) {
         toast(err.message || "Couldn't send.");

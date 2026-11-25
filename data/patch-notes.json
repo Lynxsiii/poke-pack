@@ -1,5 +1,15 @@
 [
   {
+    "id": "2026-11-25-round-2-fixes",
+    "date": "2026-11-25",
+    "title": "Messages and pack battle fixes",
+    "summary": "Two small fixes from another bug sweep.",
+    "items": [
+      "A message to a friend no longer stays in the box after it sends, so it can't go out twice by mistake.",
+      "On phones, Build a battle's empty lineup bar wraps its words beside the button instead of running under it, and the search box no longer pokes past the edge of the screen."
+    ]
+  },
+  {
     "id": "2026-11-25-character-rares",
     "date": "2026-11-25",
     "title": "Character rares and alternate arts shimmer",
