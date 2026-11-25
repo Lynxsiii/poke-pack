@@ -86,7 +86,7 @@ function face(shown, stamp, maps, withProof) {
       <span class="foil" aria-hidden="true"></span>
       ${extra.cure ? `<span class="cure" aria-hidden="true"></span>` : ""}
       <span class="glare" aria-hidden="true"></span>
-      ${/\bhas-etch-map\b/.test(extra.classes) ? `<span class="shine" aria-hidden="true"></span>` : ""}
+      ${/\bhas-etch-map\b/.test(extra.classes) ? `<span class="shine" aria-hidden="true"></span><span class="relief" aria-hidden="true"></span>` : ""}
     </div>
     <figcaption>${withProof ? (map ? `proof + ${map.lum ? "raw" : "shipped"} foil map` : "proof") : "site"} · ${c.number} ${c.name}<br>${shown.rarity}${shown.foilAs ? ` as ${shown.foilAs}` : ""}${shown.variant ? ` · ${shown.variant}` : ""}</figcaption>
   </figure>`;

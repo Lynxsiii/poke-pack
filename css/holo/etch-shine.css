@@ -89,3 +89,43 @@ body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map:is(.foil-bwr, .has-foil-rgb, .fam
 body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map.fam-bw-secret .shine {
   display: none;
 }
+
+/* ---- The relief: the engraving over the ink (2026-11-25) -------------------------------------------------------------
+ * Noah: Mega Rayquaza ex 138/103 "doesn't have texture ... find out why though and don't just hand fix it". Every lit
+ * layer above, and every family's own, is masked by the card's foil map, and TCG Live's map is near zero wherever the
+ * ink is heavy: on a card whose Pokémon fills the face the engraving only showed on the frame. The real card is
+ * engraved edge to edge and the ridges catch the lamp over ink and foil alike, colourless over ink (there is no foil
+ * under it to break the light into colour).
+ *
+ * `.relief` is that: a white pool round the light, overlaid on the engraving's lines wherever the etch map has them
+ * (art x etch map, no foil map), fading to a neutral grey away from the light. Overlay with a source of 50% grey or
+ * above never darkens and cannot move pure black or white, so printed text stays as printed. --relief (0..1) tunes it
+ * per family; --relief-reach is how far from the light the ridges still catch it.
+ * Gate: scripts/etch_zones.py (the engraving must read over the painting, and the foil must not take it over). */
+.tcg .relief {
+  display: none;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map:is(.lit, .settling) .relief {
+  display: block;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #fff 0%, rgb(236, 236, 236) 18%,
+    rgb(176, 176, 176) calc(var(--relief-reach, 70%) * 0.6), rgb(128, 128, 128) var(--relief-reach, 70%));
+  mix-blend-mode: overlay;
+  -webkit-mask-image: var(--art), var(--shine-etch, var(--etch-map));
+  mask-image: var(--art), var(--shine-etch, var(--etch-map));
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc(var(--card-opacity, 0) * var(--relief, 0.7) * min(1, var(--foil-strength, 1)));
+}
+body.fx-holo.fx-holo.fx-holo.no-shine .tcg.tcg .relief {
+  display: none;
+}
