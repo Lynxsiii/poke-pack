@@ -14,10 +14,10 @@
 /* ---- 1. The room ---------------------------------------------------------- */
 /* --u is one px of the real room; the editor sets it from the width of its box, so a thumbnail is the same room
    drawn smaller. --kr is how hard this room colour may be drawn (js/profile-view.js roomStrength keeps the ground
-   behind the captions under rgb 70); --k is that, and a thumbnail asks for more so it reads at its size. */
+   behind the captions under rgb 70); --rk is that, and a thumbnail asks for more so it reads at its size. */
 .room-bd {
   --u: 1px;
-  --k: var(--kr, 1);
+  --rk: var(--kr, 1);
   --c: var(--room-ink, var(--room));
   --hi: var(--room-hi, var(--c));
   position: absolute; top: 0; left: 0; right: 0; height: min(calc(1000 * var(--u)), var(--room-cap, 100000px));
@@ -30,66 +30,66 @@
 
 /* Plain: only the room colour, a quiet pool behind the header (nothing at all without a colour). */
 .room-bd[data-backdrop="none"] {
-  background: radial-gradient(ellipse calc(800 * var(--u)) calc(460 * var(--u)) at 50% 24%, rgb(var(--c) / calc(0.16 * var(--k))), transparent);
+  background: radial-gradient(ellipse calc(800 * var(--u)) calc(460 * var(--u)) at 50% 24%, rgb(var(--c) / calc(0.16 * var(--rk))), transparent);
 }
 
 /* Glow: a pool of the room colour behind the header, and a second smaller one off to the side. */
 .room-bd[data-backdrop="glow"] {
   background:
-    radial-gradient(ellipse calc(900 * var(--u)) calc(560 * var(--u)) at 50% 26%, rgb(var(--c) / calc(0.42 * var(--k))), rgb(var(--c) / calc(0.2 * var(--k))) 45%, rgb(var(--c) / calc(0.05 * var(--k))) 76%, transparent),
-    radial-gradient(ellipse calc(460 * var(--u)) calc(380 * var(--u)) at 94% 14%, rgb(var(--c) / calc(0.12 * var(--k))), transparent);
+    radial-gradient(ellipse calc(900 * var(--u)) calc(560 * var(--u)) at 50% 26%, rgb(var(--c) / calc(0.42 * var(--rk))), rgb(var(--c) / calc(0.2 * var(--rk))) 45%, rgb(var(--c) / calc(0.05 * var(--rk))) 76%, transparent),
+    radial-gradient(ellipse calc(460 * var(--u)) calc(380 * var(--u)) at 94% 14%, rgb(var(--c) / calc(0.12 * var(--rk))), transparent);
 }
 
 /* Contours: a topographic sheet, drawn once at a large scale, lines strongest at the top. */
 .room-bd[data-backdrop="contours"]::before {
-  background: linear-gradient(180deg, rgb(var(--c) / calc(0.55 * var(--k))) 4%, rgb(var(--c) / calc(0.72 * var(--k))) 26%, rgb(var(--c) / calc(0.32 * var(--k))) 52%, transparent 80%);
+  background: linear-gradient(180deg, rgb(var(--c) / calc(0.55 * var(--rk))) 4%, rgb(var(--c) / calc(0.72 * var(--rk))) 26%, rgb(var(--c) / calc(0.32 * var(--rk))) 52%, transparent 80%);
   -webkit-mask: url("../../assets/textures/room-contours-1.svg") 50% 0 / calc(1600 * var(--u)) auto repeat-x;
   mask: url("../../assets/textures/room-contours-1.svg") 50% 0 / calc(1600 * var(--u)) auto repeat-x;
 }
 .room-bd[data-backdrop="contours"] {
-  background: radial-gradient(ellipse calc(900 * var(--u)) calc(460 * var(--u)) at 50% 20%, rgb(var(--c) / calc(0.14 * var(--k))), transparent);
+  background: radial-gradient(ellipse calc(900 * var(--u)) calc(460 * var(--u)) at 50% 20%, rgb(var(--c) / calc(0.14 * var(--rk))), transparent);
 }
 
 /* Sheen: one broad band of light across the sleeve, and the thin glare at its edge. */
 .room-bd[data-backdrop="sheen"] {
   background:
-    linear-gradient(105deg, transparent 31%, rgb(var(--c) / calc(0.07 * var(--k))) 36%, rgb(var(--c) / calc(0.34 * var(--k))) 44%, rgb(var(--c) / calc(0.12 * var(--k))) 52%, transparent 58%),
-    linear-gradient(105deg, transparent 43.2%, rgb(var(--hi) / calc(0.11 * var(--k))) 43.6%, transparent 44.4%);
+    linear-gradient(105deg, transparent 31%, rgb(var(--c) / calc(0.07 * var(--rk))) 36%, rgb(var(--c) / calc(0.34 * var(--rk))) 44%, rgb(var(--c) / calc(0.12 * var(--rk))) 52%, transparent 58%),
+    linear-gradient(105deg, transparent 43.2%, rgb(var(--hi) / calc(0.11 * var(--rk))) 43.6%, transparent 44.4%);
   -webkit-mask-image: linear-gradient(180deg, #000 20%, transparent 86%);
   mask-image: linear-gradient(180deg, #000 20%, transparent 86%);
 }
 
 /* Paper: the room colour on soft, slightly fibrous paper. */
 .room-bd[data-backdrop="paper"] {
-  background: radial-gradient(ellipse calc(860 * var(--u)) calc(520 * var(--u)) at 50% 24%, rgb(var(--c) / calc(0.22 * var(--k))), rgb(var(--c) / calc(0.07 * var(--k))) 62%, transparent);
+  background: radial-gradient(ellipse calc(860 * var(--u)) calc(520 * var(--u)) at 50% 24%, rgb(var(--c) / calc(0.22 * var(--rk))), rgb(var(--c) / calc(0.07 * var(--rk))) 62%, transparent);
 }
 .room-bd[data-backdrop="paper"]::before {
-  background: linear-gradient(180deg, rgb(var(--hi) / calc(0.07 * var(--k))) 4%, rgb(var(--hi) / calc(0.085 * var(--k))) 26%, rgb(var(--hi) / calc(0.035 * var(--k))) 54%, transparent 82%);
+  background: linear-gradient(180deg, rgb(var(--hi) / calc(0.07 * var(--rk))) 4%, rgb(var(--hi) / calc(0.085 * var(--rk))) 26%, rgb(var(--hi) / calc(0.035 * var(--rk))) 54%, transparent 82%);
   -webkit-mask: url("../../assets/textures/room-paper-1.png") 0 0 / calc(128 * var(--u)) calc(128 * var(--u)) repeat;
   mask: url("../../assets/textures/room-paper-1.png") 0 0 / calc(128 * var(--u)) calc(128 * var(--u)) repeat;
 }
 
 /* Pockets: binder pockets, faint and large, under the header and fading into the page. */
 .room-bd[data-backdrop="pockets"] {
-  background: radial-gradient(ellipse calc(760 * var(--u)) calc(420 * var(--u)) at 50% 24%, rgb(var(--c) / calc(0.14 * var(--k))), transparent);
+  background: radial-gradient(ellipse calc(760 * var(--u)) calc(420 * var(--u)) at 50% 24%, rgb(var(--c) / calc(0.14 * var(--rk))), transparent);
 }
 .room-bd[data-backdrop="pockets"]::before {
   --pocket-bold: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='172' height='240' viewBox='0 0 172 240'%3E%3Crect x='9' y='9' width='154' height='222' rx='14' fill='%23000' fill-opacity='.22' stroke='%23000' stroke-opacity='.8' stroke-width='5'/%3E%3Cpath d='M9 36h154' stroke='%23000' stroke-opacity='.4' stroke-width='4'/%3E%3C/svg%3E");
-  background: radial-gradient(ellipse calc(900 * var(--u)) calc(640 * var(--u)) at 50% 26%, rgb(var(--c) / calc(0.7 * var(--k))), rgb(var(--c) / calc(0.24 * var(--k))) 55%, transparent);
+  background: radial-gradient(ellipse calc(900 * var(--u)) calc(640 * var(--u)) at 50% 26%, rgb(var(--c) / calc(0.7 * var(--rk))), rgb(var(--c) / calc(0.24 * var(--rk))) 55%, transparent);
   --pocket: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='172' height='240' viewBox='0 0 172 240'%3E%3Crect x='7' y='7' width='158' height='226' rx='12' fill='%23000' fill-opacity='.22' stroke='%23000' stroke-opacity='.8' stroke-width='1'/%3E%3Cpath d='M7 31h158' stroke='%23000' stroke-opacity='.4' stroke-width='1'/%3E%3C/svg%3E");
   -webkit-mask: var(--pocket) 50% 0 / calc(172 * var(--u)) calc(240 * var(--u)) repeat;
   mask: var(--pocket) 50% 0 / calc(172 * var(--u)) calc(240 * var(--u)) repeat;
 }
 /* On a phone a pocket is a third of the width, so the page reads as a binder page, not as stray boxes. */
 @media (max-width: 720px) {
-  #profile-room[data-backdrop="contours"] { --k: calc(var(--kr, 1) * 1.6); }
+  #profile-room[data-backdrop="contours"] { --rk: calc(var(--kr, 1) * 1.6); }
   #profile-room[data-backdrop="pockets"]::before { -webkit-mask-size: 33.34% auto; mask-size: 33.34% auto; -webkit-mask-position: 0 0; mask-position: 0 0; }
 }
 
 /* Horizon: a low band of light where the header ends, soft above, softer below. */
 .room-bd[data-backdrop="horizon"] {
   background:
-    linear-gradient(180deg, transparent 4%, rgb(var(--c) / calc(0.08 * var(--k))) 18%, rgb(var(--c) / calc(0.3 * var(--k))) 38%, rgb(var(--c) / calc(0.27 * var(--k))) 40%, rgb(var(--c) / calc(0.09 * var(--k))) 48%, transparent 68%);
+    linear-gradient(180deg, transparent 4%, rgb(var(--c) / calc(0.08 * var(--rk))) 18%, rgb(var(--c) / calc(0.3 * var(--rk))) 38%, rgb(var(--c) / calc(0.27 * var(--rk))) 40%, rgb(var(--c) / calc(0.09 * var(--rk))) 48%, transparent 68%);
 }
 
 /* ---- 2. The profile ---------------------------------------------------------- */
@@ -140,7 +140,9 @@
   border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
   color: var(--k); font: 600 15px var(--font-h); text-align: left; cursor: pointer;
 }
-.pl-wide:hover { transform: translateY(-1px); }
+@media (hover: hover) { .pl-wide:hover { transform: translateY(-1px); } }
+.pl-wide, .pl-sw, .pl-tile { transition: transform 0.14s var(--ease-out); }
+:is(.pl-wide, .pl-sw, .pl-tile):active { transform: translateY(1px); }
 .pl-wide.on { box-shadow: 0 0 0 3px var(--yel); }
 .pl-wide-sw { flex: none; width: 24px; height: 24px; border-radius: 4px; box-shadow: inset 0 0 0 2px var(--k); }
 .pl-wide-sw.site { background: var(--bg); background-image: var(--dots); }
@@ -150,7 +152,7 @@
   position: relative; aspect-ratio: 1; min-width: 0; padding: 0; border: 0; border-radius: 5px; cursor: pointer;
   background: var(--sw); box-shadow: inset 0 0 0 2px var(--k);
 }
-.pl-sw:hover { transform: translateY(-2px); }
+@media (hover: hover) { .pl-sw:hover { transform: translateY(-2px); } }
 .pl-sw.on { box-shadow: inset 0 0 0 2px var(--k), 0 0 0 3px var(--box), 0 0 0 6px var(--k); }
 .pl-current { margin: 12px 0 0; color: var(--k); font: 600 15px var(--font-h); }
 
@@ -163,7 +165,7 @@
   display: grid; gap: 8px; align-content: start; min-width: 0; padding: 6px 6px 9px;
   border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); color: var(--k); text-align: left; cursor: pointer;
 }
-.pl-tile:hover { transform: translateY(-2px); }
+@media (hover: hover) { .pl-tile:hover { transform: translateY(-2px); } }
 .pl-tile.on { box-shadow: 0 0 0 3px var(--yel); }
 .pl-tile.on .pl-tile-name::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 6px; border-radius: 50%; background: var(--k); vertical-align: 1px; }
 .pl-tile-name { font: 600 14px/1.2 var(--font-h); }
@@ -173,11 +175,11 @@
 /* A backdrop tile is the room drawn small: the same layer on the page's own ground, its pattern scaled to the
    tile (--u from the tile's width, as if the page were 700px wide) and a little stronger so it reads at this size. */
 .pl-thumb-room { background: var(--wall); container-type: inline-size; }
-.pl-thumb-bd { --u: calc(100cqw / 700); --k: calc(var(--kr, 1) * 1.9); }
-.pl-thumb-bd[data-backdrop="contours"] { --k: calc(var(--kr, 1) * 4.6); }
-.pl-thumb-bd[data-backdrop="pockets"] { --k: calc(var(--kr, 1) * 4.2); }
-.pl-thumb-bd[data-backdrop="paper"] { --k: calc(var(--kr, 1) * 3.2); }
-.pl-thumb-bd[data-backdrop="sheen"] { --k: calc(var(--kr, 1) * 2.6); }
+.pl-thumb-bd { --u: calc(100cqw / 700); --rk: calc(var(--kr, 1) * 1.9); }
+.pl-thumb-bd[data-backdrop="contours"] { --rk: calc(var(--kr, 1) * 4.6); }
+.pl-thumb-bd[data-backdrop="pockets"] { --rk: calc(var(--kr, 1) * 4.2); }
+.pl-thumb-bd[data-backdrop="paper"] { --rk: calc(var(--kr, 1) * 3.2); }
+.pl-thumb-bd[data-backdrop="sheen"] { --rk: calc(var(--kr, 1) * 2.6); }
 /* Hairlines would vanish at this scale: the contour sheet is shown larger and the pocket is drawn with a heavier line. */
 .pl-thumb-bd[data-backdrop="contours"]::before, .pl-room-bd[data-backdrop="contours"]::before {
   -webkit-mask-size: calc(1600 * var(--u) * 3) auto; mask-size: calc(1600 * var(--u) * 3) auto;
@@ -258,7 +260,9 @@
   border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); box-shadow: var(--drop-sm);
 }
 .pl-bar .solid { min-width: 150px; }
-.pl-bar .solid[aria-disabled="true"] { opacity: 0.55; cursor: default; }
+/* Nothing to save: the key steps back to the disabled plate (as css/rotom.css draws :disabled), not a faded yellow. */
+.pl-bar .solid[aria-disabled="true"] { color: var(--k-3); cursor: default; transform: none; }
+.pl-bar .solid[aria-disabled="true"]::before, .pl-bar .solid[aria-disabled="true"]:hover::before { background: var(--well); border-color: var(--rule-2); }
 .pl-bar .text-btn { min-height: 44px; padding: 0 2px; background: none; border: 0; font-size: 15px; }
 
 /* One yellow action per screen: here it is Save, so the hero's Claim steps aside (as it does on the badge wall). */
@@ -269,7 +273,10 @@
    which would then stick over the strip, stays in the flow; the desktop rail keeps its place. */
 body:has(#pl-layout) { overflow-x: clip; }
 @media (max-width: 960px) {
-  body:has(#pl-layout) .site-header { position: static; }
+  /* Relative, not static: the header's white scroll bar (::before, inset 0) must stay inside the header, or it
+     resolves against the body and paints the whole page white once you scroll. */
+  body:has(#pl-layout) .site-header { position: relative; top: auto; }
+  body:has(#pl-layout).rt-scrolled .site-header::before { opacity: 0; }
 }
 
 /* The room in miniature: a white sheet with the ink line, the room drawn on it. */
@@ -278,9 +285,9 @@ body:has(#pl-layout) { overflow-x: clip; }
   border: var(--line-w) solid var(--k); border-radius: 8px; box-shadow: var(--drop-sm);
   background: var(--wall);
 }
-.pl-room-bd { --u: calc(100cqw / 1280); --k: var(--kr, 1); z-index: 0; }
-.pl-room-bd[data-backdrop="contours"] { --k: calc(var(--kr, 1) * 1.1); }
-.pl-room-bd[data-backdrop="pockets"], .pl-room-bd[data-backdrop="paper"] { --k: calc(var(--kr, 1) * 0.75); }
+.pl-room-bd { --u: calc(100cqw / 1280); --rk: var(--kr, 1); z-index: 0; }
+.pl-room-bd[data-backdrop="contours"] { --rk: calc(var(--kr, 1) * 1.1); }
+.pl-room-bd[data-backdrop="pockets"], .pl-room-bd[data-backdrop="paper"] { --rk: calc(var(--kr, 1) * 0.75); }
 .pl-mini-hero, .pl-mini-body { position: relative; z-index: 1; }
 #view-account .pl-room .pl-mini-banner { height: 62px; margin: 0; border-radius: 0; border-bottom: var(--line-w) solid var(--k); -webkit-mask-image: none; mask-image: none; }
 .pl-mini-id { display: flex; align-items: flex-end; gap: 12px; padding: 0 16px; }
@@ -353,5 +360,31 @@ body:has(#pl-layout) { overflow-x: clip; }
 @media (prefers-reduced-motion: reduce) {
   .pl-switch i, .pl-switch i::after, .pl-seg button::before { transition: none; }
 }
-body.no-motion :is(.pl-switch i, .pl-switch i::after, .pl-seg button::before) { transition: none; }
+body.no-motion .pl-switch i, body.no-motion .pl-switch i::after, body.no-motion .pl-seg button::before { transition: none; }
 body.no-motion .pl-room .banner-wash::before, body.no-motion .pl-room .banner-wash::after { animation: none; }
+
+/* ---- Motion: a pick lands (js/profile-editor.js motion) ------------------------------
+   The editor repaints on every click, so nothing would move by itself: the tile you chose lands with a small
+   overshoot, the miniature's room fades up under its header and its sections settle, a moved section slides in
+   from where it was, and a switch's knob still travels. Transform and opacity only. */
+@keyframes pl-pick { 0% { transform: scale(0.9); } 100% { transform: none; } }
+@keyframes pl-room-in { from { opacity: 0; } }
+@keyframes pl-settle { from { opacity: 0.4; transform: translateY(6px); } }
+@keyframes pl-from-below { from { transform: translateY(66px); } }
+@keyframes pl-from-above { from { transform: translateY(-66px); } }
+@keyframes pl-knob-on { from { transform: translateX(0); } }
+@keyframes pl-knob-off { from { transform: translateX(22px); } }
+@keyframes pl-plate { from { transform: skewX(var(--skew)) scaleX(0.55); opacity: 0; } }
+:is(.pl-sw, .pl-wide, .pl-tile).rt-picked { animation: pl-pick 0.3s var(--ease-pop); }
+.pl-seg button.on.rt-picked::before { animation: pl-plate 0.24s var(--ease-pop); }
+.pl-room.pl-land > .pl-room-bd { animation: pl-room-in 0.4s ease-out; }
+.pl-room.pl-land .pl-mini-body { animation: pl-settle 0.3s var(--ease-out); }
+.pl-sec.pl-rose { position: relative; z-index: 1; animation: pl-from-below 0.26s var(--ease-out); }
+.pl-sec.pl-sank { animation: pl-from-above 0.26s var(--ease-out); }
+.pl-switch.rt-picked[aria-checked="true"] i::after { animation: pl-knob-on 0.16s var(--ease-out); }
+.pl-switch.rt-picked[aria-checked="false"] i::after { animation: pl-knob-off 0.16s var(--ease-out); }
+body.no-motion :is(.pl-sw, .pl-wide, .pl-tile, .pl-room > .pl-room-bd, .pl-mini-body, .pl-sec),
+body.no-motion .pl-switch i::after, body.no-motion .pl-seg button::before { animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  :is(.pl-sw, .pl-wide, .pl-tile, .pl-room > .pl-room-bd, .pl-mini-body, .pl-sec), .pl-switch i::after, .pl-seg button::before { animation: none !important; }
+}

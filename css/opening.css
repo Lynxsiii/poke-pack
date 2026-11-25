@@ -677,7 +677,7 @@
 #overlay .odo { display: inline-flex; align-items: flex-end; }
 #overlay .odo > span,
 #overlay .odo-s > i { display: block; height: 0.9em; line-height: 0.9; font-style: normal; }
-#overlay .odo-d { overflow: hidden; width: var(--w, auto); margin-right: -0.03em; }
+#overlay .odo-d { overflow: hidden; width: var(--w, auto); }
 #overlay .odo-s > i { text-align: center; }
 #overlay .odo-s { display: block; will-change: transform; transition: transform var(--ms, 0.9s) cubic-bezier(0.25, 0.65, 0.2, 1) 0.08s; }
 #overlay .odo.go .odo-s { transform: translateY(var(--y)); }

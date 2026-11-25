@@ -84,6 +84,7 @@
 .tcard-meter .rt-track { height: 14px; }
 .tcard-meter small { color: var(--k-2); font: 700 12.5px/1.3 var(--font); font-variant-numeric: tabular-nums; }
 .tcard-meter small b { color: var(--k); font: 700 14px var(--font-h); }
+.tcard-meter small .nw { white-space: nowrap; }
 
 /* The facts: a two-column list of figures, each with its word over it. */
 .tcard-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 14px; margin: 10px 0 0; }
@@ -193,6 +194,19 @@
 #view-account .pc-svg, #view-account .pc-svg.up, #view-account .pc-svg.flat { --pc-key: var(--k); }
 #view-account .pc-svg.down { --pc-key: var(--hp-low); }
 #view-account .pc-line { filter: none; }
+/* A flat cyan wash under the line, not a fade (the look has no gradients as surfaces). */
+#view-account .pc-spark :is(.pc-stop-a, .pc-stop-b) { stop-color: var(--cy); stop-opacity: 0.2; }
+#view-account .pc-spark .pc-line { stroke-width: 2.5px; stroke-linejoin: round; }
+/* The chart draws itself left to right when the tab arrives: a white cover with an ink edge slides off it. */
+#view-account .acct-chart:has(.pc-spark) { position: relative; overflow: hidden; }
+@keyframes acct-chart-draw { from { transform: translateX(0); } to { transform: translateX(101%); } }
+.acct-swap .acct-chart:has(.pc-spark)::after {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: var(--box); border-left: var(--line-w) solid var(--cy-2);
+  animation: acct-chart-draw 0.9s cubic-bezier(0.45, 0, 0.2, 1) 0.2s both;
+}
+body.no-motion .acct-swap .acct-chart::after { display: none; }
+@media (prefers-reduced-motion: reduce) { .acct-swap .acct-chart::after { display: none; } }
 #view-account .pc-empty-sm { padding: 10px 0 0; border-top: 1.5px solid var(--rule); color: var(--k-2); font-size: 14px; text-align: left; }
 #view-account .pc-dot { display: none; }
 
@@ -294,11 +308,23 @@
 .acct-swap > * > *:nth-child(4) { animation-delay: 0.12s; }
 .acct-swap > * > *:nth-child(n + 5) { animation-delay: 0.16s; }
 .acct-swap :is(.bar, .rt-track) > i { animation: rt-fill 0.75s var(--ease-out) 0.15s backwards; }
-#view-account .acct-tabs .acct-tab.on::before { animation: acct-tab-in 0.22s var(--ease-pop); }
+#view-account .acct-tabs .acct-tab.on.rt-picked::before { animation: acct-tab-in 0.24s var(--ease-pop); }
 .tcard-xp .rt-track > i { transition: transform 0.5s var(--ease-out); }
+/* XP arrives (js/acct-motion.js growBars): the fill grows from where it was. A level crossed stamps the figure. */
+@keyframes acct-lv-stamp { 0% { transform: scale(1); } 35% { transform: scale(1.18) rotate(-3deg); } 100% { transform: none; } }
+.tcard-xp.is-levelling .tcard-lv b { animation: acct-lv-stamp 0.5s var(--ease-pop) 0.12s; transform-origin: 30% 80%; }
+.tcard-lv b.is-rolling { transform-origin: 30% 80%; }
+/* Coins on their way to the purse after a claim. */
+.acct-fly-coin { position: fixed; z-index: 80; width: 22px; height: 22px; pointer-events: none; will-change: transform, opacity; }
+body.no-motion .acct-fly-coin { display: none; }
+body.no-motion .tcard-xp.is-levelling .tcard-lv b { animation: none; }
+@media (prefers-reduced-motion: reduce) {
+  .acct-fly-coin { display: none; }
+  .tcard-xp.is-levelling .tcard-lv b { animation: none; }
+}
 
-body.no-motion :is(.acct-swap > * > *, .acct-swap .bar > i, .acct-swap .rt-track > i, #view-account .acct-tabs .acct-tab.on::before) { animation: none !important; }
-body.no-motion :is(#view-account .acct-tabs .acct-tab::before, #view-account .tcard-xp, .setc-rows > li > .setc-row) { transition: none; }
+body.no-motion :is(.acct-swap > * > *, .acct-swap .bar > i, .acct-swap .rt-track > i), body.no-motion #view-account .acct-tabs .acct-tab.on::before { animation: none !important; }
+body.no-motion :is(#view-account .tcard-xp, .setc-rows > li > .setc-row), body.no-motion #view-account .acct-tabs .acct-tab::before { transition: none; }
 @media (prefers-reduced-motion: reduce) {
   .acct-swap > * > *, .acct-swap .bar > i, .acct-swap .rt-track > i, #view-account .acct-tabs .acct-tab.on::before { animation: none !important; }
   #view-account .acct-tabs .acct-tab::before, #view-account .tcard-xp, .setc-rows > li > .setc-row { transition: none; }
@@ -317,6 +343,20 @@ body.no-motion :is(#view-account .acct-tabs .acct-tab::before, #view-account .tc
   .tcard-face > .lvl-frame { --face: 112px; }
   .tcard-id { gap: 0 20px; }
   #view-account .tcard-actions .solid { flex: none; }
+}
+/* A tablet: the phone's single column would stretch every box across 800px. The facts stand in one row of four,
+   and the Overview splits into its two columns as on a computer. */
+@media (min-width: 721px) and (max-width: 960px) {
+  .tcard-facts { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .tcard-facts > div { border-bottom: 0; }
+  .tcard-facts > div + div { padding-left: 14px; border-left: 1.5px solid var(--rule); }
+  .acct-overview { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 0 22px; }
+  .acct-col { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; align-content: start; min-width: 0; }
+  #view-account .acct-pull-row {
+    margin-inline: 0; padding-inline: 0; scroll-padding-inline: 0;
+    -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent);
+  }
+  .setc-rows { grid-template-columns: minmax(0, 1fr); }
 }
 @media (min-width: 961px) {
   /* Who you are on the left; the level and the facts on the right. */
@@ -344,6 +384,11 @@ body.no-motion :is(#view-account .acct-tabs .acct-tab::before, #view-account .tc
   .acct-overview { grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: 0 32px; }
   .acct-col { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; align-content: start; min-width: 0; }
   .acct-overview .plate { padding: 14px 18px 16px; box-shadow: var(--drop-sm); }
+  /* The pulls scroll inside their column; the row's phone bleed would run under the badges beside it. */
+  #view-account .acct-pull-row {
+    margin-inline: 0; padding-inline: 0; scroll-padding-inline: 0;
+    -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 44px), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 44px), transparent);
+  }
   .acct-worth-fig { font-size: 50px; }
   .acct-worth-fig .coin-i { width: 42px; height: 42px; }
   #view-account .pc-spark { height: 130px; }

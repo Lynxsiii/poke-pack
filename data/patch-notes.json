@@ -1,5 +1,51 @@
 [
   {
+    "id": "2026-11-25-your-menu",
+    "date": "2026-11-25",
+    "title": "A new menu under your name, new icons",
+    "summary": "Your name in the top corner now opens a clean menu, the phone menu was rebuilt, and every menu icon was redrawn. Pack battles, your account and profiles got more finish too.",
+    "groups": [
+      {
+        "title": "Your menu",
+        "items": [
+          "On a computer, clicking your name opens a menu with your level and progress, Account, Public profile, Friends, Settings and Sign out.",
+          "On phones the menu drops from your avatar with you at the top, search as a proper field and tidy groups.",
+          "Every menu and tab bar icon was redrawn as one matching set.",
+          "The menu opens and closes with a short, smooth drop, and closes on Escape or a tap outside."
+        ]
+      },
+      {
+        "title": "Battles, account and profiles",
+        "items": [
+          "Pack battles, the battle table, your account, quests, levels and public profiles got smoother motion and tidier layouts.",
+          "Numbers that count up no longer wobble: every digit in a title or price is now the same width.",
+          "Friends, Rankings and Trades got a first tidy-up, with more on the way."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "2026-11-25-etch-shine-all",
+    "date": "2026-11-25",
+    "title": "Every engraved card gets the moving rainbow",
+    "summary": "The rainbow and glitter shine added to Sun & Moon's textured cards now covers every era.",
+    "items": [
+      "Sword & Shield full arts, rainbow rares, VMAX and shiny cards, XY and Black & White full arts, and Scarlet & Violet and Mega Evolution Ultra Rares and Special Illustration Rares all shimmer as the card turns.",
+      "Gold cards stay gold and get the glitter. Single-colour cards like the RGB Mews get glitter without the rainbow."
+    ]
+  },
+  {
+    "id": "2026-11-25-etch-shine",
+    "date": "2026-11-25",
+    "title": "Engraved cards shine with a moving rainbow",
+    "summary": "Textured Sun & Moon cards showed their engraving but no real holo shine when you moved them.",
+    "items": [
+      "Rainbow rares, shiny GX, full-art GX and full-art Supporters from Sun & Moon now throw a rainbow that slides across the engraving as the card turns.",
+      "Glitter sparkles round the light on those cards.",
+      "This is one shared effect for every engraved card, and the other eras get it next."
+    ]
+  },
+  {
     "id": "2026-11-25-round-2-fixes",
     "date": "2026-11-25",
     "title": "Messages and pack battle fixes",
