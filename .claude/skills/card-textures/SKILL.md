@@ -72,6 +72,7 @@ cure"). The surface gloss throws a soft highlight.
 | Where the foil is | `mask-image` on `.foil` and `.glare` | `--art` (the scan's alpha) plus window, stamp and per-card masks |
 | Cast-and-cure coat (clear UV pattern over ink and foil alike) | `.cure` | a texture tile masked by the scan only, never by the foil map; `screen` |
 | Surface gloss, specular | `.glare`, `.glare::after` | `radial-gradient` at `--pointer-x/y`, `overlay` or `soft-light` |
+| The etch shine (every face with `has-etch-map`, 2026-11-25) | `.shine`, `.shine::before`, `.shine::after` | `css/holo/etch-shine.css`: a spectrum overlaid on the engraving that slides with the light, and glitter round the pointer; one recipe for every era, tuned per family with `--shine-line` and `--shine-glit`; the span has no z-index so its layers blend with the card |
 
 ## The site's rules (read before writing CSS)
 

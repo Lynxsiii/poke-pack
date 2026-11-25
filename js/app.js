@@ -786,6 +786,7 @@ function tcgFace(card, { small = false, stamp = true, lazy = false } = {}) {
     <span class="foil" aria-hidden="true"></span>
     ${extra.cure ? `<span class="cure" aria-hidden="true"></span>` : ""}
     <span class="glare" aria-hidden="true"></span>
+    ${/\bhas-etch-map\b/.test(extra.classes) ? `<span class="shine" aria-hidden="true"></span>` : ""}
     ${stamp ? rarityStamp(shown) : ""}
   </div>`;
 }
