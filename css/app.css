@@ -2167,13 +2167,17 @@ html.dialog-open .wrap *::after {
   animation: spreadIn 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 .spread-card.hit { width: 122px; }
-/* Gold rim rides the image alpha so it hugs the printed card corners
-   instead of a guessed rectangle over the letterboxed box. */
-.spread-card.top-pull .tcg img {
-  filter:
-    drop-shadow(0 0 2px rgba(255, 226, 150, 0.95))
-    drop-shadow(0 0 5px rgba(244, 199, 82, 0.8))
-    drop-shadow(0 0 20px rgba(244, 199, 82, 0.55));
+/* Gold rim: a box-shadow on a pseudo-element with the printed card's corner,
+   behind the scan. Not a filter on the scan: on an iPhone that stops a lit
+   card's foil layers blending into it (css/holo/realism.css). */
+.spread-card.top-pull .tcg::after {
+  content: "";
+  position: absolute;
+  inset: 0.6%;
+  z-index: -1;
+  border-radius: 4.6% / 3.3%;
+  pointer-events: none;
+  box-shadow: 0 0 2px 1px rgba(255, 226, 150, 0.95), 0 0 6px 1px rgba(244, 199, 82, 0.8), 0 0 20px rgba(244, 199, 82, 0.55);
 }
 .chip {
   position: absolute;

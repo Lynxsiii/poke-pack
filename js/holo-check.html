@@ -45,6 +45,8 @@
   .v-j .tcg.tcg.tcg.tcg.tcg img { filter: none !important; }
   /* K: 2D tilt only (no perspective) */
   .v-k .tcg.tcg.tcg.tcg.tcg { transform: scale(var(--card-scale)) !important; will-change: auto !important; }
+  /* M: the old shadow, a filter on the scan (what broke on iPhones) */
+  .v-m .tcg.tcg.tcg.tcg.tcg img { filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55)) drop-shadow(0 2px 5px rgba(0, 0, 0, 0.4)) !important; }
   /* L: resting card, nothing lit */
 </style>
 </head>
@@ -78,11 +80,13 @@ const VARIANTS = [
   ["d", "no shadow on the scan"], ["e", "no shine, no relief"], ["f", "no relief"],
   ["g", "no shine"], ["h", "isolated card"], ["i", "tilt on a wrapper"],
   ["j", "no shadow, no will-change"], ["k", "flat tilt (scale only)"], ["l", "resting card"],
+  ["m", "old shadow filter (expect broken)"],
 ];
 document.getElementById("grid").innerHTML = VARIANTS.map(([k, label]) =>
   `<figure class="v-${k}">${face()}<figcaption><b>${k.toUpperCase()}</b> ${label}</figcaption></figure>`).join("");
 // The same writes js/card-motion.js makes each frame, on a slow walk of the light.
 const lit = [...document.querySelectorAll("figure:not(.v-l) .tcg")];
+document.getElementById("note").textContent = "2026-11-25 fix: A should now look clean and M broken.";
 for (const el of lit) el.classList.add("lit");
 function frame(now) {
   const t = now / 1000, x = 50 + 40 * Math.sin(t * 1.1), y = 45 + 30 * Math.sin(t * 0.8 + 0.9);

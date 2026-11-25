@@ -176,14 +176,26 @@ body.fx-holo.fx-holo.fx-holo .tcg:is(.foil-holo, .foil-reverse) .glare {
 
 /* ---- The card as an object ----------------------------------------------- */
 /* A lifted card throws a shadow that moves against the tilt, which is what
-   sells it as a physical card rather than an image leaning. */
-body.fx-holo.fx-holo.fx-holo .tcg.lit img,
-body.fx-holo.fx-holo.fx-holo .tcg.settling img {
-  filter:
-    drop-shadow(calc((var(--pointer-from-left) - 0.5) * -24px) calc(14px + (var(--pointer-from-top) - 0.5) * -20px) 22px rgba(0, 0, 0, 0.55))
-    drop-shadow(0 2px 5px rgba(0, 0, 0, 0.4));
+   sells it as a physical card rather than an image leaning.
+   The shadow is a box-shadow on a pseudo-element behind the scan, never a
+   filter on the scan itself. On an iPhone a filter puts the scan on its own
+   GPU layer, and with the etch-shine layers above it Safari then stopped
+   blending every foil layer into the card: they painted as flat grey and
+   rainbow over the text (Noah's recordings and the /js/holo-check screenshot,
+   2026-11-25; Linux WebKit never drew it). Keep every filter off `.tcg img`. */
+body.fx-holo.fx-holo.fx-holo .tcg.lit::before,
+body.fx-holo.fx-holo.fx-holo .tcg.settling::before {
+  content: "";
+  position: absolute;
+  inset: 1.5%;
+  z-index: -1;
+  /* the printed card's corner: about 4.6% of its width */
+  border-radius: 4.6% / 3.3%;
+  pointer-events: none;
+  box-shadow: 0 14px 22px rgba(0, 0, 0, 0.55), 0 2px 5px rgba(0, 0, 0, 0.4);
+  transform: translate(calc((var(--pointer-from-left) - 0.5) * -24px), calc((var(--pointer-from-top) - 0.5) * -20px));
 }
 /* No outline on .tcg itself. The box is square but the printed card is not:
    a 1px rim here stuck out past all four rounded corners as a faint
    rectangle whenever a foil was held. Anything drawn around the card has to
-   follow the art's own alpha, like the drop shadows above. */
+   follow the card's rounded corner, like the shadow above. */
