@@ -256,7 +256,7 @@ export function initProfileEditor(root, deps) {
   const layout = () => root.querySelector("#pl-layout");
 
   /** Redraw the whole tab body, keeping focus on the same control. */
-  function repaint({ focus } = {}) {
+  function repaint({ focus, land } = {}) {
     const trainer = deps.activeTrainer();
     const host = layout();
     if (!trainer || !host) return;
@@ -265,6 +265,16 @@ export function initProfileEditor(root, deps) {
     host.innerHTML = inner(trainer, deps);
     window.scrollTo({ top: scroll, behavior: "instant" });
     restoreFocus(host, active);
+    if (land) motion(host, land);
+  }
+
+  /** Decoration (css/pages/profile-look.css): the pick lands, the miniature settles, a moved row slides in. */
+  function motion(host, { what, value, dir }) {
+    if (document.body.classList.contains("no-motion") || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const sel = `[data-pl="${what}"][data-v="${CSS.escape(value)}"]`;
+    if (dir) host.querySelector(sel)?.closest(".pl-sec")?.classList.add(dir < 0 ? "pl-rose" : "pl-sank");
+    else host.querySelector(sel)?.classList.add("rt-picked");
+    host.querySelector(".pl-room")?.classList.add("pl-land");
   }
 
   /** Redraw only what a keystroke changes. */
@@ -362,7 +372,8 @@ export function initProfileEditor(root, deps) {
       if (el.getAttribute("aria-disabled") !== "true") save();
       return;
     } else return;
-    repaint();
+    const moved = what === "sec-up" ? -1 : what === "sec-down" ? 1 : 0;
+    repaint({ land: ["undo", "reset"].includes(what) ? { what: "", value: "" } : { what, value, dir: moved } });
   });
 }
 

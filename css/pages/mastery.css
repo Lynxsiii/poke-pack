@@ -109,6 +109,10 @@ body.no-motion .mm-glint::before { animation: none; transform: translate3d(90%, 
   font: italic 700 12.5px/1.35 var(--font-h); white-space: nowrap;
 }
 .qm-set.is-new .qm-state { background: none; color: var(--k-3); box-shadow: inset 0 0 0 1.5px var(--rule-2); }
+/* A shelf of untouched sets would be a wall of identical tags: the dashed row and its 0 already say it, so the
+   words stay for screen readers only and the name gets the room. */
+.qm-set.is-new .qm-state { position: absolute; width: 1px; height: 1px; margin: 0; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.qm-set.is-new .qm-name { grid-column: 2 / -1; }
 .qm-set.is-ready .qm-state { background: var(--yel); color: var(--k); box-shadow: inset 0 0 0 2px var(--k); }
 .qm-set.is-mastered .qm-state { color: var(--yel); }
 .qm-count { grid-column: 2; grid-row: 2; color: var(--k-2); font: 700 13px var(--font-h); font-variant-numeric: tabular-nums; line-height: 1.25; }
@@ -123,14 +127,14 @@ body.no-motion .mm-glint::before { animation: none; transform: translate3d(90%, 
   content: ""; position: absolute; inset: 0;
   background: linear-gradient(90deg, transparent calc(25% - 1.5px), var(--k) calc(25% - 1.5px) calc(25% + 1.5px), transparent calc(25% + 1.5px) calc(50% - 1.5px), var(--k) calc(50% - 1.5px) calc(50% + 1.5px), transparent calc(50% + 1.5px) calc(75% - 1.5px), var(--k) calc(75% - 1.5px) calc(75% + 1.5px), transparent calc(75% + 1.5px));
 }
-.acct-swap .qm-shelf > .qm-set:nth-child(-n + 8) { animation: rt-rise 0.36s var(--ease-out) backwards; }
-.acct-swap .qm-shelf > .qm-set:nth-child(2) { animation-delay: 30ms; }
-.acct-swap .qm-shelf > .qm-set:nth-child(3) { animation-delay: 60ms; }
-.acct-swap .qm-shelf > .qm-set:nth-child(4) { animation-delay: 90ms; }
-.acct-swap .qm-shelf > .qm-set:nth-child(5) { animation-delay: 120ms; }
-.acct-swap .qm-shelf > .qm-set:nth-child(6) { animation-delay: 150ms; }
-.acct-swap .qm-shelf > .qm-set:nth-child(7) { animation-delay: 180ms; }
-.acct-swap .qm-shelf > .qm-set:nth-child(8) { animation-delay: 210ms; }
+:is(.acct-swap, .acct-refilter) .qm-shelf > .qm-set:nth-child(-n + 8) { animation: rt-rise 0.36s var(--ease-out) backwards; }
+:is(.acct-swap, .acct-refilter) .qm-shelf > .qm-set:nth-child(2) { animation-delay: 30ms; }
+:is(.acct-swap, .acct-refilter) .qm-shelf > .qm-set:nth-child(3) { animation-delay: 60ms; }
+:is(.acct-swap, .acct-refilter) .qm-shelf > .qm-set:nth-child(4) { animation-delay: 90ms; }
+:is(.acct-swap, .acct-refilter) .qm-shelf > .qm-set:nth-child(5) { animation-delay: 120ms; }
+:is(.acct-swap, .acct-refilter) .qm-shelf > .qm-set:nth-child(6) { animation-delay: 150ms; }
+:is(.acct-swap, .acct-refilter) .qm-shelf > .qm-set:nth-child(7) { animation-delay: 180ms; }
+:is(.acct-swap, .acct-refilter) .qm-shelf > .qm-set:nth-child(8) { animation-delay: 210ms; }
 .acct-swap .qm-track > i { animation: rt-fill 0.7s var(--ease-out) 0.15s backwards; }
 
 /* ---- Mastery tab: the sheet under the chosen set ---------------------------------- */

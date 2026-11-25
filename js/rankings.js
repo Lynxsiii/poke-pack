@@ -66,7 +66,7 @@ function cardThumb(card) {
 function rowHtml(board, row, deps, meHandle) {
   const mine = meHandle && row.user.handle === meHandle;
   const sub = board === "best" && row.card ? `${esc(row.card.name)}${row.card.set ? `, ${esc(row.card.set)}` : ""}` : `@${esc(row.user.handle)}`;
-  return `<li class="rk-row${mine ? " is-me" : ""}${row.place <= 3 ? " is-top" : ""}" style="--i:${Math.min(8, Math.max(0, row.place - 4))}">
+  return `<li class="rk-row${mine ? " is-me" : ""}${row.place <= 3 ? " is-top" : ""}" data-h="${esc(row.user.handle)}" style="--i:${Math.min(8, Math.max(0, row.place - 4))}">
     <span class="rk-place" aria-label="${ordinal(row.place)}">${row.place}</span>
     <a class="rk-who" href="/u/${esc(row.user.handle)}">
       ${deps.faceHtml(row.user, "sm")}
@@ -209,8 +209,69 @@ const HOW = `<details class="rk-how">
   </ul>
 </details>`;
 
+const still = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches || document.body.classList.contains("no-motion");
+let drawnPick = "";
+let drawnSig = "";
+
+/** What a board shows, so a poll that brings nothing new leaves the page (and its motion) alone. */
+function boardSig(data) {
+  const card = (c) => (c ? [c.id || "", c.name || "", c.image || ""] : null);
+  const row = (r) => [r.place, r.user?.handle, r.user?.name, r.user?.avatar, r.user?.level, r.user?.prestige, r.value, r.level?.level, card(r.card)];
+  return JSON.stringify([data.board, data.period, data.scope, (data.rows || []).map(row), data.me ? [data.me.place, data.me.of, data.me.value, data.me.reason, card(data.me.card)] : null, (data.lastWeek || []).map(row)]);
+}
+
+/** Update the board words and the period and compare keys in place, so the ink plate grows under a new pick. */
+function syncControls(top, html) {
+  const next = document.createElement("div");
+  next.innerHTML = html;
+  const key = (el) => [...el.querySelectorAll("button")].map((b) => JSON.stringify(b.dataset)).join("|");
+  const old = new Map([...top.children].map((el) => [el.classList[0], el]));
+  const wanted = new Set();
+  let cursor = null;
+  for (const el of [...next.children]) {
+    const name = el.classList[0];
+    wanted.add(name);
+    const prev = old.get(name);
+    if (prev && prev.tagName === el.tagName && key(prev) === key(el)) {
+      const fresh = el.querySelectorAll("button");
+      prev.querySelectorAll("button").forEach((b, i) => {
+        b.className = fresh[i].className;
+        b.setAttribute("aria-pressed", fresh[i].getAttribute("aria-pressed"));
+      });
+      if (!fresh.length && prev.textContent !== el.textContent) prev.textContent = el.textContent;
+      cursor = prev;
+    } else if (prev) {
+      prev.replaceWith(el);
+      cursor = el;
+    } else {
+      if (cursor) cursor.after(el);
+      else top.prepend(el);
+      cursor = el;
+    }
+  }
+  for (const [name, el] of old) if (!wanted.has(name)) el.remove();
+}
+
+/** Rows that were on the board before slide from where they stood to their new place. */
+function slideRows(body, before) {
+  if (!before.size || still()) return;
+  const ease = "cubic-bezier(0.2, 0.8, 0.2, 1)";
+  let n = 0;
+  for (const el of body.querySelectorAll(".rk-row[data-h]")) {
+    const was = before.get(el.dataset.h);
+    if (was == null) continue;
+    el.classList.add("is-moved");
+    if (n++ > 24) continue;
+    const dy = was - el.getBoundingClientRect().top;
+    if (Math.abs(dy) < 2 || Math.abs(dy) > 1400) continue;
+    el.animate([{ transform: `translateY(${dy}px)` }, { transform: "none" }], { duration: 440, easing: ease });
+  }
+}
+
 /**
  * Draw the page into `root`. deps: { api, faceHtml, levelTag, user, openAuth }.
+ * The social tick calls this every few seconds: the same board comes back
+ * quietly, and only a change is drawn (rows slide to their new places).
  */
 export async function renderRankings(root, deps) {
   if (!root) return;
@@ -222,13 +283,16 @@ export async function renderRankings(root, deps) {
   writeQuery();
 
   let body = root.querySelector(".rk-body");
+  const first = !body;
   if (!body) {
     root.innerHTML = `<section class="rk" aria-label="Rankings"><div class="rk-top"></div><div class="rk-body" aria-live="polite"></div>${HOW}</section>`;
     body = root.querySelector(".rk-body");
     bind(root, deps);
   }
-  root.querySelector(".rk-top").innerHTML = controlsHtml(user);
-  body.classList.add("is-loading");
+  syncControls(root.querySelector(".rk-top"), controlsHtml(user));
+  const pickKey = `${pick.board}|${pick.period}|${pick.scope}|${user?.handle || ""}`;
+  const quiet = !first && pickKey === drawnPick && Boolean(lastData);
+  if (!quiet) body.classList.add("is-loading");
   if (!lastData) body.innerHTML = `<p class="sr-only">Loading the board.</p><div class="rk-ghosts" aria-hidden="true">${[0, 1, 2, 3, 4].map((i) => `<i style="--i:${i}"></i>`).join("")}</div>`;
 
   const gen = ++loadGen;
@@ -239,13 +303,22 @@ export async function renderRankings(root, deps) {
   } catch (err) {
     if (gen !== loadGen) return;
     body.classList.remove("is-loading");
+    if (quiet) return; // a missed poll keeps the board that is up
+    drawnPick = "";
     body.innerHTML = `<div class="rk-empty rk-empty-box"><i class="rk-ball" aria-hidden="true"></i><p>${esc(err.message || "Couldn't load the board.")} Try again in a moment.</p></div>`;
     return;
   }
   if (gen !== loadGen || !root.isConnected) return;
   lastData = data;
   body.classList.remove("is-loading");
+  const sig = boardSig(data);
+  if (quiet && sig === drawnSig) return;
+  const before = new Map([...body.querySelectorAll(".rk-row[data-h]")].map((el) => [el.dataset.h, el.getBoundingClientRect().top]));
+  body.classList.toggle("is-quiet", quiet);
   body.innerHTML = `${meHtml(data, deps, user)}${resetLine(data)}${listHtml(data, deps, user)}${lastWeekHtml(data, deps)}`;
+  drawnPick = pickKey;
+  drawnSig = sig;
+  slideRows(body, before);
 }
 
 function bind(root, deps) {

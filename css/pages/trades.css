@@ -16,9 +16,10 @@
 .tr-none { margin: 0; color: var(--k-2); font-size: 15px; line-height: 1.45; }
 .tr-fine { margin: 12px 0 0; color: var(--k-2); font-size: 14px; line-height: 1.45; }
 .tr-error {
-  margin: 0 0 12px; padding: 10px 14px; border: 2px solid var(--k); border-radius: 6px; background: #ffd9dc;
-  color: var(--k); font-size: 15px; font-weight: 700; line-height: 1.4;
+  margin: 0 0 12px; padding: 10px 14px; border: 2px solid var(--k); border-left-width: 8px; border-left-color: var(--hp-low); border-radius: 6px; background: #ffd9dc;
+  color: var(--k); font-size: 15px; font-weight: 700; line-height: 1.4; animation: tr-rise 0.24s var(--ease-out);
 }
+.tr-foot .tr-error { margin: 12px 0 0; }
 .tr-back {
   display: inline-flex; align-items: center; gap: 8px; min-height: 44px; margin: -6px 0 6px;
   color: var(--k); font: italic 800 17px var(--font-xc);
@@ -42,12 +43,16 @@
 .tr-gate .tr-actions { flex-basis: 100%; margin-top: 4px; padding-left: 6px; }
 .tr-ghosts { display: grid; gap: 10px; }
 .tr-ghosts i {
-  display: block; height: 82px; border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: rgb(255 255 255 / 0.5);
-  animation: tr-breathe 1.2s ease-in-out calc(var(--i, 0) * 0.15s) infinite alternate;
+  position: relative; display: block; height: 82px; overflow: hidden;
+  border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: rgb(255 255 255 / 0.5);
+}
+.tr-ghosts i::after {
+  content: ""; position: absolute; top: 0; bottom: 0; left: -40%; width: 34%;
+  background: var(--cy-3); opacity: 0.8; transform: skewX(var(--skew));
+  animation: rt-skel 1.3s ease-in-out infinite; animation-delay: calc(var(--i, 0) * 0.1s);
 }
 .tr-ghosts-two { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
 .tr-ghosts-two i { height: 260px; }
-@keyframes tr-breathe { from { opacity: 0.45; } to { opacity: 1; } }
 
 /* ---- The hub ------------------------------------------------------------------ */
 .tr-cols { display: grid; gap: 28px; grid-template-columns: minmax(0, 1fr); }
@@ -57,6 +62,9 @@
 .tr-word.rt-word { min-height: 38px; padding: 3px 15px 4px; font-size: 16px; box-shadow: none; }
 .tr-word.rt-word.on::after { content: none; }
 .tr-word.rt-word:hover { background: none; }
+/* The word just chosen: its ink plate grows under it (the hub redraws the words). */
+.tr-word.is-picked::before { animation: tr-plate 0.24s var(--ease-pop); }
+@keyframes tr-plate { from { opacity: 0; transform: skewX(var(--skew)) scaleX(0.55); } }
 .tr-list { display: grid; gap: 10px; margin: 0; }
 .tr-list > li { border: 0; }
 /* An offer: the trainer on the label, then what you get, the swap, what you give. */
@@ -150,7 +158,10 @@
 .tr-from { display: grid; gap: 8px; margin-top: 14px; padding-top: 12px; border-top: 2px solid var(--rule); color: var(--k); font: italic 800 15px var(--font-xc); }
 .tr-from .keys { justify-self: start; padding: 3px 4px; border: 2px solid var(--k); border-radius: 6px; background: var(--box); }
 .tr-from .seg-key { min-height: 34px; padding: 3px 13px 4px; font-size: 14.5px; }
-.tr-from .seg-thumb { transform: skewX(var(--skew)); }
+.tr-from .seg-thumb, .tr-sheet-tools .seg-thumb {
+  top: 3px; bottom: 3px; left: 4px; width: calc((100% - 8px) / var(--n, 2));
+  transform: translateX(calc(var(--i, 0) * 100%)) skewX(var(--skew)); transition: transform 0.26s var(--ease-out);
+}
 
 /* ---- One offer, and the builder: the versus table -------------------------------- */
 .tr-head-one { display: flex; align-items: center; gap: 16px; }
@@ -206,6 +217,23 @@
 .is-fresh .tr-items > .tr-item:nth-child(5) { animation-delay: 0.16s; }
 .is-fresh .tr-items > .tr-item:nth-child(6) { animation-delay: 0.2s; }
 @keyframes tr-deal { from { opacity: 0; transform: translateY(16px) rotate(-4deg); } }
+/* A card or slab just added from the picker drops onto its side and settles. */
+.tr-items > .tr-item.is-new { animation: tr-drop 0.42s var(--ease-pop) backwards; animation-delay: calc(min(var(--i, 0), 7) * 0.05s); }
+@keyframes tr-drop { 0% { opacity: 0; transform: translateY(-34px) rotate(-7deg) scale(1.08); } 55% { opacity: 1; } }
+/* Accepted in front of you: what you get crosses over from their side, what you give from yours. */
+.is-swapped .tr-vs-mark { animation: tr-swap-mark 0.6s var(--ease-pop) 0.05s backwards; }
+@keyframes tr-swap-mark { 0% { transform: rotate(0) scale(1); } 45% { transform: rotate(100deg) scale(1.25); } 100% { transform: rotate(180deg) scale(1); } }
+.is-swapped .tr-sides .tr-side-box .tr-items > .tr-item:nth-child(-n+8) { animation: tr-cross-down 0.5s var(--ease-out) backwards; animation-delay: calc(0.12s + var(--k, 0) * 0.04s); }
+.is-swapped .tr-sides .tr-side-box.is-give .tr-items > .tr-item:nth-child(-n+8) { animation-name: tr-cross-up; }
+.is-swapped .tr-items > .tr-item:nth-child(2) { --k: 1; } .is-swapped .tr-items > .tr-item:nth-child(3) { --k: 2; } .is-swapped .tr-items > .tr-item:nth-child(4) { --k: 3; }
+@keyframes tr-cross-down { from { opacity: 0; transform: translateY(-48px) rotate(-5deg); } }
+@keyframes tr-cross-up { from { opacity: 0; transform: translateY(48px) rotate(5deg); } }
+@media (min-width: 760px) {
+  .is-swapped .tr-sides .tr-side-box .tr-items > .tr-item:nth-child(-n+8) { animation-name: tr-cross-right; }
+  .is-swapped .tr-sides .tr-side-box.is-give .tr-items > .tr-item:nth-child(-n+8) { animation-name: tr-cross-left; }
+  @keyframes tr-cross-right { from { opacity: 0; transform: translateX(-64px) rotate(-5deg); } }
+  @keyframes tr-cross-left { from { opacity: 0; transform: translateX(64px) rotate(5deg); } }
+}
 /* Copies: a small ink tag on the card's corner. */
 .tr-qty {
   position: absolute; top: -6px; right: -6px; z-index: 2; display: grid; place-items: center; min-width: 26px; height: 22px; padding: 0 6px;
@@ -299,7 +327,6 @@
 .tr-search input { flex: 1; min-width: 0; min-height: 44px; padding: 0; border: 0; outline: 0; background: none; color: var(--k); font: 500 16px var(--font); }
 .tr-sheet-tools .keys { justify-self: start; padding: 3px 4px; border: 2px solid var(--k); border-radius: 6px; }
 .tr-sheet-tools .seg-key { min-height: 34px; padding: 3px 14px 4px; font-size: 14.5px; }
-.tr-sheet-tools .seg-thumb { transform: skewX(var(--skew)); }
 .tr-sort { margin: 0; }
 .tr-grid {
   flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 16px 16px 20px; outline: none;
@@ -335,6 +362,10 @@
 
 @media (min-width: 560px) {
   .tr-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  /* The scope keys and the sort words share one row under the search. */
+  .tr-sheet-tools { grid-template-columns: auto minmax(0, 1fr); align-items: center; column-gap: 18px; }
+  .tr-sheet-tools .tr-search { grid-column: 1 / -1; }
+  .tr-sheet-tools .tr-sort { justify-self: end; }
 }
 @media (min-width: 760px) {
   .tr-sides { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: start; gap: 0 12px; }
@@ -344,6 +375,10 @@
   .tr-foot { max-width: 620px; }
   .tr-sheet-wrap { align-items: center; }
   .tr-sheet { border-bottom: var(--line-w) solid var(--k); border-radius: 8px; box-shadow: var(--drop); }
+}
+/* A tablet: the two side boxes stand next to each other under the offers. */
+@media (min-width: 700px) and (max-width: 960px) {
+  .tr-side { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 18px; }
 }
 @media (min-width: 961px) {
   .tr-cols { grid-template-columns: minmax(0, 1fr) 360px; gap: 40px; }
@@ -364,9 +399,10 @@
   .tr-items { gap: 14px 10px; }
 }
 
-body.no-motion :is(.tr-list.is-fresh > li, .tr-items > .tr-item, .tr-state, .tr-confirm, .tr-sheet, .tr-scrim, .tr-pick.is-on .tr-pick-art, .tr-ghosts i) { animation: none !important; }
-body.no-motion :is(.tr-row, .tr-friend, .tr-item-art, .tr-track > i) { transition: none; }
+body.no-motion :is(.tr-list.is-fresh > li, .tr-items > .tr-item, .tr-state, .tr-confirm, .tr-sheet, .tr-scrim, .tr-pick.is-on .tr-pick-art, .tr-ghosts i::after, .tr-vs-mark, .tr-word.is-picked::before, .tr-error) { animation: none !important; }
+body.no-motion :is(.tr-row, .tr-friend, .tr-item-art, .tr-track > i, .seg-thumb, .tr-back::before) { transition: none !important; }
 @media (prefers-reduced-motion: reduce) {
-  :is(.tr-list.is-fresh > li, .tr-items > .tr-item, .tr-state, .tr-confirm, .tr-sheet, .tr-scrim, .tr-pick.is-on .tr-pick-art, .tr-ghosts i) { animation: none !important; }
+  :is(.tr-list.is-fresh > li, .tr-items > .tr-item, .tr-state, .tr-confirm, .tr-sheet, .tr-scrim, .tr-pick.is-on .tr-pick-art, .tr-ghosts i::after, .tr-vs-mark, .tr-word.is-picked::before, .tr-error) { animation: none !important; }
+  :is(.tr-track > i, .seg-thumb) { transition: none !important; }
 }
 .tr-side-box > .plate-head + .tr-coinline { margin-top: 0; padding-top: 2px; border-top: 0; }

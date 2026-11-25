@@ -117,6 +117,10 @@ pseudo-element, or slant the element and counter-slant its one child
   computer's Home.
 - Names, figures and money: Kanit 600 or 700, upright, `tabular-nums`.
 - Reading text: M PLUS Rounded 1c 500; labels and small meta 700.
+- Figures in Kanit are always one width: "Kanit Tab" (digits cut from Kanit and
+  re-spaced, `assets/fonts/kanit-tab-*`) sits in front of Kanit in `--font-h`,
+  so amounts that roll or sit in columns never jitter. Titles (`--font-xc`)
+  keep Kanit's own figures.
 - No capitals-only text anywhere except the slab's printed label.
 - No hard shadows, outlines or gradients on lettering.
 - Fonts are subset to Latin and self-hosted in `assets/fonts/` with their OFL
@@ -162,6 +166,12 @@ choose, bars fill, figures roll.
   The slab swings in, the page's top-level blocks rise in turn (14px, 0.42s,
   50ms apart), and HP bars fill from empty. A block that is pinned to the
   screen, or holds something pinned, carries `.rt-still`.
+- The shell: once the page scrolls, the phone header and the computer's purse
+  row gain a solid bar with an ink line (`body.rt-scrolled`); a marker
+  (`.rt-tabmark`) slides along the tab bar to the section you are in; the menu
+  sheet dims the page and deals its entries in; the purse bumps when the
+  amount moves. A place that is loading is `.rt-skel`: a dashed box with a
+  cyan band crossing it.
 - Choosing: an ink plate grows under the chosen tab or menu item (0.2s). Rows
   nudge 4px toward the cursor on hover. Keys sink 3px onto their ledge.
 - Arriving things (a sheet, a dialog, a toast, a new row) rise and settle in
