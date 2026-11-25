@@ -12,12 +12,15 @@
  *   .shine::after   glitter flecks screened on round the light (art x foil map), drifting against the tilt
  * Nothing at rest, nothing with the shine setting off, nothing in the Classic engine. A family tunes it with
  * --shine-line (0..1, the rainbow on the lines) and --shine-glit (0..1, the glitter); 0 turns a part off.
- * Enabled per era below, each after a WebKit render at phone size (.claude/skills/card-textures SKILL.md).
+ * On for every engraved face (Sun & Moon first, #346; the other eras after WebKit renders at phone size of each
+ * engraved family, 2026-11-25). The exceptions are at the end of the sheet: gold cards keep their gold (a faint
+ * rainbow, full glitter), monochrome prints and finishes whose engraving is not a rainbow foil take glitter only, and
+ * the Black & White secrets, tuned photo by photo, take nothing.
  */
 .tcg .shine {
   display: none;
 }
-body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map:is(.lit, .settling):is(.era-sm) .shine {
+body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map:is(.lit, .settling) .shine {
   display: block;
   position: absolute;
   inset: 0;
@@ -28,8 +31,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map:is(.lit, .settling):is(.era-sm) .
   --shine-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #fff 0%, rgb(215, 215, 215) 25%,
     rgb(120, 120, 120) 50%, rgb(50, 50, 50) 80%);
 }
-body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map:is(.lit, .settling):is(.era-sm) .shine::before,
-body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map:is(.lit, .settling):is(.era-sm) .shine::after {
+body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map:is(.lit, .settling) .shine::before,
+body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map:is(.lit, .settling) .shine::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -39,7 +42,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map:is(.lit, .settling):is(.era-sm) .
   mask-repeat: no-repeat;
   mask-mode: alpha;
 }
-body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map:is(.lit, .settling):is(.era-sm) .shine::before {
+body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map:is(.lit, .settling) .shine::before {
   background-image: var(--shine-spectrum);
   background-size: 300% 300%;
   background-position: calc(var(--pointer-from-left) * 100%) calc(var(--pointer-from-top) * 100%);
@@ -52,7 +55,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map:is(.lit, .settling):is(.era-sm) .
   mask-size: contain, 100% 100%, 100% 100%;
   opacity: calc(var(--card-opacity, 0) * var(--shine-line, 0.45) * min(1, var(--foil-strength, 1)));
 }
-body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map:is(.lit, .settling):is(.era-sm) .shine::after {
+body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map:is(.lit, .settling) .shine::after {
   background-image: url("/assets/foil/glitter-flecks.webp"), var(--shine-pool);
   background-size: 30% auto, 100% 100%;
   background-position: calc(var(--seed-x, 0.5) * 100% + var(--pointer-from-left) * 8px) calc(var(--seed-y, 0.5) * 100% + var(--pointer-from-top) * 8px), center;
@@ -69,5 +72,20 @@ body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map:is(.lit, .settling):is(.era-sm) .
   opacity: calc(var(--card-opacity, 0) * var(--shine-glit, 1) * min(1, var(--foil-strength, 1)));
 }
 body.fx-holo.fx-holo.fx-holo.no-shine .tcg.tcg .shine {
+  display: none;
+}
+
+/* ---- Per-finish strength ------------------------------------------------------------------------------------------ */
+/* Gold stays gold: a faint rainbow on the lines, the glitter in full. */
+body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map:is(.foil-gold, .fam-sm-gold, .fam-swsh-gold, .fam-sv-gold, .fam-xy-secret-gold) {
+  --shine-line: 0.2;
+}
+/* Monochrome prints (Black White Rares, the RGB Mews) and engraved finishes that are not rainbow foil on the real card
+   (Tera ex and Mega Evolution ex crystal, ACE SPEC): glitter only. */
+body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map:is(.foil-bwr, .has-foil-rgb, .fam-sv-tera, .fam-me-holo, .fam-sv-acespec, .fam-me55) {
+  --shine-line: 0;
+}
+/* The Black & White secrets were tuned photo by photo (Noah, 2026-10-02: no rainbow where the real card has none). */
+body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map.fam-bw-secret .shine {
   display: none;
 }
