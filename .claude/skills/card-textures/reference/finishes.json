@@ -1,0 +1,9168 @@
+[
+ {
+  "era": "me",
+  "family": "",
+  "pattern": "foil-reverse",
+  "classes": "rev-mirror",
+  "reverse": true,
+  "faces": 706,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 7,
+  "examples": [
+   "me1-1 (reverse)",
+   "me1-2 (reverse)"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "me",
+  "family": "",
+  "pattern": "foil-ultra",
+  "classes": "era-me has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 126,
+  "rarities": [
+   "Ultra Rare"
+  ],
+  "sets": 7,
+  "examples": [
+   "me1-155",
+   "me1-156"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "me",
+  "family": "",
+  "pattern": "foil-reverse",
+  "classes": "",
+  "reverse": true,
+  "faces": 86,
+  "rarities": [
+   "Common",
+   "Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "me55-1 (reverse)",
+   "me55-2 (reverse)"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "me",
+  "family": "",
+  "pattern": "foil-ir",
+  "classes": "has-foil-map",
+  "reverse": false,
+  "faces": 23,
+  "rarities": [
+   "Illustration Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "me55-129",
+   "me55-130"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "me",
+  "family": "",
+  "pattern": "foil-holo foil-svholo",
+  "classes": "has-foil-map",
+  "reverse": false,
+  "faces": 18,
+  "rarities": [
+   "Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "me55-12",
+   "me55-14"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "me",
+  "family": "",
+  "pattern": "foil-ex foil-sunpillar",
+  "classes": "has-foil-map",
+  "reverse": false,
+  "faces": 14,
+  "rarities": [
+   "Double Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "me55-15",
+   "me55-21"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "me",
+  "family": "",
+  "pattern": "foil-sir",
+  "classes": "has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 10,
+  "rarities": [
+   "Special Illustration Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "me55-147",
+   "me55-148"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "me",
+  "family": "",
+  "pattern": "foil-gold",
+  "classes": "era-me has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 9,
+  "rarities": [
+   "Mega Hyper Rare"
+  ],
+  "sets": 7,
+  "examples": [
+   "me1-187",
+   "me1-188"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "me",
+  "family": "",
+  "pattern": "foil-mega-attack",
+  "classes": "era-me has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 7,
+  "rarities": [
+   "Mega Attack Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "me2pt5-265",
+   "me2pt5-266"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "me",
+  "family": "",
+  "pattern": "foil-holo foil-cosmos",
+  "classes": "cosmos-pixel has-foil-map",
+  "reverse": false,
+  "faces": 7,
+  "rarities": [
+   "Cosmos"
+  ],
+  "sets": 1,
+  "examples": [
+   "me55-mep094",
+   "me55-mep095"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "me",
+  "family": "",
+  "pattern": "foil-sir",
+  "classes": "has-etch-drawn has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 2,
+  "rarities": [
+   "Special Illustration Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "me55-mep108",
+   "me55-mep110"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "me",
+  "family": "",
+  "pattern": "foil-reverse",
+  "classes": "",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Common"
+  ],
+  "sets": 1,
+  "examples": [
+   "me55-116-blister"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "me",
+  "family": "",
+  "pattern": "foil-holo",
+  "classes": "",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Promo"
+  ],
+  "sets": 1,
+  "examples": [
+   "me55-63-stamp"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "me",
+  "family": "me-holo",
+  "pattern": "foil-holo foil-svholo",
+  "classes": "era-me fam-me-holo has-foil-map meh-rare",
+  "reverse": false,
+  "faces": 107,
+  "rarities": [
+   "Rare"
+  ],
+  "sets": 7,
+  "examples": [
+   "me1-10",
+   "me1-28"
+  ],
+  "sheet": "css/holo/fam/me-holo.css"
+ },
+ {
+  "era": "me",
+  "family": "me-holo",
+  "pattern": "foil-holo foil-cosmos",
+  "classes": "cosmos-pixel era-me fam-me-holo has-foil-map meh-cosmos",
+  "reverse": false,
+  "faces": 82,
+  "rarities": [
+   "Cosmos"
+  ],
+  "sets": 7,
+  "examples": [
+   "me1-34-cosmos",
+   "me1-48-cosmos"
+  ],
+  "sheet": "css/holo/fam/me-holo.css"
+ },
+ {
+  "era": "me",
+  "family": "me-holo",
+  "pattern": "foil-ex foil-sunpillar",
+  "classes": "era-me fam-me-holo has-etch-map has-foil-map meh-mega",
+  "reverse": false,
+  "faces": 65,
+  "rarities": [
+   "Double Rare"
+  ],
+  "sets": 7,
+  "examples": [
+   "me1-3",
+   "me1-22"
+  ],
+  "sheet": "css/holo/fam/me-holo.css"
+ },
+ {
+  "era": "me",
+  "family": "me-holo",
+  "pattern": "foil-ex foil-sunpillar",
+  "classes": "era-me fam-me-holo has-foil-map meh-ex",
+  "reverse": false,
+  "faces": 44,
+  "rarities": [
+   "Double Rare"
+  ],
+  "sets": 6,
+  "examples": [
+   "me2-18",
+   "me2-29"
+  ],
+  "sheet": "css/holo/fam/me-holo.css"
+ },
+ {
+  "era": "me",
+  "family": "me-holo",
+  "pattern": "foil-holo foil-svholo",
+  "classes": "era-me fam-me-holo has-foil-map meh-energy meh-rare",
+  "reverse": false,
+  "faces": 8,
+  "rarities": [
+   "Rare"
+  ],
+  "sets": 3,
+  "examples": [
+   "me3-86",
+   "me3-87"
+  ],
+  "sheet": "css/holo/fam/me-holo.css"
+ },
+ {
+  "era": "me",
+  "family": "me-holo",
+  "pattern": "foil-ex foil-tera",
+  "classes": "era-me fam-me-holo has-etch-map has-foil-map meh-mega",
+  "reverse": false,
+  "faces": 6,
+  "rarities": [
+   "Double Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "me2pt5-38",
+   "me2pt5-57"
+  ],
+  "sheet": "css/holo/fam/me-holo.css"
+ },
+ {
+  "era": "me",
+  "family": "me-ir",
+  "pattern": "foil-ir",
+  "classes": "era-me fam-me-ir has-foil-map",
+  "reverse": false,
+  "faces": 161,
+  "rarities": [
+   "Illustration Rare"
+  ],
+  "sets": 7,
+  "examples": [
+   "me1-133",
+   "me1-134"
+  ],
+  "sheet": "css/holo/fam/me-ir.css"
+ },
+ {
+  "era": "me",
+  "family": "me-sir",
+  "pattern": "foil-sir",
+  "classes": "era-me fam-me-sir has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 60,
+  "rarities": [
+   "Special Illustration Rare"
+  ],
+  "sets": 7,
+  "examples": [
+   "me1-177",
+   "me1-178"
+  ],
+  "sheet": "css/holo/fam/me-sir.css"
+ },
+ {
+  "era": "me",
+  "family": "me-sir",
+  "pattern": "foil-sir",
+  "classes": "era-me fam-me-sir has-etch-map has-foil-map mesir-prism-frame",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Special Illustration Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "me2pt5-277"
+  ],
+  "sheet": "css/holo/fam/me-sir.css"
+ },
+ {
+  "era": "me",
+  "family": "me55",
+  "pattern": "foil-holo foil-rainbow",
+  "classes": "fam-me55 has-foil-map m55-common",
+  "reverse": false,
+  "faces": 65,
+  "rarities": [
+   "Common"
+  ],
+  "sets": 1,
+  "examples": [
+   "me55-1",
+   "me55-2"
+  ],
+  "sheet": "css/holo/fam/me55.css"
+ },
+ {
+  "era": "me",
+  "family": "me55",
+  "pattern": "foil-holo foil-pikachu",
+  "classes": "fam-me55 has-foil-map m55-pika",
+  "reverse": false,
+  "faces": 30,
+  "rarities": [
+   "Pikachu Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "me55-23",
+   "me55-24"
+  ],
+  "sheet": "css/holo/fam/me55.css"
+ },
+ {
+  "era": "me",
+  "family": "me55",
+  "pattern": "foil-holo foil-classic",
+  "classes": "fam-me55 has-foil-map m55-cc-map m55-classic",
+  "reverse": false,
+  "faces": 16,
+  "rarities": [
+   "Classic Collection"
+  ],
+  "sets": 1,
+  "examples": [
+   "me55-cc4",
+   "me55-cc5"
+  ],
+  "sheet": "css/holo/fam/me55.css"
+ },
+ {
+  "era": "me",
+  "family": "me55",
+  "pattern": "foil-ultra foil-classic",
+  "classes": "fam-me55 has-foil-map m55-cc-map m55-classic",
+  "reverse": false,
+  "faces": 14,
+  "rarities": [
+   "Classic Collection"
+  ],
+  "sets": 1,
+  "examples": [
+   "me55-cc33",
+   "me55-cc41"
+  ],
+  "sheet": "css/holo/fam/me55.css"
+ },
+ {
+  "era": "me",
+  "family": "me55",
+  "pattern": "foil-future",
+  "classes": "fam-me55 has-etch-bins has-etch-map has-foil-map m55-future",
+  "reverse": false,
+  "faces": 4,
+  "rarities": [
+   "Futuristic Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "me55-157",
+   "me55-158"
+  ],
+  "sheet": "css/holo/fam/me55.css"
+ },
+ {
+  "era": "me",
+  "family": "me55",
+  "pattern": "foil-holo foil-rainbow",
+  "classes": "fam-me55 has-foil-map m55-common m55-item",
+  "reverse": false,
+  "faces": 3,
+  "rarities": [
+   "Common"
+  ],
+  "sets": 1,
+  "examples": [
+   "me55-126",
+   "me55-127"
+  ],
+  "sheet": "css/holo/fam/me55.css"
+ },
+ {
+  "era": "me",
+  "family": "me55",
+  "pattern": "foil-future foil-rgb",
+  "classes": "fam-me55 has-etch-map has-foil-map has-foil-rgb m55-rgb m55-rgb-b",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "RGB Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "me55-B"
+  ],
+  "sheet": "css/holo/fam/me55.css"
+ },
+ {
+  "era": "me",
+  "family": "me55",
+  "pattern": "foil-future foil-rgb",
+  "classes": "fam-me55 has-etch-map has-foil-map has-foil-rgb m55-rgb m55-rgb-g",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "RGB Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "me55-G"
+  ],
+  "sheet": "css/holo/fam/me55.css"
+ },
+ {
+  "era": "me",
+  "family": "me55",
+  "pattern": "foil-future foil-rgb",
+  "classes": "fam-me55 has-etch-map has-foil-map has-foil-rgb m55-rgb m55-rgb-r",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "RGB Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "me55-R"
+  ],
+  "sheet": "css/holo/fam/me55.css"
+ },
+ {
+  "era": "sv",
+  "family": "",
+  "pattern": "foil-holo foil-cosmos",
+  "classes": "era-sv has-foil-map",
+  "reverse": false,
+  "faces": 15,
+  "rarities": [
+   "Cosmos"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv3pt5-cosmos-grass",
+   "sv3pt5-cosmos-fire"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "sv",
+  "family": "",
+  "pattern": "foil-holo foil-cosmos",
+  "classes": "cosmos-pixel era-sv has-foil-map",
+  "reverse": false,
+  "faces": 8,
+  "rarities": [
+   "Cosmos"
+  ],
+  "sets": 2,
+  "examples": [
+   "sv10-102-cosmos",
+   "sv10-103-cosmos"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "sv",
+  "family": "",
+  "pattern": "foil-bwr",
+  "classes": "era-sv has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 4,
+  "rarities": [
+   "Black White Rare"
+  ],
+  "sets": 2,
+  "examples": [
+   "rsv10pt5-172",
+   "rsv10pt5-173"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "sv",
+  "family": "",
+  "pattern": "foil-reverse foil-cosmos",
+  "classes": "",
+  "reverse": false,
+  "faces": 4,
+  "rarities": [
+   "Common"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv3pt5-1-costco",
+   "sv3pt5-25-costco"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "sv",
+  "family": "",
+  "pattern": "foil-ex",
+  "classes": "era-sv",
+  "reverse": false,
+  "faces": 2,
+  "rarities": [
+   "Double Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv4-svp067",
+   "sv4-svp068"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "sv",
+  "family": "",
+  "pattern": "foil-metal",
+  "classes": "era-sv has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Metal"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv3pt5-205-metal"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "sv",
+  "family": "",
+  "pattern": "foil-reverse",
+  "classes": "",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Common"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv8pt5-74-pokemon-day"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "sv",
+  "family": "",
+  "pattern": "foil-reverse foil-rev-pokeball",
+  "classes": "",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "zsv10pt5-12-pokeball"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "sv",
+  "family": "sv-acespec",
+  "pattern": "foil-holo foil-acespec",
+  "classes": "ace-tinted era-sv fam-sv-acespec has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 31,
+  "rarities": [
+   "ACE SPEC Rare"
+  ],
+  "sets": 6,
+  "examples": [
+   "sv5-152",
+   "sv5-153"
+  ],
+  "sheet": "css/holo/fam/sv-acespec.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-acespec",
+  "pattern": "foil-holo foil-acespec",
+  "classes": "ace-tinted era-sv fam-sv-acespec frame-paradox has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 2,
+  "rarities": [
+   "ACE SPEC Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv5-141",
+   "sv5-158"
+  ],
+  "sheet": "css/holo/fam/sv-acespec.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-double-rare",
+  "pattern": "foil-ex foil-sunpillar",
+  "classes": "era-sv fam-sv-double-rare has-foil-map",
+  "reverse": false,
+  "faces": 163,
+  "rarities": [
+   "Double Rare"
+  ],
+  "sets": 16,
+  "examples": [
+   "rsv10pt5-5",
+   "rsv10pt5-20"
+  ],
+  "sheet": "css/holo/fam/sv-double-rare.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-double-rare",
+  "pattern": "foil-ex foil-sunpillar",
+  "classes": "fam-sv-double-rare has-foil-map",
+  "reverse": false,
+  "faces": 36,
+  "rarities": [
+   "Double Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "svp-svp004",
+   "svp-svp016"
+  ],
+  "sheet": "css/holo/fam/sv-double-rare.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-double-rare",
+  "pattern": "foil-ex foil-sunpillar",
+  "classes": "era-sv fam-sv-double-rare frame-paradox has-foil-map",
+  "reverse": false,
+  "faces": 21,
+  "rarities": [
+   "Double Rare"
+  ],
+  "sets": 5,
+  "examples": [
+   "sv4-70",
+   "sv4-89"
+  ],
+  "sheet": "css/holo/fam/sv-double-rare.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-gold",
+  "pattern": "foil-gold",
+  "classes": "era-sv fam-sv-gold has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 44,
+  "rarities": [
+   "Hyper Rare"
+  ],
+  "sets": 11,
+  "examples": [
+   "sv1-253",
+   "sv1-254"
+  ],
+  "sheet": "css/holo/fam/sv-gold.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-gold",
+  "pattern": "foil-gold",
+  "classes": "era-sv fam-sv-gold has-etch-map has-foil-map sgv-energy",
+  "reverse": false,
+  "faces": 12,
+  "rarities": [
+   "Hyper Rare"
+  ],
+  "sets": 9,
+  "examples": [
+   "sv1-257",
+   "sv1-258"
+  ],
+  "sheet": "css/holo/fam/sv-gold.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-gold",
+  "pattern": "foil-gold",
+  "classes": "era-sv fam-sv-gold frame-paradox has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 9,
+  "rarities": [
+   "Hyper Rare"
+  ],
+  "sets": 3,
+  "examples": [
+   "sv4-261",
+   "sv4-262"
+  ],
+  "sheet": "css/holo/fam/sv-gold.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-gold",
+  "pattern": "foil-gold foil-scodix",
+  "classes": "era-sv fam-sv-gold has-etch-map has-foil-map sgv-pf",
+  "reverse": false,
+  "faces": 6,
+  "rarities": [
+   "Hyper Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv4pt5-240",
+   "sv4pt5-241"
+  ],
+  "sheet": "css/holo/fam/sv-gold.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-gold",
+  "pattern": "foil-gold foil-scodix",
+  "classes": "era-sv fam-sv-gold has-etch-map has-foil-map sgv-pre",
+  "reverse": false,
+  "faces": 3,
+  "rarities": [
+   "Hyper Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv8pt5-177",
+   "sv8pt5-179"
+  ],
+  "sheet": "css/holo/fam/sv-gold.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-gold",
+  "pattern": "foil-gold foil-scodix",
+  "classes": "era-sv fam-sv-gold frame-paradox has-etch-map has-foil-map sgv-pre",
+  "reverse": false,
+  "faces": 2,
+  "rarities": [
+   "Hyper Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv8pt5-176",
+   "sv8pt5-178"
+  ],
+  "sheet": "css/holo/fam/sv-gold.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-holo",
+  "pattern": "foil-holo foil-svholo",
+  "classes": "era-sv fam-sv-holo has-foil-map",
+  "reverse": false,
+  "faces": 188,
+  "rarities": [
+   "Rare"
+  ],
+  "sets": 10,
+  "examples": [
+   "sv1-15",
+   "sv1-23"
+  ],
+  "sheet": "css/holo/fam/sv-holo.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-holo",
+  "pattern": "foil-holo foil-svholo",
+  "classes": "era-sv fam-sv-holo has-foil-map svh-late",
+  "reverse": false,
+  "faces": 100,
+  "rarities": [
+   "Rare"
+  ],
+  "sets": 6,
+  "examples": [
+   "rsv10pt5-10",
+   "rsv10pt5-13"
+  ],
+  "sheet": "css/holo/fam/sv-holo.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-holo",
+  "pattern": "foil-holo foil-svholo",
+  "classes": "era-sv fam-sv-holo frame-paradox has-foil-map",
+  "reverse": false,
+  "faces": 16,
+  "rarities": [
+   "Rare"
+  ],
+  "sets": 4,
+  "examples": [
+   "sv4-28",
+   "sv4-123"
+  ],
+  "sheet": "css/holo/fam/sv-holo.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-holo",
+  "pattern": "foil-holo foil-svholo",
+  "classes": "era-sv fam-sv-holo frame-paradox has-foil-map svh-late",
+  "reverse": false,
+  "faces": 5,
+  "rarities": [
+   "Rare"
+  ],
+  "sets": 2,
+  "examples": [
+   "sv8-38",
+   "sv8-132"
+  ],
+  "sheet": "css/holo/fam/sv-holo.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-holo",
+  "pattern": "foil-holo foil-svholo",
+  "classes": "fam-sv-holo has-foil-map",
+  "reverse": false,
+  "faces": 5,
+  "rarities": [
+   "Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "svp-svp001",
+   "svp-svp002"
+  ],
+  "sheet": "css/holo/fam/sv-holo.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-holo",
+  "pattern": "foil-holo foil-svholo",
+  "classes": "era-sv fam-sv-holo has-foil-map svh-baked svh-late",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv10-96-prerelease"
+  ],
+  "sheet": "css/holo/fam/sv-holo.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-ir",
+  "pattern": "foil-ir",
+  "classes": "era-sv fam-sv-ir has-foil-map",
+  "reverse": false,
+  "faces": 424,
+  "rarities": [
+   "Illustration Rare"
+  ],
+  "sets": 16,
+  "examples": [
+   "rsv10pt5-87",
+   "rsv10pt5-88"
+  ],
+  "sheet": "css/holo/fam/sv-ir.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-ir",
+  "pattern": "foil-ir",
+  "classes": "era-sv fam-sv-ir frame-paradox has-foil-map",
+  "reverse": false,
+  "faces": 12,
+  "rarities": [
+   "Illustration Rare"
+  ],
+  "sets": 2,
+  "examples": [
+   "sv4-187",
+   "sv4-203"
+  ],
+  "sheet": "css/holo/fam/sv-ir.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-ir",
+  "pattern": "foil-ir",
+  "classes": "fam-sv-ir has-foil-map",
+  "reverse": false,
+  "faces": 3,
+  "rarities": [
+   "Illustration Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "svp-svp088",
+   "svp-svp206"
+  ],
+  "sheet": "css/holo/fam/sv-ir.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-ir",
+  "pattern": "foil-ir",
+  "classes": "fam-sv-ir has-foil-map svir-ex",
+  "reverse": false,
+  "faces": 2,
+  "rarities": [
+   "Illustration Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "svp-svp028",
+   "svp-svp029"
+  ],
+  "sheet": "css/holo/fam/sv-ir.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-prismatic",
+  "pattern": "foil-reverse foil-rev-pokeball foil-prism",
+  "classes": "era-sv fam-sv-prismatic has-foil-map svpr-ink",
+  "reverse": false,
+  "faces": 89,
+  "rarities": [
+   "Poké Ball"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv8pt5-1-pb",
+   "sv8pt5-2-pb"
+  ],
+  "sheet": "css/holo/fam/sv-prismatic.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-prismatic",
+  "pattern": "foil-reverse foil-rev-masterball foil-prism",
+  "classes": "era-sv fam-sv-prismatic has-foil-map svpr-ink",
+  "reverse": false,
+  "faces": 62,
+  "rarities": [
+   "Master Ball"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv8pt5-1-mb",
+   "sv8pt5-2-mb"
+  ],
+  "sheet": "css/holo/fam/sv-prismatic.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-prismatic",
+  "pattern": "foil-reverse foil-rev-pokeball foil-prism",
+  "classes": "era-sv fam-sv-prismatic frame-paradox has-foil-map svpr-ink",
+  "reverse": false,
+  "faces": 11,
+  "rarities": [
+   "Poké Ball"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv8pt5-42-pb",
+   "sv8pt5-43-pb"
+  ],
+  "sheet": "css/holo/fam/sv-prismatic.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-prismatic",
+  "pattern": "foil-reverse foil-rev-masterball foil-prism",
+  "classes": "era-sv fam-sv-prismatic frame-paradox has-foil-map svpr-ink",
+  "reverse": false,
+  "faces": 5,
+  "rarities": [
+   "Master Ball"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv8pt5-42-mb",
+   "sv8pt5-43-mb"
+  ],
+  "sheet": "css/holo/fam/sv-prismatic.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-promo",
+  "pattern": "foil-holo foil-cosmos",
+  "classes": "era-sv fam-sv-promo has-foil-map",
+  "reverse": false,
+  "faces": 27,
+  "rarities": [
+   "Cosmos"
+  ],
+  "sets": 8,
+  "examples": [
+   "sv1-svp009",
+   "sv1-svp010"
+  ],
+  "sheet": "css/holo/fam/sv-promo.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-promo",
+  "pattern": "foil-holo foil-cosmos",
+  "classes": "cosmos-pixel era-sv fam-sv-promo has-foil-map",
+  "reverse": false,
+  "faces": 25,
+  "rarities": [
+   "Cosmos"
+  ],
+  "sets": 10,
+  "examples": [
+   "sv10-svp199",
+   "sv10-svp200"
+  ],
+  "sheet": "css/holo/fam/sv-promo.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-promo",
+  "pattern": "foil-holo foil-cosmos",
+  "classes": "fam-sv-promo has-foil-map",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Cosmos"
+  ],
+  "sets": 1,
+  "examples": [
+   "svp-svp099"
+  ],
+  "sheet": "css/holo/fam/sv-promo.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-sv-reverse rev-grass rev-sv svr svr-grass svr-tint",
+  "reverse": true,
+  "faces": 233,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 12,
+  "examples": [
+   "sv1-1 (reverse)",
+   "sv1-2 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-sv-reverse rev-sv rev-trainer svr svr-silver svr-trainer",
+  "reverse": true,
+  "faces": 212,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 12,
+  "examples": [
+   "sv1-166 (reverse)",
+   "sv1-167 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-sv-reverse rev-psychic rev-sv svr svr-psychic svr-tint",
+  "reverse": true,
+  "faces": 210,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 12,
+  "examples": [
+   "sv1-82 (reverse)",
+   "sv1-83 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-sv-reverse rev-sv rev-water svr svr-tint svr-water",
+  "reverse": true,
+  "faces": 202,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 12,
+  "examples": [
+   "sv1-42 (reverse)",
+   "sv1-43 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-sv-reverse rev-fighting rev-sv svr svr-fighting svr-tint",
+  "reverse": true,
+  "faces": 195,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 12,
+  "examples": [
+   "sv1-107 (reverse)",
+   "sv1-108 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-sv-reverse rev-colorless rev-sv svr svr-colorless svr-silver",
+  "reverse": true,
+  "faces": 190,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 12,
+  "examples": [
+   "sv1-144 (reverse)",
+   "sv1-145 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-sv-reverse rev-fire rev-sv svr svr-fire svr-tint",
+  "reverse": true,
+  "faces": 146,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 12,
+  "examples": [
+   "sv1-30 (reverse)",
+   "sv1-31 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-sv-reverse rev-darkness rev-sv svr svr-darkness svr-tint",
+  "reverse": true,
+  "faces": 134,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 12,
+  "examples": [
+   "sv1-126 (reverse)",
+   "sv1-127 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-sv-reverse rev-lightning rev-sv svr svr-lightning svr-tint",
+  "reverse": true,
+  "faces": 133,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 12,
+  "examples": [
+   "sv1-63 (reverse)",
+   "sv1-64 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-sv-reverse rev-metal rev-sv svr svr-metal svr-silver",
+  "reverse": true,
+  "faces": 85,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 11,
+  "examples": [
+   "sv1-139 (reverse)",
+   "sv1-140 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-sv-reverse rev-dragon rev-sv svr svr-dragon svr-tint",
+  "reverse": true,
+  "faces": 28,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 8,
+  "examples": [
+   "sv2-152 (reverse)",
+   "sv3-157 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-sv-reverse rev-mirror svr svr-mirror svr-tint",
+  "reverse": true,
+  "faces": 28,
+  "rarities": [
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 5,
+  "examples": [
+   "sv4-28 (reverse)",
+   "sv4-56 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-sv-reverse has-rev-map svr svr-silver svr-trainer",
+  "reverse": true,
+  "faces": 27,
+  "rarities": [
+   "Common",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv8pt5-93 (reverse)",
+   "sv8pt5-94 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse foil-rev-pokeball",
+  "classes": "fam-sv-reverse svr svr-tint svr-water",
+  "reverse": true,
+  "faces": 20,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 2,
+  "examples": [
+   "rsv10pt5-21 (reverse)",
+   "rsv10pt5-22 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse foil-rev-pokeball",
+  "classes": "fam-sv-reverse svr svr-grass svr-tint",
+  "reverse": true,
+  "faces": 19,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 2,
+  "examples": [
+   "rsv10pt5-1 (reverse)",
+   "rsv10pt5-2 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse foil-rev-pokeball",
+  "classes": "fam-sv-reverse svr svr-psychic svr-tint",
+  "reverse": true,
+  "faces": 18,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 2,
+  "examples": [
+   "rsv10pt5-36 (reverse)",
+   "rsv10pt5-37 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse foil-rev-pokeball",
+  "classes": "fam-sv-reverse svr svr-darkness svr-tint",
+  "reverse": true,
+  "faces": 18,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 2,
+  "examples": [
+   "rsv10pt5-55 (reverse)",
+   "rsv10pt5-56 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse foil-rev-pokeball",
+  "classes": "fam-sv-reverse svr svr-fighting svr-tint",
+  "reverse": true,
+  "faces": 17,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 2,
+  "examples": [
+   "rsv10pt5-46 (reverse)",
+   "rsv10pt5-47 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse foil-rev-pokeball",
+  "classes": "fam-sv-reverse svr svr-fire svr-tint",
+  "reverse": true,
+  "faces": 14,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 2,
+  "examples": [
+   "rsv10pt5-11 (reverse)",
+   "rsv10pt5-12 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse foil-rev-pokeball",
+  "classes": "fam-sv-reverse svr svr-colorless svr-silver",
+  "reverse": true,
+  "faces": 14,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 2,
+  "examples": [
+   "rsv10pt5-72 (reverse)",
+   "rsv10pt5-73 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse foil-rev-pokeball",
+  "classes": "fam-sv-reverse svr svr-silver svr-trainer",
+  "reverse": true,
+  "faces": 14,
+  "rarities": [
+   "Common",
+   "Uncommon"
+  ],
+  "sets": 2,
+  "examples": [
+   "rsv10pt5-79 (reverse)",
+   "rsv10pt5-80 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-sv-reverse rev-mirror svr svr-mirror svr-silver",
+  "reverse": true,
+  "faces": 14,
+  "rarities": [
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 3,
+  "examples": [
+   "sv4-158 (reverse)",
+   "sv4-159 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-sv-reverse has-rev-map svr svr-colorless svr-silver",
+  "reverse": true,
+  "faces": 14,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv8pt5-74 (reverse)",
+   "sv8pt5-77 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse foil-rev-pokeball",
+  "classes": "fam-sv-reverse svr svr-lightning svr-tint",
+  "reverse": true,
+  "faces": 10,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 2,
+  "examples": [
+   "rsv10pt5-31 (reverse)",
+   "rsv10pt5-32 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse foil-rev-pokeball",
+  "classes": "fam-sv-reverse svr svr-metal svr-silver",
+  "reverse": true,
+  "faces": 10,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 2,
+  "examples": [
+   "rsv10pt5-68 (reverse)",
+   "rsv10pt5-69 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-sv-reverse rev-special-energy rev-sv svr svr-silver svr-special-energy",
+  "reverse": true,
+  "faces": 9,
+  "rarities": [
+   "Uncommon"
+  ],
+  "sets": 6,
+  "examples": [
+   "sv10-182 (reverse)",
+   "sv2-190 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse foil-rev-chain",
+  "classes": "fam-sv-reverse svr svr-darkness svr-tint",
+  "reverse": true,
+  "faces": 9,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv6pt5-27 (reverse)",
+   "sv6pt5-28 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-sv-reverse has-rev-map svr svr-grass svr-tint",
+  "reverse": true,
+  "faces": 9,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv8pt5-1 (reverse)",
+   "sv8pt5-2 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-sv-reverse has-rev-map svr svr-psychic svr-tint",
+  "reverse": true,
+  "faces": 9,
+  "rarities": [
+   "Common",
+   "Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv8pt5-33 (reverse)",
+   "sv8pt5-35 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse foil-rev-chain",
+  "classes": "fam-sv-reverse svr svr-silver svr-trainer",
+  "reverse": true,
+  "faces": 8,
+  "rarities": [
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv6pt5-54 (reverse)",
+   "sv6pt5-55 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-sv-reverse has-rev-map svr svr-fighting svr-tint",
+  "reverse": true,
+  "faces": 8,
+  "rarities": [
+   "Common",
+   "Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv8pt5-47 (reverse)",
+   "sv8pt5-48 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse foil-rev-chain",
+  "classes": "fam-sv-reverse svr svr-psychic svr-tint",
+  "reverse": true,
+  "faces": 7,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv6pt5-16 (reverse)",
+   "sv6pt5-17 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-sv-reverse has-rev-map svr svr-tint svr-water",
+  "reverse": true,
+  "faces": 7,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv8pt5-18 (reverse)",
+   "sv8pt5-19 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse foil-rev-chain",
+  "classes": "fam-sv-reverse svr svr-grass svr-tint",
+  "reverse": true,
+  "faces": 6,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv6pt5-1 (reverse)",
+   "sv6pt5-2 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse foil-rev-chain",
+  "classes": "fam-sv-reverse svr svr-colorless svr-silver",
+  "reverse": true,
+  "faces": 6,
+  "rarities": [
+   "Common"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv6pt5-48 (reverse)",
+   "sv6pt5-49 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-sv-reverse has-rev-map svr svr-mirror svr-silver",
+  "reverse": true,
+  "faces": 6,
+  "rarities": [
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv8pt5-104 (reverse)",
+   "sv8pt5-106 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-sv-reverse has-rev-map svr svr-mirror svr-tint",
+  "reverse": true,
+  "faces": 5,
+  "rarities": [
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv8pt5-42 (reverse)",
+   "sv8pt5-43 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-sv-reverse has-rev-map svr svr-metal svr-silver",
+  "reverse": true,
+  "faces": 5,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv8pt5-66 (reverse)",
+   "sv8pt5-67 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse foil-rev-pokeball",
+  "classes": "fam-sv-reverse svr svr-dragon svr-tint",
+  "reverse": true,
+  "faces": 4,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 2,
+  "examples": [
+   "rsv10pt5-71 (reverse)",
+   "zsv10pt5-68 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse foil-rev-chain",
+  "classes": "fam-sv-reverse svr svr-tint svr-water",
+  "reverse": true,
+  "faces": 4,
+  "rarities": [
+   "Common",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv6pt5-10 (reverse)",
+   "sv6pt5-11 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse foil-rev-chain",
+  "classes": "fam-sv-reverse svr svr-metal svr-silver",
+  "reverse": true,
+  "faces": 4,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv6pt5-40 (reverse)",
+   "sv6pt5-41 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse foil-rev-chain",
+  "classes": "fam-sv-reverse svr svr-dragon svr-tint",
+  "reverse": true,
+  "faces": 4,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv6pt5-44 (reverse)",
+   "sv6pt5-45 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-sv-reverse has-rev-map svr svr-darkness svr-tint",
+  "reverse": true,
+  "faces": 4,
+  "rarities": [
+   "Common",
+   "Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv8pt5-59 (reverse)",
+   "sv8pt5-61 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse foil-rev-chain",
+  "classes": "fam-sv-reverse svr svr-fighting svr-tint",
+  "reverse": true,
+  "faces": 3,
+  "rarities": [
+   "Common",
+   "Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv6pt5-23 (reverse)",
+   "sv6pt5-24 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-sv-reverse has-rev-map svr svr-fire svr-tint",
+  "reverse": true,
+  "faces": 3,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv8pt5-13 (reverse)",
+   "sv8pt5-15 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse foil-rev-pokeball",
+  "classes": "fam-sv-reverse svr svr-silver svr-special-energy",
+  "reverse": true,
+  "faces": 2,
+  "rarities": [
+   "Uncommon"
+  ],
+  "sets": 2,
+  "examples": [
+   "rsv10pt5-86 (reverse)",
+   "zsv10pt5-86 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse foil-rev-chain",
+  "classes": "fam-sv-reverse svr svr-fire svr-tint",
+  "reverse": true,
+  "faces": 2,
+  "rarities": [
+   "Common"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv6pt5-7 (reverse)",
+   "sv6pt5-8 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse foil-rev-chain",
+  "classes": "fam-sv-reverse svr svr-mirror svr-tint",
+  "reverse": true,
+  "faces": 2,
+  "rarities": [
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv6pt5-9 (reverse)",
+   "sv6pt5-26 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-sv-reverse has-rev-map svr svr-dragon svr-tint",
+  "reverse": true,
+  "faces": 2,
+  "rarities": [
+   "Common"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv8pt5-71 (reverse)",
+   "sv8pt5-72 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-sv-reverse has-rev-map svr svr-lightning svr-tint",
+  "reverse": true,
+  "faces": 1,
+  "rarities": [
+   "Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv8pt5-29 (reverse)"
+  ],
+  "sheet": "css/holo/fam/sv-reverse.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-shiny",
+  "pattern": "foil-holo foil-shiny",
+  "classes": "era-sv fam-sv-shiny has-etch-angle has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 129,
+  "rarities": [
+   "Shiny Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv4pt5-92",
+   "sv4pt5-93"
+  ],
+  "sheet": "css/holo/fam/sv-shiny.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-shiny",
+  "pattern": "foil-ultra foil-shiny",
+  "classes": "era-sv fam-sv-shiny has-etch-angle has-etch-map has-foil-map ssh-sur",
+  "reverse": false,
+  "faces": 16,
+  "rarities": [
+   "Shiny Ultra Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv4pt5-212",
+   "sv4pt5-213"
+  ],
+  "sheet": "css/holo/fam/sv-shiny.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-shiny",
+  "pattern": "foil-ultra foil-shiny",
+  "classes": "era-sv fam-sv-shiny frame-paradox has-etch-angle has-etch-map has-foil-map ssh-sur",
+  "reverse": false,
+  "faces": 4,
+  "rarities": [
+   "Shiny Ultra Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv4pt5-svp072",
+   "sv4pt5-svp072-stamp"
+  ],
+  "sheet": "css/holo/fam/sv-shiny.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-sir",
+  "pattern": "foil-sir",
+  "classes": "era-sv fam-sv-sir has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 135,
+  "rarities": [
+   "Special Illustration Rare"
+  ],
+  "sets": 16,
+  "examples": [
+   "rsv10pt5-165",
+   "rsv10pt5-166"
+  ],
+  "sheet": "css/holo/fam/sv-sir.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-sir",
+  "pattern": "foil-sir",
+  "classes": "era-sv fam-sv-sir frame-paradox has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 18,
+  "rarities": [
+   "Special Illustration Rare"
+  ],
+  "sets": 3,
+  "examples": [
+   "sv4-248",
+   "sv4-249"
+  ],
+  "sheet": "css/holo/fam/sv-sir.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-sir",
+  "pattern": "foil-sir",
+  "classes": "era-sv fam-sv-sir has-etch-map has-foil-map svsir-prism-frame",
+  "reverse": false,
+  "faces": 16,
+  "rarities": [
+   "Special Illustration Rare"
+  ],
+  "sets": 3,
+  "examples": [
+   "sv7-168",
+   "sv7-170"
+  ],
+  "sheet": "css/holo/fam/sv-sir.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-sir",
+  "pattern": "foil-sir",
+  "classes": "era-sv fam-sv-sir has-etch-angle has-etch-map has-foil-map svsir-prism-frame",
+  "reverse": false,
+  "faces": 3,
+  "rarities": [
+   "Special Illustration Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv8pt5-svp174",
+   "sv8pt5-svp175"
+  ],
+  "sheet": "css/holo/fam/sv-sir.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-tera",
+  "pattern": "foil-ex foil-tera",
+  "classes": "era-sv fam-sv-tera has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 68,
+  "rarities": [
+   "Double Rare"
+  ],
+  "sets": 11,
+  "examples": [
+   "sv1-32",
+   "sv1-45"
+  ],
+  "sheet": "css/holo/fam/sv-tera.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-tera",
+  "pattern": "foil-ultra foil-tera",
+  "classes": "era-sv fam-sv-tera has-etch-map has-foil-map svt-fa",
+  "reverse": false,
+  "faces": 34,
+  "rarities": [
+   "Ultra Rare"
+  ],
+  "sets": 9,
+  "examples": [
+   "sv1-224",
+   "sv1-225"
+  ],
+  "sheet": "css/holo/fam/sv-tera.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-tera",
+  "pattern": "foil-ultra foil-tera",
+  "classes": "fam-sv-tera has-etch-map has-foil-map svt-fa",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Ultra Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "svp-svp166"
+  ],
+  "sheet": "css/holo/fam/sv-tera.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-tera",
+  "pattern": "foil-ex foil-tera",
+  "classes": "fam-sv-tera has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Double Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "svp-svp196"
+  ],
+  "sheet": "css/holo/fam/sv-tera.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-ultra",
+  "pattern": "foil-ultra",
+  "classes": "era-sv fam-sv-ultra has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 205,
+  "rarities": [
+   "Ultra Rare"
+  ],
+  "sets": 16,
+  "examples": [
+   "rsv10pt5-157",
+   "rsv10pt5-158"
+  ],
+  "sheet": "css/holo/fam/sv-ultra.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-ultra",
+  "pattern": "foil-ultra",
+  "classes": "era-sv fam-sv-ultra frame-paradox has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 16,
+  "rarities": [
+   "Ultra Rare"
+  ],
+  "sets": 3,
+  "examples": [
+   "sv4-223",
+   "sv4-225"
+  ],
+  "sheet": "css/holo/fam/sv-ultra.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-ultra",
+  "pattern": "foil-ultra",
+  "classes": "fam-sv-ultra has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 3,
+  "rarities": [
+   "Ultra Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "svp-svp056",
+   "svp-svp124"
+  ],
+  "sheet": "css/holo/fam/sv-ultra.css"
+ },
+ {
+  "era": "sv",
+  "family": "sv-ultra",
+  "pattern": "foil-ultra",
+  "classes": "era-sv fam-sv-ultra has-etch-angle has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Ultra Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "sv10-svp204"
+  ],
+  "sheet": "css/holo/fam/sv-ultra.css"
+ },
+ {
+  "era": "swsh",
+  "family": "",
+  "pattern": "foil-holo swsh-holo swsh-classic swsh-classic-full",
+  "classes": "era-swsh",
+  "reverse": false,
+  "faces": 9,
+  "rarities": [
+   "Classic Collection"
+  ],
+  "sets": 1,
+  "examples": [
+   "cel25-cc17",
+   "cel25-cc54"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "swsh",
+  "family": "",
+  "pattern": "foil-holo swsh-holo swsh-classic",
+  "classes": "era-swsh",
+  "reverse": false,
+  "faces": 8,
+  "rarities": [
+   "Classic Collection"
+  ],
+  "sets": 1,
+  "examples": [
+   "cel25-cc9",
+   "cel25-cc15"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "swsh",
+  "family": "",
+  "pattern": "foil-holo swsh-holo swsh-classic",
+  "classes": "era-swsh has-etch-drawn has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Ultra Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "cel25-cc15-here"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-fullart",
+  "pattern": "foil-ultra swsh-vfa",
+  "classes": "era-swsh fam-swsh-fullart has-etch-map has-foil-map sfa-v",
+  "reverse": false,
+  "faces": 189,
+  "rarities": [
+   "Rare Holo V",
+   "Rare Ultra"
+  ],
+  "sets": 17,
+  "examples": [
+   "pgo-71",
+   "pgo-72"
+  ],
+  "sheet": "css/holo/fam/swsh-fullart.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-fullart",
+  "pattern": "foil-ultra swsh-tfa",
+  "classes": "era-swsh fam-swsh-fullart has-etch-map has-foil-map sfa-t",
+  "reverse": false,
+  "faces": 132,
+  "rarities": [
+   "Rare Ultra"
+  ],
+  "sets": 18,
+  "examples": [
+   "cel25-24",
+   "pgo-78"
+  ],
+  "sheet": "css/holo/fam/swsh-fullart.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-fullart",
+  "pattern": "foil-ultra swsh-vfa",
+  "classes": "era-swsh fam-swsh-fullart has-etch-map has-foil-map sfa-alt sfa-v",
+  "reverse": false,
+  "faces": 86,
+  "rarities": [
+   "Rare Holo V",
+   "Rare Ultra"
+  ],
+  "sets": 10,
+  "examples": [
+   "swsh10-161",
+   "swsh10-163"
+  ],
+  "sheet": "css/holo/fam/swsh-fullart.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-fullart",
+  "pattern": "foil-ultra swsh-vfa",
+  "classes": "era-swsh fam-swsh-fullart has-etch-map has-foil-map sfa-keep",
+  "reverse": false,
+  "faces": 14,
+  "rarities": [
+   "Rare Holo V",
+   "Rare Ultra"
+  ],
+  "sets": 2,
+  "examples": [
+   "swsh12pt5-152",
+   "swsh12pt5-153"
+  ],
+  "sheet": "css/holo/fam/swsh-fullart.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-fullart",
+  "pattern": "foil-ultra swsh-vfa",
+  "classes": "era-swsh fam-swsh-fullart has-etch-tile has-foil-map sfa-keep",
+  "reverse": false,
+  "faces": 3,
+  "rarities": [
+   "Rare Ultra"
+  ],
+  "sets": 1,
+  "examples": [
+   "swsh12pt5-swshp282",
+   "swsh12pt5-swshp283"
+  ],
+  "sheet": "css/holo/fam/swsh-fullart.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-fullart",
+  "pattern": "foil-ultra swsh-tfa",
+  "classes": "era-swsh fam-swsh-fullart has-etch-tile has-foil-map sfa-t",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Rare Ultra"
+  ],
+  "sets": 1,
+  "examples": [
+   "swsh12-TG25"
+  ],
+  "sheet": "css/holo/fam/swsh-fullart.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-gallery",
+  "pattern": "foil-ex swsh-tg",
+  "classes": "era-swsh fam-swsh-gallery has-etch-tile has-foil-map",
+  "reverse": false,
+  "faces": 68,
+  "rarities": [
+   "Trainer Gallery Rare Holo"
+  ],
+  "sets": 4,
+  "examples": [
+   "swsh11-TG01",
+   "swsh11-TG02"
+  ],
+  "sheet": "css/holo/fam/swsh-gallery.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-gold",
+  "pattern": "foil-gold swsh-gold",
+  "classes": "era-swsh fam-swsh-gold has-etch-map has-foil-map sg-glitter",
+  "reverse": false,
+  "faces": 93,
+  "rarities": [
+   "Rare Secret"
+  ],
+  "sets": 15,
+  "examples": [
+   "pgo-86",
+   "pgo-87"
+  ],
+  "sheet": "css/holo/fam/swsh-gold.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-gold",
+  "pattern": "foil-gold swsh-gold",
+  "classes": "era-swsh fam-swsh-gold has-etch-map has-foil-map sg-dark sg-glitter",
+  "reverse": false,
+  "faces": 10,
+  "rarities": [
+   "Rare Secret"
+  ],
+  "sets": 5,
+  "examples": [
+   "swsh10-TG29",
+   "swsh10-TG30"
+  ],
+  "sheet": "css/holo/fam/swsh-gold.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-gold",
+  "pattern": "foil-gold swsh-gold",
+  "classes": "era-swsh fam-swsh-gold has-etch-map has-foil-map sg-mirror",
+  "reverse": false,
+  "faces": 2,
+  "rarities": [
+   "Rare Secret"
+  ],
+  "sets": 1,
+  "examples": [
+   "cel25-swshp145",
+   "cel25-swshp146"
+  ],
+  "sheet": "css/holo/fam/swsh-gold.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-gold",
+  "pattern": "foil-gold swsh-gold",
+  "classes": "era-swsh fam-swsh-gold has-etch-map has-foil-map sg-glitter sg-silver",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Rare Secret"
+  ],
+  "sets": 1,
+  "examples": [
+   "swsh35-79"
+  ],
+  "sheet": "css/holo/fam/swsh-gold.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-holo",
+  "pattern": "foil-holo swsh-holo",
+  "classes": "era-swsh fam-swsh-holo has-foil-map swh-lines",
+  "reverse": false,
+  "faces": 388,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 17,
+  "examples": [
+   "pgo-3",
+   "pgo-10"
+  ],
+  "sheet": "css/holo/fam/swsh-holo.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-holo",
+  "pattern": "foil-holo swsh-holo",
+  "classes": "era-swsh fam-swsh-holo has-foil-map swh-tg",
+  "reverse": false,
+  "faces": 12,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "swsh10-TG01",
+   "swsh10-TG02"
+  ],
+  "sheet": "css/holo/fam/swsh-holo.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-holo",
+  "pattern": "foil-holo swsh-holo",
+  "classes": "fam-swsh-holo has-foil-map swh-lines",
+  "reverse": false,
+  "faces": 6,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "tot23-7",
+   "tot23-9"
+  ],
+  "sheet": "css/holo/fam/swsh-holo.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-holo",
+  "pattern": "foil-holo swsh-holo",
+  "classes": "era-swsh fam-swsh-holo has-etch-map has-foil-map swh-radiant",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "pgo-swshp230"
+  ],
+  "sheet": "css/holo/fam/swsh-holo.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-rainbow",
+  "pattern": "foil-ir swsh-rainbow",
+  "classes": "era-swsh fam-swsh-rainbow has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 165,
+  "rarities": [
+   "Rare Rainbow"
+  ],
+  "sets": 15,
+  "examples": [
+   "pgo-79",
+   "pgo-80"
+  ],
+  "sheet": "css/holo/fam/swsh-rainbow.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-rainbow",
+  "pattern": "foil-ir swsh-rainbow",
+  "classes": "era-swsh fam-swsh-rainbow has-etch-map has-foil-map srb-alt",
+  "reverse": false,
+  "faces": 15,
+  "rarities": [
+   "Rare Rainbow"
+  ],
+  "sets": 4,
+  "examples": [
+   "swsh5-168",
+   "swsh5-170"
+  ],
+  "sheet": "css/holo/fam/swsh-rainbow.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-rainbow",
+  "pattern": "foil-ir swsh-rainbow",
+  "classes": "era-swsh fam-swsh-rainbow has-etch-map has-foil-map srb-show",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Rare Secret"
+  ],
+  "sets": 1,
+  "examples": [
+   "swsh12pt5-160"
+  ],
+  "sheet": "css/holo/fam/swsh-rainbow.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-swsh-reverse rev-sv rev-swsh rev-trainer swr-masked swr-trainer",
+  "reverse": true,
+  "faces": 309,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 17,
+  "examples": [
+   "cel25-23 (reverse)",
+   "pgo-64 (reverse)"
+  ],
+  "sheet": "css/holo/fam/swsh-reverse.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-swsh-reverse rev-sv rev-swsh rev-water swr-masked swr-water",
+  "reverse": true,
+  "faces": 243,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 17,
+  "examples": [
+   "cel25-3 (reverse)",
+   "cel25-4 (reverse)"
+  ],
+  "sheet": "css/holo/fam/swsh-reverse.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-swsh-reverse rev-grass rev-sv rev-swsh swr-grass swr-masked",
+  "reverse": true,
+  "faces": 242,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 17,
+  "examples": [
+   "pgo-1 (reverse)",
+   "pgo-2 (reverse)"
+  ],
+  "sheet": "css/holo/fam/swsh-reverse.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-swsh-reverse rev-psychic rev-sv rev-swsh swr-masked swr-psychic",
+  "reverse": true,
+  "faces": 226,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 17,
+  "examples": [
+   "cel25-11 (reverse)",
+   "cel25-12 (reverse)"
+  ],
+  "sheet": "css/holo/fam/swsh-reverse.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-swsh-reverse rev-fighting rev-sv rev-swsh swr-fighting swr-masked",
+  "reverse": true,
+  "faces": 217,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 17,
+  "examples": [
+   "cel25-17 (reverse)",
+   "pgo-36 (reverse)"
+  ],
+  "sheet": "css/holo/fam/swsh-reverse.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-swsh-reverse rev-colorless rev-sv rev-swsh swr-colorless swr-masked",
+  "reverse": true,
+  "faces": 194,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 17,
+  "examples": [
+   "cel25-22 (reverse)",
+   "pgo-51 (reverse)"
+  ],
+  "sheet": "css/holo/fam/swsh-reverse.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-swsh-reverse rev-darkness rev-sv rev-swsh swr-darkness swr-masked",
+  "reverse": true,
+  "faces": 169,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 18,
+  "examples": [
+   "cel25-19 (reverse)",
+   "pgo-41 (reverse)"
+  ],
+  "sheet": "css/holo/fam/swsh-reverse.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-swsh-reverse rev-lightning rev-sv rev-swsh swr-lightning swr-masked",
+  "reverse": true,
+  "faces": 143,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 16,
+  "examples": [
+   "cel25-5 (reverse)",
+   "cel25-10 (reverse)"
+  ],
+  "sheet": "css/holo/fam/swsh-reverse.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-swsh-reverse rev-fire rev-sv rev-swsh swr-fire swr-masked",
+  "reverse": true,
+  "faces": 133,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 17,
+  "examples": [
+   "cel25-1 (reverse)",
+   "cel25-2 (reverse)"
+  ],
+  "sheet": "css/holo/fam/swsh-reverse.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-swsh-reverse rev-metal rev-sv rev-swsh swr-masked swr-metal",
+  "reverse": true,
+  "faces": 125,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 15,
+  "examples": [
+   "cel25-20 (reverse)",
+   "cel25-21 (reverse)"
+  ],
+  "sheet": "css/holo/fam/swsh-reverse.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-swsh-reverse rev-dragon rev-sv rev-swsh swr-dragon swr-masked",
+  "reverse": true,
+  "faces": 37,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 6,
+  "examples": [
+   "swsh10-118 (reverse)",
+   "swsh11-132 (reverse)"
+  ],
+  "sheet": "css/holo/fam/swsh-reverse.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-swsh-reverse swr-energy swr-masked",
+  "reverse": true,
+  "faces": 23,
+  "rarities": [
+   "Uncommon"
+  ],
+  "sets": 11,
+  "examples": [
+   "swsh1-186 (reverse)",
+   "swsh11-171 (reverse)"
+  ],
+  "sheet": "css/holo/fam/swsh-reverse.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-swsh-reverse rev-grass rev-sv rev-swsh swr-grass",
+  "reverse": true,
+  "faces": 3,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 2,
+  "examples": [
+   "cel25-cc15-venusaur (reverse)",
+   "swsh10-TG01 (reverse)"
+  ],
+  "sheet": "css/holo/fam/swsh-reverse.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-swsh-reverse rev-sv rev-swsh rev-trainer swr-trainer",
+  "reverse": true,
+  "faces": 3,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 2,
+  "examples": [
+   "swsh12-154 (reverse)",
+   "swsh12-156 (reverse)"
+  ],
+  "sheet": "css/holo/fam/swsh-reverse.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-swsh-reverse rev-colorless rev-sv rev-swsh swr-colorless",
+  "reverse": true,
+  "faces": 2,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 2,
+  "examples": [
+   "pgo-53 (reverse)",
+   "swsh10-TG12 (reverse)"
+  ],
+  "sheet": "css/holo/fam/swsh-reverse.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-swsh-reverse rev-sv rev-swsh rev-water swr-water",
+  "reverse": true,
+  "faces": 2,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "swsh10-TG03 (reverse)",
+   "swsh10-TG04 (reverse)"
+  ],
+  "sheet": "css/holo/fam/swsh-reverse.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-swsh-reverse rev-psychic rev-sv rev-swsh swr-psychic",
+  "reverse": true,
+  "faces": 2,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "swsh10-TG05 (reverse)",
+   "swsh10-TG06 (reverse)"
+  ],
+  "sheet": "css/holo/fam/swsh-reverse.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-swsh-reverse rev-fighting rev-sv rev-swsh swr-fighting",
+  "reverse": true,
+  "faces": 2,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "swsh10-TG07 (reverse)",
+   "swsh10-TG08 (reverse)"
+  ],
+  "sheet": "css/holo/fam/swsh-reverse.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-swsh-reverse rev-darkness rev-sv rev-swsh swr-darkness",
+  "reverse": true,
+  "faces": 2,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "swsh10-TG09 (reverse)",
+   "swsh10-TG10 (reverse)"
+  ],
+  "sheet": "css/holo/fam/swsh-reverse.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-reverse",
+  "pattern": "foil-reverse",
+  "classes": "fam-swsh-reverse rev-metal rev-sv rev-swsh swr-metal",
+  "reverse": true,
+  "faces": 1,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "swsh10-TG11 (reverse)"
+  ],
+  "sheet": "css/holo/fam/swsh-reverse.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-sf-shiny",
+  "pattern": "foil-holo sf-shiny",
+  "classes": "era-swsh fam-swsh-sf-shiny has-etch-hd has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 103,
+  "rarities": [
+   "Rare Shiny"
+  ],
+  "sets": 1,
+  "examples": [
+   "swsh45-SV001",
+   "swsh45-SV002"
+  ],
+  "sheet": "css/holo/fam/swsh-sf-shiny.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-sf-shiny",
+  "pattern": "foil-ex sf-shiny sf-v",
+  "classes": "era-swsh fam-swsh-sf-shiny has-etch-hd has-etch-map has-foil-map sfs-v",
+  "reverse": false,
+  "faces": 9,
+  "rarities": [
+   "Rare Holo V"
+  ],
+  "sets": 1,
+  "examples": [
+   "swsh45-SV105",
+   "swsh45-SV108"
+  ],
+  "sheet": "css/holo/fam/swsh-sf-shiny.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-sf-shiny",
+  "pattern": "foil-ex sf-shiny sf-vmax",
+  "classes": "era-swsh fam-swsh-sf-shiny has-etch-hd has-etch-map has-foil-map sfs-v",
+  "reverse": false,
+  "faces": 7,
+  "rarities": [
+   "Rare Holo VMAX"
+  ],
+  "sets": 1,
+  "examples": [
+   "swsh45-SV106",
+   "swsh45-SV107"
+  ],
+  "sheet": "css/holo/fam/swsh-sf-shiny.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-sf-shiny",
+  "pattern": "foil-holo sf-shiny",
+  "classes": "era-swsh fam-swsh-sf-shiny has-etch-hd has-foil-map",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Rare Shiny"
+  ],
+  "sets": 1,
+  "examples": [
+   "swsh45-SV020"
+  ],
+  "sheet": "css/holo/fam/swsh-sf-shiny.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-special",
+  "pattern": "foil-holo swsh-holo swsh-cel",
+  "classes": "era-swsh fam-swsh-special has-foil-map ssp-cel",
+  "reverse": false,
+  "faces": 23,
+  "rarities": [
+   "Rare",
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "cel25-1",
+   "cel25-2"
+  ],
+  "sheet": "css/holo/fam/swsh-special.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-special",
+  "pattern": "foil-holo swsh-radiant",
+  "classes": "era-swsh fam-swsh-special has-etch-map has-foil-map ssp-rad",
+  "reverse": false,
+  "faces": 15,
+  "rarities": [
+   "Radiant Rare"
+  ],
+  "sets": 5,
+  "examples": [
+   "pgo-4",
+   "pgo-11"
+  ],
+  "sheet": "css/holo/fam/swsh-special.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-special",
+  "pattern": "foil-holo swsh-amazing",
+  "classes": "era-swsh fam-swsh-special has-etch-map has-foil-map ssp-am",
+  "reverse": false,
+  "faces": 9,
+  "rarities": [
+   "Amazing Rare"
+  ],
+  "sets": 2,
+  "examples": [
+   "swsh4-9",
+   "swsh4-50"
+  ],
+  "sheet": "css/holo/fam/swsh-special.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-special",
+  "pattern": "foil-holo swsh-holo swsh-classic",
+  "classes": "era-swsh fam-swsh-special ssp-cc",
+  "reverse": false,
+  "faces": 6,
+  "rarities": [
+   "Classic Collection",
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "cel25-cc2",
+   "cel25-cc4"
+  ],
+  "sheet": "css/holo/fam/swsh-special.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-special",
+  "pattern": "foil-holo swsh-holo swsh-cel",
+  "classes": "era-swsh fam-swsh-special has-etch-map has-foil-map ssp-cel",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "cel25-25"
+  ],
+  "sheet": "css/holo/fam/swsh-special.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-special",
+  "pattern": "foil-holo swsh-holo swsh-classic",
+  "classes": "era-swsh fam-swsh-special has-etch-drawn has-etch-map has-foil-map ssp-cc",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Ultra Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "cel25-cc15-rockets"
+  ],
+  "sheet": "css/holo/fam/swsh-special.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-v",
+  "pattern": "foil-ex swsh-v",
+  "classes": "era-swsh fam-swsh-v has-foil-map",
+  "reverse": false,
+  "faces": 289,
+  "rarities": [
+   "Rare Holo V"
+  ],
+  "sets": 18,
+  "examples": [
+   "cel25-6",
+   "cel25-8"
+  ],
+  "sheet": "css/holo/fam/swsh-v.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-v",
+  "pattern": "foil-ex swsh-v",
+  "classes": "era-swsh fam-swsh-v has-foil-map svv-union",
+  "reverse": false,
+  "faces": 20,
+  "rarities": [
+   "Rare Holo V"
+  ],
+  "sets": 3,
+  "examples": [
+   "cel25-swshp139",
+   "cel25-swshp140"
+  ],
+  "sheet": "css/holo/fam/swsh-v.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-vmax",
+  "pattern": "foil-ultra swsh-vmax",
+  "classes": "era-swsh fam-swsh-vmax has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 95,
+  "rarities": [
+   "Rare Holo VMAX"
+  ],
+  "sets": 18,
+  "examples": [
+   "cel25-7",
+   "cel25-9"
+  ],
+  "sheet": "css/holo/fam/swsh-vmax.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-vmax",
+  "pattern": "foil-ultra swsh-vstar",
+  "classes": "era-swsh fam-swsh-vmax has-etch-map has-foil-map svm-vstar",
+  "reverse": false,
+  "faces": 46,
+  "rarities": [
+   "Rare Holo VSTAR"
+  ],
+  "sets": 7,
+  "examples": [
+   "pgo-31",
+   "pgo-50"
+  ],
+  "sheet": "css/holo/fam/swsh-vmax.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-vmax",
+  "pattern": "foil-ultra swsh-vmax",
+  "classes": "era-swsh fam-swsh-vmax has-etch-map has-foil-map svm-alt",
+  "reverse": false,
+  "faces": 16,
+  "rarities": [
+   "Rare Holo VMAX"
+  ],
+  "sets": 4,
+  "examples": [
+   "swsh11-TG13",
+   "swsh11-TG15"
+  ],
+  "sheet": "css/holo/fam/swsh-vmax.css"
+ },
+ {
+  "era": "swsh",
+  "family": "swsh-vmax",
+  "pattern": "foil-ultra swsh-vstar",
+  "classes": "era-swsh fam-swsh-vmax has-etch-map has-foil-map svm-alt svm-vstar",
+  "reverse": false,
+  "faces": 10,
+  "rarities": [
+   "Rare Holo VSTAR"
+  ],
+  "sets": 1,
+  "examples": [
+   "swsh12pt5-GG35",
+   "swsh12pt5-GG37"
+  ],
+  "sheet": "css/holo/fam/swsh-vmax.css"
+ },
+ {
+  "era": "sm",
+  "family": "",
+  "pattern": "foil-reverse",
+  "classes": "rev-sm rev-sv rev-trainer",
+  "reverse": true,
+  "faces": 285,
+  "rarities": [
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 15,
+  "examples": [
+   "sm1-114 (reverse)",
+   "sm1-115 (reverse)"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "sm",
+  "family": "",
+  "pattern": "foil-reverse",
+  "classes": "rev-sm rev-sv rev-water",
+  "reverse": true,
+  "faces": 226,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 15,
+  "examples": [
+   "sm1-28 (reverse)",
+   "sm1-29 (reverse)"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "sm",
+  "family": "",
+  "pattern": "foil-reverse",
+  "classes": "rev-psychic rev-sm rev-sv",
+  "reverse": true,
+  "faces": 217,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 14,
+  "examples": [
+   "sm1-54 (reverse)",
+   "sm1-55 (reverse)"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "sm",
+  "family": "",
+  "pattern": "foil-reverse",
+  "classes": "rev-grass rev-sm rev-sv",
+  "reverse": true,
+  "faces": 211,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 14,
+  "examples": [
+   "sm1-1 (reverse)",
+   "sm1-2 (reverse)"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "sm",
+  "family": "",
+  "pattern": "foil-reverse",
+  "classes": "rev-colorless rev-sm rev-sv",
+  "reverse": true,
+  "faces": 181,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 14,
+  "examples": [
+   "sm1-97 (reverse)",
+   "sm1-98 (reverse)"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "sm",
+  "family": "",
+  "pattern": "foil-reverse",
+  "classes": "rev-fighting rev-sm rev-sv",
+  "reverse": true,
+  "faces": 177,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 15,
+  "examples": [
+   "sm1-67 (reverse)",
+   "sm1-68 (reverse)"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "sm",
+  "family": "",
+  "pattern": "foil-reverse",
+  "classes": "rev-fire rev-sm rev-sv",
+  "reverse": true,
+  "faces": 133,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 15,
+  "examples": [
+   "sm1-21 (reverse)",
+   "sm1-22 (reverse)"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "sm",
+  "family": "",
+  "pattern": "foil-reverse",
+  "classes": "rev-lightning rev-sm rev-sv",
+  "reverse": true,
+  "faces": 121,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 14,
+  "examples": [
+   "sm1-49 (reverse)",
+   "sm1-50 (reverse)"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "sm",
+  "family": "",
+  "pattern": "foil-reverse",
+  "classes": "rev-darkness rev-sm rev-sv",
+  "reverse": true,
+  "faces": 96,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 14,
+  "examples": [
+   "sm1-76 (reverse)",
+   "sm1-77 (reverse)"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "sm",
+  "family": "",
+  "pattern": "foil-reverse",
+  "classes": "rev-fairy rev-sm rev-sv",
+  "reverse": true,
+  "faces": 79,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 12,
+  "examples": [
+   "sm1-90 (reverse)",
+   "sm1-91 (reverse)"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "sm",
+  "family": "",
+  "pattern": "foil-reverse",
+  "classes": "rev-metal rev-sm rev-sv",
+  "reverse": true,
+  "faces": 74,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 11,
+  "examples": [
+   "sm1-86 (reverse)",
+   "sm1-87 (reverse)"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "sm",
+  "family": "",
+  "pattern": "foil-reverse",
+  "classes": "rev-dragon rev-sm rev-sv",
+  "reverse": true,
+  "faces": 67,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 11,
+  "examples": [
+   "sm1-94 (reverse)",
+   "sm1-95 (reverse)"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "sm",
+  "family": "",
+  "pattern": "foil-reverse",
+  "classes": "",
+  "reverse": true,
+  "faces": 14,
+  "rarities": [
+   "Uncommon"
+  ],
+  "sets": 10,
+  "examples": [
+   "sm1-136 (reverse)",
+   "sm1-137 (reverse)"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "sm",
+  "family": "",
+  "pattern": "foil-holo foil-cosmos",
+  "classes": "era-sm has-foil-map",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Cosmos"
+  ],
+  "sets": 1,
+  "examples": [
+   "smp-smp243"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "sm",
+  "family": "sm-fullart",
+  "pattern": "foil-ultra sm-fa",
+  "classes": "era-sm fam-sm-fullart has-etch-map has-foil-map smf-gx",
+  "reverse": false,
+  "faces": 118,
+  "rarities": [
+   "Rare Ultra"
+  ],
+  "sets": 15,
+  "examples": [
+   "sm1-138",
+   "sm1-139"
+  ],
+  "sheet": "css/holo/fam/sm-fullart.css"
+ },
+ {
+  "era": "sm",
+  "family": "sm-fullart",
+  "pattern": "foil-ultra sm-tfa",
+  "classes": "era-sm fam-sm-fullart has-etch-map has-foil-map smf-t",
+  "reverse": false,
+  "faces": 86,
+  "rarities": [
+   "Rare Ultra"
+  ],
+  "sets": 15,
+  "examples": [
+   "sm1-146",
+   "sm1-147"
+  ],
+  "sheet": "css/holo/fam/sm-fullart.css"
+ },
+ {
+  "era": "sm",
+  "family": "sm-fullart",
+  "pattern": "foil-ultra sm-fa sm-tag",
+  "classes": "era-sm fam-sm-fullart has-etch-map has-foil-map smf-gx",
+  "reverse": false,
+  "faces": 40,
+  "rarities": [
+   "Rare Ultra"
+  ],
+  "sets": 6,
+  "examples": [
+   "sm10-191",
+   "sm10-194"
+  ],
+  "sheet": "css/holo/fam/sm-fullart.css"
+ },
+ {
+  "era": "sm",
+  "family": "sm-fullart",
+  "pattern": "foil-ultra sm-fa sm-alt sm-tag",
+  "classes": "era-sm fam-sm-fullart has-etch-map has-foil-map smf-alt",
+  "reverse": false,
+  "faces": 15,
+  "rarities": [
+   "Rare Ultra"
+  ],
+  "sets": 4,
+  "examples": [
+   "sm10-192",
+   "sm10-197"
+  ],
+  "sheet": "css/holo/fam/sm-fullart.css"
+ },
+ {
+  "era": "sm",
+  "family": "sm-fullart",
+  "pattern": "foil-ultra sm-fa sm-alt",
+  "classes": "era-sm fam-sm-fullart has-etch-tile has-foil-map smf-alt smf-noetch",
+  "reverse": false,
+  "faces": 12,
+  "rarities": [
+   "Rare Secret"
+  ],
+  "sets": 1,
+  "examples": [
+   "sm12-237",
+   "sm12-238"
+  ],
+  "sheet": "css/holo/fam/sm-fullart.css"
+ },
+ {
+  "era": "sm",
+  "family": "sm-fullart",
+  "pattern": "foil-ultra sm-fa",
+  "classes": "era-sm fam-sm-fullart has-etch-tile has-foil-map smf-gx smf-noetch",
+  "reverse": false,
+  "faces": 8,
+  "rarities": [
+   "Rare Ultra"
+  ],
+  "sets": 4,
+  "examples": [
+   "sm115-smp103a",
+   "sm115-smp104a"
+  ],
+  "sheet": "css/holo/fam/sm-fullart.css"
+ },
+ {
+  "era": "sm",
+  "family": "sm-fullart",
+  "pattern": "foil-ultra sm-fa sm-tag",
+  "classes": "era-sm fam-sm-fullart has-etch-tile has-foil-map smf-gx smf-noetch",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Rare Ultra"
+  ],
+  "sets": 1,
+  "examples": [
+   "sm12-143a"
+  ],
+  "sheet": "css/holo/fam/sm-fullart.css"
+ },
+ {
+  "era": "sm",
+  "family": "sm-fullart",
+  "pattern": "foil-ultra sm-fa sm-alt",
+  "classes": "era-sm fam-sm-fullart has-etch-map has-foil-map smf-alt",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Rare Secret"
+  ],
+  "sets": 1,
+  "examples": [
+   "sm35-78"
+  ],
+  "sheet": "css/holo/fam/sm-fullart.css"
+ },
+ {
+  "era": "sm",
+  "family": "sm-gold",
+  "pattern": "foil-gold sm-gold",
+  "classes": "era-sm fam-sm-gold has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 83,
+  "rarities": [
+   "Rare Secret"
+  ],
+  "sets": 14,
+  "examples": [
+   "sm1-158",
+   "sm1-159"
+  ],
+  "sheet": "css/holo/fam/sm-gold.css"
+ },
+ {
+  "era": "sm",
+  "family": "sm-gold",
+  "pattern": "foil-gold sm-gold",
+  "classes": "era-sm fam-sm-gold has-etch-map has-foil-map smg-energy",
+  "reverse": false,
+  "faces": 9,
+  "rarities": [
+   "Rare Secret"
+  ],
+  "sets": 4,
+  "examples": [
+   "sm1-162",
+   "sm1-163"
+  ],
+  "sheet": "css/holo/fam/sm-gold.css"
+ },
+ {
+  "era": "sm",
+  "family": "sm-gold",
+  "pattern": "foil-gold sm-gold",
+  "classes": "era-sm fam-sm-gold has-etch-map has-foil-map smg-gx",
+  "reverse": false,
+  "faces": 7,
+  "rarities": [
+   "Rare Secret"
+  ],
+  "sets": 3,
+  "examples": [
+   "sm115-SV91",
+   "sm115-SV92"
+  ],
+  "sheet": "css/holo/fam/sm-gold.css"
+ },
+ {
+  "era": "sm",
+  "family": "sm-gold",
+  "pattern": "foil-gold sm-gold",
+  "classes": "era-sm fam-sm-gold has-etch-drawn has-etch-map has-foil-map smg-gx",
+  "reverse": false,
+  "faces": 2,
+  "rarities": [
+   "Rare Secret"
+  ],
+  "sets": 1,
+  "examples": [
+   "smp-smp247",
+   "smp-smp248"
+  ],
+  "sheet": "css/holo/fam/sm-gold.css"
+ },
+ {
+  "era": "sm",
+  "family": "sm-gx",
+  "pattern": "foil-ex sm-gx",
+  "classes": "era-sm fam-sm-gx has-foil-map",
+  "reverse": false,
+  "faces": 174,
+  "rarities": [
+   "Rare Holo GX"
+  ],
+  "sets": 17,
+  "examples": [
+   "det1-smp195",
+   "det1-smp196"
+  ],
+  "sheet": "css/holo/fam/sm-gx.css"
+ },
+ {
+  "era": "sm",
+  "family": "sm-gx",
+  "pattern": "foil-ex sm-gx sm-tag",
+  "classes": "era-sm fam-sm-gx has-foil-map sgx-tag",
+  "reverse": false,
+  "faces": 31,
+  "rarities": [
+   "Rare Holo GX"
+  ],
+  "sets": 5,
+  "examples": [
+   "sm10-1",
+   "sm10-20"
+  ],
+  "sheet": "css/holo/fam/sm-gx.css"
+ },
+ {
+  "era": "sm",
+  "family": "sm-gx",
+  "pattern": "foil-ex sm-gx",
+  "classes": "era-sm fam-sm-gx has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 2,
+  "rarities": [
+   "Rare Holo GX"
+  ],
+  "sets": 1,
+  "examples": [
+   "sm75-smp139",
+   "sm75-smp141"
+  ],
+  "sheet": "css/holo/fam/sm-gx.css"
+ },
+ {
+  "era": "sm",
+  "family": "sm-holo",
+  "pattern": "foil-holo sm-holo",
+  "classes": "era-sm fam-sm-holo has-foil-map smh-window",
+  "reverse": false,
+  "faces": 193,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 10,
+  "examples": [
+   "sm1-17",
+   "sm1-20"
+  ],
+  "sheet": "css/holo/fam/sm-holo.css"
+ },
+ {
+  "era": "sm",
+  "family": "sm-holo",
+  "pattern": "foil-holo sm-holo sm-late",
+  "classes": "era-sm fam-sm-holo has-foil-map smh-window",
+  "reverse": false,
+  "faces": 175,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 8,
+  "examples": [
+   "det1-1",
+   "det1-2"
+  ],
+  "sheet": "css/holo/fam/sm-holo.css"
+ },
+ {
+  "era": "sm",
+  "family": "sm-holo",
+  "pattern": "foil-holo sm-holo",
+  "classes": "era-sm fam-sm-holo has-foil-map smh-confetti",
+  "reverse": false,
+  "faces": 24,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 2,
+  "examples": [
+   "mcd17-1",
+   "mcd17-2"
+  ],
+  "sheet": "css/holo/fam/sm-holo.css"
+ },
+ {
+  "era": "sm",
+  "family": "sm-holo",
+  "pattern": "foil-holo sm-holo sm-late",
+  "classes": "era-sm fam-sm-holo has-foil-map smh-confetti",
+  "reverse": false,
+  "faces": 12,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "mcd19-1",
+   "mcd19-2"
+  ],
+  "sheet": "css/holo/fam/sm-holo.css"
+ },
+ {
+  "era": "sm",
+  "family": "sm-prism",
+  "pattern": "foil-holo sm-prism",
+  "classes": "era-sm fam-sm-prism has-foil-map",
+  "reverse": false,
+  "faces": 27,
+  "rarities": [
+   "Rare Prism Star"
+  ],
+  "sets": 6,
+  "examples": [
+   "sm5-58",
+   "sm5-62"
+  ],
+  "sheet": "css/holo/fam/sm-prism.css"
+ },
+ {
+  "era": "sm",
+  "family": "sm-rainbow",
+  "pattern": "foil-ir sm-rainbow",
+  "classes": "era-sm fam-sm-rainbow has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 147,
+  "rarities": [
+   "Rare Rainbow"
+  ],
+  "sets": 15,
+  "examples": [
+   "sm1-150",
+   "sm1-151"
+  ],
+  "sheet": "css/holo/fam/sm-rainbow.css"
+ },
+ {
+  "era": "sm",
+  "family": "sm-shiny",
+  "pattern": "foil-holo foil-shiny sm-shiny",
+  "classes": "era-sm fam-sm-shiny has-etch-angle has-etch-map has-foil-map sms-live sms-window",
+  "reverse": false,
+  "faces": 45,
+  "rarities": [
+   "Rare Shiny"
+  ],
+  "sets": 1,
+  "examples": [
+   "sm115-SV1",
+   "sm115-SV2"
+  ],
+  "sheet": "css/holo/fam/sm-shiny.css"
+ },
+ {
+  "era": "sm",
+  "family": "sm-shiny",
+  "pattern": "foil-ultra foil-shiny sm-shiny sm-shiny-gx",
+  "classes": "era-sm fam-sm-shiny has-etch-angle has-etch-map has-foil-map sms-gx sms-live",
+  "reverse": false,
+  "faces": 35,
+  "rarities": [
+   "Rare Shiny GX"
+  ],
+  "sets": 1,
+  "examples": [
+   "sm115-SV46",
+   "sm115-SV47"
+  ],
+  "sheet": "css/holo/fam/sm-shiny.css"
+ },
+ {
+  "era": "sm",
+  "family": "sm-shiny",
+  "pattern": "foil-holo foil-shiny sm-shiny sm-shining",
+  "classes": "era-sm fam-sm-shiny has-etch-map has-foil-map sms-live sms-shining",
+  "reverse": false,
+  "faces": 6,
+  "rarities": [
+   "Rare Shining"
+  ],
+  "sets": 1,
+  "examples": [
+   "sm35-9",
+   "sm35-27"
+  ],
+  "sheet": "css/holo/fam/sm-shiny.css"
+ },
+ {
+  "era": "sm",
+  "family": "sm-shiny",
+  "pattern": "foil-holo foil-shiny sm-shiny sm-shining",
+  "classes": "era-sm fam-sm-shiny has-etch-map has-foil-map sms-shining",
+  "reverse": false,
+  "faces": 3,
+  "rarities": [
+   "Rare Shining"
+  ],
+  "sets": 1,
+  "examples": [
+   "sm35-smp070",
+   "sm35-smp079"
+  ],
+  "sheet": "css/holo/fam/sm-shiny.css"
+ },
+ {
+  "era": "xy",
+  "family": "mcd-promos",
+  "pattern": "foil-holo xy-holo",
+  "classes": "era-xy fam-mcd-promos has-foil-map has-foil-map mcd-xy",
+  "reverse": false,
+  "faces": 36,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 3,
+  "examples": [
+   "mcd14-1",
+   "mcd14-2"
+  ],
+  "sheet": "css/holo/fam/mcd-promos.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-break",
+  "pattern": "foil-ex xy-break",
+  "classes": "era-xy fam-xy-break has-foil-map",
+  "reverse": false,
+  "faces": 35,
+  "rarities": [
+   "Rare BREAK"
+  ],
+  "sets": 5,
+  "examples": [
+   "xy10-14",
+   "xy10-19"
+  ],
+  "sheet": "css/holo/fam/xy-break.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-evolutions",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-evolutions rev-mirror xy-rev xy-rev-evo12 xy-rev-trainer xy-rev-trainer xy12-rev xy12-rev-map",
+  "reverse": true,
+  "faces": 17,
+  "rarities": [
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "xy12-73 (reverse)",
+   "xy12-74 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-evolutions.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-evolutions",
+  "pattern": "foil-holo xy-holo xy-starlight",
+  "classes": "era-xy fam-xy-evolutions has-foil-map xy12-star",
+  "reverse": false,
+  "faces": 13,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "xy12-11",
+   "xy12-15"
+  ],
+  "sheet": "css/holo/fam/xy-evolutions.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-evolutions",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-evolutions rev-mirror xy-rev xy-rev-evo12 xy-rev-fire xy12-rev xy12-rev-map",
+  "reverse": true,
+  "faces": 9,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "xy12-9 (reverse)",
+   "xy12-10 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-evolutions.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-evolutions",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-evolutions rev-mirror xy-rev xy-rev-evo12 xy-rev-water xy12-rev xy12-rev-map",
+  "reverse": true,
+  "faces": 9,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "xy12-23 (reverse)",
+   "xy12-24 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-evolutions.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-evolutions",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-evolutions rev-mirror xy-rev xy-rev-evo12 xy-rev-psychic xy12-rev xy12-rev-map",
+  "reverse": true,
+  "faces": 9,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "xy12-43 (reverse)",
+   "xy12-44 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-evolutions.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-evolutions",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-evolutions rev-mirror xy-rev xy-rev-evo12 xy-rev-lightning xy12-rev xy12-rev-map",
+  "reverse": true,
+  "faces": 8,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "xy12-35 (reverse)",
+   "xy12-36 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-evolutions.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-evolutions",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-evolutions rev-mirror xy-rev xy-rev-evo12 xy-rev-fighting xy12-rev xy12-rev-map",
+  "reverse": true,
+  "faces": 8,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "xy12-54 (reverse)",
+   "xy12-55 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-evolutions.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-evolutions",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-evolutions rev-mirror xy-rev xy-rev-evo12 xy-rev-grass xy12-rev xy12-rev-map",
+  "reverse": true,
+  "faces": 6,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "xy12-3 (reverse)",
+   "xy12-4 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-evolutions.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-evolutions",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-evolutions rev-mirror xy-rev xy-rev-colorless xy-rev-evo12 xy12-rev xy12-rev-map",
+  "reverse": true,
+  "faces": 6,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "xy12-66 (reverse)",
+   "xy12-67 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-evolutions.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-evolutions",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-evolutions rev-mirror xy-rev xy-rev-evo12 xy-rev-fairy xy12-rev xy12-rev-map",
+  "reverse": true,
+  "faces": 1,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "xy12-63 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-evolutions.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-evolutions",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-evolutions rev-mirror xy-rev xy-rev-colorless xy-rev-evo12 xy-rev-trainer xy12-rev xy12-rev-map",
+  "reverse": true,
+  "faces": 1,
+  "rarities": [
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "xy12-90 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-evolutions.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-ex-mega",
+  "pattern": "foil-ex xy-ex",
+  "classes": "era-xy fam-xy-ex-mega has-foil-map",
+  "reverse": false,
+  "faces": 86,
+  "rarities": [
+   "Rare Holo EX"
+  ],
+  "sets": 13,
+  "examples": [
+   "g1-1",
+   "g1-11"
+  ],
+  "sheet": "css/holo/fam/xy-ex-mega.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-ex-mega",
+  "pattern": "foil-ex xy-ex",
+  "classes": "era-xy fam-xy-ex-mega has-foil-map xm-pale",
+  "reverse": false,
+  "faces": 48,
+  "rarities": [
+   "Rare Holo EX"
+  ],
+  "sets": 12,
+  "examples": [
+   "g1-10",
+   "g1-13"
+  ],
+  "sheet": "css/holo/fam/xy-ex-mega.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-ex-mega",
+  "pattern": "foil-ex xy-ex xy-mega",
+  "classes": "era-xy fam-xy-ex-mega has-foil-map",
+  "reverse": false,
+  "faces": 39,
+  "rarities": [
+   "Rare Holo EX"
+  ],
+  "sets": 13,
+  "examples": [
+   "g1-2",
+   "g1-12"
+  ],
+  "sheet": "css/holo/fam/xy-ex-mega.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-ex-mega",
+  "pattern": "foil-ex xy-ex xy-mega",
+  "classes": "era-xy fam-xy-ex-mega has-foil-map xm-pale",
+  "reverse": false,
+  "faces": 11,
+  "rarities": [
+   "Rare Holo EX"
+  ],
+  "sets": 6,
+  "examples": [
+   "xy10-85",
+   "xy12-2"
+  ],
+  "sheet": "css/holo/fam/xy-ex-mega.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-ex-mega",
+  "pattern": "foil-ex xy-ex xy-dc",
+  "classes": "era-xy fam-xy-ex-mega has-etch-tile has-foil-map",
+  "reverse": false,
+  "faces": 2,
+  "rarities": [
+   "Rare Ultra"
+  ],
+  "sets": 1,
+  "examples": [
+   "dc1-6",
+   "dc1-15"
+  ],
+  "sheet": "css/holo/fam/xy-ex-mega.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-full-art",
+  "pattern": "foil-ultra xy-fa",
+  "classes": "era-xy fam-xy-full-art has-etch-map has-foil-map xyf-etched",
+  "reverse": false,
+  "faces": 60,
+  "rarities": [
+   "Rare Ultra"
+  ],
+  "sets": 13,
+  "examples": [
+   "g1-25",
+   "g1-29"
+  ],
+  "sheet": "css/holo/fam/xy-full-art.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-full-art",
+  "pattern": "foil-ultra xy-fa",
+  "classes": "era-xy fam-xy-full-art has-etch-tile has-foil-map xyf-cure xyf-promo xyf-smooth",
+  "reverse": false,
+  "faces": 24,
+  "rarities": [
+   "Rare Ultra"
+  ],
+  "sets": 4,
+  "examples": [
+   "g1-xyp113",
+   "g1-xyp114"
+  ],
+  "sheet": "css/holo/fam/xy-full-art.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-full-art",
+  "pattern": "foil-ultra xy-fa xy-mega",
+  "classes": "era-xy fam-xy-full-art has-etch-map has-foil-map xyf-etched",
+  "reverse": false,
+  "faces": 24,
+  "rarities": [
+   "Rare Ultra"
+  ],
+  "sets": 8,
+  "examples": [
+   "xy10-118",
+   "xy10-121"
+  ],
+  "sheet": "css/holo/fam/xy-full-art.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-full-art",
+  "pattern": "foil-ultra xy-fa xy-tfa",
+  "classes": "era-xy fam-xy-full-art has-etch-map has-foil-map xyf-etched",
+  "reverse": false,
+  "faces": 19,
+  "rarities": [
+   "Rare Ultra"
+  ],
+  "sets": 11,
+  "examples": [
+   "xy10-124",
+   "xy11-113"
+  ],
+  "sheet": "css/holo/fam/xy-full-art.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-full-art",
+  "pattern": "foil-ultra xy-fa",
+  "classes": "era-xy fam-xy-full-art has-etch-tile has-foil-map xyf-cure xyf-pale xyf-promo xyf-smooth",
+  "reverse": false,
+  "faces": 5,
+  "rarities": [
+   "Rare Ultra"
+  ],
+  "sets": 2,
+  "examples": [
+   "g1-xyp110",
+   "g1-xyp111"
+  ],
+  "sheet": "css/holo/fam/xy-full-art.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-full-art",
+  "pattern": "foil-ultra xy-fa",
+  "classes": "era-xy fam-xy-full-art has-etch-map has-foil-map xyf-cure xyf-etched xyf-pale",
+  "reverse": false,
+  "faces": 5,
+  "rarities": [
+   "Rare Ultra"
+  ],
+  "sets": 5,
+  "examples": [
+   "xy10-123",
+   "xy5-147"
+  ],
+  "sheet": "css/holo/fam/xy-full-art.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-full-art",
+  "pattern": "foil-ultra xy-fa xy-tfa",
+  "classes": "era-xy fam-xy-full-art has-etch-map has-foil-map xyf-cure xyf-etched xyf-pale",
+  "reverse": false,
+  "faces": 5,
+  "rarities": [
+   "Rare Ultra"
+  ],
+  "sets": 4,
+  "examples": [
+   "xy2-105",
+   "xy2-106"
+  ],
+  "sheet": "css/holo/fam/xy-full-art.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-full-art",
+  "pattern": "foil-ultra xy-fa xy-rc",
+  "classes": "era-xy fam-xy-full-art has-etch-tile has-foil-map xyf-etched",
+  "reverse": false,
+  "faces": 4,
+  "rarities": [
+   "Rare Ultra"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-RC28",
+   "g1-RC29"
+  ],
+  "sheet": "css/holo/fam/xy-full-art.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-full-art",
+  "pattern": "foil-ultra xy-fa xy-mega",
+  "classes": "era-xy fam-xy-full-art has-etch-tile has-foil-map xyf-cure xyf-promo xyf-smooth",
+  "reverse": false,
+  "faces": 4,
+  "rarities": [
+   "Rare Ultra"
+  ],
+  "sets": 1,
+  "examples": [
+   "xyp-xyp198",
+   "xyp-xyp198a"
+  ],
+  "sheet": "css/holo/fam/xy-full-art.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-full-art",
+  "pattern": "foil-ultra xy-fa xy-mega xy-rc",
+  "classes": "era-xy fam-xy-full-art has-etch-tile has-foil-map xyf-etched",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Rare Ultra"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-RC31"
+  ],
+  "sheet": "css/holo/fam/xy-full-art.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-full-art",
+  "pattern": "foil-ultra xy-fa xy-tfa",
+  "classes": "era-xy fam-xy-full-art has-etch-tile has-foil-map xyf-cure xyf-promo xyf-smooth",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Rare Ultra"
+  ],
+  "sets": 1,
+  "examples": [
+   "xyp-xyp177a"
+  ],
+  "sheet": "css/holo/fam/xy-full-art.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-generations",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-generations rev-mirror xy-rev xy-rev-trainer xy-rev-trainer xygen-rev",
+  "reverse": true,
+  "faces": 15,
+  "rarities": [
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-59 (reverse)",
+   "g1-60 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-generations.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-generations",
+  "pattern": "foil-holo xy-rc",
+  "classes": "era-xy fam-xy-generations has-foil-map xygen-rc",
+  "reverse": false,
+  "faces": 14,
+  "rarities": [
+   "Rare Holo EX",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-RC5",
+   "g1-RC6"
+  ],
+  "sheet": "css/holo/fam/xy-generations.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-generations",
+  "pattern": "foil-holo xy-rc",
+  "classes": "era-xy fam-xy-generations has-foil-map xygen-plain",
+  "reverse": false,
+  "faces": 13,
+  "rarities": [
+   "Common"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-RC1",
+   "g1-RC2"
+  ],
+  "sheet": "css/holo/fam/xy-generations.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-generations",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-generations rev-mirror xy-rev xy-rev-fighting xygen-rev",
+  "reverse": true,
+  "faces": 6,
+  "rarities": [
+   "Common",
+   "Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-38 (reverse)",
+   "g1-40 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-generations.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-generations",
+  "pattern": "foil-holo xy-holo",
+  "classes": "era-xy fam-xy-generations has-foil-map xygen-holo",
+  "reverse": false,
+  "faces": 5,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-5",
+   "g1-27"
+  ],
+  "sheet": "css/holo/fam/xy-generations.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-generations",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-generations rev-mirror xy-rev xy-rev-circle xy-rev-fighting xygen-rev",
+  "reverse": true,
+  "faces": 5,
+  "rarities": [
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-39 (reverse)",
+   "g1-41 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-generations.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-generations",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-generations rev-mirror xy-rev xy-rev-grass xygen-rev",
+  "reverse": true,
+  "faces": 4,
+  "rarities": [
+   "Common",
+   "Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-3 (reverse)",
+   "g1-6 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-generations.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-generations",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-generations rev-mirror xy-rev xy-rev-psychic xygen-rev",
+  "reverse": true,
+  "faces": 4,
+  "rarities": [
+   "Common",
+   "Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-30 (reverse)",
+   "g1-32 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-generations.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-generations",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-generations rev-mirror xy-rev xy-rev-colorless xygen-rev",
+  "reverse": true,
+  "faces": 4,
+  "rarities": [
+   "Common",
+   "Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-53 (reverse)",
+   "g1-55 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-generations.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-generations",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-generations rev-mirror xy-rev xy-rev-psychic",
+  "reverse": true,
+  "faces": 4,
+  "rarities": [
+   "Common",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-RC11 (reverse)",
+   "g1-RC12 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-generations.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-generations",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-generations rev-mirror xy-rev xy-rev-circle xy-rev-grass xygen-rev",
+  "reverse": true,
+  "faces": 3,
+  "rarities": [
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-4 (reverse)",
+   "g1-5 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-generations.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-generations",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-generations rev-mirror xy-rev xy-rev-water xygen-rev",
+  "reverse": true,
+  "faces": 3,
+  "rarities": [
+   "Common"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-19 (reverse)",
+   "g1-21 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-generations.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-generations",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-generations rev-mirror xy-rev xy-rev-circle xy-rev-psychic xygen-rev",
+  "reverse": true,
+  "faces": 3,
+  "rarities": [
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-31 (reverse)",
+   "g1-34 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-generations.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-generations",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-generations rev-mirror xy-rev xy-rev-fairy",
+  "reverse": true,
+  "faces": 3,
+  "rarities": [
+   "Common",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-RC17 (reverse)",
+   "g1-RC19 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-generations.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-generations",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-generations rev-mirror xy-rev xy-rev-fire xygen-rev",
+  "reverse": true,
+  "faces": 2,
+  "rarities": [
+   "Common"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-14 (reverse)",
+   "g1-16 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-generations.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-generations",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-generations rev-mirror xy-rev xy-rev-circle xy-rev-water xygen-rev",
+  "reverse": true,
+  "faces": 2,
+  "rarities": [
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-20 (reverse)",
+   "g1-23 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-generations.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-generations",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-generations rev-mirror xy-rev xy-rev-fairy xygen-rev",
+  "reverse": true,
+  "faces": 2,
+  "rarities": [
+   "Common",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-50 (reverse)",
+   "g1-52 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-generations.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-generations",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-generations rev-mirror xy-rev xy-rev-circle xy-rev-colorless xygen-rev",
+  "reverse": true,
+  "faces": 2,
+  "rarities": [
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-54 (reverse)",
+   "g1-56 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-generations.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-generations",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-generations rev-mirror xy-rev xy-rev-grass",
+  "reverse": true,
+  "faces": 2,
+  "rarities": [
+   "Common"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-RC1 (reverse)",
+   "g1-RC2 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-generations.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-generations",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-generations rev-mirror xy-rev xy-rev-circle xy-rev-fire",
+  "reverse": true,
+  "faces": 2,
+  "rarities": [
+   "Common",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-RC4 (reverse)",
+   "g1-RC5 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-generations.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-generations",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-generations rev-mirror xy-rev xy-rev-circle xy-rev-fairy",
+  "reverse": true,
+  "faces": 2,
+  "rarities": [
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-RC18 (reverse)",
+   "g1-RC20 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-generations.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-generations",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-generations rev-mirror xy-rev xy-rev-colorless",
+  "reverse": true,
+  "faces": 2,
+  "rarities": [
+   "Common"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-RC23 (reverse)",
+   "g1-RC25 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-generations.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-generations",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-generations rev-mirror xy-rev xy-rev-trainer xy-rev-trainer",
+  "reverse": true,
+  "faces": 2,
+  "rarities": [
+   "Common",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-RC26 (reverse)",
+   "g1-RC27 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-generations.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-generations",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-generations rev-mirror xy-rev xy-rev-circle xy-rev-fire xygen-rev",
+  "reverse": true,
+  "faces": 1,
+  "rarities": [
+   "Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-15 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-generations.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-generations",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-generations rev-mirror xy-rev xy-rev-lightning xygen-rev",
+  "reverse": true,
+  "faces": 1,
+  "rarities": [
+   "Common"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-26 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-generations.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-generations",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-generations rev-mirror xy-rev xy-rev-circle xy-rev-lightning xygen-rev",
+  "reverse": true,
+  "faces": 1,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-27 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-generations.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-generations",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-generations rev-mirror xy-rev xy-rev-circle xy-rev-fairy xygen-rev",
+  "reverse": true,
+  "faces": 1,
+  "rarities": [
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-51 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-generations.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-generations",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-generations rev-mirror xy-rev xy-rev-colorless xy-rev-trainer xygen-rev",
+  "reverse": true,
+  "faces": 1,
+  "rarities": [
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-74 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-generations.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-generations",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-generations rev-mirror xy-rev xy-rev-fire",
+  "reverse": true,
+  "faces": 1,
+  "rarities": [
+   "Common"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-RC3 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-generations.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-generations",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-generations rev-mirror xy-rev xy-rev-water",
+  "reverse": true,
+  "faces": 1,
+  "rarities": [
+   "Common"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-RC7 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-generations.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-generations",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-generations rev-mirror xy-rev xy-rev-circle xy-rev-water",
+  "reverse": true,
+  "faces": 1,
+  "rarities": [
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-RC8 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-generations.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-generations",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-generations rev-mirror xy-rev xy-rev-circle xy-rev-lightning",
+  "reverse": true,
+  "faces": 1,
+  "rarities": [
+   "Common"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-RC9 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-generations.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-generations",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-generations rev-mirror xy-rev xy-rev-lightning",
+  "reverse": true,
+  "faces": 1,
+  "rarities": [
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-RC10 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-generations.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-generations",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-generations rev-mirror xy-rev xy-rev-circle xy-rev-psychic",
+  "reverse": true,
+  "faces": 1,
+  "rarities": [
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-RC15 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-generations.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-generations",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-generations rev-mirror xy-rev xy-rev-darkness",
+  "reverse": true,
+  "faces": 1,
+  "rarities": [
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-RC16 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-generations.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-generations",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-generations rev-mirror xy-rev xy-rev-circle xy-rev-colorless",
+  "reverse": true,
+  "faces": 1,
+  "rarities": [
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "g1-RC24 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-generations.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-trainer xy-rev-trainer xyrev-map",
+  "reverse": true,
+  "faces": 186,
+  "rarities": [
+   "Uncommon"
+  ],
+  "sets": 12,
+  "examples": [
+   "dc1-23 (reverse)",
+   "dc1-24 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-colorless xyrev-map",
+  "reverse": true,
+  "faces": 81,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 12,
+  "examples": [
+   "dc1-22 (reverse)",
+   "xy1-98 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-circle xy-rev-water xyrev-map",
+  "reverse": true,
+  "faces": 70,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 12,
+  "examples": [
+   "dc1-4 (reverse)",
+   "dc1-5 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-circle xy-rev-grass xyrev-map",
+  "reverse": true,
+  "faces": 68,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 11,
+  "examples": [
+   "xy1-4 (reverse)",
+   "xy1-5 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-water xyrev-map",
+  "reverse": true,
+  "faces": 66,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 12,
+  "examples": [
+   "dc1-3 (reverse)",
+   "xy1-31 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-grass xyrev-map",
+  "reverse": true,
+  "faces": 59,
+  "rarities": [
+   "Common",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 11,
+  "examples": [
+   "xy1-3 (reverse)",
+   "xy1-6 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-psychic xyrev-map",
+  "reverse": true,
+  "faces": 57,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 12,
+  "examples": [
+   "dc1-7 (reverse)",
+   "dc1-9 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-fighting xyrev-map",
+  "reverse": true,
+  "faces": 57,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 12,
+  "examples": [
+   "dc1-12 (reverse)",
+   "xy1-58 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-circle xy-rev-psychic xyrev-map",
+  "reverse": true,
+  "faces": 54,
+  "rarities": [
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 12,
+  "examples": [
+   "dc1-8 (reverse)",
+   "dc1-11 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-circle xy-rev-colorless xyrev-map",
+  "reverse": true,
+  "faces": 52,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 11,
+  "examples": [
+   "xy1-99 (reverse)",
+   "xy1-103 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-circle xy-rev-fighting xyrev-map",
+  "reverse": true,
+  "faces": 48,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 12,
+  "examples": [
+   "dc1-13 (reverse)",
+   "dc1-14 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-circle xy-rev-fire xyrev-map",
+  "reverse": true,
+  "faces": 39,
+  "rarities": [
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 12,
+  "examples": [
+   "dc1-2 (reverse)",
+   "xy1-21 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-fairy xyrev-map",
+  "reverse": true,
+  "faces": 38,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 11,
+  "examples": [
+   "xy1-87 (reverse)",
+   "xy1-88 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-lightning xyrev-map",
+  "reverse": true,
+  "faces": 35,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 11,
+  "examples": [
+   "xy1-42 (reverse)",
+   "xy1-44 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-darkness xyrev-map",
+  "reverse": true,
+  "faces": 33,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 10,
+  "examples": [
+   "dc1-16 (reverse)",
+   "dc1-17 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-fire xyrev-map",
+  "reverse": true,
+  "faces": 32,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 12,
+  "examples": [
+   "dc1-1 (reverse)",
+   "xy1-20 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-circle xy-rev-darkness xyrev-map",
+  "reverse": true,
+  "faces": 29,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 11,
+  "examples": [
+   "dc1-18 (reverse)",
+   "dc1-19 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-circle xy-rev-dragon xyrev-map",
+  "reverse": true,
+  "faces": 28,
+  "rarities": [
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 9,
+  "examples": [
+   "xy11-85 (reverse)",
+   "xy11-86 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-circle xy-rev-lightning xyrev-map",
+  "reverse": true,
+  "faces": 27,
+  "rarities": [
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 10,
+  "examples": [
+   "xy1-43 (reverse)",
+   "xy1-45 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-circle xy-rev-fairy xyrev-map",
+  "reverse": true,
+  "faces": 27,
+  "rarities": [
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 11,
+  "examples": [
+   "xy1-89 (reverse)",
+   "xy1-90 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-circle xy-rev-metal xyrev-map",
+  "reverse": true,
+  "faces": 24,
+  "rarities": [
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 9,
+  "examples": [
+   "xy1-82 (reverse)",
+   "xy1-84 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-colorless xy-rev-trainer",
+  "reverse": true,
+  "faces": 18,
+  "rarities": [
+   "Uncommon"
+  ],
+  "sets": 10,
+  "examples": [
+   "dc1-33 (reverse)",
+   "dc1-34 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-metal xyrev-map",
+  "reverse": true,
+  "faces": 17,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 10,
+  "examples": [
+   "xy1-81 (reverse)",
+   "xy1-83 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-dragon xyrev-map",
+  "reverse": true,
+  "faces": 14,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo"
+  ],
+  "sets": 6,
+  "examples": [
+   "xy11-83 (reverse)",
+   "xy11-84 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-colorless",
+  "reverse": true,
+  "faces": 9,
+  "rarities": [
+   "Common"
+  ],
+  "sets": 1,
+  "examples": [
+   "xy0-25 (reverse)",
+   "xy0-26 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-trainer xy-rev-trainer",
+  "reverse": true,
+  "faces": 8,
+  "rarities": [
+   "Common",
+   "Rare Holo"
+  ],
+  "sets": 2,
+  "examples": [
+   "xy0-34 (reverse)",
+   "xy0-35 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-grass",
+  "reverse": true,
+  "faces": 4,
+  "rarities": [
+   "Common"
+  ],
+  "sets": 2,
+  "examples": [
+   "xy0-1 (reverse)",
+   "xy0-2 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-fire",
+  "reverse": true,
+  "faces": 3,
+  "rarities": [
+   "Common"
+  ],
+  "sets": 1,
+  "examples": [
+   "xy0-6 (reverse)",
+   "xy0-7 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-water",
+  "reverse": true,
+  "faces": 3,
+  "rarities": [
+   "Common"
+  ],
+  "sets": 1,
+  "examples": [
+   "xy0-11 (reverse)",
+   "xy0-12 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-circle xy-rev-grass",
+  "reverse": true,
+  "faces": 2,
+  "rarities": [
+   "Common"
+  ],
+  "sets": 1,
+  "examples": [
+   "xy0-4 (reverse)",
+   "xy0-5 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-circle xy-rev-fire",
+  "reverse": true,
+  "faces": 2,
+  "rarities": [
+   "Common"
+  ],
+  "sets": 1,
+  "examples": [
+   "xy0-9 (reverse)",
+   "xy0-10 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-circle xy-rev-water",
+  "reverse": true,
+  "faces": 2,
+  "rarities": [
+   "Common"
+  ],
+  "sets": 1,
+  "examples": [
+   "xy0-13 (reverse)",
+   "xy0-14 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-darkness",
+  "reverse": true,
+  "faces": 2,
+  "rarities": [
+   "Common"
+  ],
+  "sets": 1,
+  "examples": [
+   "xy0-16 (reverse)",
+   "xy0-18 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-metal",
+  "reverse": true,
+  "faces": 2,
+  "rarities": [
+   "Common"
+  ],
+  "sets": 1,
+  "examples": [
+   "xy0-19 (reverse)",
+   "xy0-21 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-fairy",
+  "reverse": true,
+  "faces": 2,
+  "rarities": [
+   "Common"
+  ],
+  "sets": 1,
+  "examples": [
+   "xy0-22 (reverse)",
+   "xy0-24 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-circle xy-rev-darkness",
+  "reverse": true,
+  "faces": 1,
+  "rarities": [
+   "Common"
+  ],
+  "sets": 1,
+  "examples": [
+   "xy0-17 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-circle xy-rev-metal",
+  "reverse": true,
+  "faces": 1,
+  "rarities": [
+   "Common"
+  ],
+  "sets": 1,
+  "examples": [
+   "xy0-20 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-xy fam-xy-reverse rev-mirror xy-rev xy-rev-circle xy-rev-fairy",
+  "reverse": true,
+  "faces": 1,
+  "rarities": [
+   "Common"
+  ],
+  "sets": 1,
+  "examples": [
+   "xy0-23 (reverse)"
+  ],
+  "sheet": "css/holo/fam/xy-reverse.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-secret-gold",
+  "pattern": "foil-gold xy-secret xy-item",
+  "classes": "era-xy fam-xy-secret-gold has-etch-map has-foil-map xsg-item",
+  "reverse": false,
+  "faces": 8,
+  "rarities": [
+   "Rare Secret"
+  ],
+  "sets": 3,
+  "examples": [
+   "xy5-161",
+   "xy5-162"
+  ],
+  "sheet": "css/holo/fam/xy-secret-gold.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-secret-gold",
+  "pattern": "foil-ultra xy-fa xy-secret xy-secret-ex xy-mega",
+  "classes": "era-xy fam-xy-secret-gold has-etch-tile has-foil-map xsg-mega",
+  "reverse": false,
+  "faces": 7,
+  "rarities": [
+   "Rare Secret"
+  ],
+  "sets": 3,
+  "examples": [
+   "xy2-107",
+   "xy2-108"
+  ],
+  "sheet": "css/holo/fam/xy-secret-gold.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-secret-shiny",
+  "pattern": "foil-ultra xy-fa xy-secret xy-secret-ex",
+  "classes": "era-xy fam-xy-secret-shiny has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 6,
+  "rarities": [
+   "Rare Secret"
+  ],
+  "sets": 4,
+  "examples": [
+   "xy10-125",
+   "xy11-115"
+  ],
+  "sheet": "css/holo/fam/xy-secret-shiny.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-secret-shiny",
+  "pattern": "foil-ultra xy-fa xy-secret xy-secret-ex xy-mega xy-shiny",
+  "classes": "era-xy fam-xy-secret-shiny has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 3,
+  "rarities": [
+   "Rare Secret"
+  ],
+  "sets": 1,
+  "examples": [
+   "xy7-96",
+   "xy7-97"
+  ],
+  "sheet": "css/holo/fam/xy-secret-shiny.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-secret-silver",
+  "pattern": "foil-ultra xy-fa xy-secret xy-secret-ex xy-silver",
+  "classes": "era-xy fam-xy-secret-silver has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Rare Secret"
+  ],
+  "sets": 1,
+  "examples": [
+   "xy4-122"
+  ],
+  "sheet": "css/holo/fam/xy-secret-silver.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-sheen-holo",
+  "pattern": "foil-holo xy-holo",
+  "classes": "era-xy fam-xy-sheen-holo has-foil-map xysh-sheen",
+  "reverse": false,
+  "faces": 175,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 23,
+  "examples": [
+   "dc1-2",
+   "dc1-5"
+  ],
+  "sheet": "css/holo/fam/xy-sheen-holo.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-sheen-holo",
+  "pattern": "foil-holo xy-holo",
+  "classes": "era-xy fam-xy-sheen-holo has-foil-map xysh-cosmos",
+  "reverse": false,
+  "faces": 57,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 13,
+  "examples": [
+   "xy1-xyp005",
+   "xy1-xyp006"
+  ],
+  "sheet": "css/holo/fam/xy-sheen-holo.css"
+ },
+ {
+  "era": "xy",
+  "family": "xy-sheen-holo",
+  "pattern": "foil-holo xy-holo",
+  "classes": "era-xy fam-xy-sheen-holo has-foil-map xysh-cosmos xysh-pale",
+  "reverse": false,
+  "faces": 4,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 3,
+  "examples": [
+   "xy6-xyp049",
+   "xy7-xyp057"
+  ],
+  "sheet": "css/holo/fam/xy-sheen-holo.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-ex-ace",
+  "pattern": "foil-ex bw-ex",
+  "classes": "era-bw fam-bw-ex-ace has-foil-map",
+  "reverse": false,
+  "faces": 68,
+  "rarities": [
+   "Rare Holo EX"
+  ],
+  "sets": 8,
+  "examples": [
+   "bw10-9",
+   "bw10-11"
+  ],
+  "sheet": "css/holo/fam/bw-ex-ace.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-ex-ace",
+  "pattern": "foil-holo bw-ace",
+  "classes": "era-bw fam-bw-ex-ace has-foil-map",
+  "reverse": false,
+  "faces": 13,
+  "rarities": [
+   "Rare ACE"
+  ],
+  "sets": 4,
+  "examples": [
+   "bw10-92",
+   "bw10-93"
+  ],
+  "sheet": "css/holo/fam/bw-ex-ace.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-full-art",
+  "pattern": "foil-ultra bw-fa",
+  "classes": "bwfa-lines era-bw fam-bw-full-art has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 39,
+  "rarities": [
+   "Rare Ultra"
+  ],
+  "sets": 7,
+  "examples": [
+   "bw10-96",
+   "bw10-97"
+  ],
+  "sheet": "css/holo/fam/bw-full-art.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-full-art",
+  "pattern": "foil-ultra bw-fa bw-flat",
+  "classes": "bwfa-sand era-bw fam-bw-full-art has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 8,
+  "rarities": [
+   "Rare Ultra"
+  ],
+  "sets": 3,
+  "examples": [
+   "bw1-113",
+   "bw1-114"
+  ],
+  "sheet": "css/holo/fam/bw-full-art.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-full-art",
+  "pattern": "foil-ultra bw-fa bw-tfa",
+  "classes": "bwfa-lines era-bw fam-bw-full-art has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 7,
+  "rarities": [
+   "Rare Ultra"
+  ],
+  "sets": 4,
+  "examples": [
+   "bw10-101",
+   "bw7-147"
+  ],
+  "sheet": "css/holo/fam/bw-full-art.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-full-art",
+  "pattern": "foil-ultra bw-fa",
+  "classes": "bwfa-lines bwfa-promo era-bw fam-bw-full-art has-etch-tile has-foil-map",
+  "reverse": false,
+  "faces": 2,
+  "rarities": [
+   "Rare Ultra"
+  ],
+  "sets": 1,
+  "examples": [
+   "bw9-bwp073",
+   "bw9-bwp074"
+  ],
+  "sheet": "css/holo/fam/bw-full-art.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-full-art",
+  "pattern": "foil-ultra bw-fa bw-tfa bw-flat",
+  "classes": "bwfa-sand era-bw fam-bw-full-art has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Rare Ultra"
+  ],
+  "sets": 1,
+  "examples": [
+   "bw3-101"
+  ],
+  "sheet": "css/holo/fam/bw-full-art.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-full-art",
+  "pattern": "foil-ultra bw-fa",
+  "classes": "bwfa-pebble bwfa-promo era-bw fam-bw-full-art has-etch-tile has-foil-map",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Rare Ultra"
+  ],
+  "sets": 1,
+  "examples": [
+   "bw4-bwp043"
+  ],
+  "sheet": "css/holo/fam/bw-full-art.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-radiant-collection",
+  "pattern": "foil-holo bw-rc",
+  "classes": "era-bw fam-bw-radiant-collection has-foil-map rcf-stars",
+  "reverse": false,
+  "faces": 9,
+  "rarities": [
+   "Common"
+  ],
+  "sets": 1,
+  "examples": [
+   "bw11-RC1",
+   "bw11-RC2"
+  ],
+  "sheet": "css/holo/fam/bw-radiant-collection.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-radiant-collection",
+  "pattern": "foil-holo bw-rc",
+  "classes": "era-bw fam-bw-radiant-collection has-foil-map rcf-chips rcf-motif",
+  "reverse": false,
+  "faces": 7,
+  "rarities": [
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "bw11-RC3",
+   "bw11-RC4"
+  ],
+  "sheet": "css/holo/fam/bw-radiant-collection.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-radiant-collection",
+  "pattern": "foil-holo bw-rc bw-rc-fa",
+  "classes": "era-bw fam-bw-radiant-collection has-etch-tile has-foil-map rcf-chips rcf-full",
+  "reverse": false,
+  "faces": 5,
+  "rarities": [
+   "Rare Ultra"
+  ],
+  "sets": 1,
+  "examples": [
+   "bw11-RC21",
+   "bw11-RC22"
+  ],
+  "sheet": "css/holo/fam/bw-radiant-collection.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-radiant-collection",
+  "pattern": "foil-holo bw-rc",
+  "classes": "era-bw fam-bw-radiant-collection has-foil-map rcf-chips rcf-motif rcf-motif-light",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "bw11-RC10"
+  ],
+  "sheet": "css/holo/fam/bw-radiant-collection.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-radiant-collection",
+  "pattern": "foil-holo bw-rc bw-rc-fa",
+  "classes": "era-bw fam-bw-radiant-collection has-foil-map rcf-chips rcf-full rcf-motif",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Rare Holo EX"
+  ],
+  "sets": 1,
+  "examples": [
+   "bw11-RC11"
+  ],
+  "sheet": "css/holo/fam/bw-radiant-collection.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-radiant-collection",
+  "pattern": "foil-holo bw-rc",
+  "classes": "era-bw fam-bw-radiant-collection has-foil-map rcf-chips",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "bw11-RC13"
+  ],
+  "sheet": "css/holo/fam/bw-radiant-collection.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-radiant-collection",
+  "pattern": "foil-holo bw-rc",
+  "classes": "era-bw fam-bw-radiant-collection has-foil-map rcf-stars rcf-trainer",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Common"
+  ],
+  "sets": 1,
+  "examples": [
+   "bw11-RC20"
+  ],
+  "sheet": "css/holo/fam/bw-radiant-collection.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-lay-trainer bw-rev bw-rev-trainer bwr-silver era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 84,
+  "rarities": [
+   "Common",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 11,
+  "examples": [
+   "bw10-78 (reverse)",
+   "bw10-79 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-lay-basic bw-rev bw-rev-psychic era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 77,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 10,
+  "examples": [
+   "bw10-34 (reverse)",
+   "bw10-36 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-lay-basic bw-rev bw-rev-water era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 73,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 10,
+  "examples": [
+   "bw10-14 (reverse)",
+   "bw10-17 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-lay-basic bw-rev bw-rev-colorless bwr-silver era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 71,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 10,
+  "examples": [
+   "bw10-71 (reverse)",
+   "bw10-72 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-lay-basic bw-rev bw-rev-grass era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 69,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 10,
+  "examples": [
+   "bw10-1 (reverse)",
+   "bw10-3 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-lay-evo bw-rev bw-rev-psychic era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 65,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 10,
+  "examples": [
+   "bw10-35 (reverse)",
+   "bw10-40 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-lay-evo bw-rev bw-rev-water era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 62,
+  "rarities": [
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 10,
+  "examples": [
+   "bw10-15 (reverse)",
+   "bw10-16 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-lay-evo bw-rev bw-rev-grass era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 60,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 10,
+  "examples": [
+   "bw10-4 (reverse)",
+   "bw11-2 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-lay-basic bw-rev bw-rev-fighting era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 54,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 10,
+  "examples": [
+   "bw10-47 (reverse)",
+   "bw10-51 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-lay-basic bw-rev bw-rev-lightning era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 45,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 10,
+  "examples": [
+   "bw10-31 (reverse)",
+   "bw11-46 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-lay-basic bw-rev bw-rev-fire era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 43,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 10,
+  "examples": [
+   "bw10-12 (reverse)",
+   "bw11-17 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-lay-evo bw-rev bw-rev-fighting era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 42,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 10,
+  "examples": [
+   "bw10-48 (reverse)",
+   "bw10-49 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-lay-evo bw-rev bw-rev-colorless bwr-silver era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 41,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 10,
+  "examples": [
+   "bw10-73 (reverse)",
+   "bw11-105 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-lay-basic bw-rev bw-rev-plain era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 34,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "bw1-1 (reverse)",
+   "bw1-2 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-lay-evo bw-rev bw-rev-plasma era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 32,
+  "rarities": [
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 3,
+  "examples": [
+   "bw10-2 (reverse)",
+   "bw10-8 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-lay-evo bw-rev bw-rev-plain era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 31,
+  "rarities": [
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "bw1-3 (reverse)",
+   "bw1-4 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-lay-basic bw-rev bw-rev-darkness bwr-dark era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 31,
+  "rarities": [
+   "Common",
+   "Uncommon"
+  ],
+  "sets": 10,
+  "examples": [
+   "bw10-55 (reverse)",
+   "bw11-87 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-lay-evo bw-rev bw-rev-dragon bwr-dragon era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 31,
+  "rarities": [
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 6,
+  "examples": [
+   "bw10-63 (reverse)",
+   "bw10-64 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-lay-evo bw-rev bw-rev-fire era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 30,
+  "rarities": [
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 9,
+  "examples": [
+   "bw11-18 (reverse)",
+   "bw11-19 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-lay-evo bw-rev bw-rev-lightning era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 27,
+  "rarities": [
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 9,
+  "examples": [
+   "bw10-32 (reverse)",
+   "bw2-34 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-lay-evo bw-rev bw-rev-darkness bwr-dark era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 26,
+  "rarities": [
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 9,
+  "examples": [
+   "bw10-56 (reverse)",
+   "bw11-90 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-lay-basic bw-rev bw-rev-dragon bwr-dragon era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 23,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo"
+  ],
+  "sets": 6,
+  "examples": [
+   "bw10-62 (reverse)",
+   "bw10-67 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-lay-basic bw-rev bw-rev-metal bwr-silver era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 20,
+  "rarities": [
+   "Common",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 10,
+  "examples": [
+   "bw10-57 (reverse)",
+   "bw11-91 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-lay-evo bw-rev bw-rev-metal bwr-silver era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 18,
+  "rarities": [
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 8,
+  "examples": [
+   "bw10-58 (reverse)",
+   "bw10-59 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-lay-trainer bw-rev bw-rev-plain bwr-silver era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 13,
+  "rarities": [
+   "Common",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "bw1-92 (reverse)",
+   "bw1-93 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-lay-basic bw-rev bw-rev-plain bwr-silver era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 10,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "bw1-74 (reverse)",
+   "bw1-77 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-lay-evo bw-rev bw-rev-plain bwr-silver era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 8,
+  "rarities": [
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "bw1-75 (reverse)",
+   "bw1-76 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-lay-evo bw-rev bw-rev-plasma bwr-silver era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 8,
+  "rarities": [
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 3,
+  "examples": [
+   "bw10-61 (reverse)",
+   "bw10-74 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-lay-evo bw-rev bw-rev-plasma bwr-dark era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 8,
+  "rarities": [
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 2,
+  "examples": [
+   "bw8-84 (reverse)",
+   "bw8-86 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-lay-basic bw-rev bw-rev-plasma era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 6,
+  "rarities": [
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 3,
+  "examples": [
+   "bw10-24 (reverse)",
+   "bw8-49 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-lay-basic bw-rev bw-rev-plasma bwr-silver era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 6,
+  "rarities": [
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 2,
+  "examples": [
+   "bw10-77 (reverse)",
+   "bw8-87 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-rev bw-rev-energy bwr-silver era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 5,
+  "rarities": [
+   "Uncommon"
+  ],
+  "sets": 3,
+  "examples": [
+   "bw11-113 (reverse)",
+   "bw4-92 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-lay-basic bw-rev bw-rev-plain bwr-dark era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 4,
+  "rarities": [
+   "Common",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "bw1-66 (reverse)",
+   "bw1-68 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-lay-evo bw-rev bw-rev-plain bwr-dark era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 4,
+  "rarities": [
+   "Rare",
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "bw1-67 (reverse)",
+   "bw1-69 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-rev bw-rev-energy-plasma bwr-silver era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 3,
+  "rarities": [
+   "Uncommon"
+  ],
+  "sets": 3,
+  "examples": [
+   "bw10-91 (reverse)",
+   "bw8-127 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-lay-basic bw-rev bw-rev-plasma bwr-dragon era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 1,
+  "rarities": [
+   "Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "bw8-94 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-reverse",
+  "pattern": "foil-reverse",
+  "classes": "bw-lay-basic bw-rev bw-rev-plasma bwr-dark era-bw fam-bw-reverse rev-mirror",
+  "reverse": true,
+  "faces": 1,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "bw9-67 (reverse)"
+  ],
+  "sheet": "css/holo/fam/bw-reverse.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-secret",
+  "pattern": "foil-ultra bw-secret bw-gold",
+  "classes": "bws-gold era-bw fam-bw-secret has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 11,
+  "rarities": [
+   "Rare Secret"
+  ],
+  "sets": 4,
+  "examples": [
+   "bw10-102",
+   "bw10-104"
+  ],
+  "sheet": "css/holo/fam/bw-secret.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-secret",
+  "pattern": "foil-ultra bw-secret bw-yellow",
+  "classes": "bws-yellow era-bw fam-bw-secret has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 10,
+  "rarities": [
+   "Rare Secret"
+  ],
+  "sets": 3,
+  "examples": [
+   "bw4-100",
+   "bw4-101"
+  ],
+  "sheet": "css/holo/fam/bw-secret.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-secret",
+  "pattern": "foil-ultra bw-secret bw-gold bw-item",
+  "classes": "bws-gold bws-trainer era-bw fam-bw-secret has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 4,
+  "rarities": [
+   "Rare Secret"
+  ],
+  "sets": 3,
+  "examples": [
+   "bw7-153",
+   "bw8-138"
+  ],
+  "sheet": "css/holo/fam/bw-secret.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-secret",
+  "pattern": "foil-ultra bw-secret bw-yellow",
+  "classes": "bws-grain bws-yellow era-bw fam-bw-secret has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 2,
+  "rarities": [
+   "Rare Secret"
+  ],
+  "sets": 2,
+  "examples": [
+   "bw1-115",
+   "bw3-102"
+  ],
+  "sheet": "css/holo/fam/bw-secret.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-secret",
+  "pattern": "foil-gold bw-secret bw-gold bw-goldfull",
+  "classes": "bws-goldfull era-bw fam-bw-secret has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 2,
+  "rarities": [
+   "Rare Secret"
+  ],
+  "sets": 1,
+  "examples": [
+   "bw11-114",
+   "bw11-115"
+  ],
+  "sheet": "css/holo/fam/bw-secret.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-secret",
+  "pattern": "foil-ultra bw-secret bw-gold",
+  "classes": "bws-gold bws-pink era-bw fam-bw-secret has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Rare Secret"
+  ],
+  "sets": 1,
+  "examples": [
+   "bw10-103"
+  ],
+  "sheet": "css/holo/fam/bw-secret.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-secret",
+  "pattern": "foil-ultra bw-secret bw-gold bw-item",
+  "classes": "bws-gold bws-silver bws-trainer era-bw fam-bw-secret has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Rare Secret"
+  ],
+  "sets": 1,
+  "examples": [
+   "bw10-105"
+  ],
+  "sheet": "css/holo/fam/bw-secret.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-secret",
+  "pattern": "foil-ultra bw-secret bw-yellow bw-item",
+  "classes": "bws-item bws-yellow era-bw fam-bw-secret has-etch-map has-foil-map",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Rare Secret"
+  ],
+  "sets": 1,
+  "examples": [
+   "bw5-111"
+  ],
+  "sheet": "css/holo/fam/bw-secret.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-tinsel-holo",
+  "pattern": "foil-holo bw-holo",
+  "classes": "bwt-tinsel era-bw fam-bw-tinsel-holo has-foil-map",
+  "reverse": false,
+  "faces": 136,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 12,
+  "examples": [
+   "bw1-6",
+   "bw1-19"
+  ],
+  "sheet": "css/holo/fam/bw-tinsel-holo.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-tinsel-holo",
+  "pattern": "foil-holo bw-holo",
+  "classes": "bwt-cosmos era-bw fam-bw-tinsel-holo has-foil-map",
+  "reverse": false,
+  "faces": 34,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 11,
+  "examples": [
+   "bw1-bwp006",
+   "bw1-bwp007"
+  ],
+  "sheet": "css/holo/fam/bw-tinsel-holo.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-tinsel-holo",
+  "pattern": "foil-holo bw-holo",
+  "classes": "bwt-pale bwt-tinsel era-bw fam-bw-tinsel-holo has-foil-map",
+  "reverse": false,
+  "faces": 28,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 12,
+  "examples": [
+   "bw1-5",
+   "bw1-bwp001"
+  ],
+  "sheet": "css/holo/fam/bw-tinsel-holo.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-tinsel-holo",
+  "pattern": "foil-holo bw-holo bw-vault",
+  "classes": "bwt-vault era-bw fam-bw-tinsel-holo has-foil-map",
+  "reverse": false,
+  "faces": 21,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "dv1-1",
+   "dv1-2"
+  ],
+  "sheet": "css/holo/fam/bw-tinsel-holo.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-tinsel-holo",
+  "pattern": "foil-holo bw-holo",
+  "classes": "bwt-ice era-bw fam-bw-tinsel-holo has-foil-map",
+  "reverse": false,
+  "faces": 13,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 5,
+  "examples": [
+   "bw1-19-cracked-ice",
+   "bw1-31-cracked-ice"
+  ],
+  "sheet": "css/holo/fam/bw-tinsel-holo.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-tinsel-holo",
+  "pattern": "foil-holo bw-holo",
+  "classes": "bwt-bubbles bwt-cosmos era-bw fam-bw-tinsel-holo has-foil-map",
+  "reverse": false,
+  "faces": 8,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "bwp-bwp087",
+   "bwp-bwp088"
+  ],
+  "sheet": "css/holo/fam/bw-tinsel-holo.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-tinsel-holo",
+  "pattern": "foil-holo bw-holo bw-vault",
+  "classes": "bwt-mirror era-bw fam-bw-tinsel-holo has-foil-map",
+  "reverse": false,
+  "faces": 5,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "dv1-10-dvstamp",
+   "dv1-11-dvstamp"
+  ],
+  "sheet": "css/holo/fam/bw-tinsel-holo.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-tinsel-holo",
+  "pattern": "foil-holo bw-holo",
+  "classes": "bwt-rev-mirror era-bw fam-bw-tinsel-holo has-foil-map",
+  "reverse": false,
+  "faces": 4,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 3,
+  "examples": [
+   "bw4-bwp041",
+   "bw4-bwp042"
+  ],
+  "sheet": "css/holo/fam/bw-tinsel-holo.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-tinsel-holo",
+  "pattern": "foil-holo bw-holo",
+  "classes": "bwt-rev-cross era-bw fam-bw-tinsel-holo has-foil-map",
+  "reverse": false,
+  "faces": 3,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "bwp-bwp029",
+   "bwp-bwp030"
+  ],
+  "sheet": "css/holo/fam/bw-tinsel-holo.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-tinsel-holo",
+  "pattern": "foil-holo bw-holo",
+  "classes": "bwt-mirror era-bw fam-bw-tinsel-holo has-foil-map",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "bw10-bwp099"
+  ],
+  "sheet": "css/holo/fam/bw-tinsel-holo.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-tinsel-holo",
+  "pattern": "foil-holo bw-holo",
+  "classes": "bwt-rev-ball era-bw fam-bw-tinsel-holo has-foil-map",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "bw4-bwp039"
+  ],
+  "sheet": "css/holo/fam/bw-tinsel-holo.css"
+ },
+ {
+  "era": "bw",
+  "family": "bw-tinsel-holo",
+  "pattern": "foil-holo bw-holo",
+  "classes": "bwt-matte era-bw fam-bw-tinsel-holo has-foil-map",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "bw5-bwp035"
+  ],
+  "sheet": "css/holo/fam/bw-tinsel-holo.css"
+ },
+ {
+  "era": "bw",
+  "family": "mcd-promos",
+  "pattern": "foil-holo bw-rc",
+  "classes": "era-bw fam-mcd-promos has-foil-map has-foil-map mcd-bw",
+  "reverse": false,
+  "faces": 24,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 2,
+  "examples": [
+   "mcd11-1",
+   "mcd11-2"
+  ],
+  "sheet": "css/holo/fam/mcd-promos.css"
+ },
+ {
+  "era": "dp",
+  "family": "",
+  "pattern": "foil-reverse",
+  "classes": "dp-rev dp-rev-basic dp-rev-dp era-dp rev-mirror",
+  "reverse": true,
+  "faces": 45,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 4,
+  "examples": [
+   "pop6-3 (reverse)",
+   "pop6-4 (reverse)"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "dp",
+  "family": "",
+  "pattern": "foil-reverse",
+  "classes": "dp-rev dp-rev-dp dp-rev-stage era-dp rev-mirror",
+  "reverse": true,
+  "faces": 20,
+  "rarities": [
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 4,
+  "examples": [
+   "pop6-1 (reverse)",
+   "pop6-2 (reverse)"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "dp",
+  "family": "",
+  "pattern": "foil-reverse",
+  "classes": "dp-rev dp-rev-dp dp-rev-trainer era-dp rev-mirror",
+  "reverse": true,
+  "faces": 3,
+  "rarities": [
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "pop8-9 (reverse)",
+   "pop8-10 (reverse)"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "dp",
+  "family": "dp-cosmos-holo",
+  "pattern": "foil-holo dp-holo",
+  "classes": "era-dp fam-dp-cosmos-holo has-foil-map has-foil-map",
+  "reverse": false,
+  "faces": 269,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 20,
+  "examples": [
+   "col1-1",
+   "col1-2"
+  ],
+  "sheet": "css/holo/fam/dp-cosmos-holo.css"
+ },
+ {
+  "era": "dp",
+  "family": "dp-legend",
+  "pattern": "foil-ultra dp-legend dp-legend-top",
+  "classes": "era-dp fam-dp-legend fam-dp-legend-top has-foil-map has-foil-map",
+  "reverse": false,
+  "faces": 9,
+  "rarities": [
+   "LEGEND"
+  ],
+  "sets": 4,
+  "examples": [
+   "hgss1-111",
+   "hgss1-113"
+  ],
+  "sheet": "css/holo/fam/dp-legend.css"
+ },
+ {
+  "era": "dp",
+  "family": "dp-legend",
+  "pattern": "foil-ultra dp-legend dp-legend-bottom",
+  "classes": "era-dp fam-dp-legend fam-dp-legend-bottom has-foil-map has-foil-map",
+  "reverse": false,
+  "faces": 9,
+  "rarities": [
+   "LEGEND"
+  ],
+  "sets": 4,
+  "examples": [
+   "hgss1-112",
+   "hgss1-114"
+  ],
+  "sheet": "css/holo/fam/dp-legend.css"
+ },
+ {
+  "era": "dp",
+  "family": "dp-lvx",
+  "pattern": "foil-ex dp-lvx",
+  "classes": "era-dp fam-dp-lvx has-foil-map",
+  "reverse": false,
+  "faces": 75,
+  "rarities": [
+   "Rare Holo LV.X"
+  ],
+  "sets": 11,
+  "examples": [
+   "dp1-120",
+   "dp1-121"
+  ],
+  "sheet": "css/holo/fam/dp-lvx.css"
+ },
+ {
+  "era": "dp",
+  "family": "dp-prime",
+  "pattern": "foil-ex dp-prime",
+  "classes": "era-dp fam-dp-prime has-foil-map",
+  "reverse": false,
+  "faces": 29,
+  "rarities": [
+   "Rare Prime"
+  ],
+  "sets": 4,
+  "examples": [
+   "hgss1-105",
+   "hgss1-106"
+  ],
+  "sheet": "css/holo/fam/dp-prime.css"
+ },
+ {
+  "era": "dp",
+  "family": "dp-reverse",
+  "pattern": "foil-reverse",
+  "classes": "dp-rev dp-rev-basic dp-rev-dp era-dp fam-dp-reverse rev-mirror",
+  "reverse": true,
+  "faces": 651,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 11,
+  "examples": [
+   "dp1-1 (reverse)",
+   "dp1-9 (reverse)"
+  ],
+  "sheet": "css/holo/fam/dp-reverse.css"
+ },
+ {
+  "era": "dp",
+  "family": "dp-reverse",
+  "pattern": "foil-reverse",
+  "classes": "dp-rev dp-rev-dp dp-rev-stage era-dp fam-dp-reverse rev-mirror",
+  "reverse": true,
+  "faces": 466,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 11,
+  "examples": [
+   "dp1-2 (reverse)",
+   "dp1-3 (reverse)"
+  ],
+  "sheet": "css/holo/fam/dp-reverse.css"
+ },
+ {
+  "era": "dp",
+  "family": "dp-reverse",
+  "pattern": "foil-reverse",
+  "classes": "dp-rev dp-rev-basic dp-rev-hgss era-dp fam-dp-reverse rev-mirror",
+  "reverse": true,
+  "faces": 215,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 5,
+  "examples": [
+   "col1-2 (reverse)",
+   "col1-3 (reverse)"
+  ],
+  "sheet": "css/holo/fam/dp-reverse.css"
+ },
+ {
+  "era": "dp",
+  "family": "dp-reverse",
+  "pattern": "foil-reverse",
+  "classes": "dp-rev dp-rev-hgss dp-rev-stage era-dp fam-dp-reverse rev-mirror",
+  "reverse": true,
+  "faces": 173,
+  "rarities": [
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 5,
+  "examples": [
+   "col1-1 (reverse)",
+   "col1-4 (reverse)"
+  ],
+  "sheet": "css/holo/fam/dp-reverse.css"
+ },
+ {
+  "era": "dp",
+  "family": "dp-reverse",
+  "pattern": "foil-reverse",
+  "classes": "dp-rev dp-rev-dp dp-rev-trainer era-dp fam-dp-reverse rev-mirror",
+  "reverse": true,
+  "faces": 123,
+  "rarities": [
+   "Common",
+   "Uncommon"
+  ],
+  "sets": 11,
+  "examples": [
+   "dp1-105 (reverse)",
+   "dp1-106 (reverse)"
+  ],
+  "sheet": "css/holo/fam/dp-reverse.css"
+ },
+ {
+  "era": "dp",
+  "family": "dp-reverse",
+  "pattern": "foil-reverse",
+  "classes": "dp-rev dp-rev-hgss dp-rev-trainer era-dp fam-dp-reverse rev-mirror",
+  "reverse": true,
+  "faces": 50,
+  "rarities": [
+   "Uncommon"
+  ],
+  "sets": 5,
+  "examples": [
+   "col1-76 (reverse)",
+   "col1-77 (reverse)"
+  ],
+  "sheet": "css/holo/fam/dp-reverse.css"
+ },
+ {
+  "era": "dp",
+  "family": "dp-reverse",
+  "pattern": "foil-reverse",
+  "classes": "dp-rev dp-rev-dp dp-rev-senergy era-dp fam-dp-reverse rev-mirror",
+  "reverse": true,
+  "faces": 17,
+  "rarities": [
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 6,
+  "examples": [
+   "dp2-118 (reverse)",
+   "dp2-119 (reverse)"
+  ],
+  "sheet": "css/holo/fam/dp-reverse.css"
+ },
+ {
+  "era": "dp",
+  "family": "dp-reverse",
+  "pattern": "foil-reverse",
+  "classes": "dp-rev dp-rev-hgss dp-rev-senergy era-dp fam-dp-reverse rev-mirror",
+  "reverse": true,
+  "faces": 7,
+  "rarities": [
+   "Uncommon"
+  ],
+  "sets": 4,
+  "examples": [
+   "col1-86 (reverse)",
+   "col1-87 (reverse)"
+  ],
+  "sheet": "css/holo/fam/dp-reverse.css"
+ },
+ {
+  "era": "dp",
+  "family": "dp-sp",
+  "pattern": "foil-holo dp-holo",
+  "classes": "era-dp fam-dp-sp has-foil-map has-foil-map",
+  "reverse": false,
+  "faces": 23,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 5,
+  "examples": [
+   "dpp-dpp41",
+   "pl1-7"
+  ],
+  "sheet": "css/holo/fam/dp-sp.css"
+ },
+ {
+  "era": "dp",
+  "family": "dp-special-rares",
+  "pattern": "foil-holo dp-holo dp-secret",
+  "classes": "dsr-cosmos dsr-secret era-dp fam-dp-special-rares has-foil-map has-foil-map",
+  "reverse": false,
+  "faces": 13,
+  "rarities": [
+   "Rare Secret"
+  ],
+  "sets": 5,
+  "examples": [
+   "dp2-124",
+   "dp7-101"
+  ],
+  "sheet": "css/holo/fam/dp-special-rares.css"
+ },
+ {
+  "era": "dp",
+  "family": "dp-special-rares",
+  "pattern": "foil-holo dp-holo dp-shiny-legend",
+  "classes": "dsr-cosmos dsr-sl era-dp fam-dp-special-rares has-foil-map has-foil-map",
+  "reverse": false,
+  "faces": 11,
+  "rarities": [
+   "Rare Shiny Legendary"
+  ],
+  "sets": 1,
+  "examples": [
+   "col1-SL1",
+   "col1-SL2"
+  ],
+  "sheet": "css/holo/fam/dp-special-rares.css"
+ },
+ {
+  "era": "dp",
+  "family": "dp-special-rares",
+  "pattern": "foil-holo dp-shining",
+  "classes": "dsr-shining era-dp fam-dp-special-rares has-foil-map",
+  "reverse": false,
+  "faces": 10,
+  "rarities": [
+   "Rare Shining"
+  ],
+  "sets": 4,
+  "examples": [
+   "dp7-SH1",
+   "dp7-SH2"
+  ],
+  "sheet": "css/holo/fam/dp-special-rares.css"
+ },
+ {
+  "era": "dp",
+  "family": "dp-special-rares",
+  "pattern": "foil-holo dp-holo dp-ar",
+  "classes": "dsr-ar dsr-cosmos era-dp fam-dp-special-rares has-foil-map has-foil-map",
+  "reverse": false,
+  "faces": 9,
+  "rarities": [
+   "Rare Arceus"
+  ],
+  "sets": 1,
+  "examples": [
+   "pl4-AR1",
+   "pl4-AR2"
+  ],
+  "sheet": "css/holo/fam/dp-special-rares.css"
+ },
+ {
+  "era": "dp",
+  "family": "dp-special-rares",
+  "pattern": "foil-holo dp-rotom",
+  "classes": "dsr-rotom era-dp fam-dp-special-rares has-foil-map",
+  "reverse": false,
+  "faces": 6,
+  "rarities": [
+   "Rare Rotom"
+  ],
+  "sets": 1,
+  "examples": [
+   "pl2-RT1",
+   "pl2-RT2"
+  ],
+  "sheet": "css/holo/fam/dp-special-rares.css"
+ },
+ {
+  "era": "dp",
+  "family": "dp-special-rares",
+  "pattern": "foil-holo dp-alph",
+  "classes": "dsr-alph era-dp fam-dp-special-rares",
+  "reverse": false,
+  "faces": 4,
+  "rarities": [
+   "Rare Secret"
+  ],
+  "sets": 4,
+  "examples": [
+   "hgss1-ONE",
+   "hgss2-TWO"
+  ],
+  "sheet": "css/holo/fam/dp-special-rares.css"
+ },
+ {
+  "era": "dp",
+  "family": "dp-special-rares",
+  "pattern": "foil-holo dp-shining",
+  "classes": "dsr-gold dsr-shining era-dp fam-dp-special-rares has-foil-map",
+  "reverse": false,
+  "faces": 2,
+  "rarities": [
+   "Rare Shining"
+  ],
+  "sets": 2,
+  "examples": [
+   "dp7-SH3",
+   "pl4-SH12"
+  ],
+  "sheet": "css/holo/fam/dp-special-rares.css"
+ },
+ {
+  "era": "ex",
+  "family": "",
+  "pattern": "foil-reverse",
+  "classes": "era-ex ex-rev ex-rev-mirror rev-mirror",
+  "reverse": true,
+  "faces": 85,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 5,
+  "examples": [
+   "pop1-1 (reverse)",
+   "pop1-2 (reverse)"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "ex",
+  "family": "",
+  "pattern": "foil-holo ex-refractor",
+  "classes": "era-ex has-foil-map",
+  "reverse": false,
+  "faces": 46,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 4,
+  "examples": [
+   "ex11-1",
+   "ex11-2"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "ex",
+  "family": "",
+  "pattern": "foil-holo ex-sheen ex-energy",
+  "classes": "era-ex has-foil-map",
+  "reverse": false,
+  "faces": 12,
+  "rarities": [
+   "Energy"
+  ],
+  "sets": 2,
+  "examples": [
+   "ex13-105",
+   "ex13-106"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "ex",
+  "family": "",
+  "pattern": "foil-ex ex-ex ex-refractor",
+  "classes": "era-ex has-foil-map",
+  "reverse": false,
+  "faces": 10,
+  "rarities": [
+   "Rare Holo EX"
+  ],
+  "sets": 2,
+  "examples": [
+   "ex14-96",
+   "ex15-90"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "ex",
+  "family": "",
+  "pattern": "foil-reverse",
+  "classes": "era-ex ex-rev ex-rev-energy ex-rev-set-ex7 rev-mirror",
+  "reverse": true,
+  "faces": 6,
+  "rarities": [
+   "Common",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "ex7-32 (reverse)",
+   "ex7-34 (reverse)"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "ex",
+  "family": "",
+  "pattern": "foil-reverse",
+  "classes": "era-ex ex-rev ex-rev-energy ex-rev-set-ex5 rev-mirror",
+  "reverse": true,
+  "faces": 5,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "ex5-12 (reverse)",
+   "ex5-15 (reverse)"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "ex",
+  "family": "",
+  "pattern": "foil-holo ex-cosmos",
+  "classes": "era-ex has-foil-map",
+  "reverse": false,
+  "faces": 4,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "np-np016",
+   "np-np017"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "ex",
+  "family": "",
+  "pattern": "foil-reverse",
+  "classes": "era-ex ex-rev ex-rev-plain ex-rev-set-ex13 rev-mirror",
+  "reverse": true,
+  "faces": 3,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "ex13-16 (reverse)",
+   "ex13-26 (reverse)"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "ex",
+  "family": "",
+  "pattern": "foil-reverse",
+  "classes": "era-ex ex-rev ex-rev-energy ex-rev-set-ex6 rev-mirror",
+  "reverse": true,
+  "faces": 2,
+  "rarities": [
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "ex6-20 (reverse)",
+   "ex6-39 (reverse)"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "ex",
+  "family": "",
+  "pattern": "foil-reverse",
+  "classes": "era-ex ex-rev ex-rev-set-ex8 ex-rev-wheel rev-mirror",
+  "reverse": true,
+  "faces": 1,
+  "rarities": [
+   "Common"
+  ],
+  "sets": 1,
+  "examples": [
+   "ex8-74 (reverse)"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "ex",
+  "family": "",
+  "pattern": "foil-reverse",
+  "classes": "era-ex ex-rev ex-rev-pokeball ex-rev-set-ex9 rev-mirror",
+  "reverse": true,
+  "faces": 1,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "ex9-3 (reverse)"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "ex",
+  "family": "ex-cosmos-holo",
+  "pattern": "foil-holo ex-cosmos",
+  "classes": "era-ex fam-ex-cosmos-holo has-foil-map",
+  "reverse": false,
+  "faces": 193,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 19,
+  "examples": [
+   "ex1-1",
+   "ex1-2"
+  ],
+  "sheet": "css/holo/fam/ex-cosmos-holo.css"
+ },
+ {
+  "era": "ex",
+  "family": "ex-cosmos-holo",
+  "pattern": "foil-holo ex-cosmos ex-unown",
+  "classes": "era-ex fam-ex-cosmos-holo has-foil-map",
+  "reverse": false,
+  "faces": 28,
+  "rarities": [
+   "Rare Unown"
+  ],
+  "sets": 1,
+  "examples": [
+   "ex10-A",
+   "ex10-B"
+  ],
+  "sheet": "css/holo/fam/ex-cosmos-holo.css"
+ },
+ {
+  "era": "ex",
+  "family": "ex-cosmos-holo",
+  "pattern": "foil-holo ex-cosmos ex-secret",
+  "classes": "era-ex fam-ex-cosmos-holo fam-ex-cosmos-secret has-foil-map",
+  "reverse": false,
+  "faces": 13,
+  "rarities": [
+   "Rare Secret"
+  ],
+  "sets": 9,
+  "examples": [
+   "ex11-114",
+   "ex12-93"
+  ],
+  "sheet": "css/holo/fam/ex-cosmos-holo.css"
+ },
+ {
+  "era": "ex",
+  "family": "ex-cosmos-holo",
+  "pattern": "foil-holo ex-cosmos ex-energy",
+  "classes": "era-ex fam-ex-cosmos-holo has-foil-map",
+  "reverse": false,
+  "faces": 6,
+  "rarities": [
+   "Energy"
+  ],
+  "sets": 1,
+  "examples": [
+   "ex9-101",
+   "ex9-102"
+  ],
+  "sheet": "css/holo/fam/ex-cosmos-holo.css"
+ },
+ {
+  "era": "ex",
+  "family": "ex-delta-holon",
+  "pattern": "foil-holo ex-refractor",
+  "classes": "era-ex fam-ex-delta-holon has-foil-map",
+  "reverse": false,
+  "faces": 4,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 2,
+  "examples": [
+   "ex11-13",
+   "ex13-5"
+  ],
+  "sheet": "css/holo/fam/ex-delta-holon.css"
+ },
+ {
+  "era": "ex",
+  "family": "ex-delta-holon",
+  "pattern": "foil-ex ex-ex ex-refractor",
+  "classes": "era-ex fam-ex-delta-holon has-foil-map",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Rare Holo EX"
+  ],
+  "sets": 1,
+  "examples": [
+   "ex15-95"
+  ],
+  "sheet": "css/holo/fam/ex-delta-holon.css"
+ },
+ {
+  "era": "ex",
+  "family": "ex-gold-star",
+  "pattern": "foil-ultra ex-star",
+  "classes": "era-ex fam-ex-gold-star has-foil-map",
+  "reverse": false,
+  "faces": 22,
+  "rarities": [
+   "Rare Holo Star"
+  ],
+  "sets": 8,
+  "examples": [
+   "ex10-113",
+   "ex10-114"
+  ],
+  "sheet": "css/holo/fam/ex-gold-star.css"
+ },
+ {
+  "era": "ex",
+  "family": "ex-gold-star",
+  "pattern": "foil-ultra ex-star ex-refractor",
+  "classes": "era-ex fam-ex-gold-star-refractor gsr-pale gsr-pastel has-foil-map",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Rare Holo Star"
+  ],
+  "sets": 1,
+  "examples": [
+   "ex13-102"
+  ],
+  "sheet": "css/holo/fam/ex-gold-star.css"
+ },
+ {
+  "era": "ex",
+  "family": "ex-gold-star",
+  "pattern": "foil-ultra ex-star ex-refractor",
+  "classes": "era-ex fam-ex-gold-star-refractor gsr-dark has-foil-map",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Rare Holo Star"
+  ],
+  "sets": 1,
+  "examples": [
+   "ex15-100"
+  ],
+  "sheet": "css/holo/fam/ex-gold-star.css"
+ },
+ {
+  "era": "ex",
+  "family": "ex-gold-star",
+  "pattern": "foil-ultra ex-star ex-refractor",
+  "classes": "era-ex fam-ex-gold-star-refractor gsr-pale has-foil-map",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Rare Holo Star"
+  ],
+  "sets": 1,
+  "examples": [
+   "ex15-101"
+  ],
+  "sheet": "css/holo/fam/ex-gold-star.css"
+ },
+ {
+  "era": "ex",
+  "family": "ex-pokemon-ex",
+  "pattern": "foil-ex ex-ex",
+  "classes": "era-ex fam-ex-pokemon-ex has-foil-map",
+  "reverse": false,
+  "faces": 127,
+  "rarities": [
+   "Rare Holo",
+   "Rare Holo EX"
+  ],
+  "sets": 16,
+  "examples": [
+   "ex1-96",
+   "ex1-97"
+  ],
+  "sheet": "css/holo/fam/ex-pokemon-ex.css"
+ },
+ {
+  "era": "ex",
+  "family": "ex-pokemon-ex",
+  "pattern": "foil-ex ex-ex ex-secret",
+  "classes": "era-ex fam-ex-pokemon-ex fam-ex-pokemon-ex-secret has-foil-map",
+  "reverse": false,
+  "faces": 3,
+  "rarities": [
+   "Rare Secret"
+  ],
+  "sets": 2,
+  "examples": [
+   "ex10-116",
+   "ex10-117"
+  ],
+  "sheet": "css/holo/fam/ex-pokemon-ex.css"
+ },
+ {
+  "era": "ex",
+  "family": "ex-pokemon-ex",
+  "pattern": "foil-ex ex-ex ex-cracked-ice",
+  "classes": "era-ex fam-ex-pokemon-ex fam-ex-pokemon-ex-ice has-foil-map",
+  "reverse": false,
+  "faces": 3,
+  "rarities": [
+   "Rare Holo EX"
+  ],
+  "sets": 1,
+  "examples": [
+   "ex5-97",
+   "ex5-98"
+  ],
+  "sheet": "css/holo/fam/ex-pokemon-ex.css"
+ },
+ {
+  "era": "ex",
+  "family": "ex-pokemon-ex",
+  "pattern": "foil-ex ex-ex ex-secret ex-cracked-ice",
+  "classes": "era-ex fam-ex-pokemon-ex fam-ex-pokemon-ex-ice has-foil-map",
+  "reverse": false,
+  "faces": 3,
+  "rarities": [
+   "Rare Secret"
+  ],
+  "sets": 1,
+  "examples": [
+   "ex6-114",
+   "ex6-115"
+  ],
+  "sheet": "css/holo/fam/ex-pokemon-ex.css"
+ },
+ {
+  "era": "ex",
+  "family": "ex-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-ex ex-rev ex-rev-energy ex-rev-set-ex6 fam-ex-reverse rev-mirror xr-mapped xr-pat",
+  "reverse": true,
+  "faces": 101,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "ex6-1 (reverse)",
+   "ex6-2 (reverse)"
+  ],
+  "sheet": "css/holo/fam/ex-reverse.css"
+ },
+ {
+  "era": "ex",
+  "family": "ex-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-ex ex-rev ex-rev-pokeball ex-rev-set-ex10 fam-ex-reverse rev-mirror xr-mapped xr-pat",
+  "reverse": true,
+  "faces": 100,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "ex10-1 (reverse)",
+   "ex10-2 (reverse)"
+  ],
+  "sheet": "css/holo/fam/ex-reverse.css"
+ },
+ {
+  "era": "ex",
+  "family": "ex-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-ex ex-rev ex-rev-mirror ex-rev-set-ex1 fam-ex-reverse rev-mirror",
+  "reverse": true,
+  "faces": 95,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "ex1-1 (reverse)",
+   "ex1-2 (reverse)"
+  ],
+  "sheet": "css/holo/fam/ex-reverse.css"
+ },
+ {
+  "era": "ex",
+  "family": "ex-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-ex ex-rev ex-rev-set-ex8 ex-rev-wheel fam-ex-reverse rev-mirror xr-mapped xr-pat",
+  "reverse": true,
+  "faces": 94,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "ex8-1 (reverse)",
+   "ex8-2 (reverse)"
+  ],
+  "sheet": "css/holo/fam/ex-reverse.css"
+ },
+ {
+  "era": "ex",
+  "family": "ex-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-ex ex-rev ex-rev-mirror ex-rev-set-ex2 fam-ex-reverse rev-mirror",
+  "reverse": true,
+  "faces": 93,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "ex2-1 (reverse)",
+   "ex2-2 (reverse)"
+  ],
+  "sheet": "css/holo/fam/ex-reverse.css"
+ },
+ {
+  "era": "ex",
+  "family": "ex-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-ex ex-rev ex-rev-plain ex-rev-set-ex16 fam-ex-reverse rev-mirror xr-mapped",
+  "reverse": true,
+  "faces": 91,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "ex16-1 (reverse)",
+   "ex16-2 (reverse)"
+  ],
+  "sheet": "css/holo/fam/ex-reverse.css"
+ },
+ {
+  "era": "ex",
+  "family": "ex-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-ex ex-rev ex-rev-plain ex-rev-set-ex11 fam-ex-reverse rev-mirror xr-mapped",
+  "reverse": true,
+  "faces": 89,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "ex11-19 (reverse)",
+   "ex11-20 (reverse)"
+  ],
+  "sheet": "css/holo/fam/ex-reverse.css"
+ },
+ {
+  "era": "ex",
+  "family": "ex-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-ex ex-rev ex-rev-energy ex-rev-set-ex7 fam-ex-reverse rev-mirror xr-mapped xr-pat",
+  "reverse": true,
+  "faces": 89,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "ex7-1 (reverse)",
+   "ex7-2 (reverse)"
+  ],
+  "sheet": "css/holo/fam/ex-reverse.css"
+ },
+ {
+  "era": "ex",
+  "family": "ex-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-ex ex-rev ex-rev-mirror ex-rev-set-ex3 fam-ex-reverse rev-mirror",
+  "reverse": true,
+  "faces": 88,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "ex3-1 (reverse)",
+   "ex3-2 (reverse)"
+  ],
+  "sheet": "css/holo/fam/ex-reverse.css"
+ },
+ {
+  "era": "ex",
+  "family": "ex-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-ex ex-rev ex-rev-mirror ex-rev-set-ex4 fam-ex-reverse rev-mirror",
+  "reverse": true,
+  "faces": 88,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "ex4-1 (reverse)",
+   "ex4-2 (reverse)"
+  ],
+  "sheet": "css/holo/fam/ex-reverse.css"
+ },
+ {
+  "era": "ex",
+  "family": "ex-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-ex ex-rev ex-rev-pokeball ex-rev-set-ex9 fam-ex-reverse rev-mirror xr-mapped xr-pat",
+  "reverse": true,
+  "faces": 88,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "ex9-1 (reverse)",
+   "ex9-2 (reverse)"
+  ],
+  "sheet": "css/holo/fam/ex-reverse.css"
+ },
+ {
+  "era": "ex",
+  "family": "ex-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-ex ex-rev ex-rev-energy ex-rev-set-ex5 fam-ex-reverse rev-mirror xr-mapped xr-pat",
+  "reverse": true,
+  "faces": 87,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "ex5-1 (reverse)",
+   "ex5-2 (reverse)"
+  ],
+  "sheet": "css/holo/fam/ex-reverse.css"
+ },
+ {
+  "era": "ex",
+  "family": "ex-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-ex ex-rev ex-rev-cosmos ex-rev-set-ex12 fam-ex-reverse rev-mirror xr-mapped",
+  "reverse": true,
+  "faces": 82,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "ex12-1 (reverse)",
+   "ex12-2 (reverse)"
+  ],
+  "sheet": "css/holo/fam/ex-reverse.css"
+ },
+ {
+  "era": "ex",
+  "family": "ex-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-ex ex-rev ex-rev-plain ex-rev-set-ex13 fam-ex-reverse rev-mirror xr-mapped",
+  "reverse": true,
+  "faces": 79,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "ex13-18 (reverse)",
+   "ex13-19 (reverse)"
+  ],
+  "sheet": "css/holo/fam/ex-reverse.css"
+ },
+ {
+  "era": "ex",
+  "family": "ex-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-ex ex-rev ex-rev-plain ex-rev-set-ex14 fam-ex-reverse rev-mirror xr-mapped",
+  "reverse": true,
+  "faces": 77,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "ex14-1 (reverse)",
+   "ex14-3 (reverse)"
+  ],
+  "sheet": "css/holo/fam/ex-reverse.css"
+ },
+ {
+  "era": "ex",
+  "family": "ex-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-ex ex-rev ex-rev-plain ex-rev-set-ex15 fam-ex-reverse rev-mirror xr-delta xr-mapped",
+  "reverse": true,
+  "faces": 68,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "ex15-1 (reverse)",
+   "ex15-2 (reverse)"
+  ],
+  "sheet": "css/holo/fam/ex-reverse.css"
+ },
+ {
+  "era": "ex",
+  "family": "ex-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-ex ex-rev ex-rev-plain ex-rev-set-ex15 fam-ex-reverse rev-mirror xr-mapped",
+  "reverse": true,
+  "faces": 21,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "ex15-32 (reverse)",
+   "ex15-51 (reverse)"
+  ],
+  "sheet": "css/holo/fam/ex-reverse.css"
+ },
+ {
+  "era": "ex",
+  "family": "ex-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-ex ex-rev ex-rev-plain ex-rev-set-ex11 fam-ex-reverse rev-mirror xr-delta xr-mapped",
+  "reverse": true,
+  "faces": 18,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "ex11-1 (reverse)",
+   "ex11-2 (reverse)"
+  ],
+  "sheet": "css/holo/fam/ex-reverse.css"
+ },
+ {
+  "era": "ex",
+  "family": "ex-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-ex ex-rev ex-rev-plain ex-rev-set-ex13 fam-ex-reverse rev-mirror xr-delta xr-mapped",
+  "reverse": true,
+  "faces": 16,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "ex13-1 (reverse)",
+   "ex13-2 (reverse)"
+  ],
+  "sheet": "css/holo/fam/ex-reverse.css"
+ },
+ {
+  "era": "ex",
+  "family": "ex-reverse",
+  "pattern": "foil-reverse",
+  "classes": "era-ex ex-rev ex-rev-plain ex-rev-set-ex14 fam-ex-reverse rev-mirror xr-delta xr-mapped",
+  "reverse": true,
+  "faces": 11,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "ex14-2 (reverse)",
+   "ex14-4 (reverse)"
+  ],
+  "sheet": "css/holo/fam/ex-reverse.css"
+ },
+ {
+  "era": "wotc",
+  "family": "",
+  "pattern": "foil-reverse",
+  "classes": "era-wotc rev-mirror wotc-rev",
+  "reverse": true,
+  "faces": 1029,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 11,
+  "examples": [
+   "base1-1 (reverse)",
+   "base1-2 (reverse)"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "wotc",
+  "family": "wotc-aquapolis",
+  "pattern": "foil-holo wotc-ecard",
+  "classes": "era-wotc fam-wotc-aquapolis has-foil-map",
+  "reverse": false,
+  "faces": 32,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "ecard2-H1",
+   "ecard2-H2"
+  ],
+  "sheet": "css/holo/fam/wotc-aquapolis.css"
+ },
+ {
+  "era": "wotc",
+  "family": "wotc-base-set",
+  "pattern": "foil-holo wotc-cosmos wotc-starlight",
+  "classes": "era-wotc fam-wotc-base-set has-foil-map wbs-mapped",
+  "reverse": false,
+  "faces": 16,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "base1-1",
+   "base1-2"
+  ],
+  "sheet": "css/holo/fam/wotc-base-set.css"
+ },
+ {
+  "era": "wotc",
+  "family": "wotc-base-set",
+  "pattern": "foil-holo wotc-cosmos",
+  "classes": "era-wotc fam-wotc-base-set has-foil-map wbs-mapped",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "base4-cdrom8"
+  ],
+  "sheet": "css/holo/fam/wotc-base-set.css"
+ },
+ {
+  "era": "wotc",
+  "family": "wotc-base-set-2",
+  "pattern": "foil-holo wotc-cosmos",
+  "classes": "era-wotc fam-wotc-base-set-2 has-foil-map wb2-mapped",
+  "reverse": false,
+  "faces": 20,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "base4-1",
+   "base4-2"
+  ],
+  "sheet": "css/holo/fam/wotc-base-set-2.css"
+ },
+ {
+  "era": "wotc",
+  "family": "wotc-crystal",
+  "pattern": "foil-holo wotc-crystal",
+  "classes": "cr-mapped era-wotc fam-wotc-crystal has-foil-map",
+  "reverse": false,
+  "faces": 9,
+  "rarities": [
+   "Rare Crystal"
+  ],
+  "sets": 2,
+  "examples": [
+   "ecard2-148",
+   "ecard2-149"
+  ],
+  "sheet": "css/holo/fam/wotc-crystal.css"
+ },
+ {
+  "era": "wotc",
+  "family": "wotc-expedition",
+  "pattern": "foil-reverse",
+  "classes": "era-wotc exp-rev fam-wotc-expedition rev-mirror wotc-rev wotc-rev-ecard",
+  "reverse": true,
+  "faces": 482,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 3,
+  "examples": [
+   "ecard1-33 (reverse)",
+   "ecard1-34 (reverse)"
+  ],
+  "sheet": "css/holo/fam/wotc-expedition.css"
+ },
+ {
+  "era": "wotc",
+  "family": "wotc-expedition",
+  "pattern": "foil-holo wotc-ecard",
+  "classes": "era-wotc exp-holo fam-wotc-expedition has-foil-map",
+  "reverse": false,
+  "faces": 32,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "ecard1-1",
+   "ecard1-2"
+  ],
+  "sheet": "css/holo/fam/wotc-expedition.css"
+ },
+ {
+  "era": "wotc",
+  "family": "wotc-expedition",
+  "pattern": "foil-reverse",
+  "classes": "era-wotc exp-rev exp-twin fam-wotc-expedition rev-mirror wotc-rev wotc-rev-ecard",
+  "reverse": true,
+  "faces": 32,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "ecard1-1 (reverse)",
+   "ecard1-2 (reverse)"
+  ],
+  "sheet": "css/holo/fam/wotc-expedition.css"
+ },
+ {
+  "era": "wotc",
+  "family": "wotc-fossil",
+  "pattern": "foil-holo wotc-cosmos wotc-starlight",
+  "classes": "era-wotc fam-wotc-fossil has-foil-map wf-mapped",
+  "reverse": false,
+  "faces": 15,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "base3-1",
+   "base3-2"
+  ],
+  "sheet": "css/holo/fam/wotc-fossil.css"
+ },
+ {
+  "era": "wotc",
+  "family": "wotc-gym",
+  "pattern": "foil-holo wotc-cosmos",
+  "classes": "era-wotc fam-wotc-gym gym-mapped gym-pokemon has-foil-map",
+  "reverse": false,
+  "faces": 30,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 2,
+  "examples": [
+   "gym1-1",
+   "gym1-2"
+  ],
+  "sheet": "css/holo/fam/wotc-gym.css"
+ },
+ {
+  "era": "wotc",
+  "family": "wotc-gym",
+  "pattern": "foil-holo wotc-cosmos",
+  "classes": "era-wotc fam-wotc-gym gym-mapped gym-trainer has-foil-map",
+  "reverse": false,
+  "faces": 9,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 2,
+  "examples": [
+   "gym1-15",
+   "gym1-16"
+  ],
+  "sheet": "css/holo/fam/wotc-gym.css"
+ },
+ {
+  "era": "wotc",
+  "family": "wotc-jungle",
+  "pattern": "foil-holo wotc-cosmos wotc-starlight",
+  "classes": "era-wotc fam-wotc-jungle has-foil-map wj-mapped",
+  "reverse": false,
+  "faces": 16,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "base2-1",
+   "base2-2"
+  ],
+  "sheet": "css/holo/fam/wotc-jungle.css"
+ },
+ {
+  "era": "wotc",
+  "family": "wotc-legendary-collection",
+  "pattern": "foil-reverse",
+  "classes": "era-wotc fam-wotc-legendary-collection rev-mirror wotc-rev wotc-rev-legendary",
+  "reverse": true,
+  "faces": 110,
+  "rarities": [
+   "Common",
+   "Rare",
+   "Rare Holo",
+   "Uncommon"
+  ],
+  "sets": 1,
+  "examples": [
+   "base6-1 (reverse)",
+   "base6-2 (reverse)"
+  ],
+  "sheet": "css/holo/fam/wotc-legendary-collection.css"
+ },
+ {
+  "era": "wotc",
+  "family": "wotc-legendary-collection",
+  "pattern": "foil-holo wotc-cosmos wotc-starlight",
+  "classes": "era-wotc fam-wotc-legendary-collection has-foil-map lc-mapped",
+  "reverse": false,
+  "faces": 19,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "base6-1",
+   "base6-2"
+  ],
+  "sheet": "css/holo/fam/wotc-legendary-collection.css"
+ },
+ {
+  "era": "wotc",
+  "family": "wotc-neo-destiny",
+  "pattern": "foil-holo wotc-cosmos",
+  "classes": "era-wotc fam-wotc-neo-destiny has-foil-map nd-window",
+  "reverse": false,
+  "faces": 15,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "neo4-1",
+   "neo4-2"
+  ],
+  "sheet": "css/holo/fam/wotc-neo-destiny.css"
+ },
+ {
+  "era": "wotc",
+  "family": "wotc-neo-destiny",
+  "pattern": "foil-holo wotc-cosmos",
+  "classes": "era-wotc fam-wotc-neo-destiny has-foil-map nd-energy",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "neo4-16"
+  ],
+  "sheet": "css/holo/fam/wotc-neo-destiny.css"
+ },
+ {
+  "era": "wotc",
+  "family": "wotc-neo-discovery",
+  "pattern": "foil-holo wotc-cosmos",
+  "classes": "era-wotc fam-wotc-neo-discovery has-foil-map",
+  "reverse": false,
+  "faces": 16,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "neo2-2",
+   "neo2-3"
+  ],
+  "sheet": "css/holo/fam/wotc-neo-discovery.css"
+ },
+ {
+  "era": "wotc",
+  "family": "wotc-neo-discovery",
+  "pattern": "foil-holo wotc-cosmos",
+  "classes": "era-wotc fam-wotc-neo-discovery has-foil-map nd-pale",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "neo2-1"
+  ],
+  "sheet": "css/holo/fam/wotc-neo-discovery.css"
+ },
+ {
+  "era": "wotc",
+  "family": "wotc-neo-genesis",
+  "pattern": "foil-holo wotc-cosmos",
+  "classes": "era-wotc fam-wotc-neo-genesis has-foil-map ng-mapped",
+  "reverse": false,
+  "faces": 19,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "neo1-1",
+   "neo1-2"
+  ],
+  "sheet": "css/holo/fam/wotc-neo-genesis.css"
+ },
+ {
+  "era": "wotc",
+  "family": "wotc-neo-revelation",
+  "pattern": "foil-holo wotc-cosmos",
+  "classes": "era-wotc fam-wotc-neo-revelation has-foil-map",
+  "reverse": false,
+  "faces": 14,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "neo3-1",
+   "neo3-2"
+  ],
+  "sheet": "css/holo/fam/wotc-neo-revelation.css"
+ },
+ {
+  "era": "wotc",
+  "family": "wotc-promos",
+  "pattern": "foil-holo wotc-cosmos",
+  "classes": "era-wotc fam-wotc-promos has-foil-map wp-win",
+  "reverse": false,
+  "faces": 7,
+  "rarities": [
+   "Promo"
+  ],
+  "sets": 1,
+  "examples": [
+   "basep-basep09",
+   "basep-basep10"
+  ],
+  "sheet": "css/holo/fam/wotc-promos.css"
+ },
+ {
+  "era": "wotc",
+  "family": "wotc-promos",
+  "pattern": "foil-none",
+  "classes": "era-wotc fam-wotc-promos wp-rev",
+  "reverse": false,
+  "faces": 6,
+  "rarities": [
+   "Promo"
+  ],
+  "sets": 1,
+  "examples": [
+   "si1-1",
+   "si1-4"
+  ],
+  "sheet": "css/holo/fam/wotc-promos.css"
+ },
+ {
+  "era": "wotc",
+  "family": "wotc-promos",
+  "pattern": "foil-holo wotc-stamp",
+  "classes": "era-wotc fam-wotc-promos has-foil-map wp-stamp",
+  "reverse": false,
+  "faces": 4,
+  "rarities": [
+   "Promo"
+  ],
+  "sets": 1,
+  "examples": [
+   "basep-basep02",
+   "basep-basep03"
+  ],
+  "sheet": "css/holo/fam/wotc-promos.css"
+ },
+ {
+  "era": "wotc",
+  "family": "wotc-shining",
+  "pattern": "foil-holo wotc-shining",
+  "classes": "era-wotc fam-wotc-shining has-foil-map ws-fig ws-mapped",
+  "reverse": false,
+  "faces": 6,
+  "rarities": [
+   "Rare Shining"
+  ],
+  "sets": 1,
+  "examples": [
+   "neo4-106",
+   "neo4-108"
+  ],
+  "sheet": "css/holo/fam/wotc-shining.css"
+ },
+ {
+  "era": "wotc",
+  "family": "wotc-shining",
+  "pattern": "foil-holo wotc-shining wotc-shining-bg",
+  "classes": "era-wotc fam-wotc-shining has-foil-map ws-bg ws-mapped",
+  "reverse": false,
+  "faces": 2,
+  "rarities": [
+   "Rare Shining"
+  ],
+  "sets": 1,
+  "examples": [
+   "neo3-65",
+   "neo3-66"
+  ],
+  "sheet": "css/holo/fam/wotc-shining.css"
+ },
+ {
+  "era": "wotc",
+  "family": "wotc-shining",
+  "pattern": "foil-holo wotc-shining",
+  "classes": "era-wotc fam-wotc-shining has-foil-map ws-fig ws-mapped ws-spec",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Rare Shining"
+  ],
+  "sets": 1,
+  "examples": [
+   "neo4-107"
+  ],
+  "sheet": "css/holo/fam/wotc-shining.css"
+ },
+ {
+  "era": "wotc",
+  "family": "wotc-shining",
+  "pattern": "foil-holo wotc-shining",
+  "classes": "era-wotc fam-wotc-shining has-foil-map ws-fig ws-mapped ws-spec-lite",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Rare Shining"
+  ],
+  "sets": 1,
+  "examples": [
+   "neo4-109"
+  ],
+  "sheet": "css/holo/fam/wotc-shining.css"
+ },
+ {
+  "era": "wotc",
+  "family": "wotc-skyridge",
+  "pattern": "foil-holo wotc-ecard",
+  "classes": "era-wotc fam-wotc-skyridge has-foil-map",
+  "reverse": false,
+  "faces": 32,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "ecard3-H1",
+   "ecard3-H2"
+  ],
+  "sheet": "css/holo/fam/wotc-skyridge.css"
+ },
+ {
+  "era": "wotc",
+  "family": "wotc-team-rocket",
+  "pattern": "foil-holo wotc-cosmos",
+  "classes": "era-wotc fam-wotc-team-rocket has-foil-map tr-mapped tr-pokemon",
+  "reverse": false,
+  "faces": 14,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "base5-1",
+   "base5-2"
+  ],
+  "sheet": "css/holo/fam/wotc-team-rocket.css"
+ },
+ {
+  "era": "wotc",
+  "family": "wotc-team-rocket",
+  "pattern": "foil-holo wotc-cosmos",
+  "classes": "era-wotc fam-wotc-team-rocket has-foil-map tr-mapped tr-trainer",
+  "reverse": false,
+  "faces": 2,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "base5-15",
+   "base5-16"
+  ],
+  "sheet": "css/holo/fam/wotc-team-rocket.css"
+ },
+ {
+  "era": "wotc",
+  "family": "wotc-team-rocket",
+  "pattern": "foil-holo wotc-cosmos",
+  "classes": "era-wotc fam-wotc-team-rocket has-foil-map tr-energy tr-mapped",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Rare Holo"
+  ],
+  "sets": 1,
+  "examples": [
+   "base5-17"
+  ],
+  "sheet": "css/holo/fam/wotc-team-rocket.css"
+ },
+ {
+  "era": "wotc",
+  "family": "wotc-team-rocket",
+  "pattern": "foil-holo wotc-cosmos",
+  "classes": "era-wotc fam-wotc-team-rocket has-foil-map tr-mapped tr-pokemon tr-raichu",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Rare Secret"
+  ],
+  "sets": 1,
+  "examples": [
+   "base5-83"
+  ],
+  "sheet": "css/holo/fam/wotc-team-rocket.css"
+ },
+ {
+  "era": "other",
+  "family": "",
+  "pattern": "foil-reverse",
+  "classes": "",
+  "reverse": true,
+  "faces": 24,
+  "rarities": [
+   "Common",
+   "Uncommon"
+  ],
+  "sets": 2,
+  "examples": [
+   "tot23-22 (reverse)",
+   "tot23-23 (reverse)"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "other",
+  "family": "",
+  "pattern": "foil-holo foil-confetti",
+  "classes": "has-foil-map",
+  "reverse": false,
+  "faces": 20,
+  "rarities": [
+   "Confetti"
+  ],
+  "sets": 3,
+  "examples": [
+   "mcd23-1",
+   "mcd23-2"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "other",
+  "family": "",
+  "pattern": "foil-holo foil-cosmos",
+  "classes": "has-foil-map",
+  "reverse": false,
+  "faces": 9,
+  "rarities": [
+   "Cosmos"
+  ],
+  "sets": 1,
+  "examples": [
+   "tot24-6",
+   "tot24-10"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "other",
+  "family": "",
+  "pattern": "foil-holo foil-cosmos",
+  "classes": "frame-paradox has-foil-map",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Cosmos"
+  ],
+  "sets": 1,
+  "examples": [
+   "tot24-16"
+  ],
+  "sheet": ""
+ },
+ {
+  "era": "other",
+  "family": "sv-holo",
+  "pattern": "foil-holo foil-svholo",
+  "classes": "fam-sv-holo has-foil-map",
+  "reverse": false,
+  "faces": 3,
+  "rarities": [
+   "Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "tot23-26",
+   "tot23-27"
+  ],
+  "sheet": "css/holo/fam/sv-holo.css"
+ },
+ {
+  "era": "other",
+  "family": "sv-holo",
+  "pattern": "foil-holo foil-svholo",
+  "classes": "fam-sv-holo has-foil-map svh-rectmap",
+  "reverse": false,
+  "faces": 1,
+  "rarities": [
+   "Rare"
+  ],
+  "sets": 1,
+  "examples": [
+   "tot23-21"
+  ],
+  "sheet": "css/holo/fam/sv-holo.css"
+ }
+]

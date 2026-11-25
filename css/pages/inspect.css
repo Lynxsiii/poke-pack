@@ -369,6 +369,7 @@ html body #inspect .price-card .pc-loading::after {
     border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
   }
   #inspect .inspect-close svg { position: relative; z-index: 1; }
+  /* The card starts under the close bar (it ends 8px below the key), never behind it. */
   #inspect .inspect-grid { gap: 30px; margin-top: -4px; }
   #inspect .inspect-art { width: min(72vw, 300px, calc((100svh - 300px) * 0.716)); margin-top: 18px; }
   #inspect .inspect-set { padding-right: 0; }

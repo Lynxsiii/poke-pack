@@ -1494,7 +1494,7 @@ function renderShop() {
   if (chase) {
     // A set's own page shows what its packs can pull; the stamped promos
     // that only come in its boxes stay on the shelf below.
-    const top = liveSet.promoSet ? topByValue(12) : topByValue(40).filter((card) => !card.promo).slice(0, 6);
+    const top = topByValue(liveSet.promoSet ? 12 : 6);
     document.getElementById("shop-case")?.classList.toggle("hidden", !top.length);
     const sub = document.getElementById("shop-case-sub");
     if (sub) {
@@ -1599,7 +1599,7 @@ function productButton(offer) {
     : !affordable
       ? "Need coins"
       : confirming
-        ? `Confirm ${coinAmount(offer.price)}`
+        ? `Confirm <span class="confirm-price">${coinAmount(offer.price)}</span>`
         : `Open ${offer.short}`;
   return `<button type="button" class="ghost product-open${confirming ? " confirming" : ""}" data-open-product ${signed && !affordable ? "disabled" : ""}>${label}</button>${
     cartEligible(offer) ? cartControlHtml(liveSet.id, offer.id, offer.name) : ""
@@ -3021,10 +3021,17 @@ function bestHistoryPull() {
   return best;
 }
 
-/** The priciest cards in the loaded set, for the market board. */
+/**
+ * The priciest cards in the loaded set: its chase cards. A set with packs only
+ * counts what those packs can pull, so the stamped promos, box toppers and
+ * deck-only cards filed in its data stay out (the same test as the engine's
+ * pool). A promo set has no packs, so its promos are its chase.
+ */
 function topByValue(limit = 5) {
+  const packs = !liveSet?.promoSet;
   return [...setCards]
-    .filter((card) => !card.energy && typeof card.market === "number")
+    .filter((card) => !card.energy && card.rarity !== "Energy" && typeof card.market === "number")
+    .filter((card) => !packs || (!card.promo && !card.noPack && !card.boxTopper))
     .sort((a, b) => sellValue(b) - sellValue(a))
     .slice(0, limit);
 }

@@ -102,7 +102,7 @@ assert.equal(surprise.pick, 1, "a Surprise Box holds one of nine stamped ex");
 assert.equal(surprise.promos.length, 9);
 assert.deepEqual(sealedOffers(sealed, products).map((o) => o.id), ["eliteTrainerBox", "boosterBundle"],
   "no booster box: Prismatic Evolutions was never sold in one");
-assert.equal(products.length, 11);
+assert.equal(products.length, 12);
 
 // Pack shape: basic Energy, 4 Commons, 3 Uncommons, a reverse / Poké Ball /
 // ACE SPEC, the rare slot, and a reverse / Master Ball / SIR / gold.
