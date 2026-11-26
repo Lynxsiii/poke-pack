@@ -162,7 +162,7 @@
   .mbn-plaque { display: none; }
 }
 /* Tall enough (a phone header): the ribbon stays, under the logo, well above where the header fades out. */
-@container (max-aspect-ratio: 3 / 1) and (min-height: 160px) {
+@container (max-aspect-ratio: 3 / 1) and (min-height: 118px) {
   .mbn-plaque { display: grid; align-self: flex-start; }
   .mbn-rank { font-size: clamp(11px, 8cqh, 16px); }
   .mbn-set, .mbn-count { display: none; }

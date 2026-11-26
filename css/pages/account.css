@@ -387,6 +387,13 @@ body.no-motion .reward-flash.show span, body.no-motion .reward-flash.show span::
   margin: 0; padding: 12px 0 0;
 }
 #view-profile .profile-hero .acct-hero-body > :is(.user-face, .lvl-frame) { align-self: start; margin-top: calc(var(--face) * -0.6 - 12px); }
+/* A mastery banner on a phone: a taller band, and the face sits lower, so the set's logo and ribbon stay clear above it. */
+@media (max-width: 720px) {
+  #view-profile .profile-hero .acct-banner.mbn { height: 156px; }
+  #view-profile .profile-hero:has(.acct-banner.mbn) .acct-hero-body > :is(.user-face, .lvl-frame) { margin-top: calc(var(--face) * -0.38 - 12px); }
+}
+/* Wider: the logo and ribbon start past the face. */
+@media (min-width: 721px) { #view-profile .profile-hero .acct-banner.mbn .mbn-head { left: calc(24px + var(--face) + 26px); } }
 #view-profile .profile-facts:has(> li:nth-child(3):last-child) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 #view-profile .profile-hero .acct-hero-body .acct-copy { grid-column: 1 / -1; padding-top: 10px; }
 #view-profile .profile-hero .acct-hero-body .acct-hero-actions { grid-column: 2; grid-row: 1; justify-content: flex-end; align-self: start; margin-top: 0; padding: 0; }
