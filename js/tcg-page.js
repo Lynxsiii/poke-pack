@@ -27,7 +27,7 @@ import { ENERGY_TYPES, FREE_ENERGY, createDefs, isFreeEnergy } from "./tcg/cards
 import { botAction } from "./tcg/bot.js";
 import { MAX_DECKS, buildBotDeck, buildDeck, checkDeck, deckList, deckSize, roomFor } from "./tcg/decks.js";
 import { LESSON, LESSON_CARDS, LESSON_SET, createLesson } from "./tcg/tutorial.js";
-import { coinStageHTML, flipCoin } from "./coin.js?v=5";
+import { coinStageHTML, flipCoin } from "./coin.js?v=6";
 
 const ME = 0;
 const BOT = 1;

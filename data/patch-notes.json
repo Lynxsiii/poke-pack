@@ -1,5 +1,26 @@
 [
   {
+    "id": "2026-11-26-coin-toss",
+    "date": "2026-11-26",
+    "title": "The coin flips again",
+    "summary": "The Coinflip coin tosses every time, even with Lite or Idle shimmer switched off.",
+    "items": [
+      "Coinflip: the coin no longer skips its toss when Lite or Idle shimmer is off. Those switches are for card effects. Only your phone's own Reduce Motion setting shortens the toss now."
+    ]
+  },
+  {
+    "id": "2026-11-26-phone-polish",
+    "date": "2026-11-26",
+    "title": "Phone fixes and a roomier stake box",
+    "summary": "The Open and Rip keys sit on the first screen on shorter phones, and the Tall Grass and Rayquaza stake box has room to type again.",
+    "items": [
+      "On Home and on every set's page, the yellow Open or Rip key no longer hides behind the tab bar on iPhones with Safari's toolbars showing. The pack shrinks a little on short screens to make room.",
+      "Tall Grass and Rayquaza on a computer: the Stake box was squeezed to a sliver by the Half and 2x keys. It has proper room now.",
+      "Chase card names on a set's page take a second line on phones instead of being cut short.",
+      "Bigger tap targets for the era links on Packs, the set arrows in Collection and the page dots in the Binder."
+    ]
+  },
+  {
     "id": "2026-11-26-ex-reverse-holos",
     "date": "2026-11-26",
     "title": "Calmer EX-era reverse holos",

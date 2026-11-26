@@ -172,7 +172,8 @@ await check('the first request upgrades in place: columns added, marker triggers
   for (const t of Object.keys(before)) {
     if (t === 'coinflips') continue; // the listing's maintenance expires one flip; checked below
     if (t === 'jackpots' || t === 'jackpot_entries' || t === 'cards' || t === 'profiles') continue; // the maintenance returns the expired games' cards; checked below
-    assert.deepEqual(sameOldColumns[t], before[t], `${t} is unchanged`);
+    const dropTester = rows => rows.map(({ tester, ...rest }) => rest); // users.tester is added at runtime by worker/testers.js
+    assert.deepEqual(dropTester(sameOldColumns[t]), dropTester(before[t]), `${t} is unchanged`);
   }
   // Nothing was dropped: every old trigger is still there (replaced or kept) and the new ones were added.
   const nowTriggers = triggerSql(db);
@@ -509,7 +510,7 @@ await check('slabs-v1 -> v2: a live (v1) database with open and finished slab ga
   assert.deepEqual(changed, ['coinflip_settle_check', 'coinflip_slab_settle', 'jackpot_entry_check', 'jackpot_settle_check', 'jackpot_slab_settle'], 'exactly the five replaced triggers changed');
   for (const name of changed) assert.ok(v2Triggers[name].includes('/* slabs-v2 */'));
   assert.deepEqual(slabRows(w.db), frozenSlabs, 'no slab changed'); assert.equal(rawLedger(w.db), ledger);
-  for (const t of ['users', 'profiles', 'jackpot_entries']) assert.deepEqual(snapshot(w.db)[t], frozenSnapshot[t], `${t} is unchanged`);
+  for (const t of ['users', 'profiles', 'jackpot_entries']) assert.deepEqual(snapshot(w.db)[t].map(({ tester, ...r }) => r), frozenSnapshot[t].map(({ tester, ...r }) => r), `${t} is unchanged`);
   // v1-era finished games render: slabs with their ids, a house flip with no slabs
   const done = listed.done.find(f => f.id === i.S_done); assert.equal(done.hostSlabs.length, 1); assert.equal(done.guestSlabs.length, 1);
   assert.equal(done.guestSlabs[0].id, s.g4); assert.equal(done.guestSlabs[0].cert, certNumber(s.g4)); assert.equal(done.guestSlabs[0].guard, 'guard-frost'); assert.equal(done.winner, 'host');

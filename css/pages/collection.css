@@ -36,8 +36,10 @@
 .coll-setpick:hover { background: var(--cy-3); }
 .coll-setpick[aria-expanded="true"] svg { transform: rotate(180deg); }
 .coll-setno { flex: none; display: inline-flex; align-items: center; gap: 2px; color: var(--k-2); font: 700 13px var(--font); font-variant-numeric: tabular-nums; white-space: nowrap; }
+/* A thumb-sized target around the small arrow, so it can stay small on screen. */
+.coll-step::before { content: ""; position: absolute; inset: -7px -4px; }
 .coll-step {
-  display: grid; place-items: center; width: 30px; height: 30px; padding: 0;
+  position: relative; display: grid; place-items: center; width: 30px; height: 30px; padding: 0;
   border: 0; border-radius: 4px; background: none; color: var(--k); cursor: pointer;
 }
 .coll-step svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.8; stroke-linecap: round; stroke-linejoin: round; }
@@ -281,7 +283,7 @@ body.no-motion :is(.coll-hp .rt-track > i, .coll-ball, .slot-ghost) { transition
 .binder-nav .ghost.sm { min-width: 76px; }
 .binder-nav .ghost.sm:disabled { color: var(--k-3); }
 .bd-pips { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 2px; min-width: 0; }
-.bd-pip { display: grid; place-items: center; width: 28px; height: 32px; padding: 0; border: 0; background: none; cursor: pointer; }
+.bd-pip { display: grid; place-items: center; width: 30px; height: 40px; padding: 0; border: 0; background: none; cursor: pointer; }
 .bd-pip .rt-ball { width: 17px; height: 17px; transition: transform 0.18s var(--ease-pop); }
 .bd-pip:hover .rt-ball { transform: translateY(-2px); }
 .bd-pip[aria-current="true"] .rt-ball { transform: scale(1.12); }
