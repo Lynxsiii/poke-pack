@@ -26,7 +26,8 @@
 import { ACTIVE, FORMATS, RuleError, abilityBlock, abilityOn, apply, canRetreat, conditionsOn, createGame, damageAfterTyping, defOf, energyOf, hpLeft, legalActions, markOn, marksOn, maxHp, other, retreatCost, stadiumBlock, toolOf, trainerBlock, usableAttacks } from "./tcg/engine.js";
 import { ENERGY_TYPES, FREE_ENERGY, createDefs, isFreeEnergy } from "./tcg/cards.js";
 import { botAction } from "./tcg/bot.js";
-import { MAX_DECKS, buildBotDeck, buildDeck, checkDeck, deckList, deckSize, roomFor } from "./tcg/decks.js";
+import { MAX_DECKS, buildBotDeck, buildDeck, checkDeck, deckList, deckSize, notLegal, roomFor, rulesOf } from "./tcg/decks.js";
+import { BOT_FALLBACK, DECK_FORMATS, FORMAT_NOTES } from "./tcg/formats.js";
 import { LESSON, LESSON_CARDS, LESSON_SET, createLesson } from "./tcg/tutorial.js";
 import { coinStageHTML, flipCoin } from "./coin.js?v=6";
 import { api } from "./api.js";
@@ -62,7 +63,7 @@ export function initTcg(deps) {
   let route = { name: "hub" };
   let decks = [];
   let record = { wins: 0, losses: 0 };
-  let draft = { open: false, format: "half" };
+  let draft = { open: false, format: "standard" };
   let editor = { tab: "cards", query: "", type: "" };
   /** The match on the table: { state, deckId, botSet, sel, sheet, busy, line, setup, shownState, over } */
   let match = null;
@@ -97,10 +98,17 @@ export function initTcg(deps) {
           if (!r.ok) throw new Error(r.status);
           return r.json();
         });
-      const [table, trainerText] = await Promise.all([json("data/tcg/rules.json"), json("data/tcg/trainers.json"), deps.loadOwnedSets()]);
+      const [table, trainerText, legal] = await Promise.all([json("data/tcg/rules.json"), json("data/tcg/trainers.json"), json("data/tcg/legal.json"), deps.loadOwnedSets()]);
       rules = table;
-      defs = createDefs(deps.findCard, rules, trainerText);
+      defs = createDefs(deps.findCard, rules, trainerText, legal);
       decks = read("decks", []).filter((d) => d && d.cards && FORMATS[d.format]);
+      // Decks from before the tournament formats (no `v`): the old "Full deck" took any card, which is
+      // Unlimited now. An old Half deck stays as it is and shows as not legal until it is switched.
+      for (const d of decks) {
+        if (d.v) continue;
+        if (d.format === "standard") d.format = "unlimited";
+        d.v = 2;
+      }
       record = read("record", record);
     })().catch((err) => {
       loading = null;
@@ -159,13 +167,13 @@ export function initTcg(deps) {
 
   function deckRowHtml(deck) {
     const check = checkDeck(deck, owned(), defs);
-    const rulesOf = FORMATS[deck.format];
+    const kind = FORMATS[deck.format];
     const lead = Object.keys(deck.cards).find((id) => defs(id)?.kind === "pokemon");
     return `<article class="rt-box tg-deck" data-deck="${esc(deck.id)}">
       <span class="tg-deck-art">${lead ? `<img src="${img(lead)}" alt="" loading="lazy" decoding="async" />` : ""}</span>
       <div class="tg-deck-main">
         <h3>${esc(deck.name)}</h3>
-        <p>${rulesOf.name}, ${check.size} of ${rulesOf.deckSize} cards ${pips(typesOf(deck))}</p>
+        <p>${kind.name}, ${check.size} of ${check.need} cards ${pips(typesOf(deck))}</p>
         <p class="tg-deck-state${check.ok ? " ok" : ""}">${check.ok ? "Ready to play" : esc(check.problems[0])}</p>
       </div>
       <div class="tg-deck-keys">
@@ -210,6 +218,7 @@ export function initTcg(deps) {
         <ul>
           <li>Basic Pokémon, evolution, Energy, attacks, Weakness and Resistance, Special Conditions, retreat, prizes.</li>
           <li>Your own cards only, as many copies as you own. Basic Energy is free.</li>
+          <li>Decks follow the official tournament rules: Standard (regulation marks H, I, J), Expanded (Black &amp; White on, minus the ban list) or Unlimited. 60 cards, up to 4 of a card by name, one ACE SPEC, one Radiant Pokémon.</li>
           <li>Your sleeve is your card back and your coin makes the flips.</li>
           <li>Trainers: Items and Supporters that draw, search your deck, heal, switch or pull a Pokémon forward. More with each update.</li>
           <li>Pokémon Tools that change HP, Retreat Cost, damage or Weakness can be attached, one to a Pokémon.</li>
@@ -221,13 +230,20 @@ export function initTcg(deps) {
     </div>`;
   }
 
+  /** The three tournament formats (js/tcg/formats.js) as a segmented choice; `data-format` sets the draft's or the open deck's. */
+  function formatSegHtml(current) {
+    return `<div class="seg tg-seg" role="group" aria-label="Format">
+        ${DECK_FORMATS.map((id) => `<button type="button" class="seg-btn${current === id ? " on" : ""}" data-format="${id}" aria-pressed="${current === id}">${FORMATS[id].name}</button>`).join("")}
+      </div>`;
+  }
+
+  const formatNote = (format) => `${FORMAT_NOTES[format] || ""} 60 cards, 6 prizes, up to 4 of a card by name.`;
+
   function draftHtml(playable) {
     return `<div class="rt-box tg-draft">
       <h3>New deck</h3>
-      <div class="seg tg-seg" role="group" aria-label="Deck size">
-        ${Object.values(FORMATS).map((f) => `<button type="button" class="seg-btn${draft.format === f.id ? " on" : ""}" data-format="${f.id}" aria-pressed="${draft.format === f.id}">${f.name}</button>`).join("")}
-      </div>
-      <p class="tg-draft-note">${draft.format === "half" ? "30 cards, 3 prizes, up to 2 of a card. Quick matches." : "60 cards, 6 prizes, up to 4 of a card. The full game."}</p>
+      ${formatSegHtml(draft.format)}
+      <p class="tg-draft-note">${formatNote(draft.format)}</p>
       <div class="tg-draft-keys">
         <button type="button" class="solid" data-build${playable ? "" : " disabled"}>Build it for me</button>
         <button type="button" class="ghost" data-empty>Start empty</button>
@@ -240,7 +256,7 @@ export function initTcg(deps) {
     const base = types.length ? `${types.join(" and ")} deck` : "New deck";
     let name = base;
     for (let n = 2; decks.some((d) => d.name === name); n += 1) name = `${base} ${n}`;
-    const deck = { id: `d${Date.now().toString(36)}`, name, format: draft.format, cards };
+    const deck = { id: `d${Date.now().toString(36)}`, name, format: draft.format, cards, v: 2 };
     decks.push(deck);
     saveDecks();
     draft.open = false;
@@ -288,13 +304,16 @@ export function initTcg(deps) {
   function tileHtml(deck, row) {
     const { id, def } = row;
     const room = roomFor(deck, id, owned(), defs);
-    return `<div class="tg-tile${row.inDeck ? " in" : ""}">
+    // A card the deck's format doesn't allow stays in view, greyed, with the reason.
+    const why = notLegal(def, deck.format);
+    return `<div class="tg-tile${row.inDeck ? " in" : ""}${why ? " off" : ""}">
       <button type="button" class="tg-tile-face" data-look="${esc(id)}" aria-label="Look at ${esc(def.name)}">
         <img src="${img(id)}" alt="" loading="lazy" decoding="async" />
         ${row.inDeck ? `<span class="tg-tile-n">${row.inDeck}</span>` : ""}
       </button>
       <b class="tg-tile-name">${esc(def.name)}</b>
       <span class="tg-tile-meta">${def.kind === "energy" ? "Special Energy" : def.kind === "trainer" ? (def.sub === "supporter" ? "Supporter" : def.sub === "tool" ? "Tool" : def.sub === "stadium" ? "Stadium" : "Item") : `${def.stage === "basic" ? "Basic" : "Evolution"}, ${def.hp} HP`}</span>
+      ${why ? `<span class="tg-tile-why">Not in ${esc(FORMATS[deck.format].name)}. ${esc(why)}</span>` : ""}
       ${stepHtml(id, row.inDeck, room, def.name, `of ${row.owned}`)}
     </div>`;
   }
@@ -344,7 +363,8 @@ export function initTcg(deps) {
       <header class="tg-head">
         <button type="button" class="tlink tg-back" data-go="/play">Decks</button>
         <label class="tg-name"><span class="sr-only">Deck name</span><input type="text" class="search" id="tg-name" maxlength="32" value="${esc(deck.name)}" autocomplete="off" /></label>
-        <p class="tg-lede">${FORMATS[deck.format].name}: ${FORMATS[deck.format].deckSize} cards, ${FORMATS[deck.format].prizes} prizes, up to ${FORMATS[deck.format].copies} of a card.</p>
+        ${formatSegHtml(deck.format)}
+        <p class="tg-lede">${FORMATS[deck.format].pick ? formatNote(deck.format) : `${esc(FORMATS[deck.format].name)}s are retired. Pick a format above, then fill the deck to 60 cards.`}</p>
       </header>
       <div class="rt-box tg-sum rt-still" id="tg-sum">${summaryHtml(deck)}</div>
       <div class="tg-tools">
@@ -387,7 +407,7 @@ export function initTcg(deps) {
 
   /** Top the deck up with Energy, split by what its attacks ask for. */
   function fillEnergy(deck) {
-    const space = FORMATS[deck.format].deckSize - deckSize(deck);
+    const space = rulesOf(deck.format).deckSize - deckSize(deck);
     if (space <= 0) return toast("The deck is full.");
     const asks = {};
     for (const [id, n] of Object.entries(deck.cards)) {
@@ -468,7 +488,10 @@ export function initTcg(deps) {
       const set = defs(id)?.kind === "pokemon" && deps.setOf(id);
       if (set) count[set.id] = (count[set.id] || 0) + n;
     }
+    // Its deck is legal in your deck's format too; when none of your sets gives one (a Standard deck
+    // of old reprints), it takes a set that does (js/tcg/formats.js BOT_FALLBACK).
     const sets = Object.keys(count).sort((a, b) => count[b] - count[a]);
+    for (const setId of BOT_FALLBACK[deck.format] || []) if (!sets.includes(setId)) sets.push(setId);
     let botDeck = null;
     let botSet = "";
     for (const setId of sets) {
@@ -2247,13 +2270,18 @@ export function initTcg(deps) {
       return paint();
     }
     const format = t.closest("[data-format]");
-    if (format) {
-      draft.format = format.dataset.format;
+    if (format && DECK_FORMATS.includes(format.dataset.format)) {
+      // In the editor it switches the open deck (how an old Half deck becomes a 60-card one); on the hub, the new deck's.
+      const open = route.name === "deck" ? deckById(route.id) : null;
+      if (open) {
+        open.format = format.dataset.format;
+        saveDecks();
+      } else draft.format = format.dataset.format;
       return paint();
     }
     if (t.closest("[data-build]")) {
       const built = buildDeck(ownedPool(), draft.format);
-      if (!built) return toast("You need at least one Basic Pokémon that can be played.");
+      if (!built) return toast(`You need at least one Basic Pokémon that can be played in ${FORMATS[draft.format].name}.`);
       const deck = newDeck(built.cards, built.types);
       return deps.navigate(`/play/deck/${deck.id}`);
     }

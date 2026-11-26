@@ -30,7 +30,8 @@ const byId = new Map(me5.map((c) => [c.id, c]));
 for (const e of FREE_ENERGY) byId.set(e.id, { id: e.id, name: `${e.type} Energy`, supertype: "Energy", subtypes: ["Basic"], energy: true });
 const rules = JSON.parse(readFileSync(new URL("../data/tcg/rules.json", import.meta.url), "utf8"));
 const trainers = JSON.parse(readFileSync(new URL("../data/tcg/trainers.json", import.meta.url), "utf8"));
-const defs = createDefs((id) => byId.get(id), rules, trainers);
+const legal = JSON.parse(readFileSync(new URL("../data/tcg/legal.json", import.meta.url), "utf8"));
+const defs = createDefs((id) => byId.get(id), rules, trainers, legal);
 
 const { db, env } = createTestDb();
 const req = requester(worker, env, null);
@@ -51,7 +52,7 @@ const befriend = async (a, b) => {
 };
 const api = (user, path, method = "GET", body) => req(path, method, body, user);
 const ownedOf = (user) => Object.fromEntries(db.prepare("SELECT card_id, qty FROM cards WHERE user_id = ?").all(user).map((r) => [r.card_id, r.qty]));
-const deckFor = (user, format = "half", seed = 1) => {
+const deckFor = (user, format = "standard", seed = 1) => {
   let s = seed;
   const rand = () => ((s = (s * 16807) % 2147483647) / 2147483647);
   const pool = Object.entries(ownedOf(user)).map(([id, n]) => ({ def: defs(id), owned: n })).filter((p) => p.def);
@@ -91,6 +92,17 @@ await check("challenges: friends only, decks checked against what you own", asyn
   assert.equal(r.status, 400);
   r = await api("ann", "/api/tcg/challenge", "POST", { to: "bob", deck: { ...deck, cards: { "sv1-001": 1, ...deck.cards } } });
   assert.equal(r.status, 400, "a card ann doesn't own");
+  r = await api("ann", "/api/tcg/challenge", "POST", { to: "bob", deck: { ...deck, format: "half" } });
+  assert.equal(r.status, 400, "the old Half deck is not a format any more");
+  assert.match(r.body.error, /Standard, Expanded or Unlimited/);
+  // A card she owns but that rotated out of Standard (Scarlet & Violet, regulation mark G) is refused there.
+  db.prepare("INSERT OR REPLACE INTO cards(user_id,card_id,qty,reverse_qty) VALUES(?,?,2,0)").run("ann", "sv1-1");
+  const energy = Object.keys(deck.cards).find((id) => id.startsWith("energy-"));
+  const rotated = { ...deck, cards: { ...deck.cards, [energy]: deck.cards[energy] - 1, "sv1-1": 1 } };
+  r = await api("ann", "/api/tcg/challenge", "POST", { to: "bob", deck: rotated });
+  assert.equal(r.status, 400, "a rotated card in a Standard deck");
+  assert.match(r.body.error, /Pineco isn't legal in Standard: regulation mark G rotated out/);
+  db.prepare("DELETE FROM cards WHERE user_id = ? AND card_id = ?").run("ann", "sv1-1");
   r = await api("ann", "/api/tcg/challenge", "POST", { to: "@Bob", deck });
   assert.equal(r.status, 200, JSON.stringify(r.body));
   assert.equal(r.body.match.status, "open");
@@ -106,12 +118,12 @@ await check("challenges: friends only, decks checked against what you own", asyn
   assert.equal(r.status, 404, "a stranger can't read it");
   r = await api("ann", `/api/tcg/matches/${matchId}/accept`, "POST", { deck });
   assert.equal(r.status, 403, "the challenger can't accept");
-  r = await api("bob", `/api/tcg/matches/${matchId}/accept`, "POST", { deck: deckFor("bob", "standard") });
+  r = await api("bob", `/api/tcg/matches/${matchId}/accept`, "POST", { deck: deckFor("bob", "unlimited") });
   assert.equal(r.status, 400, "the format must match");
 });
 
 await check("accept starts the match: each player sees only their side", async () => {
-  const r = await api("bob", `/api/tcg/matches/${matchId}/accept`, "POST", { deck: deckFor("bob", "half", 7) });
+  const r = await api("bob", `/api/tcg/matches/${matchId}/accept`, "POST", { deck: deckFor("bob", "standard", 7) });
   assert.equal(r.status, 200, JSON.stringify(r.body));
   assert.equal(r.body.match.status, "active");
   assert.deepEqual(r.body.match.toMove, [0, 1]);
@@ -200,9 +212,9 @@ await check("a whole match through the API, both clients kept in step by events"
 });
 
 const startMatch = async (a = "ann", b = "bob") => {
-  const c = await api(a, "/api/tcg/challenge", "POST", { to: b, deck: deckFor(a, "half", 3) });
+  const c = await api(a, "/api/tcg/challenge", "POST", { to: b, deck: deckFor(a, "standard", 3) });
   assert.equal(c.status, 200, JSON.stringify(c.body));
-  const r = await api(b, `/api/tcg/matches/${c.body.match.id}/accept`, "POST", { deck: deckFor(b, "half", 5) });
+  const r = await api(b, `/api/tcg/matches/${c.body.match.id}/accept`, "POST", { deck: deckFor(b, "standard", 5) });
   assert.equal(r.status, 200, JSON.stringify(r.body));
   return c.body.match.id;
 };
@@ -250,7 +262,7 @@ await check("the clock: scheduled maintenance settles matches nobody reads, and 
   const a = await startMatch();
   await placeBoth(a);
   const b = await startMatch(); // nobody places
-  const c = await api("ann", "/api/tcg/challenge", "POST", { to: "bob", deck: deckFor("ann", "half", 9) }); // never answered
+  const c = await api("ann", "/api/tcg/challenge", "POST", { to: "bob", deck: deckFor("ann", "standard", 9) }); // never answered
   clock += TCG_TIMING.CHALLENGE_MS + 1000;
   const n = await maintainTcg(env, clock);
   assert.ok(n >= 3, `settled ${n}`);

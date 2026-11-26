@@ -27,8 +27,11 @@ the cards, sleeves, coins and playmats they have bought in-game.
   print no text and 8,867 more are read. The
   rest land their printed damage
   and the screen says their text isn't live.
-- **Decks** (`js/tcg/decks.js`): Full deck (60 cards, 6 prizes, 4 of a name)
-  and Half deck (30, 3, 2). Only cards you own, as many as you own. Basic
+- **Decks** (`js/tcg/decks.js`, `js/tcg/formats.js`): the official tournament formats,
+  Standard (marks H, I, J), Expanded (Black & White on, minus the ban list) and Unlimited:
+  60 cards, 6 prizes, 4 of a name, 1 ACE SPEC, 1 Radiant, 1 of each Prism Star. Marks per
+  print are data/tcg/legal.json (scripts/build_tcg_legal.mjs); sources in
+  /mnt/project-files/tcg-rules/formats-2026-11.md. Only cards you own, as many as you own. Basic
   Energy is free. "Build it for me" makes a legal deck from your collection.
 - **Bot** (`js/tcg/bot.js`): plays by the same actions as a person. Its deck
   is built from the ordinary one-prize cards of the set most of your deck
