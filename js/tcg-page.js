@@ -601,10 +601,12 @@ export function initTcg(deps) {
         moveCountersFrom: () => "Choose the Pokémon to move damage counters from.",
         moveCountersTo: () => `Choose ${whose === "your" ? "another of your" : "one of their"} Pokémon to take the damage counters.`,
         attachHeld: () => `Choose the Pokémon that gets ${fx.uids.length > 1 ? "the Energy" : `the ${d(fx.uids[0])?.name || "Energy"}`}.`,
+        bounce: () => "Choose the Pokémon to put back into your hand.",
       }[op]?.();
+      if (op === "gatherFrom") return { text: `Choose a Pokémon to move ${fx.type ? `a ${fx.type}` : "an"} Energy from, or finish.`, keys: `<button type="button" class="ghost sm" data-act="pick-skip">Done</button>` };
       if (moving) return { text: moving, keys: "" };
       if (op === "switch" && waiting.side === ME && waiting.player === ME && state.current !== ME) return { text: "Your Active Pokémon is pushed out. Choose the Benched Pokémon that comes in.", keys: "" };
-      const text = op === "attachFrom" ? `Choose the Pokémon that gets the ${d(waiting.effect.uid).name}.` : op === "switch" ? (waiting.side === ME ? "Choose the Benched Pokémon that comes in." : "Choose which of their Benched Pokémon to pull forward.") : op === "heal" ? `Choose one of your Pokémon to heal ${waiting.effect.n}.` : op === "discardEnergy" ? `Choose one of ${whose} Pokémon to lose an Energy.` : `Choose ${waiting.side === ME ? "one of your" : "one of their"} Pokémon for ${waiting.effect.n} damage${waiting.left > 1 ? ` (${waiting.left} to choose)` : ""}.`;
+      const text = op === "attachFrom" ? `Choose the Pokémon that gets the ${d(waiting.effect.uid).name}.` : op === "switch" ? (waiting.side === ME ? "Choose the Benched Pokémon that comes in." : "Choose which of their Benched Pokémon to pull forward.") : op === "heal" ? (waiting.effect.n >= 999 ? "Choose one of your Pokémon to heal all its damage." : `Choose one of your Pokémon to heal ${waiting.effect.n}.`) : op === "discardEnergy" ? `Choose one of ${whose} Pokémon to lose an Energy.` : `Choose ${waiting.side === ME ? "one of your" : "one of their"} Pokémon for ${waiting.effect.n} damage${waiting.left > 1 ? ` (${waiting.left} to choose)` : ""}.`;
       return { text, keys: waiting.optional ? `<button type="button" class="ghost sm" data-act="pick-skip">Stay in</button>` : "" };
     }
     if (waiting?.player === ME) return { text: "Choose your new Active Pokémon.", keys: "" };
@@ -916,6 +918,7 @@ export function initTcg(deps) {
       : waiting.effect.op === "toBench" ? `Choose ${max > 1 ? `up to ${many(max)}` : "a Basic Pokémon"} for your Bench`
       : waiting.effect.op === "attach" ? `Attach ${max > 1 ? `up to ${many(max)}` : many(1)} from your ${waiting.top ? `top ${waiting.top} cards` : "deck"}`
       : waiting.effect.op === "swapIn" ? `Switch in ${kind} from your deck`
+      : waiting.effect.op === "toDeck" ? `Shuffle ${min < max ? "up to " : ""}${many(max)} into your deck`
       : waiting.zone === "discard" ? `Take ${min < max ? "up to " : ""}${many(max)} from your discard pile`
       : `Take ${max > 1 ? `up to ${many(max)}` : many(1)} from your deck`;
     const cards = waiting.uids.slice().sort((a, b) => d(a).name.localeCompare(d(b).name) || state.cards[a].localeCompare(state.cards[b]));
@@ -1027,6 +1030,11 @@ export function initTcg(deps) {
       }
       case "discard-energy": return `${plural(event.uids.length, "Energy card")} discarded from ${event.p === ME ? "your" : "their"} Active Pokémon.`;
       case "mill": return `${plural(event.uids.length, "card")} discarded from ${event.p === ME ? "your" : "their"} deck.`;
+      case "recycle": return `${who(event.p)} shuffled ${plural(event.uids.length, "card")} from the discard pile into the deck.`;
+      case "bounce": return `${who(event.p)} put ${name(event.uid)} back into ${event.p === ME ? "your" : "its"} hand.`;
+      case "boost": return `${event.p === ME ? "Your" : "Their"} attacks can do ${event.n} more damage this turn.`;
+      case "energy-to-hand": return `${plural(event.uids.length, "Energy card")} went back to ${event.p === ME ? "your" : "their"} hand.`;
+      case "stadium-gone": return `${name(event.uid)} was discarded.`;
       case "damage":
         if (event.why === "poisoned" || event.why === "burned") return `${COND_NAME[event.why]}: ${event.n} damage to ${event.p === ME ? "your" : "their"} Active Pokémon.`;
         if (event.why === "confused") return "Confused: it hurt itself for 30.";
@@ -1037,6 +1045,7 @@ export function initTcg(deps) {
       case "form": return `${who(event.p)} switched in ${name(event.uid)}.`;
       case "turn-ends": return `${event.name} ends the turn.`;
       case "ko": return `${name(event.uid)} was Knocked Out.`;
+      case "ko-hand": return `${name(event.uid)} went back to ${event.p === ME ? "your" : "their"} hand.`;
       case "prize": return `${who(event.p)} took ${plural(event.uids.length, "prize card")}.`;
       case "switch": return `${event.p === ME ? "Your" : "Their"} Active Pokémon was switched out.`;
       case "promote": return `${who(event.p)} sent out ${name(state.players[event.p].active.uid)}.`;

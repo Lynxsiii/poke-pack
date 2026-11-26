@@ -149,6 +149,9 @@ export function defineCard(card, row, text = "") {
     retreat: Number(row?.[2]) || 0,
     prizes: prizesFor(card, row),
     box: boxOf(card),
+    ...(printed.length ? { abilityKind: printed[0].type || "Ability" } : {}),
+    // "A Pokémon that doesn't have a Rule Box" (Pokémon ex, V, GX, Radiant, Prism Star ...).
+    rule: Boolean(boxOf(card)) || subs.some((s) => /^(Radiant|Prism Star|BREAK|LEGEND|V-UNION|Level-Up|Star|TAG TEAM|MEGA)$/.test(s)),
     ...(ability ? { ability } : {}),
     playable: !why && Number(card.hp) > 0,
     why,

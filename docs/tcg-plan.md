@@ -133,9 +133,38 @@ wordings the engine can't read. Work down that list:
    discard pile. `compileStadium` reads standing changes for the Pokémon
    that fit (`field`, folded into `toolOf` with the Tool) and
    "once during each player's turn" texts whose rest reads as a Trainer
-   (`use`, action `stadium`). 23 Stadiums so far; 449 of 2,888 Trainers
-   playable. Next: Tools and Stadiums with conditions, moving Energy,
-   Rare Candy, damage boosts for a turn.
+   (`use`, action `stadium`). 23 Stadiums so far.
+   Third batch (2026-11-26): 955 of 2,888 Trainers playable (434 Items,
+   456 Supporters, 23 Tools, 42 Stadiums). Searches name more: "A or B" and
+   "any combination of A and B" (`fits` reads "pokemon|basicEnergy"), an HP
+   cap ("basic@70"), no Rule Box ("pokemon!rule", `def.rule` from
+   `cards.js`), no Pokémon-ex ("basic!ex"), "an Item card and a Pokémon Tool
+   card" (a search each), Evolution Pokémon of a type. A look at the top
+   cards that takes some (`topTake`) and discards (`mill`), shuffles, or
+   bottoms (`under`) the rest; cards shuffled back from the discard pile
+   (`recycle`, choose effect `toDeck`); a Basic Pokémon from the discard
+   pile onto the Bench. Conditions (`holds`, `condOf`): "You can use this
+   card only if ..." (`only`), and draws that change with Prize counts, a
+   Knock Out during the opponent's last turn (`side.lostOn`, kept by
+   `resolveKnockOuts`), the first turn, going second, a lone Active
+   Pokémon, your own Stadium; a step's `when` is checked as it runs.
+   Supporters that may be played on the very first turn (`early`). Hands to
+   the bottom of the deck (Iono, Marnie: `handBottom`, `drawPrizes`); the
+   other player's hand only (`foeShuffle`). Special Energy only, or one
+   from each (`hammer { special, each }`), an Energy back to their hand
+   (`toHand`). Healing that cures (`heal { cure }`), Max Potion and
+   Pokémon Center (`strip`), healing by type. "Switch ... If you do"
+   (`need`: the first step must be possible). One of your Pokémon back to
+   the hand (`bounce`: with its cards, its Pokémon cards, or only the Basic
+   one; never the last one in play). More damage this turn (`boost` in
+   `state.boosts`, all attacks, by attacker type, or only against Pokémon
+   ex; `boostOf` adds it, and a Tool's `plusVs` against GX/EX or V). Prices
+   in a kind of card ("discard a Fire Energy card"), "Discard 2 cards. If
+   you do", "in order to"; Stadium prices count the whole hand (`spare: 0`).
+   Discarding a Stadium (`dropStadium`). The ACE SPEC rule line is dropped
+   before reading (`tidy`; the deck limit comes from the subtype).
+   Next: Rare Candy and evolving from the deck, Tool and Stadium removal,
+   Lost Zone, choices between two effects ("Choose 1:"), Fossils.
 5. **Abilities and Poké-Powers**: a hook per timing (on play, once a turn,
    always on).
    First batch live (2026-11-26, `js/tcg/abilities.js`, `compileAbility`):
@@ -160,8 +189,31 @@ wordings the engine can't read. Work down that list:
    Bench guard for the team, a coin flip to hang on, the other Active
    Pokémon's Retreat Cost raised, early evolution, mending between turns,
    no effects of attacks except damage, no damage while Asleep. 1,073 live.
-   Next: "when this Pokémon moves to the Active Spot", Ability locks, attack
-   costs that change, more Energy from the discard pile.
+   Third batch (2026-11-26): triggers and locks. "When this Pokémon moves
+   from your Bench to the Active Spot" (`rise`, asked as an optional pick on
+   a retreat, switch or promotion during its owner's turn, once a turn);
+   "move any amount of Energy from your other Pokémon to it" (`gather`: an
+   optional pick a card until the player stops). Knocked Out by damage from
+   an attack (`ko`: a search, back to the hand, counters on the Attacking
+   Pokémon, cards off their deck or at random from their hand; the engine
+   marks `slot.hit` with the turn an opponent's attack damaged it and clears
+   it before the checkup). "Whenever your opponent attaches an Energy"
+   (`foeAttach`). Terms on a use (`use.need`): first turn only, after a Knock
+   Out during the opponent's last turn (`side.lostOn`), a Stadium in play,
+   their Prizes left. Locks (`lock`, folded into `abilityOn`): the other
+   side's or everyone's, Active or Benched only, Basic, by rule box, damaged
+   ones, except a name, old Poké-Power/Poké-Body locks, Garbotoxin with a
+   Tool, Abilities that Knock Out themselves. Wards: "prevent all effects of
+   your opponent's Pokémon's Abilities" (`ward`, also keeps off locks and
+   their standing auras) and of their Items and Supporters (`trainerWard`);
+   the source rides on the Trainer context as `src`. Also: +HP with Special
+   Energy, more damage at low HP (`when.hpMax`), walls against attackers
+   with Special Energy or an Ability, "your Pokémon have no Retreat Cost",
+   their Active Pokémon doing less damage, and searches for "Pokémon with N
+   HP or less" (Trainers too). 1,251 live; 1,275 with the third Trainer batch (Ability text that reads like a Trainer).
+   Next: attack costs that change, more Energy from the discard pile,
+   "Once during your turn, if this Pokémon has ... Energy attached",
+   Abilities that work from the hand or discard pile.
    `node scripts/test-tcg.mjs --coverage` lists the commonest unread texts.
 
 6. **Special Energy**. First batch live (2026-11-26, `js/tcg/energy.js`,
@@ -173,9 +225,16 @@ wordings the engine can't read. Work down that list:
    (HP, more or less damage, less damage taken, no Weakness, immune), and
    what it does when attached from the hand (`special.attach`: draw, heal,
    cure, a damage counter, switch, search). 89 of 214 Special Energy cards.
-   Next: end-of-turn discards (Boost, Triple Acceleration), Energy that
-   changes with the board (Prism, Twin, Counter, Scramble), "Discard a
-   Special Energy" attacks. Then the odd card types: V-UNION, LEGEND,
+   Second batch (2026-11-26): 113 of 214. Energy that gives more on some
+   Pokémon (`special.alt`, read by `energyOf` and a retreat's payment):
+   Prism on a Basic Pokémon, δ Rainbow on δ Pokémon, Twin on a Pokémon that
+   isn't V or GX, Counter while behind on Prizes. "When you attach ... to a
+   Lightning Pokémon" (`attach.type`), anything a Trainer could do on attach
+   (Enriching, Telepathic), healing on attach (Medical), no Retreat Cost,
+   more damage by type, less damage from the opponent's Pokémon, and old
+   Darkness/Metal/Rainbow/Warp wordings.
+   Next: end-of-turn discards (Boost, Triple Acceleration), Scramble, Multi,
+   Holon Energy, "Discard a Special Energy" attacks. Then the odd card types: V-UNION, LEGEND,
    Restored, BREAK keeping its earlier attacks, Lv.X.
 
 Rules for this work: one op per mechanic in `OPS`, wordings mapped to it in
