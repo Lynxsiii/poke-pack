@@ -58,9 +58,9 @@ EX_KITS_RESEARCH = ROOT / "scripts" / "box-research" / "ex-kits.json"  # e5: the
 WOTC_RESEARCH = ROOT / "scripts" / "box-research" / "wotc.json"
 WOTC_W1_RESEARCH = ROOT / "scripts" / "box-research" / "wotc-w1.json"
 WOTC_NEO_RESEARCH = ROOT / "scripts" / "box-research" / "wotc-neo.json"
-# Theme decks of the EX (ex1-ex16), Diamond & Pearl to Call of Legends and XY eras, same shape as wotc.json;
+# Theme decks of the EX (ex1-ex16), Diamond & Pearl to Call of Legends, XY, Sun & Moon and Sword & Shield eras, same shape as wotc.json;
 # Bulbapedia lists checked against a second list (Serebii, pokewiki.de, TCGsync), 2026-11-26.
-EX_DECKS_RESEARCH = [ROOT / "scripts" / "box-research" / name for name in ("ex-decks-a.json", "ex-decks-b.json", "dp-decks.json", "xy-decks.json")]
+EX_DECKS_RESEARCH = [ROOT / "scripts" / "box-research" / name for name in ("ex-decks-a.json", "ex-decks-b.json", "dp-decks.json", "xy-decks.json", "sm-decks.json", "swsh-decks.json")]
 # Noah chose (2026-09-30) to ship single-source lists too. --verified-only drops them again;
 # --trial writes the same build to a scratch file.
 ALLOW_SINGLE = True

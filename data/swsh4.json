@@ -7244,6 +7244,99 @@
     "imageRemote": "https://images.scrydex.com/pokemon/swsh4-203/large"
   },
   {
+    "id": "swsh4-25-cracked-ice",
+    "name": "Charizard",
+    "number": "25-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "170",
+    "artist": "Ryuta Fuse",
+    "flavorText": "It spits fire that is hot enough to melt boulders. It may cause forest fires by blowing flames.",
+    "evolvesFrom": "Charmeleon",
+    "image": "assets/cards/swsh4/25.webp",
+    "imageSmall": "assets/cards/swsh4/25-sm.webp",
+    "attacks": [
+      {
+        "name": "Royal Blaze",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "100+",
+        "text": "This attack does 50 more damage for each Leon card in your discard pile."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Battle Sense",
+        "text": "Once during your turn, you may look at the top 3 cards of your deck and put 1 of them into your hand. Discard the other cards.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh4-25/large",
+    "printedNumber": "25",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Charizard Theme Deck)",
+    "tcgplayerId": 227648,
+    "market": 37.24
+  },
+  {
+    "id": "swsh4-39-cracked-ice",
+    "name": "Drednaw",
+    "number": "39-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "140",
+    "artist": "Taira Akitsu",
+    "flavorText": "With jaws that can shear through steel rods, this highly aggressive Pokémon chomps down on its unfortunate prey.",
+    "evolvesFrom": "Chewtle",
+    "image": "assets/cards/swsh4/39.webp",
+    "imageSmall": "assets/cards/swsh4/39-sm.webp",
+    "attacks": [
+      {
+        "name": "Vise Wave",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "If you played Nessa from your hand during this turn, your opponent's Active Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Surf",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "140",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh4-39/large",
+    "printedNumber": "39",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Drednaw Theme Deck)",
+    "tcgplayerId": 227650,
+    "market": 1.49
+  },
+  {
     "id": "swsh4-swshp066",
     "name": "Charizard",
     "number": "swshp066",
@@ -7279,13 +7372,13 @@
         "type": "Ability"
       }
     ],
+    "market": 102.1,
     "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH066/large",
     "printedNumber": "SWSH 066",
     "tcgplayerId": 224365,
     "era": "swsh",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 104.54,
     "foilMap": "assets/foil/maps/swsh4/swshp066.webp"
   },
   {
@@ -7326,13 +7419,13 @@
         "text": ""
       }
     ],
+    "market": 4.71,
     "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH067/large",
     "printedNumber": "SWSH 067",
     "tcgplayerId": 224368,
     "era": "swsh",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 4.23,
     "foilMap": "assets/foil/maps/swsh4/swshp067.webp"
   },
   {
@@ -7372,13 +7465,13 @@
         "type": "Ability"
       }
     ],
+    "market": 49.36,
     "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH068/large",
     "printedNumber": "SWSH 068",
     "tcgplayerId": 224361,
     "era": "swsh",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 47.55,
     "foilMap": "assets/foil/maps/swsh4/swshp068.webp"
   },
   {
@@ -7420,13 +7513,13 @@
         "text": "If your opponent has 5 or fewer cards in their hand, this attack does nothing."
       }
     ],
+    "market": 41.85,
     "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH069/large",
     "printedNumber": "SWSH 069",
     "tcgplayerId": 224364,
     "era": "swsh",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 43.51,
     "foilMap": "assets/foil/maps/swsh4/swshp069.webp"
   },
   {
@@ -7456,13 +7549,13 @@
         "text": "Flip a coin. If tails, this attack does nothing."
       }
     ],
+    "market": 1.53,
     "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH070/large",
     "printedNumber": "SWSH 070",
     "tcgplayerId": 227028,
     "era": "swsh",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 1.67,
     "foilMap": "assets/foil/maps/swsh4/swshp070.webp"
   },
   {
@@ -7501,13 +7594,13 @@
         "text": ""
       }
     ],
+    "market": 1.95,
     "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH071/large",
     "printedNumber": "SWSH 071",
     "tcgplayerId": 227027,
     "era": "swsh",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 2.27,
     "foilMap": "assets/foil/maps/swsh4/swshp071.webp"
   },
   {
@@ -7547,13 +7640,13 @@
         "type": "Ability"
       }
     ],
+    "market": 5.93,
     "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH072/large",
     "printedNumber": "SWSH 072",
     "tcgplayerId": 221753,
     "era": "swsh",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 6.74,
     "foilMap": "assets/foil/maps/swsh4/swshp072.webp"
   },
   {
@@ -7591,13 +7684,13 @@
         "text": ""
       }
     ],
+    "market": 5.62,
     "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH073/large",
     "printedNumber": "SWSH 073",
     "tcgplayerId": 221754,
     "era": "swsh",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 5.82,
     "foilMap": "assets/foil/maps/swsh4/swshp073.webp"
   },
   {
@@ -7636,13 +7729,13 @@
         "text": "This attack does 30 more damage for each Energy attached to your opponent's Active Pokémon."
       }
     ],
+    "market": 0.63,
     "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH078/large",
     "printedNumber": "SWSH 078",
     "tcgplayerId": 227025,
     "era": "swsh",
     "promo": true,
     "foilAs": "Rare Holo V",
-    "market": 0.79,
     "foilMap": "assets/foil/maps/swsh4/swshp078.webp"
   },
   {
@@ -7681,13 +7774,13 @@
         "text": "This attack does 30 damage for each card in your opponent's hand."
       }
     ],
+    "market": 1.68,
     "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH083/large",
     "printedNumber": "SWSH 083",
     "tcgplayerId": 228980,
     "era": "swsh",
     "promo": true,
     "foilAs": "Rare Holo V",
-    "market": 1.36,
     "foilMap": "assets/foil/maps/swsh4/swshp083.webp"
   }
 ]

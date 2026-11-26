@@ -7301,6 +7301,101 @@
     "etchMap": "assets/foil/maps/swsh3/201-etch-v4.webp"
   },
   {
+    "id": "swsh3-44-cracked-ice",
+    "name": "Galarian Darmanitan",
+    "number": "44-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "140",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "On days when blizzards blow through, it comes down to where people live. It stashes food in the snowball on its head, taking it home for later.",
+    "evolvesFrom": "Galarian Darumaka",
+    "image": "assets/cards/swsh3/44.webp",
+    "imageSmall": "assets/cards/swsh3/44-sm.webp",
+    "attacks": [
+      {
+        "name": "Blizzard",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "This attack also does 10 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Crushing Headbutt",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "170",
+        "text": "During your next turn, this Pokémon can't use Crushing Headbutt."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-44/large",
+    "printedNumber": "44",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Galarian Darmanitan Theme Deck)",
+    "tcgplayerId": 220097,
+    "market": 2.47
+  },
+  {
+    "id": "swsh3-98-cracked-ice",
+    "name": "Galarian Sirfetch'd",
+    "number": "98-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "130",
+    "artist": "Ryota Murayama",
+    "flavorText": "Only Farfetch'd that have survived many battles can attain this evolution. When this Pokémon's leek withers, it will retire from combat.",
+    "evolvesFrom": "Galarian Farfetch'd",
+    "image": "assets/cards/swsh3/98.webp",
+    "imageSmall": "assets/cards/swsh3/98-sm.webp",
+    "attacks": [
+      {
+        "name": "Pierce",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "40",
+        "text": ""
+      },
+      {
+        "name": "Meteor Assault",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": "This Pokémon can't use Meteor Assault again until it leaves the Active Spot."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-98/large",
+    "printedNumber": "98",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Galarian Sirfetch'd Theme Deck)",
+    "tcgplayerId": 220096,
+    "market": 5.01
+  },
+  {
     "id": "swsh3-swshp035",
     "name": "Decidueye",
     "number": "swshp035",
@@ -7336,13 +7431,13 @@
         "type": "Ability"
       }
     ],
+    "market": 5.9,
     "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH035/large",
     "printedNumber": "SWSH 035",
     "tcgplayerId": 218579,
     "era": "swsh",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 6.38,
     "foilMap": "assets/foil/maps/swsh3/swshp035.webp"
   },
   {
@@ -7381,13 +7476,13 @@
         "type": "Ability"
       }
     ],
+    "market": 9.58,
     "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH036/large",
     "printedNumber": "SWSH 036",
     "tcgplayerId": 218580,
     "era": "swsh",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 9.5,
     "foilMap": "assets/foil/maps/swsh3/swshp036.webp"
   },
   {
@@ -7427,13 +7522,13 @@
         "type": "Ability"
       }
     ],
+    "market": 8.56,
     "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH037/large",
     "printedNumber": "SWSH 037",
     "tcgplayerId": 218583,
     "era": "swsh",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 8.88,
     "foilMap": "assets/foil/maps/swsh3/swshp037.webp"
   },
   {
@@ -7474,13 +7569,13 @@
         "text": ""
       }
     ],
+    "market": 11.75,
     "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH038/large",
     "printedNumber": "SWSH 038",
     "tcgplayerId": 218574,
     "era": "swsh",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 11.62,
     "foilMap": "assets/foil/maps/swsh3/swshp038.webp"
   },
   {
@@ -7520,13 +7615,13 @@
         "text": ""
       }
     ],
+    "market": 9.68,
     "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH039/large",
     "printedNumber": "SWSH 039",
     "tcgplayerId": 220268,
     "era": "swsh",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 11.0,
     "foilMap": "assets/foil/maps/swsh3/swshp039.webp"
   },
   {
@@ -7565,13 +7660,13 @@
         "text": ""
       }
     ],
+    "market": 0.5,
     "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH040/large",
     "printedNumber": "SWSH 040",
     "tcgplayerId": 220269,
     "era": "swsh",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 0.45,
     "foilMap": "assets/foil/maps/swsh3/swshp040.webp"
   },
   {
@@ -7612,13 +7707,13 @@
         "text": "Discard an Energy from this Pokémon. If you do, discard an Energy from your opponent's Active Pokémon."
       }
     ],
+    "market": 8.46,
     "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH041/large",
     "printedNumber": "SWSH 041",
     "tcgplayerId": 220270,
     "era": "swsh",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 8.43,
     "foilMap": "assets/foil/maps/swsh3/swshp041.webp"
   },
   {
@@ -7657,13 +7752,13 @@
         "text": "Flip a coin. If tails, this attack does nothing."
       }
     ],
+    "market": 10.98,
     "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH042/large",
     "printedNumber": "SWSH 042",
     "tcgplayerId": 220271,
     "era": "swsh",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 12.02,
     "foilMap": "assets/foil/maps/swsh3/swshp042.webp"
   }
 ]

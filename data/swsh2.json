@@ -7587,6 +7587,98 @@
     "market": 3.64
   },
   {
+    "id": "swsh2-139-cracked-ice",
+    "name": "Zacian",
+    "number": "139-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "120",
+    "artist": "Hideki Ishikawa",
+    "flavorText": "Now armed with a weapon it used in ancient times, this Pokémon needs only a single strike to fell even Gigantamax Pokémon.",
+    "image": "assets/cards/swsh2/139.webp",
+    "imageSmall": "assets/cards/swsh2/139-sm.webp",
+    "attacks": [
+      {
+        "name": "Energy Stream",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Attach a Metal Energy card from your discard pile to this Pokémon."
+      },
+      {
+        "name": "Smashing Edge",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Flip a coin. If tails, discard 2 Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh2-139/large",
+    "printedNumber": "139",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Zacian Theme Deck)",
+    "tcgplayerId": 213238,
+    "market": 3.4
+  },
+  {
+    "id": "swsh2-140-cracked-ice",
+    "name": "Zamazenta",
+    "number": "140-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "120",
+    "artist": "Hideki Ishikawa",
+    "flavorText": "Its ability to deflect any attack led to it being known as the Fighting Master's Shield. It was feared and respected by all.",
+    "image": "assets/cards/swsh2/140.webp",
+    "imageSmall": "assets/cards/swsh2/140-sm.webp",
+    "attacks": [
+      {
+        "name": "Guard Press",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "During your opponent's next turn, this Pokémon takes 20 less damage from attacks (after applying Weakness and Resistance)."
+      },
+      {
+        "name": "Power Rush",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Flip a coin. If tails, this Pokémon can't attack during your next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh2-140/large",
+    "printedNumber": "140",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Zamazenta Theme Deck)",
+    "tcgplayerId": 213239,
+    "market": 4.2
+  },
+  {
     "id": "swsh2-swshp022",
     "name": "Flapple",
     "number": "swshp022",
@@ -7622,13 +7714,13 @@
         "type": "Ability"
       }
     ],
+    "market": 9.64,
     "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH022/large",
     "printedNumber": "SWSH 022",
     "tcgplayerId": 213096,
     "era": "swsh",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 8.41,
     "foilMap": "assets/foil/maps/swsh2/swshp022.webp"
   },
   {
@@ -7668,13 +7760,13 @@
         "text": ""
       }
     ],
+    "market": 12.87,
     "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH023/large",
     "printedNumber": "SWSH 023",
     "tcgplayerId": 213144,
     "era": "swsh",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 12.43,
     "foilMap": "assets/foil/maps/swsh2/swshp023.webp"
   },
   {
@@ -7715,13 +7807,13 @@
         "type": "Ability"
       }
     ],
+    "market": 3.49,
     "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH024/large",
     "printedNumber": "SWSH 024",
     "tcgplayerId": 213196,
     "era": "swsh",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 4.15,
     "foilMap": "assets/foil/maps/swsh2/swshp024.webp"
   },
   {
@@ -7761,13 +7853,13 @@
         "type": "Ability"
       }
     ],
+    "market": 6.87,
     "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH025/large",
     "printedNumber": "SWSH 025",
     "tcgplayerId": 213211,
     "era": "swsh",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 7.21,
     "foilMap": "assets/foil/maps/swsh2/swshp025.webp"
   },
   {
@@ -7809,13 +7901,13 @@
         "text": "Choose 1 of your opponent's Benched Pokémon. They shuffle that Pokémon and all attached cards into their deck. Then, shuffle this Pokémon and all attached cards into your deck."
       }
     ],
+    "market": 2.66,
     "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH027/large",
     "printedNumber": "SWSH 027",
     "tcgplayerId": 214238,
     "era": "swsh",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 2.41,
     "foilMap": "assets/foil/maps/swsh2/swshp027.webp"
   },
   {
@@ -7858,13 +7950,13 @@
         "text": "This Pokémon also does 40 damage to itself."
       }
     ],
+    "market": 0.47,
     "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH028/large",
     "printedNumber": "SWSH 028",
     "tcgplayerId": 214239,
     "era": "swsh",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 0.49,
     "foilMap": "assets/foil/maps/swsh2/swshp028.webp"
   },
   {
@@ -7905,13 +7997,13 @@
         "text": "Discard an Energy from this Pokémon."
       }
     ],
+    "market": 8.6,
     "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH029/large",
     "printedNumber": "SWSH 029",
     "tcgplayerId": 214240,
     "era": "swsh",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 8.43,
     "foilMap": "assets/foil/maps/swsh2/swshp029.webp"
   }
 ]

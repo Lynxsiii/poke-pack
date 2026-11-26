@@ -9545,7 +9545,7 @@
         "swsh1-swshp009"
       ],
       "pick": 1,
-      "price": 103.17,
+      "price": 118.64,
       "tcgplayerId": 206040,
       "released": "2020-02-07",
       "image": "assets/products/swsh1/buildBattleBox.webp"
@@ -9558,7 +9558,7 @@
       "promos": [
         "swsh1-swshp010"
       ],
-      "price": 14.99,
+      "price": 24.99,
       "tcgplayerId": 206032,
       "released": "2020-02-07",
       "image": "assets/products/swsh1/gossifleur-single-pack-blister.webp"
@@ -9571,7 +9571,7 @@
       "promos": [
         "swsh1-swshp011"
       ],
-      "price": 18.49,
+      "price": 24.99,
       "tcgplayerId": 206031,
       "released": "2020-02-07",
       "image": "assets/products/swsh1/wooloo-single-pack-blister.webp"
@@ -9596,7 +9596,7 @@
       "promos": [
         "swsh1-swshp031"
       ],
-      "price": 60.16,
+      "price": 78.25,
       "tcgplayerId": 210577,
       "released": "2020-04-03",
       "image": "assets/products/swsh1/morpeko-pin-collection.webp"
@@ -9609,7 +9609,7 @@
       "promos": [
         "swsh1-swshp032"
       ],
-      "price": 160.0,
+      "price": 319.95,
       "tcgplayerId": 210576,
       "released": "2020-04-03",
       "image": "assets/products/swsh1/snorlax-pin-collection.webp"
@@ -9620,9 +9620,49 @@
       "kind": "box",
       "packs": 36,
       "promos": [],
-      "price": 688.99,
+      "price": 708.99,
       "tcgplayerId": 206027,
+      "released": "2020-02-07",
       "image": "assets/products/swsh1/boosterBox.webp"
+    },
+    {
+      "id": "theme-deck-rillaboom",
+      "name": "Theme Deck \"Rillaboom\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Rillaboom, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "promos": [
+        "swsh1-15-cracked-ice"
+      ],
+      "price": 14.88,
+      "tcgplayerId": 206037,
+      "image": "assets/products/swsh1/theme-deck-rillaboom.webp"
+    },
+    {
+      "id": "theme-deck-cinderace",
+      "name": "Theme Deck \"Cinderace\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Cinderace, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "promos": [
+        "swsh1-36-cracked-ice"
+      ],
+      "price": 20.4,
+      "tcgplayerId": 206035,
+      "image": "assets/products/swsh1/theme-deck-cinderace.webp"
+    },
+    {
+      "id": "theme-deck-inteleon",
+      "name": "Theme Deck \"Inteleon\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Inteleon, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "promos": [
+        "swsh1-59-cracked-ice"
+      ],
+      "price": 15.67,
+      "tcgplayerId": 206036,
+      "image": "assets/products/swsh1/theme-deck-inteleon.webp"
     }
   ],
   "swsh10": [
@@ -10240,7 +10280,7 @@
         "swsh2-swshp025"
       ],
       "pick": 1,
-      "price": 74.97,
+      "price": 68.02,
       "tcgplayerId": 212821,
       "released": "2020-05-01",
       "image": "assets/products/swsh2/buildBattleBox.webp"
@@ -10253,7 +10293,7 @@
       "promos": [
         "swsh2-swshp027"
       ],
-      "price": 20.0,
+      "price": 75.0,
       "tcgplayerId": 210565,
       "released": "2020-05-01",
       "image": "assets/products/swsh2/noctowl-single-pack-blister.webp"
@@ -10279,7 +10319,7 @@
       "promos": [
         "swsh2-swshp029"
       ],
-      "price": 45.99,
+      "price": 84.86,
       "tcgplayerId": 210568,
       "released": "2020-05-01",
       "image": "assets/products/swsh2/rayquaza-3-pack-blister.webp"
@@ -10290,7 +10330,7 @@
       "kind": "box",
       "packs": 36,
       "promos": [],
-      "price": 483.63,
+      "price": 483.62,
       "tcgplayerId": 210561,
       "image": "assets/products/swsh2/boosterBox.webp"
     },
@@ -10300,9 +10340,36 @@
       "kind": "etb",
       "packs": 9,
       "promos": [],
-      "price": 328.81,
+      "price": 319.72,
       "tcgplayerId": 210572,
+      "released": "2020-05-01",
       "image": "assets/products/swsh2/eliteTrainerBox.webp"
+    },
+    {
+      "id": "theme-deck-zacian",
+      "name": "Theme Deck \"Zacian\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Zacian, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "promos": [
+        "swsh2-139-cracked-ice"
+      ],
+      "price": 24.02,
+      "tcgplayerId": 210571,
+      "image": "assets/products/swsh2/theme-deck-zacian.webp"
+    },
+    {
+      "id": "theme-deck-zamazenta",
+      "name": "Theme Deck \"Zamazenta\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Zamazenta, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "promos": [
+        "swsh2-140-cracked-ice"
+      ],
+      "price": 32.21,
+      "tcgplayerId": 210570,
+      "image": "assets/products/swsh2/theme-deck-zamazenta.webp"
     }
   ],
   "swsh3": [
@@ -10318,7 +10385,7 @@
         "swsh3-swshp038"
       ],
       "pick": 1,
-      "price": 58.21,
+      "price": 58.13,
       "tcgplayerId": 216861,
       "image": "assets/products/swsh3/buildBattleBox.webp"
     },
@@ -10330,7 +10397,7 @@
       "promos": [
         "swsh3-swshp040"
       ],
-      "price": 13.64,
+      "price": 16.65,
       "tcgplayerId": 216859,
       "released": "2020-08-14",
       "image": "assets/products/swsh3/hatenna-single-pack-blister.webp"
@@ -10343,7 +10410,7 @@
       "promos": [
         "swsh3-swshp039"
       ],
-      "price": 35.21,
+      "price": 44.78,
       "tcgplayerId": 216860,
       "released": "2020-08-14",
       "image": "assets/products/swsh3/pikachu-single-pack-blister.webp"
@@ -10356,7 +10423,7 @@
       "promos": [
         "swsh3-swshp042"
       ],
-      "price": 41.49,
+      "price": 59.99,
       "tcgplayerId": 216857,
       "released": "2020-08-14",
       "image": "assets/products/swsh3/eevee-3-pack-blister.webp"
@@ -10369,7 +10436,7 @@
       "promos": [
         "swsh3-swshp041"
       ],
-      "price": 47.17,
+      "price": 51.71,
       "tcgplayerId": 216858,
       "released": "2020-08-14",
       "image": "assets/products/swsh3/flareon-3-pack-blister.webp"
@@ -10380,8 +10447,9 @@
       "kind": "box",
       "packs": 36,
       "promos": [],
-      "price": 363.94,
+      "price": 344.81,
       "tcgplayerId": 216853,
+      "released": "2020-08-14",
       "image": "assets/products/swsh3/boosterBox.webp"
     },
     {
@@ -10390,9 +10458,38 @@
       "kind": "etb",
       "packs": 9,
       "promos": [],
-      "price": 116.12,
+      "price": 129.45,
       "tcgplayerId": 216856,
+      "released": "2020-08-14",
       "image": "assets/products/swsh3/eliteTrainerBox.webp"
+    },
+    {
+      "id": "theme-deck-galarian-darmanitan",
+      "name": "Theme Deck \"Galarian Darmanitan\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Galarian Darmanitan, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "promos": [
+        "swsh3-44-cracked-ice"
+      ],
+      "price": 27.99,
+      "tcgplayerId": 216865,
+      "released": "2020-08-14",
+      "image": "assets/products/swsh3/theme-deck-galarian-darmanitan.webp"
+    },
+    {
+      "id": "theme-deck-galarian-sirfetch-d",
+      "name": "Theme Deck \"Galarian Sirfetch'd\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Galarian Sirfetch'd, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "promos": [
+        "swsh3-98-cracked-ice"
+      ],
+      "price": 24.46,
+      "tcgplayerId": 216866,
+      "released": "2020-08-14",
+      "image": "assets/products/swsh3/theme-deck-galarian-sirfetch-d.webp"
     }
   ],
   "swsh35": [
@@ -10568,7 +10665,7 @@
         "swsh4-swshp069"
       ],
       "pick": 1,
-      "price": 58.15,
+      "price": 60.87,
       "tcgplayerId": 221748,
       "image": "assets/products/swsh4/buildBattleBox.webp"
     },
@@ -10580,7 +10677,7 @@
       "promos": [
         "swsh4-swshp078"
       ],
-      "price": 68.34,
+      "price": 70.75,
       "tcgplayerId": 226137,
       "released": "2020-11-20",
       "image": "assets/products/swsh4/orbeetle-v-box.webp"
@@ -10593,7 +10690,7 @@
       "promos": [
         "swsh4-swshp083"
       ],
-      "price": 60.71,
+      "price": 63.35,
       "tcgplayerId": 228979,
       "released": "2021-01-08",
       "image": "assets/products/swsh4/alakazam-v-box.webp"
@@ -10606,7 +10703,7 @@
       "promos": [
         "swsh4-swshp073"
       ],
-      "price": 43.65,
+      "price": 45.32,
       "tcgplayerId": 221744,
       "released": "2020-11-13",
       "image": "assets/products/swsh4/sobble-3-pack-blister.webp"
@@ -10619,7 +10716,7 @@
       "promos": [
         "swsh4-swshp072"
       ],
-      "price": 42.77,
+      "price": 46.09,
       "tcgplayerId": 221745,
       "released": "2020-11-13",
       "image": "assets/products/swsh4/vaporeon-3-pack-blister.webp"
@@ -10632,7 +10729,7 @@
       "promos": [
         "swsh4-swshp070"
       ],
-      "price": 17.36,
+      "price": 20.18,
       "tcgplayerId": 221746,
       "released": "2020-11-13",
       "image": "assets/products/swsh4/grookey-single-pack-blister.webp"
@@ -10645,7 +10742,7 @@
       "promos": [
         "swsh4-swshp071"
       ],
-      "price": 16.75,
+      "price": 23.19,
       "tcgplayerId": 221747,
       "released": "2020-11-13",
       "image": "assets/products/swsh4/scorbunny-single-pack-blister.webp"
@@ -10656,8 +10753,9 @@
       "kind": "box",
       "packs": 36,
       "promos": [],
-      "price": 314.0,
+      "price": 328.08,
       "tcgplayerId": 221313,
+      "released": "2020-11-13",
       "image": "assets/products/swsh4/boosterBox.webp"
     },
     {
@@ -10666,9 +10764,37 @@
       "kind": "etb",
       "packs": 9,
       "promos": [],
-      "price": 134.16,
+      "price": 138.64,
       "tcgplayerId": 221752,
       "image": "assets/products/swsh4/eliteTrainerBox.webp"
+    },
+    {
+      "id": "theme-deck-charizard",
+      "name": "Theme Deck \"Charizard\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Charizard, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "promos": [
+        "swsh4-25-cracked-ice"
+      ],
+      "price": 30.76,
+      "tcgplayerId": 221750,
+      "released": "2020-11-13",
+      "image": "assets/products/swsh4/theme-deck-charizard.webp"
+    },
+    {
+      "id": "theme-deck-drednaw",
+      "name": "Theme Deck \"Drednaw\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Drednaw, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "promos": [
+        "swsh4-39-cracked-ice"
+      ],
+      "price": 11.72,
+      "tcgplayerId": 221751,
+      "released": "2020-11-13",
+      "image": "assets/products/swsh4/theme-deck-drednaw.webp"
     }
   ],
   "swsh45": [

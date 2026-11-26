@@ -7483,6 +7483,146 @@
     "etchMap": "assets/foil/maps/swsh1/216-etch-v4.webp"
   },
   {
+    "id": "swsh1-15-cracked-ice",
+    "name": "Rillaboom",
+    "number": "15-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "190",
+    "artist": "Shin Nagasawa",
+    "flavorText": "By drumming, it taps into the power of its special tree stump. The roots of the stump follow its direction in battle.",
+    "evolvesFrom": "Thwackey",
+    "image": "assets/cards/swsh1/15.webp",
+    "imageSmall": "assets/cards/swsh1/15-sm.webp",
+    "attacks": [
+      {
+        "name": "Drum Roll",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "This attack also does 10 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Drum Beating",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": "During your next turn, this Pokémon can't use Drum Beating."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh1-15/large",
+    "printedNumber": "15",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Rillaboom Theme Deck)",
+    "tcgplayerId": 206434,
+    "market": 1.09
+  },
+  {
+    "id": "swsh1-36-cracked-ice",
+    "name": "Cinderace",
+    "number": "36-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "170",
+    "artist": "Shin Nagasawa",
+    "flavorText": "It juggles a pebble with its feet, turning it into a burning soccer ball. Its shots strike opponents hard and leave them scorched.",
+    "evolvesFrom": "Raboot",
+    "image": "assets/cards/swsh1/36.webp",
+    "imageSmall": "assets/cards/swsh1/36-sm.webp",
+    "attacks": [
+      {
+        "name": "Flame Cloak",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "40",
+        "text": "Attach a Fire Energy card from your discard pile to this Pokémon."
+      },
+      {
+        "name": "Bright Flame",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": "Flip a coin. If tails, discard 2 Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh1-36/large",
+    "printedNumber": "36",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Cinderace Theme Deck)",
+    "tcgplayerId": 206435,
+    "market": 2.3
+  },
+  {
+    "id": "swsh1-59-cracked-ice",
+    "name": "Inteleon",
+    "number": "59-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "160",
+    "artist": "Akira Komayama",
+    "flavorText": "It has many hidden capabilities, such as fingertips that can shoot water and a membrane on its back that it can use to glide through the air.",
+    "evolvesFrom": "Drizzile",
+    "image": "assets/cards/swsh1/59.webp",
+    "imageSmall": "assets/cards/swsh1/59-sm.webp",
+    "attacks": [
+      {
+        "name": "Silent Shot",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Discard a random card from your opponent's hand."
+      },
+      {
+        "name": "Hydro Snipe",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "You may put an Energy attached to your opponent's Active Pokémon into their hand."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh1-59/large",
+    "printedNumber": "59",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Inteleon Theme Deck)",
+    "tcgplayerId": 206432,
+    "market": 1.39
+  },
+  {
     "id": "swsh1-swshp006",
     "name": "Rillaboom",
     "number": "swshp006",
@@ -7520,13 +7660,13 @@
         "type": "Ability"
       }
     ],
+    "market": 5.67,
     "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH006/large",
     "printedNumber": "SWSH 006",
     "tcgplayerId": 208261,
     "era": "swsh",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 5.97,
     "foilMap": "assets/foil/maps/swsh1/swshp006.webp"
   },
   {
@@ -7565,13 +7705,13 @@
         "type": "Ability"
       }
     ],
+    "market": 6.54,
     "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH007/large",
     "printedNumber": "SWSH 007",
     "tcgplayerId": 208262,
     "era": "swsh",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 6.56,
     "foilMap": "assets/foil/maps/swsh1/swshp007.webp"
   },
   {
@@ -7611,13 +7751,13 @@
         "type": "Ability"
       }
     ],
+    "market": 4.62,
     "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH008/large",
     "printedNumber": "SWSH 008",
     "tcgplayerId": 208265,
     "era": "swsh",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 4.93,
     "foilMap": "assets/foil/maps/swsh1/swshp008.webp"
   },
   {
@@ -7655,13 +7795,13 @@
         "type": "Ability"
       }
     ],
+    "market": 30.66,
     "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH009/large",
     "printedNumber": "SWSH 009",
     "tcgplayerId": 208266,
     "era": "swsh",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 31.47,
     "foilMap": "assets/foil/maps/swsh1/swshp009.webp"
   },
   {
@@ -7691,13 +7831,13 @@
         "text": "Your opponent's Active Pokémon is now Asleep."
       }
     ],
+    "market": 0.49,
     "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH010/large",
     "printedNumber": "SWSH 010",
     "tcgplayerId": 206429,
     "era": "swsh",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 0.49,
     "foilMap": "assets/foil/maps/swsh1/swshp010.webp"
   },
   {
@@ -7736,13 +7876,13 @@
         "text": ""
       }
     ],
+    "market": 2.37,
     "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH011/large",
     "printedNumber": "SWSH 011",
     "tcgplayerId": 206427,
     "era": "swsh",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 2.47,
     "foilMap": "assets/foil/maps/swsh1/swshp011.webp"
   },
   {
@@ -7774,13 +7914,13 @@
         "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
       }
     ],
+    "market": 4.14,
     "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH012/large",
     "printedNumber": "SWSH 012",
     "tcgplayerId": 206428,
     "era": "swsh",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 2.8,
     "foilMap": "assets/foil/maps/swsh1/swshp012.webp"
   },
   {
@@ -7819,13 +7959,13 @@
         "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
       }
     ],
+    "market": 0.78,
     "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH031/large",
     "printedNumber": "SWSH 031",
     "tcgplayerId": 210579,
     "era": "swsh",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 0.8,
     "foilMap": "assets/foil/maps/swsh1/swshp031.webp"
   },
   {
@@ -7868,13 +8008,13 @@
         "text": ""
       }
     ],
+    "market": 34.12,
     "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH032/large",
     "printedNumber": "SWSH 032",
     "tcgplayerId": 210578,
     "era": "swsh",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 32.74,
     "foilMap": "assets/foil/maps/swsh1/swshp032.webp"
   }
 ]
