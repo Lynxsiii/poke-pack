@@ -15,6 +15,7 @@
      deps.openCard(card)    open the card inspector (the app loads the set's data first)
      deps.openShop(setId)   show a set's shop page
      deps.owned(cardId)     copies the player holds
+     deps.heart(cardId, name)  the wishlist heart beside a card row (js/wishlist.js)
      deps.signedIn() / signIn() / toast(message) / canOpen()
    Cart controls come from js/cart.js (the same ?v= as the app, or there are two stores). */
 import { SET_BY_ID, RARITY_LABEL } from "./catalog.js";
@@ -51,6 +52,29 @@ export function numberText(card) {
   return card.number;
 }
 
+/* The card list, fetched and built once for the whole page: the search box and the
+   wishlist (js/wishlist.js) share it. Resolves to the list, or rejects when it can't load
+   (the next call tries again). */
+let indexCards = null;
+let indexLoading = null;
+export function loadCardIndex() {
+  if (indexCards) return Promise.resolve(indexCards);
+  if (indexLoading) return indexLoading;
+  indexLoading = fetch(INDEX_URL, { cache: "no-cache" })
+    .then((r) => {
+      if (!r.ok) throw new Error(r.status);
+      return r.json();
+    })
+    .then((raw) => {
+      indexCards = buildCardList(raw, { setOf: setInfo, homeOf: homeSetId, rarityLabel: (r) => RARITY_LABEL[r] || r });
+      return indexCards;
+    })
+    .finally(() => {
+      indexLoading = null;
+    });
+  return indexLoading;
+}
+
 export function initSearch(deps) {
   const root = deps.root;
   const input = root.querySelector("#search-input");
@@ -69,13 +93,9 @@ export function initSearch(deps) {
   /** Fetch the card list once. Safe to call early (the header button warms it on hover and touch). */
   function warm() {
     if (cards || loading) return loading;
-    loading = fetch(INDEX_URL, { cache: "no-cache" })
-      .then((r) => {
-        if (!r.ok) throw new Error(r.status);
-        return r.json();
-      })
-      .then((raw) => {
-        cards = buildCardList(raw, { setOf: setInfo, homeOf: homeSetId, rarityLabel: (r) => RARITY_LABEL[r] || r });
+    loading = loadCardIndex()
+      .then((list) => {
+        cards = list;
       })
       .catch(() => {
         failed = true;
@@ -101,7 +121,7 @@ export function initSearch(deps) {
     const owned = deps.owned(card.id);
     const set = card.setName;
     const rarity = card.rarityLabel;
-    return `<li><button type="button" class="search-card" data-card="${esc(card.id)}" data-set="${esc(card.dataSetId)}">
+    return `<li class="search-cardrow"><button type="button" class="search-card" data-card="${esc(card.id)}" data-set="${esc(card.dataSetId)}">
       <span class="search-thumb"><img src="${esc(card.image)}" alt="" width="52" height="73" loading="lazy" decoding="async" /></span>
       <span class="search-text">
         <b>${esc(card.name)}</b>
@@ -109,7 +129,7 @@ export function initSearch(deps) {
         <span class="search-set">${esc(set)}</span>
       </span>
       ${owned > 0 ? `<span class="search-owned">${owned > 1 ? `×${owned} owned` : "Owned"}</span>` : ""}
-    </button></li>`;
+    </button>${deps.heart ? deps.heart(card.id, card.name) : ""}</li>`;
   }
 
   function sealedRow(item) {

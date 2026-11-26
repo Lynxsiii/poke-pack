@@ -1,0 +1,105 @@
+/* Wishlist (js/wishlist.js): the heart on cards everywhere, and the /wishlist page.
+   The heart is an outline in quiet ink until it is pressed, then a solid red heart.
+   Red is the site's "New" and warning colour; on a heart it means "I want this". */
+
+.wish-heart {
+  --wish-size: 36px;
+  position: relative; display: inline-grid; place-items: center; flex: none;
+  width: var(--wish-size); height: var(--wish-size); padding: 0;
+  border: 0; border-radius: 50%; background: none; color: var(--k-3); cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.wish-heart .wish-ico {
+  width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linejoin: round;
+  transition: transform 0.16s var(--ease-out);
+}
+.wish-heart[aria-pressed="true"] { color: var(--hp-low); }
+.wish-heart[aria-pressed="true"] .wish-ico { fill: currentColor; stroke: var(--k); stroke-width: 1.8; }
+@media (hover: hover) { .wish-heart:hover { color: var(--k); } .wish-heart[aria-pressed="true"]:hover { color: var(--hp-low); } }
+.wish-heart:active .wish-ico { transform: scale(0.88); }
+.wish-heart:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 1px; }
+.wish-heart.is-pop .wish-ico { animation: wish-pop 0.34s var(--ease-pop); }
+@keyframes wish-pop { 0% { transform: scale(0.7); } 55% { transform: scale(1.22); } 100% { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .wish-heart.is-pop .wish-ico { animation: none; } }
+
+/* With its word (the inspector): a straight small key, so it reads as something you press. */
+.wish-heart.wish-word {
+  display: inline-flex; gap: 6px; width: auto; height: 36px; padding: 0 12px 0 8px;
+  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); color: var(--k);
+  font: 700 14px/1 var(--font-h);
+}
+.wish-heart.wish-word .wish-ico { width: 20px; height: 20px; }
+.wish-heart.wish-word[aria-pressed="true"] { color: var(--k); }
+.wish-heart.wish-word[aria-pressed="true"] .wish-ico { color: var(--hp-low); fill: var(--hp-low); }
+#inspect .inspect-line .inspect-wish { margin-left: auto; }
+
+/* On a set's grid: the top-right corner of a missing card's empty place, or of a hearted card. */
+.cslot .slot-wish {
+  --wish-size: 32px;
+  position: absolute; z-index: 3; top: 2px; right: 2px;
+}
+.cslot .slot-wish .wish-ico { width: 18px; height: 18px; }
+/* Over card art the heart sits on a small white disc so it reads on any picture. */
+.cslot:not(.missing) .slot-wish::before {
+  content: ""; position: absolute; inset: 5px; border: 2px solid var(--k); border-radius: 50%; background: var(--box);
+}
+.cslot:not(.missing) .slot-wish .wish-ico { position: relative; width: 14px; height: 14px; }
+
+/* In search: the heart beside the row, inside its line. */
+.search-cardrow { position: relative; }
+.search-cardrow .search-card { padding-right: 52px; }
+.search-cardrow .wish-heart { position: absolute; top: 50%; right: 8px; transform: translateY(-50%); }
+
+/* ---- The page ---- */
+#view-wishlist { position: relative; padding-bottom: 40px; }
+.wish-head h2 { margin: 0; }
+.wish-guest { margin: 0 0 14px; color: var(--k-2); font: 600 14.5px/1.4 var(--font); }
+.wish-tabs { display: flex; flex-wrap: wrap; gap: 4px 6px; margin: 4px 0 18px; }
+.wish-tabs .rt-word i { margin-left: 3px; font-style: normal; font-variant-numeric: tabular-nums; opacity: 0.75; }
+
+.wish-set { margin-top: 22px; }
+.wish-set-head {
+  display: flex; align-items: center; gap: 8px; margin: 0 2px 10px;
+  font: italic 800 20px/1.05 var(--font-xc); letter-spacing: -0.01em;
+}
+.wish-set-head img { flex: none; width: auto; height: 22px; max-width: 34px; object-fit: contain; }
+.wish-set-head span { min-width: 0; overflow-wrap: anywhere; }
+.wish-set-head > i {
+  flex: none; padding: 1px 7px; border-radius: 3px; background: var(--k); color: var(--yel-k);
+  font: 700 12.5px/1.4 var(--font-h); font-style: normal; font-variant-numeric: tabular-nums;
+}
+.wish-set-head .wish-shop { flex: none; margin-left: auto; font-style: normal; letter-spacing: 0; }
+
+.wish-list { list-style: none; display: grid; gap: 8px; margin: 0; padding: 0; }
+@media (min-width: 900px) { .wish-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.wish-row { position: relative; }
+.wish-open {
+  position: relative; display: grid; grid-template-columns: 50px minmax(0, 1fr) auto; align-items: center; gap: 12px;
+  width: 100%; min-height: 86px; padding: 6px 52px 6px 6px;
+  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); color: var(--k); text-align: left; cursor: pointer;
+  transition: transform 0.14s var(--ease-out);
+}
+@media (hover: hover) { .wish-open:hover { transform: translateX(4px); } }
+.wish-open:active { transform: translateX(2px); }
+.wish-open[aria-busy="true"] { opacity: 0.6; }
+.wish-open:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 2px; }
+.wish-open::after {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 7px; border-radius: 3px 0 0 3px; background: var(--yel);
+  transform: scaleY(0); transform-origin: 50% 0; transition: transform 0.18s var(--ease-out); pointer-events: none;
+}
+.wish-open:focus-visible::after { transform: none; }
+@media (hover: hover) { .wish-open:hover::after { transform: none; } }
+.wish-thumb { display: block; width: 50px; height: 70px; overflow: hidden; border-radius: 3px; background: var(--box-2); }
+.wish-thumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.wish-text { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.wish-text b { overflow-wrap: anywhere; font: 600 16.5px/1.15 var(--font-h); }
+.wish-meta { color: var(--k-2); font-size: 13.5px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.3; }
+.wish-where { color: var(--k-3); font-size: 12.5px; font-weight: 700; line-height: 1.3; }
+.wish-own { padding: 1px 7px 2px 6px; border-radius: 3px; background: var(--k); color: var(--on-k); font: italic 700 12px/1.3 var(--font-h); white-space: nowrap; }
+.wish-miss { color: var(--k-3); font: italic 700 12.5px/1.3 var(--font-h); white-space: nowrap; }
+.wish-row .wish-row-heart { position: absolute; top: 50%; right: 8px; transform: translateY(-50%); }
+
+.wish-empty { display: grid; justify-items: start; gap: 12px; margin-top: 8px; padding: 22px 18px; border-radius: 6px; }
+.wish-empty p { margin: 0; max-width: 46ch; color: var(--k-2); font: 600 15px/1.45 var(--font); }
+.wish-empty p b { color: var(--k); }
+.wish-empty-ico .wish-ico { width: 34px; height: 34px; fill: none; stroke: var(--k-3); stroke-width: 2; stroke-linejoin: round; }
