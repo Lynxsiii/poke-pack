@@ -172,7 +172,10 @@ export function initTcg(deps) {
 
   function hubHtml() {
     const resume = read("match", null);
-    const playable = Object.entries(owned()).filter(([id, n]) => n > 0 && defs(id)?.kind === "pokemon" && defs(id).playable).length;
+    // Only the empty hub prints the count; the draft only asks whether there is one. A big collection is
+    // thousands of cards to read the rules of, so don't count them all when no one will see the number.
+    const canPlay = ([id, n]) => n > 0 && defs(id)?.kind === "pokemon" && defs(id).playable;
+    const playable = !decks.length ? Object.entries(owned()).filter(canPlay).length : draft.open ? Number(Object.entries(owned()).some(canPlay)) : 0;
     const played = record.wins + record.losses;
     return `<div class="tg-page">
       <header class="tg-head">
