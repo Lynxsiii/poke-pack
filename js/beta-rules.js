@@ -131,6 +131,8 @@ export const TINS = [
   tin("pika-bust", "Pikachu or bust tin", "Bulk, or a Pikachu worth 75 coins or more.", "#c99a0c", { names: /\b(pichu|pikachu|raichu)\b/i, gap: [1, 75], pow: 0.45, risk: "high", back: 0.85 }),
 ];
 /** A card's weight in a tin: cheaper cards come up more often, but a big hit is never out of reach. */
+/** A card that is only one piece of a bigger one: a V-UNION quarter, a LEGEND half. Noah, 2026-11-26: never in a tin. */
+export const isPieceCard = (card) => /\bV-UNION\b|\bLEGEND$/.test(card?.name || "") || (card?.subtypes || []).some((x) => /^(v-union|legend)$/i.test(x));
 /** How many tins one tap may open. */
 export const TIN_MAX_OPEN = 5;
 /** A tin's price in cents for an average return: rounded up to a tidy figure, so the real payback is never above `back`. */
