@@ -129,7 +129,7 @@ import { THEMES, canUseTheme, resolveLook } from "./themes.js?v=1";
 import { equippedCoin, gearItem, normalizeGear } from "./gear.js?v=2";
 import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=15";
 import { initBattles } from "./battles.js?v=10";
-import { initCasino } from "./casino.js?v=26";
+import { initCasino } from "./casino.js?v=27";
 import { coinOf } from "./coin.js?v=5";
 // grading
 import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=16";
