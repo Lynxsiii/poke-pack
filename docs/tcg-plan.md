@@ -22,7 +22,9 @@ the cards, sleeves, coins and playmats they have bought in-game.
   that counts counters or Energy; effects that last a turn (can't attack,
   can't use one attack, less damage, no damage, protected, can't retreat,
   flip to attack). A text of several sentences is read when every sentence
-  is. Of 29,147 attacks, 7,645 print no text and 7,825 more are read. The
+  is. Also damage to Benched or chosen Pokémon and switching, which can
+  leave a choice open (`pending` of type "pick"). Of 29,147 attacks, 7,645
+  print no text and 8,867 more are read. The
   rest land their printed damage
   and the screen says their text isn't live.
 - **Decks** (`js/tcg/decks.js`): Full deck (60 cards, 6 prizes, 4 of a name)
@@ -32,7 +34,8 @@ the cards, sleeves, coins and playmats they have bought in-game.
   is built from the ordinary one-prize cards of the set most of your deck
   comes from.
 - **Table** (`js/tcg-page.js`, `css/pages/tcg.css`): phone first. Your sleeve
-  is your card back, your coin makes the flips. A match is kept on the device
+  is your card back, your coin makes the flips. A hand card can be tapped then
+  placed, or dragged (touch or mouse) onto the field or a Pokémon. A match is kept on the device
   and picks up where it stopped. Motion: the table is repainted whole, so
   cards in flight, the turn banner and impacts live in a layer beside it
   (`.tg-fx`); transform, opacity and filter only.
@@ -69,9 +72,10 @@ wordings the engine can't read. Work down that list:
 1. Done 2026-11-26: Special Conditions and the checkup between turns.
 2. Done 2026-11-26: effects that last a turn, as marks on a slot
    (`engine.js`, "effects that last a turn").
-3. **Bench damage, switching, searching the deck, discarding from hand.** The
-   last two need a choice from the player, so `pending` grows beyond
-   "promote" into a general "choose N of these".
+3. Done 2026-11-26: bench damage, chosen targets and switching, with a
+   general choice (`pick`: one Pokémon per action, the turn waits on it).
+   Still to come on the same door: searching the deck, discarding from hand,
+   moving Energy, damage counters placed freely.
 4. **Trainers**: Items, Supporters (one a turn), Stadiums, Tools. Same
    compile-to-steps route as attacks, same pending choices.
 5. **Abilities and Poké-Powers**: a hook per timing (on play, once a turn,

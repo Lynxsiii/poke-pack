@@ -620,6 +620,74 @@ test("damage that counts: counters on the attacker, a damaged target, heads in a
   assert.equal(state.players[1].active.energy.length, before - 1);
 });
 
+lab("lab-4", [
+  ["Snipe", 0, "This attack does 30 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"],
+  ["Splash", 20, "This attack also does 10 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"],
+  ["Hop", 10, "Switch this Pokémon with 1 of your Benched Pokémon."],
+  ["Gust", 10, "Your opponent switches the Defending Pokémon with 1 of his or her Benched Pokémon."],
+  ["Maybe", 10, "You may switch this Pokémon with 1 of your Benched Pokémon."],
+]);
+
+test("a chosen target: the turn waits for the pick, then Knock Outs are judged", () => {
+  const state = labgame("lab-4", "lab-4");
+  for (const a of defs("lab-4").attacks) assert.ok(!a.plain, a.name);
+  const bench = state.players[1].bench[0];
+  bench.damage = defs(state.cards[bench.uid]).hp - 30;
+  use(state, 0, "Snipe");
+  assert.equal(state.pending[0].type, "pick");
+  assert.equal(state.current, 0);
+  assert.deepEqual(legalActions(state, 0, defs).map((a) => a.spot), [ACTIVE, 0]);
+  assert.deepEqual(legalActions(state, 1, defs), []);
+  throws(() => act(state, { type: "end", player: 0 }), /chosen/);
+  const prizes = state.players[0].prizes.length;
+  const events = act(state, { type: "pick", player: 0, spot: 0 });
+  assert.ok(events.some((e) => e.t === "ko"));
+  assert.equal(state.players[0].prizes.length, prizes - 1);
+  assert.equal(state.players[1].bench.length, 0);
+  assert.equal(state.current, 1);
+});
+
+test("damage to every Benched Pokémon needs no choice", () => {
+  const state = labgame("lab-4", "lab-4");
+  use(state, 0, "Splash");
+  assert.equal(state.players[1].active.damage, 20);
+  assert.equal(state.players[1].bench[0].damage, 10);
+  assert.equal(state.current, 1);
+});
+
+test("switching: the attacker's own choice, a may, and the defender pushed out", () => {
+  let state = labgame("lab-4", "lab-4");
+  const mine = state.players[0].active.uid;
+  addCondition(state, state.players[0].active, "poisoned");
+  use(state, 0, "Hop");
+  act(state, { type: "pick", player: 0, spot: 0 });
+  assert.equal(state.players[0].bench[0].uid, mine);
+  assert.deepEqual(conditionsOn(state.players[0].bench[0]), []);
+  assert.equal(state.current, 1);
+
+  state = labgame("lab-4", "lab-4");
+  use(state, 0, "Maybe");
+  assert.ok(legalActions(state, 0, defs).some((a) => a.spot === null));
+  act(state, { type: "pick", player: 0, spot: null });
+  assert.equal(state.players[0].active.uid, mine);
+  assert.equal(state.current, 1);
+
+  state = labgame("lab-4", "lab-4");
+  const theirs = state.players[1].active.uid;
+  use(state, 0, "Gust"); // one Benched Pokémon: no choice for them to make
+  assert.equal(state.players[1].bench[0].uid, theirs);
+  assert.equal(state.players[1].bench[0].damage, 10);
+  // With two on the Bench the defender chooses, and the bot can.
+  state = labgame("lab-4", "lab-4");
+  act(state, { type: "bench", player: 0, uid: give(state, 0, "base1-63") });
+  act(state, { type: "end", player: 0 });
+  use(state, 1, "Gust");
+  assert.equal(state.pending[0].player, 0);
+  act(state, botAction(state, 0, defs));
+  assert.equal(state.pending.length, 0);
+  assert.equal(state.current, 0);
+});
+
 /* ---------- bot against bot ---------- */
 
 function mulberry(seed) {

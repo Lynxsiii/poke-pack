@@ -485,7 +485,7 @@ export function initTcg(deps) {
   /** While the coach is waiting for one thing, only that thing goes through. */
   function coachAllows(action) {
     const step = lessonStep();
-    if (!step || step.free || action.type === "promote") return true;
+    if (!step || step.free || action.type === "promote" || action.type === "pick") return true;
     if (step.want?.(action)) return true;
     toast(step.want || step.pick ? step.nudge : "Tap Next when you've read it.");
     return false;
@@ -558,7 +558,12 @@ export function initTcg(deps) {
       if (!match.setup.active) return { text: "Choose your Active Pokémon from your hand.", keys: "" };
       return { text: "Add Benched Pokémon if you like.", keys: `<button type="button" class="solid sm" data-act="start">Start</button>` };
     }
-    if (state.pending[0]?.player === ME) return { text: "Choose your new Active Pokémon.", keys: "" };
+    const waiting = state.pending[0];
+    if (waiting?.player === ME && waiting.type === "pick") {
+      const text = waiting.effect.op === "switch" ? "Choose the Benched Pokémon that comes in." : `Choose ${waiting.side === ME ? "one of your" : "one of their"} Pokémon for ${waiting.effect.n} damage${waiting.left > 1 ? ` (${waiting.left} to choose)` : ""}.`;
+      return { text, keys: waiting.optional ? `<button type="button" class="ghost sm" data-act="pick-skip">Stay in</button>` : "" };
+    }
+    if (waiting?.player === ME) return { text: "Choose your new Active Pokémon.", keys: "" };
     if (!myTurn()) return { text: match.line || `${BOT_NAME} is thinking`, keys: "" };
     const sel = match.sel;
     if (sel?.kind === "retreat") return { text: "Who comes in? Tap a Benched Pokémon.", keys: `<button type="button" class="ghost sm" data-act="cancel">Cancel</button>` };
@@ -589,13 +594,17 @@ export function initTcg(deps) {
     const setup = real.phase === "setup";
     const coach = coachStep();
     // With the coach waiting on one action, only that action's cards and targets light up.
-    const acts = legal().filter((a) => !coach?.want || a.type === "promote" || coach.want(a));
+    const acts = legal().filter((a) => !coach?.want || a.type === "promote" || a.type === "pick" || coach.want(a));
     const sel = match.sel;
     const selId = sel?.kind === "hand" ? real.cards[sel.uid] : "";
     const targets = new Set();
     if (sel?.kind === "hand") for (const a of acts) if ((a.type === "evolve" || a.type === "attach") && real.cards[a.uid] === selId) targets.add(a.spot);
     if (sel?.kind === "retreat") for (const a of acts) if (a.type === "retreat") targets.add(a.to);
     if (real.pending[0]?.player === ME) for (const a of acts) if (a.type === "promote") targets.add(a.spot);
+    // A choice an attack left open: the Pokémon that may be picked, on either side.
+    const foeTargets = new Set();
+    const picking = real.pending[0]?.type === "pick" && real.pending[0].player === ME ? real.pending[0] : null;
+    if (picking) for (const a of acts) if (a.spot != null) (picking.side === ME ? targets : foeTargets).add(a.spot);
     const benchOpen = sel?.kind === "hand" && acts.some((a) => a.type === "bench" && real.cards[a.uid] === selId);
 
     // During setup your picks show where they will stand; theirs stay face down.
@@ -627,11 +636,11 @@ export function initTcg(deps) {
         <span class="tg-count" title="Cards in deck"><i class="tg-ic deck"></i>${foe.deck.length}</span>
       </div>
       <div class="tg-bench tg-bench-foe">
-        ${foe.bench.map((slot, i) => (setup ? foeBack : monHtml(state, BOT, slot, i))).join("")}
+        ${foe.bench.map((slot, i) => (setup ? foeBack : monHtml(state, BOT, slot, i, { target: foeTargets.has(i) }))).join("")}
       </div>
       <div class="tg-arena">
         <span class="tg-slab" aria-hidden="true"></span>
-        <div class="tg-spot tg-spot-foe" data-p="1">${foe.active ? (setup ? foeBack : monHtml(state, BOT, foe.active, ACTIVE, { big: true })) : ""}</div>
+        <div class="tg-spot tg-spot-foe" data-p="1">${foe.active ? (setup ? foeBack : monHtml(state, BOT, foe.active, ACTIVE, { big: true, target: foeTargets.has(ACTIVE) })) : ""}</div>
         <div class="tg-info tg-info-foe">
           ${setup ? `<div class="tg-hud" data-p="1"><b class="tg-hud-name">${esc(foe.name)}</b><span class="tg-pips"><small>Ready when you are</small></span></div>` : hudHtml(state, BOT)}
         </div>
@@ -816,6 +825,7 @@ export function initTcg(deps) {
       case "heal": return `Healed ${event.n}.`;
       case "ko": return `${name(event.uid)} was Knocked Out.`;
       case "prize": return `${who(event.p)} took ${plural(event.uids.length, "prize card")}.`;
+      case "switch": return `${event.p === ME ? "Your" : "Their"} Active Pokémon was switched out.`;
       case "promote": return `${who(event.p)} sent out ${name(state.players[event.p].active.uid)}.`;
       default: return "";
     }
@@ -830,8 +840,8 @@ export function initTcg(deps) {
     setTimeout(() => el.classList.remove(cls), ms);
   }
 
-  function popDamage(p, text, tone = "") {
-    const spot = root.querySelector(`.tg-spot[data-p="${p}"]`);
+  function popDamage(p, text, tone = "", at = ACTIVE) {
+    const spot = root.querySelector(at === ACTIVE || at === -1 ? `.tg-spot[data-p="${p}"]` : `.tg-bench .tg-mon[data-p="${p}"][data-spot="${at}"]`);
     if (!spot) return;
     const el = document.createElement("span");
     el.className = `tg-pop ${tone}`;
@@ -968,7 +978,7 @@ export function initTcg(deps) {
       setTimeout(() => cue(monSel(event.p, event.spot), "charged", 460), 230);
       return 420;
     }
-    if (event.t === "promote" || event.t === "retreat") {
+    if (event.t === "promote" || event.t === "retreat" || event.t === "switch") {
       flyIn(benchSpot(event.p), root.querySelector(monSel(event.p, ACTIVE)), { ms: 320 });
       return 320;
     }
@@ -1009,9 +1019,11 @@ export function initTcg(deps) {
     const fast = deps.reduceMotion();
     const wait = (ms) => sleep(fast ? Math.min(ms, 120) : ms);
     if (action.player === ME && !coachAllows(action)) return false;
-    const before = action.type === "attack" ? JSON.parse(JSON.stringify(state)) : null;
+    // An attack, or the choice an attack left open, is played in beats on the table as it stood.
+    const before = action.type === "attack" || (action.type === "pick" && action.spot != null) ? JSON.parse(JSON.stringify(state)) : null;
     // Where the card being played sits in the hand, before the hand is redrawn without it.
-    const played = action.player === ME && action.uid ? rectOf(`.tg-hand [data-hand="${action.uid}"]`) : null;
+    const played = action.player === ME && action.uid ? dropFrom || rectOf(`.tg-hand [data-hand="${action.uid}"]`) : null;
+    dropFrom = null;
     let events;
     try {
       events = apply(state, action, defs);
@@ -1034,10 +1046,12 @@ export function initTcg(deps) {
     if (before) {
       const p = action.player;
       match.shownState = before;
-      say(events.find((e) => e.t === "attack"));
-      paintTable();
-      cue(`.tg-spot[data-p="${p}"] .tg-mon`, p === ME ? "lunge-up" : "lunge-down", 420);
-      await wait(380);
+      if (action.type === "attack") {
+        say(events.find((e) => e.t === "attack"));
+        paintTable();
+        cue(`.tg-spot[data-p="${p}"] .tg-mon`, p === ME ? "lunge-up" : "lunge-down", 420);
+        await wait(380);
+      }
       for (const flips of events.filter((e) => e.t === "flip")) {
         say(flips);
         await showFlips(flips.results);
@@ -1045,18 +1059,19 @@ export function initTcg(deps) {
       for (const event of events) {
         if (event.why === "poisoned" || event.why === "burned") continue; // the checkup, told after the attack
         if (event.t === "damage" || event.t === "heal") {
-          const slot = before.players[event.p].active;
+          const benched = event.spot >= 0;
+          const slot = benched ? before.players[event.p].bench[event.spot] : before.players[event.p].active;
           const max = slot ? defOf(before, slot.uid, defs).hp : 0;
           const was = slot ? Math.max(0, max - slot.damage) : 0;
           if (slot) slot.damage = Math.max(0, slot.damage + (event.t === "heal" ? -event.n : event.n));
           say(event);
           paintTable();
-          if (slot) slideHp(event.p, was, Math.max(0, max - slot.damage), max);
-          popDamage(event.p, event.t === "heal" ? `+${event.n}` : `-${event.n}`, event.t === "heal" ? "heal" : event.weak ? "weak" : "");
+          if (slot && !benched) slideHp(event.p, was, Math.max(0, max - slot.damage), max);
+          popDamage(event.p, event.t === "heal" ? `+${event.n}` : `-${event.n}`, event.t === "heal" ? "heal" : event.weak ? "weak" : "", event.spot);
           if (event.t === "damage") {
-            const heavy = event.weak || (max && event.n * 2 >= max);
-            if (!event.self && !event.why) burst(event.p, defOf(before, before.players[p].active.uid, defs).types?.[0], heavy);
-            cue(`.tg-spot[data-p="${event.p}"] .tg-mon`, "hit", 420);
+            const heavy = !benched && (event.weak || (max && event.n * 2 >= max));
+            if (!event.self && !event.why && !benched) burst(event.p, defOf(before, before.players[p].active.uid, defs).types?.[0], heavy);
+            cue(monSel(event.p, benched ? event.spot : ACTIVE), "hit", 420);
             if (heavy) cue(".tg-arena", "shake", 420);
             deps.buzz?.(event.weak ? [18, 30, 18] : 14);
           }
@@ -1097,7 +1112,12 @@ export function initTcg(deps) {
           popDamage(event.p, `-${event.n}`, event.why);
         }
         await wait(620);
-      } else if (event.p === BOT || event.t === "promote") {
+      } else if (event.t === "damage") {
+        // Damage from a choice made after the attack: the table already shows it.
+        cue(monSel(event.p, event.spot >= 0 ? event.spot : ACTIVE), "hit", 420);
+        popDamage(event.p, `-${event.n}`, event.weak ? "weak" : "", event.spot);
+        await wait(560);
+      } else if (event.p === BOT || event.t === "promote" || event.t === "switch") {
         await wait(Math.max(480, moving + 120));
       } else if (moving) {
         await wait(moving);
@@ -1180,8 +1200,13 @@ export function initTcg(deps) {
     const slot = p === ME ? (spot === ACTIVE ? state.players[ME].active : state.players[ME].bench[spot]) : spot === ACTIVE ? state.players[BOT].active : state.players[BOT].bench[spot];
     if (!slot) return;
     const acts = legal();
+    const waiting = state.pending[0];
+    if (waiting?.type === "pick" && waiting.player === ME) {
+      if (waiting.side === p && waiting.spots.includes(spot)) return run({ type: "pick", player: ME, spot });
+      return lookAtSlot(slot);
+    }
     if (p === ME) {
-      if (state.pending[0]?.player === ME && spot !== ACTIVE) return run({ type: "promote", player: ME, spot });
+      if (waiting?.type === "promote" && waiting.player === ME && spot !== ACTIVE) return run({ type: "promote", player: ME, spot });
       const sel = match.sel;
       if (sel?.kind === "retreat" && spot !== ACTIVE) return run({ type: "retreat", player: ME, to: spot });
       if (sel?.kind === "hand") {
@@ -1203,6 +1228,143 @@ export function initTcg(deps) {
     const energy = energyOf(state, slot, defs);
     openLook(state.cards[slot.uid], `<p class="tg-look-meta">${hpLeft(state, slot, defs)} of ${def.hp} HP left${energy.length ? `, ${pips(energy)}` : ", no Energy"}</p>`);
   }
+
+  /* ---------- dragging a card out of the hand ----------
+     Press a hand card and pull: it follows the finger or the mouse, the places it can go
+     light up as they do for a tap, and letting go over one plays it. A press that doesn't
+     move stays a tap. */
+
+  let drag = null;
+  /** Where a dropped card was let go, so its flight starts there and not back in the hand. */
+  let dropFrom = null;
+  let dragEndedAt = 0;
+  const LIFT = 46; // a finger hides what is under it: the card rides above the touch
+
+  function dropPoint(e) {
+    return { x: e.clientX, y: e.clientY - (drag.touch ? LIFT : 0) };
+  }
+
+  /** What is under the dragged card: one of your Pokémon, your Bench, or just the field. */
+  function dropTarget(e) {
+    const { x, y } = dropPoint(e);
+    const el = document.elementFromPoint(x, y);
+    const mon = el?.closest?.('.tg-mon[data-p="0"]');
+    if (mon) return { el: mon, spot: Number(mon.dataset.spot) };
+    const active = el?.closest?.(".tg-spot-me");
+    if (active) return { el: active, spot: ACTIVE, empty: true };
+    const bench = el?.closest?.("[data-bench]");
+    if (bench) return { el: root.querySelector(".tg-bench-me"), bench: true };
+    const hand = rectOf(".tg-hand");
+    return { el: null, field: !hand || y < hand.top };
+  }
+
+  function dragStart(e) {
+    const card = e.target.closest?.("[data-hand]");
+    if (!card || !match || route.name !== "match" || match.busy || match.over || (e.pointerType === "mouse" && e.button !== 0)) return;
+    const setup = match.state.phase === "setup";
+    if (!setup && !myTurn()) return;
+    drag = { uid: card.dataset.hand, x: e.clientX, y: e.clientY, id: e.pointerId, touch: e.pointerType !== "mouse", live: false, ghost: null, over: null, src: card.querySelector("img")?.src || "", w: card.getBoundingClientRect().width };
+    document.addEventListener("pointermove", dragMove, { passive: false });
+    document.addEventListener("pointerup", dragEnd);
+    document.addEventListener("pointercancel", dragCancel);
+  }
+
+  function dragMove(e) {
+    if (!drag || e.pointerId !== drag.id) return;
+    if (!drag.live) {
+      if (Math.hypot(e.clientX - drag.x, e.clientY - drag.y) < 9) return;
+      if (match.busy) return dragCancel();
+      drag.live = true;
+      // Selecting it lights the places it can go, exactly as a tap would.
+      // The places it can go light up as they would for a tap. The table is not repainted here:
+      // replacing the card under a finger would end the touch.
+      const state = match.state;
+      const card = root.querySelector(`.tg-hand [data-hand="${drag.uid}"]`);
+      root.querySelectorAll(".tg-hand .is-chosen").forEach((el) => el.classList.remove("is-chosen"));
+      card?.classList.add("is-dragging");
+      if (state.phase !== "setup") {
+        match.sel = { kind: "hand", uid: drag.uid };
+        const id = state.cards[drag.uid];
+        for (const a of legal()) {
+          if (!a.uid || state.cards[a.uid] !== id) continue;
+          if (a.type === "evolve" || a.type === "attach") root.querySelector(monSel(ME, a.spot))?.classList.add("is-target");
+          if (a.type === "bench") {
+            root.querySelector(".tg-bench-me")?.classList.add("is-open");
+            root.querySelector(".tg-bench-me .tg-hole")?.classList.add("is-target");
+          }
+        }
+        const text = root.querySelector(".tg-prompt p");
+        if (text) text.textContent = promptOf().text;
+      }
+      const ghost = document.createElement("img");
+      ghost.className = "tg-drag";
+      ghost.alt = "";
+      ghost.src = drag.src;
+      ghost.style.width = `${Math.round(drag.w * 1.12)}px`;
+      fx?.appendChild(ghost);
+      drag.ghost = ghost;
+    }
+    e.preventDefault();
+    const { x, y } = dropPoint(e);
+    const w = drag.w * 1.12;
+    if (drag.ghost) drag.ghost.style.transform = `translate(${Math.round(x - w / 2)}px, ${Math.round(y - w * 0.7)}px) rotate(-3deg)`;
+    const over = dropTarget(e).el;
+    if (over !== drag.over) {
+      drag.over?.classList.remove("drop-over");
+      over?.classList.add("drop-over");
+      drag.over = over;
+    }
+  }
+
+  function dragDone() {
+    document.removeEventListener("pointermove", dragMove);
+    document.removeEventListener("pointerup", dragEnd);
+    document.removeEventListener("pointercancel", dragCancel);
+    const was = drag;
+    drag = null;
+    was?.over?.classList.remove("drop-over");
+    const rect = was?.ghost?.getBoundingClientRect() || null;
+    was?.ghost?.remove();
+    return { was, rect };
+  }
+
+  function dragCancel() {
+    const { was } = dragDone();
+    if (!was?.live || !match) return;
+    match.sel = null;
+    paintTable();
+  }
+
+  function dragEnd(e) {
+    if (!drag || e.pointerId !== drag.id) return;
+    const live = drag.live;
+    const target = live ? dropTarget(e) : null;
+    const { was, rect } = dragDone();
+    if (!live || !match) return; // it never moved: the click that follows is a tap
+    dragEndedAt = Date.now();
+    const state = match.state;
+    const uid = was.uid;
+    if (state.phase === "setup") {
+      // Anywhere on the field places it: the first one down is the Active Pokémon.
+      if (target.el || target.field) tapHand(uid);
+      else paintTable();
+      return;
+    }
+    const id = state.cards[uid];
+    const acts = legal().filter((a) => a.uid && state.cards[a.uid] === id);
+    const onto = target.spot != null && !target.empty ? acts.find((a) => (a.type === "evolve" || a.type === "attach") && a.spot === target.spot) : null;
+    const down = acts.find((a) => a.type === "bench");
+    const play = onto || ((target.el || target.field) && down) || null;
+    if (play) {
+      dropFrom = rect;
+      return run({ ...play, uid });
+    }
+    // Let go over nothing it can use: back in the hand, or still held if it was dropped on the field.
+    if (!(target.field || target.el) || !acts.length) match.sel = null;
+    paintTable();
+  }
+
+  root.addEventListener("pointerdown", dragStart);
 
   function tapBench() {
     const sel = match.sel;
@@ -1253,6 +1415,7 @@ export function initTcg(deps) {
       match.sheet = "";
       return paintTable();
     }
+    if (act === "pick-skip") return run({ type: "pick", player: ME, spot: null });
     if (act === "start") return run({ type: "place", player: ME, active: match.setup.active, bench: match.setup.bench });
     if (act === "end") return run({ type: "end", player: ME });
     if (act === "look" && match.sel?.kind === "hand") return openLook(state.cards[match.sel.uid]);
@@ -1297,7 +1460,7 @@ export function initTcg(deps) {
       const attack = t.closest("[data-attack]");
       if (attack && !attack.disabled) return run({ type: "attack", player: ME, index: Number(attack.dataset.attack) });
       const hand = t.closest("[data-hand]");
-      if (hand) return tapHand(hand.dataset.hand);
+      if (hand) return Date.now() - dragEndedAt < 350 ? undefined : tapHand(hand.dataset.hand);
       const mon = t.closest(".tg-mon");
       if (mon) return tapMon(Number(mon.dataset.p), Number(mon.dataset.spot));
       if (t.closest("[data-bench]")) return tapBench();
@@ -1417,6 +1580,7 @@ export function initTcg(deps) {
   function hide() {
     shown = false;
     closeLook();
+    if (drag) dragDone();
     fxLayer(false);
     document.body.classList.remove("tg-playing");
   }

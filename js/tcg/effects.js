@@ -18,7 +18,7 @@
  *        shielded (the target takes no effects this turn) }
  */
 
-import { addCondition, addMark, flip, other } from "./engine.js";
+import { ACTIVE, addCondition, addMark, askPick, damageAfterTyping, defOf, flip, hpLeft, other, switchActive } from "./engine.js";
 
 const WORDS = { a: 1, an: 1, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6 };
 const count = (word) => WORDS[String(word).toLowerCase()] || Number(word) || 0;
@@ -86,6 +86,44 @@ export const OPS = {
     if (!slot || (on !== "self" && ctx.shielded)) return;
     addMark(ctx.state, slot, { kind, turn: ctx.state.turn + (mine ? 2 : 1), ...(n ? { n } : {}), ...(name ? { name } : {}) });
     ctx.events.push({ t: "mark", p, kind, ...(n ? { n } : {}), ...(name ? { name } : {}) });
+  },
+  /**
+   * Damage beyond the Active Pokémon. `to`: "bench" (theirs), "any" (theirs, the Active one
+   * included, with Weakness and Resistance for it alone), "ownBench". `count` 0 is all of them;
+   * otherwise the attacker chooses that many, when there are more than that to choose from.
+   */
+  spread(ctx, { n, to = "bench", count = 0 }) {
+    const { state, player, events } = ctx;
+    const p = to === "ownBench" ? player : other(player);
+    const side = state.players[p];
+    const spots = [...(to === "any" && side.active ? [ACTIVE] : []), ...side.bench.map((_, i) => i)];
+    if (!spots.length) return;
+    const from = to === "any" ? ctx.slot.uid : "";
+    if (count && spots.length > count) return askPick(state, { player, side: p, spots, left: count, effect: { op: "damage", n, from } });
+    // No choice to make: it lands on all of them now.
+    for (const spot of spots) {
+      const slot = spot === ACTIVE ? side.active : side.bench[spot];
+      const dealt = spot === ACTIVE && from ? damageAfterTyping(n, defOf(state, from, ctx.defs), defOf(state, slot.uid, ctx.defs)) : { amount: n, weak: false, resist: false };
+      if (dealt.amount <= 0) continue;
+      slot.damage += dealt.amount;
+      events.push({ t: "damage", p, spot, n: dealt.amount, weak: dealt.weak, resist: dealt.resist });
+    }
+  },
+  /** The attacker trades places with one of its Benched Pokémon (its player chooses). */
+  switchSelf(ctx, { optional = false }) {
+    const { state, player } = ctx;
+    const side = state.players[player];
+    if (!side.bench.length || hpLeft(state, ctx.slot, ctx.defs) <= 0) return;
+    askPick(state, { player, side: player, spots: side.bench.map((_, i) => i), left: 1, effect: { op: "switch" }, optional });
+  },
+  /** The other Active Pokémon is switched out; its own player chooses what comes in. */
+  switchFoe(ctx) {
+    const { state, player } = ctx;
+    const foe = other(player);
+    const side = state.players[foe];
+    if (!side.active || !side.bench.length || ctx.shielded || hpLeft(state, side.active, ctx.defs) <= 0) return;
+    if (side.bench.length === 1) return switchActive(state, foe, 0, ctx.events);
+    askPick(state, { player: foe, side: foe, spots: side.bench.map((_, i) => i), left: 1, effect: { op: "switch" } });
   },
   /** Discard Energy from the other Active Pokémon. */
   discardFoeEnergy(ctx, { n }) {
@@ -179,6 +217,17 @@ const PATTERNS = [
   [/^Flip a coin\. If heads, prevent all damage done to (?:(?!\. ).)+ during your opponent's next turn\.(?: \(Any other effects of attacks still happen\.\))?$/, () => [{ op: "flip", when: "after", heads: [mark("guard")] }]],
   [/^This attack's damage isn't affected by any effects on your opponent's Active Pokémon\.$/, () => [{ op: "typing", when: "before", noEffects: true }]],
   [/^This attack's damage isn't affected by Weakness or Resistance, or by any effects on your opponent's Active Pokémon\.$/, () => [{ op: "typing", when: "before", noWeakness: true, noResistance: true, noEffects: true }]],
+  // Damage beyond the Active Pokémon, and switching.
+  [new RegExp(`^(?:This attack does|Does) (\\d+) damage to ${N} of your opponent's Benched Pokémon\\.(?: \\(Don't apply Weakness and Resistance for Benched Pokémon\\.\\))?$`, "i"), (m) => [{ op: "spread", when: "after", n: Number(m[1]), to: "bench", count: count(m[2]) }]],
+  [new RegExp(`^This attack also does (\\d+) damage to ${N} of your opponent's Benched Pokémon\\.(?: \\(Don't apply Weakness and Resistance for Benched Pokémon\\.\\))?$`, "i"), (m) => [{ op: "spread", when: "after", n: Number(m[1]), to: "bench", count: count(m[2]) }]],
+  [new RegExp(`^This attack does (\\d+) damage to ${N} of your opponent's Pokémon\\.(?: \\(Don't apply Weakness and Resistance for Benched Pokémon\\.\\))?$`, "i"), (m) => [{ op: "spread", when: "after", n: Number(m[1]), to: "any", count: count(m[2]) }]],
+  [new RegExp(`^Choose ${N} of your opponent's Pokémon\\. This attack does (\\d+) damage to (?:that|each of those) Pokémon\\.(?: \\(Don't apply Weakness and Resistance for Benched Pokémon\\.\\))?$`, "i"), (m) => [{ op: "spread", when: "after", n: Number(m[2]), to: "any", count: count(m[1]) }]],
+  [/^This attack does (\d+) damage to each of your opponent's Pokémon\.(?: \(Don't apply Weakness and Resistance for Benched Pokémon\.\))?$/, (m) => [{ op: "spread", when: "after", n: Number(m[1]), to: "any" }]],
+  [/^(?:This attack also does|Does) (\d+) damage to each of your opponent's Benched Pokémon\.(?: \(Don't apply Weakness and Resistance for Benched Pokémon\.\))?$/, (m) => [{ op: "spread", when: "after", n: Number(m[1]), to: "bench" }]],
+  [/^This attack also does (\d+) damage to each of your Benched Pokémon\.(?: \(Don't apply Weakness and Resistance for Benched Pokémon\.\))?$/, (m) => [{ op: "spread", when: "after", n: Number(m[1]), to: "ownBench" }]],
+  [new RegExp(`^Switch this Pokémon with ${N} of your Benched Pokémon\\.$`, "i"), () => [{ op: "switchSelf", when: "after" }]],
+  [new RegExp(`^You may switch this Pokémon with ${N} of your Benched Pokémon\\.$`, "i"), () => [{ op: "switchSelf", when: "after", optional: true }]],
+  [new RegExp(`^Your opponent switches (?:the Defending Pokémon|his or her Active Pokémon|their Active Pokémon) with ${N} of (?:his or her|their) Benched Pokémon\\.$`, "i"), () => [{ op: "switchFoe", when: "after" }]],
   // Damage that counts something.
   [new RegExp(`^Flip ${N} coins?\\. This attack does (\\d+) more damage for each heads\\.$`, "i"), (m) => [{ op: "flipBonusEach", when: "before", coins: count(m[1]), n: Number(m[2]) }]],
   [/^Flip a coin until you get tails\. This attack does (\d+) damage (?:times the number of heads|for each heads)\.$/, (m) => [{ op: "flipUntilTails", when: "before", n: Number(m[1]) }]],
