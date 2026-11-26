@@ -67,9 +67,11 @@ const SETS_LONGEST_FIRST = [...ALL_SETS].sort((a, b) => b.id.length - a.id.lengt
 
 const setOfCard = (cardId) => SETS_LONGEST_FIRST.find((set) => String(cardId || "").startsWith(`${set.id}-`)) || null;
 const pct = (bp) => `${(bp / 100).toFixed(1)}%`;
+/** A date on record, or "Unknown": a missing date never reads as today. */
 const dateWords = (ms) => {
-  const d = new Date(Number(ms) || Date.now());
-  return d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+  const n = Number(ms);
+  if (!Number.isFinite(n) || n <= 0) return "Unknown";
+  return new Date(n).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
 };
 const article = (grade) => (grade === 8 ? "an" : "a");
 /** "017/084", the same line the collection and the slab label print. */

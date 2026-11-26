@@ -131,7 +131,7 @@ import { initBattles } from "./battles.js?v=10";
 import { initCasino } from "./casino.js?v=30";
 import { coinOf } from "./coin.js?v=6";
 // grading
-import { initGrading, GRADING_ROUTE, CERT_ROUTE } from "./grading-page.js?v=17";
+import { initGrading, GRADING_ROUTE, CERT_ROUTE } from "./grading-page.js?v=18";
 // trades
 import { initTrades, TRADES_ROUTE } from "./trades-page.js?v=6";
 import { coinTag } from "./battle-kit.js";
