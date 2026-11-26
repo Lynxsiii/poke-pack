@@ -521,3 +521,91 @@ body.no-motion .gd-result { opacity: 1; transform: none; }
   #view-grading *, #view-grading *::before { animation: none !important; transition: none !important; }
   .gd-result { transform: none; }
 }
+
+/* ---- A slab you can turn over (js/slab-viewer.js) and the public cert pages ---------- */
+.gd-slab-hero { position: relative; isolation: isolate; display: grid; justify-items: center; padding: 18px 0 20px; }
+.gd-slab-hero > .gd-stage-slab { top: 0; bottom: 64px; }
+.gd-viewer { position: relative; width: min(74vw, 320px); }
+.gd-viewer .sv-keys { flex-wrap: wrap; }
+.gd-slab-hero.is-retired .gd-viewer .sv { opacity: 0.78; }
+.gd-void {
+  position: absolute; z-index: 6; top: 38%; left: 50%; padding: 6px 18px 7px;
+  background: var(--k); color: var(--on-k); font: italic 800 26px/1 var(--font-xc); letter-spacing: -0.01em;
+  transform: translate(-50%, -50%) rotate(-12deg); pointer-events: none;
+  box-shadow: 0 0 0 3px var(--bg);
+}
+.gd-certline { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin: 2px 0 0 4px; color: var(--k-2); font-size: 13.5px; font-weight: 700; line-height: 1.4; }
+.gd-certmark {
+  display: inline-flex; align-items: center; gap: 4px; padding: 2px 10px 3px 8px; border-radius: 3px;
+  background: var(--k); color: var(--on-k); font: italic 700 13.5px/1.35 var(--font-h);
+}
+.gd-certmark svg { width: 16px; height: 16px; fill: none; stroke: var(--cy); stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; }
+.gd-certmark.is-off { font: italic 700 13.5px/1.35 var(--font-h); }
+.gd-cert-no { color: var(--k-2); font: 700 17px var(--font-h); font-variant-numeric: tabular-nums; letter-spacing: 0.02em; }
+.gd-cert-title { font-variant-numeric: tabular-nums; }
+.gd-cert-skel { height: 420px; margin-top: 16px; }
+.gd-cert-none { display: flex; align-items: center; gap: 14px; margin-top: 16px; padding: 14px 16px; }
+.gd-cert-none p { margin: 0; font-weight: 700; }
+.gd-muted { color: var(--k-3); }
+.gd-rows dd a.tlink { font: inherit; }
+.gd-mine-note { margin: 12px 0 0 4px; font-size: 14px; font-weight: 700; }
+.gd-history { margin-top: 22px; }
+.gd-certlist { display: grid; gap: 8px; margin: 10px 0 0; padding: 0; list-style: none; }
+.gd-certlist .rt-row { text-decoration: none; }
+.gd-certlist .rt-row-val { font-size: 13px; color: var(--k-2); }
+
+/* Looking a cert up: an ink "RIP" plate, the number, and a key. */
+.gd-certform { display: flex; align-items: stretch; gap: 8px; margin: 14px 0 0; max-width: 460px; }
+.gd-certfield {
+  flex: 1 1 auto; display: flex; align-items: stretch; min-width: 0; height: 42px;
+  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); overflow: hidden;
+}
+.gd-certpre { display: grid; place-items: center; padding: 0 10px; background: var(--k); color: var(--on-k); font: italic 800 15px var(--font-h); letter-spacing: 0.02em; }
+.gd-certfield input {
+  flex: 1 1 auto; min-width: 0; padding: 0 12px; border: 0; background: transparent; color: var(--k);
+  font: 700 16px var(--font-h); font-variant-numeric: tabular-nums; letter-spacing: 0.04em; outline: none;
+}
+.gd-certfield:focus-within { box-shadow: 0 0 0 3px var(--yel); }
+.gd-certform .ghost.sm { flex: none; min-width: 0; height: 42px; }
+.gd-certform.is-big { margin-top: 20px; }
+.gd-certform.is-foot { margin-top: 26px; }
+
+@media (min-width: 961px) {
+  .gd-cert-page .gd-slab-layout, .gd-slab-page .gd-slab-layout { grid-template-columns: minmax(300px, 420px) minmax(0, 1fr); gap: 40px; align-items: start; }
+  .gd-slab-hero { position: sticky; top: 24px; }
+  .gd-viewer { width: min(100%, 360px); }
+}
+
+/* ---- Landing head: the title with a cert lookup beside it ----------------------- */
+.gd-head-row { display: grid; gap: 4px; }
+.gd-certform.is-head { margin-top: 12px; }
+@media (min-width: 961px) {
+  .gd-head-row { grid-template-columns: minmax(0, 1fr) minmax(300px, 400px); align-items: end; column-gap: 32px; }
+  .gd-certform.is-head { margin: 0 0 4px; }
+}
+
+/* ---- Slab guards on the landing: one tile per shelf, the shop on its own page ---- */
+.gd-tierstrip { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.gd-tiercard {
+  display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; grid-template-rows: auto auto; column-gap: 14px; row-gap: 2px;
+  align-items: center; padding: 10px 14px 10px 12px; border: var(--line-w) solid var(--k); border-radius: 6px;
+  background: var(--box); color: var(--k); transition: transform 0.14s var(--ease-out);
+}
+.gd-tiercard::after {
+  content: ""; grid-column: 3; grid-row: 1 / span 2; width: 9px; height: 9px; margin-right: 2px;
+  border-top: 3px solid currentColor; border-right: 3px solid currentColor; transform: rotate(45deg);
+}
+.gd-tiercard-obj { grid-row: 1 / span 2; display: block; width: 40px; }
+.gd-tiercard-obj .slab { width: 100%; }
+.gd-tiercard b { align-self: end; font: 800 21px/1 var(--font-xc); font-style: italic; letter-spacing: -0.01em; }
+.gd-tiercard small { display: inline-flex; align-items: center; gap: 3px; flex-wrap: wrap; align-self: start; color: var(--k-2); font-size: 13px; font-weight: 700; line-height: 1.35; }
+.gd-tiercard small .coin-i { width: 14px; height: 14px; }
+.gd-tiercard:active { transform: translateY(2px); }
+@media (hover: hover) { .gd-tiercard:hover { transform: translateY(-3px); } }
+@media (min-width: 720px) {
+  .gd-tierstrip { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+  .gd-tiercard { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; justify-items: start; align-content: start; height: 100%; padding: 14px; row-gap: 4px; }
+  .gd-tiercard::after { display: none; }
+  .gd-tiercard-obj { grid-row: auto; width: 64px; margin-bottom: 10px; }
+}
+.gd-shop-page .gd-shop { margin-top: 8px; }

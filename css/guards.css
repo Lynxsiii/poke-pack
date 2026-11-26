@@ -287,3 +287,274 @@
   --g-hi-2: rgb(255 255 255 / .6);
   --g-lip: rgb(255 255 255 / .5);
 }
+
+/* ---- Added in the grading overhaul (2026-11-26) ----------------------------- */
+/* Solid */
+[data-guard="guard-sand"] {
+  --g-fill: linear-gradient(160deg, #e8d6b2, #cdb68b 45%, #b19a70 100%);
+  --g-sheen: linear-gradient(180deg, rgb(255 255 255 / .18), rgb(255 255 255 / 0) 26%);
+  --g-hi: rgb(255 250 235 / .5);
+  --g-lip: rgb(255 245 220 / .22);
+}
+[data-guard="guard-coral"] {
+  --g-fill: linear-gradient(160deg, #ff9a86, #f26a55 42%, #cc4a3b 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 28%, rgb(255 255 255 / .34) 38%, rgb(255 255 255 / .06) 44%, rgb(255 255 255 / 0) 60%);
+  --g-hi: rgb(255 235 228 / .55);
+  --g-lip: rgb(255 210 200 / .28);
+}
+[data-guard="guard-olive"] {
+  --g-fill: linear-gradient(160deg, #7f8650, #5e6436 45%, #474b28 100%);
+  --g-sheen: linear-gradient(180deg, rgb(255 255 255 / .1), rgb(255 255 255 / 0) 24%);
+  --g-hi: rgb(240 245 210 / .26);
+  --g-lip: rgb(230 235 200 / .12);
+}
+
+/* Two-tone and patterns */
+[data-guard="guard-polka"] {
+  --g-fill:
+    radial-gradient(circle at 50% 50%, #fbf8f2 0 calc(var(--g-u) * .17), rgb(0 0 0 / 0) calc(var(--g-u) * .17 + .6px)) 0 0 / calc(var(--g-u) * .62) calc(var(--g-u) * .62),
+    radial-gradient(circle at 50% 50%, #fbf8f2 0 calc(var(--g-u) * .17), rgb(0 0 0 / 0) calc(var(--g-u) * .17 + .6px)) calc(var(--g-u) * .31) calc(var(--g-u) * .31) / calc(var(--g-u) * .62) calc(var(--g-u) * .62),
+    linear-gradient(160deg, #e2333a, #c41d2a 50%, #96141f 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 28%, rgb(255 255 255 / .32) 38%, rgb(255 255 255 / .06) 44%, rgb(255 255 255 / 0) 60%);
+  --g-hi: rgb(255 255 255 / .5);
+  --g-lip: rgb(255 225 225 / .26);
+}
+[data-guard="guard-tiger"] {
+  /* Stripes of uneven weight on three periods so they fork and taper like the coat. */
+  --g-fill:
+    repeating-linear-gradient(118deg, rgb(0 0 0 / 0) 0 calc(var(--g-u) * .9), #15110d calc(var(--g-u) * .9 + .5px) calc(var(--g-u) * 1.08), rgb(0 0 0 / 0) calc(var(--g-u) * 1.08 + .5px) calc(var(--g-u) * 1.6)),
+    repeating-linear-gradient(62deg, rgb(0 0 0 / 0) 0 calc(var(--g-u) * 1.7), #1c140e calc(var(--g-u) * 1.7 + .5px) calc(var(--g-u) * 1.82), rgb(0 0 0 / 0) calc(var(--g-u) * 1.82 + .5px) calc(var(--g-u) * 2.5)),
+    linear-gradient(160deg, #ffad3b, #f07f1c 45%, #c95a10 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 28%, rgb(255 240 210 / .28) 38%, rgb(255 255 255 / .05) 44%, rgb(255 255 255 / 0) 60%);
+  --g-hi: rgb(255 235 200 / .5);
+  --g-lip: rgb(255 220 170 / .24);
+}
+[data-guard="guard-plaid"] {
+  --g-fill:
+    repeating-linear-gradient(90deg, rgb(20 30 70 / .55) 0 calc(var(--g-u) * .34), rgb(0 0 0 / 0) calc(var(--g-u) * .34) calc(var(--g-u) * .5), rgb(255 230 120 / .4) calc(var(--g-u) * .5) calc(var(--g-u) * .56), rgb(0 0 0 / 0) calc(var(--g-u) * .56) calc(var(--g-u) * 1.2)),
+    repeating-linear-gradient(180deg, rgb(20 30 70 / .55) 0 calc(var(--g-u) * .34), rgb(0 0 0 / 0) calc(var(--g-u) * .34) calc(var(--g-u) * .5), rgb(255 230 120 / .4) calc(var(--g-u) * .5) calc(var(--g-u) * .56), rgb(0 0 0 / 0) calc(var(--g-u) * .56) calc(var(--g-u) * 1.2)),
+    linear-gradient(160deg, #c8272f, #a51a24 50%, #7d121a 100%);
+  --g-sheen: linear-gradient(180deg, rgb(255 255 255 / .12), rgb(255 255 255 / 0) 24%);
+  --g-hi: rgb(255 230 230 / .32);
+  --g-lip: rgb(255 220 220 / .16);
+}
+[data-guard="guard-handheld"] {
+  /* A grey shell with the keys' colours set into the bottom corners. */
+  --g-fill:
+    radial-gradient(circle at 12% 94%, #8f2f6e 0 6%, rgb(0 0 0 / 0) 6.4%),
+    radial-gradient(circle at 24% 97.5%, #8f2f6e 0 4%, rgb(0 0 0 / 0) 4.4%),
+    radial-gradient(circle at 88% 95%, #c8323e 0 5%, rgb(0 0 0 / 0) 5.4%),
+    linear-gradient(180deg, rgb(0 0 0 / 0) 0 6%, rgb(60 70 150 / .55) 6% 7.2%, rgb(0 0 0 / 0) 7.2%),
+    linear-gradient(160deg, #d6d4cf, #b9b7b1 46%, #9c9a94 100%);
+  --g-sheen: linear-gradient(180deg, rgb(255 255 255 / .2), rgb(255 255 255 / 0) 26%);
+  --g-hi: rgb(255 255 255 / .55);
+  --g-lip: rgb(255 255 255 / .24);
+}
+[data-guard="guard-topo"] {
+  --g-fill:
+    repeating-radial-gradient(circle at 18% 22%, rgb(0 0 0 / 0) 0 calc(var(--g-u) * .42), rgb(40 60 40 / .45) calc(var(--g-u) * .42) calc(var(--g-u) * .42 + 1px)),
+    repeating-radial-gradient(circle at 82% 74%, rgb(0 0 0 / 0) 0 calc(var(--g-u) * .5), rgb(40 60 40 / .38) calc(var(--g-u) * .5) calc(var(--g-u) * .5 + 1px)),
+    linear-gradient(160deg, #b9cfae, #97b18a 50%, #7a956d 100%);
+  --g-sheen: linear-gradient(180deg, rgb(255 255 255 / .14), rgb(255 255 255 / 0) 26%);
+  --g-hi: rgb(245 255 240 / .4);
+  --g-lip: rgb(235 250 230 / .18);
+}
+[data-guard="guard-splatter"] {
+  --g-fill:
+    radial-gradient(circle at 30% 40%, #1e66d8 0 9%, rgb(0 0 0 / 0) 10%) 0 0 / calc(var(--g-u) * 2.3) calc(var(--g-u) * 2.9),
+    radial-gradient(circle at 70% 60%, #f23f6a 0 7%, rgb(0 0 0 / 0) 8%) 0 0 / calc(var(--g-u) * 3.1) calc(var(--g-u) * 2.1),
+    radial-gradient(circle at 50% 20%, #ffcf2e 0 6%, rgb(0 0 0 / 0) 7%) 0 0 / calc(var(--g-u) * 1.9) calc(var(--g-u) * 3.7),
+    radial-gradient(circle at 20% 80%, #15171a 0 5%, rgb(0 0 0 / 0) 6%) 0 0 / calc(var(--g-u) * 2.7) calc(var(--g-u) * 1.7),
+    radial-gradient(circle at 85% 15%, #22b573 0 8%, rgb(0 0 0 / 0) 9%) 0 0 / calc(var(--g-u) * 4.3) calc(var(--g-u) * 3.3),
+    linear-gradient(160deg, #ffffff, #efefec 50%, #d9d9d5 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 28%, rgb(255 255 255 / .5) 38%, rgb(255 255 255 / .08) 44%, rgb(255 255 255 / 0) 60%);
+  --g-hi: rgb(255 255 255 / .9);
+  --g-lip: rgb(255 255 255 / .4);
+}
+
+/* Metal */
+[data-guard="guard-bronze"] {
+  --g-fill:
+    repeating-linear-gradient(180deg, rgb(255 255 255 / 0) 0 1px, rgb(255 225 190 / .12) 1px 2px, rgb(0 0 0 / .12) 2px 3px),
+    linear-gradient(160deg, #b98a55, #8a5e30 38%, #74491f 55%, #3f2610 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 30%, rgb(255 220 180 / .36) 38%, rgb(255 245 225 / .7) 39.2%, rgb(255 220 180 / .36) 40.4%, rgb(255 255 255 / 0) 50%);
+  --g-hi: rgb(255 215 170 / .5);
+  --g-lip: rgb(255 200 150 / .26);
+}
+[data-guard="guard-brass"] {
+  --g-fill:
+    repeating-linear-gradient(180deg, rgb(255 255 255 / 0) 0 1px, rgb(255 250 210 / .18) 1px 2px, rgb(0 0 0 / .08) 2px 3px),
+    linear-gradient(160deg, #f4e08c, #d4b54c 38%, #c09e38 55%, #85681c 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 30%, rgb(255 250 220 / .5) 38%, rgb(255 255 255 / .85) 39.2%, rgb(255 250 220 / .5) 40.4%, rgb(255 255 255 / 0) 50%);
+  --g-hi: rgb(255 250 210 / .75);
+  --g-lip: rgb(255 240 180 / .36);
+}
+[data-guard="guard-titanium"] {
+  /* Bead blasted: no brushing, a fine grain and a soft wide highlight. */
+  --g-fill:
+    radial-gradient(circle at 50% 50%, rgb(255 255 255 / .12) 0 .5px, rgb(0 0 0 / 0) 1px) 0 0 / 3px 3px,
+    radial-gradient(circle at 50% 50%, rgb(0 0 0 / .1) 0 .5px, rgb(0 0 0 / 0) 1px) 1px 2px / 4px 4px,
+    linear-gradient(160deg, #b4b8bc, #8e9296 40%, #7c8084 60%, #55585c 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 24%, rgb(255 255 255 / .28) 38%, rgb(255 255 255 / 0) 54%);
+  --g-hi: rgb(255 255 255 / .5);
+  --g-lip: rgb(255 255 255 / .22);
+}
+[data-guard="guard-azure"] {
+  --g-fill:
+    repeating-linear-gradient(180deg, rgb(255 255 255 / 0) 0 1px, rgb(210 235 255 / .14) 1px 2px, rgb(0 0 0 / .1) 2px 3px),
+    linear-gradient(160deg, #6fb8ff, #2f7fe0 38%, #2266c4 55%, #0f3a7c 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 30%, rgb(200 230 255 / .4) 38%, rgb(255 255 255 / .8) 39.2%, rgb(200 230 255 / .4) 40.4%, rgb(255 255 255 / 0) 50%);
+  --g-hi: rgb(210 235 255 / .65);
+  --g-lip: rgb(170 210 255 / .32);
+}
+[data-guard="guard-violet"] {
+  --g-fill:
+    repeating-linear-gradient(180deg, rgb(255 255 255 / 0) 0 1px, rgb(240 215 255 / .14) 1px 2px, rgb(0 0 0 / .1) 2px 3px),
+    linear-gradient(160deg, #c08cff, #8a4ee6 38%, #7438cc 55%, #3f1a7c 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 30%, rgb(235 215 255 / .4) 38%, rgb(255 255 255 / .8) 39.2%, rgb(235 215 255 / .4) 40.4%, rgb(255 255 255 / 0) 50%);
+  --g-hi: rgb(235 215 255 / .62);
+  --g-lip: rgb(215 180 255 / .3);
+}
+[data-guard="guard-hammered"] {
+  /* Dimples: overlapping soft facets on two co-prime tiles, each lit from the top left. */
+  --g-fill:
+    radial-gradient(60% 60% at 35% 35%, rgb(255 255 255 / .34), rgb(255 255 255 / 0) 60%, rgb(0 0 0 / .16) 100%) 0 0 / calc(var(--g-u) * .7) calc(var(--g-u) * .66),
+    radial-gradient(60% 60% at 35% 35%, rgb(255 255 255 / .22), rgb(255 255 255 / 0) 60%, rgb(0 0 0 / .12) 100%) calc(var(--g-u) * .3) calc(var(--g-u) * .4) / calc(var(--g-u) * .9) calc(var(--g-u) * .82),
+    linear-gradient(160deg, #c9cdd2, #9ba0a7 40%, #858a91 60%, #555a61 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 30%, rgb(255 255 255 / .35) 39%, rgb(255 255 255 / 0) 50%);
+  --g-hi: rgb(255 255 255 / .7);
+  --g-lip: rgb(255 255 255 / .3);
+}
+[data-guard="guard-platinum"] {
+  --g-fill:
+    linear-gradient(180deg, rgb(255 255 255 / .5) 0%, rgb(255 255 255 / 0) 18%, rgb(0 0 0 / 0) 46%, rgb(40 44 52 / .3) 50%, rgb(0 0 0 / 0) 56%, rgb(255 255 255 / .35) 82%, rgb(255 255 255 / 0) 100%),
+    linear-gradient(160deg, #f6f7f9, #d8dbe0 36%, #c3c7ce 55%, #9298a1 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 30%, rgb(255 255 255 / .6) 37%, rgb(255 255 255 / .95) 38%, rgb(255 255 255 / .6) 39%, rgb(255 255 255 / 0) 46%);
+  --g-hi: rgb(255 255 255 / .95);
+  --g-hi-2: rgb(255 255 255 / .6);
+  --g-lip: rgb(255 255 255 / .5);
+}
+[data-guard="guard-damascus"] {
+  /* Folded steel: wavy dark and light layers, from two offset ring sets. */
+  --g-fill:
+    repeating-radial-gradient(ellipse 140% 60% at 10% 30%, rgb(255 255 255 / .2) 0 calc(var(--g-u) * .09), rgb(0 0 0 / .26) calc(var(--g-u) * .14) calc(var(--g-u) * .2), rgb(255 255 255 / .2) calc(var(--g-u) * .26)),
+    repeating-radial-gradient(ellipse 120% 80% at 90% 80%, rgb(0 0 0 / .16) 0 calc(var(--g-u) * .12), rgb(255 255 255 / .12) calc(var(--g-u) * .18) calc(var(--g-u) * .26), rgb(0 0 0 / .16) calc(var(--g-u) * .34)),
+    linear-gradient(160deg, #9aa0a8, #6c727a 45%, #43474d 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 30%, rgb(255 255 255 / .3) 39%, rgb(255 255 255 / 0) 50%);
+  --g-hi: rgb(255 255 255 / .5);
+  --g-lip: rgb(255 255 255 / .2);
+}
+
+/* ---- Crystal ----------------------------------------------------------------
+   Tinted clear acrylic: the fill is see-through, so the case's own bevel and
+   the table show through it; a bright inner edge and a hard sheen sell the
+   thickness. Glitter and gold leaf are flakes on co-prime tiles. */
+[data-guard="guard-smoke"] {
+  --g-fill: linear-gradient(160deg, rgb(120 128 140 / .55), rgb(60 66 76 / .62) 50%, rgb(30 34 40 / .7) 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 28%, rgb(255 255 255 / .38) 37%, rgb(255 255 255 / .06) 43%, rgb(255 255 255 / 0) 58%);
+  --g-hi: rgb(255 255 255 / .7);
+  --g-hi-2: rgb(255 255 255 / .4);
+  --g-lip: rgb(255 255 255 / .34);
+}
+[data-guard="guard-ruby"] {
+  --g-fill: linear-gradient(160deg, rgb(255 90 110 / .55), rgb(210 20 50 / .6) 50%, rgb(130 0 25 / .7) 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 28%, rgb(255 225 230 / .42) 37%, rgb(255 255 255 / .06) 43%, rgb(255 255 255 / 0) 58%);
+  --g-hi: rgb(255 220 225 / .75);
+  --g-hi-2: rgb(255 200 210 / .4);
+  --g-lip: rgb(255 190 200 / .36);
+}
+[data-guard="guard-sapphire"] {
+  --g-fill: linear-gradient(160deg, rgb(90 150 255 / .55), rgb(30 80 220 / .6) 50%, rgb(10 30 130 / .7) 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 28%, rgb(220 235 255 / .42) 37%, rgb(255 255 255 / .06) 43%, rgb(255 255 255 / 0) 58%);
+  --g-hi: rgb(220 235 255 / .75);
+  --g-hi-2: rgb(200 220 255 / .4);
+  --g-lip: rgb(180 210 255 / .36);
+}
+[data-guard="guard-emerald"] {
+  --g-fill: linear-gradient(160deg, rgb(80 230 150 / .5), rgb(20 160 90 / .58) 50%, rgb(0 90 50 / .7) 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 28%, rgb(220 255 235 / .42) 37%, rgb(255 255 255 / .06) 43%, rgb(255 255 255 / 0) 58%);
+  --g-hi: rgb(220 255 235 / .75);
+  --g-hi-2: rgb(200 255 225 / .4);
+  --g-lip: rgb(180 250 210 / .34);
+}
+[data-guard="guard-amber"] {
+  --g-fill: linear-gradient(160deg, rgb(255 205 90 / .58), rgb(230 140 20 / .62) 50%, rgb(150 70 0 / .72) 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 28%, rgb(255 245 215 / .42) 37%, rgb(255 255 255 / .06) 43%, rgb(255 255 255 / 0) 58%);
+  --g-hi: rgb(255 245 210 / .75);
+  --g-hi-2: rgb(255 235 190 / .4);
+  --g-lip: rgb(255 225 170 / .36);
+}
+[data-guard="guard-amethyst"] {
+  --g-fill: linear-gradient(160deg, rgb(200 140 255 / .55), rgb(140 60 220 / .6) 50%, rgb(80 20 140 / .7) 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 28%, rgb(245 225 255 / .42) 37%, rgb(255 255 255 / .06) 43%, rgb(255 255 255 / 0) 58%);
+  --g-hi: rgb(245 225 255 / .75);
+  --g-hi-2: rgb(235 210 255 / .4);
+  --g-lip: rgb(225 190 255 / .36);
+}
+[data-guard="guard-aqua"] {
+  --g-fill: linear-gradient(160deg, rgb(120 240 240 / .5), rgb(30 190 210 / .56) 50%, rgb(0 110 140 / .68) 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 28%, rgb(225 255 255 / .45) 37%, rgb(255 255 255 / .06) 43%, rgb(255 255 255 / 0) 58%);
+  --g-hi: rgb(225 255 255 / .78);
+  --g-hi-2: rgb(210 255 255 / .4);
+  --g-lip: rgb(190 250 255 / .36);
+}
+[data-guard="guard-quartz"] {
+  --g-fill:
+    radial-gradient(60% 30% at 30% 20%, rgb(255 255 255 / .35), rgb(255 255 255 / 0) 70%),
+    radial-gradient(50% 30% at 75% 80%, rgb(255 255 255 / .25), rgb(255 255 255 / 0) 70%),
+    linear-gradient(160deg, rgb(255 200 215 / .72), rgb(240 160 185 / .7) 50%, rgb(205 120 150 / .76) 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 28%, rgb(255 240 245 / .45) 37%, rgb(255 255 255 / .08) 43%, rgb(255 255 255 / 0) 58%);
+  --g-hi: rgb(255 240 245 / .8);
+  --g-hi-2: rgb(255 230 238 / .45);
+  --g-lip: rgb(255 220 230 / .38);
+}
+[data-guard="guard-ice"] {
+  /* Cracked ice: clear with frosted veins running at angles. */
+  --g-fill:
+    linear-gradient(118deg, rgb(0 0 0 / 0) 18%, rgb(255 255 255 / .7) 18.6%, rgb(0 0 0 / 0) 19.6%),
+    linear-gradient(42deg, rgb(0 0 0 / 0) 36%, rgb(255 255 255 / .6) 36.5%, rgb(0 0 0 / 0) 37.4%),
+    linear-gradient(160deg, rgb(0 0 0 / 0) 58%, rgb(255 255 255 / .65) 58.4%, rgb(0 0 0 / 0) 59.4%),
+    linear-gradient(76deg, rgb(0 0 0 / 0) 71%, rgb(255 255 255 / .55) 71.4%, rgb(0 0 0 / 0) 72.2%),
+    linear-gradient(8deg, rgb(0 0 0 / 0) 86%, rgb(255 255 255 / .5) 86.4%, rgb(0 0 0 / 0) 87.2%),
+    linear-gradient(160deg, rgb(220 240 255 / .45), rgb(170 210 240 / .4) 50%, rgb(120 170 210 / .5) 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 28%, rgb(255 255 255 / .5) 37%, rgb(255 255 255 / .08) 43%, rgb(255 255 255 / 0) 58%);
+  --g-hi: rgb(255 255 255 / .9);
+  --g-hi-2: rgb(255 255 255 / .5);
+  --g-lip: rgb(255 255 255 / .45);
+}
+[data-guard="guard-opal"] {
+  --g-fill:
+    radial-gradient(30% 18% at 20% 18%, rgb(120 255 200 / .55), rgb(120 255 200 / 0) 100%),
+    radial-gradient(26% 16% at 82% 34%, rgb(255 140 200 / .5), rgb(255 140 200 / 0) 100%),
+    radial-gradient(30% 14% at 30% 70%, rgb(110 190 255 / .55), rgb(110 190 255 / 0) 100%),
+    radial-gradient(24% 14% at 78% 88%, rgb(255 220 110 / .5), rgb(255 220 110 / 0) 100%),
+    radial-gradient(20% 12% at 60% 52%, rgb(190 140 255 / .45), rgb(190 140 255 / 0) 100%),
+    linear-gradient(160deg, rgb(250 248 245 / .9), rgb(230 230 235 / .86) 50%, rgb(205 208 220 / .9) 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 28%, rgb(255 255 255 / .55) 37%, rgb(255 255 255 / .08) 43%, rgb(255 255 255 / 0) 58%);
+  --g-hi: rgb(255 255 255 / .95);
+  --g-hi-2: rgb(255 255 255 / .55);
+  --g-lip: rgb(255 255 255 / .5);
+}
+[data-guard="guard-glitter"] {
+  --g-fill:
+    radial-gradient(circle at 30% 30%, rgb(255 255 255 / .95) 0 .6px, rgb(255 255 255 / 0) 1.2px) 0 0 / 7px 9px,
+    radial-gradient(circle at 70% 60%, rgb(220 230 245 / .9) 0 .5px, rgb(220 230 245 / 0) 1.1px) 0 0 / 11px 7px,
+    radial-gradient(circle at 50% 80%, rgb(255 255 255 / .8) 0 .7px, rgb(255 255 255 / 0) 1.3px) 0 0 / 13px 17px,
+    radial-gradient(circle at 15% 70%, rgb(180 195 215 / .8) 0 .5px, rgb(180 195 215 / 0) 1px) 0 0 / 5px 6px,
+    linear-gradient(160deg, rgb(225 232 242 / .42), rgb(185 195 212 / .4) 50%, rgb(140 150 170 / .5) 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 28%, rgb(255 255 255 / .45) 37%, rgb(255 255 255 / .06) 43%, rgb(255 255 255 / 0) 58%);
+  --g-hi: rgb(255 255 255 / .9);
+  --g-hi-2: rgb(255 255 255 / .5);
+  --g-lip: rgb(255 255 255 / .45);
+}
+[data-guard="guard-goldleaf"] {
+  --g-fill:
+    conic-gradient(from 20deg at 40% 40%, rgb(255 220 120 / .95) 0 70deg, rgb(0 0 0 / 0) 70deg) 0 0 / 9px 13px,
+    conic-gradient(from 200deg at 60% 55%, rgb(235 185 70 / .9) 0 60deg, rgb(0 0 0 / 0) 60deg) 3px 5px / 17px 11px,
+    conic-gradient(from 110deg at 50% 50%, rgb(255 236 170 / .85) 0 50deg, rgb(0 0 0 / 0) 50deg) 7px 2px / 23px 19px,
+    linear-gradient(160deg, rgb(255 250 235 / .4), rgb(235 225 200 / .38) 50%, rgb(190 175 140 / .48) 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 28%, rgb(255 248 225 / .45) 37%, rgb(255 255 255 / .06) 43%, rgb(255 255 255 / 0) 58%);
+  --g-hi: rgb(255 248 220 / .9);
+  --g-hi-2: rgb(255 240 200 / .5);
+  --g-lip: rgb(255 235 190 / .45);
+}

@@ -95,7 +95,8 @@ export const GRADING_LIMITS = { maxSlabs: 400, maxGuardQty: 10, maxShown: 8 };
 export const GUARD_TIERS = [
   { id: "solid", name: "Solid", blurb: "One colour, matte or gloss." },
   { id: "duo", name: "Two-tone", blurb: "Two colours or a pattern." },
-  { id: "metal", name: "Metal", blurb: "Brushed and mirror finishes." },
+  { id: "metal", name: "Metal", blurb: "Brushed, anodised and mirror finishes." },
+  { id: "crystal", name: "Crystal", blurb: "Tinted see-through acrylic, some with glitter set in." },
   { id: "motion", name: "Animated", blurb: "Finishes that move. Still under reduced motion." },
 ];
 
@@ -120,6 +121,9 @@ export const GUARDS = [
   { id: "guard-lilac", name: "Lilac", tier: "solid", price: 8, blurb: "Soft lilac." },
   { id: "guard-cocoa", name: "Cocoa", tier: "solid", price: 8, blurb: "Dark chocolate brown." },
   { id: "guard-navy", name: "Navy", tier: "solid", price: 8, blurb: "Midnight navy." },
+  { id: "guard-sand", name: "Sand", tier: "solid", price: 8, blurb: "Warm matte sand." },
+  { id: "guard-coral", name: "Coral", tier: "solid", price: 8, blurb: "Glossy coral." },
+  { id: "guard-olive", name: "Olive", tier: "solid", price: 8, blurb: "Matte olive drab." },
   { id: "guard-frost", name: "Frost", tier: "solid", price: 10, blurb: "Frosted clear." },
   // Two-tone and patterns
   { id: "guard-split", name: "Split", tier: "duo", price: 12, blurb: "Red over white, a black band between." },
@@ -134,6 +138,12 @@ export const GUARDS = [
   { id: "guard-rainbow", name: "Rainbow", tier: "duo", price: 14, blurb: "Every colour, in order." },
   { id: "guard-carbon", name: "Carbon", tier: "duo", price: 14, blurb: "Carbon-fibre weave." },
   { id: "guard-marble", name: "Marble", tier: "duo", price: 14, blurb: "White marble, grey veins." },
+  { id: "guard-polka", name: "Polka", tier: "duo", price: 12, blurb: "White dots on red." },
+  { id: "guard-tiger", name: "Tiger", tier: "duo", price: 12, blurb: "Orange with black stripes." },
+  { id: "guard-plaid", name: "Plaid", tier: "duo", price: 12, blurb: "Red and navy tartan." },
+  { id: "guard-handheld", name: "Handheld", tier: "duo", price: 12, blurb: "Grey body, purple and red keys, like an old console." },
+  { id: "guard-topo", name: "Topo", tier: "duo", price: 14, blurb: "Contour lines on sage." },
+  { id: "guard-splatter", name: "Splatter", tier: "duo", price: 14, blurb: "Paint flicked over white." },
   // Metal
   { id: "guard-silver", name: "Silver", tier: "metal", price: 14, blurb: "Brushed silver." },
   { id: "guard-copper", name: "Copper", tier: "metal", price: 14, blurb: "Warm brushed copper." },
@@ -141,6 +151,27 @@ export const GUARDS = [
   { id: "guard-rosegold", name: "Rose gold", tier: "metal", price: 16, blurb: "Brushed rose gold." },
   { id: "guard-gilt", name: "Gilt", tier: "metal", price: 18, blurb: "Brushed gold." },
   { id: "guard-chrome", name: "Chrome", tier: "metal", price: 18, blurb: "Mirror chrome." },
+  { id: "guard-bronze", name: "Bronze", tier: "metal", price: 14, blurb: "Dark brushed bronze." },
+  { id: "guard-brass", name: "Brass", tier: "metal", price: 14, blurb: "Bright brushed brass." },
+  { id: "guard-titanium", name: "Titanium", tier: "metal", price: 16, blurb: "Bead-blasted titanium grey." },
+  { id: "guard-azure", name: "Azure", tier: "metal", price: 16, blurb: "Blue anodised aluminium." },
+  { id: "guard-violet", name: "Violet", tier: "metal", price: 16, blurb: "Purple anodised aluminium." },
+  { id: "guard-hammered", name: "Hammered", tier: "metal", price: 16, blurb: "Hand-hammered steel." },
+  { id: "guard-platinum", name: "Platinum", tier: "metal", price: 18, blurb: "Polished platinum." },
+  { id: "guard-damascus", name: "Damascus", tier: "metal", price: 18, blurb: "Folded steel, rippled grain." },
+  // Crystal
+  { id: "guard-smoke", name: "Smoke", tier: "crystal", price: 18, blurb: "Smoked see-through grey." },
+  { id: "guard-ruby", name: "Ruby", tier: "crystal", price: 18, blurb: "Clear ruby red." },
+  { id: "guard-sapphire", name: "Sapphire", tier: "crystal", price: 18, blurb: "Clear sapphire blue." },
+  { id: "guard-emerald", name: "Emerald", tier: "crystal", price: 18, blurb: "Clear emerald green." },
+  { id: "guard-amber", name: "Amber", tier: "crystal", price: 18, blurb: "Clear honey amber." },
+  { id: "guard-amethyst", name: "Amethyst", tier: "crystal", price: 18, blurb: "Clear amethyst purple." },
+  { id: "guard-aqua", name: "Aqua", tier: "crystal", price: 18, blurb: "Clear pool-water aqua." },
+  { id: "guard-quartz", name: "Quartz", tier: "crystal", price: 20, blurb: "Rose quartz, milky pink." },
+  { id: "guard-ice", name: "Ice", tier: "crystal", price: 20, blurb: "Cracked ice, clear with frosted veins." },
+  { id: "guard-opal", name: "Opal", tier: "crystal", price: 22, blurb: "Milky white with colour fire." },
+  { id: "guard-glitter", name: "Glitter", tier: "crystal", price: 22, blurb: "Clear with silver glitter set in." },
+  { id: "guard-goldleaf", name: "Gold leaf", tier: "crystal", price: 22, blurb: "Clear with flakes of gold leaf." },
   // Animated
   { id: "guard-pulse", name: "Pulse", tier: "motion", price: 24, blurb: "A slow coral glow that breathes." },
   { id: "guard-flow", name: "Flow", tier: "motion", price: 24, blurb: "A gradient that never stops moving." },
@@ -149,6 +180,13 @@ export const GUARDS = [
   { id: "guard-holo", name: "Holo", tier: "motion", price: 28, blurb: "A holographic sweep." },
   { id: "guard-galaxy", name: "Galaxy", tier: "motion", price: 28, blurb: "A drifting starfield." },
   { id: "guard-prism", name: "Prism", tier: "motion", price: 30, blurb: "A rainbow turning around the case." },
+  { id: "guard-tide", name: "Tide", tier: "motion", price: 24, blurb: "Blue water rolling round the case." },
+  { id: "guard-storm", name: "Storm", tier: "motion", price: 26, blurb: "Dark clouds with lightning flashes." },
+  { id: "guard-magma", name: "Magma", tier: "motion", price: 26, blurb: "Glowing cracks over black rock." },
+  { id: "guard-glitch", name: "Glitch", tier: "motion", price: 26, blurb: "A screen that slips out of sync." },
+  { id: "guard-borealis", name: "Borealis", tier: "motion", price: 28, blurb: "Northern lights drifting in bands." },
+  { id: "guard-comet", name: "Comet", tier: "motion", price: 28, blurb: "A bright comet circling the edge." },
+  { id: "guard-starlight", name: "Starlight", tier: "motion", price: 30, blurb: "Black with stars that twinkle in turn." },
 ];
 
 export const guardsInTier = (tierId) => GUARDS.filter((g) => g.tier === tierId);

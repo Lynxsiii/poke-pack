@@ -31,16 +31,26 @@ import {
   gradingFee,
   gradedValue,
 } from "./grading-rules.js";
-import { slabHTML, revealSlab, guardName, gradeWord } from "./slab.js?v=2";
+import { slabHTML, revealSlab, guardName, gradeWord } from "./slab.js?v=3";
 import { uuid, slabTileHTML } from "./casino-kit.js";
 import { gateLock, gateNoticeHTML, gateRefusal, roomLine } from "./gate-notice.js";
 import { esc, coins, coinTag as defaultCoinTag } from "./battle-kit.js";
 import { ALL_SETS, sellValue } from "./catalog.js";
 import { COIN_I as COIN_IMG } from "./money.js?v=2";
 import { initAutoRegrade } from "./grading-auto.js?v=1";
+import { slabViewerHTML, attachSlabViewers, flipSlab, openSlabFullscreen } from "./slab-viewer.js?v=1";
 
 /** The paths this page answers. app.js uses it to route and to allow navigate(). */
-export const GRADING_ROUTE = /^\/grading(?:\/send(?:\/([a-zA-Z0-9-]{1,60}))?|\/graded|\/(\d{1,12})(\/auto)?|\/auto\/(\d{1,12}))?$/;
+export const GRADING_ROUTE = /^\/grading(?:\/send(?:\/([a-zA-Z0-9-]{1,60}))?|\/graded|\/guards|\/(\d{1,12})(\/auto)?|\/auto\/(\d{1,12}))?$/;
+
+/** The public cert pages: /cert to look one up, /cert/<number> for one slab. Anyone can open them, signed in or not. */
+export const CERT_ROUTE = /^\/cert(?:\/([A-Za-z0-9-]{1,20}))?$/i;
+/** "RIP-0000123", "rip 123", "0000123" or "123" -> "RIP-0000123"; "" when it isn't one. Mirrors certId in worker/grading.js. */
+export function certOf(raw) {
+  const m = String(raw || "").trim().match(/^(?:rip[-\s]?)?0*(\d{1,12})$/i);
+  const id = m ? Number(m[1]) : 0;
+  return Number.isSafeInteger(id) && id > 0 ? `RIP-${String(id).padStart(7, "0")}` : "";
+}
 
 const PICK_PAGE = 60;
 const RECENT_SLABS = 6;
@@ -397,6 +407,219 @@ export function initGrading(deps) {
     holders.forEach((holder) => observer.observe(holder));
   }
 
+
+  // ---- Turning a slab over (js/slab-viewer.js) ------------------------------------
+  /** A slab on its stage with the keys under it: turn it over, look closer, and share its cert. */
+  let viewerSource = null; // { slab, card, set, guard } for the full-screen viewer
+  function viewerBlock(slab, card, set, guard, { share = true } = {}) {
+    const face = faceOf(card, slab.reverse);
+    const shown = { ...slab, guard: guard || null };
+    viewerSource = { shown, card, set, face };
+    const markup = slabHTML({ face, card, slab: shown, set, size: "hero", back: true });
+    return `<div class="gd-viewer">
+      ${slabViewerHTML(markup, { guard: guard || "" })}
+      <div class="sv-keys">
+        <button type="button" class="ghost sm" data-sv-flip>Turn over</button>
+        <button type="button" class="ghost sm" data-sv-full>Look closer</button>
+        ${share && slab.cert ? `<button type="button" class="ghost sm" data-gd-share-cert="${esc(slab.cert)}">Share cert</button>` : ""}
+      </div>
+    </div>`;
+  }
+  function openViewerFull() {
+    if (!viewerSource) return;
+    const { shown, card, set, face } = viewerSource;
+    openSlabFullscreen(slabHTML({ face, card, slab: shown, set, size: "hero", back: true }), { title: `${card?.name || "Slab"}, ${shown.cert || ""}`, guard: shown.guard || "" });
+  }
+  async function shareCert(cert) {
+    const url = `${location.origin}/cert/${cert}`;
+    try {
+      if (navigator.share && matchMedia("(pointer: coarse)").matches) {
+        await navigator.share({ title: `${GRADING_BRAND.name} cert ${cert}`, url });
+        return;
+      }
+    } catch (err) {
+      if (err?.name === "AbortError") return;
+    }
+    try {
+      await navigator.clipboard.writeText(url);
+      toast("Cert link copied.");
+    } catch {
+      toast(url);
+    }
+  }
+
+  // ---- Public cert pages ------------------------------------------------------------
+  const certCache = new Map(); // "RIP-0000123" -> { at, res } or { at, error, status }
+  async function lookupCert(cert, { fresh = false } = {}) {
+    const hit = certCache.get(cert);
+    if (hit && !fresh && Date.now() - hit.at < 60000) return hit;
+    let out;
+    try {
+      out = { at: Date.now(), res: await deps.api(`/api/cert/${encodeURIComponent(cert)}`) };
+    } catch (err) {
+      out = { at: Date.now(), error: err?.message || "Couldn't look that cert up.", status: err?.status || 0 };
+    }
+    certCache.set(cert, out);
+    return out;
+  }
+
+  const certForm = (value = "", cls = "") => `<form class="gd-certform ${cls}" data-gd-cert-form role="search" aria-label="Look up a cert">
+      <label class="gd-certfield"><span class="gd-certpre" aria-hidden="true">RIP</span>
+        <input type="text" name="cert" inputmode="numeric" autocomplete="off" spellcheck="false" maxlength="20" placeholder="Cert number" value="${esc(value)}" aria-label="Cert number" />
+      </label>
+      <button type="submit" class="ghost sm">Look up</button>
+    </form>`;
+
+  const STATUS_WORDS = {
+    active: ["Sealed", "In its slab and checked against the grading record."],
+    "in-game": ["Sealed", "In its slab, on a casino table right now."],
+    cracked: ["Cracked", "Taken out of its slab. This cert no longer holds a card."],
+    sold: ["Sold", "Sold back to the shop. This cert is retired."],
+    lost: ["Retired", "Lost to the house in the casino. This cert is retired."],
+  };
+
+  async function paintCert() {
+    const cert = certOf(route.cert);
+    if (!route.cert) {
+      const mine = signedIn() ? sortedSlabs("newest").slice(0, 6) : [];
+      root.innerHTML = `<div class="gd-page gd-cert-page">
+        ${back("/grading", "Grading")}
+        <header class="gd-head">
+          <h1 class="page-title">Cert lookup</h1>
+          <p class="gd-lede">Every ${esc(GRADING_BRAND.name)} slab has its own cert number on the label. Type one in to see the card, its grade, who holds it and when it was graded.</p>
+        </header>
+        ${certForm("", "is-big")}
+        ${mine.length ? `<section class="gd-section"><div class="gd-sec-head"><h2 class="gd-h">Your latest certs</h2></div>
+          <ul class="gd-certlist">${mine.map((s) => {
+            const card = deps.findCard(s.cardId);
+            return `<li><a class="rt-row" href="/cert/${esc(s.cert)}" data-gd-link><span class="rt-row-lab">${esc(String(s.grade))}</span><span class="rt-row-name">${esc(card?.name || s.cardId)}<small>${esc(s.cert)}</small></span><span class="rt-row-val">${esc(dateWords(s.gradedAt))}</span></a></li>`;
+          }).join("")}</ul></section>` : ""}
+      </div>`;
+      return;
+    }
+    if (!cert) {
+      root.innerHTML = `<div class="gd-page gd-cert-page">${back("/cert", "Cert lookup")}
+        <h1 class="page-title">Cert lookup</h1>${certForm(route.cert)}
+        <p class="gd-empty">That isn't a cert number. They look like RIP-0001234.</p></div>`;
+      return;
+    }
+    if (cert !== route.cert) {
+      // One spelling per cert, so a shared link always reads the same.
+      try { history.replaceState(history.state, "", `/cert/${cert}`); } catch { /* no history */ }
+      route.cert = cert;
+    }
+    const cached = certCache.get(cert);
+    if (!cached) {
+      root.innerHTML = `<div class="gd-page gd-cert-page">${back("/cert", "Cert lookup")}
+        <h1 class="page-title gd-cert-title">${esc(cert)}</h1><div class="rt-skel gd-cert-skel" aria-label="Looking it up"></div></div>`;
+    }
+    const got = await lookupCert(cert);
+    if (!visible || route.kind !== "cert" || route.cert !== cert) return;
+    if (got.error) {
+      root.innerHTML = `<div class="gd-page gd-cert-page">${back("/cert", "Cert lookup")}
+        <h1 class="page-title gd-cert-title">${esc(cert)}</h1>
+        ${certForm(cert)}
+        <div class="rt-empty gd-cert-none"><span class="gd-ghost-slab sm" aria-hidden="true"><span class="rt-ball e"></span></span><p>${esc(got.error)}</p></div>
+      </div>`;
+      return;
+    }
+    const r = got.res;
+    await ensureCard(r.card.id).catch(() => null);
+    if (!visible || route.kind !== "cert" || route.cert !== cert) return;
+    const card = deps.findCard(r.card.id) || (r.card.name ? { ...r.card, image: r.card.image } : null);
+    const set = setOfCard(r.card.id) || r.set;
+    const sealed = r.status === "active" || r.status === "in-game";
+    const [statusWord, statusLine] = STATUS_WORDS[r.status] || STATUS_WORDS.active;
+    const slab = { ...r.slab, cert: r.cert };
+    const mineNow = sealed && data.slabs.some((s) => Number(s.id) === Number(slab.id));
+    const owner = r.owner
+      ? `<a class="tlink" href="/u/${esc(r.owner.handle)}">${esc(r.owner.name)}</a> <small>@${esc(r.owner.handle)}</small>`
+      : `<span class="gd-muted">Nobody</span>`;
+    const rows = [
+      ["Card", esc(card?.name || r.card.id)],
+      ["Set", `${esc(set?.name || "")}${numberLine(card, set) ? `, ${esc(numberLine(card, set))}` : ""}${slab.reverse ? ", reverse holo" : ""}`],
+      ["Grade", `${slab.grade} ${esc(gradeWord(slab.grade, slab.blackLabel))}`],
+      ["Graded", esc(dateWords(slab.gradedAt))],
+      r.regrades > 0 ? ["First graded", `${esc(dateWords(r.firstGradedAt))}<small>, regraded ${r.regrades === 1 ? "once" : `${r.regrades.toLocaleString("en-US")} times`} since</small>`] : null,
+      [sealed ? "Held by" : "Held by", owner],
+      !sealed && r.closedAt ? [statusWord, esc(dateWords(r.closedAt))] : null,
+      sealed && slab.value != null ? ["Graded value", coinTag(slab.value)] : null,
+    ].filter(Boolean);
+    const history = [
+      r.regradedAs ? `<li><a class="rt-row" href="/cert/${esc(r.regradedAs.cert)}" data-gd-link><span class="rt-row-lab">Next</span><span class="rt-row-name">Regraded ${esc(String(r.regradedAs.grade))} ${esc(gradeWord(r.regradedAs.grade, r.regradedAs.blackLabel))}<small>${esc(r.regradedAs.cert)}</small></span><span class="rt-row-val">${esc(dateWords(r.regradedAs.gradedAt))}</span></a></li>` : "",
+      ...r.earlier.map((e) => `<li><a class="rt-row" href="/cert/${esc(e.cert)}" data-gd-link><span class="rt-row-lab">${esc(String(e.grade))}</span><span class="rt-row-name">${esc(gradeWord(e.grade, e.blackLabel))}<small>${esc(e.cert)}</small></span><span class="rt-row-val">${esc(dateWords(e.gradedAt))}</span></a></li>`),
+    ].join("");
+    root.innerHTML = `<div class="gd-page gd-cert-page">
+      ${back("/cert", "Cert lookup")}
+      <div class="gd-slab-layout">
+        <div class="gd-slab-hero ${sealed ? "" : "is-retired"}">
+          <span class="gd-stage-slab" aria-hidden="true"></span>
+          ${card ? viewerBlock(slab, card, set, sealed ? slab.guard : null) : ""}
+          ${sealed ? "" : `<span class="gd-void" aria-hidden="true">${esc(statusWord)}</span>`}
+        </div>
+        <div class="gd-slab-copy">
+          <p class="gd-certline"><span class="gd-certmark ${sealed ? "is-ok" : "is-off rt-tag"}">${sealed ? `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>` : ""}${esc(statusWord)}</span><span>${esc(statusLine)}</span></p>
+          <h1 class="gd-slab-h">${esc(card?.name || r.card.id)}</h1>
+          <div class="gd-slab-sub">${gradePlate(slab.grade, slab.blackLabel)}<span class="gd-cert-no">${esc(r.cert)}</span></div>
+          <dl class="rt-box gd-rows">${rows.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("")}</dl>
+          ${mineNow ? `<p class="gd-mine-note">This is your slab. <a class="tlink" href="/grading/${Number(slab.id)}" data-gd-link>Open it in Grading</a></p>` : ""}
+          ${history ? `<section class="gd-section gd-history" aria-labelledby="gd-hist-h"><div class="gd-sec-head"><h2 class="gd-h" id="gd-hist-h">This copy's certs</h2></div><ul class="gd-certlist">${history}</ul></section>` : ""}
+          ${certForm("", "is-foot")}
+          ${fine()}
+        </div>
+      </div>
+    </div>`;
+    attachSlabViewers(root);
+  }
+
+
+  // ---- Slab guards: five shelves on the landing, the whole shop on its own page ----------
+  const SHELF_FACE = { solid: "guard-cherry", duo: "guard-rainbow", metal: "guard-gilt", crystal: "guard-sapphire", motion: "guard-prism" };
+  function shelvesHTML(preview) {
+    const total = GUARDS.length;
+    return `<section class="gd-section gd-shelves" aria-labelledby="gd-guards-h">
+      <div class="gd-sec-head"><h2 class="gd-h" id="gd-guards-h">Slab guards</h2><a class="tlink gd-more-link" href="/grading/guards" data-gd-link>All ${total}</a></div>
+      <p class="gd-sub">A bumper round the case, for looks only. ${total} styles on five shelves.</p>
+      <ul class="gd-tierstrip">${GUARD_TIERS.map((t) => {
+        const list = guardsInTier(t.id);
+        const from = Math.min(...list.map((g) => g.price));
+        const owned = ownedInTier(t.id);
+        return `<li><a class="gd-tiercard" href="/grading/guards" data-gd-link data-gd-tier-go="${esc(t.id)}">
+          <span class="gd-tiercard-obj rt-drop" aria-hidden="true">${preview ? slabMarkup(preview, "grid", "", SHELF_FACE[t.id]) : ""}</span>
+          <b>${esc(t.name)}</b>
+          <small>${list.length} styles, from ${COIN_IMG}${coins(from)}${owned ? `, ${owned} owned` : ""}</small>
+        </a></li>`;
+      }).join("")}</ul>
+    </section>`;
+  }
+
+  async function paintShop() {
+    if (!signedIn()) {
+      root.innerHTML = gate();
+      return;
+    }
+    const preview = bestSlab() || (await sampleSlab());
+    if (!visible || route.kind !== "guards") return;
+    if (preview) await ensureSlabCards([preview]);
+    if (!visible || route.kind !== "guards") return;
+    pendingPreview = preview;
+    const balance = coinsNow();
+    const tier = GUARD_TIERS.find((t) => t.id === shopTier) || GUARD_TIERS[0];
+    root.innerHTML = `<div class="gd-page gd-shop-page">
+      ${back("/grading", "Grading")}
+      <header class="gd-head">
+        <h1 class="page-title">Slab guards</h1>
+        <p class="gd-lede">A bumper round the slab's case, for looks only: the grade and value stay the same. Buy one here, then put it on from the slab's page.${preview && !preview.sample ? ` Shown on your best slab.` : ""}</p>
+      </header>
+      <section class="gd-section gd-shop" aria-label="${esc(tier.name)} guards">
+        ${tierWords("data-gd-shop-tier", tier.id)}
+        <p class="gd-tier-blurb">${esc(tier.blurb)}</p>
+        <div class="gd-guards">${guardsInTier(tier.id).map((g) => guardShopTile(g, preview, balance)).join("")}</div>
+      </section>
+      ${fine()}
+    </div>`;
+  }
+
   // ---- The landing -------------------------------------------------------------
   /** The shelf of slabs (landing and Graded): staggered on the first paint after the page opens. */
   function shelfHTML(list) {
@@ -423,9 +646,12 @@ export function initGrading(deps) {
     const gated = lock();
     const heroCard = preview ? deps.findCard(preview.cardId) : null;
     root.innerHTML = `<div class="gd-page gd-landing">
-      <header class="gd-head">
-        <h1 class="page-title">Grading</h1>
-        <p class="gd-lede">Send a card from your collection. It comes back sealed in a slab, with a grade on the label and a value to match.</p>
+      <header class="gd-head gd-head-row">
+        <div>
+          <h1 class="page-title">Grading</h1>
+          <p class="gd-lede">Send a card from your collection. It comes back sealed in a slab, with a grade on the label and a value to match.</p>
+        </div>
+        ${certForm("", "is-head")}
       </header>
       ${gateNoticeHTML(gated)}
       <section class="gd-lab" aria-labelledby="gd-how-h">
@@ -464,13 +690,7 @@ export function initGrading(deps) {
         }
       </section>
       ${inCasinoHTML()}
-      <section class="gd-section gd-shop" aria-labelledby="gd-guards-h">
-        <div class="gd-sec-head"><h2 class="gd-h" id="gd-guards-h">Slab guards</h2></div>
-        <p class="gd-sub">A bumper around the slab's case, for looks only: the grade and value stay the same. Buy one here, then put it on from the slab's page.</p>
-        ${tierWords("data-gd-shop-tier", shopTier)}
-        <p class="gd-tier-blurb">${esc(GUARD_TIERS.find((t) => t.id === shopTier)?.blurb || "")}</p>
-        <div class="gd-guards">${guardsInTier(shopTier).map((g) => guardShopTile(g, preview, balance)).join("")}</div>
-      </section>
+      ${shelvesHTML(preview)}
     </div>`;
     windowSlabs();
   }
@@ -756,13 +976,15 @@ export function initGrading(deps) {
   }
 
   /** One submission, idempotent: a retry after a network error sends the same requestId. Resolves with the slab. */
-  async function doSubmit(cardId, isReverse) {
+  async function doSubmit(cardId, isReverse, regradeOf = 0) {
     if (!attempt || attempt.cardId !== cardId || Boolean(attempt.reverse) !== isReverse) {
       attempt = { requestId: uuid(), cardId, reverse: isReverse, at: Date.now() };
     }
+    if (regradeOf) attempt.regradeOf = Number(regradeOf);
     writeAttempt(attempt);
     try {
-      const res = await post("/api/grading/submit", { cardId, reverse: isReverse, requestId: attempt.requestId });
+      // A regrade names the slab it came out of, so the cert keeps the copy's first grading date.
+      const res = await post("/api/grading/submit", { cardId, reverse: isReverse, requestId: attempt.requestId, ...(attempt.regradeOf ? { regradeOf: attempt.regradeOf } : {}) });
       attempt = null;
       writeAttempt(null);
       return res.slab;
@@ -938,7 +1160,7 @@ export function initGrading(deps) {
     sendError = "";
     revealed = null;
     try {
-      const fresh = await doSubmit(cardId, isReverse);
+      const fresh = await doSubmit(cardId, isReverse, slab.id);
       if (!visible || route.kind !== "send" || route.cardId !== cardId || stage !== "sending") return;
       await showReveal(fresh);
     } catch (err) {
@@ -1108,6 +1330,10 @@ export function initGrading(deps) {
     }
     const { card, set } = await ensureCard(slab.cardId);
     if (!visible || route.kind !== "slab" || route.slabId !== slab.id) return;
+    // The copy's history (first graded, regrades) comes from its public cert; drawn when it arrives.
+    const certHit = certCache.get(slab.cert);
+    const lineage = certHit?.res && Number(certHit.res.slab?.id) === Number(slab.id) ? certHit.res : null;
+    if (!certHit && slab.cert) lookupCert(slab.cert).then((got) => { if (got.res?.regrades > 0 && visible && route.kind === "slab" && route.slabId === slab.id) render(); });
     const current = slab.guard || null;
     const pick = slabPick === undefined ? current : slabPick;
     const action = guardAction(slab);
@@ -1118,15 +1344,19 @@ export function initGrading(deps) {
     root.innerHTML = `<div class="gd-page gd-slab-page">
       ${back("/grading", "Your slabs")}
       <div class="gd-slab-layout">
-        ${stageHTML(`<div class="gd-stand rt-drop">${slabMarkup(slab, "inspect", "", pick)}</div>`, "gd-slab-stage")}
+        <div class="gd-slab-hero gd-slab-stage">
+          <span class="gd-stage-slab" aria-hidden="true"></span>
+          ${card ? viewerBlock(slab, card, set, pick) : `<div class="gd-stand rt-drop">${slabMarkup(slab, "inspect", "", pick)}</div>`}
+        </div>
         <div class="gd-slab-copy">
           <h1 class="gd-slab-h">${esc(card?.name || slab.cardId)}</h1>
           <div class="gd-slab-sub">${gradePlate(slab.grade, slab.blackLabel)}<span class="gd-slab-val">${COIN_IMG}${coins(value)}</span></div>
           <dl class="rt-box gd-rows">
             <div><dt>Set</dt><dd>${esc(set?.name || "")}</dd></div>
             <div><dt>Number</dt><dd>${esc(numberLine(card, set))}${slab.reverse ? ", reverse holo" : ""}</dd></div>
-            <div><dt>Cert</dt><dd>${esc(slab.cert || "")}</dd></div>
+            <div><dt>Cert</dt><dd><a class="tlink" href="/cert/${esc(slab.cert || "")}" data-gd-link>${esc(slab.cert || "")}</a></dd></div>
             <div><dt>Graded</dt><dd>${esc(dateWords(slab.gradedAt))}</dd></div>
+            ${lineage?.regrades > 0 ? `<div><dt>First graded</dt><dd>${esc(dateWords(lineage.firstGradedAt))}<small>regraded ${lineage.regrades === 1 ? "once" : `${lineage.regrades.toLocaleString("en-US")} times`}</small></dd></div>` : ""}
             <div><dt>Raw card</dt><dd>${COIN_IMG}${coins(raw)}${Math.abs(value - raw) > 0.004 ? `<small class="${value > raw ? "is-up" : "is-down"}">slab ${value > raw ? "+" : "−"}${coins(Math.abs(value - raw))}</small>` : ""}</dd></div>
           </dl>
           <div class="gd-showrow">
@@ -1164,6 +1394,7 @@ export function initGrading(deps) {
         </div>
       </div>
     </div>`;
+    attachSlabViewers(root);
   }
 
   /** The guard box's one key: yellow when it does something, a quiet disabled key when it doesn't. */
@@ -1181,10 +1412,14 @@ export function initGrading(deps) {
     slabError = "";
     const slab = slabById(route.slabId);
     if (!slab) return;
-    const el = root.querySelector(".gd-slab-stage .slab");
-    if (el) {
-      if (guardId) el.dataset.guard = guardId;
-      else delete el.dataset.guard;
+    // Redraw the slab with the picked guard (the bumper has sides and a back too).
+    const viewer = root.querySelector(".gd-slab-stage .gd-viewer");
+    const card = deps.findCard(slab.cardId);
+    if (viewer && card) {
+      const holder = document.createElement("div");
+      holder.innerHTML = viewerBlock(slab, card, setOfCard(slab.cardId), guardId);
+      viewer.replaceWith(holder.firstElementChild);
+      attachSlabViewers(root);
     }
     root.querySelectorAll("[data-gd-pick]").forEach((b) => b.classList.toggle("on", (b.dataset.gdPick || null) === guardId));
     const actions = root.querySelector(".gd-guard-actions");
@@ -1364,6 +1599,7 @@ export function initGrading(deps) {
     const t = e.target;
     if (!(t instanceof Element)) return;
     const link = t.closest("[data-gd-link]");
+    if (link?.dataset.gdTierGo) shopTier = link.dataset.gdTierGo;
     if (link) {
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
       e.preventDefault();
@@ -1373,6 +1609,15 @@ export function initGrading(deps) {
       return;
     }
     if (route.kind.startsWith("auto") && auto.click(t)) return;
+    const flip = t.closest("[data-sv-flip]");
+    if (flip) {
+      const stage = flip.closest(".gd-viewer")?.querySelector("[data-sv]");
+      if (stage) flip.textContent = flipSlab(stage) ? "Turn back" : "Turn over";
+      return;
+    }
+    if (t.closest("[data-sv-full]")) return openViewerFull();
+    const shareBtn = t.closest("[data-gd-share-cert]");
+    if (shareBtn) return shareCert(shareBtn.dataset.gdShareCert);
     const qty = t.closest("[data-gd-qty]");
     if (qty) {
       const [id, delta] = qty.dataset.gdQty.split(":");
@@ -1502,7 +1747,23 @@ export function initGrading(deps) {
     }
   });
 
+  root.addEventListener("submit", (e) => {
+    const form = e.target.closest?.("[data-gd-cert-form]");
+    if (!form) return;
+    e.preventDefault();
+    const input = form.querySelector("input[name=cert]");
+    const cert = certOf(input?.value);
+    if (!cert) {
+      input?.setCustomValidity("Type a cert number, like RIP-0001234 or 1234.");
+      input?.reportValidity();
+      return;
+    }
+    input.setCustomValidity("");
+    navigate(`/cert/${cert}`);
+  });
+
   root.addEventListener("input", (e) => {
+    if (e.target.matches?.("[data-gd-cert-form] input")) e.target.setCustomValidity("");
     if (route.kind.startsWith("auto") && auto.input(e.target)) return;
     const search = e.target.closest?.("[data-gd-search]");
     if (!search) return;
@@ -1519,7 +1780,7 @@ export function initGrading(deps) {
   function render() {
     const gen = ++renderGen;
     const job =
-      route.kind === "auto-setup" || route.kind === "auto-run" ? auto.paint() : route.kind === "slab" ? paintSlab() : route.kind === "graded" ? paintGraded() : route.kind === "send" ? (route.cardId ? paintSend() : paintPicker()) : paintLanding();
+      route.kind === "auto-setup" || route.kind === "auto-run" ? auto.paint() : route.kind === "slab" ? paintSlab() : route.kind === "cert" ? paintCert() : route.kind === "guards" ? paintShop() : route.kind === "graded" ? paintGraded() : route.kind === "send" ? (route.cardId ? paintSend() : paintPicker()) : paintLanding();
     const mark = picked;
     picked = null;
     if (mark) job.then(() => { if (gen === renderGen) root.querySelector(mark)?.classList.add("is-pick"); }, () => {});
@@ -1533,7 +1794,10 @@ export function initGrading(deps) {
   function show(path = "/grading") {
     const clean = String(path || "/grading").replace(/\/+$/, "") || "/grading";
     const m = clean.match(GRADING_ROUTE);
-    const next = m?.[4]
+    const c = clean.match(CERT_ROUTE);
+    const next = c
+      ? { kind: "cert", slabId: 0, cardId: "", cert: c[1] || "" }
+      : m?.[4]
       ? { kind: "auto-run", slabId: 0, runId: Number(m[4]), cardId: "" }
       : m?.[2] && m?.[3]
       ? { kind: "auto-setup", slabId: Number(m[2]), cardId: "" }
@@ -1541,6 +1805,8 @@ export function initGrading(deps) {
       ? { kind: "slab", slabId: Number(m[2]), cardId: "" }
       : clean === "/grading/graded"
         ? { kind: "graded", slabId: 0, cardId: "" }
+        : clean === "/grading/guards"
+        ? { kind: "guards", slabId: 0, cardId: "" }
         : clean.startsWith("/grading/send")
         ? { kind: "send", slabId: 0, cardId: m?.[1] || "" }
         : { kind: "landing", slabId: 0, cardId: "" };

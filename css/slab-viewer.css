@@ -1,0 +1,131 @@
+/* Turning a slab over (js/slab-viewer.js). The stage gives the case its
+   thickness: a stack of edge rings behind the front face, the back face behind
+   those. Only the stage's .sv-rot carries preserve-3d; nothing on it or on the
+   faces is filtered (a filter there makes WebKit draw the back face through).
+   The slab itself keeps its own size rules (slab-inspect, slab-hero). */
+
+.sv {
+  --sv-depth: 7cqw;
+  position: relative;
+  width: 100%;
+  container-type: inline-size;
+  perspective: 1400px;
+  touch-action: pan-y;
+  cursor: grab;
+  -webkit-tap-highlight-color: transparent;
+}
+.sv.is-dragging { cursor: grabbing; }
+.sv img { -webkit-user-drag: none; user-select: none; -webkit-user-select: none; }
+.sv-full-stage { touch-action: none; }
+/* No container-type here: containment flattens preserve-3d in WebKit, which
+   then paints the back face over the front. The edges size off .sv's width. */
+.sv-rot {
+  position: relative;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.sv .slab {
+  max-width: none;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* The edge: rings of clear acrylic stepping back to the depth of the case. A
+   guard (data-guard copied onto .sv-rot) paints them in its own colour, so the
+   bumper has sides too. */
+.sv-side {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+.sv-side i {
+  position: absolute;
+  inset: 0;
+  border-radius: 4.5cqw;
+  border: max(1.5px, .5cqw) solid rgb(196 222 232 / .42);
+  transform: translateZ(calc(var(--sv-depth) * var(--i) / -12));
+}
+.sv-side i:nth-child(odd) { border-color: rgb(170 205 218 / .38); }
+.sv-side i:last-child { background: rgb(150 190 205 / .28); }
+.sv-rot[data-guard] .sv-side i {
+  inset: -2cqw;
+  border: none;
+  border-radius: 6.5cqw;
+  background: var(--g-fill, #2a2c30);
+  filter: none;
+}
+.sv-rot[data-guard] .sv-side i:nth-child(even) { opacity: .92; }
+
+/* The back face (a second .slab after the front, .slab-back): turned round and
+   pushed to the back of the case. Its guard ring is its own .slab-guard. */
+.sv .slab.slab-back {
+  display: block;
+  position: absolute;
+  inset: 0;
+  transform: translateZ(calc(-1 * var(--sv-depth))) rotateY(180deg);
+  pointer-events: none;
+}
+
+/* ---- Keys under a slab in a page ---------------------------------------------- */
+.sv-keys {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 14px;
+}
+.sv-keys .ghost { min-width: 0; }
+
+/* ---- The full-screen viewer --------------------------------------------------- */
+body.sv-open { overflow: hidden; }
+.sv-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: grid;
+  place-items: center;
+  padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom));
+  background: rgb(10 12 15 / .97);
+  opacity: 0;
+  transition: opacity .22s var(--ease-out, ease-out);
+}
+.sv-sheet.is-in { opacity: 1; }
+.sv-sheet-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(100%, 440px, calc((100dvh - 150px) * .6));
+}
+.sv-sheet .sv { width: 100%; }
+.sv-sheet .sv-rot { transform: rotateX(0deg); }
+.sv-sheet.is-in .sv { animation: svRise .34s var(--ease-out, ease-out) both; }
+@keyframes svRise {
+  from { opacity: 0; transform: translateY(24px) scale(.96); }
+  to { opacity: 1; transform: none; }
+}
+.sv-hint {
+  margin: 18px 0 0;
+  font: 700 13px/1.2 var(--font, system-ui);
+  color: rgb(255 255 255 / .62);
+}
+.sv-sheet-keys {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+.sv-sheet .ghost, .sv-sheet .ghost:hover:not(:disabled) { color: #fff; }
+.sv-sheet .ghost::before { border-color: #fff; background: #1e2329; }
+.sv-sheet .ghost:hover:not(:disabled)::before { background: #2a3139; }
+.sv-sheet .solid::before { border-color: #fff; }
+@media (prefers-reduced-motion: reduce) {
+  .sv-sheet { transition: none; }
+  .sv-sheet.is-in .sv { animation: none; }
+}
+body.no-motion .sv-sheet { transition: none; }
+body.no-motion .sv-sheet.is-in .sv { animation: none; }
+
+/* The face away from you is hidden outright as well (js/slab-viewer.js sets
+   .is-back), so a browser that drops preserve-3d still shows the right side. */
+.sv-rot:not(.is-back) > .slab.slab-back,
+.sv-rot.is-back > .slab:not(.slab-back) { visibility: hidden; }

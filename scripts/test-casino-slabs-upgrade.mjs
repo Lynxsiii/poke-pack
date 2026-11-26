@@ -321,7 +321,7 @@ await check('slabs-v4: a live v3 database gets only the bot cap triggers (three,
 // ---- Other ways to arrive at the new schema -----------------------------------------------------------------------------
 await check('the migration file applied by hand (wrangler path) leaves the Worker nothing to do; replaying its trigger half is harmless', async () => {
   const w = oldWorld(); const e = { DB: w.DB, ASSETS }; const a = apiFor(e); populate(w.db);
-  w.db.exec(migrationSql('0022_casino_slabs.sql')); w.db.exec(migrationSql('0027_casino_bot_slabs.sql')); w.db.exec(migrationSql('0029_grading_black_label.sql')); w.db.exec(migrationSql('0030_casino_bot_black_label.sql')); w.db.exec(migrationSql('0032_casino_bot_slabs_20.sql')); assert.ok(hasMarker(w.db) && v2Current(w.db));
+  w.db.exec(migrationSql('0022_casino_slabs.sql')); w.db.exec(migrationSql('0027_casino_bot_slabs.sql')); w.db.exec(migrationSql('0029_grading_black_label.sql')); w.db.exec(migrationSql('0030_casino_bot_black_label.sql')); w.db.exec(migrationSql('0032_casino_bot_slabs_20.sql')); w.db.exec(migrationSql('0038_graded_lineage.sql')); assert.ok(hasMarker(w.db) && v2Current(w.db));
   resetCaches(); const mark = w.log.length; const batches = w.DB.batches;
   assert.equal((await a('/api/casino/coinflips', 'GET', undefined, null)).status, 200);
   assert.deepEqual(w.log.slice(mark).filter(sql => !/^\s*CREATE (TABLE|INDEX) IF NOT EXISTS/i.test(sql) && /^\s*(ALTER|DROP|CREATE)/i.test(sql)), []); assert.equal(w.DB.batches, batches);

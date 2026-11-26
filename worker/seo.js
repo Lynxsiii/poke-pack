@@ -19,6 +19,7 @@
  */
 import { ALL_SETS, PLAYABLE_SETS, RARITY_LABEL, sellValue, money } from "../js/catalog.js";
 import { canPullReverse } from "../js/engine.js";
+import { GRADE_WORDS } from "../js/grading-rules.js";
 
 export const SITE = "https://poke-pack.rip";
 const SITE_NAME = "poke-pack.rip";
@@ -322,6 +323,40 @@ async function profileMeta(env, handle, path, findCard) {
   };
 }
 
+/** A cert page: the slab's card as the preview, so a shared cert link shows what it is. */
+async function certMeta(env, raw, path, findCard) {
+  const m = String(raw || "").match(/^(?:rip[-\s]?)?0*(\d{1,12})$/i);
+  const id = m ? Number(m[1]) : 0;
+  const fallback = { path, title: `Cert lookup | ${SITE_NAME}`, description: "Look up a RIP Grading slab by its cert number.", noindex: true, imageType: "image/jpeg", imageWidth: 1200, imageHeight: 630 };
+  if (!id) return fallback;
+  let row = null;
+  try {
+    row = await env.DB?.prepare("SELECT card_id, grade, black_label FROM graded_cards WHERE id = ?").bind(id).first();
+  } catch {
+    row = null;
+  }
+  if (!row) return fallback;
+  let card = null;
+  try {
+    card = await findCard(String(row.card_id));
+  } catch {
+    card = null;
+  }
+  const cert = `RIP-${String(id).padStart(7, "0")}`;
+  const grade = row.black_label ? "Black Label 10" : `${row.grade} ${GRADE_WORDS[row.grade] || ""}`.trim();
+  const name = card?.name || row.card_id;
+  return {
+    path: `/cert/${cert}`,
+    canonical: `/cert/${cert}`,
+    title: `${cert}: ${name}, ${grade} | ${SITE_NAME}`,
+    description: `${name} graded ${grade} by RIP Grading on poke-pack.rip. Cert ${cert}.`,
+    ...(card?.image
+      ? { image: `${SITE}/${String(card.image).replace(/^\//, "")}`, imageType: /\.png$/i.test(card.image) ? "image/png" : /\.jpe?g$/i.test(card.image) ? "image/jpeg" : "image/webp", imageAlt: `${name}, ${grade}` }
+      : { imageType: "image/jpeg", imageWidth: 1200, imageHeight: 630 }),
+    noindex: true,
+  };
+}
+
 /** The head this address wants, or null to serve index.html as it is. */
 export async function metaForPath(env, url, { findCard }) {
   const path = url.pathname.replace(/\/+$/, "") || "/";
@@ -345,6 +380,9 @@ export async function metaForPath(env, url, { findCard }) {
 
   const profile = path.match(/^\/u\/([a-z0-9_]{3,16})(?:\/binder\/[1-9]\d{0,2})?$/i);
   if (profile) return profileMeta(env, profile[1].toLowerCase(), path, findCard);
+
+  const cert = path.match(/^\/cert(?:\/([A-Za-z0-9-]{1,20}))?$/i);
+  if (cert) return certMeta(env, cert[1], path, findCard);
 
   const page = PAGES[path];
   if (page) {

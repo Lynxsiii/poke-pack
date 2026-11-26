@@ -65,7 +65,7 @@ import {
   SHOWCASE_MAX,
 } from "./cosmetics.js";
 import { unlockedTitles, titleContext, TITLES, isTitleUnlocked, ownedPerSet } from "./titles.js";
-import { slabHTML, gradeWord } from "./slab.js?v=2";
+import { slabHTML, gradeWord } from "./slab.js?v=3";
 import { GRADING_LIMITS, gradedValue } from "./grading-rules.js";
 import {
   ACHIEVEMENTS,
@@ -129,10 +129,10 @@ import { THEMES, canUseTheme, resolveLook } from "./themes.js?v=1";
 import { equippedCoin, gearItem, normalizeGear } from "./gear.js?v=2";
 import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=16";
 import { initBattles } from "./battles.js?v=10";
-import { initCasino } from "./casino.js?v=29";
+import { initCasino } from "./casino.js?v=30";
 import { coinOf } from "./coin.js?v=6";
 // grading
-import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=16";
+import { initGrading, GRADING_ROUTE, CERT_ROUTE } from "./grading-page.js?v=17";
 // trades
 import { initTrades, TRADES_ROUTE } from "./trades-page.js?v=6";
 import { coinTag } from "./battle-kit.js";
@@ -5740,7 +5740,8 @@ function viewFromPath(pathname) {
     return "casino";
   }
   // grading: /grading, /grading/send, /grading/send/<cardId>, /grading/<slabId>
-  if (GRADING_ROUTE.test(path)) {
+  if (GRADING_ROUTE.test(path) || CERT_ROUTE.test(path)) {
+    // The public cert pages (/cert, /cert/<number>) live on the grading page too.
     gradingPath = path;
     return "grading";
   }
@@ -10689,7 +10690,7 @@ const grading = initGrading({
       setView("casino");
       return;
     }
-    if (!GRADING_ROUTE.test(path)) return;
+    if (!GRADING_ROUTE.test(path) && !CERT_ROUTE.test(path)) return;
     gradingPath = path;
     setView("grading", opts?.replace ? { history: "replace" } : undefined);
   },
