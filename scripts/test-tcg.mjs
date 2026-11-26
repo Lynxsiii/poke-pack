@@ -4200,4 +4200,153 @@ test("base damage instead, and all of your Benched Pokémon", () => {
   assert.equal(state.players[1].active.damage, 90);
 });
 
+/* ---------- which Energy goes is the player's choice ---------- */
+
+/** An Energy card of this id, attached to that Pokémon (it need not be in the deck). */
+function attachNew(state, slot, id) {
+  const uid = `e${Object.keys(state.cards).length}`;
+  state.cards[uid] = id;
+  slot.energy.push(uid);
+  return uid;
+}
+const DCE = "bw11-113";
+lab("lab-ch", [
+  ["Burn", 30, "Discard an Energy from this Pokémon."],
+  ["Douse", 30, "Discard a Water Energy from this Pokémon."],
+  ["Trade", 10, "Discard an Energy from this Pokémon. If you do, discard an Energy from your opponent's Active Pokémon."],
+  ["Gamble", 0, "Discard a Water Energy attached to this Pokémon or this attack does nothing."],
+]);
+
+test("an attack's own Energy discard: the attacking player chooses which, unless the cards are all alike", () => {
+  let state = labgame("lab-ch", "lab-2");
+  const me = state.players[0];
+  me.discard.push(...me.active.energy.splice(0));
+  const water = attachNew(state, me.active, W);
+  const dce = attachNew(state, me.active, DCE);
+  use(state, 0, "Burn");
+  assert.equal(state.players[1].active.damage, 30, "the damage first");
+  assert.equal(state.pending[0].type, "choose");
+  assert.deepEqual(state.pending[0].uids, [water, dce]);
+  // The bot keeps its Special Energy.
+  assert.deepEqual(botAction(state, 0, defs).uids, [water]);
+  act(state, { type: "choose", player: 0, uids: [dce] });
+  assert.deepEqual(me.active.energy, [water]);
+  assert.ok(me.discard.includes(dce));
+  assert.equal(state.current, 1);
+  // Two cards alike: nothing to ask.
+  state = labgame("lab-ch", "lab-2");
+  state.players[0].discard.push(...state.players[0].active.energy.splice(0));
+  attachNew(state, state.players[0].active, W);
+  attachNew(state, state.players[0].active, W);
+  use(state, 0, "Burn");
+  assert.equal(state.pending.length, 0);
+  assert.equal(state.players[0].active.energy.length, 1);
+  // Of one type: only the Water ones may go, and they're alike.
+  state = labgame("lab-ch", "lab-2");
+  state.players[0].discard.push(...state.players[0].active.energy.splice(0));
+  const fire = attachNew(state, state.players[0].active, F);
+  attachNew(state, state.players[0].active, W);
+  use(state, 0, "Douse");
+  assert.equal(state.pending.length, 0);
+  assert.deepEqual(state.players[0].active.energy, [fire]);
+});
+
+test("\"If you do\" after the chosen discard, and a discard before the damage that the attack needs", () => {
+  let state = labgame("lab-ch", "lab-2");
+  const me = state.players[0];
+  me.discard.push(...me.active.energy.splice(0));
+  const water = attachNew(state, me.active, W);
+  attachNew(state, me.active, F);
+  const theirs = attachNew(state, state.players[1].active, F);
+  use(state, 0, "Trade");
+  assert.deepEqual(state.players[1].active.energy, [theirs], "not before the choice");
+  act(state, { type: "choose", player: 0, uids: [water] });
+  assert.deepEqual(state.players[1].active.energy, []);
+  assert.equal(state.current, 1);
+  // "Discard a Water Energy ... or this attack does nothing": paid before the damage; the choice holds the damage back.
+  state = labgame("lab-ch", "lab-2");
+  state.players[0].discard.push(...state.players[0].active.energy.splice(0));
+  const w = attachNew(state, state.players[0].active, W);
+  const rainbow = attachNew(state, state.players[0].active, "sm7-151");
+  use(state, 0, "Gamble");
+  assert.equal(state.pending[0].type, "choose", "an Energy of any type is a Water Energy too");
+  act(state, { type: "choose", player: 0, uids: [w] });
+  assert.deepEqual(state.players[0].active.energy, [rainbow]);
+  assert.equal(state.current, 1);
+});
+
+test("their Energy: the attacker chooses which; a Trainer's discard from one of their Pokémon too", () => {
+  let state = labgame("lab-3", "lab-2");
+  const foe = state.players[1];
+  const fire = attachNew(state, foe.active, F);
+  const dce = attachNew(state, foe.active, DCE);
+  use(state, 0, "Drain");
+  assert.equal(state.pending[0].player, 0);
+  // The bot takes their Special Energy.
+  assert.deepEqual(botAction(state, 0, defs).uids, [dce]);
+  act(state, { type: "choose", player: 0, uids: [fire] });
+  assert.deepEqual(foe.active.energy, [dce]);
+  // Energy Removal: the Pokémon, then the card.
+  const removal = labTrainer("removal", "Item", "Discard an Energy from 1 of your opponent's Pokémon.");
+  state = labgame("lab-3", "lab-2");
+  const f2 = attachNew(state, state.players[1].active, F);
+  const d2 = attachNew(state, state.players[1].active, DCE);
+  act(state, { type: "play", player: 0, uid: hold(state, 0, removal) });
+  if (state.pending[0].type === "pick") act(state, { type: "pick", player: 0, spot: ACTIVE });
+  assert.equal(state.pending[0].type, "choose");
+  act(state, { type: "choose", player: 0, uids: [d2] });
+  assert.deepEqual(state.players[1].active.energy, [f2]);
+});
+
+test("a Retreat Cost: the retreating player chooses the Energy that pays it", () => {
+  let state = midgame();
+  const me = state.players[0];
+  me.discard.push(...me.active.energy.splice(0));
+  const water = attachNew(state, me.active, W);
+  const dce = attachNew(state, me.active, DCE);
+  const benched = me.bench[0];
+  assert.equal(retreatCost(state, me.active, defs), 1);
+  act(state, { type: "retreat", player: 0, to: 0 });
+  assert.equal(state.pending[0].effect.op, "retreat");
+  assert.equal(me.bench[0], benched, "nothing moves until it is paid");
+  throws(() => act(state, { type: "choose", player: 0, uids: [water, dce] }), /only/);
+  // The bot keeps the Water Energy its attacks need: Double Colorless pays.
+  assert.deepEqual(botAction(state, 0, defs).uids, [dce]);
+  act(state, { type: "choose", player: 0, uids: [water] });
+  assert.equal(me.active, benched);
+  assert.deepEqual(me.bench[0].energy, [dce]);
+  assert.ok(me.discard.includes(water));
+  // Cards alike, or every card needed: no question.
+  state = midgame();
+  state.players[0].discard.push(...state.players[0].active.energy.splice(0));
+  attachNew(state, state.players[0].active, W);
+  attachNew(state, state.players[0].active, W);
+  act(state, { type: "retreat", player: 0, to: 0 });
+  assert.equal(state.pending.length, 0);
+  assert.equal(state.players[0].bench[0].energy.length, 1);
+  // Naming the cards in the action still works (the screen of a player who chose already).
+  state = midgame();
+  state.players[0].discard.push(...state.players[0].active.energy.splice(0));
+  const w2 = attachNew(state, state.players[0].active, W);
+  const f2 = attachNew(state, state.players[0].active, F);
+  act(state, { type: "retreat", player: 0, to: 0, discard: [f2] });
+  assert.deepEqual(state.players[0].bench[0].energy, [w2]);
+});
+
+test("moving one of your Energy: which card is yours to choose, then where", () => {
+  const mover = labTrainer("mover", "Item", "Move a basic Energy from 1 of your Pokémon to another of your Pokémon.");
+  const state = labgame("lab-ch", "lab-2");
+  const me = state.players[0];
+  me.discard.push(...me.active.energy.splice(0));
+  const water = attachNew(state, me.active, W);
+  const fire = attachNew(state, me.active, F);
+  act(state, { type: "play", player: 0, uid: hold(state, 0, mover) });
+  if (state.pending[0].type === "pick") act(state, { type: "pick", player: 0, spot: ACTIVE });
+  assert.equal(state.pending[0].type, "choose");
+  act(state, { type: "choose", player: 0, uids: [water] });
+  if (state.pending[0]?.type === "pick") act(state, { type: "pick", player: 0, spot: 0 });
+  assert.deepEqual(me.active.energy, [fire]);
+  assert.ok(me.bench[0].energy.includes(water));
+});
+
 console.log(`${passed} checks passed${process.exitCode ? ", some failed" : ""}`);

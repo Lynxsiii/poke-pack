@@ -1032,8 +1032,11 @@ export function initTcg(deps) {
     const kind = named || (type ? label.replace(/(Pokémon|Energy)$/, `${type} $1`) : label);
     const energyCard = /Energy$/.test(kind);
     const many = (n) => (kind === "card" ? plural(n, "card") : n === 1 ? `1 ${kind}${energyCard ? " card" : ""}` : `${n} ${kind}${energyCard ? " cards" : ""}`);
-    const foreign = waiting.owner != null && waiting.owner !== ME;
+    const foreign = waiting.owner != null && waiting.owner !== ME && waiting.zone !== "play";
+    const mineInPlay = waiting.zone === "play" && waiting.uids.every((uid) => [state.players[ME].active, ...state.players[ME].bench].some((slot) => slot?.energy.includes(uid)));
     const title = waiting.effect.op === "look" ? "Their hand"
+      : waiting.effect.op === "retreat" ? "Choose the Energy to discard for the Retreat Cost"
+      : waiting.effect.op === "dropInPlay" && what === "energy" ? `Discard ${min < max ? "up to " : ""}${many(max)} from ${mineInPlay ? "your" : "their"} Pokémon`
       : foreign ? `Choose ${min < max ? "up to " : ""}${many(max)} from their ${waiting.zone === "hand" ? "hand" : "deck"}`
       : waiting.effect.op === "order" ? "Tap the cards in the order you want them, the top one first"
       : waiting.effect.op === "deckTop" ? `Choose ${many(max)} for the top of your deck, the top one first`

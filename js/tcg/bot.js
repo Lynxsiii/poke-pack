@@ -199,6 +199,41 @@ function best(state, player, actions, defs) {
   return top;
 }
 
+/**
+ * What an Energy card in play is worth to its Pokémon: a Special Energy's own effect, and the attacks it pays for
+ * (an attack that can be used now and couldn't without it counts most, a type its costs ask for a little).
+ */
+function energyWorth(state, uid, defs) {
+  const def = defOf(state, uid, defs);
+  if (def.kind !== "energy") return 20;
+  const at = [0, 1].flatMap((p) => inPlay(state, p)).find(([slot]) => slot.energy.includes(uid));
+  if (!at) return 0;
+  const slot = at[0];
+  const mon = defOf(state, slot.uid, defs);
+  const units = energyOf(state, slot, defs);
+  const rest = energyOf(state, { ...slot, energy: slot.energy.filter((u) => u !== uid) }, defs);
+  let worth = def.basic ? 10 : 25;
+  for (const attack of mon.attacks) {
+    if (!unpaid(attack.cost, units) && unpaid(attack.cost, rest)) worth += 20 + attack.damage / 2;
+    if ((def.provides || []).some((t) => attack.cost.includes(t))) worth += 5;
+  }
+  return worth;
+}
+
+/** Of the ways to pay a Retreat Cost with these cards (the rule chooseBlock checks), the one worth least. */
+function cheapestPayment(state, waiting, defs) {
+  const uids = waiting.uids.slice(0, 10);
+  let top = uids.slice(0, waiting.min);
+  let least = Infinity;
+  for (let mask = 1; mask < 1 << uids.length; mask += 1) {
+    const pick = uids.filter((_, i) => mask & (1 << i));
+    if (pick.length < waiting.min || pick.length > waiting.max || chooseBlock(state, waiting, pick, defs)) continue;
+    const cost = pick.reduce((n, uid) => n + energyWorth(state, uid, defs), 0);
+    if (cost < least) [top, least] = [pick, cost];
+  }
+  return top;
+}
+
 /** Whether an attack hurts its own side (discards its own Energy, damages itself). */
 const costly = (attack) => (attack.fx || []).some((f) => f.op === "discardEnergy" || f.op === "selfDamage");
 
@@ -260,12 +295,20 @@ export function botAction(state, player, defs) {
       const offers = sizes.map((k) => ({ type: "choose", player, uids: order.slice(0, k) }));
       return simulating ? offers[offers.length > 1 ? 1 : 0] : best(state, player, offers, defs);
     }
-    // Tools, Special Energy or the Stadium in play: only the other side's.
-    if (waiting.effect.op === "dropInPlay") {
+    // The Energy that pays a Retreat Cost: the payment that costs its Pokémon the least.
+    if (waiting.effect.op === "retreat") return { type: "choose", player, uids: cheapestPayment(state, waiting, defs) };
+    // Energy to move off one of its Pokémon: the cards that Pokémon needs least.
+    if (waiting.effect.op === "carryEnergy") {
+      const order = waiting.uids.slice().sort((x, y) => energyWorth(state, x, defs) - energyWorth(state, y, defs));
+      return { type: "choose", player, uids: order.slice(0, waiting.max) };
+    }
+    // Tools, Special Energy or the Stadium in play: only the other side's, the ones worth most to them first;
+    // its own Energy when it must (an attack's price): the ones worth least to it.
+    if (waiting.effect.op === "dropInPlay" || (waiting.effect.op === "takeBack" && waiting.zone === "play")) {
       const foeOwns = new Set(inPlay(state, other(player)).flatMap(([slot]) => [slot.tool, ...slot.energy].filter(Boolean)));
       if (state.stadium && state.stadium.owner !== player) foeOwns.add(state.stadium.uid);
-      const theirs = waiting.uids.filter((u) => foeOwns.has(u));
-      const mine = waiting.uids.filter((u) => !foeOwns.has(u));
+      const theirs = waiting.uids.filter((u) => foeOwns.has(u)).sort((x, y) => energyWorth(state, y, defs) - energyWorth(state, x, defs));
+      const mine = waiting.uids.filter((u) => !foeOwns.has(u)).sort((x, y) => energyWorth(state, x, defs) - energyWorth(state, y, defs));
       return { type: "choose", player, uids: [...theirs.slice(0, waiting.max), ...mine.slice(0, Math.max(0, waiting.min - theirs.length))] };
     }
     const ranked = waiting.uids.slice().sort((x, y) => worth(y) - worth(x));

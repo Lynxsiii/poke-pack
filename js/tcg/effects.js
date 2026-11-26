@@ -19,7 +19,7 @@
  *        shielded (the target takes no effects this turn) }
  */
 
-import { ACTIVE, abilityOn, addCondition, addMark, askChoose, askPick, benchSafe, conditionsOn, damageAfterTyping, defOf, devolveSlot, energyFits, energyOf, flip, heldOn, hpLeft, inPlay, markOn, maxHp, other, rand, retreatCost, shuffle, strike, struck, switchActive, toolGone, unpaid, warded } from "./engine.js";
+import { ACTIVE, abilityOn, addCondition, addMark, askChoose, askPick, benchSafe, conditionsOn, damageAfterTyping, defOf, devolveSlot, energyAlike, energyFits, energyOf, flip, heldOn, hpLeft, inPlay, markOn, maxHp, other, rand, retreatCost, shedEnergy, shuffle, strike, struck, switchActive, toolGone, unpaid, warded } from "./engine.js";
 import { T_OPS, compileTrainer, fits, runTrainer, trainerReady, whatOf } from "./trainers.js";
 
 const WORDS = { a: 1, an: 1, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6 };
@@ -374,13 +374,8 @@ export const OPS = {
     const foe = other(player);
     const slot = state.players[foe].active;
     if (!slot || ctx.shielded) return;
-    const uids = slot.energy.filter((uid) => !type || (defOf(state, uid, defs).provides || []).includes(type));
-    if (uids.length > n && new Set(uids.map((uid) => state.cards[uid])).size > 1) return askChoose(state, { player, zone: "play", what: "energy", uids, min: n, max: n, effect: { op: "dropInPlay" } });
-    const gone = uids.slice(Math.max(0, uids.length - n));
-    if (!gone.length) return;
-    for (const uid of gone) slot.energy.splice(slot.energy.indexOf(uid), 1);
-    state.players[foe].discard.push(...gone);
-    ctx.events.push({ t: "discard-energy", p: foe, spot: -1, uids: gone });
+    const uids = slot.energy.filter((uid) => !type || (defOf(state, uid, defs).provides || []).some((u) => fitsType(u, type)));
+    shedEnergy(state, player, foe, ACTIVE, uids, n, ctx.events, defs);
   },
   /** Discard cards from the top of the other player's deck. */
   mill(ctx, { n }) {
@@ -459,7 +454,7 @@ export const OPS = {
     });
     if (from == null || !bench.length || !uids.length) return;
     // Nothing to tell apart (all of them, or cards all alike): no need to ask which.
-    if (all || uids.length <= n || new Set(uids.map((uid) => state.cards[uid])).size === 1) return askPick(state, { player, side: player, spots: bench, left: 1, effect: { op: "moveEnergyCards", from, uids: all ? uids : uids.slice(-n) } });
+    if (all || uids.length <= n || energyAlike(state, uids, defs)) return askPick(state, { player, side: player, spots: bench, left: 1, effect: { op: "moveEnergyCards", from, uids: all ? uids : uids.slice(-n) } });
     askChoose(state, { player, zone: "play", what: "energy", uids, min: n, max: n, effect: { op: "carryEnergy", from } });
   },
   /** Energy from the attacker back to its owner's hand: the player chooses which, when they differ. */
@@ -468,11 +463,7 @@ export const OPS = {
     const uids = slot.energy.filter((uid) => !type || (defOf(state, uid, ctx.defs).provides || []).includes(type));
     const spot = spotOf(ctx);
     if (!uids.length || spot == null) return;
-    if (uids.length > n && new Set(uids.map((uid) => state.cards[uid])).size > 1) return askChoose(state, { player, zone: "play", what: "energy", uids, min: n, max: n, effect: { op: "takeBack" } });
-    const back = uids.slice(Math.max(0, uids.length - n));
-    for (const uid of back) slot.energy.splice(slot.energy.indexOf(uid), 1);
-    state.players[player].hand.push(...back);
-    events.push({ t: "energy-to-hand", p: player, spot, uids: back });
+    shedEnergy(state, player, player, spot, uids, n, events, ctx.defs, { toHand: true });
   },
   /** "Your opponent reveals their hand": the attacker is shown it (a choice of none of its cards, so the screen shows them). */
   lookHand(ctx) {
@@ -489,13 +480,7 @@ export const OPS = {
     const foe = other(player);
     const slot = state.players[foe].active;
     if (!slot || ctx.shielded) return;
-    const uids = slot.energy.filter((uid) => !defOf(state, uid, defs).basic);
-    if (new Set(uids.map((uid) => state.cards[uid])).size > 1) return askChoose(state, { player, zone: "play", what: "energy", uids, min: 1, max: 1, effect: { op: "dropInPlay" } });
-    const gone = uids.slice(-1);
-    if (!gone.length) return;
-    slot.energy.splice(slot.energy.indexOf(gone[0]), 1);
-    state.players[foe].discard.push(...gone);
-    events.push({ t: "discard-energy", p: foe, spot: ACTIVE, uids: gone });
+    shedEnergy(state, player, foe, ACTIVE, slot.energy.filter((uid) => !defOf(state, uid, defs).basic), 1, events, defs);
   },
   /** "Choose 1 of the Defending Pokémon's attacks. That Pokémon can't use that attack during your opponent's next turn." */
   lockFoeAttack(ctx) {
@@ -555,21 +540,24 @@ export const OPS = {
       events.push({ t: "shuffle-in", p: player, spot, uid: slot.uid });
     }
   },
-  /** Discard Energy from the attacker: of one type when the card names it, any otherwise. */
+  /**
+   * Discard Energy cards from the attacker: of one type when the card names it (an Energy that can be any type counts),
+   * any otherwise. Which ones is the attacking player's choice when the cards differ and not all of them go.
+   */
   discardEnergy(ctx, { n, type, basic = false, then = null }) {
     const { state, defs, slot, player } = ctx;
-    const gone = [];
-    for (let i = slot.energy.length - 1; i >= 0 && gone.length < n; i -= 1) {
-      const def = defs(state.cards[slot.energy[i]]);
-      if (type && !(def.provides || []).includes(type)) continue;
-      if (basic && !def.basic) continue;
-      gone.push(...slot.energy.splice(i, 1));
-    }
-    if (!gone.length) return;
-    state.players[player].discard.push(...gone);
-    ctx.events.push({ t: "discard-energy", p: player, spot: -1, uids: gone });
-    // "Discard an Energy from this Pokémon. If you do, ...".
-    if (then) runSteps(then, ctx);
+    const spot = spotOf(ctx);
+    if (spot == null) return;
+    const uids = slot.energy.filter((uid) => {
+      const def = defOf(state, uid, defs);
+      return (!type || (def.provides || []).some((u) => fitsType(u, type))) && (!basic || def.basic);
+    });
+    if (!uids.length) return;
+    const asked = shedEnergy(state, player, player, spot, uids, n, ctx.events, defs);
+    // "Discard an Energy from this Pokémon. If you do, ...": once it is gone (after the choice, when one is asked).
+    if (!then) return;
+    if (!asked) return runSteps(then, ctx);
+    state.pending[state.pending.length - 1].then = [{ op: "fx", steps: then, uid: slot.uid, ...(ctx.hit.coin != null ? { coin: ctx.hit.coin } : {}) }];
   },
   /** Flip some coins: tails on any of them (`all`: on all of them) and the attack does nothing. */
   flipCancel(ctx, { coins, all = false }) {
@@ -611,7 +599,7 @@ export const OPS = {
   /** "Discard a Fire Energy attached to this Pokémon or this attack does nothing." */
   payOrNothing(ctx, { n, type = "", basic = false }) {
     const { state, defs, slot } = ctx;
-    const have = slot.energy.filter((uid) => (!type || (defOf(state, uid, defs).provides || []).includes(type)) && (!basic || defOf(state, uid, defs).basic)).length;
+    const have = slot.energy.filter((uid) => (!type || (defOf(state, uid, defs).provides || []).some((u) => fitsType(u, type))) && (!basic || defOf(state, uid, defs).basic)).length;
     if (have < n) {
       ctx.hit.cancelled = true;
       ctx.events.push({ t: "miss", p: ctx.player });
@@ -633,11 +621,7 @@ export const OPS = {
     const foe = other(player);
     const slot = state.players[foe].active;
     if (!slot || ctx.shielded || !slot.energy.length) return;
-    const uids = slot.energy.slice();
-    if (uids.length > n && new Set(uids.map((uid) => state.cards[uid])).size > 1) return askChoose(state, { player, owner: foe, zone: "play", what: "energy", uids, min: n, max: n, effect: { op: "takeBack" } });
-    const back = slot.energy.splice(Math.max(0, slot.energy.length - n), n);
-    state.players[foe].hand.push(...back);
-    events.push({ t: "energy-to-hand", p: foe, spot: ACTIVE, uids: back });
+    shedEnergy(state, player, foe, ACTIVE, slot.energy.slice(), n, events, ctx.defs, { toHand: true });
   },
   /** The top Evolution card of the other Active Pokémon goes back to its owner's hand. */
   devolveFoe(ctx) {
@@ -1367,7 +1351,7 @@ function readyFx(ctx, steps) {
   return steps.every((step) => {
     if (step.op === "trainer") return trainerReady(step.steps, trainerCtx(ctx)) && !step.steps.some((s) => T_OPS[s.op]?.must && !T_OPS[s.op].ready(trainerCtx(ctx), s));
     if (step.op === "discardEnergy") {
-      const fitting = ctx.slot.energy.filter((uid) => !step.type || (defOf(ctx.state, uid, ctx.defs).provides || []).includes(step.type)).length;
+      const fitting = ctx.slot.energy.filter((uid) => (!step.type || (defOf(ctx.state, uid, ctx.defs).provides || []).some((u) => fitsType(u, step.type))) && (!step.basic || defOf(ctx.state, uid, ctx.defs).basic)).length;
       return fitting > 0 && (step.n >= 99 || fitting >= step.n);
     }
     if (step.op === "energyToHand") return ctx.slot.energy.length >= (step.n || 1);

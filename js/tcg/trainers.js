@@ -15,7 +15,7 @@
  * ctx: { state, defs, events, player }
  */
 
-import { ACTIVE, addCondition, askChoose, askPick, conditionsOn, damageAfterTyping, defOf, energyOf, evolveSpots, flip, heldOn, hpLeft, inPlay, mayEvolve, other, rand, shuffle, slotAt, switchActive, toolOf, warded } from "./engine.js";
+import { ACTIVE, addCondition, askChoose, askPick, conditionsOn, damageAfterTyping, defOf, energyOf, evolveSpots, flip, heldOn, hpLeft, inPlay, mayEvolve, other, rand, shedEnergy, shuffle, slotAt, switchActive, toolOf, warded } from "./engine.js";
 import { runFx } from "./effects.js";
 
 const WORDS = { a: 1, an: 1, another: 1, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8 };
@@ -76,10 +76,11 @@ export const moveTargets = (ctx, { to = "any" }, from) =>
     .filter((spot) => spot !== from && (to === "self" ? spot === ctx.spot : to === "active" ? spot === ACTIVE : to === "bench" ? spot !== ACTIVE : true));
 const benchSpots = (side) => side.bench.map((_, i) => i);
 /** Your Pokémon (as spots) that hold an Energy of this type ("" for any), and the uid of the last such card. */
-export const energyIn = (ctx, slot, type, basic = false) => [...slot.energy].reverse().find((uid) => {
+export const energyCards = (ctx, slot, type, basic = false) => slot.energy.filter((uid) => {
   const def = defOf(ctx.state, uid, ctx.defs);
   return (!type || (def.provides || []).includes(type)) && (!basic || def.basic);
 });
+export const energyIn = (ctx, slot, type, basic = false) => energyCards(ctx, slot, type, basic).pop();
 const movable = (ctx, { type = "", from = "any", basic = false }) =>
   inPlay(ctx.state, ctx.player)
     .filter(([slot, spot]) => (from === "self" ? spot === ctx.spot : from === "bench" ? spot !== ACTIVE : from === "active" ? spot === ACTIVE : true) && energyIn(ctx, slot, type, basic))
@@ -335,13 +336,8 @@ export const T_OPS = {
     run(ctx, { n = 1, special = false, each = false, toHand = false, tool = false }) {
       const spots = withEnergy(ctx, special, tool);
       if (each) {
-        for (const spot of spots) {
-          const slot = slotAt(ctx.state, other(ctx.player), spot);
-          const uid = [...slot.energy].reverse().find((e) => isSpecial(ctx, e));
-          slot.energy.splice(slot.energy.indexOf(uid), 1);
-          theirs(ctx).discard.push(uid);
-          ctx.events.push({ t: "discard-energy", p: other(ctx.player), spot, uids: [uid] });
-        }
+        // One from each: which one on each, when they differ, is the card's player's choice.
+        for (const spot of spots) shedEnergy(ctx.state, ctx.player, other(ctx.player), spot, slotAt(ctx.state, other(ctx.player), spot).energy.filter((e) => isSpecial(ctx, e)), 1, ctx.events, ctx.defs);
         return;
       }
       if (spots.length) askPick(ctx.state, { player: ctx.player, side: other(ctx.player), spots, left: 1, effect: { op: "discardEnergy", n, ...(special ? { special } : {}), ...(toHand ? { toHand } : {}), ...(tool ? { tool } : {}) } });
