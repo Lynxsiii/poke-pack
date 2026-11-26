@@ -14,7 +14,7 @@ assert.ok(!ROADMAP.some((block) => block.sets.some((s) => s.id === "sv6")), "and
 
 const data = read(set.dataFile);
 const cards = [...data, ...BASIC_ENERGY];
-assert.equal(data.length, set.totalCount, "totalCount counts the 226 cards and 10 promos");
+assert.equal(data.filter((c) => !c.promo).length, set.totalCount, "totalCount counts the 226 pack cards; the 10 promos are counted on their own");
 assert.equal(data.filter((c) => !c.promo).length, 226);
 assert.equal(new Set(data.map((c) => c.id)).size, data.length, "card ids are unique");
 

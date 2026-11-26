@@ -3,7 +3,7 @@
  * from the catalog so a new set shows up in every era and set total without
  * anyone editing an achievement file.
  */
-import { PLAYABLE_SETS, RARITY_ORDER } from "./catalog.js";
+import { PLAYABLE_SETS, RARITY_ORDER, isBoosterSet, setCategory } from "./catalog.js";
 
 export const SET_INFO = new Map(
   PLAYABLE_SETS.map((set) => [
@@ -15,6 +15,10 @@ export const SET_INFO = new Map(
       edition: set.edition || "",
       total: set.totalCount || 0,
       promo: Boolean(set.promoSet) && !set.kitSet,
+      // "booster" | "promos" | "special" | "decks" (catalog.js setCategory). Only a booster set has a mastery track,
+      // counts as a completed set and is asked for by its era's crown; the rest are extras.
+      category: setCategory(set),
+      booster: isBoosterSet(set),
     },
   ])
 );
@@ -25,6 +29,11 @@ export const ERA_NAMES = [...new Set(PLAYABLE_SETS.map((set) => set.era || set.e
 /** Sets that make up one era. */
 export function setsInEra(era) {
   return PLAYABLE_SETS.filter((set) => (set.era || set.edition) === era);
+}
+
+/** The booster sets of one era: the ones its crown asks for. */
+export function boosterSetsInEra(era) {
+  return setsInEra(era).filter(isBoosterSet);
 }
 
 /** The total card count of an era across its playable sets. */
@@ -97,8 +106,8 @@ export function eraSlug(era) {
   return String(era).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }
 
-/** An era needs this many playable sets before finishing all of them earns a crown. */
+/** An era needs this many booster sets before finishing all of them earns a crown. */
 export const CROWN_MIN_SETS = 3;
 
 /** Eras with a crown (`era-<slug>-crown`): every era of at least CROWN_MIN_SETS sets, so a new era appears on its own. */
-export const CROWN_ERAS = ERA_NAMES.filter((era) => setsInEra(era).length >= CROWN_MIN_SETS);
+export const CROWN_ERAS = ERA_NAMES.filter((era) => boosterSetsInEra(era).length >= CROWN_MIN_SETS);

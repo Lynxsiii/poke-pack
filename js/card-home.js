@@ -23,6 +23,9 @@ export const HSP_SET_ID = "hsp";
 export const NP_SET_ID = "np";
 export const BASEP_SET_ID = "basep";
 export const BP_SET_ID = "bp";
+export const SVP_SET_ID = "svp";
+export const SWSHP_SET_ID = "swshp";
+export const SMP_SET_ID = "smp";
 
 /**
  * Promo homes: for each black star promo set, a test for the ids of its cards
@@ -45,6 +48,11 @@ export const BP_SET_ID = "bp";
  *    Wizards Black Star Promos their boxes, decks and gift sets held); the rest are data/basep.json's "basep-basep09".
  *  - "bp": Best of Game is its own promo set with no product that carries it (BattleZone tournament prizes), so every card is
  *    data/bp.json's "bp-bp01"; the entry only keeps the shape the other homes have.
+ *  - "svp", "swshp", "smp": "sv8-svp151", "zsv10pt5-svp209-pc", "swsh12-swshp269", "cel25-swshp130", "sm115-smp103a",
+ *    "det1-smp170" (a Scarlet & Violet, Sword & Shield or Sun & Moon set's file: the black star promos its Elite
+ *    Trainer Box, Build & Battle Box, V boxes and blisters carry); the rest are data/svp.json's "svp-svp056",
+ *    data/swshp.json's "swshp-swshp004" and data/smp.json's "smp-smp240". Since 2026-11-26: before that these
+ *    counted in the dex of the set whose box carried them.
  */
 export const PROMO_HOMES = {
   [MEP_SET_ID]: { test: /^me\d+(?:pt5)?-mep\d/, like: ["me%-mep%"] },
@@ -54,6 +62,9 @@ export const PROMO_HOMES = {
   [HSP_SET_ID]: { test: /^(?:hgss\d+|col1)-hsp\d/, like: ["hgss%-hsp%", "col1-hsp%"] },
   [NP_SET_ID]: { test: /^(?:ex\d+|pop[1-5])-np\d/, like: ["ex%-np%", "pop%-np%"] },
   [BASEP_SET_ID]: { test: /^(?:base\d|gym\d|neo\d|si1|ecard\d)-basep\d/, like: ["base_-basep%", "gym_-basep%", "neo_-basep%", "si1-basep%", "ecard_-basep%"] },
+  [SVP_SET_ID]: { test: /^[rz]?sv\d+(?:pt5)?-svp\d/, like: ["sv%-svp%", "rsv%-svp%", "zsv%-svp%"] },
+  [SWSHP_SET_ID]: { test: /^(?:swsh\d+(?:pt5)?|pgo|cel25)-swshp\d/, like: ["swsh%-swshp%", "pgo-swshp%", "cel25-swshp%"] },
+  [SMP_SET_ID]: { test: /^(?:sm\d+|det1)-smp\d/, like: ["sm%-smp%", "det1-smp%"] },
   [BP_SET_ID]: { test: /^(?:base\d|gym\d|neo\d|si1|ecard\d)-bp\d/, like: ["base_-bp%", "gym_-bp%", "neo_-bp%", "si1-bp%", "ecard_-bp%"] },
 };
 
@@ -97,6 +108,25 @@ export function isBasepCardId(cardId) {
 
 export function isBpCardId(cardId) {
   return promoHomeOf(cardId) === BP_SET_ID;
+}
+
+/**
+ * Box promos: the stamped, cosmos, tinsel, cracked-ice and store prints of a set's own cards that only come in that
+ * set's blisters, boxes and decks ("me1-133-stamp", "sv9-135-cosmos", "me4-10-gamestop", "sm12-143a", "dv1-10-dvstamp",
+ * "base4-cdrom8"). They are cards of the set (homeSetId is the set, they are listed on its page, sold with its spare
+ * copies and add to its value), but they are not pack cards: a set's dex, its `totalCount`, its completion and its
+ * mastery count pack cards only, and the box promos are listed and counted on their own (catalog.js boxPromoCards,
+ * titles.js ownedBoxPromos). scripts/test-box-promos.mjs checks this test against every data file's `promo` flag, so a
+ * new kind of print cannot slip through.
+ */
+const BOX_PROMO_SUFFIX = /\d-(?:stamp|stamped|cosmos|blister|ebgames|gamestop|pokeball|tinsel|prerelease|pokemon-day|costco|metal|dvstamp|cracked-ice|theme)$/;
+const BOX_PROMO_OTHER = /^(?:sm\d+-\d+[ah]|base4-cdrom\d+)$/;
+
+/** True for a box promo of a booster set: a promo print filed and listed under the set, never part of its pack dex. */
+export function isBoxPromoId(cardId) {
+  const id = String(cardId || "");
+  if (promoHomeOf(id)) return false;
+  return BOX_PROMO_SUFFIX.test(id) || BOX_PROMO_OTHER.test(id);
 }
 
 /** The id of the set a card id is counted under: a promo set for a black star promo filed in another set's data, else its prefix. */

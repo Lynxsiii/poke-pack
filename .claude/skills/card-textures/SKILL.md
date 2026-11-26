@@ -222,6 +222,13 @@ cure"). The surface gloss throws a soft highlight.
   intersected) keeps the light on the lines: over all 233 SIRs gain fell from a median 18 to 11 (max 35 to 20) while
   foil-zone texture held (10.6 to 10.9). Measure with `etch_zones.py --family <fam> --every` before and after: gain
   should fall, foilTex and inkTex should not. Try the same on any family whose gain is over ~20.
+- **Find the bright layer by hiding one at a time, and look as well as measure.** `etch_zones.py --per 4 --min-ink 0`
+  ranks every engraved family by whole-card gain (2026-11-26: xy-full-art 48, swsh-special Radiant 37, sm-gx 35; SIRs
+  11 after their fix). Then render the worst card with `--css ".tcg.tcg .<layer> { display: none !important }"` for
+  each layer. On XY full arts the numbers blamed `.foil` (28 of 48) but the picture blamed the shared `.shine`
+  glitter: dark speckle and a pale wash on a card that is ridged, not glittered. Both were turned down (`.foil`
+  brightness 0.62 to 0.40 and saturate 1.35 to 0.65; `--shine-glit: 0.2`). A saturated dodge repaints dark ink in
+  the foil's colours; a real card keeps its ink under the sheen.
 - **No filter on the scan, ever, and test a glitch on the real phone.** On iPhone Safari a `filter` on `.tcg img`
   (the lit card's drop shadow, there since the first holo engine) puts the scan on its own GPU layer; once the
   etch-shine span sat above it (2026-11-25), Safari stopped blending *every* foil layer into the card and painted

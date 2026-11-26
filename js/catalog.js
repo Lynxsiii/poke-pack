@@ -1,4 +1,4 @@
-import { BASEP_SET_ID, BP_SET_ID, BWP_SET_ID, dexId, DPP_SET_ID, homeSetId, HSP_SET_ID, kitCopyCount, MEP_SET_ID, NP_SET_ID, PROMO_HOMES, promoHomeOf, XYP_SET_ID } from "./card-home.js";
+import { BASEP_SET_ID, BP_SET_ID, BWP_SET_ID, dexId, DPP_SET_ID, homeSetId, HSP_SET_ID, isBoxPromoId, kitCopyCount, MEP_SET_ID, NP_SET_ID, PROMO_HOMES, promoHomeOf, XYP_SET_ID } from "./card-home.js";
 
 export const RARITY_ORDER = [
   "Energy",
@@ -1352,7 +1352,7 @@ export const CELEBRATION_30TH = {
   released: "September 16, 2026",
   live: true,
   printedTotal: 128,
-  totalCount: 193,
+  totalCount: 191,
   packSize: 6,
   cost: 16.26,
   allFoil: true,
@@ -1408,7 +1408,7 @@ export const DELTA_REIGN = {
   released: "November 6, 2026",
   live: true,
   printedTotal: 103,
-  totalCount: 148,
+  totalCount: 141,
   packSize: 11,
   cost: 6.15,
   dataFile: "data/me6.json",
@@ -1463,7 +1463,7 @@ export const PITCH_BLACK = {
   released: "July 17, 2026",
   live: true,
   printedTotal: 84,
-  totalCount: 130,
+  totalCount: 120,
   packSize: 11,
   cost: 6.0,
   dataFile: "data/me5.json",
@@ -1518,7 +1518,7 @@ export const CHAOS_RISING = {
   released: "May 22, 2026",
   live: true,
   printedTotal: 86,
-  totalCount: 130,
+  totalCount: 122,
   packSize: 11,
   cost: 5.64,
   dataFile: "data/me4.json",
@@ -1573,7 +1573,7 @@ export const PERFECT_ORDER = {
   released: "March 27, 2026",
   live: true,
   printedTotal: 88,
-  totalCount: 132,
+  totalCount: 124,
   packSize: 11,
   cost: 5.53,
   dataFile: "data/me3.json",
@@ -1629,7 +1629,7 @@ export const ASCENDED_HEROES = {
   released: "January 30, 2026",
   live: true,
   printedTotal: 217,
-  totalCount: 302,
+  totalCount: 295,
   packSize: 11,
   cost: 13.87,
   dataFile: "data/me2pt5.json",
@@ -1662,7 +1662,7 @@ export const PHANTASMAL_FLAMES = {
   released: "November 14, 2025",
   live: true,
   printedTotal: 94,
-  totalCount: 143,
+  totalCount: 130,
   packSize: 11,
   cost: 11.82,
   dataFile: "data/me2.json",
@@ -1717,7 +1717,7 @@ export const MEGA_EVOLUTION = {
   released: "September 26, 2025",
   live: true,
   printedTotal: 132,
-  totalCount: 202,
+  totalCount: 188,
   packSize: 11,
   cost: 8.31,
   dataFile: "data/me1.json",
@@ -2156,7 +2156,7 @@ export const BLACK_BOLT = {
   released: "July 18, 2025",
   live: true,
   printedTotal: 86,
-  totalCount: 181,
+  totalCount: 172,
   packSize: 11,
   cost: 14.69,
   dataFile: "data/zsv10pt5.json",
@@ -2197,7 +2197,7 @@ export const WHITE_FLARE = {
   released: "July 18, 2025",
   live: true,
   printedTotal: 86,
-  totalCount: 179,
+  totalCount: 173,
   packSize: 11,
   cost: 13.43,
   dataFile: "data/rsv10pt5.json",
@@ -2243,7 +2243,7 @@ export const PARADOX_RIFT = {
   released: "November 3, 2023",
   live: true,
   printedTotal: 182,
-  totalCount: 280,
+  totalCount: 266,
   packSize: 11,
   cost: 8.44,
   dataFile: "data/sv4.json",
@@ -2310,7 +2310,7 @@ export const SV_151 = {
   released: "September 22, 2023",
   live: true,
   printedTotal: 165,
-  totalCount: 236,
+  totalCount: 215,
   packSize: 11,
   cost: 29.71,
   dataFile: "data/sv3pt5.json",
@@ -2359,7 +2359,7 @@ export const DESTINED_RIVALS = {
   released: "May 30, 2025",
   live: true,
   printedTotal: 182,
-  totalCount: 266,
+  totalCount: 244,
   packSize: 11,
   cost: 9.13,
   dataFile: "data/sv10.json",
@@ -2397,7 +2397,7 @@ export const JOURNEY_TOGETHER = {
   live: true,
   printedTotal: 159,
   // 190 cards plus the 18 promos its boxes and blisters carry.
-  totalCount: 208,
+  totalCount: 190,
   packSize: 11,
   cost: 6.76,
   dataFile: "data/sv9.json",
@@ -2426,7 +2426,7 @@ export const PRISMATIC_EVOLUTIONS = {
   live: true,
   printedTotal: 131,
   // 180 numbered cards, 167 Poké Ball and Master Ball prints, 23 box promos.
-  totalCount: 370,
+  totalCount: 347,
   packSize: 11,
   cost: 14.3,
   dataFile: "data/sv8pt5.json",
@@ -2463,7 +2463,7 @@ export const SURGING_SPARKS = {
   released: "November 8, 2024",
   live: true,
   printedTotal: 191,
-  totalCount: 262,
+  totalCount: 252,
   packSize: 11,
   cost: 8.42,
   dataFile: "data/sv8.json",
@@ -2492,7 +2492,7 @@ export const STELLAR_CROWN = {
   released: "September 13, 2024",
   live: true,
   printedTotal: 142,
-  totalCount: 188,
+  totalCount: 175,
   packSize: 11,
   cost: 10.63,
   dataFile: "data/sv7.json",
@@ -2524,7 +2524,7 @@ export const SHROUDED_FABLE = {
   released: "August 2, 2024",
   live: true,
   printedTotal: 64,
-  totalCount: 113,
+  totalCount: 107,
   packSize: 11,
   cost: 14.49,
   dataFile: "data/sv6pt5.json",
@@ -2555,7 +2555,7 @@ export const TWILIGHT_MASQUERADE = {
   released: "May 24, 2024",
   live: true,
   printedTotal: 167,
-  totalCount: 236,
+  totalCount: 226,
   packSize: 11,
   cost: 9.23,
   dataFile: "data/sv6.json",
@@ -2593,7 +2593,7 @@ export const TEMPORAL_FORCES = {
   released: "March 22, 2024",
   live: true,
   printedTotal: 162,
-  totalCount: 232,
+  totalCount: 218,
   packSize: 11,
   cost: 9.37,
   dataFile: "data/sv5.json",
@@ -2620,7 +2620,7 @@ export const PALDEAN_FATES = {
   released: "January 26, 2024",
   live: true,
   printedTotal: 91,
-  totalCount: 264,
+  totalCount: 245,
   packSize: 11,
   cost: 24.89,
   dataFile: "data/sv4pt5.json",
@@ -2689,7 +2689,7 @@ export const OBSIDIAN_FLAMES = {
   released: "August 11, 2023",
   live: true,
   printedTotal: 197,
-  totalCount: 240,
+  totalCount: 230,
   packSize: 11,
   cost: 13.05,
   dataFile: "data/sv3.json",
@@ -2723,7 +2723,7 @@ export const PALDEA_EVOLVED = {
   released: "June 9, 2023",
   live: true,
   printedTotal: 193,
-  totalCount: 289,
+  totalCount: 279,
   packSize: 11,
   cost: 15.56,
   dataFile: "data/sv2.json",
@@ -2756,7 +2756,7 @@ export const SCARLET_VIOLET = {
   released: "March 31, 2023",
   live: true,
   printedTotal: 198,
-  totalCount: 270,
+  totalCount: 258,
   packSize: 11,
   cost: 9.1,
   dataFile: "data/sv1.json",
@@ -2791,7 +2791,11 @@ export const SV_PROMOS = {
   released: "January 6, 2023",
   live: true,
   promoSet: true,
-  totalCount: 77,
+  promoPrefix: "SVP ",
+  viewNote: "the Scarlet & Violet sets' own boxes (Elite Trainer Boxes, Build & Battle Boxes, ex boxes, tins and blisters)",
+  // Every Scarlet & Violet file a black star promo is filed in, then the set's own file (js/card-home.js PROMO_HOMES).
+  viewOf: ["sv1", "sv2", "sv3", "sv3pt5", "sv4", "sv4pt5", "sv5", "sv6", "sv6pt5", "sv7", "sv8", "sv8pt5", "sv9", "sv10", "zsv10pt5", "rsv10pt5", "svp"],
+  totalCount: 246,
   packSize: 0,
   cost: 0,
   dataFile: "data/svp.json",
@@ -2822,7 +2826,9 @@ export const SWSH_PROMOS = {
   live: true,
   promoSet: true,
   promoPrefix: "SWSH ",
-  totalCount: 60,
+  viewNote: "the Sword & Shield sets' own boxes (Elite Trainer Boxes, Build & Battle Boxes, V boxes, tins and blisters)",
+  viewOf: ["swsh1", "swsh2", "swsh3", "swsh35", "swsh4", "swsh45", "swsh5", "swsh6", "swsh7", "cel25", "swsh8", "swsh9", "swsh10", "pgo", "swsh11", "swsh12", "swsh12pt5", "swshp"],
+  totalCount: 261,
   packSize: 0,
   cost: 0,
   dataFile: "data/swshp.json",
@@ -2855,7 +2861,7 @@ export const CROWN_ZENITH = {
   released: "January 20, 2023",
   live: true,
   printedTotal: 159,
-  totalCount: 249,
+  totalCount: 230,
   packSize: 11,
   cost: 25.65,
   dataFile: "data/swsh12pt5.json",
@@ -2882,7 +2888,7 @@ export const SILVER_TEMPEST = {
   released: "November 11, 2022",
   live: true,
   printedTotal: 195,
-  totalCount: 253,
+  totalCount: 245,
   packSize: 11,
   cost: 15.05,
   dataFile: "data/swsh12.json",
@@ -2912,7 +2918,7 @@ export const LOST_ORIGIN = {
   released: "September 9, 2022",
   live: true,
   printedTotal: 196,
-  totalCount: 256,
+  totalCount: 247,
   packSize: 11,
   cost: 19.56,
   dataFile: "data/swsh11.json",
@@ -2942,7 +2948,7 @@ export const POKEMON_GO = {
   released: "July 1, 2022",
   live: true,
   printedTotal: 78,
-  totalCount: 102,
+  totalCount: 88,
   packSize: 11,
   cost: 14.5,
   dataFile: "data/pgo.json",
@@ -2969,7 +2975,7 @@ export const ASTRAL_RADIANCE = {
   released: "May 27, 2022",
   live: true,
   printedTotal: 189,
-  totalCount: 254,
+  totalCount: 246,
   packSize: 11,
   cost: 10.61,
   dataFile: "data/swsh10.json",
@@ -3000,7 +3006,7 @@ export const BRILLIANT_STARS = {
   released: "February 25, 2022",
   live: true,
   printedTotal: 172,
-  totalCount: 229,
+  totalCount: 216,
   packSize: 11,
   cost: 16.96,
   dataFile: "data/swsh9.json",
@@ -3030,7 +3036,7 @@ export const FUSION_STRIKE = {
   released: "November 12, 2021",
   live: true,
   printedTotal: 264,
-  totalCount: 294,
+  totalCount: 284,
   packSize: 11,
   cost: 18.83,
   dataFile: "data/swsh8.json",
@@ -3060,7 +3066,7 @@ export const CELEBRATIONS = {
   released: "October 8, 2021",
   live: true,
   printedTotal: 25,
-  totalCount: 66,
+  totalCount: 50,
   packSize: 4,
   cost: 33.85,
   dataFile: "data/cel25.json",
@@ -3087,7 +3093,7 @@ export const EVOLVING_SKIES = {
   released: "August 27, 2021",
   live: true,
   printedTotal: 203,
-  totalCount: 258,
+  totalCount: 237,
   packSize: 11,
   cost: 45.52,
   dataFile: "data/swsh7.json",
@@ -3117,7 +3123,7 @@ export const CHILLING_REIGN = {
   released: "June 18, 2021",
   live: true,
   printedTotal: 198,
-  totalCount: 241,
+  totalCount: 233,
   packSize: 11,
   cost: 12.52,
   dataFile: "data/swsh6.json",
@@ -3148,7 +3154,7 @@ export const BATTLE_STYLES = {
   released: "March 19, 2021",
   live: true,
   printedTotal: 163,
-  totalCount: 196,
+  totalCount: 183,
   packSize: 11,
   cost: 9.57,
   dataFile: "data/swsh5.json",
@@ -3178,7 +3184,7 @@ export const SHINING_FATES = {
   released: "February 19, 2021",
   live: true,
   printedTotal: 72,
-  totalCount: 208,
+  totalCount: 195,
   packSize: 11,
   cost: 16.44,
   dataFile: "data/swsh45.json",
@@ -3208,7 +3214,7 @@ export const VIVID_VOLTAGE = {
   released: "November 13, 2020",
   live: true,
   printedTotal: 185,
-  totalCount: 213,
+  totalCount: 203,
   packSize: 11,
   cost: 11.09,
   dataFile: "data/swsh4.json",
@@ -3238,7 +3244,7 @@ export const CHAMPIONS_PATH = {
   released: "September 25, 2020",
   live: true,
   printedTotal: 73,
-  totalCount: 95,
+  totalCount: 80,
   packSize: 11,
   cost: 19.54,
   dataFile: "data/swsh35.json",
@@ -3268,7 +3274,7 @@ export const DARKNESS_ABLAZE = {
   released: "August 14, 2020",
   live: true,
   printedTotal: 189,
-  totalCount: 209,
+  totalCount: 201,
   packSize: 11,
   cost: 9.85,
   dataFile: "data/swsh3.json",
@@ -3298,7 +3304,7 @@ export const REBEL_CLASH = {
   released: "May 1, 2020",
   live: true,
   printedTotal: 192,
-  totalCount: 216,
+  totalCount: 209,
   packSize: 11,
   cost: 12.28,
   dataFile: "data/swsh2.json",
@@ -3328,7 +3334,7 @@ export const SWORD_SHIELD = {
   released: "February 7, 2020",
   live: true,
   printedTotal: 202,
-  totalCount: 225,
+  totalCount: 216,
   packSize: 11,
   cost: 11.09,
   dataFile: "data/swsh1.json",
@@ -3513,7 +3519,9 @@ export const SM_PROMOS = {
   live: true,
   promoSet: true,
   promoPrefix: "SM ",
-  totalCount: 33,
+  viewNote: "the Sun & Moon sets' own boxes (Elite Trainer Boxes, GX boxes, tins, blisters and decks)",
+  viewOf: ["sm1", "sm2", "sm3", "sm35", "sm4", "sm5", "sm6", "sm7", "sm75", "sm8", "sm9", "det1", "sm10", "sm11", "sm115", "sm12", "smp"],
+  totalCount: 197,
   packSize: 0,
   cost: 0,
   dataFile: "data/smp.json",
@@ -3650,7 +3658,7 @@ export const SUN_MOON = {
   released: "February 3, 2017",
   live: true,
   printedTotal: 149,
-  totalCount: 178,
+  totalCount: 163,
   packSize: 11,
   cost: 22.97,
   dataFile: "data/sm1.json",
@@ -3681,7 +3689,7 @@ export const GUARDIANS_RISING = {
   released: "May 5, 2017",
   live: true,
   printedTotal: 145,
-  totalCount: 198,
+  totalCount: 169,
   packSize: 11,
   cost: 35.92,
   dataFile: "data/sm2.json",
@@ -3711,7 +3719,7 @@ export const BURNING_SHADOWS = {
   released: "August 4, 2017",
   live: true,
   printedTotal: 147,
-  totalCount: 191,
+  totalCount: 169,
   packSize: 11,
   cost: 31.02,
   dataFile: "data/sm3.json",
@@ -3741,7 +3749,7 @@ export const LOST_THUNDER = {
   released: "November 2, 2018",
   live: true,
   printedTotal: 214,
-  totalCount: 246,
+  totalCount: 236,
   packSize: 11,
   cost: 59.36,
   dataFile: "data/sm8.json",
@@ -3771,7 +3779,7 @@ export const TEAM_UP = {
   released: "February 1, 2019",
   live: true,
   printedTotal: 181,
-  totalCount: 204,
+  totalCount: 196,
   packSize: 11,
   cost: 300.96,
   dataFile: "data/sm9.json",
@@ -3801,7 +3809,7 @@ export const UNBROKEN_BONDS = {
   released: "May 3, 2019",
   live: true,
   printedTotal: 214,
-  totalCount: 245,
+  totalCount: 234,
   packSize: 11,
   cost: 68.67,
   dataFile: "data/sm10.json",
@@ -3831,7 +3839,7 @@ export const UNIFIED_MINDS = {
   released: "August 2, 2019",
   live: true,
   printedTotal: 236,
-  totalCount: 270,
+  totalCount: 258,
   packSize: 11,
   cost: 79.75,
   dataFile: "data/sm11.json",
@@ -3861,7 +3869,7 @@ export const FORBIDDEN_LIGHT = {
   released: "May 4, 2018",
   live: true,
   printedTotal: 131,
-  totalCount: 149,
+  totalCount: 146,
   packSize: 11,
   cost: 47.22,
   dataFile: "data/sm6.json",
@@ -3891,7 +3899,7 @@ export const CELESTIAL_STORM = {
   released: "August 3, 2018",
   live: true,
   printedTotal: 168,
-  totalCount: 195,
+  totalCount: 183,
   packSize: 11,
   cost: 65.83,
   dataFile: "data/sm7.json",
@@ -3921,7 +3929,7 @@ export const DRAGON_MAJESTY = {
   released: "September 7, 2018",
   live: true,
   printedTotal: 70,
-  totalCount: 96,
+  totalCount: 86,
   packSize: 11,
   cost: 107.42,
   dataFile: "data/sm75.json",
@@ -3951,7 +3959,7 @@ export const HIDDEN_FATES = {
   released: "August 23, 2019",
   live: true,
   printedTotal: 68,
-  totalCount: 171,
+  totalCount: 163,
   packSize: 11,
   cost: 49.15,
   dataFile: "data/sm115.json",
@@ -3981,7 +3989,7 @@ export const COSMIC_ECLIPSE = {
   released: "November 1, 2019",
   live: true,
   printedTotal: 236,
-  totalCount: 284,
+  totalCount: 271,
   packSize: 11,
   cost: 73.81,
   dataFile: "data/sm12.json",
@@ -4016,7 +4024,7 @@ export const DETECTIVE_PIKACHU = {
   released: "April 5, 2019",
   live: true,
   printedTotal: 18,
-  totalCount: 26,
+  totalCount: 18,
   packSize: 4,
   cost: 24.56,
   dataFile: "data/det1.json",
@@ -4045,7 +4053,7 @@ export const ULTRA_PRISM = {
   released: "February 2, 2018",
   live: true,
   printedTotal: 156,
-  totalCount: 176,
+  totalCount: 173,
   packSize: 11,
   cost: 49.67,
   dataFile: "data/sm5.json",
@@ -4075,7 +4083,7 @@ export const CRIMSON_INVASION = {
   released: "November 3, 2017",
   live: true,
   printedTotal: 111,
-  totalCount: 140,
+  totalCount: 124,
   packSize: 11,
   cost: 18.22,
   dataFile: "data/sm4.json",
@@ -4105,7 +4113,7 @@ export const SHINING_LEGENDS = {
   released: "October 6, 2017",
   live: true,
   printedTotal: 73,
-  totalCount: 101,
+  totalCount: 86,
   packSize: 11,
   cost: 109.79,
   dataFile: "data/sm35.json",
@@ -4712,7 +4720,7 @@ export const DRAGON_VAULT = {
   released: "October 5, 2012",
   live: true,
   printedTotal: 20,
-  totalCount: 26,
+  totalCount: 21,
   packSize: 5,
   cost: 265.25,
   dataFile: "data/dv1.json",
@@ -5242,7 +5250,7 @@ export const BLACK_WHITE = {
   released: "April 25, 2011",
   live: true,
   printedTotal: 114,
-  totalCount: 118,
+  totalCount: 115,
   packSize: 10,
   cost: 203.49,
   dataFile: "data/bw1.json",
@@ -5272,7 +5280,7 @@ export const EMERGING_POWERS = {
   released: "August 31, 2011",
   live: true,
   printedTotal: 98,
-  totalCount: 103,
+  totalCount: 98,
   packSize: 10,
   cost: 100.03,
   dataFile: "data/bw2.json",
@@ -5302,7 +5310,7 @@ export const NOBLE_VICTORIES = {
   released: "November 16, 2011",
   live: true,
   printedTotal: 101,
-  totalCount: 104,
+  totalCount: 102,
   packSize: 10,
   cost: 168.79,
   dataFile: "data/bw3.json",
@@ -5363,7 +5371,7 @@ export const MYSTERIOUS_TREASURES = {
   released: "August 22, 2007",
   live: true,
   printedTotal: 123,
-  totalCount: 126,
+  totalCount: 124,
   packSize: 10,
   cost: 339.83,
   dataFile: "data/dp2.json",
@@ -6349,7 +6357,7 @@ export const BASE_SET_2 = {
   released: "February 24, 2000",
   live: true,
   printedTotal: 130,
-  totalCount: 131,
+  totalCount: 130,
   packSize: 11,
   cost: 436.74,
   dataFile: "data/base4.json",
@@ -6836,7 +6844,7 @@ export function dataSetsOf(set) {
 
 /** A black star promo's sort key: "mep009-pc" comes right after "mep009", "xyp67a" after "xyp067", "bwp004", "dpp09", "hsp12", "basep21", "bp03" and "np012" in order; numbers without the prefix sort last. */
 function promoOrder(card) {
-  const m = /^(?:mep|xyp|bwp|dpp|hsp|basep|bp|np)(\d+)(.*)$/i.exec(String(card?.number || ""));
+  const m = /^(?:mep|svp|swshp|smp|xyp|bwp|dpp|hsp|basep|bp|np)(\d+)(.*)$/i.exec(String(card?.number || ""));
   return m ? [Number(m[1]), m[2]] : [Infinity, String(card?.number || "")];
 }
 
@@ -6850,7 +6858,8 @@ function promoOrder(card) {
 export function homeCards(set, lists) {
   // A Trainer Kit copy ("xytk7a-3", the second Metal Energy) is listed as the card it copies.
   const all = lists.flat().filter((card) => dexId(card.id) === card.id);
-  if (!(set.id in PROMO_HOMES)) return all.filter((card) => !promoHomeOf(card.id));
+  // A booster set's dex is its pack cards: no black star promo, and none of its box promos (boxPromoCards lists those).
+  if (!(set.id in PROMO_HOMES)) return all.filter((card) => !promoHomeOf(card.id) && !isBoxPromoId(card.id));
   return all
     .filter((card) => homeSetId(card.id) === set.id)
     .sort((a, b) => {
@@ -6858,6 +6867,48 @@ export function homeCards(set, lists) {
       const [nb, sb] = promoOrder(b);
       return na - nb || (sa < sb ? -1 : sa > sb ? 1 : 0);
     });
+}
+
+/**
+ * A set's box promos out of the lists loaded for it: the stamped, cosmos and store prints its blisters and boxes carry
+ * (js/card-home.js isBoxPromoId). Listed on the set's page under its dex and counted on their own, never toward the set.
+ */
+export function boxPromoCards(set, lists) {
+  if (set.id in PROMO_HOMES) return [];
+  return lists.flat().filter((card) => isBoxPromoId(card.id) && homeSetId(card.id) === set.id);
+}
+
+/**
+ * What kind of thing a playable set is. The site says "set" for a booster expansion only; the rest are extras:
+ *   "booster"  an expansion with booster packs: pull rates, a pack dex and a mastery track
+ *   "promos"   a Black Star Promos binder, one an era: every card comes in a box
+ *   "special"  small packs that are not an expansion: Happy Meal, Trick or Trade, POP Series
+ *   "decks"    one box of fixed cards: Trainer Kits, the Kalos Starter Set, Southern Islands
+ * Packs, Collection, Mastery and search all group by this, in SET_CATEGORIES order.
+ */
+export const SET_CATEGORIES = [
+  { id: "booster", name: "Sets", one: "Booster set", note: "Expansions with booster packs." },
+  { id: "promos", name: "Promos", one: "Black Star Promos", note: "One binder an era. Every card comes in a box." },
+  { id: "special", name: "Special packs", one: "Special pack", note: "Happy Meal, Trick or Trade and POP Series." },
+  { id: "decks", name: "Decks and kits", one: "Deck or kit", note: "One box, always the same cards." },
+];
+
+export function setCategory(set) {
+  if (!set) return "booster";
+  if (set.id in PROMO_HOMES) return "promos";
+  if (set.promoSet) return "decks";
+  if (/^(?:mcd|tot|pop)\d/.test(set.id)) return "special";
+  return "booster";
+}
+
+/** True for a booster expansion: the only kind of set with a mastery track, a crown share and a "sets completed" count. */
+export function isBoosterSet(set) {
+  return setCategory(set) === "booster";
+}
+
+/** True for a promo binder, a special pack or a deck: it has a collection page and a Complete stamp, no mastery. */
+export function isExtraSet(set) {
+  return !isBoosterSet(set);
 }
 
 /**

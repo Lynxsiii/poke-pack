@@ -166,3 +166,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map.fam-bw-secret .relief {
 body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map.fam-xy-ex-mega {
   --relief: 1;
 }
+
+/* XY full arts are ridged, not glittered: the fleck layer read as dark speckle and a pale wash over the whole face
+   (2026-11-26). Mostly off; the family's own sheet draws the ridges. */
+body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map.fam-xy-full-art.fam-xy-full-art {
+  --shine-line: 0.3;
+  --shine-glit: 0.2;
+}

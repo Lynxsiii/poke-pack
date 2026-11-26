@@ -290,7 +290,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-spe
   mask-position: center;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-  opacity: calc(min(1, 0.6 + var(--card-opacity) * 0.6) * min(1, var(--foil-strength, 1)));
+  /* 2026-11-26: x0.62, the bands at full strength washed the whole face yellow (Radiant Eternatus, Hawlucha) */
+  opacity: calc(min(1, 0.6 + var(--card-opacity) * 0.6) * 0.62 * min(1, var(--foil-strength, 1)));
 }
 /* Resting: the bands dimly on the foil, no colour. */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-rad.has-foil-map:not(.lit):not(.settling) .foil {
@@ -339,7 +340,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-spe
   mask-position: center;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-  opacity: calc(min(1, 0.7 + var(--card-opacity) * 0.4) * min(1, var(--foil-strength, 1)));
+  opacity: calc(min(1, 0.7 + var(--card-opacity) * 0.4) * 0.6 * min(1, var(--foil-strength, 1)));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-rad.has-foil-map:not(.lit):not(.settling) .glare {
   opacity: calc(0.6 * min(1, var(--foil-strength, 1)));

@@ -7,7 +7,7 @@
  * for the addresses worth sharing:
  *
  *   /packs/<set>   that set's name, blurb and its own 1200x630 image
- *                  (assets/og/sets/<set>-v1.jpg, scripts/make_og_sets.mjs)
+ *                  (assets/og/sets/<set>-v2.jpg, scripts/make_og_sets.mjs)
  *   /pull/<card>   a pull someone shares: the card's scan, its rarity, set and
  *                  value, and "@handle pulled ..." when the link carries ?by=
  *   /u/<handle>    a trainer's profile, with their first showcase card
@@ -22,12 +22,12 @@ import { canPullReverse } from "../js/engine.js";
 
 export const SITE = "https://poke-pack.rip";
 const SITE_NAME = "poke-pack.rip";
-const DEFAULT_IMAGE = `${SITE}/assets/og.jpg`;
+const DEFAULT_IMAGE = `${SITE}/assets/og-v2.jpg`;
 const DEFAULT_IMAGE_ALT = "Five Pokémon TCG chase cards fanned out under the poke-pack.rip wordmark";
 const HOME_TITLE = "poke-pack.rip | rip packs, fill the binder";
 const HOME_DESCRIPTION =
   "Open Pokémon TCG booster packs with printed pull rates, real card scans, and market-based values. Free, fan-made, no real money.";
-export const SET_IMAGE_VERSION = 1;
+export const SET_IMAGE_VERSION = 2;
 
 /** Pages that only make sense signed in: kept out of search results. */
 const PRIVATE_PAGES = /^\/(account|settings|cart|signin|login|signup|auth|social(\/.*)?|bulk(\/sealed)?|sealed|collection(\/sealed)?|binder)$/;
@@ -149,12 +149,12 @@ export function manifestJson() {
       scope: "/",
       display: "standalone",
       orientation: "portrait",
-      background_color: "#0b0b0c",
-      theme_color: "#151517",
+      background_color: "#eef2f3",
+      theme_color: "#eef2f3",
       icons: [
-        { src: "/assets/icon-192-v1.png", sizes: "192x192", type: "image/png" },
-        { src: "/assets/icon-512-v1.png", sizes: "512x512", type: "image/png" },
-        { src: "/assets/icon-512-maskable-v1.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
+        { src: "/assets/icon-192-v2.png", sizes: "192x192", type: "image/png" },
+        { src: "/assets/icon-512-v2.png", sizes: "512x512", type: "image/png" },
+        { src: "/assets/icon-512-maskable-v2.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
       ],
     },
     null,

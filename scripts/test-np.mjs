@@ -64,7 +64,7 @@ const card=(id,number,extra={})=>({id,name:'x',number,rarity:'Common',...extra})
   assert.deepEqual(homeCards({id:'pop2'},[exLists[1]]).map(c=>c.id),['pop2-1']);
   assert.deepEqual(homeCards({id:'dpp'},[[card('dp1-dpp03','dpp03'),card('ex1-np012','np012')]]).map(c=>c.id),['dp1-dpp03'],'the DP promo set ignores EX promos');
   assert.deepEqual(homeCards({id:'np'},[[card('dp1-dpp03','dpp03'),card('ex1-np012','np012'),card('ex1-1','1')]]).map(c=>c.id),['ex1-np012'],'the NP promo set keeps only NP promos');
-  assert.deepEqual(homeCards({id:'sm5'},[[card('sm5-smp101','smp101'),card('sm5-1','1')]]).map(c=>c.id),['sm5-smp101','sm5-1'],'older eras are untouched');
+  assert.deepEqual(homeCards({id:'sm5'},[[card('sm5-smp101','smp101'),card('sm5-1','1')]]).map(c=>c.id),['sm5-1'],'an SM black star promo is the SM binder\'s card, never a set\'s');
 }
 
 // ---- Fixture: sets of each promo home and the promo set, played through the Worker ---------------------------------

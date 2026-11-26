@@ -713,7 +713,8 @@ export function masteryBannersHtml(current, claimed, deps) {
 
 /** Titles handed out by a secret achievement that is not won yet: they stay out of sight. */
 export function hiddenTitles(titles, unlocked, deps) {
-  return titles.filter((row) => row.ach && !unlocked.has(row.name) && deps.isSecret(deps.achievementById?.(row.ach)));
+  // So do the legacy titles of masteries that were retired: only whoever claimed one back then sees it.
+  return titles.filter((row) => row.ach && !unlocked.has(row.name) && (row.legacy || deps.isSecret(deps.achievementById?.(row.ach))));
 }
 
 /**

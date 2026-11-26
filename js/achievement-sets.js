@@ -6,9 +6,9 @@
  * Progress on a set row is a card count, not a percentage: "37 of 75" reads
  * better than "49%" and the claim check compares the same numbers.
  */
-import { PLAYABLE_SETS } from "./catalog.js";
+import { PLAYABLE_SETS, isBoosterSet } from "./catalog.js";
 import { ach, fmt } from "./achievement-kit.js";
-import { CROWN_ERAS, ERA_NAMES, eraSlug, eraTotal, setsInEra } from "./achievement-eras.js";
+import { boosterSetsInEra, CROWN_ERAS, ERA_NAMES, eraSlug, eraTotal } from "./achievement-eras.js";
 import { crownTitle, masteryTitle } from "./titles.js";
 import { CROWN_GIFTS, MASTERY_GIFTS } from "./mastery-gifts.js";
 
@@ -73,8 +73,8 @@ export function halfGoal(total) {
   return Math.ceil(total / 2);
 }
 
-/** Two rows per playable set: `set-<id>-half` and `set-<id>-master`. */
-export const SET_ROWS = PLAYABLE_SETS.flatMap((set) => {
+/** A set's two rows: `set-<id>-half` and `set-<id>-master`. */
+const rowsOf = (set) => {
   const total = set.totalCount || 1;
   const half = halfGoal(total);
   return [
@@ -101,7 +101,20 @@ export const SET_ROWS = PLAYABLE_SETS.flatMap((set) => {
       { mark: "100%", set: set.id, kind: "mastery", title: masteryTitle(set.name), reward: { gear: masteryGear(set.id) } }
     ),
   ];
-});
+};
+
+/** Two rows per booster set. Only a booster expansion has a mastery track. */
+export const SET_ROWS = PLAYABLE_SETS.filter(isBoosterSet).flatMap(rowsOf);
+
+/**
+ * The rows the extras had before 2026-11-26 (promo binders, Happy Meal, Trick or Trade, POP Series, Trainer Kits and
+ * the fixed box sets). They can no longer be earned: `retired` keeps a row out of the tables and makes it never done,
+ * so nobody can claim one. They stay looked up by id, because a player who claimed one keeps its coins, XP, title,
+ * emblem and banner.
+ */
+export const RETIRED_SET_ROWS = PLAYABLE_SETS.filter((set) => !isBoosterSet(set))
+  .flatMap(rowsOf)
+  .map((row) => ({ ...row, retired: true }));
 
 const ERA_LADDERS = {
   "Mega Evolution": [
@@ -189,13 +202,14 @@ const ERA_ROWS = ERA_NAMES.flatMap((era) =>
 );
 
 /**
- * One crown per big era: master every playable set of it. Generated from the
+ * One crown per big era: master every booster set of it (its promo binders, special packs and decks are extras with
+ * no mastery, so a crown never asks for them). Generated from the
  * set data (CROWN_ERAS), so an era that grows or appears needs no edit here
  * (re-run scripts/make_mastery_gifts.py to give it gear). Tier 4, plus the
  * crown bonus in js/xp.js.
  */
 export const CROWN_ROWS = CROWN_ERAS.map((era) => {
-  const sets = setsInEra(era);
+  const sets = boosterSetsInEra(era);
   const gear = crownGear(era);
   return ach(
     "sets",
@@ -234,13 +248,18 @@ export const SETS_GENERAL = [
   ach("sets", 4, "sets-done-10", "Ten sets deep", "Complete 10 sets.", 10, (c) => c.setsDone, 4000, { mark: "x10", title: "Grand Master" }),
   ach("sets", 4, "sets-done-25", "Quarter century", "Complete 25 sets.", 25, (c) => c.setsDone, 4500, { mark: "x25" }),
   // A listed set with no cards yet (a promo set whose carriers are still landing) cannot be completed, so it is not counted.
-  ach("sets", 4, "sets-done-all", "Every last set", "Complete every playable set.", PLAYABLE_SETS.filter((set) => set.totalCount > 0).length, (c) => c.setsDone, 5000, { mark: "ALL", title: "Pokémon Master" }),
+  ach("sets", 4, "sets-done-all", "Every last set", "Complete every booster set.", PLAYABLE_SETS.filter((set) => isBoosterSet(set) && set.totalCount > 0).length, (c) => c.setsDone, 5000, { mark: "ALL", title: "Pokémon Master" }),
 
   ach("sets", 1, "happy-meal", "Happy meal", "Own a card from a McDonald's set.", 1, (c) => c.editionOwned("McDonald's"), 60, { mark: "M" }),
   ach("sets", 1, "trick-or-treat", "Trick or treat", "Own a card from a Trick or Trade set.", 1, (c) => c.editionOwned("Trick or Trade"), 60, { mark: "TT" }),
   ach("sets", 1, "black-star", "Black star", "Own a card from a Black Star Promos set.", 1, (c) => c.promoOwned, 40, { mark: "P" }),
-  ach("sets", 2, "promo-pile", "Promo pile", "Own 10 different Black Star promos.", 10, (c) => c.promoOwned, 200),
-  ach("sets", 3, "star-collector", "Star collector", "Own 30 different Black Star promos.", 30, (c) => c.promoOwned, 500),
+  // The extras ladder: every card that is not a booster set's pack card counts. Black star promos, box promos (stamped
+  // and cosmos prints), Happy Meal, Trick or Trade and POP cards, and the cards of the kits and fixed decks. This is
+  // what the extras pay now that they have no mastery of their own. The first two rungs keep their old ids.
+  ach("sets", 2, "promo-pile", "Promo pile", "Own 10 different promos and extras: black star and box promos, Happy Meal, Trick or Trade and POP cards, kit and deck cards.", 10, (c) => c.extrasOwned, 200),
+  ach("sets", 3, "star-collector", "Star collector", "Own 30 different promos and extras.", 30, (c) => c.extrasOwned, 500),
+  ach("sets", 3, "extras-100", "Side quest", "Own 100 different promos and extras.", 100, (c) => c.extrasOwned, 1200, { mark: "100" }),
+  ach("sets", 4, "extras-300", "Everything but the packs", "Own 300 different promos and extras.", 300, (c) => c.extrasOwned, 3000, { mark: "300" }),
 ];
 
 /** The rows for one set, halfway first. */
