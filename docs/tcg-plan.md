@@ -133,7 +133,7 @@ wordings the engine can't read. Work down that list:
    discard pile. `compileStadium` reads standing changes for the Pokémon
    that fit (`field`, folded into `toolOf` with the Tool) and
    "once during each player's turn" texts whose rest reads as a Trainer
-   (`use`, action `stadium`). 23 Stadiums so far; 449 of 2,888 Trainers
+   (`use`, action `stadium`). 23 Stadiums so far; 503 of 2,888 Trainers
    playable. Next: Tools and Stadiums with conditions, moving Energy,
    Rare Candy, damage boosts for a turn.
 5. **Abilities and Poké-Powers**: a hook per timing (on play, once a turn,
@@ -160,8 +160,31 @@ wordings the engine can't read. Work down that list:
    Bench guard for the team, a coin flip to hang on, the other Active
    Pokémon's Retreat Cost raised, early evolution, mending between turns,
    no effects of attacks except damage, no damage while Asleep. 1,073 live.
-   Next: "when this Pokémon moves to the Active Spot", Ability locks, attack
-   costs that change, more Energy from the discard pile.
+   Third batch (2026-11-26): triggers and locks. "When this Pokémon moves
+   from your Bench to the Active Spot" (`rise`, asked as an optional pick on
+   a retreat, switch or promotion during its owner's turn, once a turn);
+   "move any amount of Energy from your other Pokémon to it" (`gather`: an
+   optional pick a card until the player stops). Knocked Out by damage from
+   an attack (`ko`: a search, back to the hand, counters on the Attacking
+   Pokémon, cards off their deck or at random from their hand; the engine
+   marks `slot.hit` with the turn an opponent's attack damaged it and clears
+   it before the checkup). "Whenever your opponent attaches an Energy"
+   (`foeAttach`). Terms on a use (`use.need`): first turn only, after a Knock
+   Out during the opponent's last turn (`side.lostOn`), a Stadium in play,
+   their Prizes left. Locks (`lock`, folded into `abilityOn`): the other
+   side's or everyone's, Active or Benched only, Basic, by rule box, damaged
+   ones, except a name, old Poké-Power/Poké-Body locks, Garbotoxin with a
+   Tool, Abilities that Knock Out themselves. Wards: "prevent all effects of
+   your opponent's Pokémon's Abilities" (`ward`, also keeps off locks and
+   their standing auras) and of their Items and Supporters (`trainerWard`);
+   the source rides on the Trainer context as `src`. Also: +HP with Special
+   Energy, more damage at low HP (`when.hpMax`), walls against attackers
+   with Special Energy or an Ability, "your Pokémon have no Retreat Cost",
+   their Active Pokémon doing less damage, and searches for "Pokémon with N
+   HP or less" (Trainers too). 1,251 live.
+   Next: attack costs that change, more Energy from the discard pile,
+   "Once during your turn, if this Pokémon has ... Energy attached",
+   Abilities that work from the hand or discard pile.
    `node scripts/test-tcg.mjs --coverage` lists the commonest unread texts.
 
 6. **Special Energy**. First batch live (2026-11-26, `js/tcg/energy.js`,

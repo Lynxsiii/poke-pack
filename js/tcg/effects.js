@@ -107,6 +107,7 @@ export const OPS = {
       if (dealt.amount <= 0) continue;
       if (benchSafe(state, slot, spot, ctx.defs)) continue;
       slot.damage += dealt.amount;
+      slot.hit = state.turn;
       events.push({ t: "damage", p, spot, n: dealt.amount, weak: dealt.weak, resist: dealt.resist });
     }
   },
@@ -123,7 +124,7 @@ export const OPS = {
     const foe = other(player);
     const side = state.players[foe];
     if (!side.active || !side.bench.length || ctx.shielded || hpLeft(state, side.active, ctx.defs) <= 0) return;
-    if (side.bench.length === 1) return switchActive(state, foe, 0, ctx.events);
+    if (side.bench.length === 1) return switchActive(state, foe, 0, ctx.events, ctx.defs);
     askPick(state, { player: foe, side: foe, spots: side.bench.map((_, i) => i), left: 1, effect: { op: "switch" } });
   },
   /** Discard Energy from the other Active Pokémon. */

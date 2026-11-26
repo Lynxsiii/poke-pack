@@ -60,39 +60,38 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-revers
   mask-repeat: no-repeat, no-repeat, no-repeat;
 }
 
-/* Plain rainbow (ex11, ex13-ex16): a smooth vivid spectrum over the map, an overlay-type blend so the art's own light and dark
-   stay (a screen/opaque layer painted a flat green sheet and failed review): the colour rides the picture's tones. Every layer is
-   200% wide with multiplier 1: a sweep of the pointer slides the spectrum 0.26 card, a quarter of a (one-card) period. */
+/* Plain refractor (ex11, ex13-ex16): a smooth silver foil under the art box's ink. On the real card (photos of the ex13 reverses:
+   Holon Fossil, Kabuto, Kingdra, 2026-11-26) it reads as the picture itself head on, with a soft silver sheen and a faint pastel
+   shift only as it tilts; the first recipe's vivid full-saturation spectrum painted the art box rainbow (Noah, 2026-11-26: "I don't
+   like how rainbow it is"). Here: a white pool round the light and a pastel spectrum (saturation ~45%, lightness ~72%), overlay,
+   so the art keeps its own colours and the foil lifts and tints them a little. 200% wide, multiplier 1: the spectrum slides 0.26
+   card a sweep, a quarter of its one-card period. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.fam-ex-reverse.fam-ex-reverse.fam-ex-reverse.fam-ex-reverse.xr-mapped.ex-rev-plain .foil {
   background-image:
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsla(0, 0%, 100%, 0.35) 0%, hsla(0, 0%, 100%, 0.1) 30%, hsla(0, 0%, 100%, 0) 62%),
-    linear-gradient(115deg, hsl(0, 100%, 58%) 0%, hsl(45, 100%, 55%) 8%, hsl(100, 100%, 48%) 17%, hsl(170, 100%, 48%) 25%, hsl(215, 100%, 58%) 33%, hsl(275, 100%, 62%) 41%, hsl(330, 100%, 60%) 50%, hsl(30, 100%, 56%) 58%, hsl(70, 100%, 50%) 66%, hsl(140, 100%, 48%) 74%, hsl(200, 100%, 56%) 83%, hsl(260, 100%, 62%) 91%, hsl(320, 100%, 60%) 100%);
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsla(0, 0%, 100%, 0.55) 0%, hsla(0, 0%, 100%, 0.16) 28%, hsla(0, 0%, 100%, 0) 58%),
+    linear-gradient(115deg, hsl(0, 45%, 74%) 0%, hsl(45, 50%, 72%) 8%, hsl(100, 40%, 70%) 17%, hsl(170, 42%, 70%) 25%, hsl(215, 48%, 74%) 33%, hsl(275, 42%, 76%) 41%, hsl(330, 45%, 75%) 50%, hsl(30, 48%, 73%) 58%, hsl(70, 45%, 71%) 66%, hsl(140, 40%, 70%) 74%, hsl(200, 46%, 73%) 83%, hsl(260, 42%, 76%) 91%, hsl(320, 45%, 75%) 100%);
   background-size: 100% 100%, 200% 200%;
   background-position:
     center,
     clamp(0%, calc(((50% - var(--background-x)) * 1) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1) + 50%), 100%);
   background-repeat: no-repeat, no-repeat;
-  background-blend-mode: soft-light, normal;
+  background-blend-mode: screen, normal;
   filter: none;
   mix-blend-mode: overlay;
-  opacity: calc((0.5 + var(--card-opacity) * 0.4) * var(--foil-strength, 1));
+  opacity: calc((0.45 + var(--card-opacity) * 0.35) * var(--foil-strength, 1));
 }
-/* Lit, the group blends hard-light at a lower strength: overlay could not lift a dark painting (Banette ex14-1's night sky showed
-   no foil at all, 2026-11-25 visibility sweep), and at 0.3-0.6 hard-light still rides the art's tones instead of painting a sheet. */
-body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.fam-ex-reverse.fam-ex-reverse.fam-ex-reverse.fam-ex-reverse.xr-mapped.ex-rev-plain:not(.xr-delta):is(.lit, .settling) .foil {
-  mix-blend-mode: hard-light;
-  opacity: calc((0.3 + var(--card-opacity) * 0.3) * var(--foil-strength, 1));
-}
-/* a delta card lights the whole Pokemon, a large area: a little less colour so the body keeps its own shading */
+/* a delta card lights the whole Pokemon, a large area: a little less, so the body keeps its own shading */
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.fam-ex-reverse.fam-ex-reverse.fam-ex-reverse.fam-ex-reverse.xr-mapped.xr-delta.ex-rev-plain .foil {
-  opacity: calc((0.4 + var(--card-opacity) * 0.34) * var(--foil-strength, 1));
+  opacity: calc((0.38 + var(--card-opacity) * 0.3) * var(--foil-strength, 1));
 }
+/* At rest: no colour at all, a faint silver diagonal sheen (the real card head on shows the print) */
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.fam-ex-reverse.fam-ex-reverse.fam-ex-reverse.fam-ex-reverse.xr-mapped.ex-rev-plain:not(.lit):not(.settling) .foil {
-  background-image: linear-gradient(115deg, hsl(200, 95%, 58%), hsl(300, 85%, 62%) 50%, hsl(165, 100%, 52%));
+  background-image: linear-gradient(115deg, hsla(0, 0%, 100%, 0) 25%, hsla(0, 0%, 100%, 0.7) 50%, hsla(0, 0%, 100%, 0) 75%);
   background-size: 100% 100%;
   background-position: center;
   background-blend-mode: normal;
-  opacity: calc(0.3 * var(--foil-strength, 1));
+  mix-blend-mode: soft-light;
+  opacity: calc(0.4 * var(--foil-strength, 1));
 }
 /* the era's own glare, cut to the map */
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.fam-ex-reverse.fam-ex-reverse.fam-ex-reverse.fam-ex-reverse.xr-mapped.ex-rev-plain .glare {

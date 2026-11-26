@@ -12,7 +12,7 @@
  * attribute, so it wins (`--foil-map` included). `card` has been through foilLook(), so a promo's rarity is its foilAs.
  * Never import js/foil-maps.js from here (it waits on this module).
  */
-import { isEx, exPattern, exWindow } from "../ex-foil.js?v=8";
+import { isEx, exPattern, exWindow } from "../ex-foil.js?v=9";
 
 const setOf = (card) => String(card?.id || "").split("-")[0];
 

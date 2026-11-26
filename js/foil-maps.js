@@ -30,10 +30,10 @@ import { isBw, bwEtched, bwMap, bwPattern, bwReverseExtras, bwReverseFinish, BW_
 
 import { isDp, dpEtched, dpMap, dpPattern, dpReverseExtras, dpReverseFinish, DP_FULL_ART } from "./dp-foil.js?v=3";
 
-import { isEx, exEtched, exMap, exPattern, exReverseExtras, exReverseFinish, exReversePattern } from "./ex-foil.js?v=8";
+import { isEx, exEtched, exMap, exPattern, exReverseExtras, exReverseFinish, exReversePattern } from "./ex-foil.js?v=9";
 import { isWotc, wotcLegendaryExtras, wotcMap, wotcPattern, wotcReverseFinish, WOTC_FULL_ART } from "./wotc-foil.js?v=6";
 import { specialInk, specialReverseMap } from "./wotc-special.js?v=3";
-import { famExtras } from "./holo-fam.js?v=112";
+import { famExtras } from "./holo-fam.js?v=113";
 import { HIT_RARITIES } from "./engine.js";
 
 export { isSm, smPattern, isXy, xyPattern, isBw, bwPattern, isDp, dpPattern, isEx, exPattern, isWotc, wotcPattern };
