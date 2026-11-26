@@ -30,7 +30,7 @@ for (const [set, list] of Object.entries(products)) {
     decks++;
     const bad = [];
     for (const { id } of all) { const d = defs(id); if (!d) bad.push(`?${id}`); else if (!d.playable) bad.push(`${d.name}|${d.why}|${id}`); }
-    if (!bad.length) ready++;
+    if (!bad.length) { ready++; if (process.env.READY) console.log("ready", set, o.id); }
     for (const b of new Set(bad)) missing.set(b, (missing.get(b) || 0) + 1);
   }
 }

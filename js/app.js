@@ -7623,7 +7623,8 @@ function keepThemeDeck(product, setId, promos, boxCards) {
   for (const card of boxCards || []) cards[card.id] = (cards[card.id] || 0) + (card.n || 1);
   if (Object.values(cards).reduce((a, b) => a + b, 0) !== 60) return;
   const quoted = String(product.name || "").match(/"([^"]+)"/);
-  const name = (quoted ? quoted[1] : String(product.name || "Theme deck")).trim();
+  // "Theme Deck "Rillaboom"" -> "Rillaboom", "ex Battle Deck: Lucario ex" -> "Lucario ex".
+  const name = (quoted ? quoted[1] : String(product.name || "Theme deck").replace(/^.*\bBattle Deck:\s*/i, "")).trim();
   const key = `pp-tcg-inbox-v1:${cloudUser?.id || cloudUser?.handle || "guest"}`;
   try {
     const inbox = JSON.parse(localStorage.getItem(key) || "[]");
