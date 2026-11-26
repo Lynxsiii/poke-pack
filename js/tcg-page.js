@@ -194,7 +194,7 @@ export function initTcg(deps) {
       <header class="tg-head">
         <span class="rt-tag">Early build</span>
         <h1 class="page-title tg-title">Play</h1>
-        <p class="tg-lede">Build a deck from the cards you own, then take it to the table against the house bot.${played ? ` You've won ${record.wins} of ${plural(played, "match")}.` : ""}</p>
+        <p class="tg-lede">Build a deck from the cards you own, or open a Theme Deck or Battle Deck from the shop, then take it to the table.${played ? ` You've won ${record.wins} of ${plural(played, "match")}.` : ""}</p>
       </header>
       ${resume?.state && resume.state.phase !== "over" ? `<div class="rt-box tg-resume">
         <p><b>${resume.lesson != null ? "Your lesson is waiting" : "A match is waiting"}</b>Turn ${Math.max(1, resume.state.turn)} against the ${BOT_NAME}.</p>
@@ -223,7 +223,7 @@ export function initTcg(deps) {
           <li>Trainers: Items and Supporters that draw, search your deck, heal, switch or pull a Pokémon forward. More with each update.</li>
           <li>Pokémon Tools that change HP, Retreat Cost, damage or Weakness can be attached, one to a Pokémon.</li>
           <li>Stadiums stay in play for both players. Tap the Stadium on the table to read it or use it.</li>
-          <li>Not yet: Abilities, and some attack text (the printed damage still lands).</li>
+          <li>Abilities, Pokémon Tools, Stadiums and Special Energy as their cards read, with more each update. Not yet: some attack text (the printed damage still lands).</li>
         </ul>
         ${read("learned", false) ? `<button type="button" class="tlink tg-relearn" data-lesson>Run the lesson again</button>` : ""}
       </section>
@@ -244,9 +244,9 @@ export function initTcg(deps) {
       <h3>New deck</h3>
       ${formatSegHtml(draft.format)}
       <p class="tg-draft-note">${formatNote(draft.format)}</p>
+      <p class="tg-draft-note">Want one ready to play? Theme Decks and Battle Decks in the shop arrive here as decks.</p>
       <div class="tg-draft-keys">
-        <button type="button" class="solid" data-build${playable ? "" : " disabled"}>Build it for me</button>
-        <button type="button" class="ghost" data-empty>Start empty</button>
+        <button type="button" class="solid" data-empty>Start building</button>
         <button type="button" class="tlink" data-cancel>Cancel</button>
       </div>
     </div>`;
@@ -284,7 +284,7 @@ export function initTcg(deps) {
       for (let n = 2; decks.some((d) => d.name === name); n += 1) name = `${item.name} ${n}`;
       const ids = Object.keys(item.cards);
       const lead = (defs(ids[0])?.kind === "pokemon" && ids[0]) || ids.find((id) => defs(id)?.kind === "pokemon" && defs(id)?.stage !== "basic") || ids.find((id) => defs(id)?.kind === "pokemon") || null;
-      decks.push({ id: `t${(item.at || Date.now()).toString(36)}${decks.length}`, name, format: themeFormat(item.cards), cards: { ...item.cards }, theme: item.product || true, lead });
+      decks.push({ id: `t${(item.at || Date.now()).toString(36)}${decks.length}`, v: 2, name, format: themeFormat(item.cards), cards: { ...item.cards }, theme: item.product || true, lead });
     }
     saveDecks();
     try {
