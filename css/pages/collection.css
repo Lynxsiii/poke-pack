@@ -578,3 +578,18 @@ body.no-motion :is(.picker, .picker-backdrop) { animation: none; }
 }
 #binder-body .need-account p { margin: 0; color: var(--k); font-size: 15px; font-weight: 700; line-height: 1.45; }
 #binder-body .need-account .account-hero-actions { display: flex; flex-wrap: wrap; gap: 12px 16px; padding-left: 6px; }
+
+/* An extra with every card found (a promo binder, a Happy Meal year, a kit): no mastery, a stamp on its count. */
+.coll-stamp {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 7px;
+  border: 2px solid var(--cy-2);
+  border-radius: 3px;
+  color: var(--cy-2);
+  font: italic 800 11px/1.2 var(--font-xc, var(--font-h));
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transform: rotate(-4deg);
+  vertical-align: 2px;
+}

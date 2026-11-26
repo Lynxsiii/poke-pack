@@ -8,7 +8,7 @@ const root = new URL("../", import.meta.url);
 const set = getSet("sv3pt5");
 assert.equal(set.id, "sv3pt5");
 const cards = [...JSON.parse(fs.readFileSync(new URL(set.dataFile, root))), ...BASIC_ENERGY];
-assert.equal(cards.length - BASIC_ENERGY.length, set.totalCount);
+assert.equal(cards.filter((c) => !c.promo).length - BASIC_ENERGY.length, set.totalCount, "totalCount is the pack cards: promos are counted on their own");
 assert.equal(new Set(cards.map((c) => c.id)).size, cards.length, "card ids are unique");
 const byId = Object.fromEntries(cards.map((c) => [c.id, c]));
 
