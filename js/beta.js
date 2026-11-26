@@ -2,14 +2,12 @@
 
    /casino/beta     join with an invite code, the perks, the games; the owner makes codes here
    /casino/grass    Tall Grass: clear tiles, dodge the Voltorb, cash out
-   /casino/drop     Poké Ball Drop: one ball down 12 rows of pegs
    /casino/rocket   Rocket: one shared round, cash out before the pop
-   /casino/higher   Higher or Lower on a set's real card prices
    /casino/tins     Mystery Tins: a themed tin, one card out
 
    The page only asks and shows. Every stake, roll and payout is the Worker's. */
 import { api, esc, coinTag, uuid } from "./casino-kit.js";
-import { BETA_GAMES, BETA_RULES, GRASS, DROP_ROWS, DROP_RISKS, ROCKET, rocketAt, grassMultiplier } from "./beta-rules.js?v=1";
+import { BETA_GAMES, BETA_RULES, GRASS, ROCKET, TIN_MAX_OPEN, rocketAt, grassMultiplier } from "./beta-rules.js?v=2";
 
 const fmtX = (m) => `${Number(m || 0).toFixed(2)}x`;
 const num = (v) => Number(v).toLocaleString("en-US", { maximumFractionDigits: 2 });
@@ -17,12 +15,9 @@ const post = (path, body) => api(path, { method: "POST", body: JSON.stringify(bo
 
 // ---- Art ---------------------------------------------------------------------------------
 const VOLTORB = `<svg class="bz-voltorb" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="16" fill="var(--hp-low)" stroke="var(--k0)" stroke-width="2.5"/><path d="M4 20a16 16 0 0 0 32 0z" fill="#fff" stroke="var(--k0)" stroke-width="2.5"/><path d="M11 15l7 3M29 15l-7 3" stroke="var(--k0)" stroke-width="2.5" stroke-linecap="round"/></svg>`;
-const BALL = `<svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="16" fill="#fff" stroke="var(--k0)" stroke-width="2.5"/><path d="M4 20a16 16 0 0 1 32 0z" fill="var(--hp-low)" stroke="var(--k0)" stroke-width="2.5"/><circle cx="20" cy="20" r="5" fill="#fff" stroke="var(--k0)" stroke-width="2.5"/></svg>`;
 const ART = {
   grass: `<svg viewBox="0 0 70 70" aria-hidden="true"><g stroke="var(--k0)" stroke-width="2.5"><rect x="4" y="4" width="18" height="18" fill="var(--hp)"/><rect x="26" y="4" width="18" height="18" fill="var(--hp)"/><rect x="48" y="4" width="18" height="18" fill="var(--box)"/><rect x="4" y="26" width="18" height="18" fill="var(--box)"/><rect x="26" y="26" width="18" height="18" fill="var(--hp)"/><rect x="48" y="26" width="18" height="18" fill="var(--hp)"/><rect x="4" y="48" width="18" height="18" fill="var(--hp)"/><rect x="26" y="48" width="18" height="18" fill="var(--hp-low)"/><rect x="48" y="48" width="18" height="18" fill="var(--hp)"/></g></svg>`,
-  drop: `<svg viewBox="0 0 70 70" aria-hidden="true"><g fill="var(--k)"><circle cx="35" cy="12" r="3"/><circle cx="25" cy="24" r="3"/><circle cx="45" cy="24" r="3"/><circle cx="15" cy="36" r="3"/><circle cx="35" cy="36" r="3"/><circle cx="55" cy="36" r="3"/></g><g stroke="var(--k0)" stroke-width="2.5"><circle cx="40" cy="47" r="7" fill="var(--hp-low)"/><path d="M33 47h14"/></g><g stroke="var(--k0)" stroke-width="2"><rect x="4" y="58" width="12" height="9" fill="var(--hp-low)"/><rect x="17" y="58" width="12" height="9" fill="var(--hp-mid)"/><rect x="30" y="58" width="12" height="9" fill="var(--hp)"/><rect x="43" y="58" width="12" height="9" fill="var(--hp-mid)"/><rect x="56" y="58" width="10" height="9" fill="var(--hp-low)"/></g></svg>`,
   rocket: `<svg viewBox="0 0 70 70" aria-hidden="true"><path d="M6 64 C30 62 46 44 60 10" stroke="var(--cy-2)" stroke-width="3.5" fill="none"/><path d="M6 66H66M6 66V6" stroke="var(--k)" stroke-width="2.5"/><circle cx="60" cy="10" r="5" fill="var(--yel)" stroke="var(--k0)" stroke-width="2"/></svg>`,
-  higher: `<svg viewBox="0 0 70 70" aria-hidden="true"><g stroke="var(--k0)" stroke-width="2.5"><rect x="6" y="14" width="26" height="38" fill="var(--box)"/><rect x="38" y="18" width="26" height="38" fill="var(--cy-3)"/></g><path d="M51 30l-6 8h12z" fill="var(--hp)"/><path d="M51 48l-6-8h12z" fill="var(--hp-low)"/></svg>`,
   tins: `<svg viewBox="0 0 70 70" aria-hidden="true"><g stroke="var(--k0)" stroke-width="2.5"><rect x="8" y="22" width="54" height="34" fill="var(--cy)"/><rect x="5" y="14" width="60" height="10" fill="var(--yel)"/></g><circle cx="35" cy="39" r="7" fill="var(--box)" stroke="var(--k0)" stroke-width="2.5"/></svg>`,
 };
 
@@ -121,7 +116,7 @@ function homePage(ctx, root) {
           <form class="rt-box bz-box bz-join" data-join><label class="bz-field bz-wide"><span>Invite code</span><input class="bz-input bz-code" name="code" autocomplete="off" autocapitalize="characters" placeholder="BETA-XXXXXX" required /></label>
           <button class="solid rt-go" type="submit">Join the beta</button></form>
           <section class="rt-box bz-box"><h2 class="cs-h">What testers get</h2>${perks}
-          <p class="bz-note">Five games to try: ${BETA_GAMES.map((g) => esc(g.title)).join(", ")}. Free play with virtual coins, like the rest of the casino.</p></section>`}
+          <p class="bz-note">Three games to try: ${BETA_GAMES.map((g) => esc(g.title)).join(", ")}. Free play with virtual coins, like the rest of the casino.</p></section>`}
         ${data?.member && data?.admin ? "" : ""}${admin()}</div>`;
     }
     root.addEventListener("submit", async (e) => {
@@ -263,93 +258,6 @@ function recentRows(rows) {
     <span class="rt-row-val">${r.won ? coinTag(r.payout) : ""}</span></div>`).join("")}</div></section>`;
 }
 
-// ---- Poké Ball Drop ----------------------------------------------------------------------
-function dropPage(ctx, root) {
-  return page(ctx, root, "drop", (p) => {
-    let slots = null;
-    let recent = [];
-    let risk = "medium";
-    let stake = 10;
-    let lastSlot = -1;
-    const W = 320, TOP = 22, ROW = 22, GAP = W / (DROP_ROWS + 2);
-    const pegX = (row, i) => W / 2 + (i - row / 2) * GAP;
-    function board() {
-      let pegs = "";
-      for (let r = 0; r < DROP_ROWS; r++) for (let i = 0; i <= r + 1; i++) pegs += `<circle cx="${pegX(r + 1, i).toFixed(1)}" cy="${TOP + r * ROW}" r="2.6"/>`;
-      const list = slots?.[risk] || [];
-      const sw = GAP - 2;
-      const cells = list.map((m, k) => {
-        const x = pegX(DROP_ROWS, k) - sw / 2;
-        const tone = m >= 2 ? "hi" : m >= 1 ? "mid" : "lo";
-        return `<g class="bz-slot is-${tone}${k === lastSlot ? " is-hit" : ""}" data-slot="${k}"><rect x="${x.toFixed(1)}" y="${TOP + DROP_ROWS * ROW - 6}" width="${sw.toFixed(1)}" height="20" rx="3"/><text x="${(x + sw / 2).toFixed(1)}" y="${TOP + DROP_ROWS * ROW + 8}">${m < 10 ? m : Math.round(m)}</text></g>`;
-      }).join("");
-      return `<svg class="bz-pegs" viewBox="0 0 ${W} ${TOP + DROP_ROWS * ROW + 20}" role="img" aria-label="Peg board"><g class="bz-peg">${pegs}</g>${cells}</svg><span class="bz-ball" hidden>${BALL}</span>`;
-    }
-    function paint() {
-      root.innerHTML = `<div class="cs-page bz-page bz-drop">${p.head("Poké Ball Drop")}
-        <div class="bz-play"><div class="bz-board-wrap"><p class="bz-status" data-drop-status>Drop a ball. It lands in a slot and pays that much times your stake.</p><div class="bz-board">${board()}</div></div>
-        <form class="rt-box bz-box bz-controls" data-go>${stakeField("dr-stake", stake)}
-          <div class="bz-field"><span>Risk</span><div class="bz-words">${DROP_RISKS.map((r) => `<button type="button" class="rt-word${r === risk ? " on" : ""}" data-risk="${r}" aria-pressed="${r === risk}">${r[0].toUpperCase() + r.slice(1)}</button>`).join("")}</div></div>
-          <button class="solid rt-go" type="submit">Drop</button></form></div>
-        ${recentRows(recent.map((r) => ({ won: r.payout > 0, line: `${r.risk[0].toUpperCase() + r.risk.slice(1)} risk, slot ${r.slot + 1}`, mult: r.mult, stake: r.stake, payout: r.payout })))}</div>`;
-    }
-    async function animate(run) {
-      const ball = root.querySelector(".bz-ball");
-      const svg = root.querySelector(".bz-pegs");
-      if (!ball || !svg || !ctx.motion()) return;
-      const scale = svg.getBoundingClientRect().width / W;
-      let i = 0;
-      const frames = [{ transform: `translate(${(W / 2) * scale}px, 0px)` }];
-      run.path.forEach((right, r) => {
-        i += right;
-        frames.push({ transform: `translate(${pegX(r + 1, i) * scale}px, ${(TOP + r * ROW + ROW * 0.6) * scale}px)`, easing: "cubic-bezier(.3,0,.7,1)" });
-      });
-      ball.hidden = false;
-      ball.style.setProperty("--b", `${16 * Math.max(scale, 0.8)}px`);
-      await ball.animate(frames, { duration: 140 * DROP_ROWS, fill: "forwards", easing: "linear" }).finished.catch(() => {});
-    }
-    root.addEventListener("click", (e) => {
-      const r = e.target.closest("[data-risk]");
-      if (!r || p.state.busy) return;
-      risk = r.dataset.risk;
-      stake = readStake(root, "dr-stake") || stake;
-      lastSlot = -1;
-      paint();
-    });
-    root.addEventListener("submit", async (e) => {
-      if (!e.target.closest("[data-go]")) return;
-      e.preventDefault();
-      if (p.state.busy) return;
-      stake = readStake(root, "dr-stake");
-      p.state.busy = true;
-      try {
-        const res = await post("/api/casino/beta/drop/play", { stake, risk, requestId: uuid() });
-        lastSlot = -1;
-        paint();
-        root.querySelector("[data-go] button[type=submit]").disabled = true;
-        await animate(res.run);
-        p.apply(res);
-        lastSlot = res.run.slot;
-        recent = [res.run, ...recent].slice(0, 8);
-        paint();
-        const st = root.querySelector("[data-drop-status]");
-        st.innerHTML = res.run.payout >= res.run.stake ? `${fmtX(res.run.mult)}, you win ${coinTag(res.run.payout)}.` : `${fmtX(res.run.mult)}, back ${coinTag(res.run.payout)}.`;
-        st.classList.add(res.run.payout >= res.run.stake ? "is-good" : "is-bad");
-        if (res.run.mult >= 5) ctx.buzz?.([30, 30, 30]);
-      } catch (err) { p.fail(err); paint(); } finally { p.state.busy = false; }
-    });
-    async function load() {
-      try {
-        const res = await api("/api/casino/beta/drop");
-        slots = res.slots;
-        recent = res.recent || [];
-        if (p.visible() && !p.state.busy) paint();
-      } catch (err) { p.fail(err); }
-    }
-    return { show() { paint(); load(); } };
-  });
-}
-
 // ---- Rocket ------------------------------------------------------------------------------
 function rocketPage(ctx, root) {
   return page(ctx, root, "rocket", (p) => {
@@ -439,65 +347,6 @@ function rocketPage(ctx, root) {
   });
 }
 
-// ---- Higher or Lower ---------------------------------------------------------------------
-function higherPage(ctx, root) {
-  return page(ctx, root, "higher", (p) => {
-    let run = null;
-    let recent = [];
-    let stake = 10;
-    const card = (c, cls = "") => `<figure class="bz-card ${cls}"><img src="${esc(c.image)}" alt="${esc(c.name)}" loading="lazy" decoding="async" /><figcaption><b>${esc(c.name)}</b>${coinTag(c.price)}</figcaption></figure>`;
-    function paint() {
-      const live = run?.state === "open";
-      const cur = run?.shown?.[run.shown.length - 1];
-      const pay = live ? Math.min(BETA_RULES.maxWin, Math.floor(run.stake * run.mult * 100) / 100) : 0;
-      const status = !run ? `<p class="bz-status">Each round deals from one real set. Guess if the next card sells for more or less.</p>`
-        : live ? `<p class="bz-status">${run.set?.name ? `${esc(run.set.name)}. ` : ""}${run.guesses ? `${run.guesses} right, cash out for ${coinTag(pay)} (${fmtX(run.mult)}).` : "Make your first guess."}</p>`
-        : run.state === "lost" ? `<p class="bz-status is-bad">Wrong call${run.last ? `: ${esc(run.last.name)} sells for ${coinTag(run.last.price)}` : ""}. The stake is gone.</p>`
-        : `<p class="bz-status is-good">Cashed out ${coinTag(run.payout)} at ${fmtX(run.mult)}.</p>`;
-      root.innerHTML = `<div class="cs-page bz-page bz-higher">${p.head("Higher or Lower")}
-        <div class="bz-play"><div class="bz-board-wrap">${status}
-          <div class="bz-cards">${cur ? card(cur, "is-now") : `<div class="bz-card is-empty">${ART.higher}</div>`}${run?.state === "lost" && run.last ? card(run.last, "is-wrong") : ""}</div>
-          ${run?.shown?.length > 1 ? `<div class="bz-trail" aria-label="Cards so far">${run.shown.slice(0, -1).map((c) => `<img src="${esc(c.image)}" alt="${esc(c.name)}" loading="lazy" />`).join("")}</div>` : ""}</div>
-        <form class="rt-box bz-box bz-controls" data-go>${live ? `
-            <div class="bz-guess"><button type="button" class="ghost" data-dir="higher" ${run.pays.higher ? "" : "disabled"}>Higher <small>${run.pays.higher ? fmtX(run.pays.higher) : "none"}</small></button>
-            <button type="button" class="ghost" data-dir="lower" ${run.pays.lower ? "" : "disabled"}>Lower <small>${run.pays.lower ? fmtX(run.pays.lower) : "none"}</small></button></div>
-            <p class="bz-note">${run.odds.above} cards in this set sell for more, ${run.odds.below} for less.</p>
-            <button type="button" class="solid rt-go" data-cash ${run.guesses ? "" : "disabled"}>Cash out ${run.guesses ? coinTag(pay) : ""}</button>`
-          : `${stakeField("hl-stake", stake)}<button class="solid rt-go" type="submit">Deal a card</button>`}</form></div>
-        ${recentRows(recent.map((r) => ({ won: r.state === "cashed", line: r.state === "cashed" ? "Cashed out" : "Wrong guess", mult: r.mult, stake: r.stake, payout: r.payout })))}</div>`;
-    }
-    root.addEventListener("submit", async (e) => {
-      if (!e.target.closest("[data-go]")) return;
-      e.preventDefault();
-      if (p.state.busy) return;
-      stake = readStake(root, "hl-stake");
-      p.state.busy = true;
-      try { run = p.apply(await post("/api/casino/beta/higher/start", { stake, requestId: uuid() })).run; paint(); }
-      catch (err) { p.fail(err); } finally { p.state.busy = false; }
-    });
-    root.addEventListener("click", async (e) => {
-      const dir = e.target.closest("[data-dir]");
-      const cash = e.target.closest("[data-cash]");
-      if ((!dir && !cash) || p.state.busy || run?.state !== "open") return;
-      p.state.busy = true;
-      try {
-        run = p.apply(dir ? await post("/api/casino/beta/higher/guess", { id: run.id, dir: dir.dataset.dir }) : await post("/api/casino/beta/higher/cash", { id: run.id })).run;
-        if (run.state !== "open") load(true);
-        paint();
-      } catch (err) { p.fail(err); } finally { p.state.busy = false; }
-    });
-    async function load(quiet) {
-      try {
-        const res = await api("/api/casino/beta/higher");
-        if (!quiet) run = res.run;
-        recent = res.recent || [];
-        if (p.visible()) paint();
-      } catch (err) { p.fail(err); }
-    }
-    return { show() { paint(); load(); } };
-  });
-}
-
 // ---- Mystery Tins ------------------------------------------------------------------------
 /* The chase cards are the show. On the shelf a tin is its three best cards standing in an open tin; a tin's own
    page (/casino/tins/<id>) lines up the chase cards as real faces, then every card with its odds. Opening spins
@@ -513,7 +362,8 @@ function tinsPage(ctx, root) {
     let tins = null;
     let recent = [];
     let viewId = ""; // the tin whose page is open ("" = the shelf)
-    let stage = null; // { phase: 'reel'|'landed', card } while a tin is being opened
+    let stage = null; // { phase: 'reel'|'landed', cards } while tins are being opened
+    let count = 1; // how many tins the key opens at once (up to TIN_MAX_OPEN)
     const full = new Map(); // card id -> the catalog's card, once its set has loaded (ctx.cardsById)
     const asked = new Set();
     const pct = (o) => (o >= 0.01 ? `${(o * 100).toFixed(o >= 0.1 ? 0 : 1)}%` : o >= 0.0001 ? `${(o * 100).toFixed(2)}%` : `1 in ${Math.round(1 / o).toLocaleString("en-US")}`);
@@ -568,15 +418,29 @@ function tinsPage(ctx, root) {
     const chaseHTML = (t) => `<div class="bz-chase" role="list">${t.cards.slice(0, TIN_CHASE).map((c, i) => `<figure class="bz-chase-card" role="listitem">
         <button type="button" class="bz-chase-face" data-look="${esc(c.id)}" aria-label="Look at ${esc(c.name)}">${face(c, true)}</button>
         <figcaption><b>${esc(c.name)}</b><span>${coinTag(c.price)}</span><small>${i === 0 ? "Top card, " : ""}${oneIn(c.odds)}</small></figcaption></figure>`).join("")}</div>`;
-    const revealHTML = (t, card) => `<div class="bz-reveal">
-      <div class="bz-reveal-plate${big(t, card) ? " is-hit" : ""}"><b>${esc(card.name)}</b><span>${esc(card.rarity || "")}${card.setName ? `, ${esc(card.setName)}` : ""}</span></div>
-      <p class="bz-reveal-fig">${coinTag(card.price)} <small>${card.price >= t.price ? `${(card.price / t.price).toFixed(1)}x what you paid` : "Added to your collection"}</small></p></div>`;
-    const stageHTML = (t) => (stage ? `<section class="bz-stage is-reel" aria-live="polite"><div class="bz-reel-wrap"><div class="bz-reel"></div></div></section>` : chaseHTML(t));
+    /** What one landed card was: its plate and figure. Several cards get a row each and one total. */
+    const revealHTML = (t, cards) => {
+      if (cards.length === 1) {
+        const card = cards[0];
+        return `<div class="bz-reveal">
+          <div class="bz-reveal-plate${big(t, card) ? " is-hit" : ""}"><b>${esc(card.name)}</b><span>${esc(card.rarity || "")}${card.setName ? `, ${esc(card.setName)}` : ""}</span></div>
+          <p class="bz-reveal-fig">${coinTag(card.price)} <small>${card.price >= t.price ? `${(card.price / t.price).toFixed(1)}x what you paid` : "Added to your collection"}</small></p></div>`;
+      }
+      const total = cards.reduce((sum, c) => sum + c.price, 0);
+      const paid = t.price * cards.length;
+      return `<div class="bz-reveal is-many">
+        <div class="cs-rows bz-reveal-rows">${cards.map((c) => `<div class="rt-row bz-row${big(t, c) ? " is-hit" : c.price >= t.price ? " is-won" : ""}"><span class="rt-row-name">${esc(c.name)}<small>${esc(c.rarity || "")}</small></span><span class="rt-row-val">${coinTag(c.price)}</span></div>`).join("")}</div>
+        <p class="bz-reveal-fig">${coinTag(Math.round(total * 100) / 100)} <small>${total >= paid ? `${(total / paid).toFixed(1)}x what you paid` : `from ${cards.length} tins, all in your collection`}</small></p></div>`;
+    };
+    const stageHTML = (t) => (stage ? `<section class="bz-stage is-reel is-n${stage.cards.length}" aria-live="polite">${stage.cards.map(() => `<div class="bz-reel-wrap"><div class="bz-reel"></div></div>`).join("")}</section>` : chaseHTML(t));
     const keysHTML = (t) => {
       const beat = t.cards.filter((c) => c.price >= t.price);
       const chance = beat.reduce((sum, c) => sum + c.odds, 0);
       const again = stage?.phase === "landed";
-      return `<div class="bz-view-keys"><button type="button" class="solid rt-go" data-open="${esc(t.id)}">${again ? "Open another" : "Open"} for ${coinTag(t.price)}</button>
+      const n = Math.min(count, TIN_MAX_OPEN);
+      return `<div class="bz-view-keys">
+        <div class="bz-count" role="group" aria-label="How many tins to open"><span>Open</span>${Array.from({ length: TIN_MAX_OPEN }, (_, i) => `<button type="button" class="rt-word${i + 1 === n ? " on" : ""}" data-count="${i + 1}" aria-pressed="${i + 1 === n}">${i + 1}</button>`).join("")}<span>at once</span></div>
+        <button type="button" class="solid rt-go" data-open="${esc(t.id)}" data-n="${n}">${again ? "Open " + (n > 1 ? `${n} more` : "another") : n > 1 ? `Open ${n}` : "Open"} for ${coinTag(Math.round(t.price * n * 100) / 100)}</button>
         ${again ? `<button type="button" class="ghost" data-close>Back to the chase cards</button>` : ""}
         <p class="bz-note">${beat.length} of the ${t.cards.length} cards are worth more than the tin, a ${oneIn(chance)} chance. On average ${Math.round((t.back || 0.9) * 100)}% of the price comes back.</p></div>`;
     };
@@ -606,38 +470,46 @@ function tinsPage(ctx, root) {
     const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
     /** The spin: a strip of the tin's cards, picked at their real odds, runs under the marker and stops on yours. */
-    async function spin(tin, card) {
+    async function spin(tin, cards) {
       const moving = ctx.motion();
-      stage = { phase: "reel", card };
+      stage = { phase: "reel", cards };
       paintView();
       const box = root.querySelector(".bz-stage");
       box?.scrollIntoView?.({ block: "start", behavior: moving ? "smooth" : "auto" });
-      const reel = root.querySelector(".bz-reel");
       const pick = () => { let u = Math.random(); for (const c of tin.cards) { if (u < c.odds) return c; u -= c.odds; } return tin.cards[tin.cards.length - 1]; };
-      const strip = Array.from({ length: 36 }, pick);
-      // A chase card or two always goes by, so the spin shows what the tin holds.
-      strip[9] = tin.cards[Math.floor(Math.random() * Math.min(3, tin.cards.length))];
-      strip[31] = tin.cards[Math.floor(Math.random() * Math.min(TIN_CHASE, tin.cards.length))];
-      strip[30] = card;
-      reel.innerHTML = strip.map((c, i) => `<span class="bz-reel-card${i === 30 ? " is-won" : ""}"><img src="${esc(c.image)}" alt="" decoding="async" /></span>`).join("");
-      const item = reel.children[30];
-      // Stop a little off centre, like a wheel does, but always well inside the card.
-      const off = (Math.random() - 0.5) * item.offsetWidth * 0.5;
-      const target = item.offsetLeft + item.offsetWidth / 2 - reel.parentElement.clientWidth / 2;
-      await lightFaces([card]);
-      if (moving) {
-        await reel.animate([{ transform: "translateX(0)" }, { transform: `translateX(${-(target + off)}px)` }], { duration: 4400, easing: "cubic-bezier(.1,.62,.1,1)", fill: "forwards" }).finished.catch(() => {});
-        await reel.animate([{ transform: `translateX(${-(target + off)}px)` }, { transform: `translateX(${-target}px)` }], { duration: 320, easing: "cubic-bezier(.2,.8,.2,1)", fill: "forwards" }).finished.catch(() => {});
-      } else reel.style.transform = `translateX(${-target}px)`;
-      // The card grows where it landed, as the real face with its foil, and lights itself.
-      item.innerHTML = face(card, true);
+      await lightFaces(cards);
+      // Every reel starts together; each stops a beat after the one above it.
+      const reels = [...root.querySelectorAll(".bz-reel")].map((reel, n) => {
+        const card = cards[n];
+        const strip = Array.from({ length: 36 }, pick);
+        // A chase card or two always goes by, so the spin shows what the tin holds.
+        strip[9] = tin.cards[Math.floor(Math.random() * Math.min(3, tin.cards.length))];
+        strip[31] = tin.cards[Math.floor(Math.random() * Math.min(TIN_CHASE, tin.cards.length))];
+        strip[30] = card;
+        reel.innerHTML = strip.map((c, i) => `<span class="bz-reel-card${i === 30 ? " is-won" : ""}"><img src="${esc(c.image)}" alt="" decoding="async" /></span>`).join("");
+        return { reel, card, item: reel.children[30], n };
+      });
+      await Promise.all(reels.map(async ({ reel, card, item, n }) => {
+        // Stop a little off centre, like a wheel does, but always well inside the card.
+        const off = (Math.random() - 0.5) * item.offsetWidth * 0.5;
+        const target = item.offsetLeft + item.offsetWidth / 2 - reel.parentElement.clientWidth / 2;
+        if (moving) {
+          await reel.animate([{ transform: "translateX(0)" }, { transform: `translateX(${-(target + off)}px)` }], { duration: 4400 + n * 550, easing: "cubic-bezier(.1,.62,.1,1)", fill: "forwards" }).finished.catch(() => {});
+          await reel.animate([{ transform: `translateX(${-(target + off)}px)` }, { transform: `translateX(${-target}px)` }], { duration: 320, easing: "cubic-bezier(.2,.8,.2,1)", fill: "forwards" }).finished.catch(() => {});
+        } else reel.style.transform = `translateX(${-target}px)`;
+        // The card grows where it landed, as the real face with its foil, and lights itself.
+        item.innerHTML = `<button type="button" class="bz-chase-face" data-look="${esc(card.id)}" aria-label="Look at ${esc(card.name)}">${face(card, cards.length === 1)}</button>`;
+        reel.parentElement.classList.add("is-landed");
+        if (big(tin, card)) reel.parentElement.classList.add("is-hit");
+        item.classList.add("is-land");
+        ctx.presentFace?.(item.querySelector(".tcg"));
+        if (big(tin, card)) ctx.buzz?.(cards.length > 1 ? [40, 30, 40] : [40, 30, 40, 30, 80]);
+      }));
       box.classList.replace("is-reel", "is-landed");
-      item.classList.add("is-land");
-      ctx.presentFace?.(item.querySelector(".tcg"));
       if (moving) await wait(450);
-      stage = { phase: "landed", card };
-      if (big(tin, card)) box.classList.add("is-hit");
-      box.insertAdjacentHTML("beforeend", revealHTML(tin, card));
+      stage = { phase: "landed", cards };
+      if (cards.length === 1 && big(tin, cards[0])) box.classList.add("is-hit");
+      box.insertAdjacentHTML("beforeend", revealHTML(tin, cards));
     }
 
     root.addEventListener("click", async (e) => {
@@ -647,6 +519,13 @@ function tinsPage(ctx, root) {
         try { await ctx.cardsById?.([look.dataset.look]); ctx.inspect?.({ id: look.dataset.look }); } catch { /* the picture is still there */ }
         return;
       }
+      const pickCount = e.target.closest("[data-count]");
+      if (pickCount && !p.state.busy) {
+        count = Math.max(1, Math.min(TIN_MAX_OPEN, Number(pickCount.dataset.count) || 1));
+        const t = tinOf(viewId);
+        if (t) root.querySelector("[data-keys]").innerHTML = keysHTML(t);
+        return;
+      }
       const b = e.target.closest("[data-open]");
       if (!b || p.state.busy) return;
       const tin = tinOf(b.dataset.open);
@@ -654,14 +533,15 @@ function tinsPage(ctx, root) {
       p.state.busy = true;
       root.querySelectorAll("[data-open]").forEach((x) => (x.disabled = true));
       try {
-        const res = await post("/api/casino/beta/tins/open", { tin: tin.id, price: tin.price, requestId: uuid() });
+        const n = Math.max(1, Math.min(TIN_MAX_OPEN, Number(b.dataset.n) || 1)); // the shelf's key opens one
+        const res = await post("/api/casino/beta/tins/open", { tin: tin.id, price: tin.price, count: n, requestId: uuid() });
+        const runs = res.runs || [res.run];
         // Opening from the shelf moves to the tin's own page, where the spin plays.
         if (viewId !== tin.id) { viewId = tin.id; ctx.navigate(`/casino/tins/${tin.id}`); paint(); window.scrollTo?.(0, 0); }
-        await spin(tin, res.run.card);
+        await spin(tin, runs.map((r) => r.card));
         p.apply(res);
         ctx.invalidateCards?.();
-        recent = [res.run, ...recent].slice(0, 8);
-        if (big(tin, res.run.card)) ctx.buzz?.([40, 30, 40, 30, 80]);
+        recent = [...runs, ...recent].slice(0, 8);
         root.querySelector("[data-keys]").innerHTML = keysHTML(tin);
       } catch (err) { p.fail(err); stage = null; paintView(); } finally {
         p.state.busy = false;
@@ -696,11 +576,9 @@ export function createBetaPages(ctx, roots) {
   return {
     beta: homePage(ctx, roots.beta),
     grass: grassPage(ctx, roots.grass),
-    drop: dropPage(ctx, roots.drop),
     rocket: rocketPage(ctx, roots.rocket),
-    higher: higherPage(ctx, roots.higher),
     tins: tinsPage(ctx, roots.tins),
   };
 }
-export const BETA_KEYS = ["beta", "grass", "drop", "rocket", "higher", "tins"];
+export const BETA_KEYS = ["beta", "grass", "rocket", "tins"];
 export { ART as BETA_ART };

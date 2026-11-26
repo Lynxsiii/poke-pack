@@ -1,11 +1,11 @@
 import { PLAYABLE_SETS, ALL_SETS, sellValue } from '../js/catalog.js';
 import {
-  BETA_RULES, BETA_ADMINS, stakeCents, payoutCents, GRASS, grassMultiplier, DROP_RISKS, DROP_ROWS, DROP_SLOTS,
-  ROCKET, rocketAt, rocketMsFor, rocketCrash, guessMultiplier, TINS, tinWeight, tinPrice,
+  BETA_RULES, BETA_ADMINS, stakeCents, payoutCents, GRASS, grassMultiplier,
+  ROCKET, rocketAt, rocketMsFor, rocketCrash, TINS, TIN_MAX_OPEN, tinWeight, tinPrice,
 } from '../js/beta-rules.js';
 import { gateResponse } from './gates.js';
 
-/* BETA TESTING (/api/casino/beta/...): invite codes, the tester flag, and five games against the house.
+/* BETA TESTING (/api/casino/beta/...): invite codes, the tester flag, and three games against the house.
 
    Joining: Noah (BETA_ADMINS, or the Worker var BETA_ADMINS) makes codes; a player enters one once and becomes a beta tester
    (users.beta = 1). Testers get the beta badge, the Beta Tester frame and the games below. Only code holders can play (Noah, 2026-11-26: "games be locked to code holders"); the owner is let in automatically.
@@ -210,114 +210,24 @@ async function grass(env, helpers, user, action, body, method) {
   error('Not found.', 404);
 }
 
-// ---- Poké Ball Drop ----------------------------------------------------------------------
-const viewDrop = (row) => {
-  const d = parse(row.data) || {};
-  return { id: row.id, game: 'drop', stake: coins(row.stake), risk: d.risk, path: d.path, slot: d.slot, mult: row.mult, payout: coins(row.payout), createdAt: row.created_at };
-};
-async function drop(env, helpers, user, action, body, method) {
-  if (method === 'GET') return helpers.json({ slots: DROP_SLOTS, rows: DROP_ROWS, recent: (await recent(env, user.id, 'drop')).map(viewDrop), serverNow: Date.now() });
-  if (action !== 'play') error('Not found.', 404);
-  const gate = await mayPlay(env, helpers, user);
-  if (gate) return gate;
-  const risk = String(body?.risk || '');
-  if (!DROP_RISKS.includes(risk)) error('Pick a risk.');
-  const stake = await readStake(body);
-  const requestId = readRequestId(body);
-  const path = Array.from({ length: DROP_ROWS }, () => randInt(2)); // 1 = bounce right
-  const slot = path.reduce((a, b) => a + b, 0);
-  const mult = DROP_SLOTS[risk][slot];
-  const payout = payoutCents(stake, mult);
-  const row = await startRun(env, helpers, user, 'drop', requestId, stake, { risk, path, slot }, { state: payout > 0 ? 'won' : 'lost', payout, mult });
-  return respond(helpers, env, user, { run: viewDrop(row) });
+// ---- Retired games --------------------------------------------------------------------------
+/* Higher or Lower and Poké Ball Drop were removed on 2026-11-26 (Noah). A drop settled in one call, but a Higher or
+   Lower run could be left open with a stake in it: the next time its player calls the beta, it is cashed out at the
+   multiplier it had reached (1x before the first right guess, so at least the stake comes back). */
+async function settleRetired(env, user) {
+  const { results } = await env.DB.prepare("SELECT * FROM beta_runs WHERE user_id = ? AND game = 'higher' AND state = 'open'").bind(user.id).all();
+  for (const run of results || []) {
+    const mult = Math.max(1, Number(parse(run.data)?.mult) || 1);
+    await env.DB.batch(cashOut(env, run, 'cashed', payoutCents(run.stake, mult), mult, run.data, Date.now()));
+  }
 }
 
-// ---- Higher or Lower --------------------------------------------------------------------
 const cardBrief = (c, cents) => ({ id: c.id, name: c.name, image: c.imageSmall || c.image, number: c.number ?? null, rarity: c.rarity ?? null, price: coins(cents) });
 async function pricedCards(env, helpers, request, set) {
   const cards = await helpers.loadSetCards(env, request, set);
   return cards.filter((c) => typeof c.market === 'number' && c.market > 0 && c.image && !String(c.id).startsWith('energy-'))
     .map((c) => ({ card: c, cents: Math.round(sellValue(c) * 100) }));
 }
-function hlCounts(pool, cents) {
-  let above = 0, below = 0;
-  for (const p of pool) { if (p[1] > cents) above++; else if (p[1] < cents) below++; }
-  return { above, below };
-}
-async function viewHigher(env, helpers, request, row) {
-  if (!row) return null;
-  const d = parse(row.data) || {};
-  const set = ALL_SETS.find((s) => s.id === d.set);
-  const cards = set ? await helpers.loadSetCards(env, request, set) : [];
-  const brief = ([id, cents]) => { const c = cards.find((x) => x.id === id); return c ? cardBrief(c, cents) : { id, name: id, image: '', price: coins(cents) }; };
-  const cur = d.shown[d.shown.length - 1];
-  const { above, below } = hlCounts(d.pool, cur[1]);
-  const done = row.state !== 'open';
-  return { id: row.id, game: 'higher', state: row.state, stake: coins(row.stake), set: set ? { id: set.id, name: set.name } : null,
-    shown: d.shown.map(brief), last: d.last ? brief(d.last) : null, mult: done ? row.mult : d.mult, guesses: d.right ?? d.shown.length - 1, // shown keeps the last 12 cards only
-    pays: done ? null : { higher: guessMultiplier(above, below, 'higher'), lower: guessMultiplier(above, below, 'lower') },
-    odds: done ? null : { above, below }, payout: coins(row.payout), createdAt: row.created_at };
-}
-async function higher(env, helpers, user, action, body, method, request) {
-  if (method === 'GET') {
-    const open = await env.DB.prepare("SELECT * FROM beta_runs WHERE user_id = ? AND game = 'higher' AND state = 'open' ORDER BY created_at DESC LIMIT 1").bind(user.id).first();
-    const rows = await recent(env, user.id, 'higher');
-    return helpers.json({ run: await viewHigher(env, helpers, request, open), recent: rows.map((r) => ({ id: r.id, state: r.state, stake: coins(r.stake), mult: r.mult, payout: coins(r.payout), createdAt: r.created_at })), serverNow: Date.now() });
-  }
-  const gate = await mayPlay(env, helpers, user);
-  if (gate) return gate;
-  const now = Date.now();
-  if (action === 'start') {
-    const open = await env.DB.prepare("SELECT 1 FROM beta_runs WHERE user_id = ? AND game = 'higher' AND state = 'open'").bind(user.id).first();
-    if (open) error('Finish the run you are in first.', 409);
-    const stake = await readStake(body);
-    const requestId = readRequestId(body);
-    let set = null, priced = [];
-    for (let tries = 0; tries < 8 && priced.length < 40; tries++) {
-      set = PLAYABLE_SETS[randInt(PLAYABLE_SETS.length)];
-      priced = await pricedCards(env, helpers, request, set);
-    }
-    if (priced.length < 40) error('No cards to play with right now. Try again.', 503);
-    const pool = priced.map((p) => [p.card.id, p.cents]);
-    const first = pool[randInt(pool.length)];
-    const row = await startRun(env, helpers, user, 'higher', requestId, stake, { set: set.id, pool, shown: [first], mult: 1 });
-    return respond(helpers, env, user, { run: await viewHigher(env, helpers, request, row) });
-  }
-  const run = await getRun(env, String(body?.id || ''), user.id);
-  if (!run || run.game !== 'higher') error('Run not found.', 404);
-  if (run.state !== 'open') return respond(helpers, env, user, { run: await viewHigher(env, helpers, request, run) });
-  const d = parse(run.data);
-  const cur = d.shown[d.shown.length - 1];
-  if (action === 'guess') {
-    const dir = body?.dir === 'higher' ? 'higher' : body?.dir === 'lower' ? 'lower' : null;
-    if (!dir) error('Guess higher or lower.');
-    const { above, below } = hlCounts(d.pool, cur[1]);
-    const pays = guessMultiplier(above, below, dir);
-    if (!pays) error(`No card in this set is ${dir === 'higher' ? 'worth more' : 'worth less'}.`);
-    const others = d.pool.filter((p) => p[1] !== cur[1]);
-    const next = others[randInt(others.length)];
-    const right = dir === 'higher' ? next[1] > cur[1] : next[1] < cur[1];
-    if (!right) {
-      const data = JSON.stringify({ ...d, last: next });
-      await env.DB.prepare("UPDATE beta_runs SET state = 'lost', data = ?, mult = 0, ended_at = ? WHERE id = ? AND state = 'open' AND data = ?").bind(data, now, run.id, run.data).run();
-    } else {
-      const mult = Math.floor(d.mult * pays * 100 + 1e-9) / 100;
-      const shown = [...d.shown, next].slice(-12);
-      const data = JSON.stringify({ ...d, shown, mult, right: (d.right ?? d.shown.length - 1) + 1 });
-      const pay = payoutCents(run.stake, mult);
-      if (pay >= BETA_RULES.maxWin * 100) await env.DB.batch(cashOut(env, run, 'cashed', pay, mult, data, now));
-      else await env.DB.prepare("UPDATE beta_runs SET data = ? WHERE id = ? AND state = 'open' AND data = ?").bind(data, run.id, run.data).run();
-    }
-    return respond(helpers, env, user, { run: await viewHigher(env, helpers, request, await getRun(env, run.id, user.id)) });
-  }
-  if (action === 'cash') {
-    if (d.shown.length < 2) error('Make at least one guess first.');
-    await env.DB.batch(cashOut(env, run, 'cashed', payoutCents(run.stake, d.mult), d.mult, run.data, now));
-    return respond(helpers, env, user, { run: await viewHigher(env, helpers, request, await getRun(env, run.id, user.id)) });
-  }
-  error('Not found.', 404);
-}
-
 // ---- Mystery Tins ------------------------------------------------------------------------
 let tinCache = { at: 0, tins: null };
 /** Every tin with its cards, odds and price (90% of the price comes back on average, valued like selling). */
@@ -371,13 +281,41 @@ async function tins(env, helpers, user, action, body, method, request) {
   const requestId = readRequestId(body);
   // Price check: the page shows a price; refuse if it moved since (prices update daily).
   if (body?.price != null && Math.round(Number(body.price) * 100) !== tin.price) error('The price just changed. Look again.', 409);
-  let u = randUnit();
-  let pick = tin.cards[tin.cards.length - 1];
-  for (const c of tin.cards) { if (u < c.odds) { pick = c; break; } u -= c.odds; }
-  const { cents, odds, ...card } = pick;
-  const row = await startRun(env, helpers, user, 'tins', requestId, tin.price, { tin: tin.id, tinName: tin.name, card: { ...card, odds } },
-    { state: 'won', mult: cents / tin.price, card: card.id });
-  return respond(helpers, env, user, { run: viewTinRun(row) });
+  // Up to TIN_MAX_OPEN tins in one go: one payment, one roll each, all or nothing.
+  const count = body?.count == null ? 1 : Number(body.count);
+  if (!Number.isInteger(count) || count < 1 || count > TIN_MAX_OPEN) error(`Open between 1 and ${TIN_MAX_OPEN} tins at a time.`);
+  const ids = Array.from({ length: count }, (_, i) => (i ? `${requestId}-${i}` : requestId));
+  const mine = async () => {
+    const rows = [];
+    for (const id of ids) { const row = await byRequest(env, user.id, id); if (row) rows.push(row); }
+    return rows;
+  };
+  let rows = await mine();
+  if (!rows.length) {
+    const now = Date.now();
+    const sts = [takeStake(env, tin.price * count, user.id)];
+    for (const rid of ids) {
+      let u = randUnit();
+      let pick = tin.cards[tin.cards.length - 1];
+      for (const c of tin.cards) { if (u < c.odds) { pick = c; break; } u -= c.odds; }
+      const { cents, odds, ...card } = pick;
+      // Each statement runs only if the one before it changed a row, so nothing lands unless the payment did.
+      sts.push(env.DB.prepare(`INSERT INTO beta_runs (id, user_id, game, request_id, stake, state, data, mult, payout, created_at, ended_at)
+        SELECT ?, ?, 'tins', ?, ?, 'won', ?, ?, 0, ?, ? WHERE changes() = 1`)
+        .bind(newId(), user.id, rid, tin.price, JSON.stringify({ tin: tin.id, tinName: tin.name, card: { ...card, odds } }), cents / tin.price, now, now));
+      sts.push(env.DB.prepare(`INSERT INTO cards (user_id, card_id, qty, reverse_qty) SELECT ?, ?, 1, 0 WHERE changes() = 1
+        ON CONFLICT(user_id, card_id) DO UPDATE SET qty = cards.qty + 1`).bind(user.id, card.id));
+    }
+    try {
+      await env.DB.batch(sts);
+    } catch (err) {
+      if (!(await mine()).length) throw err; // the same tap sent twice: the first one's rows stand
+    }
+    rows = await mine();
+    if (!rows.length) error('Not enough coins.');
+  }
+  const runs = rows.map(viewTinRun);
+  return respond(helpers, env, user, { run: runs[0], runs });
 }
 
 // ---- Rocket --------------------------------------------------------------------------------
@@ -464,7 +402,7 @@ async function rocket(env, helpers, user, action, body, method) {
 }
 
 // ---- Router ------------------------------------------------------------------------------
-const GAMES = { grass, drop, higher, tins, rocket };
+const GAMES = { grass, tins, rocket };
 export async function handleBeta(path, method, request, env, helpers) {
   const m = path.match(/^\/api\/casino\/beta(?:\/([a-z]+))?(?:\/([a-z]+))?$/);
   if (!m) return helpers.json({ error: 'Not found.' }, 404);
@@ -491,6 +429,7 @@ export async function handleBeta(path, method, request, env, helpers) {
       user.beta = 1;
     }
 
+    await settleRetired(env, user);
     if (!part) {
       if (method !== 'GET') error('Not found.', 404);
       return helpers.json({ member: isMember(user), admin, codes: admin ? await listCodes(env) : null, rules: BETA_RULES, serverNow: Date.now() });
