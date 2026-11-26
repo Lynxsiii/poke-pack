@@ -8,7 +8,7 @@
  */
 import { readFileSync, readdirSync } from "node:fs";
 import assert from "node:assert/strict";
-import { ACTIVE, FORMATS, RuleError, addCondition, apply, canRetreat, conditionsOn, createGame, damageAfterTyping, legalActions, maxHp, resolveKnockOuts, retreatCost, unpaid, usableAttacks, viewFor } from "../js/tcg/engine.js";
+import { ACTIVE, FORMATS, RuleError, addCondition, apply, benchSafe, canRetreat, energyOf, toolOf, conditionsOn, createGame, damageAfterTyping, legalActions, maxHp, resolveKnockOuts, retreatCost, unpaid, usableAttacks, viewFor } from "../js/tcg/engine.js";
 import { createDefs, defineCard, FREE_ENERGY } from "../js/tcg/cards.js";
 import { compileAttack } from "../js/tcg/effects.js";
 import { botAction } from "../js/tcg/bot.js";
@@ -47,7 +47,8 @@ function test(name, fn) {
 if (process.argv.includes("--coverage")) {
   let mons = 0, playable = 0, attacks = 0, read = 0, noText = 0;
   const unread = new Map();
-  let trainerCards = 0, trainerRead = 0;
+  let trainerCards = 0, trainerRead = 0, abilityCards = 0, abilityRead = 0;
+  const unreadAbilities = new Map();
   const unreadTrainers = new Map();
   for (const card of byId.values()) {
     const def = defs(card.id);
@@ -59,6 +60,14 @@ if (process.argv.includes("--coverage")) {
     if (def.kind !== "pokemon") continue;
     mons += 1;
     if (def.playable) playable += 1;
+    if ((card.abilities || []).length) {
+      abilityCards += 1;
+      if (def.ability) abilityRead += 1;
+      else {
+        const shape = String(card.abilities[0].text || "").replace(/\s+/g, " ").replace(/\d+/g, "N").split(card.name).join("<name>");
+        unreadAbilities.set(shape, (unreadAbilities.get(shape) || 0) + 1);
+      }
+    }
     for (const a of def.attacks) {
       attacks += 1;
       if (!a.text) noText += 1;
@@ -76,6 +85,13 @@ if (process.argv.includes("--coverage")) {
   console.log(`${trainerCards} Trainers: ${trainerRead} playable (Items and Supporters whose text is read)`);
   console.log("Commonest unread Item and Supporter texts:");
   for (const [shape, n] of [...unreadTrainers].sort((a, b) => b[1] - a[1]).slice(0, 15)) console.log(`  ${String(n).padStart(4)}  ${shape.slice(0, 150)}`);
+  const specials = [...byId.values()].filter((c) => c.supertype === "Energy" && !(c.subtypes || []).includes("Basic"));
+  const unreadSpecial = new Map();
+  for (const c of specials) if (!defs(c.id).playable) unreadSpecial.set(c.name, (unreadSpecial.get(c.name) || 0) + 1);
+  console.log(`${specials.length} Special Energy cards: ${specials.length - [...unreadSpecial.values()].reduce((a, b) => a + b, 0)} playable. Not yet: ${[...unreadSpecial].sort((a, b) => b[1] - a[1]).slice(0, 12).map(([n, k]) => `${n} (${k})`).join(", ")}`);
+  console.log(`${abilityCards} Pokémon with an Ability: ${abilityRead} live`);
+  console.log("Commonest unread Ability texts:");
+  for (const [shape, n] of [...unreadAbilities].sort((a, b) => b[1] - a[1]).slice(0, Number(process.env.TOP || 40))) console.log(`  ${String(n).padStart(4)}  ${shape.slice(0, 220)}`);
   process.exit(0);
 }
 
@@ -1332,6 +1348,230 @@ test("a Benched Pokémon's Ability can bring it up; one played from the hand ask
   act(state, { type: "pick", player: 0, spot: null });
   assert.equal(me.hand.length, 2);
   assert.equal(state.pending.length, 0);
+});
+
+
+/* ---------- Abilities, second batch ---------- */
+
+const AB2 = {
+  shift: power("shift", "As often as you like during your turn (before your attack), you may move a Water Energy from 1 of your Pokémon to another of your Pokémon."),
+  pull: power("pull", "Once during your turn, you may move 1 damage counter from 1 of your Pokémon to 1 of your opponent's Pokémon."),
+  dig: power("dig", "Once during your turn, you may search your deck for a Basic Water Energy card and attach it to this Pokémon. Then, shuffle your deck."),
+  spread: power("spread", "Once during your turn, you may search your deck for up to 2 Basic Water Energy cards and attach them to your Pokémon in any way you like. Then, shuffle your deck. If you searched your deck in this way, this Pokémon is Knocked Out."),
+  star: power("star", "During your turn, you may draw 2 cards. (You can't use more than 1 VSTAR Power in a game.)"),
+  rest: power("rest", "Once during your turn, you may draw 3 cards. If you use this Ability, your turn ends."),
+  calm: power("calm", "This Pokémon can't be affected by any Special Conditions."),
+  ward: power("ward", "Prevent all damage done to your Benched Pokémon by your opponent's attacks."),
+  heavy: power("heavy", "Your opponent's Active Pokémon's Retreat Cost is ColorlessColorless more."),
+  quick: power("quick", "This Pokémon can evolve during your first turn or the turn you play it."),
+  mend: power("mend", "At any time between turns, remove 1 damage counter from this Pokémon."),
+  veil: power("veil", "Prevent all effects of attacks from your opponent's Pokémon done to this Pokémon. (Damage is not an effect.)"),
+  shove: power("shove", "Once during your turn, you may switch out your opponent's Active Pokémon to the Bench. (Your opponent chooses the new Active Pokémon.)"),
+  scout: power("scout", "Once during your turn, you may search your deck for a Water Pokémon, reveal it, and put it into your hand. Then, shuffle your deck."),
+};
+
+test("Ability text, second batch: the new wordings are read", () => {
+  assert.deepEqual(defs(AB2.shift).ability.use.steps, [{ op: "moveEnergy", type: "Water", basic: false, from: "any", to: "any" }]);
+  assert.ok(defs(AB2.spread).ability.use.selfKo);
+  assert.ok(defs(AB2.star).ability.use.vstar);
+  assert.ok(defs(AB2.rest).ability.use.ends);
+  assert.deepEqual(defs(AB2.calm).ability.mod.immune, ["all"]);
+  assert.equal(defs(AB2.scout).ability.use.steps[0].what, "pokemon:Water");
+  // Real cards: Deoxys changes Forme, Magcargo can't sleep, Snorlax's old Poké-Power needs no Special Condition.
+  assert.deepEqual(defs("ex8-16").ability.use.steps, [{ op: "formChange", name: "Deoxys", any: false }]);
+  assert.deepEqual(defs("dp4-45").ability.mod.immune, ["asleep", "paralyzed"]);
+  assert.ok(defs("dp6-6").ability.use.calm);
+});
+
+test("moving Energy and damage counters: from one Pokémon, then to another", () => {
+  const state = labgame(AB2.shift);
+  const [me, foe] = state.players;
+  const from = me.active;
+  const had = from.energy.length;
+  assert.ok(had > 0, "the Active Pokémon has Water Energy");
+  benchSlot(state, 0, "base1-63");
+  act(state, { type: "ability", player: 0, spot: ACTIVE });
+  assert.equal(state.pending[0].effect.op, "moveEnergyFrom");
+  act(state, { type: "pick", player: 0, spot: ACTIVE });
+  assert.equal(state.pending[0].effect.op, "moveEnergyTo");
+  assert.ok(!state.pending[0].spots.includes(ACTIVE), "not back onto itself");
+  act(state, { type: "pick", player: 0, spot: 0 });
+  assert.equal(from.energy.length, had - 1);
+  assert.equal(me.bench[0].energy.length, 1);
+  // As often as you like: it can go again at once. With one place to go, it goes there without asking.
+  assert.ok(legalActions(state, 0, defs).some((a) => a.type === "ability"));
+  me.bench.pop();
+  act(state, { type: "ability", player: 0, spot: ACTIVE });
+  act(state, { type: "pick", player: 0, spot: 0 });
+  assert.equal(state.pending.length, 0);
+  assert.equal(from.energy.length, had, "back onto the only other Pokémon");
+
+  const s2 = labgame(AB2.pull);
+  s2.players[0].active.damage = 30;
+  act(s2, { type: "ability", player: 0, spot: ACTIVE });
+  act(s2, { type: "pick", player: 0, spot: ACTIVE });
+  assert.equal(s2.pending[0].side, 1);
+  act(s2, { type: "pick", player: 0, spot: ACTIVE });
+  assert.equal(s2.players[0].active.damage, 20);
+  assert.equal(s2.players[1].active.damage, 10);
+});
+
+test("Energy from the deck onto Pokémon: this one, or spread out", () => {
+  let state = labgame(AB2.dig);
+  const [me] = state.players;
+  const had = me.active.energy.length;
+  act(state, { type: "ability", player: 0, spot: ACTIVE });
+  assert.equal(state.pending[0].type, "choose");
+  const water = state.pending[0].uids;
+  assert.ok(water.length && water.every((uid) => state.cards[uid] === W), "only basic Water Energy is offered");
+  act(state, { type: "choose", player: 0, uids: [water[0]] });
+  assert.equal(me.active.energy.length, had + 1);
+
+  state = labgame();
+  const slot = benchSlot(state, 0, AB2.spread);
+  const spot = state.players[0].bench.indexOf(slot);
+  const prizes = state.players[1].prizes.length;
+  act(state, { type: "ability", player: 0, spot });
+  const two = state.pending[0].uids.slice(0, 2);
+  act(state, { type: "choose", player: 0, uids: two });
+  assert.equal(state.pending.length, 2, "a Pokémon to pick for each card");
+  act(state, { type: "pick", player: 0, spot: ACTIVE });
+  act(state, { type: "pick", player: 0, spot: 0 });
+  assert.ok(!state.players[0].bench.includes(slot), "it Knocks itself Out");
+  assert.equal(state.players[1].prizes.length, prizes - 1, "and the other player takes a Prize");
+});
+
+test("VSTAR Power once a game, an Ability that ends the turn", () => {
+  const state = labgame(AB2.star);
+  act(state, { type: "ability", player: 0, spot: ACTIVE });
+  assert.ok(state.players[0].vstarUsed);
+  act(state, { type: "end", player: 0 });
+  act(state, { type: "end", player: 1 });
+  throws(() => act(state, { type: "ability", player: 0, spot: ACTIVE }), /VSTAR/);
+
+  const s2 = labgame(AB2.rest);
+  const turn = s2.turn;
+  act(s2, { type: "ability", player: 0, spot: ACTIVE });
+  assert.equal(s2.turn, turn + 1, "the turn passed");
+  assert.equal(s2.current, 1);
+});
+
+test("standing Abilities, second batch: immune, Bench ward, heavier retreat, early evolution, mending", () => {
+  let state = labgame("lab-2", AB2.calm);
+  use(state, 0, "Sting");
+  assert.deepEqual(conditionsOn(state.players[1].active), [], "no Poison");
+
+  state = labgame("lab-2", AB2.veil);
+  use(state, 0, "Sting");
+  assert.equal(state.players[1].active.damage, 50, "damage still lands");
+  assert.deepEqual(conditionsOn(state.players[1].active), [], "the effect doesn't");
+
+  state = labgame();
+  benchSlot(state, 1, AB2.ward);
+  assert.ok(benchSafe(state, state.players[1].bench[0], 0, defs));
+  assert.ok(!benchSafe(state, state.players[1].active, ACTIVE, defs));
+
+  state = labgame();
+  const base = retreatCost(state, state.players[0].active, defs);
+  benchSlot(state, 1, AB2.heavy);
+  assert.equal(retreatCost(state, state.players[0].active, defs), base + 2);
+  assert.equal(retreatCost(state, state.players[0].bench[0], defs), retreatCost(labgame(), labgame().players[0].bench[0], defs), "only the Active one");
+
+  state = labgame();
+  state.cards[state.players[0].bench[0].uid] = AB2.quick;
+  byId.set("lab-ab-quick-2", { id: "lab-ab-quick-2", name: "Lab quick two", supertype: "Pokémon", subtypes: ["Stage 1"], evolvesFrom: "Lab quick", types: ["Colorless"], hp: "150", attacks: [] });
+  state.players[0].bench[0].since = state.turn;
+  const uid = hold(state, 0, "lab-ab-quick-2");
+  act(state, { type: "evolve", player: 0, uid, spot: 0 });
+  assert.equal(state.cards[state.players[0].bench[0].uid], "lab-ab-quick-2", "evolved the turn it was played");
+
+  state = labgame(AB2.mend);
+  state.players[0].active.damage = 30;
+  act(state, { type: "end", player: 0 });
+  assert.equal(state.players[0].active.damage, 20);
+});
+
+test("an Ability can push the other Active Pokémon out: its player chooses", () => {
+  const state = labgame(AB2.shove);
+  const before = state.players[1].active;
+  act(state, { type: "ability", player: 0, spot: ACTIVE });
+  assert.equal(state.pending[0].player, 1);
+  assert.ok(legalActions(state, 1, defs).every((a) => a.type === "pick"));
+  act(state, { type: "pick", player: 1, spot: 0 });
+  assert.notEqual(state.players[1].active, before);
+});
+
+test("form change: another of the same name takes over, cards and damage and all", () => {
+  const state = labgame();
+  const [me] = state.players;
+  const slot = me.active;
+  state.cards[slot.uid] = "ex8-16";
+  slot.damage = 20;
+  const other = Object.keys(state.cards).find((uid) => me.deck.includes(uid));
+  state.cards[other] = "ex8-17";
+  assert.equal(defs("ex8-17").name, "Deoxys");
+  act(state, { type: "ability", player: 0, spot: ACTIVE });
+  act(state, { type: "choose", player: 0, uids: [other] });
+  assert.equal(me.active, slot);
+  assert.equal(state.cards[slot.uid], "ex8-17");
+  assert.equal(slot.damage, 20);
+  assert.ok(me.deck.some((uid) => state.cards[uid] === "ex8-16"), "the old one went back in the deck");
+});
+
+/* ---------- Special Energy ---------- */
+
+test("Special Energy: what it provides, who it's for, what it does", () => {
+  assert.deepEqual(defs("base1-96").provides, ["Colorless", "Colorless"], "Double Colorless");
+  assert.ok(defs("base1-96").playable && !defs("base1-96").basic);
+  assert.deepEqual(defs("sm1-137").provides, ["Any"], "Rainbow Energy");
+  assert.deepEqual(defs("xy10-115").special.only, { types: ["Fighting"] }, "Strong Energy");
+  assert.deepEqual(defs("ex13-97").provides, ["Darkness|Metal"]);
+  assert.equal(unpaid(["Metal", "Darkness"], ["Darkness|Metal", "Any"]), 0);
+  assert.equal(unpaid(["Fire"], ["Darkness|Metal"]), 1);
+  // Old Metal Energy gives Metal (the name isn't read as "this card").
+  assert.deepEqual(defs("dp2-120").provides, ["Metal"]);
+  assert.ok(!defs("bw11-113").why, "Double Colorless reads in every printing");
+});
+
+test("Special Energy in play: Double Colorless pays two, Rainbow hurts, Strong only on Fighting", () => {
+  const state = labgame();
+  const [me] = state.players;
+  me.active.energy = [];
+  const dce = hold(state, 0, "bw11-113");
+  act(state, { type: "attach", player: 0, uid: dce, spot: ACTIVE });
+  assert.equal(energyOf(state, me.active, defs).length, 2);
+
+  const s2 = labgame();
+  const rainbow = hold(s2, 0, "sm1-137");
+  act(s2, { type: "attach", player: 0, uid: rainbow, spot: ACTIVE });
+  assert.equal(s2.players[0].active.damage, 10, "a damage counter on attach");
+  assert.ok(energyOf(s2, s2.players[0].active, defs).includes("Any"));
+
+  const s3 = labgame();
+  const strong = hold(s3, 0, "xy10-115");
+  assert.ok(!legalActions(s3, 0, defs).some((a) => a.type === "attach" && a.uid === strong), "Lab is Colorless, not Fighting");
+  throws(() => act(s3, { type: "attach", player: 0, uid: strong, spot: ACTIVE }), /only be attached to Fighting/);
+
+  // Weakness Guard Energy: no Weakness on the Pokémon it is attached to.
+  const s4 = labgame();
+  const guard = hold(s4, 0, "sm11-213");
+  act(s4, { type: "attach", player: 0, uid: guard, spot: ACTIVE });
+  assert.ok(toolOf(s4, s4.players[0].active, defs).noWeakness);
+});
+
+test("Special Energy that acts when attached: Warp to the Bench, Draw a card", () => {
+  const state = labgame();
+  const [me] = state.players;
+  const front = me.active;
+  act(state, { type: "attach", player: 0, uid: hold(state, 0, "sm35-70"), spot: ACTIVE });
+  assert.equal(state.pending[0].effect.op, "switch");
+  act(state, { type: "pick", player: 0, spot: 0 });
+  assert.notEqual(me.active, front);
+
+  const s2 = labgame();
+  const hand = s2.players[0].hand.length;
+  act(s2, { type: "attach", player: 0, uid: hold(s2, 0, "sm12-209"), spot: 0 });
+  assert.equal(s2.players[0].hand.length, hand + 1, "attached from the hand, and a card drawn");
 });
 
 console.log(`${passed} checks passed${process.exitCode ? ", some failed" : ""}`);

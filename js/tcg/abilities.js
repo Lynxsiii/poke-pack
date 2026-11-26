@@ -16,10 +16,15 @@
  *   sturdy   n: survives a Knock Out from full HP with n HP left
  *   use      { steps, where, often, cost }: "Once during your turn, you may ..."
  *   enter    { steps, how: "bench" | "evolve" }: "When you play this Pokémon from your hand ..."
+ *   (and, newer) immune [conditions] in `mod`; benchWall; hangOn n (a coin flip to survive);
+ *   foeAura { who, mod } on the other player's Pokémon; early "any" | "active" | "second" (may
+ *   evolve sooner); mend n between turns; attachCure; noEffects (attack effects, not damage).
+ *   `use` may carry: calm (not with a Special Condition), vstar (once a game), ends (the turn
+ *   ends), selfKo (this Pokémon is Knocked Out afterwards).
  * `kind` is the printed label: "Ability", "Poké-Body", "Poké-Power" or "Pokémon Power".
  */
 
-import { compileTrainer } from "./trainers.js";
+import { compileTrainer, whatOf } from "./trainers.js";
 
 const TYPE = "(?:Grass|Fire|Water|Lightning|Psychic|Fighting|Darkness|Metal|Fairy|Dragon|Colorless)";
 const AFTER = "(?: \\(after applying Weakness and Resistance\\))?";
@@ -47,8 +52,25 @@ function wallOf(words) {
   return out;
 }
 
+const CONDITION = "(?:Asleep|Burned|Confused|Paralyzed|Poisoned)";
+const condsIn = (words) => (words.match(new RegExp(CONDITION, "g")) || []).map((w) => w.toLowerCase());
+
 /** Texts that stand for as long as the Pokémon is in play. */
 const STANDING = [
+  [/^This Pokémon can't be affected by any Special Conditions\.$/, () => ({ mod: { immune: ["all"] } })],
+  [new RegExp(`^This Pokémon can't be ((?:${CONDITION}(?:, or |, | or | and )?)+)\\.$`), (m) => ({ mod: { immune: condsIn(m[1]) } })],
+  [/^Prevent all damage done to your Benched Pokémon by (?:your opponent's attacks|attacks from your opponent's Pokémon)\.$/, () => ({ benchWall: true })],
+  [/^If this Pokémon would be Knocked Out by damage from an attack, flip a coin\. If heads, this Pokémon is not Knocked Out, and its remaining HP becomes (\d+)\.$/, (m) => ({ hangOn: Number(m[1]) })],
+  [/^Your opponent's Active Pokémon's Retreat Cost is ((?:Colorless)+) more\.$/, (m) => ({ foeAura: { who: { active: true }, mod: { retreat: -colorless(m[1]) } } })],
+  [new RegExp(`^As long as this Pokémon is your Active Pokémon, (?:all of )?your Pokémon take (\\d+) less damage from (?:your opponent's )?attacks${AFTER}\\.$`), (m) => ({ aura: { who: {}, mod: { less: Number(m[1]) } }, where: "active" })],
+  [/^As long as this Pokémon is on your Bench, your Active Pokémon's Retreat Cost is ((?:Colorless)+) less\.$/, (m) => ({ aura: { who: { active: true }, mod: { retreat: colorless(m[1]) } }, where: "bench" })],
+  [/^This Pokémon can evolve during your first turn or the turn you play it\.$/, () => ({ early: "any" })],
+  [/^As long as this Pokémon is in the Active Spot, it can evolve during your first turn or the turn you play it\.$/, () => ({ early: "active" })],
+  [/^If you go second, this Pokémon can evolve during your first turn\.$/, () => ({ early: "second" })],
+  [/^At any time between turns, remove (\d+) damage counters? from this Pokémon\.$/, (m) => ({ mend: Number(m[1]) * 10 })],
+  [/^As long as this Pokémon is Asleep, prevent all damage done to this Pokémon by attacks\.$/, () => ({ wall: { all: true, boxes: [], types: [], stage: "" }, when: { status: "asleep" } })],
+  [/^Whenever you attach an Energy card from your hand to this Pokémon, remove all Special Conditions from it\.$/, () => ({ attachCure: true })],
+  [/^Prevent all effects of (?:attacks (?:from|used by) your opponent's Pokémon done to this Pokémon\. \(Damage is not an effect\.\)|your opponent's attacks, except damage, done to this Pokémon\.)$/, () => ({ noEffects: true })],
   [new RegExp(`^(?:This Pokémon takes (\\d+) less damage from (?:your opponent's )?attacks|(?:Any|All) damage done (?:to this Pokémon by attacks|by attacks to this Pokémon) is reduced by (\\d+))${AFTER}\\.$`), (m) => ({ mod: { less: Number(m[1] || m[2]) } })],
   [/^This Pokémon has no Retreat Cost\.$/, () => ({ mod: { retreat: "all" } })],
   [/^This Pokémon has no Weakness\.$/, () => ({ mod: { noWeakness: true } })],
@@ -74,8 +96,29 @@ const STANDING = [
 ];
 
 const ENERGY = `(?:an?|1) (?:[Bb]asic )?(${TYPE})? ?Energy(?: card)?`;
+const MOVE_TO = { "another of your Pokémon": "any", "your Active Pokémon": "active", "this Pokémon": "self", "1 of your Benched Pokémon": "bench" };
+const FETCH_TO = { "this Pokémon": "self", "your Active Pokémon": "active", "1 of your Pokémon": "one", "your Pokémon in any way you like": "spread" };
+const UPTO = "(?:up to )?(\\d+|an?)";
+const many = (word) => (/^an?$/.test(word) ? 1 : Number(word));
 /** What "you may ..." asks for, where a Trainer wouldn't say it that way. [wording, steps]. */
 const DOES = [
+  [new RegExp(`^Move ${ENERGY} (?:from|attached to) 1 of your (Benched )?Pokémon to (another of your Pokémon|your Active Pokémon|this Pokémon|1 of your Benched Pokémon)\\.$`), (m) => [{ op: "moveEnergy", type: m[1] || "", basic: /[Bb]asic/.test(m[0]), from: m[2] ? "bench" : "any", to: MOVE_TO[m[3]] }]],
+  [new RegExp(`^Move ${ENERGY} from this Pokémon to (1 of your Benched Pokémon|another of your Pokémon|your Active Pokémon)\\.$`), (m) => [{ op: "moveEnergy", type: m[1] || "", basic: /[Bb]asic/.test(m[0]), from: "self", to: MOVE_TO[m[2]] }]],
+  [/^(?:Put|Place) (\d+) damage counters? on 1 of your opponent's Benched Pokémon\.$/, (m) => [{ op: "counters", n: Number(m[1]) * 10, where: "bench" }]],
+  [/^(?:Put|Place) (\d+) damage counters? on your opponent's Active Pokémon\.$/, (m) => [{ op: "counters", n: Number(m[1]) * 10, where: "active" }]],
+  [/^Move (?:up to )?(\d+) damage counters? from 1 of your Pokémon to (1 of your opponent's Pokémon|another of your Pokémon)\.$/, (m) => [{ op: "moveCounters", n: Number(m[1]) * 10, to: /opponent/.test(m[2]) ? "foe" : "mine" }]],
+  [new RegExp(`^Make your opponent's Active Pokémon ((?:${CONDITION}(?:, and |, | and | or )?)+)\\.$`), (m) => [{ op: "condition", kinds: condsIn(m[1]) }]],
+  [/^(?:Switch out your opponent's Active Pokémon to the Bench\. \(Your opponent chooses the new Active Pokémon\.\)|Have your opponent switch (?:their|his or her) Active Pokémon with 1 of (?:their|his or her) Benched Pokémon\.)$/, () => [{ op: "foeSwitch" }]],
+  [new RegExp(`^Search your deck for ${UPTO} (.+?) and attach (?:it|them) to (this Pokémon|your Active Pokémon|1 of your Pokémon|your Pokémon in any way you like)\\. (?:Then, shuffle your deck|Shuffle your deck afterward)\\.$`), (m) => {
+    const what = whatOf(m[2]);
+    if (!/^(basicEnergy|energy)/.test(what)) return null;
+    return [{ op: "fetchEnergy", what, n: many(m[1]), to: FETCH_TO[m[3]] }];
+  }],
+  [new RegExp(`^Look at the top (\\d+) cards of your deck and attach any number of (.+?) you find there to this Pokémon\\. Put the other cards into your hand\\.$`), (m) => {
+    const what = whatOf(m[2]);
+    if (!/^(basicEnergy|energy)/.test(what)) return null;
+    return [{ op: "fetchEnergy", what, n: Number(m[1]), to: "self", top: Number(m[1]), rest: "hand" }];
+  }],
   [/^Heal (\d+) damage from each of your Pokémon\.$/, (m) => [{ op: "heal", n: Number(m[1]), to: "all" }]],
   [/^Heal (\d+) damage from your Active Pokémon\.$/, (m) => [{ op: "heal", n: Number(m[1]), to: "active" }]],
   [/^Heal (\d+) damage from this Pokémon\.$/, (m) => [{ op: "heal", n: Number(m[1]), to: "self" }]],
@@ -90,9 +133,18 @@ const DOES = [
   ]],
 ];
 
-function stepsOf(words) {
-  const said = words.replace(/^use this (?:Ability|power)\. /i, "");
+function stepsOf(words, cardName = "") {
+  const said = words.replace(/^use this (?:Ability|power|Poké-Power)\. /i, "");
   const text = said[0].toUpperCase() + said.slice(1);
+  // "Search your deck for another Deoxys and switch it with Deoxys": a form change.
+  const form = text.match(/^Search your deck for (?:another|any) (this Pokémon|[A-Z][\w'.é -]+?) and switch it with this Pokémon\. \(Any cards attached to this Pokémon, damage counters, Special Conditions, and effects on it are now on the new Pokémon\.\) (?:If you do, put this Pokémon on top of your deck\. Shuffle your deck afterward|Shuffle this Pokémon back into your deck)\.$/);
+  // "another Unown" is one of the same name; "any Deoxys" is any of its Formes.
+  if (form) return cardName ? [{ op: "formChange", name: form[1] === "this Pokémon" ? cardName : form[1], any: /^Search your deck for any /.test(text) }] : null;
+  const coin = text.match(/^Flip a coin\. If heads, (.+)$/);
+  if (coin) {
+    const heads = stepsOf(coin[1], cardName);
+    return heads ? [{ op: "flip", heads }] : null;
+  }
   for (const [pattern, build] of DOES) {
     const m = text.match(pattern);
     if (m) return build(m);
@@ -101,7 +153,8 @@ function stepsOf(words) {
 }
 
 const PRICE = /^You must discard (an?|\d+) cards? from your hand in order to use this (?:Ability|Poké-Power)\. /;
-const USE = /^(Once|As often as you like) during your turn(?: \(before your attack\))?, (?:if this Pokémon is (in the Active Spot|your Active Pokémon|on your Bench), )?you may (.+)$/;
+const USE = /^(?:If this Pokémon is your Active Pokémon, )?(Once|As often as you like|During your turn)(?: during your turn)?(?: \(before your attack\))?, (?:if this Pokémon is (in the Active Spot|your Active Pokémon|on your Bench), )?(?:you may )?(.+)$/;
+const ACTIVE_FIRST = /^If this Pokémon is your Active Pokémon, /;
 const ENTER = /^(?:Once during your turn, )?[Ww]hen you play this Pokémon from your hand (onto your Bench|to evolve 1 of your Pokémon)(?: during your turn)?, you may (.+)$/;
 
 export function compileAbility(ability, cardName = "") {
@@ -110,11 +163,16 @@ export function compileAbility(ability, cardName = "") {
   if (!text) return null;
   // Older cards name themselves where newer ones say "this Pokémon".
   if (cardName) text = text.split(cardName).join("this Pokémon");
+  text = text.replace(/^this Pokémon\b/, "This Pokémon");
+  let calm = false, vstar = false, ends = false, selfKo = false, single = false;
   text = text
-    .replace(/ This power can't be used if this Pokémon is (?:affected by a Special Condition|Asleep, Confused, or Paralyzed)\./, "")
-    .replace(/ \(This doesn't use up your 1 Energy card attachment for the turn\.\)/, "");
-  let single = false;
-  text = text.replace(/ You can't use more than 1 .+? (?:Ability|Poké-Power) each turn\./, () => ((single = true), ""));
+    .replace(/ This power can't be used if this Pokémon is affected by a Special Condition\./, () => ((calm = true), ""))
+    .replace(/ This power can't be used if this Pokémon is Asleep, Confused, or Paralyzed\./, "")
+    .replace(/ \(This doesn't use up your 1 Energy card attachment for the turn\.\)/, "")
+    .replace(/ \(You can't use more than 1 VSTAR Power in a game\.\)/, () => ((vstar = true), ""))
+    .replace(/ If you use this (?:Ability|Poké-Power|power), your turn ends\./, () => ((ends = true), ""))
+    .replace(/ (?:If you use this (?:Ability|Poké-Power)|If you searched your deck in this way), this Pokémon is Knocked Out\./, () => ((selfKo = true), ""))
+    .replace(/ You can't use more than 1 .+? (?:Ability|Poké-Power)(?: each turn| during your turn)\./, () => ((single = true), ""));
   const base = { name: ability.name || kind, kind, text: String(ability.text || "").replace(/\s+/g, " ").trim() };
 
   for (const [pattern, build] of STANDING) {
@@ -131,15 +189,17 @@ export function compileAbility(ability, cardName = "") {
     text = text.slice(price[0].length);
   }
   let m = text.match(USE);
-  if (m) {
-    const steps = stepsOf(m[3]);
-    if (!steps) return null;
-    const where = !m[2] ? "" : /Bench/.test(m[2]) ? "bench" : "active";
-    return { ...base, use: { steps: cost ? [{ op: "cost", n: cost, spare: 0 }, ...steps] : steps, where, often: m[1] !== "Once", single } };
+  // "During your turn, you may" is a VSTAR Power's wording: once a game is the only limit then.
+  if (m && (m[1] !== "During your turn" || vstar)) {
+    // A wording that starts the same way but isn't read here may still be a "when you play" one below.
+    const steps = stepsOf(m[3], cardName);
+    const where = ACTIVE_FIRST.test(text) ? "active" : !m[2] ? "" : /Bench/.test(m[2]) ? "bench" : "active";
+    const flags = { ...(calm ? { calm } : {}), ...(vstar ? { vstar } : {}), ...(ends ? { ends } : {}), ...(selfKo ? { selfKo } : {}) };
+    if (steps) return { ...base, use: { steps: cost ? [{ op: "cost", n: cost, spare: 0 }, ...steps] : steps, where, often: m[1] === "As often as you like", single, ...flags } };
   }
-  m = !cost && text.match(ENTER);
+  m = !cost && !ends && !selfKo && !vstar && text.match(ENTER);
   if (m) {
-    const steps = stepsOf(m[2]);
+    const steps = stepsOf(m[2], cardName);
     return steps ? { ...base, enter: { steps, how: /Bench/.test(m[1]) ? "bench" : "evolve" } } : null;
   }
   return null;

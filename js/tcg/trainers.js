@@ -15,7 +15,7 @@
  * ctx: { state, defs, events, player }
  */
 
-import { ACTIVE, askChoose, askPick, conditionsOn, defOf, flip, inPlay, other, shuffle, slotAt, switchActive } from "./engine.js";
+import { ACTIVE, addCondition, askChoose, askPick, conditionsOn, defOf, flip, inPlay, other, shuffle, slotAt, switchActive } from "./engine.js";
 
 const WORDS = { a: 1, an: 1, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8 };
 const count = (word) => WORDS[String(word).toLowerCase()] || Number(word) || 0;
@@ -49,13 +49,39 @@ const energySpots = (ctx, { to, whoType }) =>
   inPlay(ctx.state, ctx.player)
     .filter(([slot, spot]) => (to === "self" ? spot === ctx.spot : to === "active" ? spot === ACTIVE : to === "bench" ? spot !== ACTIVE : true) && (!whoType || defOf(ctx.state, slot.uid, ctx.defs).types.includes(whoType)))
     .map(([, spot]) => spot);
+const counterSpots = (ctx, where) => inPlay(ctx.state, other(ctx.player)).map(([, spot]) => spot).filter((spot) => (where === "bench" ? spot !== ACTIVE : where === "active" ? spot === ACTIVE : true));
+/** Where an Energy moved off `from` may go. */
+export const moveTargets = (ctx, { to = "any" }, from) =>
+  inPlay(ctx.state, ctx.player)
+    .map(([, spot]) => spot)
+    .filter((spot) => spot !== from && (to === "self" ? spot === ctx.spot : to === "active" ? spot === ACTIVE : to === "bench" ? spot !== ACTIVE : true));
 const benchSpots = (side) => side.bench.map((_, i) => i);
+/** Your Pokémon (as spots) that hold an Energy of this type ("" for any), and the uid of the last such card. */
+export const energyIn = (ctx, slot, type, basic = false) => [...slot.energy].reverse().find((uid) => {
+  const def = defOf(ctx.state, uid, ctx.defs);
+  return (!type || (def.provides || []).includes(type)) && (!basic || def.basic);
+});
+const movable = (ctx, { type = "", from = "any", basic = false }) =>
+  inPlay(ctx.state, ctx.player)
+    .filter(([slot, spot]) => (from === "self" ? spot === ctx.spot : from === "bench" ? spot !== ACTIVE : from === "active" ? spot === ACTIVE : true) && energyIn(ctx, slot, type, basic))
+    .map(([, spot]) => spot);
 const withEnergy = (ctx) => inPlay(ctx.state, other(ctx.player)).filter(([slot]) => slot.energy.length).map(([, spot]) => spot);
 
-/** Does a card fit what a search asks for? */
+/**
+ * Does a card fit what a search asks for? `what` is a kind ("basic", "basicEnergy", "item" ...),
+ * a kind and a type ("basic:Water", "basicEnergy:Fire"), or a name ("name=Deoxys").
+ */
 export function fits(def, what) {
   if (!def) return false;
   if (what === "any") return true;
+  if (what.startsWith("name=")) return def.kind === "pokemon" && def.name === what.slice(5);
+  if (what.startsWith("name^")) return def.kind === "pokemon" && (def.name === what.slice(5) || def.name.startsWith(`${what.slice(5)} `));
+  if (what.includes(":")) {
+    const [kind, type] = what.split(":");
+    if (!fits(def, kind)) return false;
+    return def.kind === "energy" ? def.provides.includes(type) : (def.types || []).includes(type);
+  }
+  if (what === "energy") return def.kind === "energy";
   if (what === "pokemon") return def.kind === "pokemon";
   if (what === "basic") return def.kind === "pokemon" && def.stage === "basic";
   if (what === "evolution") return def.kind === "pokemon" && def.stage === "evolution";
@@ -197,9 +223,9 @@ export const T_OPS = {
   },
   /** Damage counters on one of their Pokémon, your choice (not an attack: no Weakness, no Resistance). */
   counters: {
-    ready: (ctx) => inPlay(ctx.state, other(ctx.player)).length > 0,
-    run(ctx, { n }) {
-      askPick(ctx.state, { player: ctx.player, side: other(ctx.player), spots: inPlay(ctx.state, other(ctx.player)).map(([, spot]) => spot), left: 1, effect: { op: "damage", n } });
+    ready: (ctx, { where = "" }) => counterSpots(ctx, where).length > 0,
+    run(ctx, { n, where = "" }) {
+      askPick(ctx.state, { player: ctx.player, side: other(ctx.player), spots: counterSpots(ctx, where), left: 1, effect: { op: "damage", n } });
     },
   },
   /** An Energy card from the hand or the discard pile goes onto one of your Pokémon, outside the one a turn. */
@@ -212,13 +238,70 @@ export const T_OPS = {
       askPick(ctx.state, { player: ctx.player, side: ctx.player, spots, left: 1, effect: { op: "attachFrom", zone: step.zone, uid } });
     },
   },
-  /** Your Active Pokémon shakes off every Special Condition. */
+  /** Special Conditions on the other Active Pokémon (an Ability's, so nothing on the attack side can stop it). */
+  condition: {
+    ready: (ctx) => Boolean(theirs(ctx).active),
+    run(ctx, { kinds }) {
+      for (const kind of kinds) if (addCondition(ctx.state, theirs(ctx).active, kind, ctx.defs)) ctx.events.push({ t: "condition", p: other(ctx.player), kind });
+    },
+  },
+  /** Their Active Pokémon goes to the Bench; they choose what comes in. */
+  foeSwitch: {
+    ready: (ctx) => Boolean(theirs(ctx).active) && theirs(ctx).bench.length > 0,
+    run: (ctx) => askPick(ctx.state, { player: other(ctx.player), side: other(ctx.player), spots: benchSpots(theirs(ctx)), left: 1, effect: { op: "switch" } }),
+  },
+  /**
+   * Move an Energy (of `type`, or any) from one of your Pokémon to another. `from`: "any", "self"
+   * (the Pokémon whose Ability it is), "bench"; `to`: "any", "self", "active". Two picks: where from, then where to.
+   */
+  moveEnergy: {
+    ready: (ctx, step) => movable(ctx, step).some((spot) => moveTargets(ctx, step, spot).length > 0),
+    run(ctx, step) {
+      const spots = movable(ctx, step).filter((spot) => moveTargets(ctx, step, spot).length > 0);
+      if (spots.length) askPick(ctx.state, { player: ctx.player, side: ctx.player, spots, left: 1, effect: { op: "moveEnergyFrom", type: step.type || "", basic: Boolean(step.basic), to: step.to || "any", self: ctx.spot ?? null } });
+    },
+  },
+  /** Move damage counters from one of your Pokémon to one of theirs (`to: "foe"`) or another of yours. */
+  moveCounters: {
+    ready: (ctx, { to = "foe" }) => hurt(ctx).length > 0 && (to !== "foe" || inPlay(ctx.state, other(ctx.player)).length > 0) && (to === "foe" || inPlay(ctx.state, ctx.player).length > 1),
+    run(ctx, { n, to = "foe" }) {
+      askPick(ctx.state, { player: ctx.player, side: ctx.player, spots: hurt(ctx), left: 1, effect: { op: "moveCountersFrom", n, to } });
+    },
+  },
+  /** Energy from the deck straight onto your Pokémon: `to` "self", "active", "one" (all on one) or "spread" (any way you like). */
+  fetchEnergy: {
+    ready: (ctx, { to }) => hasDeck(ctx) && (to !== "self" || ctx.spot != null) && inPlay(ctx.state, ctx.player).length > 0,
+    run(ctx, { what, n = 1, to, top = 0 }) {
+      const side = mine(ctx);
+      const pool = top ? side.deck.slice(0, top) : side.deck;
+      askChoose(ctx.state, { player: ctx.player, zone: "deck", what, uids: fitting(ctx, pool, what), min: 0, max: n, effect: { op: "attach", to, spot: to === "self" ? ctx.spot : to === "active" ? ACTIVE : null }, shuffle: !top });
+    },
+  },
+  /** "Search your deck for another Deoxys and switch it with Deoxys": the new card takes over the slot. */
+  formChange: {
+    ready: (ctx, { name, any = false }) => ctx.spot != null && fitting(ctx, mine(ctx).deck, `${any ? "name^" : "name="}${name}`).length > 0,
+    run(ctx, { name, any = false }) {
+      const what = `${any ? "name^" : "name="}${name}`;
+      askChoose(ctx.state, { player: ctx.player, zone: "deck", what, uids: fitting(ctx, mine(ctx).deck, what), min: 0, max: 1, effect: { op: "swapIn", spot: ctx.spot }, shuffle: true });
+    },
+  },
+  /** Your Active Pokémon (or, `to: "self"`, the one the card is on) shakes off every Special Condition. */
   cure: {
-    ready: (ctx) => conditionsOn(mine(ctx).active).length > 0,
-    run(ctx) {
-      const slot = mine(ctx).active;
+    ready: (ctx, { to = "" } = {}) => conditionsOn(to === "self" ? slotAt(ctx.state, ctx.player, ctx.spot) : mine(ctx).active).length > 0,
+    run(ctx, { to = "" } = {}) {
+      const slot = to === "self" ? slotAt(ctx.state, ctx.player, ctx.spot) : mine(ctx).active;
       for (const kind of conditionsOn(slot)) ctx.events.push({ t: "cure", p: ctx.player, kind });
       if (slot) delete slot.status;
+    },
+  },
+  /** Damage counters on the Pokémon the card is on (Rainbow Energy's price). */
+  hurtSelf: {
+    ready: (ctx) => ctx.spot != null,
+    run(ctx, { n }) {
+      const slot = slotAt(ctx.state, ctx.player, ctx.spot);
+      if (!slot) return;
+      slot.damage += n;
+      ctx.events.push({ t: "damage", p: ctx.player, spot: ctx.spot, n, self: true, why: "energy" });
     },
   },
 };
@@ -254,8 +337,10 @@ const PATTERNS = [
   [/^Switch 1 of your (?:own )?Benched Pokémon with your Active Pokémon\.$/, () => [{ op: "switch" }]],
   [/^Choose 1 Energy card attached to 1 of your opponent's Pokémon and discard it\.$/, () => [{ op: "hammer" }]],
   [/^Discard an Energy (?:card )?(?:from|attached to) 1 of your opponent's Pokémon\.$/, () => [{ op: "hammer" }]],
+  [/^Move an? [Bb]asic Energy(?: card)? (?:from|attached to) 1 of your Pokémon to another of your Pokémon\.$/, () => [{ op: "moveEnergy", basic: true }]],
 ];
 
+const TYPE_WORD = "Grass|Fire|Water|Lightning|Psychic|Fighting|Darkness|Metal|Fairy|Dragon|Colorless";
 const WHAT = [
   [/^(?:an? )?Basic Pokémon(?: cards?)?$/i, "basic"],
   [/^(?:an? )?Evolution(?: Pokémon)?(?: cards?)?$/i, "evolution"],
@@ -266,7 +351,24 @@ const WHAT = [
   [/^(?:an? )?Trainer(?: cards?)?$/i, "trainer"],
   [/^(?:an? )?cards?$/i, "any"],
 ];
-const whatOf = (words) => WHAT.find(([pattern]) => pattern.test(words))?.[1] || "";
+const TYPED = [
+  [new RegExp(`^(?:an? |any )?[Bb]asic (${TYPE_WORD}) Energy(?: cards?)?$`), "basicEnergy"],
+  [new RegExp(`^(?:an? |any )?(${TYPE_WORD}) Energy(?: cards?)?$`), "basicEnergy"],
+  [new RegExp(`^(?:an? |any )?Basic (${TYPE_WORD}) Pokémon(?: cards?)?$`), "basic"],
+  [new RegExp(`^(?:an? |any )?(${TYPE_WORD}) Pokémon(?: cards?)?$`), "pokemon"],
+];
+/** What a search names, as `fits` reads it, or "" when it names something we can't sort yet. */
+export function whatOf(words) {
+  const plain = WHAT.find(([pattern]) => pattern.test(words))?.[1];
+  if (plain) return plain;
+  if (/^(?:an? )?Pokémon Tool(?: cards?)?$/i.test(words)) return "tool";
+  if (/^(?:an? )?Stadium(?: cards?)?$/i.test(words)) return "stadium";
+  for (const [pattern, kind] of TYPED) {
+    const m = words.match(pattern);
+    if (m) return `${kind}:${m[1]}`;
+  }
+  return "";
+}
 const SHUFFLED = "(?:Then, shuffle your deck\\.|Shuffle your deck afterward\\.)";
 const SEARCH = new RegExp(`^Search your deck for (?:up to ${N} )?(.+?)(?:,? (?:reveal (?:it|them)|show (?:it|them) to your opponent),?)?,? and put (?:it|them) (into your hand|onto your Bench)\\. ${SHUFFLED}$`, "i");
 const RECOVER = new RegExp(`^Put (up to )?${N} (.+?) from your discard pile into your hand\\.$`, "i");
@@ -282,7 +384,7 @@ function compileParts(clean) {
   if (m) {
     const what = whatOf(m[2]);
     const to = /Bench/.test(m[3]) ? "bench" : "hand";
-    if (!what || (to === "bench" && what !== "basic")) return null;
+    if (!what || (to === "bench" && what.split(":")[0] !== "basic")) return null;
     return [{ op: "search", what, n: m[1] ? count(m[1]) : 1, to }];
   }
   m = clean.match(RECOVER);
@@ -386,6 +488,8 @@ export function compileStadium(text) {
 
 /** Does a Stadium's standing change reach this Pokémon? */
 export function fieldFits(who, def) {
+  // Old Darkness Energy: a Darkness Pokémon, or one with "Dark" in its name.
+  if (who.dark && /^Dark /.test(def.name)) return true;
   if (who.types && !who.types.some((t) => def.types.includes(t))) return false;
   if (who.stage && def.stage !== who.stage) return false;
   if (who.name && def.name !== who.name) return false;
@@ -418,7 +522,10 @@ export function runTrainer(steps, ctx) {
 /** For the bot and the screen: what a Trainer is for, by its first step that matters. */
 export function trainerAim(steps) {
   const ops = steps.flatMap((s) => (s.op === "flip" ? s.heads : [s])).map((s) => s.op);
-  for (const own of ["energize", "counters", "switchSelf"]) if (ops.includes(own)) return own;
+  for (const own of ["energize", "fetchEnergy", "counters", "condition", "moveCounters", "switchSelf"]) if (ops.includes(own)) return own === "fetchEnergy" ? "energize" : own === "moveCounters" || own === "condition" ? "counters" : own;
+  if (ops.includes("formChange")) return "form";
+  if (ops.includes("moveEnergy")) return "move";
+  if (ops.includes("foeSwitch")) return "gust";
   if (ops.includes("cost")) return "trade";
   if (ops.includes("search")) return "search";
   if (ops.includes("recover")) return "recover";
