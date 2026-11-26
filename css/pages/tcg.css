@@ -31,6 +31,12 @@
 .tg-resume p { margin: 0; color: var(--k-2); font-size: 14px; font-weight: 500; }
 .tg-resume b { display: block; color: var(--k); font: italic 800 18px/1.2 var(--font-xc); }
 
+.tg-learn { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; padding: 12px 14px; }
+.tg-learn p { margin: 0; color: var(--k-2); font-size: 14px; font-weight: 500; }
+.tg-learn b { display: block; color: var(--k); font: italic 800 18px/1.2 var(--font-xc); }
+.tg-learn button { flex: none; white-space: nowrap; }
+.tg-relearn { margin-top: 10px; }
+
 .tg-deck { display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; align-items: center; gap: 12px; margin-bottom: 10px; padding: 10px 12px; }
 .tg-deck-art { width: 52px; aspect-ratio: 5 / 7; border-radius: 3px; overflow: hidden; background: var(--box-2); }
 .tg-deck-art img { display: block; width: 100%; height: 100%; object-fit: cover; }
@@ -265,6 +271,25 @@ body.tg-playing { overflow: hidden; }
 .tg-coin { display: grid; place-items: center; min-height: 150px; padding: 8px 0 2px; }
 .tg-flip { width: auto; min-width: 190px; z-index: 62; }
 .tg-flip .tg-coin { min-height: 120px; }
+
+/* The coach (the lesson): sits over their Bench, which the lesson never needs you to touch. */
+.tg-coach {
+  position: absolute; z-index: 61; top: calc(max(6px, env(safe-area-inset-top)) + 36px); left: max(8px, calc(50vw - var(--u) * 50)); right: max(8px, calc(50vw - var(--u) * 50));
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 6px 12px; padding: 9px 12px 10px;
+  border: var(--line-w) solid var(--k0); border-bottom-width: 5px; border-radius: 6px; background: var(--yel); color: var(--k0);
+  animation: tg-rise-card 0.24s var(--ease-out);
+}
+.tg-coach p { margin: 0; font: 600 14px/1.3 var(--font-h); text-wrap: pretty; }
+.tg-table.has-coach .tg-bench-foe { visibility: hidden; }
+.tg-coach-bar { grid-column: 1 / -1; height: 4px; border-radius: 2px; background: color-mix(in srgb, var(--k0) 22%, transparent); overflow: hidden; }
+.tg-coach-bar i { display: block; height: 100%; background: var(--k0); transform-origin: left; }
+.tg-coach .solid::before { background: var(--k0); border-color: var(--k0); }
+.tg-coach .solid, .tg-coach .solid:hover:not(:disabled) { color: var(--yel); }
+.tg-coach .solid:hover:not(:disabled)::before { background: var(--k0); }
+.tg-table.coach-hand .tg-hand .tg-card.can, .tg-table.coach-active .tg-spot-me .tg-mon, .tg-table.coach-key .tg-keys .solid, .tg-table.coach-key .tg-keys .ghost { animation: tg-nudge 0.7s var(--ease-out) infinite alternate; }
+.tg-table.coach-hand .tg-hand .tg-card.can::after, .tg-table.coach-active .tg-spot-me .tg-mon::after {
+  content: ""; position: absolute; inset: -4px; border: 3px solid var(--yel); border-radius: 7px; pointer-events: none;
+}
 
 /* Cues. */
 .tg-mon.lunge-up { animation: tg-lunge-up 0.4s var(--ease-out); }

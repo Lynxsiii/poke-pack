@@ -12,6 +12,7 @@ import { ACTIVE, FORMATS, RuleError, addCondition, apply, canRetreat, conditions
 import { createDefs, defineCard, FREE_ENERGY } from "../js/tcg/cards.js";
 import { compileAttack } from "../js/tcg/effects.js";
 import { botAction } from "../js/tcg/bot.js";
+import { LESSON, LESSON_CARDS, createLesson } from "../js/tcg/tutorial.js";
 import { buildBotDeck, buildDeck, checkDeck, deckList, roomFor } from "../js/tcg/decks.js";
 
 const rules = JSON.parse(readFileSync("data/tcg/rules.json", "utf8"));
@@ -454,6 +455,43 @@ test("retreating and evolving clear conditions; the newer of sleep, confusion an
   mine.status.main = "confused";
   act(state, { type: "retreat", player: 0, to: 0 });
   assert.deepEqual(conditionsOn(state.players[0].bench[0]), []);
+});
+
+test("the lesson plays through as the coach tells it", () => {
+  for (const id of LESSON_CARDS) assert.ok(defs(id)?.playable !== false && defs(id), id);
+  const state = createLesson(["You", "Bot"], defs);
+  act(state, botAction(state, 1, defs));
+  const me = state.players[0];
+  const botPlays = () => {
+    for (let n = 0; n < 40 && state.phase === "main"; n++) {
+      const waiting = state.pending[0];
+      if (!(waiting ? waiting.player === 1 : state.current === 1)) return;
+      act(state, botAction(state, 1, defs));
+    }
+  };
+  const setup = { active: null, bench: [] };
+  for (const step of LESSON) {
+    if (step.pick) {
+      const uid = me.hand.find((u) => step.pick(defs(state.cards[u])) && u !== setup.active);
+      assert.ok(uid, step.say);
+      if (!setup.active) setup.active = uid;
+      else setup.bench.push(uid);
+    } else if (step.want) {
+      const action = state.phase === "setup" ? { type: "place", player: 0, ...setup } : legalActions(state, 0, defs).find(step.want);
+      assert.ok(action && step.want(action), step.say);
+      act(state, action);
+      botPlays();
+    }
+    if (/bit Hitmonchan for 20/.test(step.say)) {
+      assert.equal(me.active.damage, 20);
+      assert.ok(me.hand.some((u) => defs(state.cards[u]).name === "Machoke"));
+    }
+    if (/took a prize card/.test(step.say)) {
+      assert.equal(me.prizes.length, 2);
+      assert.equal(state.phase, "main");
+      assert.equal(state.current, 0);
+    }
+  }
 });
 
 /* ---------- bot against bot ---------- */
