@@ -118,6 +118,10 @@ export function botAction(state, player, defs) {
     if (aim === "heal" && inPlay(state, player).some(([slot]) => slot.damage >= heal.n)) return action;
   }
 
+  // A Tool goes on the Active Pokémon, else on whoever is first on the Bench.
+  const tool = actions.filter((a) => a.type === "tool").sort((a, b) => a.spot - b.spot)[0];
+  if (tool) return tool;
+
   const evolve = actions.filter((a) => a.type === "evolve").sort((a, b) => a.spot - b.spot)[0];
   if (evolve) return evolve;
 

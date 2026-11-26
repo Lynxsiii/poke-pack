@@ -22,7 +22,7 @@
  *   coinFaces()         { heads, tails } art of the equipped coin, or null for the house coin
  */
 
-import { ACTIVE, FORMATS, RuleError, apply, canRetreat, conditionsOn, createGame, damageAfterTyping, defOf, energyOf, hpLeft, legalActions, markOn, marksOn, other, trainerBlock, usableAttacks } from "./tcg/engine.js";
+import { ACTIVE, FORMATS, RuleError, apply, canRetreat, conditionsOn, createGame, damageAfterTyping, defOf, energyOf, hpLeft, legalActions, markOn, marksOn, maxHp, other, retreatCost, toolOf, trainerBlock, usableAttacks } from "./tcg/engine.js";
 import { ENERGY_TYPES, FREE_ENERGY, createDefs, isFreeEnergy } from "./tcg/cards.js";
 import { botAction } from "./tcg/bot.js";
 import { MAX_DECKS, buildBotDeck, buildDeck, checkDeck, deckList, deckSize, roomFor } from "./tcg/decks.js";
@@ -190,7 +190,8 @@ export function initTcg(deps) {
           <li>Your own cards only, as many copies as you own. Basic Energy is free.</li>
           <li>Your sleeve is your card back and your coin makes the flips.</li>
           <li>Trainers: Items and Supporters that draw, search your deck, heal, switch or pull a Pokémon forward. More with each update.</li>
-          <li>Not yet: Stadiums, Tools, Abilities, and some attack text (the printed damage still lands). Matches against other players come later.</li>
+          <li>Pokémon Tools that change HP, Retreat Cost, damage or Weakness can be attached, one to a Pokémon.</li>
+          <li>Not yet: Stadiums, Abilities, and some attack text (the printed damage still lands). Matches against other players come later.</li>
         </ul>
         ${read("learned", false) ? `<button type="button" class="tlink tg-relearn" data-lesson>Run the lesson again</button>` : ""}
       </section>
@@ -269,7 +270,7 @@ export function initTcg(deps) {
         ${row.inDeck ? `<span class="tg-tile-n">${row.inDeck}</span>` : ""}
       </button>
       <b class="tg-tile-name">${esc(def.name)}</b>
-      <span class="tg-tile-meta">${def.kind === "trainer" ? (def.sub === "supporter" ? "Supporter" : "Item") : `${def.stage === "basic" ? "Basic" : "Evolution"}, ${def.hp} HP`}</span>
+      <span class="tg-tile-meta">${def.kind === "trainer" ? (def.sub === "supporter" ? "Supporter" : def.sub === "tool" ? "Tool" : "Item") : `${def.stage === "basic" ? "Basic" : "Evolution"}, ${def.hp} HP`}</span>
       ${stepHtml(id, row.inDeck, room, def.name, `of ${row.owned}`)}
     </div>`;
   }
@@ -526,11 +527,13 @@ export function initTcg(deps) {
   function monHtml(state, p, slot, spot, { big = false, target = false, chosen = false } = {}) {
     const def = defOf(state, slot.uid, defs);
     const left = hpLeft(state, slot, defs);
-    const label = `${p === ME ? "Your" : "Their"} ${def.name}, ${left} of ${def.hp} HP`;
+    const full = maxHp(state, slot, defs);
+    const toolName = slot.tool ? defOf(state, slot.tool, defs).name : "";
+    const label = `${p === ME ? "Your" : "Their"} ${def.name}, ${left} of ${full} HP${toolName ? `, holding ${toolName}` : ""}`;
     return `<button type="button" class="tg-mon${big ? " big" : ""}${target ? " is-target" : ""}${chosen ? " is-chosen" : ""}" data-p="${p}" data-spot="${spot}" aria-label="${esc(label)}">
       <img src="${img(state.cards[slot.uid], big)}" alt="" draggable="false" decoding="async" />
       ${slot.damage ? `<span class="tg-dmg">${slot.damage}</span>` : ""}
-      ${big ? (slot.energy.length ? `<span class="tg-pips tg-on">${pips(energyOf(state, slot, defs))}</span>` : "") : `${hpBar(left, def.hp)}<span class="tg-pips">${pips(energyOf(state, slot, defs))}</span>`}
+      ${big ? (slot.energy.length ? `<span class="tg-pips tg-on">${pips(energyOf(state, slot, defs))}</span>` : "") : `${hpBar(left, full)}<span class="tg-pips">${pips(energyOf(state, slot, defs))}${toolName ? `<i class="tg-en tg-toolpip" title="${esc(toolName)}">T</i>` : ""}</span>`}
     </button>`;
   }
 
@@ -547,8 +550,8 @@ export function initTcg(deps) {
     return `<div class="tg-hud" data-p="${p}">
       <b class="tg-hud-name">${esc(def.name)}</b>
       <span class="tg-pips">${energy.length ? pips(energy) : `<small>No Energy</small>`}</span>
-      <span class="tg-hud-hp"><em>HP</em>${hpBar(left, def.hp)}<span class="num">${left}/${def.hp}</span></span>
-      ${conditionsOn(slot).length || marksOn(state, slot).length || edge ? `<span class="tg-conds">${edge}${conditionsOn(slot).map((c) => `<i class="tg-cond" data-cond="${c}">${COND_NAME[c]}</i>`).join("")}${marksOn(state, slot).map((m) => `<i class="tg-cond" data-cond="mark" data-mark="${m.kind}">${esc(markLabel(m))}</i>`).join("")}</span>` : ""}
+      <span class="tg-hud-hp"><em>HP</em>${hpBar(left, maxHp(state, slot, defs))}<span class="num">${left}/${maxHp(state, slot, defs)}</span></span>
+      ${conditionsOn(slot).length || marksOn(state, slot).length || edge || slot.tool ? `<span class="tg-conds">${edge}${slot.tool ? `<i class="tg-cond" data-cond="tool">${esc(defOf(state, slot.tool, defs).name)}</i>` : ""}${conditionsOn(slot).map((c) => `<i class="tg-cond" data-cond="${c}">${COND_NAME[c]}</i>`).join("")}${marksOn(state, slot).map((m) => `<i class="tg-cond" data-cond="mark" data-mark="${m.kind}">${esc(markLabel(m))}</i>`).join("")}</span>` : ""}
     </div>`;
   }
 
@@ -583,7 +586,7 @@ export function initTcg(deps) {
       let text = `${def.name} can't be played right now.`;
       if (acts.some((a) => a.type === "bench")) text = `${def.name}: tap your Bench to play it.`;
       else if (acts.some((a) => a.type === "evolve")) text = `${def.name}: tap the Pokémon it evolves from.`;
-      else if (acts.some((a) => a.type === "attach")) text = `${def.name}: tap a Pokémon to attach it.`;
+      else if (acts.some((a) => a.type === "attach" || a.type === "tool")) text = `${def.name}: tap a Pokémon to attach it.`;
       else if (acts.some((a) => a.type === "play")) return { text: def.text || `Play ${def.name}?`, keys: `<button type="button" class="solid sm" data-act="play-card">Play</button><button type="button" class="ghost sm" data-act="look">View</button>` };
       else if (def.kind === "trainer") text = trainerBlock(state, ME, def, defs) || `${def.name} can't be played right now.`;
       else if (def.kind === "energy") text = "One Energy a turn, and you've attached yours.";
@@ -610,7 +613,7 @@ export function initTcg(deps) {
     const sel = match.sel;
     const selId = sel?.kind === "hand" ? real.cards[sel.uid] : "";
     const targets = new Set();
-    if (sel?.kind === "hand") for (const a of acts) if ((a.type === "evolve" || a.type === "attach") && real.cards[a.uid] === selId) targets.add(a.spot);
+    if (sel?.kind === "hand") for (const a of acts) if ((a.type === "evolve" || a.type === "attach" || a.type === "tool") && real.cards[a.uid] === selId) targets.add(a.spot);
     if (sel?.kind === "retreat") for (const a of acts) if (a.type === "retreat") targets.add(a.to);
     if (real.pending[0]?.player === ME) for (const a of acts) if (a.type === "promote") targets.add(a.spot);
     // A choice an attack left open: the Pokémon that may be picked, on either side.
@@ -700,15 +703,18 @@ export function initTcg(deps) {
       const base = parseInt(attack.damage, 10) || 0;
       if (!foeDef || !base) return { html: esc(attack.damage || ""), note: "" };
       const more = /[+×x]/i.test(String(attack.damage)) ? String(attack.damage).replace(/^\d+/, "") : "";
-      const typed = damageAfterTyping(base, def, foeDef);
+      const mine = toolOf(state, slot, defs);
+      const theirs = toolOf(state, foeSlot, defs);
+      const typed = damageAfterTyping(base + (mine.plus || 0), def, foeDef, { noWeakness: Boolean(theirs.noWeakness) });
       const blocked = markOn(state, foeSlot, "shield") || markOn(state, foeSlot, "guard");
-      const less = markOn(state, foeSlot, "less")?.n || 0;
+      const less = (markOn(state, foeSlot, "less")?.n || 0) + (theirs.less || 0);
       const real = blocked ? 0 : Math.max(0, typed.amount - less);
       const notes = [];
+      if (mine.plus) notes.push(`${defOf(state, slot.tool, defs).name} +${mine.plus}`);
       if (typed.weak) notes.push(`Weakness ${foeDef.weakness.op === "x" ? "×" : "+"}${foeDef.weakness.n}`);
       if (typed.resist) notes.push(`Resistance -${foeDef.resistance.n}`);
       if (blocked) notes.push("Blocked this turn");
-      else if (less) notes.push(`${less} less this turn`);
+      else if (less) notes.push(`${less} less${theirs.less ? "" : " this turn"}`);
       if (!blocked && real >= hpLeft(state, foeSlot, defs)) notes.push(`Knocks out ${foeDef.name}`);
       const tone = real > base ? "up" : real < base ? "down" : "";
       return {
@@ -727,7 +733,7 @@ export function initTcg(deps) {
           ${usable.has(i) || !myTurn() ? "" : `<span class="tg-atk-why">${whyNot(attack)}</span>`}
         </button>`).join("")}
         <div class="tg-sheet-keys">
-          <button type="button" class="ghost sm" data-act="retreat"${retreat ? "" : " disabled"}>${markOn(state, slot, "noRetreat") ? "Can't retreat" : `Retreat ${def.retreat ? pips(Array(def.retreat).fill("Colorless")) : "(free)"}`}</button>
+          <button type="button" class="ghost sm" data-act="retreat"${retreat ? "" : " disabled"}>${markOn(state, slot, "noRetreat") ? "Can't retreat" : `Retreat ${retreatCost(state, slot, defs) ? pips(Array(retreatCost(state, slot, defs)).fill("Colorless")) : "(free)"}`}</button>
           <button type="button" class="ghost sm" data-act="look-active">View card</button>
         </div>
       </div>`;
@@ -890,6 +896,7 @@ export function initTcg(deps) {
       case "bench": return `${who(event.p)} benched ${name(event.uid)}.`;
       case "evolve": return `${who(event.p)} evolved into ${name(event.uid)}.`;
       case "attach": return `${who(event.p)} attached ${name(event.uid)}.`;
+      case "tool": return `${who(event.p)} attached ${name(event.uid)}, a Pokémon Tool.`;
       case "play": return `${who(event.p)} played ${name(event.uid)}.`;
       case "shuffle-hand": return `${who(event.p)} shuffled ${event.p === ME ? "your" : "its"} hand into the deck.`;
       case "search": {
@@ -1087,7 +1094,7 @@ export function initTcg(deps) {
       ghost(img(match.state.cards[event.uid]), src, to, { ms: event.p === ME ? 900 : 1300, width: w, show: true });
       return event.p === ME ? 800 : 1200;
     }
-    if (event.t === "attach") {
+    if (event.t === "attach" || event.t === "tool") {
       const to = rectOf(`${monSel(event.p, event.spot)} img`);
       if (to) ghost(img(match.state.cards[event.uid]), src, to, { ms: 320, width: to.width * 0.62, absorb: true });
       setTimeout(() => cue(monSel(event.p, event.spot), "charged", 460), 230);
@@ -1195,7 +1202,7 @@ export function initTcg(deps) {
         if (event.t === "damage" || event.t === "heal") {
           const benched = event.spot >= 0;
           const slot = benched ? before.players[event.p].bench[event.spot] : before.players[event.p].active;
-          const max = slot ? defOf(before, slot.uid, defs).hp : 0;
+          const max = slot ? maxHp(before, slot, defs) : 0;
           const was = slot ? Math.max(0, max - slot.damage) : 0;
           if (slot) slot.damage = Math.max(0, slot.damage + (event.t === "heal" ? -event.n : event.n));
           say(event);
@@ -1360,7 +1367,7 @@ export function initTcg(deps) {
       if (sel?.kind === "retreat" && spot !== ACTIVE) return run({ type: "retreat", player: ME, to: spot });
       if (sel?.kind === "hand") {
         const id = state.cards[sel.uid];
-        const hit = acts.find((a) => (a.type === "evolve" || a.type === "attach") && a.spot === spot && state.cards[a.uid] === id);
+        const hit = acts.find((a) => (a.type === "evolve" || a.type === "attach" || a.type === "tool") && a.spot === spot && state.cards[a.uid] === id);
         if (hit) return run({ ...hit, uid: sel.uid });
       }
       if (spot === ACTIVE && myTurn() && !sel) {
@@ -1375,7 +1382,7 @@ export function initTcg(deps) {
     const state = match.state;
     const def = d(slot.uid);
     const energy = energyOf(state, slot, defs);
-    openLook(state.cards[slot.uid], `<p class="tg-look-meta">${hpLeft(state, slot, defs)} of ${def.hp} HP left${energy.length ? `, ${pips(energy)}` : ", no Energy"}</p>`);
+    openLook(state.cards[slot.uid], `<p class="tg-look-meta">${hpLeft(state, slot, defs)} of ${maxHp(state, slot, defs)} HP left${energy.length ? `, ${pips(energy)}` : ", no Energy"}</p>${slot.tool ? `<p class="tg-look-note">${esc(defOf(state, slot.tool, defs).name)}: ${esc(defOf(state, slot.tool, defs).text)}</p>` : ""}`);
   }
 
   /* ---------- dragging a card out of the hand ----------
@@ -1436,7 +1443,7 @@ export function initTcg(deps) {
         const id = state.cards[drag.uid];
         for (const a of legal()) {
           if (!a.uid || state.cards[a.uid] !== id) continue;
-          if (a.type === "evolve" || a.type === "attach") root.querySelector(monSel(ME, a.spot))?.classList.add("is-target");
+          if (a.type === "evolve" || a.type === "attach" || a.type === "tool") root.querySelector(monSel(ME, a.spot))?.classList.add("is-target");
           if (a.type === "bench") {
             root.querySelector(".tg-bench-me")?.classList.add("is-open");
             root.querySelector(".tg-bench-me .tg-hole")?.classList.add("is-target");
@@ -1501,7 +1508,7 @@ export function initTcg(deps) {
     }
     const id = state.cards[uid];
     const acts = legal().filter((a) => a.uid && state.cards[a.uid] === id);
-    const onto = target.spot != null && !target.empty ? acts.find((a) => (a.type === "evolve" || a.type === "attach") && a.spot === target.spot) : null;
+    const onto = target.spot != null && !target.empty ? acts.find((a) => (a.type === "evolve" || a.type === "attach" || a.type === "tool") && a.spot === target.spot) : null;
     const down = acts.find((a) => a.type === "bench" || a.type === "play");
     const play = onto || ((target.el || target.field) && down) || null;
     if (play) {

@@ -110,8 +110,24 @@ export function inPlay(state, player) {
   return out;
 }
 
+/** What the Pokémon Tool on this Pokémon changes ({} when it has none). See compileTool. */
+export function toolOf(state, slot, defs) {
+  return (slot?.tool && defOf(state, slot.tool, defs)?.tool) || {};
+}
+
+/** A Pokémon's HP as it stands in play: what it prints, plus what its Tool adds. */
+export function maxHp(state, slot, defs) {
+  return defOf(state, slot.uid, defs).hp + (toolOf(state, slot, defs).hp || 0);
+}
+
+/** What it costs this Pokémon to retreat, after its Tool. */
+export function retreatCost(state, slot, defs) {
+  const less = toolOf(state, slot, defs).retreat;
+  return less === "all" ? 0 : Math.max(0, defOf(state, slot.uid, defs).retreat - (less || 0));
+}
+
 export function hpLeft(state, slot, defs) {
-  return Math.max(0, defOf(state, slot.uid, defs).hp - slot.damage);
+  return Math.max(0, maxHp(state, slot, defs) - slot.damage);
 }
 
 /** The Energy types a slot's attached cards give, one entry per unit of Energy. */
@@ -250,8 +266,7 @@ export function usableAttacks(state, player, defs) {
 export function canRetreat(state, player, defs) {
   const side = state.players[player];
   if (!side.active || side.retreated || !side.bench.length || stuck(side.active) || markOn(state, side.active, "noRetreat")) return false;
-  const def = defOf(state, side.active.uid, defs);
-  return energyOf(state, side.active, defs).length >= def.retreat;
+  return energyOf(state, side.active, defs).length >= retreatCost(state, side.active, defs);
 }
 
 /* ---------- setting up ---------- */
@@ -373,7 +388,7 @@ function settle(state, defs, events) {
 }
 
 function discardSlot(state, player, slot) {
-  state.players[player].discard.push(slot.uid, ...slot.under, ...slot.energy);
+  state.players[player].discard.push(slot.uid, ...slot.under, ...slot.energy, ...(slot.tool ? [slot.tool] : []));
 }
 
 /**
@@ -386,7 +401,7 @@ export function resolveKnockOuts(state, defs, events) {
     const side = state.players[p];
     for (const [slot, spot] of inPlay(state, p)) {
       const def = defOf(state, slot.uid, defs);
-      if (slot.damage < def.hp) continue;
+      if (slot.damage < maxHp(state, slot, defs)) continue;
       events.push({ t: "ko", p, spot, uid: slot.uid });
       discardSlot(state, p, slot);
       if (spot === ACTIVE) side.active = null;
@@ -535,6 +550,20 @@ const HANDLERS = {
     events.push({ t: "attach", p: player, uid, spot });
   },
 
+  /** Attach a Pokémon Tool from the hand: one to a Pokémon, and it stays until that Pokémon leaves play. */
+  tool(state, { player, uid, spot }, defs, events) {
+    const side = state.players[player];
+    if (!side.hand.includes(uid)) fail("That card isn't in your hand.");
+    const def = defOf(state, uid, defs);
+    if (def.kind !== "trainer" || def.sub !== "tool" || !def.playable) fail(def.why || "That isn't a Pokémon Tool.");
+    const slot = slotAt(state, player, spot);
+    if (!slot) fail("There's no Pokémon there.");
+    if (slot.tool) fail("That Pokémon already has a Tool.");
+    takeFromHand(state, player, uid);
+    slot.tool = uid;
+    events.push({ t: "tool", p: player, uid, spot });
+  },
+
   retreat(state, { player, to, discard }, defs, events) {
     const side = state.players[player];
     if (side.retreated) fail("You've already retreated this turn.");
@@ -543,7 +572,7 @@ const HANDLERS = {
     const slot = side.active;
     if (stuck(slot)) fail(statusOf(slot).main === "asleep" ? "An Asleep Pokémon can't retreat." : "A Paralyzed Pokémon can't retreat.");
     if (markOn(state, slot, "noRetreat")) fail("That Pokémon can't retreat this turn.");
-    const cost = defOf(state, slot.uid, defs).retreat;
+    const cost = retreatCost(state, slot, defs);
     if (energyOf(state, slot, defs).length < cost) fail("Not enough Energy to retreat.");
     // Pay with the chosen cards, or the first ones attached when none are named.
     let paid = 0;
@@ -608,8 +637,12 @@ const HANDLERS = {
     // What an earlier attack left on the target: less damage, or none at all.
     ctx.shielded = Boolean(target && !hit.noEffects && markOn(state, target, "shield"));
     if (!hit.cancelled && target) {
-      const dealt = damageAfterTyping(hit.damage, def, defOf(state, target.uid, defs), hit);
-      const less = hit.noEffects ? 0 : markOn(state, target, "less")?.n || 0;
+      // Tools: the attacker's adds damage before Weakness, the target's can lift its Weakness or soak some.
+      const mine = toolOf(state, slot, defs);
+      const theirs = toolOf(state, target, defs);
+      const base = hit.damage > 0 ? hit.damage + (mine.plus || 0) : hit.damage;
+      const dealt = damageAfterTyping(base, def, defOf(state, target.uid, defs), { ...hit, noWeakness: hit.noWeakness || Boolean(theirs.noWeakness) });
+      const less = (hit.noEffects ? 0 : markOn(state, target, "less")?.n || 0) + (theirs.less || 0);
       const guarded = ctx.shielded || (!hit.noEffects && markOn(state, target, "guard"));
       const amount = guarded ? 0 : Math.max(0, dealt.amount - less);
       if (amount > 0) {
@@ -831,6 +864,10 @@ export function legalActions(state, player, defs) {
     }
     if (def.kind === "energy" && !side.energyUsed) {
       for (const [, spot] of spots) out.push({ type: "attach", player, uid, spot });
+    }
+    if (def.kind === "trainer" && def.sub === "tool") {
+      if (def.playable) for (const [slot, spot] of spots) if (!slot.tool) out.push({ type: "tool", player, uid, spot });
+      continue;
     }
     if (def.kind === "trainer" && !trainerBlock(state, player, def, defs)) out.push({ type: "play", player, uid });
   }
