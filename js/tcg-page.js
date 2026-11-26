@@ -1037,6 +1037,7 @@ export function initTcg(deps) {
       case "form": return `${who(event.p)} switched in ${name(event.uid)}.`;
       case "turn-ends": return `${event.name} ends the turn.`;
       case "ko": return `${name(event.uid)} was Knocked Out.`;
+      case "ko-hand": return `${name(event.uid)} went back to ${event.p === ME ? "your" : "their"} hand.`;
       case "prize": return `${who(event.p)} took ${plural(event.uids.length, "prize card")}.`;
       case "switch": return `${event.p === ME ? "Your" : "Their"} Active Pokémon was switched out.`;
       case "promote": return `${who(event.p)} sent out ${name(state.players[event.p].active.uid)}.`;

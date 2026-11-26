@@ -149,6 +149,7 @@ export function defineCard(card, row, text = "") {
     retreat: Number(row?.[2]) || 0,
     prizes: prizesFor(card, row),
     box: boxOf(card),
+    ...(printed.length ? { abilityKind: printed[0].type || "Ability" } : {}),
     ...(ability ? { ability } : {}),
     playable: !why && Number(card.hp) > 0,
     why,
