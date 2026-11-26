@@ -146,71 +146,99 @@
 .bz-guess small { font: 700 13px var(--font-h); color: var(--k-2); font-variant-numeric: tabular-nums; }
 
 /* ---- Mystery Tins ---------------------------------------------------------------- */
-/* The tins sit on a shelf: each card is a box with the tin standing in a dotted well, its paint as a slanted band behind it. */
-.bz-tin-list { display: grid; gap: 14px; }
+/* The chase cards are the show (js/beta.js tinsPage). A tin's paint (--paint) is art: one slanted band and the tin itself. */
+.bz-face { display: block; width: 100%; }
+.bz-face-img { display: block; width: 100%; aspect-ratio: 63 / 88; object-fit: contain; border-radius: 4.5%; }
+
+/* The shelf: three chase cards standing in an open tin. */
+.bz-tin-list { display: grid; gap: 16px; }
 @media (min-width: 640px) { .bz-tin-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 1100px) { .bz-tin-list { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .bz-tin { display: grid; grid-template-rows: auto 1fr; overflow: hidden; padding: 0; }
-.bz-tin-well {
-  position: relative; isolation: isolate; display: grid; place-items: center; height: 168px; border-bottom: var(--line-w) solid var(--k);
-  background-color: var(--box-2); background-image: var(--dots); background-size: 14px 14px; overflow: hidden;
-}
-.bz-tin-well::before { content: ""; position: absolute; z-index: -1; top: -10px; bottom: -10px; left: 50%; width: 46%; background: var(--paint); opacity: 0.32; transform: translateX(-50%) skewX(var(--skew)); }
-.bz-tin-copy { display: grid; gap: 8px; align-content: start; padding: 14px 16px 16px; }
-.bz-tin-name { margin: 0; font: italic 800 24px/1.05 var(--font-xc); letter-spacing: -0.02em; }
-.bz-tin-best { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; margin: 0; font: 700 15px var(--font-h); }
-.bz-tin-best small { width: 100%; color: var(--k-2); font-size: 12.5px; }
-.bz-tin .bz-open { margin-top: 4px; min-height: 48px; font-size: 16px; }
-.bz-odds summary { cursor: pointer; color: var(--cy-2); font: 700 14px var(--font-h); text-decoration: underline; text-underline-offset: 3px; }
-.bz-odds .cs-rows { margin-top: 10px; max-height: 360px; overflow: auto; display: grid; gap: 6px; }
-
-/* The tin itself (js/beta.js tinArt). */
-.bz-tinart { display: block; width: 148px; filter: drop-shadow(var(--drop-sm)); }
-.bz-tinart svg { display: block; width: 100%; height: auto; overflow: visible; }
-.bz-tin-shadow { fill: var(--k); opacity: 0.12; }
-.bz-tin-lid, .bz-tin-body { transform-box: view-box; transform-origin: 80px 140px; }
-@media (hover: hover) {
-  .bz-tin:hover .is-shelf .bz-tin-lid { transform: translateY(-6px) rotate(-3deg); transition: transform 0.22s var(--ease-pop); }
-}
-.bz-tinart .bz-tin-lid { transition: transform 0.22s var(--ease-out); }
-
-/* The stage: shake, pop, reel, reveal. */
-.bz-stage {
-  position: relative; isolation: isolate; display: grid; justify-items: center; gap: 12px; margin: 0 0 22px; padding: 18px 0 20px;
-  border: var(--line-w) solid var(--k); border-radius: 6px; overflow: hidden;
+.bz-tin-well, .bz-view-show {
+  position: relative; isolation: isolate; display: block; overflow: hidden;
   background-color: var(--box-2); background-image: var(--dots); background-size: 14px 14px;
-  animation: bz-rise 0.28s var(--ease-out); scroll-margin-top: 92px;
 }
-.bz-stage::before { content: ""; position: absolute; z-index: -1; top: -20px; bottom: -20px; left: 50%; width: 44%; background: var(--paint); opacity: 0.3; transform: translateX(-50%) skewX(var(--skew)); }
+.bz-tin-well { height: 264px; border-bottom: var(--line-w) solid var(--k); color: inherit; text-decoration: none; }
+.bz-tin-well::before, .bz-view-show::before { content: ""; position: absolute; z-index: -1; top: -20px; bottom: -20px; left: 50%; width: 52%; background: var(--paint); opacity: 0.34; transform: translateX(-50%) skewX(var(--skew)); }
+.bz-fan { position: absolute; inset: 0; display: block; }
+.bz-fan-card { position: absolute; left: 50%; top: 14px; width: 142px; margin-left: -71px; filter: drop-shadow(var(--drop-sm)); transition: transform 0.24s var(--ease-out); }
+.bz-fan-card.is-l, .bz-fan-card.is-r { top: 34px; width: 120px; margin-left: -60px; }
+.bz-fan-card.is-l { transform: translateX(-88px) rotate(-9deg); }
+.bz-fan-card.is-r { transform: translateX(88px) rotate(9deg); }
+@media (hover: hover) {
+  .bz-tin:hover .bz-fan-card.is-c { transform: translateY(-8px); }
+  .bz-tin:hover .bz-fan-card.is-l { transform: translateX(-98px) translateY(-4px) rotate(-12deg); }
+  .bz-tin:hover .bz-fan-card.is-r { transform: translateX(98px) translateY(-4px) rotate(12deg); }
+}
+/* The tin's front wall: the cards stand behind it. */
+.bz-tinfront {
+  position: absolute; z-index: 2; left: 50%; bottom: -3px; width: min(88%, 330px); height: 66px; transform: translateX(-50%);
+  display: grid; align-content: center; justify-items: center; gap: 1px; overflow: hidden;
+  border: var(--line-w) solid var(--k0); border-radius: 5px 5px 0 0; background: var(--paint); color: var(--paint-ink);
+}
+.bz-tinfront::before { content: ""; position: absolute; inset: 0 0 auto; height: 9px; background: rgb(0 0 0 / 0.2); border-bottom: 2px solid var(--k0); }
+.bz-tinfront::after { content: ""; position: absolute; top: -10px; bottom: -10px; left: 9%; width: 16px; background: #fff; opacity: 0.24; transform: skewX(var(--skew)); }
+.bz-tinfront b { margin-top: 8px; font: italic 800 23px/1 var(--font-xc); letter-spacing: -0.02em; white-space: nowrap; }
+.bz-tinfront i { font: 700 11.5px/1 var(--font-h); letter-spacing: 0.04em; opacity: 0.85; }
+.bz-tin-copy { display: grid; gap: 12px; align-content: start; padding: 13px 16px 16px; }
+.bz-tin-best { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; margin: 0; font: 700 16px var(--font-h); }
+.bz-tin-best small { width: 100%; color: var(--k-2); font-size: 12.5px; }
+.bz-tin-keys { display: grid; gap: 10px; }
+.bz-tin-all, .bz-view-back { color: var(--cy-2); font: 700 14px var(--font-h); text-decoration: underline; text-underline-offset: 3px; }
+.bz-tin .bz-open { min-height: 48px; font-size: 16px; }
+
+/* A tin's page: the chase cards in a row you swipe, each a real face. */
+.bz-view-head { display: grid; gap: 4px; margin: 0 0 14px; }
+.bz-view-back { justify-self: start; padding: 6px 0; }
+.bz-view-name { margin: 0; font: italic 800 30px/1.05 var(--font-xc); letter-spacing: -0.02em; }
+.bz-view-show { border: var(--line-w) solid var(--k); border-radius: 6px; }
+.bz-chase {
+  display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
+  padding: 22px max(18px, calc(50% - min(104px, 27vw))) 16px; -webkit-overflow-scrolling: touch;
+}
+.bz-chase::-webkit-scrollbar { display: none; }
+.bz-chase-card { flex: none; width: min(208px, 54vw); margin: 0; scroll-snap-align: center; display: grid; gap: 12px; }
+.bz-chase-face { all: unset; display: block; cursor: pointer; filter: drop-shadow(var(--drop)); }
+.bz-chase-face:focus-visible { outline: 3px solid var(--yel); outline-offset: 4px; }
+.bz-chase-card figcaption { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0 10px; align-items: baseline; font: 700 16px var(--font-h); }
+.bz-chase-card figcaption b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bz-chase-card figcaption small { grid-column: 1 / -1; color: var(--k-2); font-size: 13px; }
+.bz-view-keys { display: grid; gap: 10px; width: min(100%, 440px); margin: 16px auto 0; }
+.bz-view-keys .solid { min-height: 54px; font-size: 18px; }
+.bz-view-keys .bz-note { text-align: center; }
+.bz-all { margin-top: 26px; }
+.bz-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px 10px; }
+@media (min-width: 640px) { .bz-grid { grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: 20px 14px; } }
+.bz-cell { all: unset; display: grid; align-content: start; gap: 2px; cursor: pointer; min-width: 0; }
+.bz-cell:focus-visible { outline: 3px solid var(--yel); outline-offset: 3px; }
+.bz-cell img { width: 100%; aspect-ratio: 63 / 88; object-fit: contain; border-radius: 4.5%; margin-bottom: 5px; }
+.bz-cell b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 700 13.5px/1.2 var(--font-h); }
+.bz-cell small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--k-2); font-size: 11.5px; font-weight: 500; }
+.bz-cell-fig { display: grid; justify-items: start; gap: 1px; font: 700 13px var(--font-h); font-variant-numeric: tabular-nums; }
+.bz-cell-fig i { font-style: normal; color: var(--k-2); }
+
+/* Opening: the reel spins under the marker, stops on your card, and the card grows where it landed. */
+.bz-stage { display: grid; justify-items: center; gap: 12px; padding: 0 0 18px; scroll-margin-top: 92px; }
+.bz-reel-wrap { position: relative; width: 100%; overflow: hidden; padding: 52px 0 44px; }
+.bz-reel-wrap::before, .bz-reel-wrap::after { content: ""; position: absolute; z-index: 3; left: 50%; margin-left: -11px; border-left: 11px solid transparent; border-right: 11px solid transparent; filter: drop-shadow(0 2.5px 0 var(--k0)); transition: opacity 0.2s; }
+.bz-reel-wrap::before { top: 8px; border-top: 17px solid var(--yel); }
+.bz-reel-wrap::after { bottom: 8px; border-bottom: 17px solid var(--yel); filter: drop-shadow(0 -2.5px 0 var(--k0)); }
+.bz-stage.is-landed .bz-reel-wrap::before, .bz-stage.is-landed .bz-reel-wrap::after { opacity: 0; }
+.bz-reel { display: flex; gap: 12px; will-change: transform; }
+.bz-reel-card { flex: none; width: min(184px, 47vw); transition: opacity 0.35s var(--ease-out), transform 0.45s var(--ease-pop); }
+.bz-reel-card img { display: block; width: 100%; aspect-ratio: 63 / 88; object-fit: contain; border-radius: 4.5%; }
+.bz-stage.is-landed .bz-reel-card:not(.is-land) { opacity: 0.16; }
+.bz-reel-card.is-land { position: relative; z-index: 2; transform: scale(1.26); filter: drop-shadow(var(--drop)); }
+.bz-reveal { display: grid; justify-items: center; gap: 10px; width: 100%; padding: 0 16px; }
 @keyframes bz-rise { from { opacity: 0; transform: translateY(14px); } }
-.bz-stage-tin .bz-tinart { width: 190px; }
-.bz-stage.is-open .bz-tin-body, .bz-stage.is-open .bz-tin-lid { animation: bz-shake 0.6s ease-in-out; }
-.bz-stage.is-open .bz-tin-lid { animation: bz-shake 0.6s ease-in-out, bz-lid 0.45s 0.6s var(--ease-out) forwards; }
-@keyframes bz-shake { 0%, 100% { transform: rotate(0); } 20% { transform: rotate(-5deg); } 40% { transform: rotate(5deg); } 60% { transform: rotate(-4deg); } 80% { transform: rotate(3deg); } }
-@keyframes bz-lid { to { transform: translate(40px, -90px) rotate(24deg); opacity: 0; } }
-.bz-stage.is-reel .bz-tin-lid, .bz-stage.is-reveal .bz-tin-lid { opacity: 0; }
-.bz-stage.is-reel .bz-stage-tin, .bz-stage.is-reveal .bz-stage-tin { display: none; }
-.bz-stage:not(.is-reel) .bz-reel-wrap { display: none; }
-.bz-reel-wrap { position: relative; width: 100%; overflow: hidden; padding: 16px 0 6px; }
-.bz-reel-wrap::before { content: ""; position: absolute; z-index: 2; top: 0; left: 50%; margin-left: -10px; border-top: 15px solid var(--yel); border-left: 10px solid transparent; border-right: 10px solid transparent; filter: drop-shadow(0 2.5px 0 var(--k0)); }
-.bz-reel { display: flex; gap: 10px; will-change: transform; }
-.bz-reel img { flex: none; width: 104px; aspect-ratio: 63 / 88; object-fit: contain; border-radius: 4px; }
-.bz-reel img.is-land { transform: scale(1.08); transition: transform 0.25s var(--ease-pop); filter: drop-shadow(var(--drop-sm)); }
-.bz-reveal { position: relative; display: grid; justify-items: center; gap: 10px; width: 100%; padding: 0 16px; }
-.bz-reveal-slab { position: absolute; z-index: -1; top: 8px; left: 50%; width: 220px; height: 250px; background: var(--slab, var(--cy)); transform: translateX(-50%) skewX(var(--skew)); animation: bz-slab 0.4s var(--ease-out) backwards; }
-.bz-stage.is-hit .bz-reveal-slab { background: var(--yel); }
-@keyframes bz-slab { from { transform: translateX(-50%) skewX(var(--skew)) scaleY(0); } }
-.bz-reveal-card { width: min(200px, 54vw); aspect-ratio: 63 / 88; object-fit: contain; border-radius: 4.5%; filter: drop-shadow(var(--drop)); animation: bz-flip 0.6s 0.1s var(--ease-pop) backwards; }
-@keyframes bz-flip { from { opacity: 0; transform: translateY(40px) rotateY(80deg) scale(0.8); } }
-.bz-reveal-plate { display: grid; justify-items: center; gap: 2px; padding: 6px 18px 7px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); text-align: center; animation: bz-rise 0.3s 0.45s var(--ease-out) backwards; }
-.bz-reveal-plate b { font: italic 800 22px/1.1 var(--font-xc); letter-spacing: -0.02em; }
+.bz-reveal-plate { display: grid; justify-items: center; gap: 2px; padding: 6px 18px 7px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); text-align: center; animation: bz-rise 0.3s var(--ease-out) backwards; }
+.bz-reveal-plate b { font: italic 800 23px/1.1 var(--font-xc); letter-spacing: -0.02em; }
 .bz-reveal-plate span { color: var(--k-2); font-size: 13px; font-weight: 700; }
 .bz-reveal-plate.is-hit { background: var(--yel); border-color: var(--k0); }
 .bz-reveal-plate.is-hit b, .bz-reveal-plate.is-hit span { color: var(--k0); }
-.bz-reveal-fig { display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; gap: 4px 10px; margin: 0; font: 700 22px var(--font-h); animation: bz-rise 0.3s 0.55s var(--ease-out) backwards; }
+.bz-reveal-fig { display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; gap: 4px 10px; margin: 0; font: 700 22px var(--font-h); animation: bz-rise 0.3s 0.1s var(--ease-out) backwards; }
 .bz-reveal-fig small { color: var(--k-2); font-size: 13.5px; }
-.bz-reveal-keys { display: grid; gap: 8px; width: min(100%, 360px); animation: bz-rise 0.3s 0.65s var(--ease-out) backwards; }
-.bz-reveal-keys .solid { min-height: 50px; font-size: 17px; }
 
 @media (prefers-reduced-motion: reduce) {
   .bz-page *, .hub-beta { animation: none !important; transition: none !important; }

@@ -129,7 +129,7 @@ import { THEMES, canUseTheme, resolveLook } from "./themes.js?v=1";
 import { gearItem, normalizeGear } from "./gear.js?v=2";
 import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=15";
 import { initBattles } from "./battles.js?v=10";
-import { initCasino } from "./casino.js?v=23";
+import { initCasino } from "./casino.js?v=24";
 import { coinOf } from "./coin.js?v=5";
 // grading
 import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=16";
@@ -10581,6 +10581,15 @@ const casino = initCasino({
   invalidateCards: invalidateCasinoCards,
   sealedTargets: casinoSealedTargets,
   inspect: (card) => openInspect(card.id, Boolean(card.reverse), card.reverseKind || ""),
+  // Mystery Tins show their chase cards as real faces: the full cards for these ids (their sets load on demand),
+  // the face itself, and the light a card on show gives itself.
+  cardsById: async (ids) => {
+    const sets = new Set(ids.map((id) => setForCardId(id)).filter((set) => set?.dataFile));
+    await Promise.all([...sets].map((set) => loadSetData(set).catch(() => null)));
+    return new Map(ids.map((id) => [id, findCard(id)]).filter(([, card]) => card));
+  },
+  tcgFace,
+  presentFace,
   // A flip remembers the coin id each player flipped with; the art is that coin's
   // picture from the catalog (null = the house coin).
   coinArt: (id) => {
