@@ -1525,7 +1525,7 @@ function paintWrapperChoice() {
   const rip = document.getElementById("shop-rip");
   if (rip) {
     // The key says what it does and carries the price, which rolls when the set changes.
-    const label = !signed ? "Sign in to rip" : !affordable ? "Need coins" : `Rip the ${wrap?.name || liveSet.name} pack`;
+    const label = !signed ? "Sign in to rip" : !affordable ? "Need coins" : `Rip the ${wrap?.name || liveSet.name}${/(?:pack|pouch)$/i.test(wrap?.name || "") ? "" : " pack"}`;
     let words = rip.querySelector(".rip-l");
     let fig = rip.querySelector(".rip-n");
     if (!words || !fig) {
@@ -3388,7 +3388,8 @@ function packLine(set) {
   if (set.promoSet || !set.packSize) return "No boosters here. Each promo comes in its box.";
   const energy = (set.slots || []).filter((slot) => slot.pool === "energy").reduce((n, slot) => n + (slot.count || 1), 0);
   const tail = energy === 1 ? " and a basic Energy" : energy > 1 ? ` and ${energy} Energy` : "";
-  return `${set.packSize - energy} cards${tail} a pack, at the printed pull rates.`;
+  const cards = set.packSize - energy;
+  return `${cards} card${cards === 1 ? "" : "s"}${tail} a pack, at the printed pull rates.`;
 }
 
 /* ---- Home: the set on show --------------------------------------------------
@@ -3494,7 +3495,8 @@ function packShort(set) {
   if (set.promoSet || !set.packSize) return "";
   const energy = (set.slots || []).filter((slot) => slot.pool === "energy").reduce((n, slot) => n + (slot.count || 1), 0);
   const tail = energy === 1 ? " and a basic Energy" : energy > 1 ? ` and ${energy} Energy` : "";
-  return `${set.packSize - energy} cards${tail}`;
+  const cards = set.packSize - energy;
+  return `${cards} card${cards === 1 ? "" : "s"}${tail}`;
 }
 
 /** The pack picture on the stage: the img carries the hard shadow, the layers around it move. */

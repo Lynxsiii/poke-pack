@@ -3497,7 +3497,7 @@ export const MCDONALDS_2026 = {
   heroIds: ["mcd26-4", "mcd26-5", "mcd26-12", "mcd26-8"],
   wrappers: boosterWrappers("mcd26", [
     { id: "pikachu", name: "Pikachu", cardId: "mcd26-4", tag: "Happy Meal" },
-  ]),
+  ], 2), // v2: scripts/make_mcd_pouch_v2.py
 };
 
 /**
@@ -3561,7 +3561,7 @@ function happyMeal2017to2019(id, year, released, cost, heroIds, cardId) {
     lede: `Each Happy Meal came with one Confetti holo out of twelve, and the Pikachu in each set is the one people chase.`,
     slots: [{ pool: "printedHolo", count: 1 }],
     heroIds,
-    wrappers: boosterWrappers(id, [{ id: "happy-meal", name: "Happy Meal pouch", cardId, tag: `${year} Collection` }]),
+    wrappers: boosterWrappers(id, [{ id: "happy-meal", name: "Happy Meal pouch", cardId, tag: `${year} Collection` }], 2), // v2: scripts/make_mcd_pouch_v2.py
   };
 }
 
@@ -3597,7 +3597,7 @@ function happyMeal2014to2016(id, year, released, cost, heroIds, cardId, region) 
     lede: `Each Happy Meal came with one Confetti holo out of twelve, and the Pikachu in each set is the one people chase.`,
     slots: [{ pool: "printedHolo", count: 1 }],
     heroIds,
-    wrappers: boosterWrappers(id, [{ id: "happy-meal", name: "Happy Meal pouch", cardId, tag: `${year} Collection` }]),
+    wrappers: boosterWrappers(id, [{ id: "happy-meal", name: "Happy Meal pouch", cardId, tag: `${year} Collection` }], 2), // v2: scripts/make_mcd_pouch_v2.py
   };
 }
 
@@ -4865,7 +4865,7 @@ function happyMeal2011to2012(id, year, released, cost, heroIds, cardId) {
     lede: `Each Happy Meal came with one holo out of twelve, every one a Unova Pokémon from the Black & White sets.`,
     slots: [{ pool: "printedHolo", count: 1 }],
     heroIds,
-    wrappers: boosterWrappers(id, [{ id: "happy-meal", name: "Happy Meal pouch", cardId, tag: `${year} Collection` }]),
+    wrappers: boosterWrappers(id, [{ id: "happy-meal", name: "Happy Meal pouch", cardId, tag: `${year} Collection` }], 2), // v2: scripts/make_mcd_pouch_v2.py
   };
 }
 
