@@ -393,8 +393,9 @@ export function botAction(state, player, defs) {
   }
 
   // What the Stadium offers is free: take it while there is a deck to work with.
+  // Not one that costs its own cards (a Pokémon shuffled away, Energy back to the hand).
   const stadium = actions.find((a) => a.type === "stadium");
-  if (stadium && side.deck.length > 6) return stadium;
+  if (stadium && side.deck.length > 6 && !defOf(state, state.stadium.uid, defs).stadium.loss) return stadium;
 
   // A Tool goes on the Active Pokémon, else on whoever is first on the Bench.
   const tool = actions.filter((a) => a.type === "tool").sort((a, b) => a.spot - b.spot)[0];

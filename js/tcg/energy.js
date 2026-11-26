@@ -11,6 +11,8 @@
  *             for the ones that fit `who` ({ types } or {} for any)
  *   attach    steps run when it is attached from the hand (see trainers.js), with `where`
  *             ("active" | "bench" | "") when the text names a spot
+ *   alt       [{ who, provides }] what it gives instead on the Pokémon that fit
+ *   crowd     it gives only Colorless while another Special Energy is attached with it
  *
  * The text is read a sentence at a time; one sentence that isn't read keeps the whole
  * card out, so nothing is half working.
@@ -54,6 +56,10 @@ const SENTENCES = [
   [/^This card can be attached only to an Evolved Pokémon( \(excluding Pokémon-ex\))?$/, (m, out) => ((out.only = { evolved: true, ...(m[1] ? { noEx: true } : {}) }), true)],
   [/^While in play, this card (?:provides every type of Energy but provides only 1 Energy at a time|counts as every type of basic Energy but only provides 1 Energy at a time)$/, (m, out) => ((out.provides = ["Any"]), (out.any = true))],
   [new RegExp(`^This card can only be attached to (${TYPE}) Pokémon$`), (m, out) => ((out.only = { types: [m[1]] }), true)],
+  // Double Dragon Energy: 2 units, each of any type, on the only Pokémon it may go on.
+  [new RegExp(`^This card provides every type of Energy, but provides only 2 Energy at a time, only while this card is attached to an? (${TYPE}) Pokémon$`), (m, out) => out.only?.types?.[0] === m[1] && ((out.provides = ["Any", "Any"]), (out.any = true))],
+  // Multi Energy: on a Pokémon with another Special Energy attached, only Colorless.
+  [/^(?:this card|Multi energy) provides Colorless Energy when attached to a Pokémon that already has Special Energy cards attached to it$/i, (m, out) => (out.crowd = true)],
   [new RegExp(`^This card provides (${TYPE}) Energy only while this card is attached to an? (${TYPE}) Pokémon$`), (m, out) => ((out.provides = [m[1]]), (out.only = { types: [m[2]] }), true)],
   [new RegExp(`^${HOLDER} has no Weakness$`, "i"), (m, out) => mod(out, m[1], { noWeakness: true })],
   [new RegExp(`^${HOLDER} gets \\+(\\d+) HP$`, "i"), (m, out) => mod(out, m[1], { hp: Number(m[2]) })],
@@ -160,5 +166,6 @@ export function compileSpecialEnergy(text, cardName = "", debug = false) {
   if (out.mods.length) special.mods = out.mods;
   if (out.attach) special.attach = out.attach;
   if (out.alt) special.alt = out.alt;
+  if (out.crowd) special.crowd = true;
   return special;
 }

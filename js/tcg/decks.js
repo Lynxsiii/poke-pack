@@ -142,7 +142,8 @@ export function buildDeck(pool, format = "standard", { prefer = "", rand = Math.
     const needs = [...needsOf(def)];
     if (needs.length > 1) continue;
     const share = worth(def) * Math.min(owned, rules.copies);
-    for (const type of needs.length ? needs : FREE_ENERGY.map((e) => e.type)) tally[type] = (tally[type] || 0) + share * (needs.length ? 1 : 0.25);
+    // Basic Fairy Energy left Standard with the Fairy type.
+    for (const type of needs.length ? needs : FREE_ENERGY.map((e) => e.type).filter((t) => format !== "standard" || t !== "Fairy")) tally[type] = (tally[type] || 0) + share * (needs.length ? 1 : 0.25);
   }
   const ranked = Object.keys(tally).sort((a, b) => tally[b] - tally[a] || (rand() < 0.5 ? -1 : 1));
   const first = prefer && tally[prefer] ? prefer : ranked[0];
