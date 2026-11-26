@@ -598,7 +598,7 @@ main #view-catalog .cat-jump {
 }
 main #view-catalog .cat-jump::-webkit-scrollbar { display: none; }
 main #view-catalog .cat-jump-era {
-  flex: none; min-height: 40px; margin: 0; padding: 0; border: 0; background: none; color: var(--k);
+  flex: none; min-height: 44px; margin: 0 -8px; padding: 0 8px; border: 0; background: none; color: var(--k);
   font: 700 14px var(--font); white-space: nowrap; cursor: pointer;
   text-decoration: underline; text-decoration-color: var(--cy-2); text-decoration-thickness: 2px; text-underline-offset: 4px;
 }
@@ -676,3 +676,39 @@ main #view-catalog .cat-art.is-box img { height: 100%; }
 @media (prefers-reduced-motion: reduce) { #view-shop .kit-half { transition: none; } }
 body.no-motion #view-shop .kit-half { transition: none; }
 #view-shop .shop-step b { white-space: normal; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+
+/* A phone that is short (an iPhone in Safari, toolbars showing, is about
+   390x660): the stage gives up height so the Rip key is on the first screen,
+   not behind the tab bar. */
+@media (max-width: 639px) and (max-height: 760px) {
+  #view-shop .shop-stage, #view-shop .stage-pack { min-height: 286px; }
+  #view-shop .shop-stage.is-many .stage-pack { min-height: 270px; }
+  #view-shop .stage-img img { height: 256px; }
+  #view-shop .wrappers { gap: 7px; }
+  #view-shop .wr-pack { height: 56px; }
+  #view-shop .wr-th { height: 46px; }
+  #view-shop .shop-hero-card { min-height: 296px; }
+  #view-shop .shop-hero-card img { height: 262px; }
+}
+/* An iPhone SE in Safari (about 375x550). */
+@media (max-width: 639px) and (max-height: 620px) {
+  #view-shop .shop-top { gap: 10px; }
+  #view-shop .sethead:not(.no-logo) .shop-title, #view-shop .shop-title { font-size: clamp(36px, 10vw, 42px); }
+  #view-shop .shop-stage, #view-shop .stage-pack { min-height: 188px; }
+  #view-shop .shop-stage.is-many .stage-pack { min-height: 184px; }
+  #view-shop .stage-img img { height: 172px; }
+  #view-shop .wrappers { gap: 6px; }
+  #view-shop .wr-pack { height: 40px; }
+  #view-shop .wr-th { height: 32px; }
+  #view-shop .shop-hero-card { min-height: 210px; }
+  #view-shop .shop-hero-card img { height: 190px; }
+}
+
+/* Chase rows on a phone: the number label slims down and a long name takes a
+   second line instead of being cut to "Mega Darkrai ...". */
+@media (max-width: 639px) {
+  #view-shop .chase-row .rt-row-lab { min-width: 62px; padding: 0 15px 0 10px; font-size: 12px; }
+  #view-shop .chase-row .rt-row-name { margin-left: 8px; padding-block: 6px; }
+  #view-shop .chase-row .rt-row-name { white-space: normal; line-height: 1.12; overflow-wrap: anywhere; }
+  #view-shop .chase-row .rt-row-val { padding: 0 10px 0 8px; }
+}
