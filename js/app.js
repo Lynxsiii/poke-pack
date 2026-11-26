@@ -1011,7 +1011,7 @@ function paintHud(trainer) {
     face.classList.toggle("pixel", Boolean(trainer) && avatarStyle(trainer.avatarStyle) === "pixel");
     face.innerHTML = trainer
       ? `<img src="${esc(avatarSrc(trainer.avatar, trainer.avatarStyle))}" alt="" />`
-      : `<img src="assets/mark.png?v=35" alt="" />`;
+      : `<img src="assets/mark-v2.png" alt="" />`;
     if (trainer) face.style.setProperty("--avatar", avatarColor(trainer.color).hex);
   }
   if (lv) {
@@ -1072,7 +1072,7 @@ function paintMeMenus(trainer) {
   const xp = trainer && state.xp ? levelUi.xpOf(state) : null;
   const face = trainer
     ? `<img src="${esc(avatarSrc(trainer.avatar, trainer.avatarStyle))}" alt="" />`
-    : `<img src="assets/mark.png?v=35" alt="" />`;
+    : `<img src="assets/mark-v2.png" alt="" />`;
   const pixel = Boolean(trainer) && avatarStyle(trainer.avatarStyle) === "pixel";
   const set = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; };
   for (const id of ["me-face", "menu-me-face"]) {
@@ -3792,7 +3792,7 @@ async function hydrateAfterAccountChange() {
 /** The sign-in screen's hero: the set on show, its wrappers fanned on the cyan slab (decoration only). */
 function authHeroHtml() {
   const wraps = (liveSet?.wrappers || []).slice(0, 3);
-  if (!wraps.length) return `<div class="au-hero is-mark" aria-hidden="true"><span class="au-slab"></span><img class="au-pack" src="assets/mark.png?v=35" alt="" /></div>`;
+  if (!wraps.length) return `<div class="au-hero is-mark" aria-hidden="true"><span class="au-slab"></span><img class="au-pack" src="assets/mark-v2.png" alt="" /></div>`;
   const order = wraps.length === 3 ? [wraps[1], wraps[2], wraps[0]] : wraps.length === 2 ? [wraps[1], wraps[0]] : wraps;
   return `<div class="au-hero n${wraps.length}" aria-hidden="true"><span class="au-slab"></span>${order
     .map((w, i) => `<span class="au-pack p${order.length - i}">${packPicture(w, " ", liveSet).replace(/ alt="[^"]*"/, ' alt=""')}</span>`)
@@ -3939,7 +3939,7 @@ function renderAuth() {
     <div class="auth-page ${recover ? "is-recover" : signin ? "is-signin" : "is-signup"}">
       ${authHeroHtml()}
       <div class="auth-copy">
-        <p class="au-kicker"><img class="auth-mark" src="assets/mark.png?v=35" width="256" height="256" alt="" /><span class="au-plate">${recover ? "Recovery" : signin ? "Continue" : "New game"}</span></p>
+        <p class="au-kicker"><img class="auth-mark" src="assets/mark-v2.png" width="256" height="256" alt="" /><span class="au-plate">${recover ? "Recovery" : signin ? "Continue" : "New game"}</span></p>
         <h1>${recover ? "Reset your password" : signin ? "Welcome back" : "Make a trainer"}</h1>
         <p class="lede">${
           recover
@@ -4112,7 +4112,7 @@ function signedOutAccount() {
     <header class="tcard signed-out">
       <div class="tcard-band"></div>
       <div class="tcard-id">
-        <img class="brand-logo lg" src="assets/mark.png?v=35" width="256" height="256" alt="" />
+        <img class="brand-logo lg" src="assets/mark-v2.png" width="256" height="256" alt="" />
         <div class="tcard-who">
           <h1 class="tcard-name">Make a trainer</h1>
           <p class="tcard-idno"><span><small>ID No.</small> <b>Not issued yet</b></span></p>
@@ -5590,7 +5590,10 @@ function paintNav(current) {
     current === "auth" || current === "profile" ? "account" : current === "battles" ? "casino" : current === "vault" || current === "binder" ? "collection"
       : current === "social" && socialTab === "rankings" ? "rankings" : current;
   document.querySelectorAll(".nav-btn").forEach((btn) => {
-    const on = btn.dataset.view === navView || (current === "social" && btn.dataset.view === "social" && !btn.closest(".nav-more-list"));
+    let on = btn.dataset.view === navView || (current === "social" && btn.dataset.view === "social" && !btn.closest(".nav-more-list"));
+    // A game's own menu entry lights only on that game; the Casino entry stays lit for the whole area.
+    if (btn.dataset.casino) on = current === "casino" && casinoPath.startsWith(btn.dataset.casino);
+    else if (btn.dataset.view === "battles") on = current === "battles";
     btn.classList.toggle("active", on);
     if (on) btn.setAttribute("aria-current", "page");
     else btn.removeAttribute("aria-current");
@@ -8020,7 +8023,7 @@ document.querySelectorAll(".nav-btn").forEach((btn) => {
       return;
     }
     if (btn.dataset.view === "battles") battlePath = "/battles";
-    if (btn.dataset.view === "casino") casinoPath = "/casino";
+    if (btn.dataset.view === "casino") casinoPath = btn.dataset.casino || "/casino";
     if (btn.dataset.view === "grading") gradingPath = "/grading"; // grading
     if (btn.dataset.view === "trades") tradesPath = "/trades"; // trades
     setView(btn.dataset.view);
@@ -10596,7 +10599,7 @@ function sharePull(card, { pulled = false } = {}) {
     id: card.id,
     image: `/${String(card.image || card.imageSmall || "").replace(/^\//, "")}`,
     coin: "/assets/coins/pp-coin-v1.svg",
-    mark: "/assets/mark.png",
+    mark: "/assets/mark-v2.png",
     name: card.name,
     line: [rarity, no === "Energy" ? "" : no].filter(Boolean).join(", "),
     rarity,
