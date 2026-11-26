@@ -12,7 +12,7 @@ const open=vm.runInNewContext(source.slice(start,end)+'\nopenInspect',{
   pullTy:()=>'',foilWord:()=>'',coinAmount:()=>'',sellValue:()=>0,presentFace:()=>{},
   els:{inspectArt:{querySelector:()=>null},inspectInfo:{}},tcgFace:card=>{rendered=card;return '';},
   numberLine:()=>'',esc:s=>s||'',rarityPips:()=>'',rarityLine:()=>'',
-  paintInspect:()=>{},openDialog:()=>{},Date,
+  wishlist:{heart:()=>''},paintInspect:()=>{},openDialog:()=>{},Date,
   setForCard:()=>({id:'test',name:'Test Set'}),setIdentity:()=>({symbol:''}),inspectFindMore:()=>'',
 });
 open('test-1',false);
