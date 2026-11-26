@@ -3768,7 +3768,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Water"
@@ -3805,13 +3805,13 @@
         "type": "Poké-Body"
       }
     ],
+    "market": 278.37,
     "imageRemote": "https://images.scrydex.com/pokemon/np-37/large",
     "printedNumber": "NP 037",
     "tcgplayerId": 86558,
     "era": "ex",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 183.42
+    "foilAs": "Rare Holo"
   },
   {
     "id": "ex9-np038",
@@ -3821,7 +3821,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Fighting"
@@ -3858,13 +3858,13 @@
         "type": "Poké-Body"
       }
     ],
+    "market": 422.92,
     "imageRemote": "https://images.scrydex.com/pokemon/np-38/large",
     "printedNumber": "NP 038",
     "tcgplayerId": 85931,
     "era": "ex",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 250.83
+    "foilAs": "Rare Holo"
   },
   {
     "id": "ex9-np039",
@@ -3874,7 +3874,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Colorless"
@@ -3911,12 +3911,12 @@
         "type": "Poké-Body"
       }
     ],
+    "market": 840.0,
     "imageRemote": "https://images.scrydex.com/pokemon/np-39/large",
     "printedNumber": "NP 039",
     "tcgplayerId": 88644,
     "era": "ex",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 650.0
+    "foilAs": "Rare Holo"
   }
 ]

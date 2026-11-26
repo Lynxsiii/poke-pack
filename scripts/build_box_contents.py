@@ -58,6 +58,8 @@ EX_KITS_RESEARCH = ROOT / "scripts" / "box-research" / "ex-kits.json"  # e5: the
 WOTC_RESEARCH = ROOT / "scripts" / "box-research" / "wotc.json"
 WOTC_W1_RESEARCH = ROOT / "scripts" / "box-research" / "wotc-w1.json"
 WOTC_NEO_RESEARCH = ROOT / "scripts" / "box-research" / "wotc-neo.json"
+# EX-era theme decks (ex1-ex16), same shape as wotc.json; Bulbapedia lists checked against Serebii (2026-11-26).
+EX_DECKS_RESEARCH = [ROOT / "scripts" / "box-research" / f"ex-decks-{part}.json" for part in ("a", "b")]
 # Noah chose (2026-09-30) to ship single-source lists too. --verified-only drops them again;
 # --trial writes the same build to a scratch file.
 ALLOW_SINGLE = True
@@ -476,6 +478,9 @@ def build(parts_dir: Path) -> int:
         wotc_neo(json.loads(WOTC_NEO_RESEARCH.read_text(encoding="utf-8")), out, rep, offers, cards)
     if WOTC_RESEARCH.exists():
         wotc_decks(json.loads(WOTC_RESEARCH.read_text(encoding="utf-8")), out, rep, offers, cards)
+    for path in EX_DECKS_RESEARCH:
+        if path.exists():
+            wotc_decks(json.loads(path.read_text(encoding="utf-8")), out, rep, offers, cards)
 
     write(out, rep, offers)
     return 0

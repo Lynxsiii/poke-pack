@@ -4240,7 +4240,7 @@
       "name": "Build & Battle Box",
       "kind": "battle",
       "packs": 4,
-      "note": "One of four prerelease promos, picked at random. The real box also held a 23-card evolution pack, which isn't simulated.",
+      "note": "One of four prerelease promos, picked at random. The box also deals its 23-card evolution pack, the deck that goes with the promo.",
       "promos": [
         "sm10-smp179",
         "sm10-smp180",
@@ -4384,7 +4384,7 @@
       "name": "Build & Battle Box",
       "kind": "battle",
       "packs": 4,
-      "note": "One of four prerelease promos, picked at random. The real box also held a 23-card evolution pack, which isn't simulated.",
+      "note": "One of four prerelease promos, picked at random. The box also deals its 23-card evolution pack, the deck that goes with the promo.",
       "promos": [
         "sm11-smp202",
         "sm11-smp203",
@@ -17852,7 +17852,7 @@
       "promos": [
         "ex9-np037"
       ],
-      "price": 4183.42,
+      "price": 4278.37,
       "priceDerived": "packs"
     },
     {
@@ -17868,7 +17868,7 @@
       "promos": [
         "ex9-np038"
       ],
-      "price": 4250.83,
+      "price": 4422.92,
       "priceDerived": "packs"
     },
     {
@@ -17884,8 +17884,38 @@
       "promos": [
         "ex9-np039"
       ],
-      "price": 4650.0,
+      "price": 4840.0,
       "priceDerived": "packs"
+    },
+    {
+      "id": "deck-hydrobloom",
+      "name": "Theme Deck \"Hydrobloom\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Milotic, no booster pack (Bulbapedia and Serebii deck lists).",
+      "promos": [
+        "ex9-8"
+      ],
+      "price": 155.27,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "tcgplayerId": 232874,
+      "image": "assets/products/ex9/deck-hydrobloom.webp"
+    },
+    {
+      "id": "deck-wildfire",
+      "name": "Theme Deck \"Wildfire\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Manectric, no booster pack (Bulbapedia and Serebii deck lists).",
+      "promos": [
+        "ex9-7"
+      ],
+      "price": 178.79,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "tcgplayerId": 232875,
+      "image": "assets/products/ex9/deck-wildfire.webp"
     }
   ],
   "ex10": [
@@ -17900,6 +17930,36 @@
       "priceDerived": "packs",
       "tcgplayerId": 98576,
       "image": "assets/products/ex10/booster-box.webp"
+    },
+    {
+      "id": "deck-golden-sky",
+      "name": "Theme Deck \"Golden Sky\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Ho-Oh, no booster pack (Bulbapedia and Serebii deck lists).",
+      "promos": [
+        "ex10-27"
+      ],
+      "price": 168.37,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "tcgplayerId": 232865,
+      "image": "assets/products/ex10/deck-golden-sky.webp"
+    },
+    {
+      "id": "deck-silvery-ocean",
+      "name": "Theme Deck \"Silvery Ocean\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Lugia, no booster pack (Bulbapedia and Serebii deck lists).",
+      "promos": [
+        "ex10-29"
+      ],
+      "price": 96.89,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "tcgplayerId": 232866,
+      "image": "assets/products/ex10/deck-silvery-ocean.webp"
     }
   ],
   "ex11": [
@@ -17925,7 +17985,7 @@
         "ex11-np029",
         "ex11-np030"
       ],
-      "price": 3108.65,
+      "price": 3134.83,
       "priceDerived": "packs"
     },
     {
@@ -17937,7 +17997,7 @@
       "promos": [
         "ex11-np031"
       ],
-      "price": 3106.17,
+      "price": 3297.0,
       "priceDerived": "packs"
     },
     {
@@ -17949,7 +18009,7 @@
       "promos": [
         "ex11-np032"
       ],
-      "price": 3180.77,
+      "price": 3211.9,
       "priceDerived": "packs"
     },
     {
@@ -17961,8 +18021,38 @@
       "promos": [
         "ex11-np033"
       ],
-      "price": 3147.37,
+      "price": 3147.74,
       "priceDerived": "packs"
+    },
+    {
+      "id": "deck-breakthrough",
+      "name": "Theme Deck \"Breakthrough\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Crobat δ, no booster pack (Bulbapedia and Serebii deck lists).",
+      "promos": [
+        "ex11-2"
+      ],
+      "price": 95.28,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "tcgplayerId": 232863,
+      "image": "assets/products/ex11/deck-breakthrough.webp"
+    },
+    {
+      "id": "deck-steeplechase",
+      "name": "Theme Deck \"Steeplechase\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Salamence δ, no booster pack (Bulbapedia and Serebii deck lists).",
+      "promos": [
+        "ex11-14"
+      ],
+      "price": 102.79,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "tcgplayerId": 232864,
+      "image": "assets/products/ex11/deck-steeplechase.webp"
     }
   ],
   "ex12": [
@@ -17977,6 +18067,32 @@
       "priceDerived": "packs",
       "tcgplayerId": 98556,
       "image": "assets/products/ex12/booster-box.webp"
+    },
+    {
+      "id": "deck-groundbreaker",
+      "name": "Theme Deck \"Groundbreaker\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Golem, no booster pack (Bulbapedia and Serebii deck lists).",
+      "promos": [
+        "ex12-6"
+      ],
+      "price": 53.13,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price."
+    },
+    {
+      "id": "deck-shadowquake",
+      "name": "Theme Deck \"Shadowquake\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Gengar, no booster pack (Bulbapedia and Serebii deck lists).",
+      "promos": [
+        "ex12-5"
+      ],
+      "price": 268.05,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price."
     }
   ],
   "ex13": [
@@ -17991,6 +18107,36 @@
       "priceDerived": "packs",
       "tcgplayerId": 98523,
       "image": "assets/products/ex13/booster-box.webp"
+    },
+    {
+      "id": "deck-firemist",
+      "name": "Theme Deck \"FireMist\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Latias δ, no booster pack (Bulbapedia and Serebii deck lists).",
+      "promos": [
+        "ex13-21"
+      ],
+      "price": 63.21,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "tcgplayerId": 232850,
+      "image": "assets/products/ex13/deck-firemist.webp"
+    },
+    {
+      "id": "deck-floodrush",
+      "name": "Theme Deck \"FloodRush\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Latios δ, no booster pack (Bulbapedia and Serebii deck lists).",
+      "promos": [
+        "ex13-22"
+      ],
+      "price": 64.64,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "tcgplayerId": 232851,
+      "image": "assets/products/ex13/deck-floodrush.webp"
     }
   ],
   "ex14": [
@@ -18005,6 +18151,45 @@
       "priceDerived": "packs",
       "tcgplayerId": 98567,
       "image": "assets/products/ex14/booster-box.webp"
+    },
+    {
+      "id": "deck-green-cyclone",
+      "name": "Theme Deck \"Green Cyclone\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Venusaur, no booster pack (Bulbapedia and Serebii deck lists).",
+      "promos": [
+        "ex14-28"
+      ],
+      "price": 138.07,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price."
+    },
+    {
+      "id": "deck-storm-surge",
+      "name": "Theme Deck \"Storm Surge\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Blastoise, no booster pack (Bulbapedia and Serebii deck lists).",
+      "promos": [
+        "ex14-14"
+      ],
+      "price": 99.54,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price."
+    },
+    {
+      "id": "deck-earth-shower",
+      "name": "Theme Deck \"Earth Shower\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Swampert, no booster pack (Bulbapedia and Serebii deck lists).",
+      "promos": [
+        "ex14-27"
+      ],
+      "price": 89.24,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price."
     }
   ],
   "ex15": [
@@ -18031,6 +18216,32 @@
       "priceDerived": "packs",
       "tcgplayerId": 616216,
       "image": "assets/products/ex15/single-blister-pack.webp"
+    },
+    {
+      "id": "deck-shadow-blaze",
+      "name": "Theme Deck \"Shadow Blaze\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Typhlosion δ, no booster pack (Bulbapedia and Serebii deck lists).",
+      "promos": [
+        "ex15-12"
+      ],
+      "price": 161.39,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price."
+    },
+    {
+      "id": "deck-power-wave",
+      "name": "Theme Deck \"Power Wave\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Feraligatr δ, no booster pack (Bulbapedia and Serebii deck lists).",
+      "promos": [
+        "ex15-2"
+      ],
+      "price": 143.47,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price."
     }
   ],
   "ex16": [
@@ -18057,6 +18268,32 @@
       "priceDerived": "packs",
       "tcgplayerId": 616213,
       "image": "assets/products/ex16/single-blister-pack.webp"
+    },
+    {
+      "id": "deck-dark-blast",
+      "name": "Theme Deck \"Dark Blast\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Mightyena, no booster pack (Bulbapedia and Serebii deck lists).",
+      "promos": [
+        "ex16-18"
+      ],
+      "price": 67.47,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price."
+    },
+    {
+      "id": "deck-mind-game",
+      "name": "Theme Deck \"Mind Game\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Dusclops, no booster pack (Bulbapedia and Serebii deck lists).",
+      "promos": [
+        "ex16-14"
+      ],
+      "price": 267.28,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price."
     }
   ],
   "base1": [
@@ -19053,9 +19290,39 @@
       "packs": 36,
       "note": "36 packs, no code card. Groudon, the secret rare box topper, is not in the packs. TCGplayer has no market price for the box, only a single $52,400 listing (its mid price), which is used as it is: thin (36 packs at the $800 pack would be $28,800).",
       "promos": [],
-      "price": 52400.0,
+      "price": 64200.0,
       "tcgplayerId": 98596,
       "image": "assets/products/ex5/booster-box.webp"
+    },
+    {
+      "id": "deck-wish-maker",
+      "name": "Theme Deck \"Wish Maker\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Jirachi, no booster pack (Bulbapedia and Serebii deck lists).",
+      "promos": [
+        "ex5-8"
+      ],
+      "price": 125.9,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "tcgplayerId": 215766,
+      "image": "assets/products/ex5/deck-wish-maker.webp"
+    },
+    {
+      "id": "deck-forest-guardian",
+      "name": "Theme Deck \"Forest Guardian\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Dark Celebi, no booster pack (Bulbapedia and Serebii deck lists).",
+      "promos": [
+        "ex5-4"
+      ],
+      "price": 162.18,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "tcgplayerId": 215765,
+      "image": "assets/products/ex5/deck-forest-guardian.webp"
     }
   ],
   "ex6": [
@@ -19082,6 +19349,34 @@
       "priceDerived": "packs",
       "tcgplayerId": 488312,
       "image": "assets/products/ex6/single-pack-blister.webp"
+    },
+    {
+      "id": "deck-firered",
+      "name": "Theme Deck \"FireRed\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Pidgeot, no booster pack (Bulbapedia and Serebii deck lists).",
+      "promos": [
+        "ex6-10"
+      ],
+      "price": 55.12,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price."
+    },
+    {
+      "id": "deck-leafgreen",
+      "name": "Theme Deck \"LeafGreen\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Beedrill, no booster pack (Bulbapedia and Serebii deck lists).",
+      "promos": [
+        "ex6-1"
+      ],
+      "price": 70.4,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "tcgplayerId": 488299,
+      "image": "assets/products/ex6/deck-leafgreen.webp"
     }
   ],
   "ex7": [
@@ -19096,6 +19391,32 @@
       "priceDerived": "packs",
       "tcgplayerId": 98579,
       "image": "assets/products/ex7/booster-box.webp"
+    },
+    {
+      "id": "deck-jessie",
+      "name": "Theme Deck \"Jessie\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Dark Tyranitar, no booster pack (Bulbapedia and Serebii deck lists).",
+      "promos": [
+        "ex7-20"
+      ],
+      "price": 438.66,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price."
+    },
+    {
+      "id": "deck-james",
+      "name": "Theme Deck \"James\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Dark Dragonite, no booster pack (Bulbapedia and Serebii deck lists).",
+      "promos": [
+        "ex7-15"
+      ],
+      "price": 273.32,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price."
     }
   ],
   "ex8": [
@@ -19110,6 +19431,36 @@
       "priceDerived": "packs",
       "tcgplayerId": 98563,
       "image": "assets/products/ex8/booster-box.webp"
+    },
+    {
+      "id": "deck-starcharge",
+      "name": "Theme Deck \"Starcharge\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Deoxys, no booster pack (Bulbapedia and Serebii deck lists).",
+      "promos": [
+        "ex8-16"
+      ],
+      "price": 77.33,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "tcgplayerId": 232861,
+      "image": "assets/products/ex8/deck-starcharge.webp"
+    },
+    {
+      "id": "deck-jetstream",
+      "name": "Theme Deck \"Jetstream\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Rayquaza, no booster pack (Bulbapedia and Serebii deck lists).",
+      "promos": [
+        "ex8-22"
+      ],
+      "price": 105.29,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "tcgplayerId": 232862,
+      "image": "assets/products/ex8/deck-jetstream.webp"
     }
   ],
   "ex1": [
@@ -19165,8 +19516,38 @@
       "promos": [
         "ex1-np020"
       ],
-      "price": 2418.67,
+      "price": 2421.4,
       "priceDerived": "packs"
+    },
+    {
+      "id": "deck-ruby",
+      "name": "Theme Deck \"Ruby\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Blaziken, no booster pack (Bulbapedia and Serebii deck lists).",
+      "promos": [
+        "ex1-15"
+      ],
+      "price": 41.75,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "tcgplayerId": 488309,
+      "image": "assets/products/ex1/deck-ruby.webp"
+    },
+    {
+      "id": "deck-sapphire",
+      "name": "Theme Deck \"Sapphire\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Swampert, no booster pack (Bulbapedia and Serebii deck lists).",
+      "promos": [
+        "ex1-23"
+      ],
+      "price": 57.78,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "tcgplayerId": 488310,
+      "image": "assets/products/ex1/deck-sapphire.webp"
     }
   ],
   "ex2": [
@@ -19181,6 +19562,34 @@
       "priceDerived": "packs",
       "tcgplayerId": 98564,
       "image": "assets/products/ex2/booster-box.webp"
+    },
+    {
+      "id": "deck-oasis",
+      "name": "Theme Deck \"Oasis\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Armaldo, no booster pack (Bulbapedia and Serebii deck lists).",
+      "promos": [
+        "ex2-1"
+      ],
+      "price": 101.25,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price."
+    },
+    {
+      "id": "deck-caravan",
+      "name": "Theme Deck \"Caravan\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Cradily, no booster pack (Bulbapedia and Serebii deck lists).",
+      "promos": [
+        "ex2-3"
+      ],
+      "price": 93.47,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "tcgplayerId": 234511,
+      "image": "assets/products/ex2/deck-caravan.webp"
     }
   ],
   "ex3": [
@@ -19195,6 +19604,32 @@
       "priceDerived": "packs",
       "tcgplayerId": 98518,
       "image": "assets/products/ex3/booster-box.webp"
+    },
+    {
+      "id": "deck-windblast",
+      "name": "Theme Deck \"WindBlast\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Roselia, no booster pack (Bulbapedia and Serebii deck lists).",
+      "promos": [
+        "ex3-9"
+      ],
+      "price": 60.79,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price."
+    },
+    {
+      "id": "deck-firefang",
+      "name": "Theme Deck \"FireFang\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Salamence, no booster pack (Bulbapedia and Serebii deck lists).",
+      "promos": [
+        "ex3-19"
+      ],
+      "price": 499.99,
+      "tcgplayerId": 488300,
+      "image": "assets/products/ex3/deck-firefang.webp"
     }
   ],
   "ex4": [
@@ -19219,8 +19654,36 @@
       "promos": [
         "ex4-np034"
       ],
-      "price": 3046.88,
+      "price": 3050.59,
       "priceDerived": "packs"
+    },
+    {
+      "id": "deck-team-magma",
+      "name": "Theme Deck \"Team Magma\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Team Magma's Groudon, no booster pack (Bulbapedia and Serebii deck lists).",
+      "promos": [
+        "ex4-9"
+      ],
+      "price": 358.77,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "tcgplayerId": 488301,
+      "image": "assets/products/ex4/deck-team-magma.webp"
+    },
+    {
+      "id": "deck-team-aqua",
+      "name": "Theme Deck \"Team Aqua\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Team Aqua's Kyogre, no booster pack (Bulbapedia and Serebii deck lists).",
+      "promos": [
+        "ex4-3"
+      ],
+      "price": 677.39,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price."
     }
   ],
   "extk1a": [

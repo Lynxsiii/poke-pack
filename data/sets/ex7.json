@@ -29,6 +29,30 @@
       "promos": [],
       "note": "36 packs, no code card. Charmeleon, the secret rare box topper, is not in the packs. TCGplayer lists the box without a market price, so it is priced at 36 packs.",
       "hull": false
+    },
+    {
+      "id": "deck-jessie",
+      "name": "Theme Deck \"Jessie\"",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "20"
+      ],
+      "price": 438.66,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Dark Tyranitar, no booster pack (Bulbapedia and Serebii deck lists)."
+    },
+    {
+      "id": "deck-james",
+      "name": "Theme Deck \"James\"",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "15"
+      ],
+      "price": 273.32,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Dark Dragonite, no booster pack (Bulbapedia and Serebii deck lists)."
     }
   ]
 }

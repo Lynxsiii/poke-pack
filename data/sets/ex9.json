@@ -90,6 +90,32 @@
         "np039"
       ],
       "note": "Four packs in the real tin, two Emerald and two Crystal Guardians (pkmn.gg's np-37 to np-39 'EX Collector's Tins', October 2006; the pack mix is Bulbapedia's search excerpt only, so low-medium confidence), with the cosmos holo ex promo. Tin not simulated. TCGplayer lists no tin: priced from its packs at the Emerald pack price."
+    },
+    {
+      "id": "deck-hydrobloom",
+      "name": "Theme Deck \"Hydrobloom\"",
+      "kind": "deck",
+      "tcgplayerId": 232874,
+      "packs": 0,
+      "promos": [
+        "8"
+      ],
+      "price": 155.27,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Milotic, no booster pack (Bulbapedia and Serebii deck lists)."
+    },
+    {
+      "id": "deck-wildfire",
+      "name": "Theme Deck \"Wildfire\"",
+      "kind": "deck",
+      "tcgplayerId": 232875,
+      "packs": 0,
+      "promos": [
+        "7"
+      ],
+      "price": 178.79,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Manectric, no booster pack (Bulbapedia and Serebii deck lists)."
     }
   ]
 }

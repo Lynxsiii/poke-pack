@@ -1,0 +1,4450 @@
+{
+ "_about": "Diamond & Pearl through Call of Legends English Theme Decks, researched 2026-11-26: 35 decks (dp1 3, dp2 2, dp3 2, dp4 3, dp5 2, dp6 2, dp7 2, pl1 2, pl2 2, pl3 2, pl4 2 [Arceus], hgss1 3, hgss2 2, hgss3 2, hgss4 2, col1 2). The set a deck is filed under is the expansion Bulbapedia names (Platinum: Arceus decks are pl4). All 34 lists total exactly 60. Sources: (1) Bulbapedia deck pages '<Deck> (TCG)' via the MediaWiki API; (2) German pokewiki.de deck pages (Kartenliste with set+number, all 35); (3) Serebii https://serebii.net/card/themedeck/<deck>.shtml for the 22 DP and Platinum-block decks it covers (no HGSS/CoL pages; Serebii's quantity of the final rows is misparsed for Eternal Time, Overflow and Rebellion, and the Arceus promo row of Flamemaster/Stormshaper is not parsed, so those 5 are bp + pokewiki.de only). Recon also checked by a web-search summary of pokemoncard.io and a retailer list (not fetched directly). Cards resolved against data/<set>.json by (set, number). Disagreements (used value in brackets): Skull Charge energy Bulbapedia 14 Grass/10 Fighting vs pokewiki+Serebii 10/14 [10 Grass/14 Fighting]; Bombardment energy Bulbapedia+Serebii 8 Water/16 Fighting vs pokewiki 13/11 [8/16]; Infinite Space energy Bulbapedia 17 Water/7 Psychic vs pokewiki+Serebii 16/8 [16/8]; Endless Night Bulbapedia+Serebii 2 Energy Search+2 Potion vs pokewiki 4 Energy Search, no Potion [Bulbapedia]; Forest Force Bulbapedia (and a retailer list) 2 Dusk Ball+1 Energy Restore vs pokewiki+Serebii 1+2 [pokewiki/Serebii: 1 Dusk Ball, 2 Energy Restore]; Recon Bulbapedia (and pokemoncard/retailer) 8 Grass/10 Fire vs pokewiki 10/8 [8/10]. Several decks differ only by WHICH PRINT of a reprinted trainer/common (e.g. Potion dp1-118 vs dp3-127, Larvitar hgss2-50 vs 51, Metang dp6-64 vs 65): per-deck notes say which was used (Bulbapedia unless pokewiki and Serebii both agree on the other). Basic Energy: Bulbapedia lists dp2-pl4 deck Energy as unnumbered; pokewiki.de and Serebii both list them as Diamond & Pearl numbered Energy (dp1 123-130 = dp1-123..dp1-130 on the site), so those ids are used (the unnumbered shared print energy-<type>-dp also exists in js/catalog.js ENERGY_PRINTS as 'dp', same art, label 'Diamond & Pearl 2007'; dp1-123..130 chosen because two sources name the numbers). dp1 decks and Inferno Zone/Royal Frost/Terra Firma use dp1 numbered Energy per Bulbapedia too. HGSS decks use hgss1-115..122 (HGSS numbered Energy) and Call of Legends decks col1-88..95, numbers as Bulbapedia lists them (pokewiki.de's col1 energy numbers are wrong, types agree). No shared-id ENERGY_PRINTS ('energy-*') ids are used. SHOWCASE: 'showcase' is the deck's Rare Holo row; Bulbapedia's trivia says which are exclusive holofoil/Cosmos/Cracked Ice prints (all but dp1 decks and Endless Night, Flamemaster, Stormshaper, which carry no exclusive-print note: the deck holo is the pack print). Daybreak, Nightfall etc: the listing shows the holo Espeon and a non-holo Espeon as separate rows of the same card number; merged into one row n=2 (and for Rare-Holo-plus-Rare pairs the two copies are the same site id). TCGplayer: no separate product exists for any deck-exclusive print; showcaseTcgplayerId is the product of the card's normal print (TCGplayer folds the theme holo into the Normal/Reverse Holofoil rows of that product; the site's existing dp2-21-theme / dp2-33-theme reuse the same ids). SEALED TCGplayer: only 14 decks have a product (found by scanning every tcgcsv group): Terra Firma 228804, Inferno Zone 228805, Royal Frost 228806, Skull Charge 229176, Armor Fortress 229177, Polar Frost 229132, Forest Force 229134, Metal Surge 693133, Flourish 229173, Rebellion 229175, Overflow 645310, Stormshaper 678178, Flamemaster 678179, Retort 644851. No product exists for dp3, dp4, dp7 decks, Bombardment, pl2 decks, Ignition, any hgss1-4 deck, or Recon (tcgplayerId null). marketPrice is null for all: TCGplayer lists no market price; Inferno Zone has low/mid 399.99, Stormshaper/Flamemaster 501.00 (noted per deck). Release dates are Bulbapedia's. Extras: HGSS-block (Undaunted, Triumphant) and Call of Legends decks include a booster pack of the set (Bulbapedia); DP/Platinum/Unleashed/HGSS-base decks do not. The real decks hold no extra 61st card.",
+ "decks": [
+  {
+   "set": "dp1",
+   "name": "Inferno Zone",
+   "showcase": "Infernape",
+   "showcaseCard": "dp1-5",
+   "showcasePrint": "Rare Holo same as the set's pack print (no deck-exclusive finish noted on Bulbapedia)",
+   "showcaseTcgplayerId": 86274,
+   "tcgplayerId": 228805,
+   "tcgplayerName": "Diamond & Pearl Theme Deck - \"Inferno Zone\"",
+   "marketPrice": null,
+   "released": "2007-05-23",
+   "extras": "Per Bulbapedia: 60-card deck, damage counters, custom coin, rulebook, card list, and a single-player mat.",
+   "total": 60,
+   "cards": [
+    {
+     "id": "dp1-5",
+     "name": "Infernape",
+     "n": 1
+    },
+    {
+     "id": "dp1-56",
+     "name": "Monferno",
+     "n": 2
+    },
+    {
+     "id": "dp1-76",
+     "name": "Chimchar",
+     "n": 4
+    },
+    {
+     "id": "dp1-32",
+     "name": "Medicham",
+     "n": 1
+    },
+    {
+     "id": "dp1-89",
+     "name": "Meditite",
+     "n": 4
+    },
+    {
+     "id": "dp1-59",
+     "name": "Rapidash",
+     "n": 2
+    },
+    {
+     "id": "dp1-94",
+     "name": "Ponyta",
+     "n": 4
+    },
+    {
+     "id": "dp1-101",
+     "name": "Starly",
+     "n": 2
+    },
+    {
+     "id": "dp1-29",
+     "name": "Hippowdon",
+     "n": 1
+    },
+    {
+     "id": "dp1-51",
+     "name": "Hippopotas",
+     "n": 4
+    },
+    {
+     "id": "dp1-112",
+     "name": "Professor Rowan",
+     "n": 1
+    },
+    {
+     "id": "dp1-109",
+     "name": "PlusPower",
+     "n": 2
+    },
+    {
+     "id": "dp1-110",
+     "name": "Poké Ball",
+     "n": 2
+    },
+    {
+     "id": "dp1-111",
+     "name": "Pokédex HANDY910is",
+     "n": 2
+    },
+    {
+     "id": "dp1-117",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "dp1-118",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "dp1-124",
+     "name": "Fire Energy",
+     "n": 16
+    },
+    {
+     "id": "dp1-128",
+     "name": "Fighting Energy",
+     "n": 8
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Inferno_Zone_(TCG)",
+     "quote": "Deck list sums to 60 (18 rows); no exclusive-print trivia"
+    },
+    {
+     "url": "https://www.pokewiki.de/Inferno-Zone_%28TCG%29",
+     "quote": "Kartenliste, 60 cards"
+    },
+    {
+     "url": "https://serebii.net/card/themedeck/infernozone.shtml",
+     "quote": "Serebii theme deck card list with quantities"
+    }
+   ],
+   "notes": "Energy: numbered Energy as listed by Bulbapedia (dp1-124, dp1-128). TCGplayer has no market price; low/mid listing 399.99."
+  },
+  {
+   "set": "dp1",
+   "name": "Royal Frost",
+   "showcase": "Empoleon",
+   "showcaseCard": "dp1-4",
+   "showcasePrint": "Rare Holo same as the set's pack print (no deck-exclusive finish noted on Bulbapedia)",
+   "showcaseTcgplayerId": 85197,
+   "tcgplayerId": 228806,
+   "tcgplayerName": "Diamond & Pearl Theme Deck - \"Royal Frost\"",
+   "marketPrice": null,
+   "released": "2007-05-23",
+   "extras": "Per Bulbapedia: 60-card deck, damage counters, custom coin, rulebook, card list, and a single-player mat.",
+   "total": 60,
+   "cards": [
+    {
+     "id": "dp1-4",
+     "name": "Empoleon",
+     "n": 1
+    },
+    {
+     "id": "dp1-58",
+     "name": "Prinplup",
+     "n": 2
+    },
+    {
+     "id": "dp1-93",
+     "name": "Piplup",
+     "n": 4
+    },
+    {
+     "id": "dp1-26",
+     "name": "Floatzel",
+     "n": 1
+    },
+    {
+     "id": "dp1-72",
+     "name": "Buizel",
+     "n": 4
+    },
+    {
+     "id": "dp1-34",
+     "name": "Noctowl",
+     "n": 1
+    },
+    {
+     "id": "dp1-85",
+     "name": "Hoothoot",
+     "n": 4
+    },
+    {
+     "id": "dp1-54",
+     "name": "Magneton",
+     "n": 2
+    },
+    {
+     "id": "dp1-87",
+     "name": "Magnemite",
+     "n": 4
+    },
+    {
+     "id": "dp1-84",
+     "name": "Goldeen",
+     "n": 2
+    },
+    {
+     "id": "dp1-113",
+     "name": "Rival",
+     "n": 2
+    },
+    {
+     "id": "dp1-109",
+     "name": "PlusPower",
+     "n": 2
+    },
+    {
+     "id": "dp1-107",
+     "name": "Energy Switch",
+     "n": 2
+    },
+    {
+     "id": "dp1-105",
+     "name": "Double Full Heal",
+     "n": 1
+    },
+    {
+     "id": "dp1-117",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "dp1-118",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "dp1-125",
+     "name": "Water Energy",
+     "n": 18
+    },
+    {
+     "id": "dp1-130",
+     "name": "Metal Energy",
+     "n": 6
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Royal_Frost_(TCG)",
+     "quote": "Deck list sums to 60 (18 rows); no exclusive-print trivia"
+    },
+    {
+     "url": "https://www.pokewiki.de/Klirrende_K%C3%A4lte_%28TCG%29",
+     "quote": "Kartenliste, 60 cards"
+    },
+    {
+     "url": "https://serebii.net/card/themedeck/royalfrost.shtml",
+     "quote": "Serebii theme deck card list with quantities"
+    }
+   ],
+   "notes": "Energy: numbered Energy as listed by Bulbapedia (dp1-125, dp1-130)."
+  },
+  {
+   "set": "dp1",
+   "name": "Terra Firma",
+   "showcase": "Torterra",
+   "showcaseCard": "dp1-17",
+   "showcasePrint": "Rare Holo same as the set's pack print (no deck-exclusive finish noted on Bulbapedia)",
+   "showcaseTcgplayerId": 89983,
+   "tcgplayerId": 228804,
+   "tcgplayerName": "Diamond & Pearl Theme Deck - \"Terra Firma\"",
+   "marketPrice": null,
+   "released": "2007-05-23",
+   "extras": "Per Bulbapedia: 60-card deck, damage counters, custom coin, rulebook, card list, and a single-player mat.",
+   "total": 60,
+   "cards": [
+    {
+     "id": "dp1-17",
+     "name": "Torterra",
+     "n": 1
+    },
+    {
+     "id": "dp1-49",
+     "name": "Grotle",
+     "n": 2
+    },
+    {
+     "id": "dp1-103",
+     "name": "Turtwig",
+     "n": 4
+    },
+    {
+     "id": "dp1-19",
+     "name": "Beautifly",
+     "n": 1
+    },
+    {
+     "id": "dp1-63",
+     "name": "Silcoon",
+     "n": 2
+    },
+    {
+     "id": "dp1-104",
+     "name": "Wurmple",
+     "n": 4
+    },
+    {
+     "id": "dp1-28",
+     "name": "Heracross",
+     "n": 1
+    },
+    {
+     "id": "dp1-79",
+     "name": "Combee",
+     "n": 4
+    },
+    {
+     "id": "dp1-102",
+     "name": "Stunky",
+     "n": 2
+    },
+    {
+     "id": "dp1-100",
+     "name": "Sneasel",
+     "n": 4
+    },
+    {
+     "id": "dp1-115",
+     "name": "Super Scoop Up",
+     "n": 2
+    },
+    {
+     "id": "dp1-113",
+     "name": "Rival",
+     "n": 2
+    },
+    {
+     "id": "dp1-110",
+     "name": "Poké Ball",
+     "n": 2
+    },
+    {
+     "id": "dp1-108",
+     "name": "Night Pokémon Center",
+     "n": 1
+    },
+    {
+     "id": "dp1-117",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "dp1-118",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "dp1-123",
+     "name": "Grass Energy",
+     "n": 18
+    },
+    {
+     "id": "dp1-129",
+     "name": "Darkness Energy",
+     "n": 6
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Terra_Firma_(TCG)",
+     "quote": "Deck list sums to 60 (18 rows); no exclusive-print trivia"
+    },
+    {
+     "url": "https://www.pokewiki.de/Terra_Firma_%28TCG%29",
+     "quote": "Kartenliste, 60 cards"
+    },
+    {
+     "url": "https://serebii.net/card/themedeck/terrafirma.shtml",
+     "quote": "Serebii theme deck card list with quantities"
+    }
+   ],
+   "notes": "Energy: numbered Energy as listed by Bulbapedia (dp1-123, dp1-129)."
+  },
+  {
+   "set": "dp2",
+   "name": "Armor Fortress",
+   "showcase": "Bastiodon",
+   "showcaseCard": "dp2-21",
+   "showcasePrint": "The Holofoil version of Bastiodon is exclusive to this deck.",
+   "showcaseTcgplayerId": 93321,
+   "tcgplayerId": 229177,
+   "tcgplayerName": "Mysterious Treasures Theme Deck - \"Armor Fortress\"",
+   "marketPrice": null,
+   "released": "2007-08-22",
+   "extras": "Per Bulbapedia: 60-card deck, damage counters, custom coin, rulebook, card list, and a single-player mat.",
+   "total": 60,
+   "cards": [
+    {
+     "id": "dp2-21",
+     "name": "Bastiodon",
+     "n": 1
+    },
+    {
+     "id": "dp2-63",
+     "name": "Shieldon",
+     "n": 2
+    },
+    {
+     "id": "dp2-116",
+     "name": "Armor Fossil",
+     "n": 4
+    },
+    {
+     "id": "dp2-39",
+     "name": "Walrein",
+     "n": 1
+    },
+    {
+     "id": "dp2-62",
+     "name": "Sealeo",
+     "n": 2
+    },
+    {
+     "id": "dp2-102",
+     "name": "Spheal",
+     "n": 4
+    },
+    {
+     "id": "dp2-46",
+     "name": "Dodrio",
+     "n": 2
+    },
+    {
+     "id": "dp2-80",
+     "name": "Doduo",
+     "n": 4
+    },
+    {
+     "id": "dp2-74",
+     "name": "Bronzor",
+     "n": 4
+    },
+    {
+     "id": "dp2-106",
+     "name": "Totodile",
+     "n": 2
+    },
+    {
+     "id": "dp2-29",
+     "name": "Mantine",
+     "n": 1
+    },
+    {
+     "id": "dp2-109",
+     "name": "Bebe's Search",
+     "n": 2
+    },
+    {
+     "id": "dp2-111",
+     "name": "Fossil Excavator",
+     "n": 2
+    },
+    {
+     "id": "dp2-114",
+     "name": "Quick Ball",
+     "n": 1
+    },
+    {
+     "id": "dp1-117",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "dp1-118",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "dp1-125",
+     "name": "Water Energy",
+     "n": 16
+    },
+    {
+     "id": "dp1-130",
+     "name": "Metal Energy",
+     "n": 8
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Armor_Fortress_(TCG)",
+     "quote": "Deck list sums to 60 (18 rows); The Holofoil version of Bastiodon is exclusive to this deck."
+    },
+    {
+     "url": "https://www.pokewiki.de/Panzer-Festung_%28TCG%29",
+     "quote": "Kartenliste, 60 cards"
+    },
+    {
+     "url": "https://serebii.net/card/themedeck/armorfortress.shtml",
+     "quote": "Serebii theme deck card list with quantities"
+    }
+   ],
+   "notes": "Energy: Bulbapedia lists unnumbered Energy; pokewiki.de and Serebii list the Diamond & Pearl numbered Energy (dp1 123-130) for this deck, so dp1-123..130 are used (site has no separate print needed; energy-<type>-dp also exists as the unnumbered DP print)."
+  },
+  {
+   "set": "dp2",
+   "name": "Skull Charge",
+   "showcase": "Rampardos",
+   "showcaseCard": "dp2-33",
+   "showcasePrint": "The Holofoil version of Rampardos is exclusive to this deck.",
+   "showcaseTcgplayerId": 88569,
+   "tcgplayerId": 229176,
+   "tcgplayerName": "Mysterious Treasures Theme Deck - \"Skull Charge\"",
+   "marketPrice": null,
+   "released": "2007-08-22",
+   "extras": "Per Bulbapedia: 60-card deck, damage counters, custom coin, rulebook, card list, and a single-player mat.",
+   "total": 60,
+   "cards": [
+    {
+     "id": "dp2-33",
+     "name": "Rampardos",
+     "n": 1
+    },
+    {
+     "id": "dp2-43",
+     "name": "Cranidos",
+     "n": 2
+    },
+    {
+     "id": "dp2-117",
+     "name": "Skull Fossil",
+     "n": 4
+    },
+    {
+     "id": "dp2-27",
+     "name": "Kricketune",
+     "n": 1
+    },
+    {
+     "id": "dp2-86",
+     "name": "Kricketot",
+     "n": 3
+    },
+    {
+     "id": "dp2-55",
+     "name": "Masquerain",
+     "n": 2
+    },
+    {
+     "id": "dp2-104",
+     "name": "Surskit",
+     "n": 4
+    },
+    {
+     "id": "dp2-20",
+     "name": "Ariados",
+     "n": 1
+    },
+    {
+     "id": "dp2-103",
+     "name": "Spinarak",
+     "n": 3
+    },
+    {
+     "id": "dp2-51",
+     "name": "Graveler",
+     "n": 2
+    },
+    {
+     "id": "dp2-84",
+     "name": "Geodude",
+     "n": 4
+    },
+    {
+     "id": "dp2-109",
+     "name": "Bebe's Search",
+     "n": 2
+    },
+    {
+     "id": "dp2-110",
+     "name": "Dusk Ball",
+     "n": 1
+    },
+    {
+     "id": "dp2-111",
+     "name": "Fossil Excavator",
+     "n": 2
+    },
+    {
+     "id": "dp1-117",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "dp1-118",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "dp1-123",
+     "name": "Grass Energy",
+     "n": 10
+    },
+    {
+     "id": "dp1-128",
+     "name": "Fighting Energy",
+     "n": 14
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Skull_Charge_(TCG)",
+     "quote": "Deck list sums to 60 (18 rows); The Holofoil version of Rampardos is exclusive to this deck."
+    },
+    {
+     "url": "https://www.pokewiki.de/Kopf-Attacke_%28TCG%29",
+     "quote": "Kartenliste, 60 cards"
+    },
+    {
+     "url": "https://serebii.net/card/themedeck/skullcharge.shtml",
+     "quote": "Serebii theme deck card list with quantities"
+    }
+   ],
+   "notes": "Energy: Bulbapedia lists unnumbered Energy; pokewiki.de and Serebii list the Diamond & Pearl numbered Energy (dp1 123-130) for this deck, so dp1-123..130 are used (site has no separate print needed; energy-<type>-dp also exists as the unnumbered DP print). Grass Energy count: Bulbapedia 14, pokewiki.de 10, Serebii 10 (used 10). Fighting Energy count: Bulbapedia 10, pokewiki.de 14, Serebii 14 (used 14)."
+  },
+  {
+   "set": "dp3",
+   "name": "Lavaflow",
+   "showcase": "Magmortar",
+   "showcaseCard": "dp3-31",
+   "showcasePrint": "The Cosmos Holofoil version of Magmortar is exclusive to this deck.",
+   "showcaseTcgplayerId": 87056,
+   "tcgplayerId": null,
+   "tcgplayerName": null,
+   "marketPrice": null,
+   "released": "2007-11-07",
+   "extras": "Per Bulbapedia: 60-card deck, damage counters, custom coin, rulebook, card list, and a single-player mat.",
+   "total": 60,
+   "cards": [
+    {
+     "id": "dp3-31",
+     "name": "Magmortar",
+     "n": 1
+    },
+    {
+     "id": "dp3-93",
+     "name": "Magmar",
+     "n": 4
+    },
+    {
+     "id": "dp3-20",
+     "name": "Venusaur",
+     "n": 1
+    },
+    {
+     "id": "dp3-51",
+     "name": "Ivysaur",
+     "n": 2
+    },
+    {
+     "id": "dp3-77",
+     "name": "Bulbasaur",
+     "n": 4
+    },
+    {
+     "id": "dp3-46",
+     "name": "Charmeleon",
+     "n": 2
+    },
+    {
+     "id": "dp3-82",
+     "name": "Charmander",
+     "n": 4
+    },
+    {
+     "id": "dp3-104",
+     "name": "Sentret",
+     "n": 3
+    },
+    {
+     "id": "dp3-22",
+     "name": "Arcanine",
+     "n": 1
+    },
+    {
+     "id": "dp3-89",
+     "name": "Growlithe",
+     "n": 4
+    },
+    {
+     "id": "dp2-109",
+     "name": "Bebe's Search",
+     "n": 2
+    },
+    {
+     "id": "dp3-121",
+     "name": "PlusPower",
+     "n": 2
+    },
+    {
+     "id": "dp3-126",
+     "name": "Team Galactic's Mars",
+     "n": 2
+    },
+    {
+     "id": "dp1-117",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "dp3-127",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "dp1-123",
+     "name": "Grass Energy",
+     "n": 8
+    },
+    {
+     "id": "dp1-124",
+     "name": "Fire Energy",
+     "n": 16
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Lavaflow_(TCG)",
+     "quote": "Deck list sums to 60 (17 rows); The Cosmos Holofoil version of Magmortar is exclusive to this deck.; The Non Holofoil version of Venusaur is exclusive to this deck."
+    },
+    {
+     "url": "https://www.pokewiki.de/Lavafluss_%28TCG%29",
+     "quote": "Kartenliste, 60 cards"
+    },
+    {
+     "url": "https://serebii.net/card/themedeck/lavaflow.shtml",
+     "quote": "Serebii theme deck card list with quantities"
+    }
+   ],
+   "notes": "Energy: Bulbapedia lists unnumbered Energy; pokewiki.de and Serebii list the Diamond & Pearl numbered Energy (dp1 123-130) for this deck, so dp1-123..130 are used (site has no separate print needed; energy-<type>-dp also exists as the unnumbered DP print). Bebe's Search: Bulbapedia {'dp2-109': 2} vs pokewiki.de {'dp3-119': 2} (used Bulbapedia)."
+  },
+  {
+   "set": "dp3",
+   "name": "Powerhouse",
+   "showcase": "Electivire",
+   "showcaseCard": "dp3-25",
+   "showcasePrint": "The Cosmos Holofoil version of Electivire is exclusive to this deck.",
+   "showcaseTcgplayerId": 85122,
+   "tcgplayerId": null,
+   "tcgplayerName": null,
+   "marketPrice": null,
+   "released": "2007-11-07",
+   "extras": "Per Bulbapedia: 60-card deck, damage counters, custom coin, rulebook, card list, and a single-player mat.",
+   "total": 60,
+   "cards": [
+    {
+     "id": "dp3-25",
+     "name": "Electivire",
+     "n": 1
+    },
+    {
+     "id": "dp3-87",
+     "name": "Electabuzz",
+     "n": 4
+    },
+    {
+     "id": "dp3-1",
+     "name": "Ampharos",
+     "n": 1
+    },
+    {
+     "id": "dp3-50",
+     "name": "Flaaffy",
+     "n": 2
+    },
+    {
+     "id": "dp3-94",
+     "name": "Mareep",
+     "n": 4
+    },
+    {
+     "id": "dp3-48",
+     "name": "Donphan",
+     "n": 2
+    },
+    {
+     "id": "dp3-98",
+     "name": "Phanpy",
+     "n": 4
+    },
+    {
+     "id": "dp3-113",
+     "name": "Stantler",
+     "n": 3
+    },
+    {
+     "id": "dp3-26",
+     "name": "Electrode",
+     "n": 1
+    },
+    {
+     "id": "dp3-117",
+     "name": "Voltorb",
+     "n": 4
+    },
+    {
+     "id": "dp3-122",
+     "name": "Professor Oak's Visit",
+     "n": 2
+    },
+    {
+     "id": "dp3-125",
+     "name": "Roseanne's Research",
+     "n": 2
+    },
+    {
+     "id": "dp3-121",
+     "name": "PlusPower",
+     "n": 2
+    },
+    {
+     "id": "dp1-117",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "dp3-127",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "dp1-126",
+     "name": "Lightning Energy",
+     "n": 16
+    },
+    {
+     "id": "dp1-128",
+     "name": "Fighting Energy",
+     "n": 8
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Powerhouse_(TCG)",
+     "quote": "Deck list sums to 60 (17 rows); The Cosmos Holofoil version of Electivire is exclusive to this deck.; The Non Holofoil version of Ampharos is exclusive to this deck."
+    },
+    {
+     "url": "https://www.pokewiki.de/Kraftpaket_%28TCG%29",
+     "quote": "Kartenliste, 60 cards"
+    },
+    {
+     "url": "https://serebii.net/card/themedeck/powerhouse.shtml",
+     "quote": "Serebii theme deck card list with quantities"
+    }
+   ],
+   "notes": "Energy: Bulbapedia lists unnumbered Energy; pokewiki.de and Serebii list the Diamond & Pearl numbered Energy (dp1 123-130) for this deck, so dp1-123..130 are used (site has no separate print needed; energy-<type>-dp also exists as the unnumbered DP print)."
+  },
+  {
+   "set": "dp4",
+   "name": "Endless Night",
+   "showcase": "Darkrai",
+   "showcaseCard": "dp4-4",
+   "showcasePrint": "Rare Holo same as the set's pack print (no deck-exclusive finish noted on Bulbapedia)",
+   "showcaseTcgplayerId": 84699,
+   "tcgplayerId": null,
+   "tcgplayerName": null,
+   "marketPrice": null,
+   "released": "2008-02-13",
+   "extras": "Per Bulbapedia: 60-card deck, damage counters, custom coin, rulebook, card list, and a single-player mat.",
+   "total": 60,
+   "cards": [
+    {
+     "id": "dp4-4",
+     "name": "Darkrai",
+     "n": 1
+    },
+    {
+     "id": "dp4-34",
+     "name": "Cacturne",
+     "n": 2
+    },
+    {
+     "id": "dp4-62",
+     "name": "Cacnea",
+     "n": 4
+    },
+    {
+     "id": "dp4-13",
+     "name": "Beedrill",
+     "n": 1
+    },
+    {
+     "id": "dp4-73",
+     "name": "Kakuna",
+     "n": 2
+    },
+    {
+     "id": "dp4-93",
+     "name": "Weedle",
+     "n": 4
+    },
+    {
+     "id": "dp4-18",
+     "name": "Houndoom",
+     "n": 1
+    },
+    {
+     "id": "dp4-69",
+     "name": "Houndour",
+     "n": 4
+    },
+    {
+     "id": "dp4-83",
+     "name": "Slugma",
+     "n": 4
+    },
+    {
+     "id": "dp4-59",
+     "name": "Zangoose",
+     "n": 2
+    },
+    {
+     "id": "dp2-114",
+     "name": "Quick Ball",
+     "n": 2
+    },
+    {
+     "id": "dp1-117",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "dp3-127",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "dp4-99",
+     "name": "Leftovers",
+     "n": 1
+    },
+    {
+     "id": "dp4-97",
+     "name": "Amulet Coin",
+     "n": 2
+    },
+    {
+     "id": "dp3-125",
+     "name": "Roseanne's Research",
+     "n": 2
+    },
+    {
+     "id": "dp1-123",
+     "name": "Grass Energy",
+     "n": 10
+    },
+    {
+     "id": "dp1-124",
+     "name": "Fire Energy",
+     "n": 8
+    },
+    {
+     "id": "dp1-129",
+     "name": "Darkness Energy",
+     "n": 6
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Endless_Night_(TCG)",
+     "quote": "Deck list sums to 60 (19 rows); no exclusive-print trivia"
+    },
+    {
+     "url": "https://www.pokewiki.de/Endlose_Nacht_%28TCG%29",
+     "quote": "Kartenliste, 60 cards"
+    },
+    {
+     "url": "https://serebii.net/card/themedeck/endlessnight.shtml",
+     "quote": "Serebii theme deck card list with quantities"
+    }
+   ],
+   "notes": "Energy: Bulbapedia lists unnumbered Energy; pokewiki.de and Serebii list the Diamond & Pearl numbered Energy (dp1 123-130) for this deck, so dp1-123..130 are used (site has no separate print needed; energy-<type>-dp also exists as the unnumbered DP print). Energy Search: Bulbapedia {'dp1-117': 2} vs pokewiki.de {'dp1-117': 4} (used Bulbapedia). Potion: Bulbapedia {'dp3-127': 2} vs pokewiki.de {} (used Bulbapedia). COUNT DISAGREE Energy Search: Bulbapedia 2 vs pokewiki.de 4 COUNT DISAGREE Potion: Bulbapedia 2 vs pokewiki.de 0"
+  },
+  {
+   "set": "dp4",
+   "name": "Eternal Time",
+   "showcase": "Dialga",
+   "showcaseCard": "dp4-16",
+   "showcasePrint": "The Cosmos Holofoil version of Dialga is exclusive to this deck.",
+   "showcaseTcgplayerId": 84799,
+   "tcgplayerId": null,
+   "tcgplayerName": null,
+   "marketPrice": null,
+   "released": "2008-02-13",
+   "extras": "Per Bulbapedia: 60-card deck, damage counters, custom coin, rulebook, card list, and a single-player mat.",
+   "total": 60,
+   "cards": [
+    {
+     "id": "dp4-16",
+     "name": "Dialga",
+     "n": 1
+    },
+    {
+     "id": "dp4-6",
+     "name": "Porygon-Z",
+     "n": 1
+    },
+    {
+     "id": "dp4-49",
+     "name": "Porygon2",
+     "n": 2
+    },
+    {
+     "id": "dp4-81",
+     "name": "Porygon",
+     "n": 4
+    },
+    {
+     "id": "dp4-85",
+     "name": "Solrock",
+     "n": 2
+    },
+    {
+     "id": "dp4-76",
+     "name": "Lunatone",
+     "n": 2
+    },
+    {
+     "id": "dp4-27",
+     "name": "Primeape",
+     "n": 1
+    },
+    {
+     "id": "dp4-79",
+     "name": "Mankey",
+     "n": 4
+    },
+    {
+     "id": "dp4-78",
+     "name": "Makuhita",
+     "n": 4
+    },
+    {
+     "id": "dp4-88",
+     "name": "Togepi",
+     "n": 2
+    },
+    {
+     "id": "dp4-53",
+     "name": "Skarmory",
+     "n": 2
+    },
+    {
+     "id": "dp1-110",
+     "name": "Poké Ball",
+     "n": 2
+    },
+    {
+     "id": "dp1-117",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "dp3-128",
+     "name": "Switch",
+     "n": 2
+    },
+    {
+     "id": "dp4-97",
+     "name": "Amulet Coin",
+     "n": 1
+    },
+    {
+     "id": "dp4-99",
+     "name": "Leftovers",
+     "n": 2
+    },
+    {
+     "id": "dp3-122",
+     "name": "Professor Oak's Visit",
+     "n": 2
+    },
+    {
+     "id": "dp1-128",
+     "name": "Fighting Energy",
+     "n": 16
+    },
+    {
+     "id": "dp1-130",
+     "name": "Metal Energy",
+     "n": 8
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Eternal_Time_(TCG)",
+     "quote": "Deck list sums to 60 (19 rows); The Cosmos Holofoil version of Dialga is exclusive to this deck.; The Non Holofoil version of Porygon-Z is exclusive to this deck."
+    },
+    {
+     "url": "https://www.pokewiki.de/Ewige_Zeit_%28TCG%29",
+     "quote": "Kartenliste, 60 cards"
+    },
+    {
+     "url": "https://serebii.net/card/themedeck/eternaltime.shtml",
+     "quote": "Serebii theme deck card list with quantities (partial parse only: confirms Pokemon/Trainer lines)"
+    }
+   ],
+   "notes": "Energy: Bulbapedia lists unnumbered Energy; pokewiki.de and Serebii list the Diamond & Pearl numbered Energy (dp1 123-130) for this deck, so dp1-123..130 are used (site has no separate print needed; energy-<type>-dp also exists as the unnumbered DP print). Switch: Bulbapedia {'dp3-128': 2} vs pokewiki.de {'dp1-119': 2} (used Bulbapedia). Serebii page parsed only partially (quantity of the last rows misread); Bulbapedia and pokewiki.de agree exactly."
+  },
+  {
+   "set": "dp4",
+   "name": "Infinite Space",
+   "showcase": "Palkia",
+   "showcaseCard": "dp4-26",
+   "showcasePrint": "The Cosmos Holofoil version of Palkia is exclusive to this deck.",
+   "showcaseTcgplayerId": 87907,
+   "tcgplayerId": null,
+   "tcgplayerName": null,
+   "marketPrice": null,
+   "released": "2008-02-13",
+   "extras": "Per Bulbapedia: 60-card deck, damage counters, custom coin, rulebook, card list, and a single-player mat.",
+   "total": 60,
+   "cards": [
+    {
+     "id": "dp4-26",
+     "name": "Palkia",
+     "n": 1
+    },
+    {
+     "id": "dp4-17",
+     "name": "Exploud",
+     "n": 1
+    },
+    {
+     "id": "dp4-44",
+     "name": "Loudred",
+     "n": 2
+    },
+    {
+     "id": "dp4-94",
+     "name": "Whismur",
+     "n": 4
+    },
+    {
+     "id": "dp4-28",
+     "name": "Slowking",
+     "n": 1
+    },
+    {
+     "id": "dp4-82",
+     "name": "Slowpoke",
+     "n": 4
+    },
+    {
+     "id": "dp4-61",
+     "name": "Buizel",
+     "n": 4
+    },
+    {
+     "id": "dp4-33",
+     "name": "Arbok",
+     "n": 2
+    },
+    {
+     "id": "dp4-66",
+     "name": "Ekans",
+     "n": 4
+    },
+    {
+     "id": "dp4-75",
+     "name": "Krabby",
+     "n": 2
+    },
+    {
+     "id": "dp2-110",
+     "name": "Dusk Ball",
+     "n": 2
+    },
+    {
+     "id": "dp1-117",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "dp1-118",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "dp4-100",
+     "name": "Moonlight Stadium",
+     "n": 1
+    },
+    {
+     "id": "dp4-97",
+     "name": "Amulet Coin",
+     "n": 2
+    },
+    {
+     "id": "dp4-98",
+     "name": "Felicity's Drawing",
+     "n": 2
+    },
+    {
+     "id": "dp1-125",
+     "name": "Water Energy",
+     "n": 16
+    },
+    {
+     "id": "dp1-127",
+     "name": "Psychic Energy",
+     "n": 8
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Infinite_Space_(TCG)",
+     "quote": "Deck list sums to 60 (18 rows); The Cosmos Holofoil version of Palkia is exclusive to this deck."
+    },
+    {
+     "url": "https://www.pokewiki.de/Unendlicher_Raum_%28TCG%29",
+     "quote": "Kartenliste, 60 cards"
+    },
+    {
+     "url": "https://serebii.net/card/themedeck/infinitespace.shtml",
+     "quote": "Serebii theme deck card list with quantities"
+    }
+   ],
+   "notes": "Energy: Bulbapedia lists unnumbered Energy; pokewiki.de and Serebii list the Diamond & Pearl numbered Energy (dp1 123-130) for this deck, so dp1-123..130 are used (site has no separate print needed; energy-<type>-dp also exists as the unnumbered DP print). Potion: print/number {'dp3-127': 2} on Bulbapedia, {'dp1-118': 2} on pokewiki.de and Serebii (used the latter). Water Energy count: Bulbapedia 17, pokewiki.de 16, Serebii 16 (used 16). Psychic Energy count: Bulbapedia 7, pokewiki.de 8, Serebii 8 (used 8)."
+  },
+  {
+   "set": "dp5",
+   "name": "Forest Force",
+   "showcase": "Leafeon",
+   "showcaseCard": "dp5-24",
+   "showcasePrint": "The Cosmos Holofoil version of Leafeon is exclusive to this deck.",
+   "showcaseTcgplayerId": 86678,
+   "tcgplayerId": 229134,
+   "tcgplayerName": "Majestic Dawn Theme Deck - \"Forest Force\"",
+   "marketPrice": null,
+   "released": "2008-05-21",
+   "extras": "Per Bulbapedia: 60-card deck, damage counters, custom coin, rulebook, card list, and a single-player mat.",
+   "total": 60,
+   "cards": [
+    {
+     "id": "dp5-24",
+     "name": "Leafeon",
+     "n": 1
+    },
+    {
+     "id": "dp5-18",
+     "name": "Espeon",
+     "n": 1
+    },
+    {
+     "id": "dp5-62",
+     "name": "Eevee",
+     "n": 4
+    },
+    {
+     "id": "dp5-30",
+     "name": "Torterra",
+     "n": 1
+    },
+    {
+     "id": "dp5-37",
+     "name": "Grotle",
+     "n": 2
+    },
+    {
+     "id": "dp5-77",
+     "name": "Turtwig",
+     "n": 4
+    },
+    {
+     "id": "dp5-35",
+     "name": "Ambipom",
+     "n": 2
+    },
+    {
+     "id": "dp5-50",
+     "name": "Aipom",
+     "n": 4
+    },
+    {
+     "id": "dp5-60",
+     "name": "Croagunk",
+     "n": 4
+    },
+    {
+     "id": "dp5-52",
+     "name": "Bronzor",
+     "n": 2
+    },
+    {
+     "id": "dp5-80",
+     "name": "Dusk Ball",
+     "n": 1
+    },
+    {
+     "id": "dp5-81",
+     "name": "Energy Restore",
+     "n": 2
+    },
+    {
+     "id": "dp5-83",
+     "name": "Mom's Kindness",
+     "n": 2
+    },
+    {
+     "id": "dp2-113",
+     "name": "Night Maintenance",
+     "n": 2
+    },
+    {
+     "id": "dp5-90",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "dp3-127",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "dp1-123",
+     "name": "Grass Energy",
+     "n": 14
+    },
+    {
+     "id": "dp1-127",
+     "name": "Psychic Energy",
+     "n": 10
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Forest_Force_(TCG)",
+     "quote": "Deck list sums to 60 (18 rows); The Cosmos Holofoil version of Leafeon is exclusive to this deck."
+    },
+    {
+     "url": "https://www.pokewiki.de/Waldwucht_%28TCG%29",
+     "quote": "Kartenliste, 60 cards"
+    },
+    {
+     "url": "https://serebii.net/card/themedeck/forestforce.shtml",
+     "quote": "Serebii theme deck card list with quantities"
+    },
+    {
+     "url": "https://cardcodex.com/pokemon/diamond-pearl/majestic-dawn/majestic-dawn-theme-deck-forest-force-dp5/",
+     "quote": "retailer listing (via search summary): 2 Dusk Ball, 1 Energy Restore (agrees with Bulbapedia, not with Serebii/pokewiki)"
+    }
+   ],
+   "notes": "Energy: Bulbapedia lists unnumbered Energy; pokewiki.de and Serebii list the Diamond & Pearl numbered Energy (dp1 123-130) for this deck, so dp1-123..130 are used (site has no separate print needed; energy-<type>-dp also exists as the unnumbered DP print). Dusk Ball: print/number {'dp5-80': 2} on Bulbapedia, {'dp5-80': 1} on pokewiki.de and Serebii (used the latter). Energy Restore: print/number {'dp5-81': 1} on Bulbapedia, {'dp5-81': 2} on pokewiki.de and Serebii (used the latter). Night Maintenance: print/number {'dp3-120': 2} on Bulbapedia, {'dp2-113': 2} on pokewiki.de and Serebii (used the latter). COUNT DISAGREE Energy Restore: Bulbapedia 1 vs pokewiki.de 2 COUNT DISAGREE Dusk Ball: Bulbapedia 2 vs pokewiki.de 1 COUNT DISAGREE Energy Restore: Bulbapedia 1 vs Serebii 2 COUNT DISAGREE Dusk Ball: Bulbapedia 2 vs Serebii 1"
+  },
+  {
+   "set": "dp5",
+   "name": "Polar Frost",
+   "showcase": "Glaceon",
+   "showcaseCard": "dp5-20",
+   "showcasePrint": "The Cosmos Holofoil version of Glaceon is exclusive to this deck.",
+   "showcaseTcgplayerId": 85745,
+   "tcgplayerId": 229132,
+   "tcgplayerName": "Majestic Dawn Theme Deck - \"Polar Frost\"",
+   "marketPrice": null,
+   "released": "2008-05-21",
+   "extras": "Per Bulbapedia: 60-card deck, damage counters, custom coin, rulebook, card list, and a single-player mat.",
+   "total": 60,
+   "cards": [
+    {
+     "id": "dp5-20",
+     "name": "Glaceon",
+     "n": 1
+    },
+    {
+     "id": "dp5-23",
+     "name": "Jolteon",
+     "n": 1
+    },
+    {
+     "id": "dp5-62",
+     "name": "Eevee",
+     "n": 4
+    },
+    {
+     "id": "dp5-17",
+     "name": "Empoleon",
+     "n": 1
+    },
+    {
+     "id": "dp5-44",
+     "name": "Prinplup",
+     "n": 2
+    },
+    {
+     "id": "dp5-71",
+     "name": "Piplup",
+     "n": 4
+    },
+    {
+     "id": "dp5-40",
+     "name": "Manectric",
+     "n": 2
+    },
+    {
+     "id": "dp5-64",
+     "name": "Electrike",
+     "n": 4
+    },
+    {
+     "id": "dp5-70",
+     "name": "Pikachu",
+     "n": 4
+    },
+    {
+     "id": "dp5-73",
+     "name": "Shellos East Sea",
+     "n": 2
+    },
+    {
+     "id": "dp5-80",
+     "name": "Dusk Ball",
+     "n": 1
+    },
+    {
+     "id": "dp5-83",
+     "name": "Mom's Kindness",
+     "n": 2
+    },
+    {
+     "id": "dp5-86",
+     "name": "Quick Ball",
+     "n": 2
+    },
+    {
+     "id": "dp5-88",
+     "name": "Warp Point",
+     "n": 2
+    },
+    {
+     "id": "dp5-90",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "dp3-127",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "dp1-125",
+     "name": "Water Energy",
+     "n": 12
+    },
+    {
+     "id": "dp1-126",
+     "name": "Lightning Energy",
+     "n": 12
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Polar_Frost_(TCG)",
+     "quote": "Deck list sums to 60 (18 rows); The Cosmos Holofoil version of Glaceon is exclusive to this deck."
+    },
+    {
+     "url": "https://www.pokewiki.de/Frostschock_%28TCG%29",
+     "quote": "Kartenliste, 60 cards"
+    },
+    {
+     "url": "https://serebii.net/card/themedeck/polarfrost.shtml",
+     "quote": "Serebii theme deck card list with quantities"
+    }
+   ],
+   "notes": "Energy: Bulbapedia lists unnumbered Energy; pokewiki.de and Serebii list the Diamond & Pearl numbered Energy (dp1 123-130) for this deck, so dp1-123..130 are used (site has no separate print needed; energy-<type>-dp also exists as the unnumbered DP print). Eevee: print/number {'dp5-63': 4} on Bulbapedia, {'dp5-62': 4} on pokewiki.de and Serebii (used the latter)."
+  },
+  {
+   "set": "dp6",
+   "name": "Bombardment",
+   "showcase": "Regigigas",
+   "showcaseCard": "dp6-37",
+   "showcasePrint": "The Cosmos Holofoil version of Regigigas is exclusive to this deck.",
+   "showcaseTcgplayerId": 88662,
+   "tcgplayerId": null,
+   "tcgplayerName": null,
+   "marketPrice": null,
+   "released": "2008-08-20",
+   "extras": "Per Bulbapedia: 60-card deck, damage counters, custom coin, rulebook, card list, and a single-player mat.",
+   "total": 60,
+   "cards": [
+    {
+     "id": "dp6-37",
+     "name": "Regigigas",
+     "n": 1
+    },
+    {
+     "id": "dp6-9",
+     "name": "Mamoswine",
+     "n": 1
+    },
+    {
+     "id": "dp6-69",
+     "name": "Piloswine",
+     "n": 2
+    },
+    {
+     "id": "dp6-123",
+     "name": "Swinub",
+     "n": 4
+    },
+    {
+     "id": "dp6-5",
+     "name": "Gliscor",
+     "n": 1
+    },
+    {
+     "id": "dp6-94",
+     "name": "Gligar",
+     "n": 4
+    },
+    {
+     "id": "dp6-63",
+     "name": "Marowak",
+     "n": 2
+    },
+    {
+     "id": "dp6-90",
+     "name": "Cubone",
+     "n": 4
+    },
+    {
+     "id": "dp6-124",
+     "name": "Taillow",
+     "n": 4
+    },
+    {
+     "id": "dp6-117",
+     "name": "Riolu",
+     "n": 2
+    },
+    {
+     "id": "dp6-134",
+     "name": "Snowpoint Temple",
+     "n": 1
+    },
+    {
+     "id": "dp6-131",
+     "name": "Cynthia's Feelings",
+     "n": 1
+    },
+    {
+     "id": "dp6-136",
+     "name": "Technical Machine TS-1",
+     "n": 2
+    },
+    {
+     "id": "dp6-133",
+     "name": "Poké Radar",
+     "n": 1
+    },
+    {
+     "id": "dp5-83",
+     "name": "Mom's Kindness",
+     "n": 2
+    },
+    {
+     "id": "dp5-90",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "dp3-127",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "dp1-125",
+     "name": "Water Energy",
+     "n": 8
+    },
+    {
+     "id": "dp1-128",
+     "name": "Fighting Energy",
+     "n": 16
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Bombardment_(TCG)",
+     "quote": "Deck list sums to 60 (19 rows); The Cosmos Holofoil version of Regigigas is exclusive to this deck.; The Non Holofoil versions of Mamoswine and Gliscor are exclusive to this deck."
+    },
+    {
+     "url": "https://www.pokewiki.de/Dauerbeschuss_%28TCG%29",
+     "quote": "Kartenliste, 60 cards"
+    },
+    {
+     "url": "https://serebii.net/card/themedeck/bombardment.shtml",
+     "quote": "Serebii theme deck card list with quantities"
+    }
+   ],
+   "notes": "Energy: Bulbapedia lists unnumbered Energy; pokewiki.de and Serebii list the Diamond & Pearl numbered Energy (dp1 123-130) for this deck, so dp1-123..130 are used (site has no separate print needed; energy-<type>-dp also exists as the unnumbered DP print). Water Energy count: Bulbapedia 8, pokewiki.de 13, Serebii 8 (used 8). Fighting Energy count: Bulbapedia 16, pokewiki.de 11, Serebii 16 (used 16)."
+  },
+  {
+   "set": "dp6",
+   "name": "Metal Surge",
+   "showcase": "Heatran",
+   "showcaseCard": "dp6-30",
+   "showcasePrint": "The Cosmos Holofoil version of Heatran is exclusive to this deck.",
+   "showcaseTcgplayerId": 86048,
+   "tcgplayerId": 693133,
+   "tcgplayerName": "Legends Awakened Theme Deck - Metal Surge",
+   "marketPrice": null,
+   "released": "2008-08-20",
+   "extras": "Per Bulbapedia: 60-card deck, damage counters, custom coin, rulebook, card list, and a single-player mat.",
+   "total": 60,
+   "cards": [
+    {
+     "id": "dp6-30",
+     "name": "Heatran",
+     "n": 1
+    },
+    {
+     "id": "dp6-10",
+     "name": "Metagross",
+     "n": 1
+    },
+    {
+     "id": "dp6-64",
+     "name": "Metang",
+     "n": 2
+    },
+    {
+     "id": "dp6-83",
+     "name": "Beldum",
+     "n": 4
+    },
+    {
+     "id": "dp6-17",
+     "name": "Yanmega",
+     "n": 1
+    },
+    {
+     "id": "dp6-128",
+     "name": "Yanma",
+     "n": 4
+    },
+    {
+     "id": "dp6-60",
+     "name": "Ledian",
+     "n": 2
+    },
+    {
+     "id": "dp6-104",
+     "name": "Ledyba",
+     "n": 4
+    },
+    {
+     "id": "dp6-106",
+     "name": "Meowth",
+     "n": 4
+    },
+    {
+     "id": "dp6-113",
+     "name": "Pineco",
+     "n": 2
+    },
+    {
+     "id": "dp6-130",
+     "name": "Buck's Training",
+     "n": 2
+    },
+    {
+     "id": "dp6-131",
+     "name": "Cynthia's Feelings",
+     "n": 1
+    },
+    {
+     "id": "dp6-136",
+     "name": "Technical Machine TS-1",
+     "n": 2
+    },
+    {
+     "id": "dp6-133",
+     "name": "Poké Radar",
+     "n": 2
+    },
+    {
+     "id": "dp5-90",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "dp3-127",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "dp1-123",
+     "name": "Grass Energy",
+     "n": 14
+    },
+    {
+     "id": "dp1-130",
+     "name": "Metal Energy",
+     "n": 10
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Metal_Surge_(TCG)",
+     "quote": "Deck list sums to 60 (18 rows); The Cosmos Holofoil version of Heatran is exclusive to this deck.; The Non Holofoil versions of Metagross and Yanmega are exclusive to this deck."
+    },
+    {
+     "url": "https://www.pokewiki.de/Metallwelle_%28TCG%29",
+     "quote": "Kartenliste, 60 cards"
+    },
+    {
+     "url": "https://serebii.net/card/themedeck/metalsurge.shtml",
+     "quote": "Serebii theme deck card list with quantities"
+    }
+   ],
+   "notes": "Energy: Bulbapedia lists unnumbered Energy; pokewiki.de and Serebii list the Diamond & Pearl numbered Energy (dp1 123-130) for this deck, so dp1-123..130 are used (site has no separate print needed; energy-<type>-dp also exists as the unnumbered DP print). Metang: print/number {'dp6-65': 2} on Bulbapedia, {'dp6-64': 2} on pokewiki.de and Serebii (used the latter)."
+  },
+  {
+   "set": "dp7",
+   "name": "Dark Rampage",
+   "showcase": "Tyranitar",
+   "showcaseCard": "dp7-30",
+   "showcasePrint": "The Cosmos Holofoil version of Tyranitar is exclusive to this deck.",
+   "showcaseTcgplayerId": 90120,
+   "tcgplayerId": null,
+   "tcgplayerName": null,
+   "marketPrice": null,
+   "released": "2008-11-05",
+   "extras": "Per Bulbapedia: 60-card deck, damage counters, custom coin, rulebook, card list, and a single-player mat.",
+   "total": 60,
+   "cards": [
+    {
+     "id": "dp7-30",
+     "name": "Tyranitar",
+     "n": 1
+    },
+    {
+     "id": "dp7-47",
+     "name": "Pupitar",
+     "n": 2
+    },
+    {
+     "id": "dp7-63",
+     "name": "Larvitar",
+     "n": 4
+    },
+    {
+     "id": "dp7-27",
+     "name": "Staraptor",
+     "n": 1
+    },
+    {
+     "id": "dp7-52",
+     "name": "Staravia",
+     "n": 2
+    },
+    {
+     "id": "dp7-75",
+     "name": "Starly",
+     "n": 4
+    },
+    {
+     "id": "dp7-26",
+     "name": "Skuntank",
+     "n": 1
+    },
+    {
+     "id": "dp7-76",
+     "name": "Stunky",
+     "n": 4
+    },
+    {
+     "id": "dp7-64",
+     "name": "Machop",
+     "n": 4
+    },
+    {
+     "id": "dp7-53",
+     "name": "Bagon",
+     "n": 2
+    },
+    {
+     "id": "dp5-90",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "dp7-92",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "dp6-131",
+     "name": "Cynthia's Feelings",
+     "n": 2
+    },
+    {
+     "id": "dp7-84",
+     "name": "Energy Switch",
+     "n": 2
+    },
+    {
+     "id": "dp7-85",
+     "name": "Great Ball",
+     "n": 2
+    },
+    {
+     "id": "dp7-86",
+     "name": "Luxury Ball",
+     "n": 1
+    },
+    {
+     "id": "dp1-128",
+     "name": "Fighting Energy",
+     "n": 11
+    },
+    {
+     "id": "dp1-129",
+     "name": "Darkness Energy",
+     "n": 13
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Dark_Rampage_(TCG)",
+     "quote": "Deck list sums to 60 (18 rows); The Cosmos Holofoil version of Tyranitar is exclusive to this deck."
+    },
+    {
+     "url": "https://www.pokewiki.de/Finsterer_Ansturm_%28TCG%29",
+     "quote": "Kartenliste, 60 cards"
+    },
+    {
+     "url": "https://serebii.net/card/themedeck/darkrampage.shtml",
+     "quote": "Serebii theme deck card list with quantities"
+    }
+   ],
+   "notes": "Energy: Bulbapedia lists unnumbered Energy; pokewiki.de and Serebii list the Diamond & Pearl numbered Energy (dp1 123-130) for this deck, so dp1-123..130 are used (site has no separate print needed; energy-<type>-dp also exists as the unnumbered DP print)."
+  },
+  {
+   "set": "dp7",
+   "name": "Raging Sea",
+   "showcase": "Gyarados",
+   "showcaseCard": "dp7-19",
+   "showcasePrint": "The Cosmos Holofoil version of Gyarados is exclusive to this deck.",
+   "showcaseTcgplayerId": 85994,
+   "tcgplayerId": null,
+   "tcgplayerName": null,
+   "marketPrice": null,
+   "released": "2008-11-05",
+   "extras": "Per Bulbapedia: 60-card deck, damage counters, custom coin, rulebook, card list, and a single-player mat.",
+   "total": 60,
+   "cards": [
+    {
+     "id": "dp7-19",
+     "name": "Gyarados",
+     "n": 1
+    },
+    {
+     "id": "dp7-65",
+     "name": "Magikarp",
+     "n": 4
+    },
+    {
+     "id": "dp7-10",
+     "name": "Sceptile",
+     "n": 1
+    },
+    {
+     "id": "dp7-39",
+     "name": "Grovyle",
+     "n": 2
+    },
+    {
+     "id": "dp7-79",
+     "name": "Treecko",
+     "n": 4
+    },
+    {
+     "id": "dp7-12",
+     "name": "Abomasnow",
+     "n": 1
+    },
+    {
+     "id": "dp7-74",
+     "name": "Snover",
+     "n": 4
+    },
+    {
+     "id": "dp7-32",
+     "name": "Bibarel",
+     "n": 2
+    },
+    {
+     "id": "dp7-54",
+     "name": "Bidoof",
+     "n": 4
+    },
+    {
+     "id": "dp7-61",
+     "name": "Finneon",
+     "n": 2
+    },
+    {
+     "id": "dp7-92",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "dp7-93",
+     "name": "Switch",
+     "n": 2
+    },
+    {
+     "id": "dp5-83",
+     "name": "Mom's Kindness",
+     "n": 2
+    },
+    {
+     "id": "dp7-84",
+     "name": "Energy Switch",
+     "n": 2
+    },
+    {
+     "id": "dp5-80",
+     "name": "Dusk Ball",
+     "n": 2
+    },
+    {
+     "id": "dp7-86",
+     "name": "Luxury Ball",
+     "n": 1
+    },
+    {
+     "id": "dp1-123",
+     "name": "Grass Energy",
+     "n": 9
+    },
+    {
+     "id": "dp1-125",
+     "name": "Water Energy",
+     "n": 15
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Raging_Sea_(TCG)",
+     "quote": "Deck list sums to 60 (18 rows); The Cosmos Holofoil version of Gyarados is exclusive to this deck.; The Non Holofoil version of Sceptile is exclusive to this deck."
+    },
+    {
+     "url": "https://www.pokewiki.de/Tosende_See_%28TCG%29",
+     "quote": "Kartenliste, 60 cards"
+    },
+    {
+     "url": "https://serebii.net/card/themedeck/ragingsea.shtml",
+     "quote": "Serebii theme deck card list with quantities"
+    }
+   ],
+   "notes": "Energy: Bulbapedia lists unnumbered Energy; pokewiki.de and Serebii list the Diamond & Pearl numbered Energy (dp1 123-130) for this deck, so dp1-123..130 are used (site has no separate print needed; energy-<type>-dp also exists as the unnumbered DP print)."
+  },
+  {
+   "set": "pl1",
+   "name": "Flourish",
+   "showcase": "Shaymin",
+   "showcaseCard": "pl1-38",
+   "showcasePrint": "The Holofoil version of Shaymin is exclusive to this deck.",
+   "showcaseTcgplayerId": 89106,
+   "tcgplayerId": 229173,
+   "tcgplayerName": "Platinum Theme Deck - \"Flourish\"",
+   "marketPrice": null,
+   "released": "2009-02-11",
+   "extras": "Per Bulbapedia: 60-card deck, damage counters, custom coin, rulebook, card list, and a single-player mat.",
+   "total": 60,
+   "cards": [
+    {
+     "id": "pl1-38",
+     "name": "Shaymin",
+     "n": 1
+    },
+    {
+     "id": "pl1-36",
+     "name": "Ninetales",
+     "n": 1
+    },
+    {
+     "id": "pl1-102",
+     "name": "Vulpix",
+     "n": 4
+    },
+    {
+     "id": "pl1-21",
+     "name": "Beautifly",
+     "n": 1
+    },
+    {
+     "id": "pl1-63",
+     "name": "Silcoon",
+     "n": 2
+    },
+    {
+     "id": "pl1-103",
+     "name": "Wurmple",
+     "n": 4
+    },
+    {
+     "id": "pl1-52",
+     "name": "Lombre",
+     "n": 2
+    },
+    {
+     "id": "pl1-81",
+     "name": "Lotad",
+     "n": 4
+    },
+    {
+     "id": "pl1-70",
+     "name": "Chimchar",
+     "n": 3
+    },
+    {
+     "id": "pl1-78",
+     "name": "Kricketot",
+     "n": 3
+    },
+    {
+     "id": "dp3-127",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "dp7-93",
+     "name": "Switch",
+     "n": 2
+    },
+    {
+     "id": "dp1-105",
+     "name": "Double Full Heal",
+     "n": 2
+    },
+    {
+     "id": "dp5-80",
+     "name": "Dusk Ball",
+     "n": 2
+    },
+    {
+     "id": "dp5-85",
+     "name": "Poké Ball",
+     "n": 2
+    },
+    {
+     "id": "pl1-115",
+     "name": "Pokémon Rescue",
+     "n": 1
+    },
+    {
+     "id": "dp1-123",
+     "name": "Grass Energy",
+     "n": 16
+    },
+    {
+     "id": "dp1-124",
+     "name": "Fire Energy",
+     "n": 8
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Flourish_(TCG)",
+     "quote": "Deck list sums to 60 (18 rows); The Holofoil version of Shaymin is exclusive to this deck."
+    },
+    {
+     "url": "https://www.pokewiki.de/Bl%C3%BCtezeit_%28TCG%29",
+     "quote": "Kartenliste, 60 cards"
+    },
+    {
+     "url": "https://serebii.net/card/themedeck/flourish.shtml",
+     "quote": "Serebii theme deck card list with quantities"
+    }
+   ],
+   "notes": "Energy: Bulbapedia lists unnumbered Energy; pokewiki.de and Serebii list the Diamond & Pearl numbered Energy (dp1 123-130) for this deck, so dp1-123..130 are used (site has no separate print needed; energy-<type>-dp also exists as the unnumbered DP print). Potion: Bulbapedia {'dp3-127': 2} vs pokewiki.de {'dp1-118': 2} (used Bulbapedia). Switch: Bulbapedia {'dp7-93': 2} vs pokewiki.de {'dp1-119': 2} (used Bulbapedia). Poké Ball: Bulbapedia {'dp5-85': 2} vs pokewiki.de {'pl1-113': 2} (used Bulbapedia)."
+  },
+  {
+   "set": "pl1",
+   "name": "Rebellion",
+   "showcase": "Giratina",
+   "showcaseCard": "pl1-28",
+   "showcasePrint": "The Holofoil version of Giratina is exclusive to this deck.",
+   "showcaseTcgplayerId": 85734,
+   "tcgplayerId": 229175,
+   "tcgplayerName": "Platinum Theme Deck - \"Rebellion\"",
+   "marketPrice": null,
+   "released": "2009-02-11",
+   "extras": "Per Bulbapedia: 60-card deck, damage counters, custom coin, rulebook, card list, and a single-player mat.",
+   "total": 60,
+   "cards": [
+    {
+     "id": "pl1-28",
+     "name": "Giratina",
+     "n": 1
+    },
+    {
+     "id": "pl1-8",
+     "name": "Gardevoir",
+     "n": 1
+    },
+    {
+     "id": "pl1-51",
+     "name": "Kirlia",
+     "n": 2
+    },
+    {
+     "id": "pl1-89",
+     "name": "Ralts",
+     "n": 4
+    },
+    {
+     "id": "pl1-24",
+     "name": "Dugtrio",
+     "n": 1
+    },
+    {
+     "id": "pl1-72",
+     "name": "Diglett",
+     "n": 4
+    },
+    {
+     "id": "pl1-55",
+     "name": "Mismagius",
+     "n": 2
+    },
+    {
+     "id": "pl1-83",
+     "name": "Misdreavus",
+     "n": 4
+    },
+    {
+     "id": "pl1-91",
+     "name": "Riolu",
+     "n": 3
+    },
+    {
+     "id": "pl1-92",
+     "name": "Shuppet",
+     "n": 3
+    },
+    {
+     "id": "dp3-127",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "dp5-90",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "dp3-119",
+     "name": "Bebe's Search",
+     "n": 2
+    },
+    {
+     "id": "pl1-108",
+     "name": "Life Herb",
+     "n": 2
+    },
+    {
+     "id": "pl1-114",
+     "name": "Pokédex HANDY910is",
+     "n": 2
+    },
+    {
+     "id": "dp5-86",
+     "name": "Quick Ball",
+     "n": 1
+    },
+    {
+     "id": "dp1-127",
+     "name": "Psychic Energy",
+     "n": 16
+    },
+    {
+     "id": "dp1-128",
+     "name": "Fighting Energy",
+     "n": 8
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Rebellion_(TCG)",
+     "quote": "Deck list sums to 60 (18 rows); The Holofoil version of Giratina is exclusive to this deck.; The Non Holofoil version of Gardevoir is exclusive to this deck."
+    },
+    {
+     "url": "https://www.pokewiki.de/Rebellion_%28TCG%29",
+     "quote": "Kartenliste, 60 cards"
+    },
+    {
+     "url": "https://serebii.net/card/themedeck/rebellion.shtml",
+     "quote": "Serebii theme deck card list with quantities (partial parse only: confirms Pokemon/Trainer lines)"
+    }
+   ],
+   "notes": "Energy: Bulbapedia lists unnumbered Energy; pokewiki.de and Serebii list the Diamond & Pearl numbered Energy (dp1 123-130) for this deck, so dp1-123..130 are used (site has no separate print needed; energy-<type>-dp also exists as the unnumbered DP print). Serebii page parsed only partially (quantity of the last rows misread); Bulbapedia and pokewiki.de agree exactly."
+  },
+  {
+   "set": "pl2",
+   "name": "Cutting Edge",
+   "showcase": "Gallade E4",
+   "showcaseCard": "pl2-20",
+   "showcasePrint": "The Holofoil version of Gallade 四 is exclusive to this deck.",
+   "showcaseTcgplayerId": 85608,
+   "tcgplayerId": null,
+   "tcgplayerName": null,
+   "marketPrice": null,
+   "released": "2009-05-16",
+   "extras": "Per Bulbapedia: 60-card deck, damage counters, custom coin, rulebook, card list, and a single-player mat.",
+   "total": 60,
+   "cards": [
+    {
+     "id": "pl2-20",
+     "name": "Gallade E4",
+     "n": 1
+    },
+    {
+     "id": "pl2-15",
+     "name": "Beedrill",
+     "n": 1
+    },
+    {
+     "id": "pl2-66",
+     "name": "Kakuna",
+     "n": 2
+    },
+    {
+     "id": "pl2-86",
+     "name": "Weedle",
+     "n": 4
+    },
+    {
+     "id": "pl2-28",
+     "name": "Mr. Mime E4",
+     "n": 1
+    },
+    {
+     "id": "pl2-40",
+     "name": "Gengar GL",
+     "n": 2
+    },
+    {
+     "id": "pl2-45",
+     "name": "Leafeon",
+     "n": 2
+    },
+    {
+     "id": "pl2-59",
+     "name": "Eevee",
+     "n": 4
+    },
+    {
+     "id": "pl2-87",
+     "name": "Weezing",
+     "n": 2
+    },
+    {
+     "id": "pl2-68",
+     "name": "Koffing",
+     "n": 4
+    },
+    {
+     "id": "pl2-78",
+     "name": "Seedot",
+     "n": 2
+    },
+    {
+     "id": "dp5-90",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "dp7-92",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "pl2-88",
+     "name": "Aaron's Collection",
+     "n": 1
+    },
+    {
+     "id": "pl2-92",
+     "name": "Lucian's Assignment",
+     "n": 2
+    },
+    {
+     "id": "dp5-83",
+     "name": "Mom's Kindness",
+     "n": 2
+    },
+    {
+     "id": "pl2-97",
+     "name": "Underground Expedition",
+     "n": 2
+    },
+    {
+     "id": "dp1-123",
+     "name": "Grass Energy",
+     "n": 11
+    },
+    {
+     "id": "dp1-127",
+     "name": "Psychic Energy",
+     "n": 13
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Cutting_Edge_(TCG)",
+     "quote": "Deck list sums to 60 (19 rows); The Holofoil version of Gallade 四 is exclusive to this deck."
+    },
+    {
+     "url": "https://www.pokewiki.de/Schneidklinge_%28TCG%29",
+     "quote": "Kartenliste, 60 cards"
+    },
+    {
+     "url": "https://serebii.net/card/themedeck/cuttingedge.shtml",
+     "quote": "Serebii theme deck card list with quantities"
+    }
+   ],
+   "notes": "Energy: Bulbapedia lists unnumbered Energy; pokewiki.de and Serebii list the Diamond & Pearl numbered Energy (dp1 123-130) for this deck, so dp1-123..130 are used (site has no separate print needed; energy-<type>-dp also exists as the unnumbered DP print)."
+  },
+  {
+   "set": "pl2",
+   "name": "Drill Point",
+   "showcase": "Rhyperior E4",
+   "showcaseCard": "pl2-32",
+   "showcasePrint": "The Holofoil version of Rhyperior 四 is exclusive to this deck.",
+   "showcaseTcgplayerId": 88748,
+   "tcgplayerId": null,
+   "tcgplayerName": null,
+   "marketPrice": null,
+   "released": "2009-05-16",
+   "extras": "Per Bulbapedia: 60-card deck, damage counters, custom coin, rulebook, card list, and a single-player mat.",
+   "total": 60,
+   "cards": [
+    {
+     "id": "pl2-32",
+     "name": "Rhyperior E4",
+     "n": 1
+    },
+    {
+     "id": "pl2-5",
+     "name": "Flygon",
+     "n": 1
+    },
+    {
+     "id": "pl2-53",
+     "name": "Vibrava",
+     "n": 2
+    },
+    {
+     "id": "pl2-84",
+     "name": "Trapinch",
+     "n": 4
+    },
+    {
+     "id": "pl2-42",
+     "name": "Hippowdon E4",
+     "n": 2
+    },
+    {
+     "id": "pl2-25",
+     "name": "Hippowdon",
+     "n": 1
+    },
+    {
+     "id": "pl2-64",
+     "name": "Hippopotas",
+     "n": 4
+    },
+    {
+     "id": "pl2-50",
+     "name": "Starmie",
+     "n": 2
+    },
+    {
+     "id": "pl2-83",
+     "name": "Staryu",
+     "n": 4
+    },
+    {
+     "id": "pl2-55",
+     "name": "Aerodactyl GL",
+     "n": 4
+    },
+    {
+     "id": "dp7-92",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "dp7-93",
+     "name": "Switch",
+     "n": 2
+    },
+    {
+     "id": "pl2-88",
+     "name": "Aaron's Collection",
+     "n": 1
+    },
+    {
+     "id": "pl2-89",
+     "name": "Bebe's Search",
+     "n": 2
+    },
+    {
+     "id": "dp4-98",
+     "name": "Felicity's Drawing",
+     "n": 2
+    },
+    {
+     "id": "pl2-98",
+     "name": "Volkner's Philosophy",
+     "n": 2
+    },
+    {
+     "id": "dp1-125",
+     "name": "Water Energy",
+     "n": 12
+    },
+    {
+     "id": "dp1-128",
+     "name": "Fighting Energy",
+     "n": 12
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Drill_Point_(TCG)",
+     "quote": "Deck list sums to 60 (18 rows); The Holofoil version of Rhyperior 四 is exclusive to this deck.; The Non Holofoil version of Flygon is exclusive to this deck."
+    },
+    {
+     "url": "https://www.pokewiki.de/Bohrhammer_%28TCG%29",
+     "quote": "Kartenliste, 60 cards"
+    },
+    {
+     "url": "https://serebii.net/card/themedeck/drillpoint.shtml",
+     "quote": "Serebii theme deck card list with quantities"
+    }
+   ],
+   "notes": "Energy: Bulbapedia lists unnumbered Energy; pokewiki.de and Serebii list the Diamond & Pearl numbered Energy (dp1 123-130) for this deck, so dp1-123..130 are used (site has no separate print needed; energy-<type>-dp also exists as the unnumbered DP print)."
+  },
+  {
+   "set": "pl3",
+   "name": "Ignition",
+   "showcase": "Arcanine G",
+   "showcaseCard": "pl3-15",
+   "showcasePrint": "The Holofoil version of Arcanine G is exclusive to this deck.",
+   "showcaseTcgplayerId": 83591,
+   "tcgplayerId": null,
+   "tcgplayerName": null,
+   "marketPrice": null,
+   "released": "2009-08-19",
+   "extras": "Per Bulbapedia: 60-card deck, damage counters, custom coin, rulebook, card list, and a single-player mat.",
+   "total": 60,
+   "cards": [
+    {
+     "id": "pl3-15",
+     "name": "Arcanine G",
+     "n": 1
+    },
+    {
+     "id": "pl3-19",
+     "name": "Camerupt G",
+     "n": 1
+    },
+    {
+     "id": "pl3-78",
+     "name": "Raticate G",
+     "n": 2
+    },
+    {
+     "id": "pl3-13",
+     "name": "Venusaur",
+     "n": 1
+    },
+    {
+     "id": "pl3-62",
+     "name": "Ivysaur",
+     "n": 2
+    },
+    {
+     "id": "pl3-93",
+     "name": "Bulbasaur",
+     "n": 4
+    },
+    {
+     "id": "pl3-68",
+     "name": "Masquerain",
+     "n": 2
+    },
+    {
+     "id": "pl3-130",
+     "name": "Surskit",
+     "n": 4
+    },
+    {
+     "id": "pl3-97",
+     "name": "Chimchar",
+     "n": 3
+    },
+    {
+     "id": "pl3-119",
+     "name": "Paras",
+     "n": 3
+    },
+    {
+     "id": "pl3-132",
+     "name": "Whismur",
+     "n": 4
+    },
+    {
+     "id": "pl3-137",
+     "name": "Cyrus's Initiative",
+     "n": 2
+    },
+    {
+     "id": "pl2-89",
+     "name": "Bebe's Search",
+     "n": 2
+    },
+    {
+     "id": "pl3-138",
+     "name": "Night Teleporter",
+     "n": 1
+    },
+    {
+     "id": "dp5-90",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "dp7-92",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "dp1-123",
+     "name": "Grass Energy",
+     "n": 15
+    },
+    {
+     "id": "dp1-124",
+     "name": "Fire Energy",
+     "n": 9
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Ignition_(TCG)",
+     "quote": "Deck list sums to 60 (18 rows); The Holofoil version of Arcanine G is exclusive to this deck.; The Non Holofoil version of Venusaur is exclusive to this deck."
+    },
+    {
+     "url": "https://www.pokewiki.de/Schnellz%C3%BCnder_%28TCG%29",
+     "quote": "Kartenliste, 60 cards"
+    },
+    {
+     "url": "https://serebii.net/card/themedeck/ignition.shtml",
+     "quote": "Serebii theme deck card list with quantities"
+    }
+   ],
+   "notes": "Energy: Bulbapedia lists unnumbered Energy; pokewiki.de and Serebii list the Diamond & Pearl numbered Energy (dp1 123-130) for this deck, so dp1-123..130 are used (site has no separate print needed; energy-<type>-dp also exists as the unnumbered DP print)."
+  },
+  {
+   "set": "pl3",
+   "name": "Overflow",
+   "showcase": "Milotic C",
+   "showcaseCard": "pl3-35",
+   "showcasePrint": "The Holofoil version of Milotic C is exclusive to this deck.",
+   "showcaseTcgplayerId": 87459,
+   "tcgplayerId": 645310,
+   "tcgplayerName": "Supreme Victors Theme Deck - \"Overflow\"",
+   "marketPrice": null,
+   "released": "2009-08-19",
+   "extras": "Per Bulbapedia: 60-card deck, damage counters, custom coin, rulebook, card list, and a single-player mat.",
+   "total": 60,
+   "cards": [
+    {
+     "id": "pl3-35",
+     "name": "Milotic C",
+     "n": 1
+    },
+    {
+     "id": "pl3-84",
+     "name": "Spiritomb C",
+     "n": 2
+    },
+    {
+     "id": "pl3-40",
+     "name": "Roserade C",
+     "n": 1
+    },
+    {
+     "id": "pl3-12",
+     "name": "Swampert",
+     "n": 1
+    },
+    {
+     "id": "pl3-67",
+     "name": "Marshtomp",
+     "n": 2
+    },
+    {
+     "id": "pl3-116",
+     "name": "Mudkip",
+     "n": 4
+    },
+    {
+     "id": "pl3-58",
+     "name": "Floatzel",
+     "n": 2
+    },
+    {
+     "id": "pl3-92",
+     "name": "Buizel",
+     "n": 4
+    },
+    {
+     "id": "pl3-100",
+     "name": "Corphish",
+     "n": 3
+    },
+    {
+     "id": "pl3-101",
+     "name": "Croagunk",
+     "n": 4
+    },
+    {
+     "id": "pl3-128",
+     "name": "Skorupi",
+     "n": 3
+    },
+    {
+     "id": "dp6-131",
+     "name": "Cynthia's Feelings",
+     "n": 2
+    },
+    {
+     "id": "dp3-125",
+     "name": "Roseanne's Research",
+     "n": 2
+    },
+    {
+     "id": "pl3-138",
+     "name": "Night Teleporter",
+     "n": 1
+    },
+    {
+     "id": "dp7-92",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "dp7-93",
+     "name": "Switch",
+     "n": 2
+    },
+    {
+     "id": "dp1-125",
+     "name": "Water Energy",
+     "n": 15
+    },
+    {
+     "id": "dp1-127",
+     "name": "Psychic Energy",
+     "n": 9
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Overflow_(TCG)",
+     "quote": "Deck list sums to 60 (18 rows); The Holofoil version of Milotic C is exclusive to this deck.; The Non Holofoil version of Swampert is exclusive to this deck."
+    },
+    {
+     "url": "https://www.pokewiki.de/%C3%9Cberlauf_%28TCG%29",
+     "quote": "Kartenliste, 60 cards"
+    },
+    {
+     "url": "https://serebii.net/card/themedeck/overflow.shtml",
+     "quote": "Serebii theme deck card list with quantities (partial parse only: confirms Pokemon/Trainer lines)"
+    }
+   ],
+   "notes": "Energy: Bulbapedia lists unnumbered Energy; pokewiki.de and Serebii list the Diamond & Pearl numbered Energy (dp1 123-130) for this deck, so dp1-123..130 are used (site has no separate print needed; energy-<type>-dp also exists as the unnumbered DP print). Serebii page parsed only partially (quantity of the last rows misread); Bulbapedia and pokewiki.de agree exactly."
+  },
+  {
+   "set": "pl4",
+   "name": "Flamemaster",
+   "showcase": "Arceus",
+   "showcaseCard": "pl4-AR3",
+   "showcasePrint": "Rare Holo same as the set's pack print (no deck-exclusive finish noted on Bulbapedia)",
+   "showcaseTcgplayerId": 83594,
+   "tcgplayerId": 678179,
+   "tcgplayerName": "Arceus Theme Deck - \"Flamemaster\"",
+   "marketPrice": null,
+   "released": "2009-11-04",
+   "extras": "Per Bulbapedia: 60-card deck, damage counters, custom coin, rulebook, card list, and a single-player mat.",
+   "total": 60,
+   "cards": [
+    {
+     "id": "pl4-AR3",
+     "name": "Arceus",
+     "n": 1
+    },
+    {
+     "id": "pl4-15",
+     "name": "Cherrim",
+     "n": 1
+    },
+    {
+     "id": "pl4-60",
+     "name": "Cherubi",
+     "n": 4
+    },
+    {
+     "id": "pl4-39",
+     "name": "Grovyle",
+     "n": 2
+    },
+    {
+     "id": "pl4-72",
+     "name": "Ponyta",
+     "n": 4
+    },
+    {
+     "id": "pl4-47",
+     "name": "Rapidash",
+     "n": 2
+    },
+    {
+     "id": "pl4-31",
+     "name": "Sceptile",
+     "n": 1
+    },
+    {
+     "id": "pl4-77",
+     "name": "Tangela",
+     "n": 4
+    },
+    {
+     "id": "pl4-10",
+     "name": "Tangrowth",
+     "n": 1
+    },
+    {
+     "id": "pl4-79",
+     "name": "Treecko",
+     "n": 4
+    },
+    {
+     "id": "pl2-89",
+     "name": "Bebe's Search",
+     "n": 2
+    },
+    {
+     "id": "dp6-131",
+     "name": "Cynthia's Feelings",
+     "n": 2
+    },
+    {
+     "id": "dp7-86",
+     "name": "Luxury Ball",
+     "n": 1
+    },
+    {
+     "id": "dp7-92",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "pl4-90",
+     "name": "Professor Oak's Visit",
+     "n": 2
+    },
+    {
+     "id": "dp7-93",
+     "name": "Switch",
+     "n": 2
+    },
+    {
+     "id": "dp1-123",
+     "name": "Grass Energy",
+     "n": 16
+    },
+    {
+     "id": "dp1-124",
+     "name": "Fire Energy",
+     "n": 9
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Flamemaster_(TCG)",
+     "quote": "Deck list sums to 60 (18 rows); The Non Holofoil version of Tangrowth is exclusive to this deck."
+    },
+    {
+     "url": "https://www.pokewiki.de/Flammenherrscher_%28TCG%29",
+     "quote": "Kartenliste, 59 cards (Arceus AR promo row missing from this list)"
+    },
+    {
+     "url": "https://serebii.net/card/themedeck/flamemaster.shtml",
+     "quote": "Serebii theme deck card list with quantities (partial parse only: confirms Pokemon/Trainer lines)"
+    }
+   ],
+   "notes": "Energy: Bulbapedia lists unnumbered Energy; pokewiki.de and Serebii list the Diamond & Pearl numbered Energy (dp1 123-130) for this deck, so dp1-123..130 are used (site has no separate print needed; energy-<type>-dp also exists as the unnumbered DP print). Arceus: Bulbapedia {'pl4-AR3': 1} vs pokewiki.de {} (used Bulbapedia). COUNT DISAGREE Arceus: Bulbapedia 1 vs pokewiki.de 0 TCGplayer has no market price; low/mid listing 501.0."
+  },
+  {
+   "set": "pl4",
+   "name": "Stormshaper",
+   "showcase": "Arceus",
+   "showcaseCard": "pl4-AR6",
+   "showcasePrint": "Rare Holo same as the set's pack print (no deck-exclusive finish noted on Bulbapedia)",
+   "showcaseTcgplayerId": 83597,
+   "tcgplayerId": 678178,
+   "tcgplayerName": "Arceus Theme Deck - \"Stormshaper\"",
+   "marketPrice": null,
+   "released": "2009-11-04",
+   "extras": "Per Bulbapedia: 60-card deck, damage counters, custom coin, rulebook, card list, and a single-player mat.",
+   "total": 60,
+   "cards": [
+    {
+     "id": "pl4-AR6",
+     "name": "Arceus",
+     "n": 1
+    },
+    {
+     "id": "pl4-62",
+     "name": "Electrike",
+     "n": 4
+    },
+    {
+     "id": "pl4-64",
+     "name": "Gastly",
+     "n": 4
+    },
+    {
+     "id": "pl4-66",
+     "name": "Gulpin",
+     "n": 4
+    },
+    {
+     "id": "pl4-42",
+     "name": "Haunter",
+     "n": 2
+    },
+    {
+     "id": "pl4-43",
+     "name": "Luxio",
+     "n": 2
+    },
+    {
+     "id": "pl4-5",
+     "name": "Luxray",
+     "n": 1
+    },
+    {
+     "id": "pl4-22",
+     "name": "Manectric",
+     "n": 1
+    },
+    {
+     "id": "pl4-9",
+     "name": "Swalot",
+     "n": 1
+    },
+    {
+     "id": "pl4-74",
+     "name": "Shinx",
+     "n": 4
+    },
+    {
+     "id": "dp7-92",
+     "name": "Potion",
+     "n": 2
+    },
+    {
+     "id": "dp5-90",
+     "name": "Energy Search",
+     "n": 2
+    },
+    {
+     "id": "pl4-87",
+     "name": "Expert Belt",
+     "n": 2
+    },
+    {
+     "id": "pl4-88",
+     "name": "Lucky Egg",
+     "n": 2
+    },
+    {
+     "id": "dp7-86",
+     "name": "Luxury Ball",
+     "n": 1
+    },
+    {
+     "id": "pl4-86",
+     "name": "Energy Restore",
+     "n": 2
+    },
+    {
+     "id": "dp1-126",
+     "name": "Lightning Energy",
+     "n": 11
+    },
+    {
+     "id": "dp1-127",
+     "name": "Psychic Energy",
+     "n": 14
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Stormshaper_(TCG)",
+     "quote": "Deck list sums to 60 (18 rows); The Non Holofoil versions of Luxray and Swalot are exclusive to this deck."
+    },
+    {
+     "url": "https://www.pokewiki.de/Sturmformer_%28TCG%29",
+     "quote": "Kartenliste, 59 cards (Arceus AR promo row missing from this list)"
+    },
+    {
+     "url": "https://serebii.net/card/themedeck/stormshaper.shtml",
+     "quote": "Serebii theme deck card list with quantities (partial parse only: confirms Pokemon/Trainer lines)"
+    }
+   ],
+   "notes": "Energy: Bulbapedia lists unnumbered Energy; pokewiki.de and Serebii list the Diamond & Pearl numbered Energy (dp1 123-130) for this deck, so dp1-123..130 are used (site has no separate print needed; energy-<type>-dp also exists as the unnumbered DP print). Arceus: Bulbapedia {'pl4-AR6': 1} vs pokewiki.de {} (used Bulbapedia). COUNT DISAGREE Arceus: Bulbapedia 1 vs pokewiki.de 0 TCGplayer has no market price; low/mid listing 501.0."
+  },
+  {
+   "set": "hgss1",
+   "name": "Ember Spark",
+   "showcase": "Typhlosion",
+   "showcaseCard": "hgss1-32",
+   "showcasePrint": "The Holofoil version of Typhlosion is exclusive to this deck.",
+   "showcaseTcgplayerId": 90106,
+   "tcgplayerId": null,
+   "tcgplayerName": null,
+   "marketPrice": null,
+   "released": "2010-02-10",
+   "extras": "Per Bulbapedia: 60-card deck, damage counters, custom coin, rulebook, card list, and a single-player mat.",
+   "total": 60,
+   "cards": [
+    {
+     "id": "hgss1-32",
+     "name": "Typhlosion",
+     "n": 1
+    },
+    {
+     "id": "hgss1-49",
+     "name": "Quilava",
+     "n": 2
+    },
+    {
+     "id": "hgss1-61",
+     "name": "Cyndaquil",
+     "n": 4
+    },
+    {
+     "id": "hgss1-1",
+     "name": "Arcanine",
+     "n": 1
+    },
+    {
+     "id": "hgss1-65",
+     "name": "Growlithe",
+     "n": 4
+    },
+    {
+     "id": "hgss1-8",
+     "name": "Noctowl",
+     "n": 1
+    },
+    {
+     "id": "hgss1-66",
+     "name": "Hoothoot",
+     "n": 4
+    },
+    {
+     "id": "hgss1-42",
+     "name": "Flaaffy",
+     "n": 2
+    },
+    {
+     "id": "hgss1-73",
+     "name": "Mareep",
+     "n": 4
+    },
+    {
+     "id": "hgss1-78",
+     "name": "Pikachu",
+     "n": 2
+    },
+    {
+     "id": "hgss1-90",
+     "name": "Copycat",
+     "n": 1
+    },
+    {
+     "id": "hgss1-98",
+     "name": "Pokémon Communication",
+     "n": 2
+    },
+    {
+     "id": "hgss1-99",
+     "name": "Pokémon Reversal",
+     "n": 2
+    },
+    {
+     "id": "hgss1-101",
+     "name": "Professor Oak's New Theory",
+     "n": 2
+    },
+    {
+     "id": "hgss1-102",
+     "name": "Switch",
+     "n": 2
+    },
+    {
+     "id": "hgss1-94",
+     "name": "Moomoo Milk",
+     "n": 2
+    },
+    {
+     "id": "hgss1-116",
+     "name": "Fire Energy",
+     "n": 14
+    },
+    {
+     "id": "hgss1-118",
+     "name": "Lightning Energy",
+     "n": 10
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Ember_Spark_(TCG)",
+     "quote": "Deck list sums to 60 (18 rows); The Holofoil version of Typhlosion is exclusive to this deck.; The Non Holofoil versions of Arcanine and Noctowl are exclusive to this deck."
+    },
+    {
+     "url": "https://www.pokewiki.de/Glutfunke_%28TCG%29",
+     "quote": "Kartenliste, 60 cards"
+    }
+   ],
+   "notes": "Energy: numbered Energy as listed by Bulbapedia (hgss1-116, hgss1-118)."
+  },
+  {
+   "set": "hgss1",
+   "name": "Growth Clash",
+   "showcase": "Meganium",
+   "showcaseCard": "hgss1-26",
+   "showcasePrint": "The Holofoil version of Meganium is exclusive to this deck.",
+   "showcaseTcgplayerId": 87293,
+   "tcgplayerId": null,
+   "tcgplayerName": null,
+   "marketPrice": null,
+   "released": "2010-02-10",
+   "extras": "Per Bulbapedia: 60-card deck, damage counters, custom coin, rulebook, card list, and a single-player mat.",
+   "total": 60,
+   "cards": [
+    {
+     "id": "hgss1-26",
+     "name": "Meganium",
+     "n": 1
+    },
+    {
+     "id": "hgss1-35",
+     "name": "Bayleef",
+     "n": 2
+    },
+    {
+     "id": "hgss1-59",
+     "name": "Chikorita",
+     "n": 4
+    },
+    {
+     "id": "hgss1-21",
+     "name": "Furret",
+     "n": 1
+    },
+    {
+     "id": "hgss1-80",
+     "name": "Sentret",
+     "n": 4
+    },
+    {
+     "id": "hgss1-29",
+     "name": "Sandslash",
+     "n": 1
+    },
+    {
+     "id": "hgss1-79",
+     "name": "Sandshrew",
+     "n": 4
+    },
+    {
+     "id": "hgss1-46",
+     "name": "Metapod",
+     "n": 2
+    },
+    {
+     "id": "hgss1-57",
+     "name": "Caterpie",
+     "n": 4
+    },
+    {
+     "id": "hgss1-75",
+     "name": "Meowth",
+     "n": 2
+    },
+    {
+     "id": "hgss1-89",
+     "name": "Bill",
+     "n": 2
+    },
+    {
+     "id": "hgss1-94",
+     "name": "Moomoo Milk",
+     "n": 1
+    },
+    {
+     "id": "hgss1-98",
+     "name": "Pokémon Communication",
+     "n": 2
+    },
+    {
+     "id": "hgss1-99",
+     "name": "Pokémon Reversal",
+     "n": 2
+    },
+    {
+     "id": "hgss1-102",
+     "name": "Switch",
+     "n": 2
+    },
+    {
+     "id": "hgss1-101",
+     "name": "Professor Oak's New Theory",
+     "n": 1
+    },
+    {
+     "id": "hgss1-95",
+     "name": "Poké Ball",
+     "n": 1
+    },
+    {
+     "id": "hgss1-115",
+     "name": "Grass Energy",
+     "n": 13
+    },
+    {
+     "id": "hgss1-120",
+     "name": "Fighting Energy",
+     "n": 11
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Growth_Clash_(TCG)",
+     "quote": "Deck list sums to 60 (19 rows); The Holofoil version of Meganium is exclusive to this deck."
+    },
+    {
+     "url": "https://www.pokewiki.de/Wachstumskampf_%28TCG%29",
+     "quote": "Kartenliste, 60 cards"
+    }
+   ],
+   "notes": "Energy: numbered Energy as listed by Bulbapedia (hgss1-115, hgss1-120)."
+  },
+  {
+   "set": "hgss1",
+   "name": "Mind Flood",
+   "showcase": "Feraligatr",
+   "showcaseCard": "hgss1-20",
+   "showcasePrint": "The Holofoil version of Feraligatr is exclusive to this deck.",
+   "showcaseTcgplayerId": 85419,
+   "tcgplayerId": null,
+   "tcgplayerName": null,
+   "marketPrice": null,
+   "released": "2010-02-10",
+   "extras": "Per Bulbapedia: 60-card deck, damage counters, custom coin, rulebook, card list, and a single-player mat.",
+   "total": 60,
+   "cards": [
+    {
+     "id": "hgss1-20",
+     "name": "Feraligatr",
+     "n": 1
+    },
+    {
+     "id": "hgss1-38",
+     "name": "Croconaw",
+     "n": 2
+    },
+    {
+     "id": "hgss1-86",
+     "name": "Totodile",
+     "n": 4
+    },
+    {
+     "id": "hgss1-18",
+     "name": "Exeggutor",
+     "n": 1
+    },
+    {
+     "id": "hgss1-63",
+     "name": "Exeggcute",
+     "n": 4
+    },
+    {
+     "id": "hgss1-23",
+     "name": "Hypno",
+     "n": 1
+    },
+    {
+     "id": "hgss1-62",
+     "name": "Drowzee",
+     "n": 4
+    },
+    {
+     "id": "hgss1-52",
+     "name": "Slowbro",
+     "n": 2
+    },
+    {
+     "id": "hgss1-81",
+     "name": "Slowpoke",
+     "n": 4
+    },
+    {
+     "id": "hgss1-69",
+     "name": "Jynx",
+     "n": 2
+    },
+    {
+     "id": "hgss1-89",
+     "name": "Bill",
+     "n": 2
+    },
+    {
+     "id": "hgss1-93",
+     "name": "Full Heal",
+     "n": 1
+    },
+    {
+     "id": "hgss1-95",
+     "name": "Poké Ball",
+     "n": 2
+    },
+    {
+     "id": "hgss1-100",
+     "name": "Professor Elm's Training Method",
+     "n": 2
+    },
+    {
+     "id": "hgss1-101",
+     "name": "Professor Oak's New Theory",
+     "n": 2
+    },
+    {
+     "id": "hgss1-94",
+     "name": "Moomoo Milk",
+     "n": 2
+    },
+    {
+     "id": "hgss1-117",
+     "name": "Water Energy",
+     "n": 13
+    },
+    {
+     "id": "hgss1-119",
+     "name": "Psychic Energy",
+     "n": 11
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Mind_Flood_(TCG)",
+     "quote": "Deck list sums to 60 (18 rows); The Holofoil version of Feraligatr is exclusive to this deck."
+    },
+    {
+     "url": "https://www.pokewiki.de/Geistschwemme_%28TCG%29",
+     "quote": "Kartenliste, 60 cards"
+    }
+   ],
+   "notes": "Energy: numbered Energy as listed by Bulbapedia (hgss1-117, hgss1-119)."
+  },
+  {
+   "set": "hgss2",
+   "name": "Chaos Control",
+   "showcase": "Tyranitar",
+   "showcaseCard": "hgss2-26",
+   "showcasePrint": "The Holofoil version of Tyranitar is exclusive to this deck.",
+   "showcaseTcgplayerId": 90121,
+   "tcgplayerId": null,
+   "tcgplayerName": null,
+   "marketPrice": null,
+   "released": "2010-05-12",
+   "extras": "Per Bulbapedia: 60-card deck, damage counters, custom coin, rulebook, card list, and a single-player mat.",
+   "total": 60,
+   "cards": [
+    {
+     "id": "hgss2-26",
+     "name": "Tyranitar",
+     "n": 1
+    },
+    {
+     "id": "hgss2-38",
+     "name": "Pupitar",
+     "n": 2
+    },
+    {
+     "id": "hgss2-51",
+     "name": "Larvitar",
+     "n": 4
+    },
+    {
+     "id": "hgss2-5",
+     "name": "Mismagius",
+     "n": 1
+    },
+    {
+     "id": "hgss2-54",
+     "name": "Misdreavus",
+     "n": 4
+    },
+    {
+     "id": "hgss2-19",
+     "name": "Lucario",
+     "n": 1
+    },
+    {
+     "id": "hgss2-60",
+     "name": "Riolu",
+     "n": 4
+    },
+    {
+     "id": "hgss2-33",
+     "name": "Metang",
+     "n": 2
+    },
+    {
+     "id": "hgss2-44",
+     "name": "Beldum",
+     "n": 4
+    },
+    {
+     "id": "hgss2-70",
+     "name": "Zubat",
+     "n": 2
+    },
+    {
+     "id": "hgss2-75",
+     "name": "Engineer's Adjustments",
+     "n": 2
+    },
+    {
+     "id": "hgss2-76",
+     "name": "Good Rod",
+     "n": 2
+    },
+    {
+     "id": "hgss2-77",
+     "name": "Interviewer's Questions",
+     "n": 2
+    },
+    {
+     "id": "hgss2-79",
+     "name": "Life Herb",
+     "n": 2
+    },
+    {
+     "id": "hgss2-81",
+     "name": "Pokémon Circulator",
+     "n": 1
+    },
+    {
+     "id": "hgss1-95",
+     "name": "Poké Ball",
+     "n": 2
+    },
+    {
+     "id": "hgss1-119",
+     "name": "Psychic Energy",
+     "n": 11
+    },
+    {
+     "id": "hgss1-120",
+     "name": "Fighting Energy",
+     "n": 10
+    },
+    {
+     "id": "hgss1-121",
+     "name": "Darkness Energy",
+     "n": 3
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Chaos_Control_(TCG)",
+     "quote": "Deck list sums to 60 (19 rows); The Holofoil version of Tyranitar is exclusive to this deck.; The Non Holofoil version of Mismagius is exclusive to this deck."
+    },
+    {
+     "url": "https://www.pokewiki.de/Chaoskontrolle_%28TCG%29",
+     "quote": "Kartenliste, 60 cards"
+    }
+   ],
+   "notes": "Energy: numbered Energy as listed by Bulbapedia (hgss1-119, hgss1-120, hgss1-121). Larvitar: Bulbapedia {'hgss2-51': 4} vs pokewiki.de {'hgss2-50': 4} (used Bulbapedia)."
+  },
+  {
+   "set": "hgss2",
+   "name": "Steel Sentinel",
+   "showcase": "Steelix",
+   "showcaseCard": "hgss2-24",
+   "showcasePrint": "The Holofoil version of Steelix is exclusive to this deck.",
+   "showcaseTcgplayerId": 89563,
+   "tcgplayerId": null,
+   "tcgplayerName": null,
+   "marketPrice": null,
+   "released": "2010-05-12",
+   "extras": "Per Bulbapedia: 60-card deck, damage counters, custom coin, rulebook, card list, and a single-player mat.",
+   "total": 60,
+   "cards": [
+    {
+     "id": "hgss2-24",
+     "name": "Steelix",
+     "n": 1
+    },
+    {
+     "id": "hgss2-57",
+     "name": "Onix",
+     "n": 4
+    },
+    {
+     "id": "hgss2-22",
+     "name": "Primeape",
+     "n": 1
+    },
+    {
+     "id": "hgss2-53",
+     "name": "Mankey",
+     "n": 4
+    },
+    {
+     "id": "hgss2-23",
+     "name": "Roserade",
+     "n": 1
+    },
+    {
+     "id": "hgss2-61",
+     "name": "Roselia",
+     "n": 4
+    },
+    {
+     "id": "hgss2-28",
+     "name": "Cherrim",
+     "n": 2
+    },
+    {
+     "id": "hgss2-47",
+     "name": "Cherubi",
+     "n": 4
+    },
+    {
+     "id": "hgss2-41",
+     "name": "Tauros",
+     "n": 2
+    },
+    {
+     "id": "hgss2-67",
+     "name": "Turtwig",
+     "n": 2
+    },
+    {
+     "id": "hgss2-71",
+     "name": "Cheerleader's Cheer",
+     "n": 2
+    },
+    {
+     "id": "hgss2-74",
+     "name": "Energy Returner",
+     "n": 2
+    },
+    {
+     "id": "hgss2-79",
+     "name": "Life Herb",
+     "n": 2
+    },
+    {
+     "id": "hgss1-89",
+     "name": "Bill",
+     "n": 2
+    },
+    {
+     "id": "hgss1-95",
+     "name": "Poké Ball",
+     "n": 1
+    },
+    {
+     "id": "hgss1-102",
+     "name": "Switch",
+     "n": 2
+    },
+    {
+     "id": "hgss1-115",
+     "name": "Grass Energy",
+     "n": 12
+    },
+    {
+     "id": "hgss1-120",
+     "name": "Fighting Energy",
+     "n": 9
+    },
+    {
+     "id": "hgss1-122",
+     "name": "Metal Energy",
+     "n": 3
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Steel_Sentinel_(TCG)",
+     "quote": "Deck list sums to 60 (19 rows); The Holofoil version of Steelix is exclusive to this deck."
+    },
+    {
+     "url": "https://www.pokewiki.de/Stahlw%C3%A4chter_%28TCG%29",
+     "quote": "Kartenliste, 60 cards"
+    }
+   ],
+   "notes": "Energy: numbered Energy as listed by Bulbapedia (hgss1-115, hgss1-120, hgss1-122). Onix: Bulbapedia {'hgss2-57': 4} vs pokewiki.de {'hgss2-56': 4} (used Bulbapedia)."
+  },
+  {
+   "set": "hgss3",
+   "name": "Daybreak",
+   "showcase": "Espeon",
+   "showcaseCard": "hgss3-2",
+   "showcasePrint": "The Cracked Ice Holofoil version of Espeon is exclusive to this deck.",
+   "showcaseTcgplayerId": 85322,
+   "tcgplayerId": null,
+   "tcgplayerName": null,
+   "marketPrice": null,
+   "released": "2010-08-18",
+   "extras": "Per Bulbapedia: 60-card deck, damage counters, custom coin, rulebook, card list, a single-player mat, and an Undaunted booster pack.",
+   "total": 60,
+   "cards": [
+    {
+     "id": "hgss3-2",
+     "name": "Espeon",
+     "n": 2
+    },
+    {
+     "id": "hgss3-48",
+     "name": "Eevee",
+     "n": 4
+    },
+    {
+     "id": "hgss3-1",
+     "name": "Bellossom",
+     "n": 1
+    },
+    {
+     "id": "hgss3-27",
+     "name": "Gloom",
+     "n": 2
+    },
+    {
+     "id": "hgss3-60",
+     "name": "Oddish",
+     "n": 2
+    },
+    {
+     "id": "hgss3-11",
+     "name": "Dodrio",
+     "n": 1
+    },
+    {
+     "id": "hgss3-45",
+     "name": "Doduo",
+     "n": 2
+    },
+    {
+     "id": "hgss3-31",
+     "name": "Muk",
+     "n": 2
+    },
+    {
+     "id": "hgss3-50",
+     "name": "Grimer",
+     "n": 2
+    },
+    {
+     "id": "hgss3-9",
+     "name": "Togekiss",
+     "n": 1
+    },
+    {
+     "id": "hgss3-39",
+     "name": "Togetic",
+     "n": 2
+    },
+    {
+     "id": "hgss3-70",
+     "name": "Togepi",
+     "n": 2
+    },
+    {
+     "id": "hgss3-34",
+     "name": "Raticate",
+     "n": 2
+    },
+    {
+     "id": "hgss3-64",
+     "name": "Rattata",
+     "n": 2
+    },
+    {
+     "id": "hgss3-36",
+     "name": "Scyther",
+     "n": 2
+    },
+    {
+     "id": "hgss3-73",
+     "name": "Energy Exchanger",
+     "n": 2
+    },
+    {
+     "id": "hgss2-77",
+     "name": "Interviewer's Questions",
+     "n": 2
+    },
+    {
+     "id": "hgss2-79",
+     "name": "Life Herb",
+     "n": 2
+    },
+    {
+     "id": "hgss1-95",
+     "name": "Poké Ball",
+     "n": 2
+    },
+    {
+     "id": "hgss3-76",
+     "name": "Ruins of Alph",
+     "n": 1
+    },
+    {
+     "id": "hgss3-77",
+     "name": "Sage's Training",
+     "n": 2
+    },
+    {
+     "id": "hgss3-78",
+     "name": "Team Rocket's Trickery",
+     "n": 2
+    },
+    {
+     "id": "hgss1-115",
+     "name": "Grass Energy",
+     "n": 10
+    },
+    {
+     "id": "hgss1-119",
+     "name": "Psychic Energy",
+     "n": 8
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Daybreak_(TCG)",
+     "quote": "Deck list sums to 60 (25 rows); The Cracked Ice Holofoil version of Espeon is exclusive to this deck.; The Non Holofoil versions of Espeon, Bellossom, and Togekiss are exclusive to this deck."
+    },
+    {
+     "url": "https://www.pokewiki.de/Morgend%C3%A4mmerung_%28TCG%29",
+     "quote": "Kartenliste, 60 cards"
+    }
+   ],
+   "notes": "Energy: numbered Energy as listed by Bulbapedia (hgss1-115, hgss1-119)."
+  },
+  {
+   "set": "hgss3",
+   "name": "Nightfall",
+   "showcase": "Umbreon",
+   "showcaseCard": "hgss3-10",
+   "showcasePrint": "The Cracked Ice Holofoil version of Umbreon is exclusive to this deck.",
+   "showcaseTcgplayerId": 90145,
+   "tcgplayerId": null,
+   "tcgplayerName": null,
+   "marketPrice": null,
+   "released": "2010-08-18",
+   "extras": "Per Bulbapedia: 60-card deck, damage counters, custom coin, rulebook, card list, a single-player mat, and an Undaunted booster pack.",
+   "total": 60,
+   "cards": [
+    {
+     "id": "hgss3-10",
+     "name": "Umbreon",
+     "n": 2
+    },
+    {
+     "id": "hgss3-47",
+     "name": "Eevee",
+     "n": 4
+    },
+    {
+     "id": "hgss3-18",
+     "name": "Metagross",
+     "n": 1
+    },
+    {
+     "id": "hgss3-30",
+     "name": "Metang",
+     "n": 2
+    },
+    {
+     "id": "hgss3-43",
+     "name": "Beldum",
+     "n": 2
+    },
+    {
+     "id": "hgss3-16",
+     "name": "Honchkrow",
+     "n": 1
+    },
+    {
+     "id": "hgss3-58",
+     "name": "Murkrow",
+     "n": 2
+    },
+    {
+     "id": "hgss3-29",
+     "name": "Lairon",
+     "n": 2
+    },
+    {
+     "id": "hgss3-42",
+     "name": "Aron",
+     "n": 2
+    },
+    {
+     "id": "hgss3-37",
+     "name": "Skuntank",
+     "n": 2
+    },
+    {
+     "id": "hgss3-69",
+     "name": "Stunky",
+     "n": 2
+    },
+    {
+     "id": "hgss3-54",
+     "name": "Houndour",
+     "n": 2
+    },
+    {
+     "id": "hgss3-56",
+     "name": "Mawile",
+     "n": 2
+    },
+    {
+     "id": "hgss3-21",
+     "name": "Skarmory",
+     "n": 1
+    },
+    {
+     "id": "hgss3-35",
+     "name": "Sableye",
+     "n": 2
+    },
+    {
+     "id": "hgss1-102",
+     "name": "Switch",
+     "n": 2
+    },
+    {
+     "id": "hgss1-98",
+     "name": "Pokémon Communication",
+     "n": 2
+    },
+    {
+     "id": "hgss3-71",
+     "name": "Burned Tower",
+     "n": 1
+    },
+    {
+     "id": "hgss1-93",
+     "name": "Full Heal",
+     "n": 2
+    },
+    {
+     "id": "hgss3-73",
+     "name": "Energy Exchanger",
+     "n": 2
+    },
+    {
+     "id": "hgss2-77",
+     "name": "Interviewer's Questions",
+     "n": 2
+    },
+    {
+     "id": "hgss3-77",
+     "name": "Sage's Training",
+     "n": 2
+    },
+    {
+     "id": "hgss1-121",
+     "name": "Darkness Energy",
+     "n": 7
+    },
+    {
+     "id": "hgss1-122",
+     "name": "Metal Energy",
+     "n": 11
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Nightfall_(TCG)",
+     "quote": "Deck list sums to 60 (25 rows); The Cracked Ice Holofoil version of Umbreon is exclusive to this deck.; The Non Holofoil version of Umbreon is exclusive to this deck."
+    },
+    {
+     "url": "https://www.pokewiki.de/Abendd%C3%A4mmerung_%28TCG%29",
+     "quote": "Kartenliste, 60 cards"
+    }
+   ],
+   "notes": "Energy: numbered Energy as listed by Bulbapedia (hgss1-121, hgss1-122)."
+  },
+  {
+   "set": "hgss4",
+   "name": "Royal Guard",
+   "showcase": "Nidoking",
+   "showcaseCard": "hgss4-6",
+   "showcasePrint": "The Cracked Ice Holofoil version of Nidoking is exclusive to this deck.",
+   "showcaseTcgplayerId": 87699,
+   "tcgplayerId": null,
+   "tcgplayerName": null,
+   "marketPrice": null,
+   "released": "2010-11-03",
+   "extras": "Per Bulbapedia: 60-card deck, damage counters, custom coin, rulebook, card list, a single-player mat, and a Triumphant booster pack.",
+   "total": 60,
+   "cards": [
+    {
+     "id": "hgss4-6",
+     "name": "Nidoking",
+     "n": 2
+    },
+    {
+     "id": "hgss4-46",
+     "name": "Nidorino",
+     "n": 2
+    },
+    {
+     "id": "hgss4-70",
+     "name": "Nidoran ♂",
+     "n": 4
+    },
+    {
+     "id": "hgss4-26",
+     "name": "Machamp",
+     "n": 1
+    },
+    {
+     "id": "hgss4-40",
+     "name": "Machoke",
+     "n": 2
+    },
+    {
+     "id": "hgss4-67",
+     "name": "Machop",
+     "n": 2
+    },
+    {
+     "id": "hgss4-44",
+     "name": "Marowak",
+     "n": 2
+    },
+    {
+     "id": "hgss4-60",
+     "name": "Cubone",
+     "n": 2
+    },
+    {
+     "id": "hgss4-23",
+     "name": "Grumpig",
+     "n": 1
+    },
+    {
+     "id": "hgss4-77",
+     "name": "Spoink",
+     "n": 2
+    },
+    {
+     "id": "hgss4-35",
+     "name": "Haunter",
+     "n": 2
+    },
+    {
+     "id": "hgss4-63",
+     "name": "Gastly",
+     "n": 2
+    },
+    {
+     "id": "hgss4-14",
+     "name": "Banette",
+     "n": 1
+    },
+    {
+     "id": "hgss4-75",
+     "name": "Shuppet",
+     "n": 2
+    },
+    {
+     "id": "hgss4-76",
+     "name": "Skorupi",
+     "n": 2
+    },
+    {
+     "id": "hgss3-73",
+     "name": "Energy Exchanger",
+     "n": 2
+    },
+    {
+     "id": "hgss2-77",
+     "name": "Interviewer's Questions",
+     "n": 2
+    },
+    {
+     "id": "hgss2-79",
+     "name": "Life Herb",
+     "n": 2
+    },
+    {
+     "id": "hgss1-95",
+     "name": "Poké Ball",
+     "n": 2
+    },
+    {
+     "id": "hgss1-100",
+     "name": "Professor Elm's Training Method",
+     "n": 2
+    },
+    {
+     "id": "hgss1-101",
+     "name": "Professor Oak's New Theory",
+     "n": 1
+    },
+    {
+     "id": "hgss4-89",
+     "name": "Twins",
+     "n": 2
+    },
+    {
+     "id": "hgss1-119",
+     "name": "Psychic Energy",
+     "n": 8
+    },
+    {
+     "id": "hgss1-120",
+     "name": "Fighting Energy",
+     "n": 10
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Royal_Guard_(TCG)",
+     "quote": "Deck list sums to 60 (25 rows); The Cracked Ice Holofoil version of Nidoking is exclusive to this deck.; The Non Holofoil version of Nidoking is exclusive to this deck."
+    },
+    {
+     "url": "https://www.pokewiki.de/K%C3%B6nigliche_Garde_%28TCG%29",
+     "quote": "Kartenliste, 60 cards"
+    }
+   ],
+   "notes": "Energy: numbered Energy as listed by Bulbapedia (hgss1-119, hgss1-120)."
+  },
+  {
+   "set": "hgss4",
+   "name": "Verdant Frost",
+   "showcase": "Mamoswine",
+   "showcaseCard": "hgss4-5",
+   "showcasePrint": "The Cracked Ice Holofoil version of Mamoswine is exclusive to this deck.",
+   "showcaseTcgplayerId": 87140,
+   "tcgplayerId": null,
+   "tcgplayerName": null,
+   "marketPrice": null,
+   "released": "2010-11-03",
+   "extras": "Per Bulbapedia: 60-card deck, damage counters, custom coin, rulebook, card list, a single-player mat, and a Triumphant booster pack.",
+   "total": 60,
+   "cards": [
+    {
+     "id": "hgss4-5",
+     "name": "Mamoswine",
+     "n": 2
+    },
+    {
+     "id": "hgss4-48",
+     "name": "Piloswine",
+     "n": 2
+    },
+    {
+     "id": "hgss4-79",
+     "name": "Swinub",
+     "n": 4
+    },
+    {
+     "id": "hgss4-54",
+     "name": "Yanmega",
+     "n": 2
+    },
+    {
+     "id": "hgss4-84",
+     "name": "Yanma",
+     "n": 2
+    },
+    {
+     "id": "hgss4-24",
+     "name": "Kricketune",
+     "n": 1
+    },
+    {
+     "id": "hgss4-65",
+     "name": "Kricketot",
+     "n": 2
+    },
+    {
+     "id": "hgss4-22",
+     "name": "Golduck",
+     "n": 1
+    },
+    {
+     "id": "hgss4-74",
+     "name": "Psyduck",
+     "n": 2
+    },
+    {
+     "id": "hgss4-11",
+     "name": "Venomoth",
+     "n": 1
+    },
+    {
+     "id": "hgss4-81",
+     "name": "Venonat",
+     "n": 2
+    },
+    {
+     "id": "hgss4-53",
+     "name": "Weepinbell",
+     "n": 2
+    },
+    {
+     "id": "hgss4-57",
+     "name": "Bellsprout",
+     "n": 2
+    },
+    {
+     "id": "hgss4-50",
+     "name": "Tentacruel",
+     "n": 2
+    },
+    {
+     "id": "hgss4-80",
+     "name": "Tentacool",
+     "n": 2
+    },
+    {
+     "id": "hgss4-85",
+     "name": "Black Belt",
+     "n": 2
+    },
+    {
+     "id": "hgss3-73",
+     "name": "Energy Exchanger",
+     "n": 2
+    },
+    {
+     "id": "hgss2-77",
+     "name": "Interviewer's Questions",
+     "n": 2
+    },
+    {
+     "id": "hgss1-95",
+     "name": "Poké Ball",
+     "n": 1
+    },
+    {
+     "id": "hgss1-98",
+     "name": "Pokémon Communication",
+     "n": 2
+    },
+    {
+     "id": "hgss1-100",
+     "name": "Professor Elm's Training Method",
+     "n": 2
+    },
+    {
+     "id": "hgss1-101",
+     "name": "Professor Oak's New Theory",
+     "n": 2
+    },
+    {
+     "id": "hgss1-115",
+     "name": "Grass Energy",
+     "n": 9
+    },
+    {
+     "id": "hgss1-117",
+     "name": "Water Energy",
+     "n": 9
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Verdant_Frost_(TCG)",
+     "quote": "Deck list sums to 60 (25 rows); The Cracked Ice Holofoil version of Mamoswine is exclusive to this deck.; The Non Holofoil versions of Mamoswine and Venomoth are exclusive to this deck."
+    },
+    {
+     "url": "https://www.pokewiki.de/Fr%C3%BChlingsfrost_%28TCG%29",
+     "quote": "Kartenliste, 60 cards"
+    }
+   ],
+   "notes": "Energy: numbered Energy as listed by Bulbapedia (hgss1-115, hgss1-117)."
+  },
+  {
+   "set": "col1",
+   "name": "Recon",
+   "showcase": "Tangrowth",
+   "showcaseCard": "col1-34",
+   "showcasePrint": "The Cracked Ice Holofoil version of Tangrowth is exclusive to this deck.",
+   "showcaseTcgplayerId": 89754,
+   "tcgplayerId": null,
+   "tcgplayerName": null,
+   "marketPrice": null,
+   "released": "2011-02-09",
+   "extras": "Per Bulbapedia: 60-card deck, damage counters, custom coin, rulebook, card list, a single-player mat, and a Call of Legends booster pack.",
+   "total": 60,
+   "cards": [
+    {
+     "id": "col1-34",
+     "name": "Tangrowth",
+     "n": 2
+    },
+    {
+     "id": "col1-72",
+     "name": "Tangela",
+     "n": 4
+    },
+    {
+     "id": "col1-27",
+     "name": "Meganium",
+     "n": 1
+    },
+    {
+     "id": "col1-40",
+     "name": "Bayleef",
+     "n": 2
+    },
+    {
+     "id": "col1-53",
+     "name": "Chikorita",
+     "n": 2
+    },
+    {
+     "id": "col1-17",
+     "name": "Ninetales",
+     "n": 1
+    },
+    {
+     "id": "col1-75",
+     "name": "Vulpix",
+     "n": 2
+    },
+    {
+     "id": "col1-16",
+     "name": "Magmortar",
+     "n": 1
+    },
+    {
+     "id": "col1-62",
+     "name": "Magmar",
+     "n": 2
+    },
+    {
+     "id": "col1-54",
+     "name": "Clefairy",
+     "n": 2
+    },
+    {
+     "id": "col1-49",
+     "name": "Quilava",
+     "n": 2
+    },
+    {
+     "id": "col1-55",
+     "name": "Cyndaquil",
+     "n": 2
+    },
+    {
+     "id": "col1-73",
+     "name": "Teddiursa",
+     "n": 2
+    },
+    {
+     "id": "col1-68",
+     "name": "Pineco",
+     "n": 2
+    },
+    {
+     "id": "col1-71",
+     "name": "Snubbull",
+     "n": 2
+    },
+    {
+     "id": "col1-77",
+     "name": "Copycat",
+     "n": 1
+    },
+    {
+     "id": "hgss2-74",
+     "name": "Energy Returner",
+     "n": 2
+    },
+    {
+     "id": "col1-79",
+     "name": "Interviewer's Questions",
+     "n": 2
+    },
+    {
+     "id": "hgss2-79",
+     "name": "Life Herb",
+     "n": 2
+    },
+    {
+     "id": "hgss1-98",
+     "name": "Pokémon Communication",
+     "n": 2
+    },
+    {
+     "id": "col1-82",
+     "name": "Professor Elm's Training Method",
+     "n": 2
+    },
+    {
+     "id": "col1-85",
+     "name": "Sage's Training",
+     "n": 2
+    },
+    {
+     "id": "col1-88",
+     "name": "Grass Energy",
+     "n": 8
+    },
+    {
+     "id": "col1-89",
+     "name": "Fire Energy",
+     "n": 10
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Recon_(TCG)",
+     "quote": "Deck list sums to 60 (25 rows); The Cracked Ice Holofoil version of Tangrowth is exclusive to this deck.; The Non Holofoil versions of Ninetales and Magmortar are exclusive to this deck."
+    },
+    {
+     "url": "https://www.pokewiki.de/Recon_%28TCG%29",
+     "quote": "Kartenliste, 60 cards"
+    },
+    {
+     "url": "https://pokemoncard.io/deck/recon-theme-deck-44530",
+     "quote": "via web search summary: 8 Grass + 10 Fire Energy, matching Bulbapedia (not fetched; Cloudflare)"
+    }
+   ],
+   "notes": "Energy: numbered Energy as listed by Bulbapedia (col1-88, col1-89). Grass Energy count: Bulbapedia 8, pokewiki.de 10 (used 8). Fire Energy count: Bulbapedia 10, pokewiki.de 8 (used 10)."
+  },
+  {
+   "set": "col1",
+   "name": "Retort",
+   "showcase": "Lucario",
+   "showcaseCard": "col1-14",
+   "showcasePrint": "The Cracked Ice Holofoil version of Lucario is exclusive to this deck.",
+   "showcaseTcgplayerId": 86881,
+   "tcgplayerId": 644851,
+   "tcgplayerName": "Call Of Legends Theme Deck - \"Retort\" [Lucario]",
+   "marketPrice": null,
+   "released": "2011-02-09",
+   "extras": "Per Bulbapedia: 60-card deck, damage counters, custom coin, rulebook, card list, a single-player mat, and a Call of Legends booster pack.",
+   "total": 60,
+   "cards": [
+    {
+     "id": "col1-14",
+     "name": "Lucario",
+     "n": 2
+    },
+    {
+     "id": "col1-50",
+     "name": "Riolu",
+     "n": 4
+    },
+    {
+     "id": "col1-42",
+     "name": "Donphan",
+     "n": 2
+    },
+    {
+     "id": "col1-66",
+     "name": "Phanpy",
+     "n": 2
+    },
+    {
+     "id": "col1-23",
+     "name": "Ampharos",
+     "n": 1
+    },
+    {
+     "id": "col1-43",
+     "name": "Flaaffy",
+     "n": 2
+    },
+    {
+     "id": "col1-63",
+     "name": "Mareep",
+     "n": 2
+    },
+    {
+     "id": "col1-45",
+     "name": "Jolteon",
+     "n": 2
+    },
+    {
+     "id": "col1-56",
+     "name": "Eevee",
+     "n": 2
+    },
+    {
+     "id": "col1-48",
+     "name": "Pidgeotto",
+     "n": 2
+    },
+    {
+     "id": "col1-67",
+     "name": "Pidgey",
+     "n": 2
+    },
+    {
+     "id": "col1-57",
+     "name": "Hitmonchan",
+     "n": 2
+    },
+    {
+     "id": "col1-58",
+     "name": "Hitmonlee",
+     "n": 2
+    },
+    {
+     "id": "col1-8",
+     "name": "Hitmontop",
+     "n": 1
+    },
+    {
+     "id": "col1-6",
+     "name": "Groudon",
+     "n": 1
+    },
+    {
+     "id": "col1-79",
+     "name": "Interviewer's Questions",
+     "n": 2
+    },
+    {
+     "id": "hgss2-79",
+     "name": "Life Herb",
+     "n": 2
+    },
+    {
+     "id": "hgss1-93",
+     "name": "Full Heal",
+     "n": 1
+    },
+    {
+     "id": "hgss1-98",
+     "name": "Pokémon Communication",
+     "n": 2
+    },
+    {
+     "id": "col1-82",
+     "name": "Professor Elm's Training Method",
+     "n": 1
+    },
+    {
+     "id": "col1-83",
+     "name": "Professor Oak's New Theory",
+     "n": 2
+    },
+    {
+     "id": "col1-84",
+     "name": "Research Record",
+     "n": 1
+    },
+    {
+     "id": "col1-85",
+     "name": "Sage's Training",
+     "n": 2
+    },
+    {
+     "id": "col1-91",
+     "name": "Lightning Energy",
+     "n": 6
+    },
+    {
+     "id": "col1-93",
+     "name": "Fighting Energy",
+     "n": 12
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Retort_(TCG)",
+     "quote": "Deck list sums to 60 (26 rows); The Cracked Ice Holofoil version of Lucario is exclusive to this deck.; The Non Holofoil versions of Lucario, Hitmontop, and Groudon are exclusive to this deck."
+    },
+    {
+     "url": "https://www.pokewiki.de/Retort_%28TCG%29",
+     "quote": "Kartenliste, 60 cards"
+    }
+   ],
+   "notes": "Energy: numbered Energy as listed by Bulbapedia (col1-91, col1-93)."
+  }
+ ],
+ "gifts": []
+}
