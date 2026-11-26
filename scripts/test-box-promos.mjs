@@ -5,7 +5,7 @@
 // Run: node scripts/test-box-promos.mjs
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { PLAYABLE_SETS, SET_CATEGORIES, boxPromoCards, dataSetsOf, homeCards, isBoosterSet, isExtraSet, setCategory } from "../js/catalog.js";
+import { PLAYABLE_SETS, SET_CATEGORIES, boxPromoCards, dataSetsOf, foldKits, homeCards, isBoosterSet, isExtraSet, kitHalfName, kitHalves, kitName, setCategory } from "../js/catalog.js";
 import { homeSetId, isBoxPromoId, promoHomeOf, PROMO_HOMES } from "../js/card-home.js";
 import { ownedBoxPromos, ownedPerSet } from "../js/titles.js";
 import { ACHIEVEMENTS, RETIRED_ACHIEVEMENTS, achievementById, achievementContext, achievementsFor, isAchievementDone, isRetired, masteryRowFor, readyToClaim } from "../js/achievements.js";
@@ -138,5 +138,25 @@ assert.equal(achievementById("era-xy-crown").goal, 14);
 assert.equal(achievementById("sets-done-all").goal, byCat.booster.length);
 assert.ok([...SET_INFO.values()].every((info) => info.booster === (info.category === "booster")));
 for (const id of ["extras-100", "extras-300"]) assert.ok(ACHIEVEMENTS.some((row) => row.id === id), `${id} is on the extras ladder`);
+
+// ---- a Trainer Kit is one box: its two half-deck sets pair up, and lists show it once ------------------------
+{
+  const kits = byCat.decks.filter((set) => kitHalves(set));
+  assert.equal(kits.length, 18, "nine kits, two half decks each");
+  for (const set of kits) {
+    const halves = kitHalves(set);
+    assert.equal(halves.length, 2);
+    assert.ok(halves.includes(set) && halves[0].id.endsWith("a") && halves[1].id.endsWith("b"));
+    assert.equal(halves[0].released, halves[1].released, `${set.id}: both halves are one release`);
+    assert.equal(kitName(halves[0]), kitName(halves[1]));
+    assert.match(kitName(set), /Trainer Kit: .+ & .+/);
+    assert.ok(kitHalfName(set) && !/Kit/.test(kitHalfName(set)), `${set.id} half is named for its Pokémon`);
+  }
+  for (const set of PLAYABLE_SETS) if (!byCat.decks.includes(set)) assert.equal(kitHalves(set), null, `${set.id} is not a kit half`);
+  assert.equal(kitHalves(PLAYABLE_SETS.find((set) => set.id === "xy0")), null);
+  assert.equal(foldKits(byCat.decks).length, 11, "nine kits and two fixed decks");
+  assert.equal(foldKits(byCat.booster).length, byCat.booster.length);
+  assert.equal(kitName(PLAYABLE_SETS.find((set) => set.id === "xytk7b")), "XY Trainer Kit: Bisharp & Wigglytuff");
+}
 
 console.log(`Box promo checks passed: ${byCat.booster.length} booster sets, ${byCat.promos.length} promo binders, ${byCat.special.length} special packs, ${byCat.decks.length} decks and kits; ${boxTotal} box promos on ${boxSets} sets, none counted toward a set; ${RETIRED_ACHIEVEMENTS.length} retired rows.`);

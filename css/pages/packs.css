@@ -657,3 +657,22 @@ main #view-catalog .cat-tab:not(.active) { color: var(--k); }
 @media (min-width: 760px) {
   #view-shop .box-strip { flex-wrap: wrap; margin: 0; padding-inline: 0; overflow: visible; }
 }
+
+/* ==== A Trainer Kit: one page, its two half decks as a switch; the box on the slab ==== */
+#view-shop .kit-halves { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 0; }
+#view-shop .kit-halves[hidden] { display: none; }
+#view-shop .kit-half {
+  flex: 1 1 0; min-width: 0; min-height: 48px; margin: 0; padding: 6px 12px;
+  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); color: var(--k);
+  font: 600 14.5px/1.15 var(--font-h); text-align: left; cursor: pointer; transition: transform 0.14s var(--ease-out);
+}
+#view-shop .kit-half small { display: block; margin-top: 2px; color: var(--k-2); font: 700 12px var(--font); font-variant-numeric: tabular-nums; }
+#view-shop .kit-half.active { background: var(--k); color: var(--on-k); }
+#view-shop .kit-half.active small { color: var(--yel-k); }
+#view-shop .kit-half:active { transform: translateY(1px); }
+#view-shop .kit-half:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 3px; }
+#view-shop .shop-hero-card.is-box img { width: min(86%, 420px); height: auto; max-height: 340px; object-fit: contain; border-radius: 0; }
+main #view-catalog .cat-art.is-box img { height: 100%; }
+@media (prefers-reduced-motion: reduce) { #view-shop .kit-half { transition: none; } }
+body.no-motion #view-shop .kit-half { transition: none; }
+#view-shop .shop-step b { white-space: normal; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
