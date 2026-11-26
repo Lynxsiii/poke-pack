@@ -324,6 +324,8 @@ export function botAction(state, player, defs) {
     const def = defOf(state, action.uid, defs);
     const aim = trainerAim(def.fx);
     const heal = def.fx.find((s) => s.op === "heal");
+    // A card that also discards the Stadium in play is not played over its own Stadium.
+    if (def.fx.some((s) => s.op === "dropStadium") && state.stadium?.owner === player) continue;
     if (aim === "cure" && inPlay(state, player).some(([slot]) => Object.values(statusOf(slot)).some(Boolean))) return action;
     if (aim === "hammer" && inPlay(state, other(player)).some(([slot]) => slot.energy.length)) return action;
     if (aim === "cure" || aim === "hammer" || aim === "switch" || aim === "gust") continue;

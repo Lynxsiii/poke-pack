@@ -10,7 +10,7 @@ import { readFileSync, readdirSync } from "node:fs";
 import assert from "node:assert/strict";
 import { ACTIVE, FORMATS, RuleError, abilityOn, addCondition, apply, benchSafe, canRetreat, energyOf, toolOf, conditionsOn, createGame, damageAfterTyping, legalActions, maxHp, resolveKnockOuts, retreatCost, unpaid, usableAttacks, viewFor } from "../js/tcg/engine.js";
 import { createDefs, defineCard, FREE_ENERGY } from "../js/tcg/cards.js";
-import { boostOf, compileTrainer, fits, whatOf } from "../js/tcg/trainers.js";
+import { boostOf, compileTrainer, fits, runTrainer, whatOf } from "../js/tcg/trainers.js";
 import { compileAttack } from "../js/tcg/effects.js";
 import { botAction } from "../js/tcg/bot.js";
 import { LESSON, LESSON_CARDS, createLesson } from "../js/tcg/tutorial.js";
@@ -823,6 +823,19 @@ test("Full Heal clears conditions; the bot plays what helps it", () => {
   assert.deepEqual(conditionsOn(me.active), []);
   hold(state, 0, T.draw);
   assert.equal(botAction(state, 0, defs).type === "play" || botAction(state, 0, defs).type === "bench", true);
+});
+
+test("review fixes: an Ability's mill hits the other deck; Warp Point with no Bench on their side doesn't hang", () => {
+  const state = midgame();
+  const [mine, theirs] = [state.players[0].deck.length, state.players[1].deck.length];
+  runTrainer([{ op: "foeMill", n: 2 }], { state, defs, events: [], player: 0 });
+  assert.equal(state.players[0].deck.length, mine);
+  assert.equal(state.players[1].deck.length, theirs - 2);
+  const s2 = midgame();
+  for (const slot of s2.players[1].bench.splice(0)) s2.players[1].discard.push(slot.uid);
+  runTrainer([{ op: "foeSwitch" }, { op: "switch" }], { state: s2, defs, events: [], player: 0 });
+  assert.ok(!s2.pending.some((w) => w.type === "pick" && !w.spots.length), "no pick with nothing to pick");
+  assert.ok(legalActions(s2, 0, defs).length > 0);
 });
 
 /* ---------- bot against bot ---------- */

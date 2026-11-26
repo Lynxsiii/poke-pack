@@ -310,7 +310,10 @@ export const T_OPS = {
   /** Their Active Pokémon goes to the Bench; they choose what comes in. */
   foeSwitch: {
     ready: (ctx) => frontOpen(ctx) && theirs(ctx).bench.length > 0,
-    run: (ctx) => askPick(ctx.state, { player: other(ctx.player), side: other(ctx.player), spots: benchSpots(theirs(ctx)), left: 1, effect: { op: "switch" } }),
+    run(ctx) {
+      // A card can carry on past this step ("... Then, switch your Active Pokémon"), so it checks again here.
+      if (frontOpen(ctx) && theirs(ctx).bench.length) askPick(ctx.state, { player: other(ctx.player), side: other(ctx.player), spots: benchSpots(theirs(ctx)), left: 1, effect: { op: "switch" } });
+    },
   },
   /**
    * Move an Energy (of `type`, or any) from one of your Pokémon to another. `from`: "any", "self"
@@ -359,7 +362,7 @@ export const T_OPS = {
     },
   },
   /** The top n cards of the other player's deck go to their discard pile. */
-  mill: {
+  foeMill: {
     ready: (ctx) => theirs(ctx).deck.length > 0,
     run(ctx, { n }) {
       const side = theirs(ctx);
