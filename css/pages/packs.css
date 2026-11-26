@@ -157,6 +157,7 @@ body[data-view="shop"]::after { display: none; }
 }
 #view-shop .shop-rip::after { left: 22px; }
 #view-shop .rip-l { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+@media (max-width: 560px) { #view-shop .rip-x { display: none; } }
 #view-shop .rip-p { flex: none; gap: 6px; font-family: var(--font-h); font-style: normal; font-weight: 700; font-size: 20px; }
 #view-shop .rip-p .coin-i { width: 22px; height: 22px; }
 #view-shop .shop-rip:disabled::after { border-left-color: var(--rule-2); animation: none; }

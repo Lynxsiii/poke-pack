@@ -1581,7 +1581,13 @@ function paintWrapperChoice() {
   const rip = document.getElementById("shop-rip");
   if (rip) {
     // The key says what it does and carries the price, which rolls when the set changes.
-    const label = !signed ? "Sign in to rip" : !affordable ? "Need coins" : `Rip the ${wrap?.name || liveSet.name}${/(?:pack|pouch)$/i.test(wrap?.name || "") ? "" : " pack"}`;
+    // On a phone the key drops "the" and "pack" (css/pages/packs.css), so a long wrapper name stays on one line.
+    const name = wrap?.name || liveSet.name;
+    const label = !signed
+      ? "Sign in to rip"
+      : !affordable
+        ? "Need coins"
+        : `Rip <span class="rip-x">the </span>${esc(name)}${/(?:pack|pouch)$/i.test(wrap?.name || "") ? "" : `<span class="rip-x"> pack</span>`}`;
     let words = rip.querySelector(".rip-l");
     let fig = rip.querySelector(".rip-n");
     if (!words || !fig) {
@@ -1589,7 +1595,7 @@ function paintWrapperChoice() {
       words = rip.querySelector(".rip-l");
       fig = rip.querySelector(".rip-n");
     }
-    words.textContent = label;
+    words.innerHTML = label;
     const cost = Number(liveSet.cost) || 0;
     const was = rip.dataset.cost ? Number(rip.dataset.cost) : NaN;
     rip.dataset.cost = String(cost);
