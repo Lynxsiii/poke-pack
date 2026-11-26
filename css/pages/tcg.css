@@ -209,6 +209,13 @@ body.tg-playing { overflow: hidden; }
   position: absolute; z-index: -1; left: -50vw; right: -50vw; top: 33%; height: 34%;
   background: var(--cy); transform: skewY(-9deg);
 }
+/* The Stadium in play sits in the pocket between the two Active Pokémon. */
+.tg-stadium { position: absolute; z-index: 1; left: 53%; top: 50%; width: calc(var(--u) * 13); padding: 0; border: 0; background: none; color: var(--on-k); cursor: pointer; transform: translate(-50%, -50%) rotate(-9deg); animation: tg-fade 0.3s var(--ease-out); }
+.tg-stadium img { display: block; width: 100%; aspect-ratio: 5 / 7; border-radius: 4.5%/3.2%; object-fit: cover; filter: drop-shadow(var(--drop)); pointer-events: none; }
+.tg-stadium b { display: block; margin-top: 2px; font: italic 800 11px/1 var(--font-xc); letter-spacing: 0.01em; text-align: center; color: var(--k0); }
+.tg-stadium-sheet { display: grid; grid-template-columns: minmax(0, 38%) minmax(0, 1fr); gap: 14px; align-items: start; }
+.tg-stadium-sheet img { width: 100%; border-radius: 4.5%/3.2%; }
+.tg-stadium-sheet > div { display: grid; gap: 8px; min-width: 0; }
 .tg-spot { position: absolute; width: var(--w); aspect-ratio: 5 / 7; }
 .tg-spot-foe { --w: calc(var(--u) * 30); top: 0; right: 0; }
 .tg-spot-me { --w: calc(var(--u) * 36); bottom: 0; left: 0; }

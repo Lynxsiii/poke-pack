@@ -114,9 +114,14 @@ wordings the engine can't read. Work down that list:
    kept on `slot.tool`; `compileTool` reads the ones that change numbers
    (HP, Retreat Cost, damage dealt or taken, no Weakness) and the engine
    asks `toolOf` / `maxHp` / `retreatCost` wherever those numbers are used.
-   423 of 2,888 Trainers playable. Next: Stadiums (the same kind of
-   standing modifier, for both players), Tools with conditions, moving
-   Energy, Rare Candy, damage boosts for a turn.
+   Stadiums (same day): `state.stadium = { uid, owner }`, one played a
+   turn, never the name already in play, the old one to its owner's
+   discard pile. `compileStadium` reads standing changes for the Pokémon
+   that fit (`field`, folded into `toolOf` with the Tool) and
+   "once during each player's turn" texts whose rest reads as a Trainer
+   (`use`, action `stadium`). 23 Stadiums so far; 449 of 2,888 Trainers
+   playable. Next: Tools and Stadiums with conditions, moving Energy,
+   Rare Candy, damage boosts for a turn.
 5. **Abilities and Poké-Powers**: a hook per timing (on play, once a turn,
    always on).
 6. **Special Energy**, then the odd card types: V-UNION, LEGEND, Restored,

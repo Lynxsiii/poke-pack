@@ -838,6 +838,7 @@ function playOut(decks, format, seed) {
         seen.push(...side.deck, ...side.hand, ...side.discard, ...side.prizes);
         for (const slot of [side.active, ...side.bench]) if (slot) seen.push(slot.uid, ...slot.under, ...slot.energy, ...(slot.tool ? [slot.tool] : []));
       }
+      if (state.stadium) seen.push(state.stadium.uid);
       assert.equal(seen.length, Object.keys(state.cards).length);
       assert.equal(new Set(seen).size, seen.length);
     }
@@ -1041,6 +1042,61 @@ test("Tools change retreat cost, damage dealt and Weakness", () => {
     assert.equal(plain, printed * 2, "Charmander is weak to Water");
     assert.equal(vested, printed);
   }
+});
+
+/* ---------- Stadiums ---------- */
+
+const STAD = {
+  gym: labTrainer("gym", "Stadium", "Each Fire Pokémon in play (both yours and your opponent's) gets +30 HP."),
+  path: labTrainer("path", "Stadium", "The Retreat Cost of each Basic Pokémon in play (both yours and your opponent's) is Colorless less."),
+  park: labTrainer("park", "Stadium", "Once during each player's turn, that player may search their deck for a Basic Pokémon and put it onto their Bench. Then, that player shuffles their deck."),
+  odd: labTrainer("oddstadium", "Stadium", "Each player hums a tune."),
+};
+
+test("a Stadium stays in play for both players and a new one replaces it", () => {
+  assert.ok(defs(STAD.gym).playable && defs(STAD.park).playable && !defs(STAD.odd).playable);
+  const state = started();
+  state.current = 0;
+  const [me, foe] = state.players;
+  const gym = hold(state, 0, STAD.gym);
+  const again = hold(state, 0, STAD.gym);
+  const path = hold(state, 0, STAD.path);
+  const fireHp = maxHp(state, me.active, defs);
+  const waterHp = maxHp(state, foe.active, defs);
+  apply(state, { type: "play", player: 0, uid: gym }, defs);
+  assert.equal(state.stadium.uid, gym);
+  assert.ok(!me.discard.includes(gym));
+  assert.equal(maxHp(state, me.active, defs), fireHp + 30, "Charmander is Fire");
+  assert.equal(maxHp(state, foe.active, defs), waterHp, "Squirtle is not");
+  // One Stadium a turn, and never the one already in play.
+  assert.ok(!legalActions(state, 0, defs).some((a) => a.type === "play" && (a.uid === path || a.uid === again)));
+  me.stadiumPlayed = false;
+  assert.ok(!legalActions(state, 0, defs).some((a) => a.type === "play" && a.uid === again));
+  // Damage that the extra HP was holding Knocks the Pokémon Out when the Stadium is replaced.
+  me.active.damage = fireHp + 10;
+  if (!me.bench.length) me.bench.push({ uid: me.deck.shift(), under: [], energy: [], damage: 0, since: 0 });
+  const cost = retreatCost(state, foe.active, defs);
+  const events = apply(state, { type: "play", player: 0, uid: path }, defs);
+  assert.ok(me.discard.includes(gym));
+  assert.ok(events.some((e) => e.t === "ko" && e.p === 0));
+  assert.equal(retreatCost(state, foe.active, defs), Math.max(0, cost - 1));
+});
+
+test("a Stadium's once-a-turn use is open to both players, once each turn", () => {
+  const state = started();
+  state.current = 0;
+  const me = state.players[0];
+  me.bench = [];
+  apply(state, { type: "play", player: 0, uid: hold(state, 0, STAD.park) }, defs);
+  assert.ok(legalActions(state, 0, defs).some((a) => a.type === "stadium"));
+  apply(state, { type: "stadium", player: 0 }, defs);
+  apply(state, { type: "choose", player: 0, uids: [state.pending[0].uids[0]] }, defs);
+  assert.equal(me.bench.length, 1);
+  assert.ok(!legalActions(state, 0, defs).some((a) => a.type === "stadium"));
+  assert.throws(() => apply(state, { type: "stadium", player: 0 }, defs), RuleError);
+  apply(state, { type: "end", player: 0 }, defs);
+  assert.equal(state.current, 1);
+  assert.ok(legalActions(state, 1, defs).some((a) => a.type === "stadium"), "the other player may use it too");
 });
 
 /* ---------- the rulebook audit (2026-11-26) ---------- */

@@ -49,7 +49,7 @@
  */
 
 import { runAttackEffects } from "./effects.js";
-import { runTrainer, trainerReady } from "./trainers.js";
+import { fieldFits, runTrainer, trainerReady } from "./trainers.js";
 
 export const FORMATS = {
   standard: { id: "standard", name: "Full deck", deckSize: 60, prizes: 6, bench: 5, copies: 4 },
@@ -110,9 +110,26 @@ export function inPlay(state, player) {
   return out;
 }
 
-/** What the Pokémon Tool on this Pokémon changes ({} when it has none). See compileTool. */
+/**
+ * What changes this Pokémon's numbers while it is in play: its Pokémon Tool and the Stadium,
+ * added up ({} when neither says anything). See compileTool and compileStadium.
+ */
 export function toolOf(state, slot, defs) {
-  return (slot?.tool && defOf(state, slot.tool, defs)?.tool) || {};
+  if (!slot) return {};
+  const tool = (slot.tool && defOf(state, slot.tool, defs)?.tool) || null;
+  const field = (state.stadium && defOf(state, state.stadium.uid, defs)?.stadium?.field) || [];
+  const def = field.length ? defOf(state, slot.uid, defs) : null;
+  const mods = [tool, ...field.filter((f) => fieldFits(f.who, def)).map((f) => f.mod)].filter(Boolean);
+  if (!mods.length) return {};
+  const sum = (key) => mods.reduce((n, m) => n + (m[key] || 0), 0);
+  return {
+    hp: sum("hp"),
+    plus: sum("plus"),
+    less: sum("less"),
+    retreat: mods.some((m) => m.retreat === "all") ? "all" : mods.reduce((n, m) => n + (Number(m.retreat) || 0), 0),
+    noWeakness: mods.some((m) => m.noWeakness),
+    noResistance: mods.some((m) => m.noResistance),
+  };
 }
 
 /** A Pokémon's HP as it stands in play: what it prints, plus what its Tool adds. */
@@ -370,6 +387,8 @@ function startTurn(state, events) {
   side.energyUsed = false;
   side.retreated = false;
   side.supporterUsed = false;
+  side.stadiumPlayed = false;
+  side.stadiumUsed = false;
   events.push({ t: "turn", p: state.current, n: state.turn });
   if (!side.deck.length) return win(state, other(state.current), "deck", events);
   draw(state, state.current, 1, events);
@@ -530,6 +549,16 @@ const HANDLERS = {
     const why = trainerBlock(state, player, def, defs);
     if (why) fail(why);
     takeFromHand(state, player, uid);
+    if (def.sub === "stadium") {
+      // It stays in play for both players; the one it replaces goes to its owner's discard pile.
+      if (state.stadium) state.players[state.stadium.owner].discard.push(state.stadium.uid);
+      state.stadium = { uid, owner: player };
+      side.stadiumPlayed = true;
+      events.push({ t: "stadium", p: player, uid });
+      // HP a Stadium gave is gone with it: anything left with none is Knocked Out.
+      resolveKnockOuts(state, defs, events);
+      return;
+    }
     side.discard.push(uid);
     if (def.sub === "supporter") side.supporterUsed = true;
     events.push({ t: "play", p: player, uid, sub: def.sub });
@@ -548,6 +577,17 @@ const HANDLERS = {
     slot.energy.push(uid);
     side.energyUsed = true;
     events.push({ t: "attach", p: player, uid, spot });
+  },
+
+  /** Do what the Stadium in play offers once a turn. */
+  stadium(state, { player }, defs, events) {
+    const why = stadiumBlock(state, player, defs);
+    if (why) fail(why);
+    const def = defOf(state, state.stadium.uid, defs);
+    state.players[player].stadiumUsed = true;
+    events.push({ t: "stadium-use", p: player, uid: state.stadium.uid });
+    runTrainer(def.stadium.use, { state, defs, events, player });
+    if (!state.pending.length) resolveKnockOuts(state, defs, events);
   },
 
   /** Attach a Pokémon Tool from the hand: one to a Pokémon, and it stays until that Pokémon leaves play. */
@@ -641,7 +681,7 @@ const HANDLERS = {
       const mine = toolOf(state, slot, defs);
       const theirs = toolOf(state, target, defs);
       const base = hit.damage > 0 ? hit.damage + (mine.plus || 0) : hit.damage;
-      const dealt = damageAfterTyping(base, def, defOf(state, target.uid, defs), { ...hit, noWeakness: hit.noWeakness || Boolean(theirs.noWeakness) });
+      const dealt = damageAfterTyping(base, def, defOf(state, target.uid, defs), { ...hit, noWeakness: hit.noWeakness || Boolean(theirs.noWeakness), noResistance: hit.noResistance || Boolean(theirs.noResistance) });
       const less = (hit.noEffects ? 0 : markOn(state, target, "less")?.n || 0) + (theirs.less || 0);
       const guarded = ctx.shielded || (!hit.noEffects && markOn(state, target, "guard"));
       const amount = guarded ? 0 : Math.max(0, dealt.amount - less);
@@ -728,7 +768,21 @@ export function trainerBlock(state, player, def, defs) {
     if (side.supporterUsed) return "You've already played a Supporter this turn.";
     if (state.turn === 1) return "No Supporter on the first turn of the match.";
   }
+  if (def.sub === "stadium") {
+    if (side.stadiumPlayed) return "You've already played a Stadium this turn.";
+    if (state.stadium && defOf(state, state.stadium.uid, defs).name === def.name) return `${def.name} is already in play.`;
+    return "";
+  }
   if (!trainerReady(def.fx, { state, defs, events: [], player })) return `${def.name} would do nothing right now.`;
+  return "";
+}
+
+/** Why the Stadium in play can't be used by this player right now, or "" when it can. */
+export function stadiumBlock(state, player, defs) {
+  const use = state.stadium && defOf(state, state.stadium.uid, defs)?.stadium?.use;
+  if (!use) return "This Stadium has nothing to use.";
+  if (state.players[player].stadiumUsed) return "You've already used the Stadium this turn.";
+  if (!trainerReady(use, { state, defs, events: [], player })) return "The Stadium would do nothing right now.";
   return "";
 }
 
@@ -871,6 +925,7 @@ export function legalActions(state, player, defs) {
     }
     if (def.kind === "trainer" && !trainerBlock(state, player, def, defs)) out.push({ type: "play", player, uid });
   }
+  if (state.stadium && !stadiumBlock(state, player, defs)) out.push({ type: "stadium", player });
   if (canRetreat(state, player, defs)) side.bench.forEach((_, to) => out.push({ type: "retreat", player, to }));
   for (const index of usableAttacks(state, player, defs)) out.push({ type: "attack", player, index });
   out.push({ type: "end", player });

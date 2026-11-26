@@ -261,7 +261,7 @@ function compileParts(clean) {
   }
   m = clean.match(/^Flip a coin\. If heads, (.+)$/);
   if (m) {
-    const heads = compileParts(m[1][0].toUpperCase() + m[1].slice(1));
+    const heads = compileTrainer(m[1][0].toUpperCase() + m[1].slice(1));
     return heads ? [{ op: "flip", heads }] : null;
   }
   return null;
@@ -300,6 +300,54 @@ export function compileTool(text) {
     if (m) return build(m);
   }
   return null;
+}
+
+/**
+ * A Stadium stays in play for both players. What it does, or null when its text isn't read yet:
+ *   { field: [{ who, mod }] }  a standing change to the Pokémon that fit `who`
+ *       who: { types: [..] | null, stage: "basic" | "evolution" | null, name: "" }
+ *       mod: the same numbers a Tool changes (see compileTool), plus noResistance
+ *   { use: steps }             once during each player's turn, that player may do this
+ */
+const TYPE = "(?:Grass|Fire|Water|Lightning|Psychic|Fighting|Darkness|Metal|Fairy|Dragon|Colorless)";
+const BOTH = "(?: \\((?:both yours and your opponent's|even your opponent's)\\))?";
+const typesIn = (words) => words.match(new RegExp(TYPE, "g")) || [];
+const STADIUMS = [
+  [new RegExp(`^Each ((?:${TYPE}(?:, | and |, and )?)+) Pokémon in play${BOTH} gets \\+(\\d+) HP\\.$`), (m) => ({ who: { types: typesIn(m[1]) }, mod: { hp: Number(m[2]) } })],
+  [new RegExp(`^Each Pokémon that isn't an Evolved Pokémon in play${BOTH} gets \\+(\\d+) HP\\.$`), (m) => ({ who: { stage: "basic" }, mod: { hp: Number(m[1]) } })],
+  [new RegExp(`^The Retreat Cost of each Basic Pokémon (?:in|is) play${BOTH} is ((?:Colorless)+) less\\.$`), (m) => ({ who: { stage: "basic" }, mod: { retreat: m[1].length / 9 } })],
+  [new RegExp(`^Each player pays ((?:Colorless)+) less to retreat (?:his or her|their) ((?:${TYPE}(?:, | and |, and )?)+) Pokémon\\.$`), (m) => ({ who: { types: typesIn(m[2]) }, mod: { retreat: m[1].length / 9 } })],
+  [new RegExp(`^The Retreat Cost (?:for|of) each ((?:${TYPE}(?:, | and |, and )?)+) Pokémon(?: in play)?${BOTH} is 0\\.$`), (m) => ({ who: { types: typesIn(m[1]) }, mod: { retreat: "all" } })],
+  [new RegExp(`^The Retreat Cost of each ([A-Z][\\w'.-]+) in play${BOTH} is ((?:Colorless)+) less\\.$`), (m) => ({ who: { name: m[1] }, mod: { retreat: m[2].length / 9 } })],
+  [new RegExp(`^Each Pokémon in play${BOTH} has no Resistance\\.$`), () => ({ who: {}, mod: { noResistance: true } })],
+  [new RegExp(`^The attacks of ((?:${TYPE} Pokémon(?:, | and |, and )?)+)${BOTH} do (\\d+) more damage to the opponent's Active Pokémon(?: \\(before applying Weakness and Resistance\\))?\\.$`), (m) => ({ who: { types: typesIn(m[1]) }, mod: { plus: Number(m[2]) } })],
+  [new RegExp(`^((?:Basic ${TYPE}(?:, | and |, and )?)+) Pokémon${BOTH} take (\\d+) less damage from the opponent's attacks(?: \\(after applying Weakness and Resistance\\))?\\.$`), (m) => ({ who: { types: typesIn(m[1]), stage: "basic" }, mod: { less: Number(m[2]) } })],
+];
+const ONCE = /^Once during each player's turn(?: \(before attacking\))?, that player may (.+)$/;
+/** "that player may search their deck..." reworded as a card you play yourself, so the same reader takes it. */
+const asYours = (words) =>
+  (words[0].toUpperCase() + words.slice(1))
+    .replace(/that player shuffles (?:their|his or her) deck/g, "shuffle your deck")
+    .replace(/that player draws/g, "draw")
+    .replace(/\b(?:their|his or her)\b/g, "your");
+
+export function compileStadium(text) {
+  const clean = String(text || "").replace(/\s+/g, " ").trim();
+  for (const [pattern, build] of STADIUMS) {
+    const m = clean.match(pattern);
+    if (m) return { field: [build(m)] };
+  }
+  const once = clean.match(ONCE);
+  const use = once && compileTrainer(asYours(once[1]));
+  return use ? { use } : null;
+}
+
+/** Does a Stadium's standing change reach this Pokémon? */
+export function fieldFits(who, def) {
+  if (who.types && !who.types.some((t) => def.types.includes(t))) return false;
+  if (who.stage && def.stage !== who.stage) return false;
+  if (who.name && def.name !== who.name) return false;
+  return true;
 }
 
 /** A card may be played when it would do something, and every price it asks can be paid. */
