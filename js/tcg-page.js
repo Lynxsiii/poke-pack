@@ -483,7 +483,7 @@ export function initTcg(deps) {
         <div><dt>Retreat</dt><dd>${def.retreat ? pips(Array(def.retreat).fill("Colorless")) : "Free"}</dd></div>
       </dl>
       ${def.ability ? `<p class="tg-look-text tg-ability-text"><b>${esc(def.ability.kind)}: ${esc(def.ability.name)}</b> ${esc(def.ability.text)}</p>` : ""}
-      ${def.attacks.length ? `<ul class="tg-look-attacks">${def.attacks.map((a) => `<li><span class="tg-pips">${a.cost.length ? pips(a.cost) : "Free"}</span><b>${esc(a.name)}</b><em>${a.damage || ""}</em>${a.text ? `<p>${esc(a.text)}</p>` : ""}</li>`).join("")}</ul>` : ""}
+      ${def.attacks.length ? `<ul class="tg-look-attacks">${def.attacks.map((a) => `<li><span class="tg-pips">${a.cost.length ? pips(a.cost) : "Free"}</span><b>${esc(a.name)}</b><em>${a.damage || ""}</em>${a.text ? `<p${a.plain ? ' class="off"' : ""}>${a.plain ? "<b>Text not live yet:</b> only the printed damage lands. " : ""}${esc(a.text)}</p>` : ""}</li>`).join("")}</ul>` : ""}
       ${def.prizes > 1 ? `<p class="tg-look-note">Gives up ${def.prizes} prize cards when Knocked Out.</p>` : ""}
       ${def.notes.map((n) => `<p class="tg-look-note">${esc(n)}.</p>`).join("")}`;
     return `<div class="tg-sheet-bg" data-close></div>

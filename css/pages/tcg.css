@@ -143,6 +143,7 @@
 .tg-look-attacks li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 2px 8px; padding: 5px 0; border-bottom: 1.5px solid var(--rule); font: 700 14px var(--font-h); }
 .tg-look-attacks em { font-style: normal; font-weight: 800; }
 .tg-look-attacks p { grid-column: 1 / -1; margin: 0; color: var(--k-2); font: 500 12.5px/1.35 var(--font); }
+.tg-look-attacks p.off b { font: inherit; font-weight: 700; color: var(--k); }
 .tg-look-facts dd { margin: 0; font: 700 14px var(--font-h); }
 
 /* ---- The table ------------------------------------------------------------------------------------------- */
