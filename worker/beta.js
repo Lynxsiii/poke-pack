@@ -8,7 +8,7 @@ import { gateResponse } from './gates.js';
 /* BETA TESTING (/api/casino/beta/...): invite codes, the tester flag, and five games against the house.
 
    Joining: Noah (BETA_ADMINS, or the Worker var BETA_ADMINS) makes codes; a player enters one once and becomes a beta tester
-   (users.beta = 1). Testers get the beta badge, the Beta Tester frame and the games below. Only code holders can play, the owner included (Noah, 2026-11-26: "games be locked to code holders").
+   (users.beta = 1). Testers get the beta badge, the Beta Tester frame and the games below. Only code holders can play (Noah, 2026-11-26: "games be locked to code holders"); the owner is let in automatically.
 
    Every game is play coins only. The coins move in one D1 batch with the game row: the stake comes off only when the wallet
    has it, the row is written only when the stake came off, and a payout is credited only while the row is still open, then
@@ -476,6 +476,14 @@ export async function handleBeta(path, method, request, env, helpers) {
       if (!body) error('Expected JSON.');
     } else if (method !== 'GET') error('Not found.', 404);
     const admin = isBetaAdmin(env, user);
+    // The owner always has the beta (Noah, 2026-11-26: he could not get in with a code as @polar): joined once, with the badge and frame.
+    if (admin && !isMember(user)) {
+      await env.DB.batch([
+        env.DB.prepare("INSERT OR IGNORE INTO beta_members (user_id, code, joined_at) VALUES (?, 'OWNER', ?)").bind(user.id, Date.now()),
+        env.DB.prepare('UPDATE users SET beta = 1 WHERE id = ?').bind(user.id),
+      ]);
+      user.beta = 1;
+    }
 
     if (!part) {
       if (method !== 'GET') error('Not found.', 404);
