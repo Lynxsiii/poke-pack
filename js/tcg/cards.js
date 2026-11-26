@@ -18,7 +18,7 @@
 
 import { compileAbility } from "./abilities.js";
 import { compileAttack } from "./effects.js";
-import { compileStadium, compileTool, compileTrainer } from "./trainers.js";
+import { compileCard, compileStadium, compileTool } from "./trainers.js";
 import { compileSpecialEnergy } from "./energy.js";
 import { deckName, legalityOf } from "./formats.js";
 
@@ -32,6 +32,7 @@ export const FREE_ENERGY = ENERGY_TYPES.map((type) => ({
 const FREE_IDS = new Set(FREE_ENERGY.map((e) => e.id));
 export const isFreeEnergy = (id) => FREE_IDS.has(id);
 
+const TAGS = ["Team Plasma", "SP", "Level-Up", "Baby"];
 const EVOLVED = /^(Stage 1|Stage 2|VMAX|VSTAR|BREAK|Level-Up)$/;
 const NOT_YET = /^(LEGEND|V-UNION|Restored)$/;
 
@@ -123,6 +124,8 @@ export function defineCard(card, row, text = "", lines = null, print = null) {
  * (js/tcg/formats.js). Without it a card has no regulation mark.
  */
 function defineRules(card, row, text, lines, print) {
+  // Kinds some Trainers ask for by name: "a Team Plasma card", "Pokémon SP", "(excluding Pokémon LV.X)", "Baby Pokémon".
+  const tags = (card.subtypes || []).filter((s) => TAGS.includes(s));
   const base = {
     id: card.id,
     name: card.name,
@@ -131,6 +134,7 @@ function defineRules(card, row, text, lines, print) {
     mark: print?.mark || "",
     ...(isClassic(card) ? { classic: true } : {}),
     ...limitsOf(card),
+    ...(tags.length ? { tags } : {}),
   };
   if (card.supertype === "Energy" || card.energy) {
     const type = ENERGY_TYPES.find((t) => new RegExp(`^(Basic )?${t} Energy$`).test(card.name));
@@ -144,9 +148,9 @@ function defineRules(card, row, text, lines, print) {
   if (card.supertype !== "Pokémon") {
     const subs = card.subtypes || [];
     const sub = subs.includes("Supporter") ? "supporter" : subs.includes("Stadium") ? "stadium" : subs.some((x) => /Tool|Technical Machine/.test(x)) ? "tool" : "item";
-    const fx = sub === "item" || sub === "supporter" ? compileTrainer(text) : null;
+    const fx = sub === "item" || sub === "supporter" ? compileCard(text) : null;
     // A Tool is not played and discarded: it is attached, and its numbers ride on the Pokémon.
-    const tool = sub === "tool" && subs.includes("Pokémon Tool") ? compileTool(text) : null;
+    const tool = sub === "tool" && subs.includes("Pokémon Tool") ? compileTool(text, card.name) : null;
     const stadium = sub === "stadium" ? compileStadium(text) : null;
     const why = sub === "stadium" ? (stadium ? "" : "This Stadium's text isn't live yet.") : sub === "tool" ? (tool ? "" : "This Tool's text isn't live yet.") : fx ? "" : "This Trainer's text isn't live yet.";
     return { ...base, kind: "trainer", sub, text: text || "", fx: fx || [], ...(tool ? { tool } : {}), ...(stadium ? { stadium } : {}), playable: !why, why };
@@ -173,7 +177,8 @@ function defineRules(card, row, text, lines, print) {
   // A BREAK keeps the Weakness, Resistance, Retreat Cost and attacks of what it evolved from; until the table reads those through, it waits.
   else if (subs.includes("BREAK")) why = "BREAK Evolution isn't in yet.";
   else if (!row) why = "We don't have this card's play data yet.";
-  else if (!attacks.length) why = "It has no attack to use yet.";
+  // A Pokémon with no attack of its own may still be played for its Ability (Elekid's Playful Punch).
+  else if (!attacks.length && !ability) why = "It has no attack to use yet.";
 
   return {
     ...base,
@@ -192,6 +197,9 @@ function defineRules(card, row, text, lines, print) {
     prizes: prizesFor(card, row),
     box: boxOf(card),
     ...(printed.length ? { abilityKind: printed[0].type || "Ability" } : {}),
+    // The Baby Pokémon rule (attacking it takes a coin flip), and Team Plasma for the cards that ask.
+    ...(subs.includes("Baby") ? { baby: true } : {}),
+    ...(subs.includes("Team Plasma") ? { plasma: true } : {}),
     // "A Pokémon that doesn't have a Rule Box" (Pokémon ex, V, GX, Radiant, Prism Star ...).
     rule: Boolean(boxOf(card)) || subs.some((s) => /^(Radiant|Prism Star|BREAK|LEGEND|V-UNION|Level-Up|Star|TAG TEAM|MEGA)$/.test(s)),
     ...(ability ? { ability } : {}),

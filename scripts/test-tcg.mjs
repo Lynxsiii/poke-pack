@@ -15,6 +15,7 @@ import { compileAttack } from "../js/tcg/effects.js";
 import { botAction } from "../js/tcg/bot.js";
 import { LESSON, LESSON_CARDS, createLesson } from "../js/tcg/tutorial.js";
 import { buildBotDeck, buildDeck, checkDeck, deckList, roomFor } from "../js/tcg/decks.js";
+import { BASIC_ENERGY, boxCardList } from "../js/catalog.js";
 
 const rules = JSON.parse(readFileSync("data/tcg/rules.json", "utf8"));
 const sets = {};
@@ -87,6 +88,10 @@ if (process.argv.includes("--coverage")) {
   console.log(`${trainerCards} Trainers: ${trainerRead} playable (Items and Supporters whose text is read)`);
   console.log("Commonest unread Item and Supporter texts:");
   for (const [shape, n] of [...unreadTrainers].sort((a, b) => b[1] - a[1]).slice(0, 15)) console.log(`  ${String(n).padStart(4)}  ${shape.slice(0, 150)}`);
+  for (const sub of ["tool", "stadium"]) {
+    const all = [...byId.values()].map((c) => defs(c.id)).filter((d) => d.kind === "trainer" && d.sub === sub);
+    console.log(`${all.length} ${sub === "tool" ? "Pokémon Tools" : "Stadiums"}: ${all.filter((d) => d.playable).length} live`);
+  }
   const specials = [...byId.values()].filter((c) => c.supertype === "Energy" && !(c.subtypes || []).includes("Basic"));
   const unreadSpecial = new Map();
   for (const c of specials) if (!defs(c.id).playable) unreadSpecial.set(c.name, (unreadSpecial.get(c.name) || 0) + 1);
@@ -982,9 +987,11 @@ function playOut(decks, format, seed) {
       const seen = [];
       for (const side of state.players) {
         seen.push(...side.deck, ...side.hand, ...side.discard, ...side.prizes, ...(side.lost || []));
-        for (const slot of [side.active, ...side.bench]) if (slot) seen.push(slot.uid, ...slot.under, ...slot.energy, ...(slot.tool ? [slot.tool] : []));
+        for (const slot of [side.active, ...side.bench]) if (slot) seen.push(slot.uid, ...slot.under, ...slot.energy, ...(slot.tool ? [slot.tool] : []), ...(slot.held || []).map((h) => h.uid));
       }
       if (state.stadium) seen.push(state.stadium.uid);
+      // Energy taken from the deck waits on the choice of the Pokémon it goes to; so does a card to evolve with.
+      for (const w of state.pending) seen.push(...(w.effect?.op === "attachHeld" ? w.effect.uids : w.effect?.op === "evolveHeld" ? [w.effect.uid] : []));
       assert.equal(seen.length, Object.keys(state.cards).length);
       assert.equal(new Set(seen).size, seen.length);
     }
@@ -2648,6 +2655,562 @@ test("Energy from the hand or the discard pile onto a Pokémon the card names: B
   act(s4, { type: "pick", player: 0, spot: ACTIVE });
   assert.equal(s4.pending[0].effect.op, "toHand");
   assert.equal(s4.pending[0].zone, "deck");
+});
+
+/* ---------- the pre-made decks' Items and Supporters ---------- */
+
+const PM = {
+  kukui: "sm1-128", timer: "sm1-134", stretcher: "sm2-130", rope: "sm3-114", sonia: "swsh2-167", malasada: "sm1-114",
+  plusOld: "base1-84", plusDp: "dp1-109", defender: "base1-80", superOld: "base1-90", elm: "neo1-96", fieldworker: "ex12-73",
+  retrieval: "base1-81", milk: "neo1-101", kahili: "sm8-179", hint: "xy12-84", quick: "dp5-86", nav: "ex1-88", rod: "swsh1-171",
+  bug: "sm11-189", luxury: "dp7-86", misty: "gym1-102", egg: "pgo-66",
+};
+const deckUid = (state, p, kind) => state.players[p].deck.find((uid) => defs(state.cards[uid]).kind === kind);
+
+test("pre-made decks: the Items and Supporters are read", () => {
+  for (const [key, id] of Object.entries(PM)) assert.ok(defs(id).playable, `${key} ${id}`);
+  assert.equal(trainerAim(defs(PM.kukui).fx), "draw");
+  assert.equal(trainerAim(defs(PM.stretcher).fx), "recover");
+  // Unread on purpose: Rock-Paper-Scissors, a Fossil played as a Pokémon.
+  assert.ok(!defs("swsh2-158").playable && !defs("ex13-92").playable);
+});
+
+test("Professor Kukui: 2 cards and 20 more damage this turn only; no Supporter on the first turn of the match", () => {
+  const state = labgame("lab-2", "lab-2");
+  const hand = state.players[0].hand.length;
+  act(state, { type: "play", player: 0, uid: hold(state, 0, PM.kukui) });
+  assert.equal(state.players[0].hand.length, hand + 2);
+  assert.ok(state.players[0].supporterUsed);
+  use(state, 0, "Pierce");
+  assert.equal(state.players[1].active.damage, 70);
+  act(state, { type: "end", player: 1 });
+  state.players[1].active.damage = 0;
+  use(state, 0, "Pierce");
+  assert.equal(state.players[1].active.damage, 50, "the next turn it is gone");
+  const fresh = started();
+  throws(() => act(fresh, { type: "play", player: fresh.current, uid: hold(fresh, fresh.current, PM.kukui) }), /first turn/);
+});
+
+test("Timer Ball and Bug Catcher: a search or a draw for each heads", () => {
+  const state = midgame();
+  const me = state.players[0];
+  stock(state, 0, "base1-24");
+  stock(state, 0, "base1-24");
+  rigFlips(state, [true, true]);
+  let events = act(state, { type: "play", player: 0, uid: hold(state, 0, PM.timer) });
+  assert.deepEqual(events.find((e) => e.t === "flip").results, [true, true]);
+  assert.equal(state.pending[0].what, "evolution");
+  assert.equal(state.pending[0].max, 2);
+  act(state, { type: "choose", player: 0, uids: state.pending[0].uids });
+  assert.equal(me.hand.filter((u) => state.cards[u] === "base1-24").length, 2);
+  // Two tails: no search, the deck stays as it was.
+  const order = me.deck.slice();
+  rigFlips(state, [false, false]);
+  act(state, { type: "play", player: 0, uid: hold(state, 0, PM.timer) });
+  assert.equal(state.pending.length, 0);
+  assert.deepEqual(me.deck, order);
+  // Bug Catcher: 2 cards, then 2 more on heads (two sentences read one after the other).
+  assert.deepEqual(defs(PM.bug).fx.map((s) => s.op), ["draw", "flip"]);
+  const hand = me.hand.length;
+  rigFlips(state, [true]);
+  act(state, { type: "play", player: 0, uid: hold(state, 0, PM.bug) });
+  assert.equal(me.hand.length, hand + 4);
+});
+
+test("Choose 1: Rescue Stretcher offers what can be done; Ordinary Rod offers both; the bot answers", () => {
+  const state = midgame();
+  const me = state.players[0];
+  const stretcher = hold(state, 0, PM.stretcher);
+  assert.ok(!playable(state, stretcher), "no Pokémon in the discard pile");
+  const mon = me.deck.splice(me.deck.findIndex((u) => defs(state.cards[u]).kind === "pokemon"), 1)[0];
+  me.discard.push(mon);
+  act(state, { type: "play", player: 0, uid: stretcher });
+  assert.equal(state.pending[0].type, "option");
+  assert.equal(state.pending[0].labels.length, 2);
+  assert.deepEqual(legalActions(state, 0, defs).map((a) => a.index), [0, 1]);
+  throws(() => act(state, { type: "option", player: 0, index: 5 }), /one of the options/);
+  throws(() => act(state, { type: "end", player: 0 }), /Waiting for a choice/);
+  assert.equal(botAction(state, 0, defs).type, "option");
+  act(state, { type: "option", player: 0, index: 0 });
+  assert.equal(state.pending[0].zone, "discard");
+  act(state, { type: "choose", player: 0, uids: [mon] });
+  assert.ok(me.hand.includes(mon));
+  // Ordinary Rod: a Pokémon and a basic Energy in the discard pile, so either or both.
+  me.discard.push(me.hand.splice(me.hand.indexOf(mon), 1)[0], me.deck.splice(me.deck.findIndex((u) => defs(state.cards[u]).kind === "energy"), 1)[0]);
+  act(state, { type: "play", player: 0, uid: hold(state, 0, PM.rod) });
+  assert.deepEqual(state.pending[0].labels.slice(-1), ["Both"]);
+  const deck = me.deck.length;
+  act(state, { type: "option", player: 0, index: 2 });
+  act(state, { type: "choose", player: 0, uids: state.pending[0].uids });
+  act(state, { type: "choose", player: 0, uids: state.pending[0].uids });
+  assert.equal(me.deck.length, deck + 2);
+});
+
+test("Escape Rope: the opponent switches first, then you", () => {
+  const state = midgame();
+  const [me, foe] = state.players;
+  const [mine, theirs] = [me.active.uid, foe.active.uid];
+  act(state, { type: "play", player: 0, uid: hold(state, 0, PM.rope) });
+  assert.equal(state.pending[0].player, 1);
+  act(state, { type: "pick", player: 1, spot: 0 });
+  assert.equal(state.pending[0].player, 0);
+  act(state, { type: "pick", player: 0, spot: 0 });
+  assert.equal(foe.bench[0].uid, theirs);
+  assert.equal(me.bench[0].uid, mine);
+});
+
+test("Sonia: up to two Basic Pokémon or up to two basic Energy, never one of each; the bot keeps to it", () => {
+  const state = midgame();
+  act(state, { type: "play", player: 0, uid: hold(state, 0, PM.sonia) });
+  const waiting = state.pending[0];
+  const mon = waiting.uids.find((u) => defs(state.cards[u]).kind === "pokemon");
+  const energy = waiting.uids.filter((u) => defs(state.cards[u]).kind === "energy");
+  throws(() => act(state, { type: "choose", player: 0, uids: [mon, energy[0]] }), /one kind/);
+  const answer = botAction(state, 0, defs);
+  assert.equal(new Set(answer.uids.map((u) => defs(state.cards[u]).kind)).size, 1);
+  act(state, { type: "choose", player: 0, uids: energy.slice(0, 2) });
+  assert.ok(energy.slice(0, 2).every((u) => state.players[0].hand.includes(u)));
+});
+
+test("Big Malasada: 20 healed, and the player chooses which Special Condition goes", () => {
+  const state = midgame();
+  const me = state.players[0];
+  me.active.damage = 30;
+  addCondition(state, me.active, "asleep");
+  addCondition(state, me.active, "poisoned");
+  act(state, { type: "play", player: 0, uid: hold(state, 0, PM.malasada) });
+  assert.equal(me.active.damage, 10);
+  assert.deepEqual(state.pending[0].labels, ["Asleep", "Poisoned"]);
+  act(state, { type: "option", player: 0, index: 1 });
+  assert.deepEqual(conditionsOn(me.active), ["asleep"]);
+});
+
+test("old PlusPower: on the Active Pokémon until the end of the turn, 10 more after Weakness and Resistance, only if it does damage", () => {
+  const state = labgame("lab-2", "lab-2");
+  const me = state.players[0];
+  const card = hold(state, 0, PM.plusOld);
+  act(state, { type: "play", player: 0, uid: card });
+  assert.deepEqual(state.pending[0].spots, [ACTIVE]);
+  act(state, { type: "pick", player: 0, spot: ACTIVE });
+  assert.ok(me.active.held.some((h) => h.uid === card) && !me.discard.includes(card));
+  use(state, 0, "Pierce");
+  assert.equal(state.players[1].active.damage, 60);
+  assert.ok(me.discard.includes(card) && !me.active.held.length, "discarded at the end of the turn");
+  // An attack that does no damage gets nothing from it.
+  const s2 = labgame("lab-2", "lab-2");
+  act(s2, { type: "play", player: 0, uid: hold(s2, 0, PM.plusOld) });
+  act(s2, { type: "pick", player: 0, spot: ACTIVE });
+  rigFlips(s2, [false]);
+  use(s2, 0, "Hide");
+  assert.equal(s2.players[1].active.damage, 0);
+  // Diamond & Pearl PlusPower: any of your Pokémon, before Weakness and Resistance.
+  assert.deepEqual(defs(PM.plusDp).fx[0].mod, { plus: 10 });
+});
+
+test("Defender: 20 less damage until the end of the opponent's next turn, then discarded", () => {
+  const state = labgame("lab-1", "lab-3");
+  const me = state.players[0];
+  const card = hold(state, 0, PM.defender);
+  act(state, { type: "play", player: 0, uid: card });
+  act(state, { type: "pick", player: 0, spot: ACTIVE });
+  act(state, { type: "end", player: 0 });
+  assert.ok(me.active.held.length, "still on through the opponent's turn");
+  use(state, 1, "Follow");
+  assert.equal(me.active.damage, 0);
+  assert.ok(me.discard.includes(card));
+});
+
+test("Base Set Super Potion: the player chooses the Energy to discard, then 40 damage is healed", () => {
+  const state = midgame();
+  const me = state.players[0];
+  me.active.energy = [give(state, 0, W), give(state, 0, G)];
+  me.bench[0].damage = 30;
+  const potion = hold(state, 0, PM.superOld);
+  assert.ok(!playable(state, potion), "the hurt Pokémon has no Energy to pay with");
+  me.active.damage = 50;
+  act(state, { type: "play", player: 0, uid: potion });
+  assert.deepEqual(state.pending[0].spots, [ACTIVE]);
+  act(state, { type: "pick", player: 0, spot: ACTIVE });
+  const grass = me.active.energy.find((u) => state.cards[u] === G);
+  act(state, { type: "choose", player: 0, uids: [grass] });
+  assert.equal(me.active.damage, 10);
+  assert.ok(me.discard.includes(grass) && me.active.energy.length === 1);
+});
+
+test("Professor Elm, Professor Oak's Hint: no more Trainers this turn; the turn ends", () => {
+  const state = midgame();
+  const me = state.players[0];
+  me.active.damage = 30;
+  act(state, { type: "play", player: 0, uid: hold(state, 0, PM.elm) });
+  assert.equal(me.hand.length, 7);
+  throws(() => act(state, { type: "play", player: 0, uid: hold(state, 0, T.potion) }), /any more Trainer/);
+  act(state, { type: "end", player: 0 });
+  act(state, { type: "end", player: 1 });
+  me.hand.splice(3);
+  act(state, { type: "play", player: 0, uid: hold(state, 0, PM.hint) });
+  assert.equal(me.hand.length, 7);
+  assert.equal(state.current, 1);
+});
+
+test("Fieldworker: the opponent chooses whether to draw; Energy Retrieval can't take back the card paid", () => {
+  const state = midgame();
+  const [me, foe] = state.players;
+  const hand = foe.hand.length;
+  act(state, { type: "play", player: 0, uid: hold(state, 0, PM.fieldworker) });
+  assert.equal(state.pending[0].player, 1);
+  assert.deepEqual(state.pending[0].labels, ["Draw 1", "Don't draw"]);
+  act(state, { type: "option", player: 1, index: 0 });
+  assert.equal(foe.hand.length, hand + 1);
+
+  const s2 = midgame();
+  const m2 = s2.players[0];
+  m2.discard.push(m2.deck.splice(m2.deck.findIndex((u) => s2.cards[u] === W), 1)[0]);
+  const paid = give(s2, 0, W);
+  act(s2, { type: "play", player: 0, uid: hold(s2, 0, PM.retrieval) });
+  act(s2, { type: "choose", player: 0, uids: [paid] });
+  assert.ok(!s2.pending[0].uids.includes(paid));
+  assert.equal(s2.pending[0].uids.length, 1);
+});
+
+test("Moo-Moo Milk: the Pokémon is chosen, then 2 coins; Kahili comes back on heads", () => {
+  const state = midgame();
+  const me = state.players[0];
+  me.active.damage = 60;
+  act(state, { type: "play", player: 0, uid: hold(state, 0, PM.milk) });
+  rigFlips(state, [true, true]);
+  act(state, { type: "pick", player: 0, spot: ACTIVE });
+  assert.equal(me.active.damage, 20);
+
+  const kahili = hold(state, 0, PM.kahili);
+  rigFlips(state, [true]);
+  act(state, { type: "play", player: 0, uid: kahili });
+  assert.ok(me.hand.includes(kahili) && !me.discard.includes(kahili));
+  assert.ok(me.supporterUsed);
+});
+
+test("Quick Ball takes the first Pokémon; PokéNav puts the other two back in the order chosen; Luxury Ball once in the discard pile", () => {
+  const state = midgame();
+  const me = state.players[0];
+  const first = me.deck.find((u) => defs(state.cards[u]).kind === "pokemon");
+  act(state, { type: "play", player: 0, uid: hold(state, 0, PM.quick) });
+  assert.ok(me.hand.includes(first));
+
+  const top = me.deck.slice(0, 3);
+  act(state, { type: "play", player: 0, uid: hold(state, 0, PM.nav) });
+  const take = state.pending[0].uids[0];
+  act(state, { type: "choose", player: 0, uids: take ? [take] : [] });
+  const rest = top.filter((u) => u !== take).slice(0, 2).reverse();
+  assert.equal(state.pending[0].effect.op, "order");
+  act(state, { type: "choose", player: 0, uids: rest });
+  assert.deepEqual(me.deck.slice(0, 2), rest);
+
+  const lux = hold(state, 0, PM.luxury);
+  assert.ok(playable(state, lux));
+  me.discard.push(hold(state, 0, PM.luxury));
+  me.hand.pop();
+  assert.ok(!playable(state, lux), "a Luxury Ball is in the discard pile");
+});
+
+test("Misty: 20 more after Weakness and Resistance, only for a Pokémon with Misty in its name", () => {
+  const steps = defs(PM.misty).fx;
+  assert.deepEqual(steps.map((s) => s.op), ["cost", "boost"]);
+  const state = labgame("lab-2", "lab-2");
+  state.players[0].hand.push(hold(state, 0, T.draw), hold(state, 0, T.draw));
+  act(state, { type: "play", player: 0, uid: hold(state, 0, PM.misty) });
+  act(state, { type: "choose", player: 0, uids: state.pending[0].uids.slice(0, 2) });
+  use(state, 0, "Pierce");
+  assert.equal(state.players[1].active.damage, 50, "Lab has no Misty in its name");
+  assert.deepEqual(steps[1], { op: "boost", n: 20, after: true, who: { named: "Misty" } });
+});
+
+test("the bot plays the pre-made decks through, every Trainer in them read", () => {
+  for (const e of BASIC_ENERGY) if (!byId.has(e.id)) byId.set(e.id, e);
+  const products = JSON.parse(readFileSync("data/products.json", "utf8"));
+  const box = JSON.parse(readFileSync("data/box-contents.json", "utf8"));
+  const lists = [];
+  for (const [set, list] of Object.entries(products)) {
+    if (!Array.isArray(list)) continue;
+    for (const o of list) {
+      const entry = box[`${set}/${o.id}`];
+      if (o.kind !== "deck" || /trainer kit/i.test(o.name) || !entry) continue;
+      // The deck's own promo card makes the 60th, as the shop opens it.
+      const promos = (o.promos || []).slice(0, 1).map((p) => (Array.isArray(p) ? p[0] : String(p))).map((p) => (p.includes("-") && byId.has(p) ? p : `${set}-${p}`));
+      const ids = [...promos, ...boxCardList(entry, promos, () => 0).flatMap(({ id, n }) => Array(n).fill(id))];
+      if (ids.length === 60 && ids.every((id) => defs(id)?.playable)) lists.push(ids);
+    }
+  }
+  assert.ok(lists.length >= 60, `only ${lists.length} pre-made decks are playable`);
+  for (let i = 0; i + 1 < lists.length; i += 2) assert.equal(playOut([lists[i], lists[i + 1]], "standard", 500 + i).phase, "over");
+});
+
+/* ---------- the pre-made decks' Tools, Stadiums, Special Energy and Pokémon ---------- */
+
+lab("lab-tap", [["Tap", 10, ""]]);
+/** A match where player 0's Lab Pokémon attacks player 1's, each with a Tool from the card pool, if given. */
+function tooled(mine, theirs, attacker = "lab-9", defender = "lab-2") {
+  const state = labgame(attacker, defender);
+  if (mine) state.players[0].active.tool = hold(state, 0, mine);
+  if (theirs) state.players[1].active.tool = hold(state, 1, theirs);
+  state.players[0].hand = state.players[0].hand.filter((u) => u !== state.players[0].active.tool);
+  state.players[1].hand = state.players[1].hand.filter((u) => u !== state.players[1].active.tool);
+  return state;
+}
+
+test("theme deck Tools: what they do as their Pokémon is Knocked Out", () => {
+  // Rescue Scarf: the Pokémon back to the hand, the rest to the discard pile.
+  let state = tooled(null, "bw6-115");
+  let foe = state.players[1];
+  let front = foe.active.uid;
+  let tool = foe.active.tool;
+  use(state, 0, "Smash");
+  assert.ok(foe.hand.includes(front) && foe.discard.includes(tool));
+
+  // Expert Belt: one more Prize card.
+  state = tooled(null, "pl4-87");
+  const prizes = state.players[0].prizes.length;
+  use(state, 0, "Smash");
+  assert.equal(state.players[0].prizes.length, prizes - 2);
+
+  // Energy Pouch: the basic Energy to the hand.
+  state = tooled(null, "xy10-97");
+  foe = state.players[1];
+  const energy = [hold(state, 1, W), hold(state, 1, W)];
+  foe.hand = foe.hand.filter((u) => !energy.includes(u));
+  foe.active.energy.push(...energy);
+  use(state, 0, "Smash");
+  assert.ok(energy.every((u) => foe.hand.includes(u)));
+
+  // Lucky Egg: draw up to 7.
+  state = tooled(null, "pl4-88");
+  state.players[1].hand.splice(3);
+  use(state, 0, "Smash");
+  assert.equal(state.players[1].hand.length, 7);
+});
+
+test("theme deck Tools: Exp. Share and Wishful Baton move the Energy left behind", () => {
+  let state = labgame("lab-9", "lab-2");
+  let foe = state.players[1];
+  foe.bench[0].tool = hold(state, 1, "sm1-118");
+  foe.hand.pop();
+  let energy = [hold(state, 1, W), hold(state, 1, F)];
+  foe.hand = foe.hand.filter((u) => !energy.includes(u));
+  foe.active.energy.push(...energy);
+  use(state, 0, "Smash");
+  assert.equal(state.pending[0].type, "choose");
+  assert.equal(state.pending[0].player, 1);
+  assert.equal(state.pending[0].max, 1);
+  assert.deepEqual(legalActions(state, 0, defs), [], "the other player waits");
+  act(state, { type: "choose", player: 1, uids: [energy[1]] });
+  assert.ok(foe.bench[0].energy.includes(energy[1]) && foe.discard.includes(energy[0]));
+  assert.equal(state.pending[0].type, "promote");
+
+  // Wishful Baton: up to 3 to the Benched Pokémon picked, then the new Active Pokémon.
+  state = tooled(null, "sm3-128");
+  foe = state.players[1];
+  energy = [hold(state, 1, W), hold(state, 1, W), hold(state, 1, W), hold(state, 1, F)];
+  foe.hand = foe.hand.filter((u) => !energy.includes(u));
+  foe.active.energy.push(...energy);
+  use(state, 0, "Smash");
+  assert.equal(state.pending[0].max, 3);
+  act(state, { type: "choose", player: 1, uids: energy.slice(0, 3) });
+  assert.equal(state.pending[0].type, "pick");
+  act(state, { type: "pick", player: 1, spot: 0 });
+  assert.ok(energy.slice(0, 3).every((u) => foe.bench[0].energy.includes(u)));
+  assert.equal(state.pending[0].type, "promote");
+  // The bot gets through the same choices.
+  state = tooled(null, "sm3-128");
+  state.players[1].active.energy.push(hold(state, 1, W));
+  use(state, 0, "Smash");
+  for (let i = 0; i < 5 && state.pending.length; i += 1) act(state, botAction(state, state.pending[0].player, defs));
+  assert.ok(!state.pending.length && state.players[1].active);
+});
+
+test("theme deck Tools: hitting back, the end of the turn, between turns", () => {
+  // Rocky Helmet: 2 damage counters on the attacker. Lucky Helmet: 2 cards.
+  let state = tooled(null, "bw3-94", "lab-tap");
+  use(state, 0, "Tap");
+  assert.equal(state.players[0].active.damage, 20);
+  state = tooled(null, "xy7-77", "lab-tap");
+  let hand = state.players[1].hand.length;
+  use(state, 0, "Tap");
+  assert.equal(state.players[1].hand.length, hand + 2 + 1, "2 from the Helmet, 1 for the turn");
+
+  // Amulet Coin and Leftovers at the end of their owner's turn, while Active.
+  state = tooled("dp4-97", null);
+  hand = state.players[0].hand.length;
+  act(state, { type: "end", player: 0 });
+  assert.equal(state.players[0].hand.length, hand + 1);
+  state = tooled("dp4-99", null);
+  state.players[0].active.damage = 30;
+  act(state, { type: "end", player: 0 });
+  assert.equal(state.players[0].active.damage, 20);
+
+  // Oran Berry between turns: 2 counters off, then it is gone. Lum Berry: the conditions, before Poison lands.
+  state = tooled("ex9-80", null);
+  let me = state.players[0];
+  me.active.damage = 30;
+  const berry = me.active.tool;
+  act(state, { type: "end", player: 0 });
+  assert.equal(me.active.damage, 10);
+  assert.ok(!me.active.tool && me.discard.includes(berry));
+  state = tooled("ex1-84", null);
+  me = state.players[0];
+  addCondition(state, me.active, "poisoned");
+  act(state, { type: "end", player: 0 });
+  assert.equal(me.active.damage, 0);
+  assert.deepEqual(conditionsOn(me.active), []);
+
+  // Buffer Piece: 20 less, through the opponent's next turn only. Strength Charm: 10 more, gone after it attacks.
+  state = labgame("lab-tap", "lab-tap");
+  me = state.players[0];
+  act(state, { type: "tool", player: 0, uid: hold(state, 0, "ex15-72"), spot: ACTIVE });
+  act(state, { type: "end", player: 0 });
+  use(state, 1, "Tap");
+  assert.equal(me.active.damage, 0);
+  assert.ok(!me.active.tool, "discarded at the end of that turn");
+  act(state, { type: "tool", player: 0, uid: hold(state, 0, "ex8-92"), spot: ACTIVE });
+  use(state, 0, "Tap");
+  assert.equal(state.players[1].active.damage, 20);
+  assert.ok(!me.active.tool);
+});
+
+test("theme deck Tools: retreating, who they fit, where they go", () => {
+  // Escape Board: retreat while Asleep. Balloon Berry pays the Retreat Cost by itself.
+  let state = tooled("sm5-122", null);
+  let me = state.players[0];
+  addCondition(state, me.active, "asleep");
+  assert.ok(canRetreat(state, 0, defs));
+  me.active.tool = null;
+  assert.ok(!canRetreat(state, 0, defs));
+  state = labgame("base1-46", "lab-2");
+  me = state.players[0];
+  me.active.energy = [];
+  assert.ok(!canRetreat(state, 0, defs));
+  me.active.tool = hold(state, 0, "ex3-82");
+  me.hand.pop();
+  assert.ok(canRetreat(state, 0, defs));
+  act(state, { type: "retreat", player: 0, to: 0 });
+  assert.ok(!me.bench[0].tool && me.discard.includes(state.players[0].discard.at(-1)));
+
+  // Fighting Fury Belt and Eviolite only on a Basic Pokémon; Protective Orb only on an Evolved one.
+  state = labgame("base1-46", "lab-2");
+  me = state.players[0];
+  const hp = maxHp(state, me.active, defs);
+  me.active.tool = hold(state, 0, "xy9-99");
+  assert.equal(maxHp(state, me.active, defs), hp + 40);
+  state.cards[me.active.uid] = "base1-24";
+  assert.equal(maxHp(state, me.active, defs), defs("base1-24").hp, "Charmeleon isn't Basic");
+  me.active.tool = null;
+  const orb = hold(state, 0, "ex10-90");
+  assert.ok(legalActions(state, 0, defs).some((a) => a.type === "tool" && a.uid === orb && a.spot === ACTIVE));
+  assert.ok(!legalActions(state, 0, defs).some((a) => a.type === "tool" && a.uid === orb && a.spot !== ACTIVE), "the Bench holds Basic Pokémon");
+
+  // U-Turn Board goes back to the hand; Healing Scarf heals as Energy goes on.
+  state = tooled(null, "sm11-211");
+  const board = state.players[1].active.tool;
+  use(state, 0, "Smash");
+  assert.ok(state.players[1].hand.includes(board));
+  state = tooled("xy6-84", null);
+  state.players[0].active.damage = 30;
+  state.players[0].energyUsed = false;
+  act(state, { type: "attach", player: 0, uid: hold(state, 0, W), spot: ACTIVE });
+  assert.equal(state.players[0].active.damage, 10);
+});
+
+test("theme deck Stadiums: standing rules and once-a-turn uses", () => {
+  const state = midgame();
+  const [me, foe] = state.players;
+  const play = (id) => {
+    me.stadiumPlayed = false;
+    me.stadiumUsed = false;
+    act(state, { type: "play", player: 0, uid: hold(state, 0, id) });
+  };
+  // Altar of the Sunne: Fire Pokémon have no Weakness. Fairy Garden: no Retreat Cost with Fairy Energy.
+  play("sm2-118");
+  assert.ok(toolOf(state, foe.active, defs).noWeakness, "Charmander is Fire");
+  assert.ok(!toolOf(state, me.active, defs).noWeakness);
+  play("xy1-117");
+  assert.ok(retreatCost(state, foe.active, defs) > 0);
+  foe.active.energy.push(hold(state, 1, "energy-fairy-xy"));
+  foe.hand.pop();
+  assert.equal(retreatCost(state, foe.active, defs), 0);
+  // Pewter City Gym: Brock's Pokémon pierce Resistance; Team Aqua's Hideout: 1 more to retreat.
+  play("gym1-115");
+  state.cards[me.active.uid] = "gym1-21";
+  assert.ok(toolOf(state, me.active, defs).pierce);
+  play("ex4-78");
+  assert.equal(retreatCost(state, me.active, defs), defs("gym1-21").retreat + 1);
+  state.cards[me.active.uid] = "base1-63";
+  // Risky Ruins: a Basic non-Darkness Pokémon benched during its owner's turn takes 2 counters.
+  play("me1-127");
+  act(state, { type: "bench", player: 0, uid: give(state, 0, "base1-63") });
+  assert.equal(me.bench.at(-1).damage, 20);
+  // Pokémon Center: 20 off one Benched Pokémon.
+  play("bw4-90");
+  act(state, { type: "stadium", player: 0 });
+  assert.equal(state.pending[0].effect.op, "heal");
+  act(state, { type: "pick", player: 0, spot: me.bench.length - 1 });
+  assert.equal(me.bench.at(-1).damage, 0);
+  // Brooklet Hill: a Basic Water Pokémon from the deck onto the Bench.
+  play("sm2-120");
+  const room = me.bench.length;
+  act(state, { type: "stadium", player: 0 });
+  act(state, { type: "choose", player: 0, uids: [state.pending[0].uids[0]] });
+  assert.equal(me.bench.length, room + 1);
+  // Saffron City Gym and Fuchsia City Gym cost their player's own cards: the bot leaves them be.
+  assert.ok(defs("gym2-122").stadium.often && defs("gym2-122").stadium.loss && defs("gym2-114").stadium.loss);
+  // Viridian City Gym: Giovanni's Pokémon shed 2 counters as they evolve.
+  assert.deepEqual(defs("gym2-123").stadium.evolveHeal, { n: 20, who: { named: "Giovanni" } });
+});
+
+test("theme deck Special Energy and Pokémon: Double Dragon, Multi Energy, Elekid and the Baby rule, Houndoom ex", () => {
+  const state = midgame();
+  const me = state.players[0];
+  me.energyUsed = false;
+  const dde = hold(state, 0, "xy6-97");
+  throws(() => act(state, { type: "attach", player: 0, uid: dde, spot: ACTIVE }), /Dragon/);
+  state.cards[me.active.uid] = "xy6-49";
+  me.active.energy = [];
+  act(state, { type: "attach", player: 0, uid: dde, spot: ACTIVE });
+  assert.deepEqual(energyOf(state, me.active, defs), ["Any", "Any"]);
+  // Multi Energy: every type alone, Colorless beside another Special Energy.
+  me.active.energy = [hold(state, 0, "ex2-93")];
+  assert.deepEqual(energyOf(state, me.active, defs), ["Any"]);
+  me.active.energy.push(dde);
+  assert.deepEqual(energyOf(state, me.active, defs), ["Colorless", "Any", "Any"]);
+
+  // Elekid has no attack, but its Pokémon Power: heads, 20 to their Active Pokémon (Weakness counts); either way the turn ends.
+  assert.ok(defs("neo1-22").playable && defs("neo1-22").baby);
+  assert.ok(defs("svp-svp103").playable, "Houndoom ex has its play data");
+  state.cards[me.active.uid] = "neo1-22";
+  const foe = state.players[1];
+  rigFlips(state, [true]);
+  act(state, { type: "ability", player: 0, spot: ACTIVE });
+  assert.equal(foe.active.damage, 20);
+  assert.equal(state.current, 1, "the turn is over");
+
+  // The Baby rule: attacking an Active Baby Pokémon takes a coin flip first; tails, no attack and the turn ends.
+  const s2 = labgame("lab-tap", "neo1-22");
+  rigFlips(s2, [false]);
+  const events = use(s2, 0, "Tap");
+  assert.ok(events.some((e) => e.t === "miss"));
+  assert.equal(s2.players[1].active.damage, 0);
+  assert.equal(s2.current, 1);
+});
+
+test("the bot plays through decks full of the theme decks' Tools, Stadiums and Special Energy", () => {
+  const tools = ["sm5-122", "sm3-128", "sm1-118", "dp4-97", "xy10-97", "xy6-84", "xy7-77", "xy9-99", "bw6-115", "dp4-99", "neo1-99", "ex15-72", "pl4-87", "pl4-88", "sm11-211", "bw3-91", "bw3-94", "neo4-97", "ex9-80", "ex10-85", "ex10-90", "ex8-92", "ex1-84", "ex3-82"];
+  const stadiums = ["sm2-120", "me1-127", "me1-122", "sm2-118", "sm2-117", "xy1-117", "xy5-137", "xy5-138", "bw4-90", "hgss3-71", "gym1-107", "gym2-122", "gym2-114", "neo4-99", "ex12-76", "ex12-77", "ex16-82", "ex4-83", "ex4-78"];
+  for (const id of [...tools, ...stadiums, "xy6-97", "ex2-93", "neo1-22"]) assert.ok(defs(id).playable, id);
+  const reasons = {};
+  for (let i = 0; i < 24; i += 1) {
+    const extra = (k) => [tools[(i + k) % tools.length], tools[(i + k + 7) % tools.length], stadiums[(i + k) % stadiums.length], "ex2-93"];
+    const a = deckOf(["base1-46", 9], ["base1-24", 4], ["base1-4", 1], ["neo1-22", 1], [F, 11], ...extra(0).map((id) => [id, 1]));
+    const b = deckOf(["base1-63", 12], ["base1-44", 2], [W, 12], ...extra(3).map((id) => [id, 1]));
+    const end = playOut([a, b], "half", 500 + i);
+    reasons[end.reason] = (reasons[end.reason] || 0) + 1;
+  }
+  assert.ok(Object.keys(reasons).length);
 });
 
 console.log(`${passed} checks passed${process.exitCode ? ", some failed" : ""}`);

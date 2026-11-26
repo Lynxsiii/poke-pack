@@ -43,7 +43,8 @@ function row(card) {
 
 // Every source card by what it does, for our prints the source lists under another id
 // (promos, stamped and patterned variants, trainer kits): same name, HP and attacks.
-const print = (c) => `${c.name}|${c.hp || ""}|${(c.attacks || []).map((a) => a.name).join(",")}`;
+// Curly and straight apostrophes count as one ("Hound’s Fang" on our promo, "Hound's Fang" at the source).
+const print = (c) => `${c.name}|${c.hp || ""}|${(c.attacks || []).map((a) => a.name).join(",")}`.replace(/[‘’]/g, "'");
 const byPrint = new Map();
 const cache = new Map();
 async function source(setId) {
