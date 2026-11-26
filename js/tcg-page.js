@@ -48,7 +48,7 @@ const enIcon = (type) => (EN_FILE[type] ? `<img src="/assets/tcg/energy/${EN_FIL
 const COND_NAME = { asleep: "Asleep", burned: "Burned", confused: "Confused", paralyzed: "Paralyzed", poisoned: "Poisoned" };
 
 /** What a turn-long effect is called on a name plate. */
-const markLabel = (m) => ({ noAttack: "Can't attack", noUse: `No ${m.name}`, less: `-${m.n} damage`, shield: "Protected", guard: "No damage", noRetreat: "Can't retreat", mustFlip: "Flips to attack", stronger: `+${m.n} damage`, weaker: `Does -${m.n}`, exposed: `Takes +${m.n}`, harden: `Ignores ${m.n} or less`, noWeakness: "No Weakness", spite: `Hits back ${m.n / 10}`, bounty: `+${m.n} Prize if KO`, base: `${m.name}: ${m.n}` })[m.kind] || "";
+const markLabel = (m) => ({ noAttack: "Can't attack", noUse: `No ${m.name}`, less: `-${m.n} damage`, shield: "Protected", guard: "No damage", noRetreat: "Can't retreat", mustFlip: "Flips to attack", stronger: `+${m.n} damage`, weaker: `Does -${m.n}`, exposed: `Takes +${m.n}`, harden: `Ignores ${m.n} or less`, noWeakness: "No Weakness", spite: `Hits back ${m.n / 10}`, bounty: `+${m.n} Prize if KO`, base: `${m.name}: ${m.n}`, noHeal: "Can't be healed", doom: `${m.n / 10} counters at turn end` })[m.kind] || "";
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const plural = (n, word) => `${n} ${word}${n === 1 ? "" : "s"}`;
@@ -707,7 +707,8 @@ export function initTcg(deps) {
         swapFrom: () => "Choose the Basic Pokémon to swap for one from your deck.",
         energyFrom: () => (fx.move ? "Choose the Pokémon to move Energy from." : whose === "your" ? "Choose your Pokémon to discard an Energy from." : "Choose one of their Pokémon to lose Energy."),
         moveAllFrom: () => "Choose the Pokémon to move all its Energy from.",
-        moveEnergyCards: () => "Choose the Pokémon that gets the Energy.",
+        moveEnergyCards: () => (fx.uids.length === 1 ? `Choose the Pokémon that gets the ${d(fx.uids[0])?.name || "Energy"}.` : "Choose the Pokémon that gets the Energy."),
+        knockOut: () => "Choose one of their Pokémon to Knock Out.",
         heal: () => (fx.flips ? "Choose one of your Pokémon, then the coins are flipped." : null),
       }[op]?.();
       if (op === "gatherFrom") return { text: `Choose a Pokémon to move ${fx.type ? `a ${fx.type}` : "an"} Energy from, or finish.`, keys: `<button type="button" class="ghost sm" data-act="pick-skip">Done</button>` };
@@ -1181,12 +1182,14 @@ export function initTcg(deps) {
           base: `${whose} Active Pokémon's ${event.name} will do ${event.n} damage next turn.`,
           noWeakness: `${whose} Active Pokémon has no Weakness next turn.`,
           spite: `${whose} Active Pokémon will put ${event.n / 10} damage counters on whatever damages it next turn.`,
+          noHeal: `${whose} Active Pokémon can't be healed next turn.`,
+          doom: `${whose} Active Pokémon gets ${event.n / 10} damage counters at the end of next turn.`,
         }[event.kind] || "";
       }
       case "lock": return `${event.p === ME ? "You" : "They"} can't play ${event.kinds.map((k) => ({ item: "Item", supporter: "Supporter", stadium: "Stadium", special: "Special Energy", trainer: "Trainer" })[k]).join(" or ")} cards next turn.`;
       case "copy": return `It used ${event.name}.`;
       case "devolve": return `${name(event.uid)} went back to ${event.p === ME ? "your" : "their"} hand.`;
-      case "discard-energy": return `${plural(event.uids.length, "Energy card")} discarded from ${event.p === ME ? "your" : "their"} Active Pokémon.`;
+      case "discard-energy": return `${plural(event.uids.length, "Energy card")} discarded from ${event.p === ME ? "your" : "their"} ${event.spot >= 0 ? "Benched" : "Active"} Pokémon.`;
       case "mill": return `${plural(event.uids.length, "card")} discarded from ${event.p === ME ? "your" : "their"} deck.`;
       case "recycle": return `${who(event.p)} shuffled ${plural(event.uids.length, "card")} from the discard pile into the deck.`;
       case "bounce": return `${who(event.p)} put ${name(event.uid)} back into ${event.p === ME ? "your" : "its"} hand.`;
@@ -1198,6 +1201,7 @@ export function initTcg(deps) {
       case "damage":
         if (event.why === "poisoned" || event.why === "burned") return `${COND_NAME[event.why]}: ${event.n} damage to ${event.p === ME ? "your" : "their"} Active Pokémon.`;
         if (event.why === "confused") return "Confused: it hurt itself for 30.";
+        if (event.why === "doom") return `${event.n / 10} damage counters landed at the end of the turn.`;
         if (event.why === "energy") return `The Energy put ${event.n / 10 === 1 ? "a damage counter" : `${event.n / 10} damage counters`} on it.`;
         return `${event.n} damage${event.weak ? ", it's weak to that" : ""}${event.resist ? ", resisted" : ""}${event.self ? " to itself" : ""}.`;
       case "heal": return event.why === "move" ? "" : event.why === "ability" ? `${event.p === ME ? "Your" : "Their"} Pokémon healed ${event.n} between turns.` : `Healed ${event.n}.`;

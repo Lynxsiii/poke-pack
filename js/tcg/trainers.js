@@ -15,7 +15,7 @@
  * ctx: { state, defs, events, player }
  */
 
-import { ACTIVE, addCondition, askChoose, askPick, conditionsOn, damageAfterTyping, defOf, energyOf, evolveSpots, flip, heldOn, hpLeft, inPlay, mayEvolve, other, rand, shedEnergy, shuffle, slotAt, switchActive, toolOf, warded } from "./engine.js";
+import { ACTIVE, addCondition, askChoose, askPick, conditionsOn, damageAfterTyping, defOf, energyOf, evolveSpots, flip, healRoom, heldOn, hpLeft, inPlay, mayEvolve, other, rand, shedEnergy, shuffle, slotAt, switchActive, toolOf, warded } from "./engine.js";
 import { runFx } from "./effects.js";
 
 const WORDS = { a: 1, an: 1, another: 1, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8 };
@@ -302,7 +302,7 @@ export const T_OPS = {
       if (to) {
         for (const spot of spots) {
           const slot = slotAt(ctx.state, ctx.player, spot);
-          const healed = Math.min(n, slot.damage);
+          const healed = Math.min(n, healRoom(ctx.state, slot));
           slot.damage -= healed;
           if (healed) slot.healedOn = ctx.state.turn;
           ctx.events.push({ t: "heal", p: ctx.player, spot, n: healed });
@@ -1000,7 +1000,7 @@ export const T_OPS = {
     run(ctx, { n, types }) {
       for (const spot of typedHurt(ctx, types)) {
         const slot = slotAt(ctx.state, ctx.player, spot);
-        const healed = Math.min(n, slot.damage);
+        const healed = Math.min(n, healRoom(ctx.state, slot));
         slot.damage -= healed;
         if (healed) slot.healedOn = ctx.state.turn;
         ctx.events.push({ t: "heal", p: ctx.player, spot, n: healed });
