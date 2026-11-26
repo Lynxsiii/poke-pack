@@ -449,6 +449,8 @@ function clearConditions(slot) {
      weaker    its attacks do n less, before Weakness and Resistance
      exposed   takes n more from attacks, after Weakness and Resistance
      harden    takes no damage from an attack that would do n or less
+     noWeakness has no Weakness     spite     n damage counters on whatever attack damages it
+     bounty    n more Prize cards if this turn's attack damage Knocks it Out
    A guard may say `from`: only attacks from "basic", "evolution" or "basicNonColorless" Pokémon. */
 
 /** A slot's mark of this kind that is in force this turn. */
