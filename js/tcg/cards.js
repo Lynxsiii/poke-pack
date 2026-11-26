@@ -17,7 +17,7 @@
  */
 
 import { compileAttack } from "./effects.js";
-import { compileTool, compileTrainer } from "./trainers.js";
+import { compileStadium, compileTool, compileTrainer } from "./trainers.js";
 
 export const ENERGY_TYPES = ["Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Darkness", "Metal", "Fairy"];
 
@@ -92,8 +92,9 @@ export function defineCard(card, row, text = "") {
     const fx = sub === "item" || sub === "supporter" ? compileTrainer(text) : null;
     // A Tool is not played and discarded: it is attached, and its numbers ride on the Pokémon.
     const tool = sub === "tool" && subs.includes("Pokémon Tool") ? compileTool(text) : null;
-    const why = sub === "stadium" ? "Stadiums aren't in yet." : sub === "tool" ? (tool ? "" : "This Tool's text isn't live yet.") : fx ? "" : "This Trainer's text isn't live yet.";
-    return { ...base, kind: "trainer", sub, text: text || "", fx: fx || [], ...(tool ? { tool } : {}), playable: !why, why };
+    const stadium = sub === "stadium" ? compileStadium(text) : null;
+    const why = sub === "stadium" ? (stadium ? "" : "This Stadium's text isn't live yet.") : sub === "tool" ? (tool ? "" : "This Tool's text isn't live yet.") : fx ? "" : "This Trainer's text isn't live yet.";
+    return { ...base, kind: "trainer", sub, text: text || "", fx: fx || [], ...(tool ? { tool } : {}), ...(stadium ? { stadium } : {}), playable: !why, why };
   }
 
   const subs = card.subtypes || [];

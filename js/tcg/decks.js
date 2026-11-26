@@ -175,7 +175,7 @@ export function buildDeck(pool, format = "standard", { prefer = "", rand = Math.
   if (!Object.keys(cards).some((id) => mons.find((p) => p.def.id === id)?.def.stage === "basic")) return null;
 
   // Trainers the pool holds and the game can read: about a seventh of the deck, card draw first.
-  const aimAt = (def) => (def.sub === "tool" ? 3.5 : order[trainerAim(def.fx)] ?? 9);
+  const aimAt = (def) => (def.sub === "tool" ? 3.5 : def.sub === "stadium" ? 6.5 : order[trainerAim(def.fx)] ?? 9);
   const order = { draw: 0, search: 1, refresh: 2, trade: 3, heal: 4, switch: 5, gust: 6, recover: 7, cure: 8, hammer: 9 };
   const trainers = pool.filter((p) => p.def?.kind === "trainer" && p.def.playable && p.owned > 0).sort((a, b) => aimAt(a.def) - aimAt(b.def));
   let room = Math.round(rules.deckSize * 0.14);

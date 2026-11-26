@@ -22,7 +22,7 @@
  *   coinFaces()         { heads, tails } art of the equipped coin, or null for the house coin
  */
 
-import { ACTIVE, FORMATS, RuleError, apply, canRetreat, conditionsOn, createGame, damageAfterTyping, defOf, energyOf, hpLeft, legalActions, markOn, marksOn, maxHp, other, retreatCost, toolOf, trainerBlock, usableAttacks } from "./tcg/engine.js";
+import { ACTIVE, FORMATS, RuleError, apply, canRetreat, conditionsOn, createGame, damageAfterTyping, defOf, energyOf, hpLeft, legalActions, markOn, marksOn, maxHp, other, retreatCost, stadiumBlock, toolOf, trainerBlock, usableAttacks } from "./tcg/engine.js";
 import { ENERGY_TYPES, FREE_ENERGY, createDefs, isFreeEnergy } from "./tcg/cards.js";
 import { botAction } from "./tcg/bot.js";
 import { MAX_DECKS, buildBotDeck, buildDeck, checkDeck, deckList, deckSize, roomFor } from "./tcg/decks.js";
@@ -191,7 +191,8 @@ export function initTcg(deps) {
           <li>Your sleeve is your card back and your coin makes the flips.</li>
           <li>Trainers: Items and Supporters that draw, search your deck, heal, switch or pull a Pokémon forward. More with each update.</li>
           <li>Pokémon Tools that change HP, Retreat Cost, damage or Weakness can be attached, one to a Pokémon.</li>
-          <li>Not yet: Stadiums, Abilities, and some attack text (the printed damage still lands). Matches against other players come later.</li>
+          <li>Stadiums stay in play for both players. Tap the Stadium on the table to read it or use it.</li>
+          <li>Not yet: Abilities, and some attack text (the printed damage still lands). Matches against other players come later.</li>
         </ul>
         ${read("learned", false) ? `<button type="button" class="tlink tg-relearn" data-lesson>Run the lesson again</button>` : ""}
       </section>
@@ -270,7 +271,7 @@ export function initTcg(deps) {
         ${row.inDeck ? `<span class="tg-tile-n">${row.inDeck}</span>` : ""}
       </button>
       <b class="tg-tile-name">${esc(def.name)}</b>
-      <span class="tg-tile-meta">${def.kind === "trainer" ? (def.sub === "supporter" ? "Supporter" : def.sub === "tool" ? "Tool" : "Item") : `${def.stage === "basic" ? "Basic" : "Evolution"}, ${def.hp} HP`}</span>
+      <span class="tg-tile-meta">${def.kind === "trainer" ? (def.sub === "supporter" ? "Supporter" : def.sub === "tool" ? "Tool" : def.sub === "stadium" ? "Stadium" : "Item") : `${def.stage === "basic" ? "Basic" : "Evolution"}, ${def.hp} HP`}</span>
       ${stepHtml(id, row.inDeck, room, def.name, `of ${row.owned}`)}
     </div>`;
   }
@@ -654,6 +655,7 @@ export function initTcg(deps) {
         ${foe.bench.map((slot, i) => (setup ? foeBack : monHtml(state, BOT, slot, i, { target: foeTargets.has(i) }))).join("")}
       </div>
       <div class="tg-arena">
+        ${state.stadium ? `<button type="button" class="tg-stadium" data-act="stadium" aria-label="Stadium in play: ${esc(defOf(state, state.stadium.uid, defs).name)}"><img src="${img(state.cards[state.stadium.uid])}" alt="" draggable="false" /><b>Stadium</b></button>` : ""}
         <span class="tg-slab" aria-hidden="true"></span>
         <div class="tg-spot tg-spot-foe" data-p="1">${foe.active ? (setup ? foeBack : monHtml(state, BOT, foe.active, ACTIVE, { big: true, target: foeTargets.has(ACTIVE) })) : ""}</div>
         <div class="tg-info tg-info-foe">
@@ -685,6 +687,24 @@ export function initTcg(deps) {
       ${coachHtml()}
       ${sheetHtml()}
     </div>`;
+  }
+
+  /** The Stadium in play: what it says, who played it, and its once-a-turn use when it has one. */
+  function stadiumSheetHtml() {
+    const state = match.state;
+    const def = defOf(state, state.stadium.uid, defs);
+    const why = def.stadium?.use ? (myTurn() ? stadiumBlock(state, ME, defs) : "Wait for your turn.") : "";
+    return `<div class="tg-sheet-bg" data-act="cancel"></div>
+      <div class="tg-sheet tg-stadium-sheet" role="dialog" aria-label="${esc(def.name)}">
+        <img src="${img(state.cards[state.stadium.uid], true)}" alt="" draggable="false" />
+        <div>
+          <h3>${esc(def.name)}</h3>
+          <p class="tg-look-meta">Stadium, played by ${state.stadium.owner === ME ? "you" : BOT_NAME}. It affects both players.</p>
+          <p class="tg-look-text">${esc(def.text)}</p>
+          ${why && def.stadium?.use ? `<p class="tg-look-note">${esc(why)}</p>` : ""}
+          <div class="tg-sheet-keys">${def.stadium?.use ? `<button type="button" class="solid sm" data-act="stadium-use"${why ? " disabled" : ""}>Use</button>` : ""}<button type="button" class="ghost sm" data-act="cancel">Close</button></div>
+        </div>
+      </div>`;
   }
 
   function attackSheetHtml() {
@@ -805,6 +825,7 @@ export function initTcg(deps) {
     if (match.state.phase === "over" && match.over) return overHtml();
     if (match.opening) return openingHtml();
     if (match.sheet === "attacks") return attackSheetHtml();
+    if (match.sheet === "stadium" && match.state.stadium) return stadiumSheetHtml();
     if (match.sheet === "flip") return flipSheetHtml();
     const waiting = match.state.pending[0];
     if (waiting?.type === "choose" && waiting.player === ME && !match.busy) return chooseSheetHtml(waiting);
@@ -896,6 +917,8 @@ export function initTcg(deps) {
       case "bench": return `${who(event.p)} benched ${name(event.uid)}.`;
       case "evolve": return `${who(event.p)} evolved into ${name(event.uid)}.`;
       case "attach": return `${who(event.p)} attached ${name(event.uid)}.`;
+      case "stadium": return `${who(event.p)} played ${name(event.uid)}. It stays in play for both players.`;
+      case "stadium-use": return `${who(event.p)} used ${name(event.uid)}.`;
       case "tool": return `${who(event.p)} attached ${name(event.uid)}, a Pokémon Tool.`;
       case "play": return `${who(event.p)} played ${name(event.uid)}.`;
       case "shuffle-hand": return `${who(event.p)} shuffled ${event.p === ME ? "your" : "its"} hand into the deck.`;
@@ -1085,7 +1108,7 @@ export function initTcg(deps) {
       setTimeout(() => cue(monSel(event.p, event.spot), "evolved", 560), 290);
       return 620;
     }
-    if (event.t === "play") {
+    if (event.t === "play" || event.t === "stadium") {
       // The card is shown large over the arena for a beat, so both players read what was played.
       const arena = rectOf(".tg-arena");
       if (!arena) return 0;
@@ -1578,6 +1601,12 @@ export function initTcg(deps) {
       match.sheet = "";
       return paintTable();
     }
+    if (act === "stadium") {
+      if (match.busy) return;
+      match.sheet = "stadium";
+      return paintTable();
+    }
+    if (act === "stadium-use") return run({ type: "stadium", player: ME });
     if (act === "choose-done") {
       const uids = [...(match.choice || [])];
       match.choice = null;
