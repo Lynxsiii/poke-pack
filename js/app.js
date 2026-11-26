@@ -32,6 +32,11 @@ import {
   homeCards,
   boxPromoCards,
   isBoosterSet,
+  isExtraSet,
+  kitHalves,
+  kitHalfName,
+  kitName,
+  foldKits,
   setCategory,
   SET_CATEGORIES,
 } from "./catalog.js";
@@ -1163,7 +1168,22 @@ cartStore.subscribe(() => {
 
 function renderSetChrome() {
   const month = liveSet.released.replace(/ \d+,/, "");
-  paintSign(els.shopTitle, liveSet.name);
+  const kit = kitOf(liveSet);
+  paintSign(els.shopTitle, kit?.name || liveSet.name);
+  // A Trainer Kit is one page: its two half decks are a switch under the name.
+  const halfSwitch = document.getElementById("shop-halves");
+  if (halfSwitch) {
+    halfSwitch.hidden = !kit;
+    halfSwitch.innerHTML = kit
+      ? kit.halves
+          .map((half) => {
+            const on = half === liveSet;
+            const have = activeTrainer() ? ` <small>${num(Math.min(ownedInSet(half), half.totalCount))}/${num(half.totalCount)}</small>` : "";
+            return `<button type="button" class="kit-half${on ? " active" : ""}" data-quick-set="${esc(half.id)}" aria-pressed="${on}">${esc(kitHalfName(half))} half deck${have}</button>`;
+          })
+          .join("")
+      : "";
+  }
   // The set's own logo heads its page; the name stands in when there is none.
   const logo = document.getElementById("shop-logo");
   const head = logo?.closest(".sethead");
@@ -1185,7 +1205,11 @@ function renderSetChrome() {
     tag.textContent = age < 0 ? `Out ${day}` : `New, ${day}`;
   }
   const facts = document.getElementById("shop-facts");
-  if (facts) facts.textContent = shopMetaLine(liveSet, !fresh);
+  if (facts) {
+    facts.textContent = kit
+      ? [liveSet.era || liveSet.edition, "one box, two half decks", `${num(kit.halves.reduce((n, half) => n + half.totalCount, 0))} different cards`, `out ${String(liveSet.released).replace(/ /g, " ")}`].join(", ")
+      : shopMetaLine(liveSet, !fresh);
+  }
   paintShopProgress();
   const rates = document.getElementById("shop-rates");
   if (rates) {
@@ -1550,8 +1574,6 @@ function renderShop() {
     quickSets.innerHTML = setTabsHtml();
     centerQuickSet();
   }
-  const allSets = document.getElementById("shop-all-sets");
-  if (allSets) allSets.textContent = `All ${PLAYABLE_SETS.length} sets`;
 
   // Keep the box as it is while the same set is on the counter, so a re-render
   // after a rip or a sale doesn't take the focus off the chosen wrapper.
@@ -1587,12 +1609,61 @@ function renderShop() {
     const hero = document.getElementById("shop-hero-card");
     if (hero) {
       const card = liveSet.promoSet ? top[0] : null;
-      hero.hidden = !card;
-      hero.innerHTML = card ? `<span class="stage-slab"></span><img src="${esc(card.image || card.imageSmall)}" alt="" decoding="async" />` : "";
+      const box = kitOf(liveSet)?.image;
+      hero.hidden = !card && !box;
+      hero.classList.toggle("is-box", Boolean(box));
+      hero.innerHTML = box || card ? `<span class="stage-slab"></span><img src="${esc(box || card.image || card.imageSmall)}" alt="" decoding="async" />` : "";
     }
   }
   renderSealed();
+  renderShopBox();
+  renderShopFoot();
   loadShopTrends();
+}
+
+/**
+ * The set's box promos: the stamped and cosmos prints from its blisters and
+ * boxes. They are listed here and in the collection, and never count toward
+ * the set.
+ */
+function renderShopBox() {
+  const block = document.getElementById("shop-box");
+  if (!block) return;
+  const list = boxCards;
+  block.classList.toggle("hidden", !list.length);
+  if (!list.length) {
+    block.innerHTML = "";
+    return;
+  }
+  const have = list.filter((card) => ownedQty(card.id) > 0).length;
+  block.innerHTML = `<h2 class="ground-h" id="shop-box-h">Box promos <span>${activeTrainer() ? `${num(have)} of ${num(list.length)} in your binder` : num(list.length)}</span></h2>
+    <p class="shop-box-note">Stamped and special prints from this set's boxes and blisters. They're extras: no pack holds them and they don't count toward the set.</p>
+    <ul class="box-strip">${list
+      .map((card) => {
+        const owned = ownedQty(card.id) > 0;
+        return `<li><button type="button" class="box-card${owned ? " is-owned" : ""}" ${inspectAttrs(card)} aria-label="${esc(card.name)}, ${esc(numberLine(card))}${owned ? ", in your binder" : ""}">
+          <img src="${esc(card.imageSmall || card.image)}" alt="" loading="lazy" decoding="async" />
+          <span class="box-card-name">${esc(card.name)}</span>
+        </button></li>`;
+      })
+      .join("")}</ul>`;
+}
+
+/** The foot of a set page: the set before and after it among its own kind, and the way back to every pack. */
+function renderShopFoot() {
+  const foot = document.getElementById("shop-foot");
+  if (!foot) return;
+  const cat = setCategory(liveSet);
+  // Newest first by release date, so the set after this one came out earlier.
+  const day = (set) => Date.parse(set.released || "") || 0;
+  const kin = foldKits(PLAYABLE_SETS.filter((set) => setCategory(set) === cat)).sort((x, y) => day(y) - day(x));
+  const at = kin.indexOf(kitHalves(liveSet)?.[0] || liveSet);
+  const step = (set, word) =>
+    set
+      ? `<a class="shop-step" href="/packs/${esc(set.id)}"><small>${word}</small><b>${esc(kitOf(set)?.name || set.name)}</b></a>`
+      : `<span class="shop-step is-none" aria-hidden="true"></span>`;
+  foot.innerHTML = `<div class="shop-steps">${step(kin[at + 1], "Older")}${step(kin[at - 1], "Newer")}</div>
+    <a class="ghost shop-allpacks" href="/packs">All packs</a>`;
 }
 
 /**
@@ -1615,16 +1686,36 @@ function shopChaseRows(list) {
     .join("");
 }
 
-/** Every set as a tab with its wrapper (or its symbol) beside the name: the set page's and the collection's. */
+/** The sets that share the live set's era, booster sets first and then the extras: what the set tabs offer. */
+function eraSiblings() {
+  const era = liveSet.era || liveSet.edition;
+  const sets = PLAYABLE_SETS.filter((set) => (set.era || set.edition) === era);
+  // A Trainer Kit is one tab: the half that is open, else its first.
+  const shown = sets.filter((set) => {
+    const halves = kitHalves(set);
+    return !halves || (halves.includes(liveSet) ? set === liveSet : set === halves[0]);
+  });
+  return [...shown.filter(isBoosterSet), ...shown.filter((set) => !isBoosterSet(set))];
+}
+
+/** The box a Trainer Kit half belongs to: its two halves, the name on the box and the box photo (data/products.json); null for any other set. */
+function kitOf(set) {
+  const halves = kitHalves(set);
+  if (!halves) return null;
+  const product = halves.map((half) => (productList[half.id] || [])[0]).find(Boolean);
+  return { halves, name: product?.name || kitName(set), image: product?.image || "" };
+}
+
+/** The live set's era as tabs, each with its wrapper (or its symbol) beside the name: the set page's and the collection's. Every other era is one tap away on the Packs page. */
 function setTabsHtml() {
-  return PLAYABLE_SETS.map((set) => {
+  return eraSiblings().map((set) => {
     const on = set.id === liveSet.id;
     const wrap = set.wrappers?.[0];
     const thumb = wrap
       ? quietPackPicture(wrap, set, true)
       : `<img class="qs-symbol" src="${esc(setIdentity(set).symbol)}" alt="" loading="lazy" decoding="async" />`;
     return `<button type="button" class="st${on ? " active" : ""}"
-      data-quick-set="${esc(set.id)}" aria-pressed="${on}"><span class="st-th${wrap ? "" : " is-symbol"}">${thumb}</span>${esc(set.name)}</button>`;
+      data-quick-set="${esc(set.id)}" aria-pressed="${on}"><span class="st-th${wrap ? "" : " is-symbol"}">${thumb}</span>${esc(kitOf(set)?.name || set.name)}</button>`;
   }).join("");
 }
 
@@ -2169,17 +2260,22 @@ function renderBulkSets() {
   // The sets are words, like the era row above them: the name, then how many of
   // its cards you have in small figures. The open set is ink with a line under it.
   const signed = Boolean(activeTrainer());
-  const setBtns = (active?.sets || [])
+  // Booster sets first, then the era's extras under their own small label.
+  const shelf = active?.sets || [];
+  const ordered = [...shelf.filter((set) => !isExtraSet(set)), ...shelf.filter(isExtraSet)];
+  const firstExtra = ordered.find(isExtraSet);
+  const setBtns = ordered
     .map((set) => {
+      const label = set === firstExtra && set !== ordered[0] ? `<p class="bulk-shelf-label">Extras <small>no mastery</small></p>` : "";
       const live = Boolean(set.live && hasCardData(set));
       if (!live) {
-        return `<button type="button" class="bulk-set is-queued" data-soon="${esc(set.name)}"
+        return `${label}<button type="button" class="bulk-set is-queued" data-soon="${esc(set.name)}"
           title="${esc(set.name)} is queued (${esc(shortReleased(set))})"><span class="bulk-set-name">${esc(set.name)}</span> <span class="bulk-set-count">queued</span></button>`;
       }
       const on = set.id === liveSet.id;
       const owned = ownedInSet(set);
       const count = signed ? ` <span class="bulk-set-count">${num(owned)}/${num(set.totalCount)}</span>` : "";
-      return `<button type="button" class="bulk-set${on ? " active" : ""}" data-set="${esc(set.id)}"
+      return `${label}<button type="button" class="bulk-set${on ? " active" : ""}" data-set="${esc(set.id)}"
         aria-pressed="${on}" ${ripping ? "disabled" : ""}${signed ? ` aria-label="${esc(set.name)}, ${num(owned)} of ${num(set.totalCount)}"` : ""}><span class="bulk-set-name">${esc(set.name)}</span>${count}</button>`;
     })
     .join("");
@@ -2534,26 +2630,30 @@ function renderCollection({ refreshSets = true } = {}) {
    label under it (name, release month, the code badge, the price of a pack). A
    set with no boosters (promos, kits) stands as its logo. A set still on the way
    waits dark and is not a link. */
-function catalogSlot(set, { live = false, owned = null } = {}) {
+function catalogSlot(set, { live = false, owned = null, total: size = null } = {}) {
   const { symbol, logo } = setIdentity(set);
   const wrap = set.wrappers?.[0];
+  const kit = kitOf(set);
+  const name = kit?.name || set.name;
   const when = shortReleased(set);
   const price = live && set.cost ? coin(set.cost) : "";
   const pack = wrap
     ? `<span class="cat-art">${quietPackPicture(wrap, set, true)}</span>`
+    : kit?.image
+      ? `<span class="cat-art is-box"><img src="${esc(kit.image)}" alt="" loading="lazy" decoding="async" /></span>`
     : `<span class="cat-art is-logo"><img src="${esc(logo)}" alt="" loading="lazy" decoding="async" /></span>`;
   // Signed in: the set's HP bar, cards found of its total.
-  const total = Number(set.totalCount) || 0;
+  const total = size ?? (Number(set.totalCount) || 0);
   const have = live && owned != null && total ? Math.min(owned, total) : null;
   const hp = have != null
     ? `<span class="cat-hp"><span class="rt-track"><i style="width:${((have / total) * 100).toFixed(2)}%"></i></span><small>${num(have)}/${num(total)}</small></span>`
     : "";
   const label = `<span class="cat-copy">
-      <span class="cat-name">${esc(set.name)}</span>
+      <span class="cat-name">${esc(name)}</span>
       <span class="cat-meta"><img class="cat-sym" src="${esc(symbol)}" alt="" width="28" height="14" loading="lazy" decoding="async" /><span>${live ? esc(when) : `Coming ${esc(when)}`}</span>${price ? `<span class="cat-price price">${COIN_I}${price}</span>` : ""}</span>
       ${hp}
     </span>`;
-  const said = `${esc(set.name)}, ${esc(when)}${price ? `, ${price} coins a pack` : ""}${have != null ? `, ${num(have)} of ${num(total)} found` : ""}`;
+  const said = `${esc(name)}, ${esc(when)}${price ? `, ${price} coins a pack` : ""}${have != null ? `, ${num(have)} of ${num(total)} found` : ""}`;
   return live
     ? `<a class="cat-tile" href="/packs/${esc(set.id)}" aria-label="${said}">${pack}${label}</a>`
     : `<div class="cat-tile is-soon" role="group" aria-label="${esc(set.name)}, coming ${esc(when)}">${pack}${label}</div>`;
@@ -2877,12 +2977,27 @@ function renderBinder() {
   if (binderLookNow().color === COLOR_FROM_CARDS || binderEditor?.isOpen()) refineArt(binderCardsOf(), paintBinderLook);
 }
 
+/** The category the Packs page is showing (SET_CATEGORIES in js/catalog.js). */
+let catalogCat = "booster";
+/** What one entry of a category is called in an era's count: "10 sets", "1 binder". */
+const CATEGORY_NOUN = { booster: ["set", "sets"], promos: ["binder", "binders"], special: ["pack", "packs"], decks: ["box", "boxes"] };
+
+/**
+ * The Packs page: the set on the counter to jump back into, the four
+ * categories as word tabs (Sets, Promos, Special packs, Decks and kits), the
+ * eras of the chosen one as a jump row, then each era's tiles.
+ */
 function renderCatalog() {
-  const eras = erasWithSets();
-  const queued = eras.reduce((total, block) => total + block.queued.length, 0);
-  const summary = queued
-    ? `<p class="catalog-summary"><b>${PLAYABLE_SETS.length}</b> sets are live and <b>${queued}</b> more are on the way.</p>`
-    : `<p class="catalog-summary"><b>${PLAYABLE_SETS.length}</b> sets are live: every English set from Base Set to ${esc(eras[0]?.era || "today")}.</p>`;
+  const cats = SET_CATEGORIES.map((cat) => ({ ...cat, sets: foldKits(PLAYABLE_SETS.filter((set) => setCategory(set) === cat.id)) }));
+  const cat = cats.find((entry) => entry.id === catalogCat) || cats[0];
+  const [one, many] = CATEGORY_NOUN[cat.id] || CATEGORY_NOUN.booster;
+  const eras = erasWithSets()
+    .map((block) => ({
+      ...block,
+      live: foldKits(block.live.filter((set) => setCategory(set) === cat.id)),
+      queued: cat.id === "booster" ? block.queued : [],
+    }))
+    .filter((block) => block.live.length + block.queued.length);
 
   // Cards found per set, counted in one pass over the collection (signed in only).
   const ownedBy = activeTrainer() ? new Map() : null;
@@ -2894,23 +3009,28 @@ function renderCatalog() {
       }
     }
   }
+  const slug = (era) => `era-${String(era).toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
   const blocks = eras
     .map((block) => {
-      const live = block.live.map((set) => catalogSlot(set, { live: true, owned: ownedBy ? ownedBy.get(set.id) || 0 : null })).join("");
+      // A Trainer Kit's tile counts both of its half decks.
+      const parts = (set) => kitHalves(set) || [set];
+      const foundIn = (set) => parts(set).reduce((n, part) => n + Math.min(ownedBy.get(part.id) || 0, Number(part.totalCount) || 0), 0);
+      const sizeOf = (set) => parts(set).reduce((n, part) => n + (Number(part.totalCount) || 0), 0);
+      const live = block.live.map((set) => catalogSlot(set, { live: true, owned: ownedBy ? foundIn(set) : null, total: sizeOf(set) })).join("");
       const rest = block.queued.map((set) => catalogSlot(set)).join("");
       const count = block.live.length + block.queued.length;
-      const sets = `${count} set${count === 1 ? "" : "s"}`;
+      const sets = `${count} ${count === 1 ? one : many}`;
       const state = !block.queued.length
         ? sets
         : !block.live.length
           ? `${sets} on the way`
           : `${sets}, ${block.live.length} live`;
-      const found = ownedBy ? block.live.reduce((n, set) => n + Math.min(ownedBy.get(set.id) || 0, Number(set.totalCount) || 0), 0) : 0;
-      const of = block.live.reduce((n, set) => n + (Number(set.totalCount) || 0), 0);
-      return `<section class="era-block">
+      const found = ownedBy ? block.live.reduce((n, set) => n + foundIn(set), 0) : 0;
+      const of = block.live.reduce((n, set) => n + sizeOf(set), 0);
+      return `<section class="era-block" id="${esc(slug(block.era))}">
       <header class="era-head">
         <h3>${esc(eraTitle(block.era))}</h3>
-        <p><span class="era-span">${esc(eraYears(block.sets))}</span><span class="era-count">${state}</span>${
+        <p><span class="era-span">${esc(eraYears(block.live.length ? block.live : block.sets))}</span><span class="era-count">${state}</span>${
           ownedBy && of ? `<span class="era-found">${num(found)} of ${num(of)} cards found</span>` : ""
         }</p>
       </header>
@@ -2919,8 +3039,56 @@ function renderCatalog() {
     })
     .join("");
 
-  els.catalogEras.innerHTML = summary + blocks;
+  const top = document.getElementById("catalog-top");
+  if (top) {
+    // The set on the counter, one tap from its page.
+    const wrap = chosenWrapper(liveSet);
+    const thumb = wrap
+      ? quietPackPicture(wrap, liveSet, true)
+      : `<img src="${esc(setIdentity(liveSet).logo)}" alt="" loading="lazy" decoding="async" />`;
+    const back = `<a class="rt-row cat-back" href="/packs/${esc(liveSet.id)}">
+        <span class="rt-row-lab">Jump back in</span>
+        <span class="cat-back-th${wrap ? "" : " is-logo"}">${thumb}</span>
+        <span class="rt-row-name">${esc(liveSet.name)}<small>${esc(liveSet.era || liveSet.edition || "")}</small></span>
+        ${liveSet.cost && liveSet.wrappers?.length ? `<span class="rt-row-val price">${coinAmount(liveSet.cost)}</span>` : ""}
+      </a>`;
+    const tabs = cats
+      .map((entry) => {
+        const on = entry.id === cat.id;
+        return `<button type="button" class="st cat-tab${on ? " active" : ""}" role="tab" aria-selected="${on}" data-cat="${esc(entry.id)}">${esc(entry.name)} <small>${num(entry.sets.length)}</small></button>`;
+      })
+      .join("");
+    const jumps = eras.length > 2
+      ? `<nav class="cat-jump" aria-label="Eras">${eras.map((block) => `<button type="button" class="cat-jump-era" data-era-jump="${esc(slug(block.era))}">${esc(eraTitle(block.era))}</button>`).join("")}</nav>`
+      : "";
+    top.innerHTML = `${back}
+      <div class="cat-tabs" role="tablist" aria-label="Kinds of packs">${tabs}</div>
+      <p class="catalog-summary">${esc(cat.note)}${cat.id === "booster" ? "" : " Extras have a collection page and no mastery."}</p>
+      ${jumps}`;
+  }
+  els.catalogEras.innerHTML = blocks;
+  // The tabs scroll sideways on a phone: keep the chosen one in view.
+  const row = top?.querySelector(".cat-tabs");
+  const on = row?.querySelector(".cat-tab.active");
+  if (row && on && row.scrollWidth > row.clientWidth) row.scrollLeft = Math.max(0, on.offsetLeft - (row.clientWidth - on.offsetWidth) / 2);
 }
+
+// "All packs" on a set page opens the Packs page on that set's own category.
+document.getElementById("view-shop")?.addEventListener("click", (e) => {
+  if (e.target.closest('a[href="/packs"]')) catalogCat = setCategory(liveSet);
+}, true);
+
+document.getElementById("view-catalog")?.addEventListener("click", (e) => {
+  const tab = e.target.closest("[data-cat]");
+  if (tab) {
+    catalogCat = tab.dataset.cat;
+    renderCatalog();
+    document.querySelector("#catalog-top .cat-tab.active")?.focus({ preventScroll: true });
+    return;
+  }
+  const jump = e.target.closest("[data-era-jump]");
+  if (jump) document.getElementById(jump.dataset.eraJump)?.scrollIntoView({ behavior: reduceMotion() ? "auto" : "smooth", block: "start" });
+});
 
 /* ---- Home / Account / Settings ------------------------------------------ */
 
@@ -5373,7 +5541,7 @@ const VIEW_PATHS = {
   vault: "/bulk/sealed",
   collection: "/bulk",
   binder: "/binder",
-  catalog: "/catalog",
+  catalog: "/packs",
   account: "/account",
   profile: "/u",
   auth: "/signin",
@@ -5387,7 +5555,7 @@ const PATH_VIEWS = {
   "/": "home",
   "/home": "home",
   "/index.html": "home",
-  "/packs": "shop",
+  "/packs": "catalog",
   "/battles": "battles",
   "/gear": "gear",
   "/sleeves": "gear",
@@ -5431,7 +5599,7 @@ const VIEW_TITLES = {
   vault: "Sealed collection | poke-pack.rip",
   collection: "Collection | poke-pack.rip",
   binder: "Binder | poke-pack.rip",
-  catalog: "All sets | poke-pack.rip",
+  catalog: "Packs | poke-pack.rip",
   account: "Account | poke-pack.rip",
   profile: "Trainer | poke-pack.rip",
   auth: "Sign in | poke-pack.rip",
@@ -5549,7 +5717,7 @@ function viewTitle() {
   if (view === "social" && socialTab === "rankings") return "Rankings | poke-pack.rip";
   if (view === "social" && socialTab === "lounge") return "Lounge | poke-pack.rip";
   if (view === "social" && dmHandle) return `DM @${dmHandle} | poke-pack.rip`;
-  if (view === "shop") return `${liveSet.name} packs | poke-pack.rip`;
+  if (view === "shop") return `${kitOf(liveSet)?.name || `${liveSet.name} packs`} | poke-pack.rip`;
   if (view === "legal") return `${LEGAL_TITLES[legalDoc]} | poke-pack.rip`;
   return VIEW_TITLES[view] || VIEW_TITLES.home;
 }
@@ -5588,7 +5756,7 @@ railQuery.addEventListener?.("change", keepRailOpen);
 
 function paintNav(current) {
   const navView =
-    current === "auth" || current === "profile" ? "account" : current === "battles" ? "casino" : current === "vault" || current === "binder" ? "collection"
+    current === "auth" || current === "profile" ? "account" : current === "battles" ? "casino" : current === "vault" || current === "binder" ? "collection" : current === "shop" ? "catalog"
       : current === "social" && socialTab === "rankings" ? "rankings" : current;
   document.querySelectorAll(".nav-btn").forEach((btn) => {
     let on = btn.dataset.view === navView || (current === "social" && btn.dataset.view === "social" && !btn.closest(".nav-more-list"));
@@ -8031,7 +8199,7 @@ document.querySelectorAll(".nav-btn").forEach((btn) => {
   });
 });
 
-els.setSwitcher.addEventListener("click", (e) => {
+els.setSwitcher?.addEventListener("click", (e) => {
   const soon = e.target.closest("[data-soon]");
   if (soon) {
     toast(`${soon.dataset.soon} is queued.`);
@@ -8055,7 +8223,7 @@ els.bulkSets?.addEventListener("click", (e) => {
   const tab = e.target.closest("[data-set]");
   if (tab) activateSet(tab.dataset.set).then((ok) => ok && toggleSetBrowser(false));
 });
-els.setSwitcher.addEventListener("toggle", onEraToggle);
+els.setSwitcher?.addEventListener("toggle", onEraToggle);
 
 function onEraToggle(e) {
   const era = e.target.closest("details.rail-era");
@@ -9911,7 +10079,7 @@ function hideBrokenSetArt(e) {
 }
 els.catalogEras.addEventListener("error", hideBrokenSetArt, true);
 els.inspectInfo.addEventListener("error", hideBrokenSetArt, true);
-els.setSwitcher.addEventListener("error", hideBrokenSetArt, true);
+els.setSwitcher?.addEventListener("error", hideBrokenSetArt, true);
 document.getElementById("shop-quick-sets")?.addEventListener("error", hideBrokenSetArt, true);
 document.getElementById("shop-logo")?.addEventListener("error", hideBrokenSetArt);
 els.packGrid.addEventListener("error", hideBrokenSetArt, true);

@@ -6912,6 +6912,40 @@ export function isExtraSet(set) {
 }
 
 /**
+ * A Trainer Kit is one box of two half decks, and each half deck is a set of
+ * its own in the data (xytk7a, xytk7b). The two halves of the kit `set` is
+ * part of, the "a" half first, or null for any other set. Pages show a kit
+ * once; ids, saves and /packs/<half> links stay as they are.
+ */
+export function kitHalves(set) {
+  const stem = /^(.+tk\d+)[ab]$/.exec(set?.id || "")?.[1];
+  if (!stem) return null;
+  const halves = [`${stem}a`, `${stem}b`].map((id) => PLAYABLE_SETS.find((entry) => entry.id === id));
+  return halves.every(Boolean) ? halves : null;
+}
+
+/** The Pokémon a kit half is named for: "Bisharp" from "XY Kit Bisharp". */
+export function kitHalfName(set) {
+  return String(set?.name || "").replace(/^.*?\bKit\s+/, "");
+}
+
+/** "XY Trainer Kit: Bisharp & Wigglytuff", from its halves' names. */
+export function kitName(set) {
+  const halves = kitHalves(set);
+  if (!halves) return set?.name || "";
+  const series = String(halves[0].name).replace(/\s*(?:Trainer )?Kit\s+.*$/, "");
+  return `${series} Trainer Kit: ${halves.map(kitHalfName).join(" & ")}`;
+}
+
+/** A category's sets with each Trainer Kit listed once (its "a" half stands for the box). */
+export function foldKits(sets) {
+  return sets.filter((set) => {
+    const halves = kitHalves(set);
+    return !halves || halves[0] === set;
+  });
+}
+
+/**
  * Playable sets folded into their ROADMAP era, then the queued remainder.
  * Catalog and the Packs rail both use this so a live Scarlet & Violet set
  * lands under that heading instead of always on Mega Evolution.

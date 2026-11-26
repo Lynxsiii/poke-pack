@@ -593,3 +593,7 @@ body.no-motion :is(.picker, .picker-backdrop) { animation: none; }
   transform: rotate(-4deg);
   vertical-align: 2px;
 }
+
+/* The set picker: an era's extras sit after its booster sets, under a small label. */
+.bulk-shelf-label { grid-column: 1 / -1; margin: 10px 0 0; color: var(--k); font: italic 800 15px var(--font-xc); }
+.bulk-shelf-label small { margin-left: 6px; color: var(--k-2); font: 700 12px var(--font); font-style: normal; }

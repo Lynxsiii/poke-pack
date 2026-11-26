@@ -39,8 +39,8 @@ const PAGES = {
     description: (n) => `Open booster packs from ${n} Pokémon TCG sets, from Base Set to Mega Evolution, with the printed pull rates and real card scans. Free, no real money.`,
   },
   "/catalog": {
-    title: `All sets | ${SITE_NAME}`,
-    description: (n) => `All ${n} Pokémon TCG sets on poke-pack.rip by era, with their packs, odds and chase cards.`,
+    title: `Packs | ${SITE_NAME}`,
+    description: (n) => `All ${n} Pokémon TCG sets on poke-pack.rip by era: booster sets, promos, special packs, decks and kits.`,
   },
   "/notes": {
     title: `Patch notes | ${SITE_NAME}`,
