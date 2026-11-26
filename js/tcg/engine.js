@@ -49,7 +49,7 @@
  */
 
 import { runAttackEffects } from "./effects.js";
-import { T_OPS, boostOf, energyIn, fieldFits, moveTargets, prizesLeft, runTrainer, stripEnergy, trainerReady } from "./trainers.js";
+import { T_OPS, boostOf, energyIn, fieldFits, fits, moveTargets, prizesLeft, runTrainer, stripEnergy, trainerReady } from "./trainers.js";
 
 export const FORMATS = {
   standard: { id: "standard", name: "Full deck", deckSize: 60, prizes: 6, bench: 5, copies: 4 },
@@ -66,7 +66,7 @@ const fail = (message) => {
 };
 
 /** Whose card a pending choice belongs to and where it came from, carried onto the next one. */
-const carry = (waiting) => ({ ...(waiting.src ? { src: waiting.src } : {}), ...(waiting.by != null ? { by: waiting.by } : {}) });
+const carry = (waiting) => ({ ...(waiting.src ? { src: waiting.src } : {}), ...(waiting.by != null ? { by: waiting.by } : {}), ...(waiting.card ? { card: waiting.card } : {}) });
 
 /* ---------- random ---------- */
 
@@ -473,7 +473,7 @@ export function mayEvolve(state, slot, defs, how = {}) {
   // Some Pokémon may evolve on the first turn, or the turn they are played (an Ability says so).
   const early = abilityOn(state, slot, defs)?.early;
   const owner = ownerOf(state, slot);
-  const lifted = how.lift || early === "any" || (early === "active" && state.players[owner]?.active === slot) || (early === "second" && state.first !== owner && slot.since < state.turn);
+  const lifted = how.lift || slot.lift === state.turn || early === "any" || (early === "active" && state.players[owner]?.active === slot) || (early === "second" && state.first !== owner && slot.since < state.turn);
   return lifted || !(firstTurnOf(state) || slot.since >= state.turn);
 }
 
@@ -623,6 +623,7 @@ function settle(state, defs, events) {
   if (state.phase !== "main" || state.pending.length || !state.ending) return;
   if (!state.checked) {
     state.checked = true;
+    dropHeld(state, events);
     checkup(state, defs, events);
     resolveKnockOuts(state, defs, events, { between: true });
     if (state.phase !== "main" || state.pending.length) return;
@@ -631,7 +632,27 @@ function settle(state, defs, events) {
 }
 
 function discardSlot(state, player, slot) {
-  state.players[player].discard.push(slot.uid, ...slot.under, ...slot.energy, ...(slot.tool ? [slot.tool] : []));
+  state.players[player].discard.push(slot.uid, ...slot.under, ...slot.energy, ...(slot.tool ? [slot.tool] : []), ...heldOn(slot));
+}
+
+/**
+ * Old Trainers that are attached for a while (PlusPower, Defender): { uid, until, plus?, after?, less? } on
+ * `slot.held`, discarded at the end of turn `until`. `plus` counts before Weakness and Resistance, `after` after.
+ */
+export const heldOn = (slot) => (slot?.held || []).map((h) => h.uid);
+const heldSum = (slot, key) => (slot?.held || []).reduce((n, h) => n + (h[key] || 0), 0);
+
+/** The end of a turn: attached Trainers whose time is up go to their owner's discard pile. */
+function dropHeld(state, events) {
+  for (const p of [0, 1]) {
+    for (const [slot, spot] of inPlay(state, p)) {
+      const gone = (slot.held || []).filter((h) => h.until <= state.turn);
+      if (!gone.length) continue;
+      slot.held = slot.held.filter((h) => h.until > state.turn);
+      state.players[p].discard.push(...gone.map((h) => h.uid));
+      for (const h of gone) events.push({ t: "discard-held", p, spot, uid: h.uid });
+    }
+  }
 }
 
 /**
@@ -672,7 +693,7 @@ export function resolveKnockOuts(state, defs, events, { between = false } = {}) 
         // "Put it into your hand instead of the discard pile. (Discard all attached cards.)"
         events.push({ t: "ability", p, spot, uid: slot.uid, name: ability.name });
         side.hand.push(slot.uid);
-        side.discard.push(...slot.under, ...slot.energy, ...(slot.tool ? [slot.tool] : []));
+        side.discard.push(...slot.under, ...slot.energy, ...(slot.tool ? [slot.tool] : []), ...heldOn(slot));
         events.push({ t: "ko-hand", p, uid: slot.uid });
       } else discardSlot(state, p, slot);
       if (ability?.ko.steps) after.push([p, spot, slot.uid, ability]);
@@ -822,7 +843,7 @@ const HANDLERS = {
     side.discard.push(uid);
     if (def.sub === "supporter") side.supporterUsed = true;
     events.push({ t: "play", p: player, uid, sub: def.sub });
-    runTrainer(def.fx, { state, defs, events, player, src: "trainer" });
+    runTrainer(def.fx, { state, defs, events, player, src: "trainer", uid });
     if (!state.pending.length) resolveKnockOuts(state, defs, events);
   },
 
@@ -906,6 +927,7 @@ const HANDLERS = {
     if (!side.hand.includes(uid)) fail("That card isn't in your hand.");
     const def = defOf(state, uid, defs);
     if (def.kind !== "trainer" || def.sub !== "tool" || !def.playable) fail(def.why || "That isn't a Pokémon Tool.");
+    if (side.noTrainers === state.turn) fail("You can't play any more Trainer cards this turn.");
     const slot = slotAt(state, player, spot);
     if (!slot) fail("There's no Pokémon there.");
     if (slot.tool) fail("That Pokémon already has a Tool.");
@@ -993,9 +1015,11 @@ const HANDLERS = {
       // Tools: the attacker's adds damage before Weakness, the target's can lift its Weakness or soak some.
       const mine = toolOf(state, slot, defs);
       const theirs = toolOf(state, target, defs);
-      const base = hit.damage > 0 ? Math.max(0, hit.damage + (mine.plus || 0) + boostOf(state, player, slot, target, defs)) : hit.damage;
+      const base = hit.damage > 0 ? Math.max(0, hit.damage + (mine.plus || 0) + heldSum(slot, "plus") + boostOf(state, player, slot, target, defs)) : hit.damage;
       const dealt = damageAfterTyping(base, def, defOf(state, target.uid, defs), { ...hit, noWeakness: hit.noWeakness || Boolean(theirs.noWeakness), noResistance: hit.noResistance || Boolean(theirs.noResistance) });
-      const less = (hit.noEffects ? 0 : markOn(state, target, "less")?.n || 0) + (theirs.less || 0);
+      // Old PlusPower and Misty: more only when the attack does damage after Weakness and Resistance.
+      if (dealt.amount > 0) dealt.amount += heldSum(slot, "after") + boostOf(state, player, slot, target, defs, true);
+      const less = (hit.noEffects ? 0 : markOn(state, target, "less")?.n || 0) + (theirs.less || 0) + heldSum(target, "less");
       let guarded = marked || (!hit.noEffects && markOn(state, target, "guard"));
       // The target's Ability: no damage from this kind of attacker, or a coin flip to take none.
       const power = hit.noEffects ? null : abilityOn(state, target, defs);
@@ -1024,6 +1048,8 @@ const HANDLERS = {
         target.damage += amount;
         target.hit = state.turn;
         events.push({ t: "damage", p: foe, spot: ACTIVE, n: amount, weak: dealt.weak, resist: dealt.resist });
+        // Koga: "If an attack from a Pokémon with Koga in its name does damage to a Defending Pokémon this turn, that Pokémon is then Poisoned."
+        if ((state.boosts || []).some((b) => b.poison && b.p === player && b.turn === state.turn && fieldFits(b.who || {}, def)) && addCondition(state, target, "poisoned", defs)) events.push({ t: "condition", p: foe, kind: "poisoned" });
         // Damaged in the Active Spot, it hits back, even when this Knocks it Out.
         const thorns = abilityOn(state, target, defs)?.thorns;
         if (thorns) {
@@ -1066,11 +1092,15 @@ const HANDLERS = {
 
   choose(state, { player, uids = [] }, defs, events) {
     const waiting = state.pending[0];
-    const side = state.players[player];
+    // `owner`: the cards are another player's (their hand, their deck), and go where the effect says on their side.
+    const owner = waiting.owner ?? player;
+    const side = state.players[owner];
     const picked = [...new Set(uids)];
     if (picked.some((uid) => !waiting.uids.includes(uid))) fail("That card can't be chosen.");
     if (picked.length < waiting.min) fail(waiting.min === 1 ? "Choose a card." : `Choose ${waiting.min} cards.`);
     if (picked.length > waiting.max) fail(waiting.max === 1 ? "Choose only one card." : `Choose at most ${waiting.max} cards.`);
+    const why = chooseBlock(state, waiting, picked, defs);
+    if (why) fail(why);
     // Cards in play (Tools, the Stadium) leave where they are in the effect itself.
     const pile = waiting.zone === "play" ? [] : side[waiting.zone];
     for (const uid of picked) if (pile.includes(uid)) pile.splice(pile.indexOf(uid), 1);
@@ -1150,17 +1180,69 @@ const HANDLERS = {
       } else side.deck.push(...picked);
     } else if (op === "toDeck") {
       side.deck.push(...picked);
-      events.push({ t: "recycle", p: player, uids: picked });
+      events.push({ t: "recycle", p: owner, uids: picked });
     } else if (op === "toBench") {
       for (const uid of picked) side.bench.push(newSlot(state, uid));
-      events.push({ t: "search", p: player, uids: picked, from: waiting.zone, to: "bench" });
+      events.push({ t: "search", p: owner, uids: picked, from: waiting.zone, to: "bench" });
+      // Revive: half its HP in damage counters, rounded down to the nearest 10.
+      if (waiting.effect.half) for (const slot of side.bench.slice(-picked.length)) slot.damage += Math.floor(defOf(state, slot.uid, defs).hp / 20) * 10;
+    } else if (op === "deckTop") {
+      // "Search your deck for a card, shuffle your deck, then put that card on top of it": in the order chosen, the first on top.
+      shuffle(state, side.deck);
+      side.deck.unshift(...picked);
+      events.push({ t: "deck-top", p: owner, n: picked.length });
+    } else if (op === "order") {
+      // Cards looked at go back where they came from in the order chosen (the first one chosen nearest the top).
+      if (waiting.effect.at === "bottom") side.deck.push(...picked);
+      else side.deck.unshift(...picked);
+    } else if (op === "fromDiscardTop") {
+      side.deck.unshift(...picked);
+      events.push({ t: "recycle", p: owner, uids: picked, at: "top" });
+    } else if (op === "keepOne") {
+      // Professor Rowan: the card chosen stays, the rest of the hand is shuffled into the deck.
+      const rest = side.hand.splice(0);
+      side.hand.push(...picked);
+      side.deck.push(...rest);
+      if (rest.length) events.push({ t: "shuffle-hand", p: owner });
+    } else if (op === "toActive") {
+      // Lt. Surge: a Basic Pokémon from the hand becomes the Active Pokémon, the old one goes to the Bench.
+      if (picked.length && side.active && side.bench.length < state.rules.bench) {
+        clearConditions(side.active);
+        side.bench.push(side.active);
+        side.active = newSlot(state, picked[0]);
+        events.push({ t: "bench", p: owner, uid: picked[0], spot: ACTIVE });
+      } else side.hand.push(...picked);
+    } else if (op === "carryEnergy") {
+      // Lucian's Assignment: the Energy chosen, then the Pokémon it goes to.
+      const spots = inPlay(state, owner).map(([, s]) => s).filter((s) => s !== waiting.effect.from);
+      if (picked.length && spots.length) {
+        askPick(state, { player, side: owner, spots, left: 1, effect: { op: "moveEnergyCards", from: waiting.effect.from, uids: picked }, ...(waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) });
+        waiting.then = null;
+      }
     } else {
       side.hand.push(...picked);
-      events.push({ t: "search", p: player, uids: picked, from: waiting.zone, to: "hand" });
+      events.push({ t: "search", p: owner, uids: picked, from: waiting.zone, to: "hand" });
     }
-    if (waiting.shuffle) shuffle(state, side.deck);
+    // Grimsley's Move: the other cards looked at are shuffled and put on the bottom of the deck.
+    if (waiting.restBottom) {
+      const rest = side.deck.splice(0, Math.max(0, waiting.restBottom - picked.length));
+      side.deck.push(...shuffle(state, rest));
+    }
+    if (waiting.shuffle && op !== "deckTop") shuffle(state, side.deck);
+    // "Discard ... If you discarded a Pokémon that has δ on its card, draw 4 cards instead": the next step sees what went.
+    if (waiting.pass && waiting.then?.length) waiting.then = [{ ...waiting.then[0], paid: picked }, ...waiting.then.slice(1)];
     state.pending.shift();
     resume(state, waiting, defs, events);
+    if (!state.pending.length) resolveKnockOuts(state, defs, events);
+  },
+
+  /** Answer a "Choose 1:" a card offers: pending { type: "option", player, labels, options: [steps] }. */
+  option(state, { player, index }, defs, events) {
+    const waiting = state.pending[0];
+    const steps = waiting.options[index];
+    if (!Number.isInteger(index) || !steps) fail("Choose one of the options.");
+    state.pending.shift();
+    runTrainer([...steps, ...(waiting.then || [])], { state, defs, events, player: waiting.by ?? waiting.player, spot: waiting.from, ...(waiting.src ? { src: waiting.src } : {}), ...(waiting.card ? { uid: waiting.card } : {}) });
     if (!state.pending.length) resolveKnockOuts(state, defs, events);
   },
 
@@ -1184,6 +1266,7 @@ const HANDLERS = {
 export function trainerBlock(state, player, def, defs) {
   if (def?.kind !== "trainer" || !def.playable) return def?.why || "That card can't be played.";
   const side = state.players[player];
+  if (side.noTrainers === state.turn) return "You can't play any more Trainer cards this turn.";
   if (def.sub === "supporter") {
     if (side.supporterUsed) return "You've already played a Supporter this turn.";
     if (state.turn === 1 && !def.fx.some((step) => step.op === "early")) return "No Supporter on the first turn of the match.";
@@ -1294,19 +1377,76 @@ function applyPick(state, waiting, spot, defs, events) {
     switchActive(state, p, spot, events, defs);
   } else if (effect.op === "heal") {
     const slot = slotAt(state, p, spot);
-    const healed = Math.min(effect.n, slot.damage);
+    let n = effect.n;
+    // Moo-Moo Milk: the Pokémon is chosen, then the coins say how much. Night Pokémon Center: both heads heal it all, both tails strip it.
+    if (effect.flips) {
+      const results = Array.from({ length: effect.flips }, () => flip(state));
+      events.push({ t: "flip", p, results });
+      const heads = results.filter(Boolean).length;
+      n = effect.night ? (heads === effect.flips ? 9990 : 0) : heads * effect.per;
+      if (effect.night && !heads) stripEnergy({ state, events }, p, spot);
+    }
+    const healed = Math.min(n, slot.damage);
     slot.damage -= healed;
     if (healed) events.push({ t: "heal", p, spot, n: healed });
     if (effect.cure) {
       for (const kind of conditionsOn(slot)) events.push({ t: "cure", p, spot, kind });
       delete slot.status;
     }
-    if (effect.strip) stripEnergy({ state, events }, p, spot);
+    if (effect.strip && (!effect.ifHealed || healed)) stripEnergy({ state, events }, p, spot, effect.strip === "hand");
+    // Super Potion: an Energy of the kind named, the player's choice of which, goes from that Pokémon (the price, or "if you do").
+    if (effect.pay && (!effect.ifHealed || healed)) {
+      const uids = slot.energy.filter((uid) => fitsEnergy(defOf(state, uid, defs), effect.pay));
+      if (uids.length === 1) dropEnergy(state, p, spot, uids, events);
+      else if (uids.length) {
+        askChoose(state, { player: waiting.player, zone: "play", what: "energy", uids, min: 1, max: 1, effect: { op: "dropInPlay" }, ...(waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) });
+        waiting.then = null;
+      }
+    }
+  } else if (effect.op === "hold") {
+    // PlusPower, Defender: the card played goes on the Pokémon for a while (see heldOn).
+    const discard = state.players[waiting.by ?? waiting.player].discard;
+    if (!discard.includes(effect.uid)) return;
+    discard.splice(discard.indexOf(effect.uid), 1);
+    const slot = slotAt(state, p, spot);
+    (slot.held ||= []).push({ uid: effect.uid, ...effect.mod });
+    events.push({ t: "hold", p, spot, uid: effect.uid });
+  } else if (effect.op === "lift") {
+    slotAt(state, p, spot).lift = state.turn;
+    events.push({ t: "lift", p, spot });
+  } else if (effect.op === "devolve") {
+    // Hyper Devolution Spray: the top Evolution card back to the hand; what is left can't evolve again this turn.
+    const slot = slotAt(state, p, spot);
+    if (!slot.under.length) return;
+    side.hand.push(slot.uid);
+    events.push({ t: "devolve", p, spot, uid: slot.uid });
+    slot.uid = slot.under.shift();
+    slot.since = state.turn;
+    clearConditions(slot);
+  } else if (effect.op === "swapFrom") {
+    // Ninja Boy: a Basic Pokémon from the deck takes this one's place, with all it had.
+    const uids = side.deck.filter((uid) => isBasic(state, uid, defs));
+    askChoose(state, { player: waiting.player, zone: "deck", what: "basic", uids, min: 0, max: 1, effect: { op: "swapIn", spot }, shuffle: true, ...(waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) });
+    waiting.then = null;
+  } else if (effect.op === "energyFrom") {
+    // Super Energy Removal, Lucian's Assignment: which Energy cards on the Pokémon picked.
+    const uids = slotAt(state, p, spot).energy.slice();
+    if (!uids.length) return;
+    const next = effect.move ? { op: "carryEnergy", from: spot } : { op: "dropInPlay" };
+    askChoose(state, { player: waiting.player, zone: "play", what: "energy", uids, min: effect.min ?? 1, max: effect.n || uids.length, effect: next, ...(effect.move ? { owner: p } : {}), ...(waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) });
+    waiting.then = null;
+  } else if (effect.op === "moveAllFrom") {
+    // Sabrina: every Energy on one, onto another the card names.
+    const spots = inPlay(state, p).filter(([s, at]) => at !== spot && fieldFits(effect.who || {}, defOf(state, s.uid, defs))).map(([, at]) => at);
+    const uids = slotAt(state, p, spot).energy.slice();
+    if (spots.length && uids.length) follow(state, waiting, { player: waiting.player, side: p, spots, left: 1, effect: { op: "moveEnergyCards", from: spot, uids } });
+  } else if (effect.op === "moveEnergyCards") {
+    for (const uid of effect.uids) moveEnergy(state, p, effect.from, spot, uid, events);
   } else if (effect.op === "bounce") {
     // Back to the hand: its Pokémon cards (all of them, or only the Basic one), and what was attached when `keep` is "all".
     const slot = slotAt(state, p, spot);
     const mons = [slot.uid, ...slot.under];
-    const all = [...mons, ...slot.energy, ...(slot.tool ? [slot.tool] : [])];
+    const all = [...mons, ...slot.energy, ...(slot.tool ? [slot.tool] : []), ...heldOn(slot)];
     const back = effect.keep === "all" ? all : effect.keep === "basic" ? [mons[mons.length - 1]] : mons;
     side.hand.push(...back);
     side.discard.push(...all.filter((uid) => !back.includes(uid)));
@@ -1365,6 +1505,36 @@ function applyPick(state, waiting, spot, defs, events) {
   }
 }
 
+const fitsEnergy = (def, what) => def?.kind === "energy" && (what === "energy" || (def.provides || []).includes(what.split(":")[1]));
+
+function dropEnergy(state, p, spot, uids, events) {
+  const slot = slotAt(state, p, spot);
+  for (const uid of uids) slot.energy.splice(slot.energy.indexOf(uid), 1);
+  state.players[p].discard.push(...uids);
+  events.push({ t: "discard-energy", p, spot, uids });
+}
+
+/**
+ * Why these cards can't be chosen together, or "": `rule` { oneOf: [what] } all of one kind (Sonia),
+ * { apiece: [what] } at most one of each kind (Drayton), { distinct: true } no two of the same type (Lady Outing).
+ */
+export function chooseBlock(state, waiting, picked, defs) {
+  const rule = waiting.rule;
+  if (!rule || !picked.length) return "";
+  const cards = picked.map((uid) => defOf(state, uid, defs));
+  if (rule.oneOf && !rule.oneOf.some((what) => cards.every((def) => fits(def, what)))) return "Choose cards of one kind only.";
+  if (rule.apiece) {
+    // Each card needs a kind of its own: a matching, tried kind by kind.
+    const free = (i, used) => i === cards.length || rule.apiece.some((what, k) => !used.has(k) && fits(cards[i], what) && free(i + 1, new Set([...used, k])));
+    if (!free(0, new Set())) return "Only one card of each kind.";
+  }
+  if (rule.distinct) {
+    const types = cards.map((def) => def.provides || def.types || []);
+    if (types.some((a, i) => types.some((b, j) => j > i && a.some((t) => b.includes(t))))) return "Each card must be a different type.";
+  }
+  return "";
+}
+
 function moveEnergy(state, p, from, to, uid, events) {
   const source = slotAt(state, p, from);
   const slot = slotAt(state, p, to);
@@ -1376,7 +1546,7 @@ function moveEnergy(state, p, from, to, uid, events) {
 
 /** A pick that leads to another (move from here, then to there): the steps waiting on the first ride on the second. */
 function follow(state, waiting, pick) {
-  askPick(state, { ...pick, ...(waiting.then ? { then: waiting.then } : {}), ...(waiting.from != null ? { from: waiting.from } : {}), ...(waiting.src ? { src: waiting.src } : {}) });
+  askPick(state, { ...pick, ...(waiting.then ? { then: waiting.then } : {}), ...(waiting.from != null ? { from: waiting.from } : {}), ...carry(waiting) });
   waiting.then = null;
 }
 
@@ -1409,7 +1579,7 @@ export function askChoose(state, choice) {
 /** A choice was made: carry on with whatever the card said to do after it. */
 function resume(state, waiting, defs, events) {
   // `by`: whose card it is, when the choice was the other player's ("your opponent switches ...").
-  if (waiting.then?.length) runTrainer(waiting.then, { state, defs, events, player: waiting.by ?? waiting.player, spot: waiting.from, ...(waiting.src ? { src: waiting.src } : {}) });
+  if (waiting.then?.length) runTrainer(waiting.then, { state, defs, events, player: waiting.by ?? waiting.player, spot: waiting.from, ...(waiting.src ? { src: waiting.src } : {}), ...(waiting.card ? { uid: waiting.card } : {}) });
 }
 
 /** Apply one action. Changes `state`, returns what happened, throws RuleError when it isn't allowed. */
@@ -1439,9 +1609,9 @@ export function apply(state, action, defs) {
   if (state.phase !== "main") fail("Place your Pokémon first.");
   const waiting = state.pending[0];
   if (waiting) {
-    if (waiting.type !== type || waiting.player !== player) fail(waiting.type === "pick" ? "Waiting for a Pokémon to be chosen." : waiting.type === "choose" ? "Waiting for cards to be chosen." : "Waiting for a new Active Pokémon.");
+    if (waiting.type !== type || waiting.player !== player) fail(waiting.type === "pick" ? "Waiting for a Pokémon to be chosen." : waiting.type === "choose" ? "Waiting for cards to be chosen." : waiting.type === "option" ? "Waiting for a choice." : "Waiting for a new Active Pokémon.");
   } else {
-    if (type === "promote" || type === "pick" || type === "choose") fail("Nothing to choose.");
+    if (type === "promote" || type === "pick" || type === "choose" || type === "option") fail("Nothing to choose.");
     if (state.current !== player) fail("It isn't your turn.");
     if (state.ending) fail("Your turn is over.");
   }
@@ -1464,6 +1634,7 @@ export function legalActions(state, player, defs) {
     // Which cards to take is the player's call; the one listed here is the plainest legal answer.
     if (waiting.type === "choose") return [{ type: "choose", player, uids: waiting.uids.slice(0, waiting.min) }];
     if (waiting.type === "pick") return [...waiting.spots.map((spot) => ({ type: "pick", player, spot })), ...(waiting.optional ? [{ type: "pick", player, spot: null }] : [])];
+    if (waiting.type === "option") return waiting.labels.map((_, index) => ({ type: "option", player, index }));
     return side.bench.map((_, spot) => ({ type: "promote", player, spot }));
   }
   if (state.current !== player || state.ending) return [];
@@ -1483,7 +1654,7 @@ export function legalActions(state, player, defs) {
       for (const [slot, spot] of spots) if (energyFits(def, defOf(state, slot.uid, defs))) out.push({ type: "attach", player, uid, spot });
     }
     if (def.kind === "trainer" && def.sub === "tool") {
-      if (def.playable) for (const [slot, spot] of spots) if (!slot.tool) out.push({ type: "tool", player, uid, spot });
+      if (def.playable && side.noTrainers !== state.turn) for (const [slot, spot] of spots) if (!slot.tool) out.push({ type: "tool", player, uid, spot });
       continue;
     }
     if (def.kind === "trainer" && !trainerBlock(state, player, def, defs)) out.push({ type: "play", player, uid });
@@ -1508,7 +1679,7 @@ export function viewFor(state, player) {
     side.discard.forEach((uid) => shown.add(uid));
     for (const slot of [side.active, ...side.bench]) {
       if (!slot || (state.phase === "setup" && p !== player)) continue;
-      [slot.uid, ...slot.under, ...slot.energy, ...(slot.tool ? [slot.tool] : [])].forEach((uid) => shown.add(uid));
+      [slot.uid, ...slot.under, ...slot.energy, ...(slot.tool ? [slot.tool] : []), ...heldOn(slot)].forEach((uid) => shown.add(uid));
     }
     if (p !== player) {
       side.hand = side.hand.length;
@@ -1525,6 +1696,8 @@ export function viewFor(state, player) {
   for (const waiting of state.pending) {
     if (waiting.player !== player) continue;
     if (waiting.type === "choose") waiting.uids.forEach((uid) => shown.add(uid));
+    // "Look at your opponent's hand": all of it, not only the cards that may be chosen.
+    (waiting.seen || []).forEach((uid) => shown.add(uid));
     if (waiting.type === "pick" && waiting.effect?.op === "evolveHeld") shown.add(waiting.effect.uid);
   }
   view.cards = Object.fromEntries(Object.entries(view.cards).filter(([uid]) => shown.has(uid)));

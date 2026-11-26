@@ -866,9 +866,11 @@ function playOut(decks, format, seed) {
       const seen = [];
       for (const side of state.players) {
         seen.push(...side.deck, ...side.hand, ...side.discard, ...side.prizes);
-        for (const slot of [side.active, ...side.bench]) if (slot) seen.push(slot.uid, ...slot.under, ...slot.energy, ...(slot.tool ? [slot.tool] : []));
+        for (const slot of [side.active, ...side.bench]) if (slot) seen.push(slot.uid, ...slot.under, ...slot.energy, ...(slot.tool ? [slot.tool] : []), ...(slot.held || []).map((h) => h.uid));
       }
       if (state.stadium) seen.push(state.stadium.uid);
+      // Energy taken from the deck waits on the choice of the Pokémon it goes to; so does a card to evolve with.
+      for (const w of state.pending) seen.push(...(w.effect?.op === "attachHeld" ? w.effect.uids : w.effect?.op === "evolveHeld" ? [w.effect.uid] : []));
       assert.equal(seen.length, Object.keys(state.cards).length);
       assert.equal(new Set(seen).size, seen.length);
     }

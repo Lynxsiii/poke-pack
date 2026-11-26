@@ -659,6 +659,7 @@ export function initTcg(deps) {
     }
     const waiting = state.pending[0];
     if (waiting?.player === ME && waiting.type === "choose") return { text: "Choose from the cards shown.", keys: "" };
+    if (waiting?.player === ME && waiting.type === "option") return { text: waiting.prompt || "Choose one.", keys: waiting.labels.map((label, i) => `<button type="button" class="${i ? "ghost" : "solid"} sm" data-act="option-${i}">${esc(label)}</button>`).join("") };
     if (waiting?.player === ME && waiting.type === "pick") {
       const op = waiting.effect.op;
       const whose = waiting.side === ME ? "your" : "their";
@@ -675,6 +676,14 @@ export function initTcg(deps) {
         attachHeld: () => `Choose the Pokémon that gets ${fx.uids.length > 1 ? "the Energy" : `the ${d(fx.uids[0])?.name || "Energy"}`}.`,
         bounce: () => "Choose the Pokémon to put back into your hand.",
         evolveHeld: () => `Choose the Pokémon that evolves into ${d(fx.uid)?.name || "it"}.`,
+        hold: () => `Choose the Pokémon to attach ${d(fx.uid)?.name || "it"} to.`,
+        lift: () => "Choose the Pokémon that may evolve this turn.",
+        devolve: () => "Choose the Pokémon to devolve.",
+        swapFrom: () => "Choose the Basic Pokémon to swap for one from your deck.",
+        energyFrom: () => (fx.move ? "Choose the Pokémon to move Energy from." : whose === "your" ? "Choose your Pokémon to discard an Energy from." : "Choose one of their Pokémon to lose Energy."),
+        moveAllFrom: () => "Choose the Pokémon to move all its Energy from.",
+        moveEnergyCards: () => "Choose the Pokémon that gets the Energy.",
+        heal: () => (fx.flips ? "Choose one of your Pokémon, then the coins are flipped." : null),
       }[op]?.();
       if (op === "gatherFrom") return { text: `Choose a Pokémon to move ${fx.type ? `a ${fx.type}` : "an"} Energy from, or finish.`, keys: `<button type="button" class="ghost sm" data-act="pick-skip">Done</button>` };
       if (moving) return { text: moving, keys: "" };
@@ -991,7 +1000,15 @@ export function initTcg(deps) {
     const kind = named || (type ? label.replace(/(Pokémon|Energy)$/, `${type} $1`) : label);
     const energyCard = /Energy$/.test(kind);
     const many = (n) => (kind === "card" ? plural(n, "card") : n === 1 ? `1 ${kind}${energyCard ? " card" : ""}` : `${n} ${kind}${energyCard ? " cards" : ""}`);
-    const title = waiting.effect.op === "discard" ? `Discard ${many(min)} from your hand`
+    const foreign = waiting.owner != null && waiting.owner !== ME;
+    const title = foreign ? `Choose ${min < max ? "up to " : ""}${many(max)} from their ${waiting.zone === "hand" ? "hand" : "deck"}`
+      : waiting.effect.op === "order" ? "Tap the cards in the order you want them, the top one first"
+      : waiting.effect.op === "deckTop" ? `Choose ${many(max)} for the top of your deck, the top one first`
+      : waiting.effect.op === "keepOne" ? "Choose the card to keep; the rest is shuffled into your deck"
+      : waiting.effect.op === "toActive" ? "Choose your new Active Pokémon"
+      : waiting.effect.op === "carryEnergy" ? "Choose the Energy to move"
+      : waiting.effect.op === "fromDiscardTop" ? `Put ${many(max)} from your discard pile on top of your deck`
+      : waiting.effect.op === "discard" ? `Discard ${min < max ? "up to " : ""}${many(min < max ? max : min)} from your hand`
       : waiting.effect.op === "toBench" ? `Choose ${max > 1 ? `up to ${many(max)}` : "a Basic Pokémon"} for your Bench`
       : waiting.effect.op === "attach" && waiting.zone !== "deck" ? `Attach ${max > 1 ? `up to ${many(max)}` : many(1)} from your ${waiting.zone === "hand" ? "hand" : "discard pile"}`
       : waiting.effect.op === "attach" ? `Attach ${max > 1 ? `up to ${many(max)}` : many(1)} from your ${waiting.top ? `top ${waiting.top} cards` : "deck"}`
@@ -2206,6 +2223,7 @@ export function initTcg(deps) {
     }
     if (act === "play-card" && match.sel?.kind === "hand") return run({ type: "play", player: ME, uid: match.sel.uid });
     if (act === "pick-skip") return run({ type: "pick", player: ME, spot: null });
+    if (act.startsWith("option-")) return run({ type: "option", player: ME, index: Number(act.slice(7)) });
     if (act === "start") return run({ type: "place", player: ME, active: match.setup.active, bench: match.setup.bench });
     if (act === "end") return run({ type: "end", player: ME });
     if (act === "look" && match.sel?.kind === "hand") return openLook(state.cards[match.sel.uid]);
