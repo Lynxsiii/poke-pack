@@ -90,6 +90,8 @@ export function guessMultiplier(above, below, dir) {
 // ---- Mystery Tins -------------------------------------------------------------
 /** Each tin: a name, the sets it draws from, and which cards count (by name, or by rarity). */
 const POP_SETS = ["sv3pt5", "sv4pt5", "sv3", "sv8", "sv8pt5", "sv10", "sv6pt5", "me1", "me2", "swsh7", "swsh9", "swsh11", "swsh12pt5", "cel25", "sm115", "sm12", "xy12"];
+/** The wider pool the newer tins draw from: the popular sets plus more of Scarlet and Violet, Sword and Shield and Sun and Moon. */
+const WIDE_SETS = [...POP_SETS, "sv1", "sv2", "sv4", "sv5", "sv6", "sv7", "sv9", "swsh12", "swsh10", "swsh8", "swsh5", "swsh6", "swsh45", "sm11", "sm10", "sm9", "sm8", "sm3", "xy1", "xy8"];
 /** Each tin: a name, a line, its colour (the tin's paint, art only), the sets it draws from, and which cards count (by name, or by rarity). */
 export const TINS = [
   { id: "eevee", name: "Eeveelution tin", line: "Eevee and all eight evolutions.", color: "#c98a4b", sets: ["sv8pt5"], names: /\b(eevee|vaporeon|jolteon|flareon|espeon|umbreon|leafeon|glaceon|sylveon)\b/i },
@@ -102,6 +104,14 @@ export const TINS = [
   { id: "birds", name: "Legendary birds tin", line: "Articuno, Zapdos and Moltres.", color: "#3f7fd0", sets: POP_SETS, names: /\b(articuno|zapdos|moltres)\b/i },
   { id: "starters", name: "Kanto starters tin", line: "Bulbasaur and Squirtle lines.", color: "#3aa6a0", sets: POP_SETS, names: /\b(bulbasaur|ivysaur|venusaur|squirtle|wartortle|blastoise)\b/i },
   { id: "night", name: "Umbreon and Darkrai tin", line: "Dark types after midnight.", color: "#2b3046", sets: POP_SETS, names: /\b(umbreon|darkrai|zoroark|tyranitar)\b/i },
+  { id: "skies", name: "Evolving Skies hits tin", line: "Only the rare pulls from Evolving Skies.", color: "#4a9fd8", sets: ["swsh7"], hitsOnly: true },
+  { id: "base", name: "Base Set hits tin", line: "The 1999 holos and rares.", color: "#e3b53c", sets: ["base1"], hitsOnly: true },
+  { id: "towers", name: "Lugia and Ho-Oh tin", line: "The two tower guardians.", color: "#b9c4d6", sets: WIDE_SETS, names: /\b(lugia|ho-oh)\b/i },
+  { id: "gyarados", name: "Gyarados tin", line: "Magikarp and Gyarados.", color: "#2d6fc4", sets: WIDE_SETS, names: /\b(magikarp|gyarados)\b/i },
+  { id: "greninja", name: "Greninja tin", line: "Froakie, Frogadier and Greninja.", color: "#31508f", sets: WIDE_SETS, names: /\b(froakie|frogadier|greninja)\b/i },
+  { id: "gardevoir", name: "Gardevoir tin", line: "Ralts, Kirlia, Gardevoir and Gallade.", color: "#59b98c", sets: WIDE_SETS, names: /\b(ralts|kirlia|gardevoir|gallade)\b/i },
+  { id: "lucario", name: "Lucario tin", line: "Riolu and Lucario.", color: "#3c6fb0", sets: WIDE_SETS, names: /\b(riolu|lucario)\b/i },
+  { id: "snorlax", name: "Sleepy favourites tin", line: "Snorlax, Psyduck, Slowpoke and Mimikyu.", color: "#3d7c86", sets: WIDE_SETS, names: /\b(snorlax|munchlax|psyduck|slowpoke|mimikyu)\b/i },
 ];
 /** A card's weight in a tin: cheaper cards come up more often, but a big hit is never out of reach. */
 export const tinWeight = (cents) => 1 / Math.pow(Math.max(1, cents), 0.7);
