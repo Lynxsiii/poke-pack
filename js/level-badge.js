@@ -90,7 +90,7 @@ export function levelBadgeHtml(level, { size = "md", prestige = 0 } = {}) {
  * size in every tile. Under it come the Pokémon frames, grouped
  * (Pokémon, Cards, Extras), each dimmed with what it needs while locked.
  */
-export function framePicksHtml({ level, prestige = 0, frame, avatar, color = "" }) {
+export function framePicksHtml({ level, prestige = 0, frame, avatar, color = "", beta = false }) {
   const lv = wholeLevel(level) || 1;
   const equipped = frameInfo(frame) ? frame : "";
   const art = (id) => `<span class="frame-pick-art">${id ? frameHtml(avatar, id, { size: "md", color }) : avatar}</span>`;
@@ -98,7 +98,7 @@ export function framePicksHtml({ level, prestige = 0, frame, avatar, color = "" 
   const tile = (f) => {
     const on = equipped === f.id;
     // A frame already worn stays wearable (it was free when it was picked).
-    const locked = !on && !frameOpen(f, lv, prestige);
+    const locked = !on && !frameOpen(f, lv, prestige, beta);
     return `<button type="button" class="frame-pick${on ? " on" : ""}${locked ? " locked" : ""}" ${
       locked ? `data-frame-locked="${f.id}" aria-disabled="true"` : `data-set-frame="${f.id}" aria-pressed="${on}"`
     }>${art(f.id)}<b>${f.name}</b>${locked ? `<small>${frameNeed(f)}</small>` : ""}</button>`;

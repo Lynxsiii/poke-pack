@@ -4512,6 +4512,7 @@ function lookTab(trainer, stats) {
         ${framePicksHtml({
           level: unlockOf(trainer),
           prestige: trainer.prestige || 0,
+          beta: Boolean(trainer.beta || cloudUser?.beta),
           frame: trainer.frame,
           color: avatarColor(trainer.color).hex,
           avatar: faceHtml({ ...trainer, online: false }, "md", { frame: false }),
@@ -8523,7 +8524,7 @@ els.accountBody.addEventListener("click", async (e) => {
   const lockedFrame = e.target.closest("[data-frame-locked]");
   if (lockedFrame) {
     const info = frameInfo(lockedFrame.dataset.frameLocked);
-    if (info) toast(`Reach ${frameNeed(info).toLowerCase()} to wear the ${info.name} frame.`);
+    if (info) toast(info.beta ? `The ${info.name} frame is for beta testers. Join in the casino with an invite code.` : `Reach ${frameNeed(info).toLowerCase()} to wear the ${info.name} frame.`);
     return;
   }
   const lockedMotion = e.target.closest("[data-motion-locked]");

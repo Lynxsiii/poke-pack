@@ -8,6 +8,7 @@ import { CASINO_DDL } from './casino-ddl.js';
 import { ensureSalesSchema, winningsInfo, sellWinnings } from './winnings.js';
 import { handleJackpots, maintainJackpots } from './jackpot.js';
 import { handleUpgrades } from './upgrader.js';
+import { handleBeta } from './beta.js';
 import { equippedCoinId } from './gear.js';
 import { ensureSlabsSchema, resetSlabsSchemaCache } from './casino-slabs.js';
 import { setForCard, stakeSlabView } from './grading.js';
@@ -378,6 +379,7 @@ export async function handleCasino(path, method, request, env, helpers) {
     await ensureCasinoSchema(env);
     // Views carry avatars: users.avatar_style comes from the social runtime schema.
     if (helpers.ensureSocialSchema) await helpers.ensureSocialSchema(env);
+    if (/^\/api\/casino\/beta(\/|$)/.test(path)) return await handleBeta(path, method, request, env, helpers);
     if (/^\/api\/casino\/upgrades(\/|$)/.test(path)) return await handleUpgrades(path, method, request, env, helpers, SHARED);
     if (/^\/api\/casino\/jackpots(\/|$)/.test(path)) return await handleJackpots(path, method, request, env, helpers, SHARED);
     if (/^\/api\/casino\/winnings(\/|$)/.test(path)) return await handleWinnings(path, method, request, env, helpers);
