@@ -1,5 +1,18 @@
 [
   {
+    "id": "2026-11-26-touch-ups",
+    "date": "2026-11-26",
+    "title": "Phone touch-ups",
+    "summary": "Small fixes for smaller iPhones and Safari.",
+    "items": [
+      "Grading: the cert lookup's Look up key no longer runs off the edge of smaller phones.",
+      "Casino: putting up cards on a short phone scrolls the whole sheet, so your cards get the room instead of a strip one row tall.",
+      "The menu shows a soft shade at its bottom edge when there are more pages to scroll to.",
+      "The Beta testing card in the Casino names the games that are actually in it.",
+      "The search box's hint fits on smaller phones."
+    ]
+  },
+  {
     "id": "2026-11-26-theme-decks-sm-swsh",
     "date": "2026-11-26",
     "title": "Sun and Moon and Sword and Shield theme decks",

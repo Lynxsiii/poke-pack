@@ -128,7 +128,7 @@ import { THEMES, canUseTheme, resolveLook } from "./themes.js?v=1";
 import { equippedCoin, gearItem, normalizeGear } from "./gear.js?v=2";
 import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=16";
 import { initBattles } from "./battles.js?v=10";
-import { initCasino } from "./casino.js?v=30";
+import { initCasino } from "./casino.js?v=31";
 import { coinOf } from "./coin.js?v=6";
 // grading
 import { initGrading, GRADING_ROUTE, CERT_ROUTE } from "./grading-page.js?v=19";
