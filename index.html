@@ -62,8 +62,8 @@
     <link rel="stylesheet" href="css/theme.css?v=28" />
     <link rel="stylesheet" href="css/counter.css?v=4" />
     <link rel="stylesheet" href="css/pages/home.css?v=12" />
-    <link rel="stylesheet" href="css/pages/packs.css?v=18" />
-    <link rel="stylesheet" href="css/pages/collection.css?v=18" />
+    <link rel="stylesheet" href="css/pages/packs.css?v=19" />
+    <link rel="stylesheet" href="css/pages/collection.css?v=19" />
     <!-- binder object (materials, hardware, plate): css/binder/ -->
     <link rel="stylesheet" href="css/binder/textures.css?v=3" />
     <link rel="stylesheet" href="css/binder/materials.css?v=3" />
@@ -280,15 +280,14 @@
       </a>
       <nav class="nav" aria-label="Sections">
         <a class="nav-btn active" href="/home" data-view="home"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-home"/></svg>Home</a>
-        <a class="nav-btn" href="/packs" data-view="shop">Packs</a>
+        <a class="nav-btn" href="/packs" data-view="catalog">Packs</a>
         <a class="nav-btn" href="/bulk" data-view="collection">Collection</a>
         <a class="nav-btn" href="/casino" data-view="casino">Casino</a>
         <details class="nav-more">
           <summary>More</summary>
           <div class="nav-more-list nav-menu">
           <button class="nav-btn tab-search" data-search-open type="button" aria-label="Search cards and products" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-search"/></svg>Search</button>
-          <a class="nav-btn nav-area" data-area="packs" href="/packs" data-view="shop"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-packs"/></svg>Packs</a>
-          <a class="nav-btn" href="/catalog" data-view="catalog"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-sets"/></svg>All sets</a>
+          <a class="nav-btn nav-area" data-area="packs" href="/packs" data-view="catalog"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-packs"/></svg>Packs</a>
           <a class="nav-btn" href="/cart" data-view="cart"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-cart"/></svg>Cart</a>
           <a class="nav-btn nav-area" data-area="coll" href="/bulk" data-view="collection"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-coll"/></svg>Collection</a>
           <a class="nav-btn" href="/binder" data-view="binder"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-binder"/></svg>Binder</a>
@@ -397,7 +396,7 @@
               <button class="solid rt-go hh-go" id="home-rip" type="button"><span class="hh-go-label" id="home-rip-label">Open a pack</span><span class="price hh-go-price" id="home-price"></span></button>
               <p class="hh-links">
                 <a class="tlink" id="home-choose" href="/packs">Pull rates and boxes</a>
-                <a class="tlink" id="home-all-sets" href="/catalog">All sets</a>
+                <a class="tlink" id="home-all-sets" href="/packs">All packs</a>
               </p>
             </div>
           </div>
@@ -436,9 +435,9 @@
       <section id="view-shop" class="hidden">
         <div class="set-notice hidden" id="set-notice" role="alert"></div>
         <!-- The set page (js/app.js renderShop): the sets as tabs, the set's logo, its wrappers, the booster pack, the odds, the chase cards, then the sealed product -->
-        <nav class="settabs" aria-label="Sets">
+        <nav class="settabs" aria-label="Sets of this era">
+          <a class="st st-all" id="shop-all-sets" href="/packs">All packs</a>
           <div class="settabs-row" id="shop-quick-sets"></div>
-          <a class="st st-all" id="shop-all-sets" href="/catalog">All sets</a>
         </nav>
         <div class="shop-top">
           <div class="sethead">
@@ -478,12 +477,8 @@
           </section>
           <div class="sealed-block promo-elsewhere hidden" id="promo-elsewhere"></div>
         </div>
-        <aside class="shop-rail" aria-labelledby="shop-rail-h">
-          <div class="shop-rail-head">
-            <h2 id="shop-rail-h">All expansions</h2>
-          </div>
-          <div class="set-switcher" id="set-switcher"></div>
-        </aside>
+        <section class="shop-box hidden" id="shop-box" aria-labelledby="shop-box-h"></section>
+        <nav class="shop-foot" id="shop-foot" aria-label="More packs"></nav>
       </section>
 
       <!-- The collection (js/app.js renderCollection): the Cards | Sealed | Binder strip, the title, the set's HUD box (the set name opens the set picker; the Found bar, the count, the worth), the show and rarity words, search and sort, then every card in a slot -->
@@ -559,9 +554,10 @@
       <section id="view-catalog" class="hidden">
         <div class="section-head">
           <div>
-            <h2>All sets</h2>
+            <h2>Packs</h2>
           </div>
         </div>
+        <div id="catalog-top"></div>
         <div id="catalog-eras"></div>
       </section>
 
@@ -720,7 +716,7 @@
         <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-home"/></svg>
         <span>Home</span>
       </a>
-      <a class="nav-btn" href="/packs" data-view="shop">
+      <a class="nav-btn" href="/packs" data-view="catalog">
         <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-packs"/></svg>
         <span>Packs</span>
       </a>
@@ -752,8 +748,7 @@
             <svg class="menu-me-go" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
           </a>
           <button class="nav-btn tab-search" id="search-open-tab" type="button" aria-label="Search cards and products" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-search"/></svg>Search</button>
-          <a class="nav-btn nav-area" data-area="packs" href="/packs" data-view="shop"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-packs"/></svg>Packs</a>
-          <a class="nav-btn" href="/catalog" data-view="catalog"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-sets"/></svg>All sets</a>
+          <a class="nav-btn nav-area" data-area="packs" href="/packs" data-view="catalog"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-packs"/></svg>Packs</a>
           <a class="nav-btn" href="/cart" data-view="cart"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-cart"/></svg>Cart</a>
           <a class="nav-btn nav-area" data-area="coll" href="/bulk" data-view="collection"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-coll"/></svg>Collection</a>
           <a class="nav-btn" href="/binder" data-view="binder"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-binder"/></svg>Binder</a>
@@ -793,7 +788,7 @@
       </nav>
     </footer>
     <script type="module" src="js/etch.js?v=1"></script>
-    <script type="module" src="js/app.js?v=329"></script>
+    <script type="module" src="js/app.js?v=330"></script>
     <script type="module" src="js/rotom.js?v=3"></script>
   </body>
 </html>
