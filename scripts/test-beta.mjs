@@ -197,7 +197,9 @@ assert.equal(prof.body.user?.beta ?? prof.body.profile?.beta ?? prof.body.beta, 
     const sum = t.cards.reduce((s, c) => s + c.odds, 0);
     assert.ok(Math.abs(sum - 1) < 1e-9);
     const ev = t.cards.reduce((s, c) => s + c.odds * c.price, 0);
-    assert.ok(ev <= t.price * 0.9 + 0.01, `${t.name} returns ${ev / t.price}`);
+    assert.ok(ev <= t.price * 0.95 + 0.01, `${t.name} returns ${ev / t.price}`);
+    assert.ok(t.back > 0.5 && t.back <= 0.95, `${t.name} says it returns ${t.back}`);
+    assert.ok(!t.sets, 'a tin never names its sets');
   }
   const tin = list.body.tins[0];
   const o = await call('/api/casino/beta/tins/open', 'POST', { tin: tin.id, price: tin.price, requestId: rid() }, ash.sid);
