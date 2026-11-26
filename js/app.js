@@ -129,7 +129,7 @@ import { THEMES, canUseTheme, resolveLook } from "./themes.js?v=1";
 import { equippedCoin, gearItem, normalizeGear } from "./gear.js?v=2";
 import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=15";
 import { initBattles } from "./battles.js?v=10";
-import { initCasino } from "./casino.js?v=21";
+import { initCasino } from "./casino.js?v=23";
 import { coinOf } from "./coin.js?v=5";
 // grading
 import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=16";
@@ -145,7 +145,8 @@ import { startTour, maybeStartTour } from "./tour.js?v=3";
 import { initVault } from "./vault-page.js?v=9";
 import { initBatchOpen } from "./batch-open.js?v=6";
 import { cartEligible } from "./orders-rules.js?v=1";
-import { initSearch } from "./search.js?v=5";
+import { initSearch } from "./search.js?v=6";
+import { initWishlist } from "./wishlist.js?v=1";
 import { createShareSheet, pullUrl } from "./share-pull.js?v=3";
 // binder looks: the /binder cover, the customiser and the owner's look on a profile
 import { binderObjectHtml, applyBinderLook } from "./binder-object.js";
@@ -229,6 +230,7 @@ function applyCloudSave(save) {
   state.gear = normalizeGear(save.gear);
   state.graded = Array.isArray(save.graded) ? save.graded : []; // grading: slabs ride along with the save
   state.vaultKept = Math.max(0, Math.floor(Number(save.vaultKept) || 0)); // kept sealed product (total)
+  wishlist?.adopt(save); // hearted cards (js/wishlist.js)
   if (save.createdAt) state.createdAt = save.createdAt;
   if (save.activeSetId) state.activeSetId = save.activeSetId;
   setPersistProgress(true);
@@ -258,6 +260,7 @@ function wipeProgressMemory() {
   state.gear = normalizeGear(null);
   state.graded = []; // grading
   state.vaultKept = 0;
+  wishlist?.reset(); // the account's hearts leave with it; this browser's come back
   // Screen memory belongs to the account that is gone: a secret revealed for one
   // trainer must not stay revealed for the next.
   achFilter = "all";
@@ -425,6 +428,7 @@ const els = {
   viewBattles: document.getElementById("view-battles"),
   viewGear: document.getElementById("view-gear"),
   viewTcg: document.getElementById("view-tcg"),
+  viewWishlist: document.getElementById("view-wishlist"),
   viewCasino: document.getElementById("view-casino"),
   viewGrading: document.getElementById("view-grading"), // grading
   viewTrades: document.getElementById("view-trades"), // trades
@@ -510,6 +514,56 @@ const els = {
   inspectClose: document.getElementById("inspect-close"),
   toast: document.getElementById("toast"),
 };
+
+/* ---- Wishlist (js/wishlist.js): hearted cards and the /wishlist page ---- */
+
+/** promo card id -> [{ setId, name }] of the products that hold it, rebuilt when the product list changes. */
+let promoHomes = null;
+let promoHomesOf = null;
+function productsHolding(cardId) {
+  if (promoHomesOf !== productList) {
+    promoHomes = new Map();
+    promoHomesOf = productList;
+    for (const [setId, items] of Object.entries(productList || {})) {
+      if (!Array.isArray(items) || !PLAYABLE_SETS.some((set) => set.id === setId)) continue;
+      for (const item of items) {
+        for (const id of Array.isArray(item?.promos) ? item.promos : []) {
+          if (!promoHomes.has(id)) promoHomes.set(id, []);
+          if (!promoHomes.get(id).some((p) => p.name === item.name)) promoHomes.get(id).push({ setId, name: String(item.name || "") });
+        }
+      }
+    }
+  }
+  return promoHomes.get(cardId) || [];
+}
+
+/** Where a card on the wishlist comes from: the products that hold it, else its set's packs. */
+function wishSource(entry) {
+  const products = productsHolding(entry.id);
+  if (products.length) return { kind: "product", setId: products[0].setId, products: products.map((p) => p.name) };
+  const set = PLAYABLE_SETS.find((item) => item.id === entry.dataSetId) || PLAYABLE_SETS.find((item) => item.id === entry.setId);
+  if (set?.wrappers?.length) return { kind: "pack", setId: set.id, products: [] };
+  return { kind: "none", setId: "", products: [] };
+}
+
+const wishlist = initWishlist({
+  root: document.getElementById("view-wishlist"),
+  api,
+  signedIn: () => Boolean(activeTrainer()),
+  openAuth: (mode) => openAuth(mode),
+  openSearch: () => siteSearch.open(),
+  toast: (msg) => toast(msg),
+  owned: (id) => ownedQty(id),
+  openCard: (card) => openIndexedCard(card),
+  openShop: async (setId) => {
+    if (await activateSet(setId)) setView("shop");
+  },
+  sourceOf: wishSource,
+  setInfo: (id) => {
+    const set = ALL_SETS.find((item) => item.id === id);
+    return set ? { name: kitOf(set)?.name || set.name, symbol: setIdentity(set).symbol } : null;
+  },
+});
 
 /*
  * Both overlays are real dialogs now. `inert` takes everything underneath out
@@ -1729,7 +1783,14 @@ function centerQuickSet(id = "shop-quick-sets") {
   const row = document.getElementById(id);
   const on = row?.querySelector(".st.active");
   if (!on || !row.clientWidth) return;
-  row.scrollLeft = on.offsetLeft - (row.clientWidth - on.offsetWidth) / 2;
+  // Centre it in the part of the row that shows: a pinned (sticky) All packs link at the
+  // front covers the left of the row, and offsetLeft can be measured from another parent.
+  const first = row.firstElementChild;
+  const pin = first && first !== on && getComputedStyle(first).position === "sticky" ? first.getBoundingClientRect().width : 0;
+  const box = row.getBoundingClientRect();
+  const at = on.getBoundingClientRect().left - box.left + row.scrollLeft;
+  const room = row.clientWidth - pin;
+  row.scrollLeft = Math.max(0, at - pin - Math.max(0, (room - on.offsetWidth) / 2));
 }
 
 /** Sets whose price history has loaded for the shop's trend buttons. */
@@ -2512,8 +2573,9 @@ function renderCollection({ refreshSets = true } = {}) {
     }
     return true;
   });
-  const showCounts = { all: base.length, owned: 0, missing: 0, dupes: 0 };
+  const showCounts = { all: base.length, owned: 0, missing: 0, dupes: 0, wish: 0 };
   for (const card of base) {
+    if (wishlist.has(card.id)) showCounts.wish += 1;
     if (ownedQty(card.id) > 0) showCounts.owned += 1;
     else showCounts.missing += 1;
     if (rawQty(card.id) > 1) showCounts.dupes += 1;
@@ -2526,8 +2588,9 @@ function renderCollection({ refreshSets = true } = {}) {
       ["owned", "Owned"],
       ["missing", "Missing"],
       ["dupes", "Spares"],
+      ["wish", "Wishlist"],
     ]
-      .filter(([key]) => key !== "dupes" || showCounts.dupes > 0 || ownedMode === "dupes")
+      .filter(([key]) => (key !== "dupes" && key !== "wish") || showCounts[key] > 0 || ownedMode === key)
       .map(([key, label]) => collWord("data-owned", key, label, showCounts[key], ownedMode === key))
       .join("");
     if (collShownOwned && collShownOwned !== ownedMode) els.ownedFilter.querySelector('[aria-pressed="true"]')?.classList.add("is-pick");
@@ -2539,6 +2602,7 @@ function renderCollection({ refreshSets = true } = {}) {
     if (ownedMode === "owned" && count < 1) return false;
     if (ownedMode === "missing" && count > 0) return false;
     if (ownedMode === "dupes" && rawQty(card.id) < 2) return false;
+    if (ownedMode === "wish" && !wishlist.has(card.id)) return false;
     return true;
   });
   if (sortBy === "value") {
@@ -2583,6 +2647,8 @@ function renderCollection({ refreshSets = true } = {}) {
           ? "You have every one of these. Nice."
           : ownedMode === "dupes"
             ? "No spares here."
+            : ownedMode === "wish"
+              ? "Nothing from this set is on your wishlist."
             : "No cards match.";
     grid.innerHTML = `<div class="bulk-empty rt-empty">
       <i class="coll-ball" aria-hidden="true"></i>
@@ -2611,8 +2677,10 @@ function renderCollection({ refreshSets = true } = {}) {
       const value = missing
         ? `<span class="slot-vl is-miss">Missing</span>`
         : `<span class="slot-vl">${coin(sellValue(card))}<span class="sr-only"> coins</span></span>`;
+      // The heart sits on every card you're still missing, and on any card already hearted.
+      const wish = missing || wishlist.has(card.id) ? wishlist.heart(card.id, card.name, { cls: "slot-wish" }) : "";
       return `<article class="cslot bulk-card${missing ? " missing" : ""}${card.id === foundCardId ? " is-found" : ""}"${i < 12 ? ` style="--i:${i}"` : ""}>
-        <div class="slot-art">${art}</div>
+        <div class="slot-art">${art}${wish}</div>
         <p class="slot-meta"><span class="slot-no">${esc(no)}<span class="slot-mark" title="${esc(rarityLine(card))}">${rarityIcons(card.printedRarity || card.rarity)}</span></span>${value}</p>
       </article>`;
     })
@@ -5516,6 +5584,7 @@ const VIEW_SECTIONS = {
   battles: "viewBattles",
   gear: "viewGear",
   tcg: "viewTcg",
+  wishlist: "viewWishlist",
   casino: "viewCasino",
   grading: "viewGrading", // grading
   trades: "viewTrades", // trades
@@ -5539,6 +5608,7 @@ const VIEW_PATHS = {
   battles: "/battles",
   gear: "/gear",
   tcg: "/play",
+  wishlist: "/wishlist",
   casino: "/casino",
   grading: "/grading", // grading
   trades: "/trades", // trades
@@ -5565,6 +5635,9 @@ const PATH_VIEWS = {
   "/gear": "gear",
   "/sleeves": "gear",
   "/coins": "gear",
+  "/wishlist": "wishlist",
+  "/favourites": "wishlist",
+  "/favorites": "wishlist",
   "/casino": "casino",
   "/grading": "grading", // grading
   "/cart": "cart",
@@ -5598,6 +5671,7 @@ const VIEW_TITLES = {
   battles: "Pack battles | poke-pack.rip",
   gear: "Sleeves & coins | poke-pack.rip",
   tcg: "Play | poke-pack.rip",
+  wishlist: "Wishlist | poke-pack.rip",
   casino: "Casino | poke-pack.rip",
   grading: "Grading | poke-pack.rip", // grading
   trades: "Trades | poke-pack.rip", // trades
@@ -5624,6 +5698,10 @@ const VIEW_RENDER = {
   battles: () => battles.show(battlePath),
   gear: () => gearPage.show(),
   tcg: () => showTcg(),
+  wishlist: async () => {
+    if (!Object.keys(productList).length) await loadSealedPrices();
+    wishlist.show();
+  },
   casino: () => casino.show(casinoPath),
   grading: () => grading.show(gradingPath), // grading
   trades: () => trades.show(tradesPath), // trades
@@ -6904,7 +6982,7 @@ function pullsPageHtml(best) {
     : activeWrapper?.name
       ? `${activeWrapper.name} wrapper`
       : "";
-  const sub = [set.name, wrap, `${currentPulls.length} cards`, fresh ? `${fresh} new` : ""].filter(Boolean).join(", ");
+  const sub = [set.name, wrap, `${currentPulls.length} card${currentPulls.length === 1 ? "" : "s"}`, fresh ? `${fresh} new` : ""].filter(Boolean).join(", ");
   const view = pullsView();
   const spots = pileSpots(currentPulls, best);
   return `<div class="pulls-page">
@@ -8136,7 +8214,7 @@ function openInspect(id, reverse = false, reverseKind = "") {
     ${TILT_CAPABLE && !tiltLive && !state.settings.lite && els.inspectArt.querySelector(".foil") && !els.inspectArt.querySelector(".tcg.foil-none:not(.reverse)") ? `<p class="inspect-tilt"><button type="button" class="inspect-link" data-inspect-tilt>Tilt your phone to move the light</button></p>` : ""}
     <p class="inspect-set"><button type="button" class="inspect-set-link" data-inspect-set="${esc(card.id)}" aria-label="Show ${esc(card.name)} in ${esc(set.name)}"><img class="inspect-set-symbol" src="${esc(setIdentity(set).symbol)}" alt="" width="24" height="24" decoding="async" /><span>${esc(set.name)}</span></button></p>
     <h2 id="inspect-title">${esc(card.name)}</h2>
-    <p class="inspect-line"><span class="rt-type" data-ty="${pullTy(card)}">${esc(rarityLine(card))}</span>${rest ? `<span>${esc(rest)}</span>` : ""}</p>
+    <p class="inspect-line"><span class="rt-type" data-ty="${pullTy(card)}">${esc(rarityLine(card))}</span>${rest ? `<span>${esc(rest)}</span>` : ""}${wishlist.heart(card.id, card.name, { word: true, cls: "inspect-wish" })}</p>
     <div class="inspect-worth"><small>Worth</small><b class="price">${coinAmount(sellValue(card))}</b></div>
     <div id="inspect-sell"></div>
     <div class="price-card" id="inspect-chart"></div>
@@ -10868,24 +10946,27 @@ async function openSharedPull(cardId) {
   return true;
 }
 
+/** Open a card from the search index (search, the wishlist): the inspector looks a card up by id, so its set loads first. */
+async function openIndexedCard({ id, setId }) {
+  try {
+    const set = getSet(setId);
+    if (set.id !== setId) throw new Error("unknown set");
+    await loadSetData(set);
+    if (!findCard(id)) throw new Error("missing card");
+    openInspect(id);
+  } catch {
+    toast("Couldn't open that card.");
+  }
+}
+
 const siteSearch = initSearch({
   root: document.getElementById("site-search"),
   opener: [document.getElementById("search-open"), document.getElementById("search-open-tab")].filter(Boolean),
   openDialog,
   closeDialog,
   sealedItems: searchSealedItems,
-  // The inspector looks a card up by id, so the card's set has to be loaded first.
-  openCard: async ({ id, setId }) => {
-    try {
-      const set = getSet(setId);
-      if (set.id !== setId) throw new Error("unknown set");
-      await loadSetData(set);
-      if (!findCard(id)) throw new Error("missing card");
-      openInspect(id);
-    } catch {
-      toast("Couldn't open that card.");
-    }
-  },
+  openCard: openIndexedCard,
+  heart: (id, name) => wishlist.heart(id, name),
   openShop: async (setId) => {
     if (await activateSet(setId)) setView("shop");
   },

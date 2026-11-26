@@ -65,6 +65,7 @@ import { applyRestores } from "./restores.js";
 import { handleInteraction } from "./discord-commands.js";
 import { handleTrades } from "./trades.js";
 import { seoResponse } from "./seo.js";
+import { handleWishlist, wishlistFor } from "./wishlist.js";
 import { DISCORD_URL, ensureFeedSchema, flushFeed, postNewPatchNotes, pullFeedStmts, sharesFeed } from "./discord.js";
 import { claimLevels, clearXpStmts, ensureXpSchema, loadXpCounters, prestigeUp, readXpRow, syncXp } from "./xp.js";
 import { hourlyBonus } from "../js/levels.js";
@@ -322,6 +323,8 @@ export async function handleApi(request, env, url) {
 
   const gear = await handleGear(path, method, request, env, { json, requireUser, readJson, loadSave });
   if (gear) return gear;
+  const wish = await handleWishlist(path, method, request, env, { json, requireUser, readJson, findCatalogCard });
+  if (wish) return wish;
 
   await ensureSocialSchema(env);
   if (path.startsWith("/api/rankings")) {
@@ -1381,7 +1384,7 @@ async function loadSave(env, userId) {
   await ensureQuestSchema(env);
   // Independent reads, run together: this is called on every rip.
   // Battle results are folded into the counters here, at read time (no triggers).
-  const [profile, inventory, historyRows, counters, setPacks, friends, xpRow] = await Promise.all([
+  const [profile, inventory, historyRows, counters, setPacks, friends, xpRow, wishlist] = await Promise.all([
     env.DB.prepare("SELECT * FROM profiles WHERE user_id = ?").bind(userId).first(),
     inventoryMap(env, userId),
     env.DB.prepare(
@@ -1399,6 +1402,7 @@ async function loadSave(env, userId) {
     setPacksFor(env, userId),
     friendsCount(env, userId),
     readXpRow(env, userId),
+    wishlistFor(env, userId),
   ]);
   if (!profile) fail("Missing profile.", 500);
   const { collection, reverses } = inventory;
@@ -1434,6 +1438,8 @@ async function loadSave(env, userId) {
     activeSetId: profile.active_set_id || DEFAULT_SET_ID,
     createdAt: profile.created_at,
     binder: normalizeBinder(parseJson(profile.binder, emptyBinder())),
+    // Hearted cards, newest first (worker/wishlist.js). Kept through a progress reset.
+    wishlist,
     worthLog: Array.isArray(parseJson(profile.worth_log, [])) ? parseJson(profile.worth_log, []).slice(-200) : [],
   };
   // XP is worked out from the finished save (slabs and all), then kept as a high-water mark.

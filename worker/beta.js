@@ -8,7 +8,7 @@ import { gateResponse } from './gates.js';
 /* BETA TESTING (/api/casino/beta/...): invite codes, the tester flag, and five games against the house.
 
    Joining: Noah (BETA_ADMINS, or the Worker var BETA_ADMINS) makes codes; a player enters one once and becomes a beta tester
-   (users.beta = 1). Testers get the beta badge, the Beta Tester frame and the games below. Only code holders can play, the owner included (Noah, 2026-11-26: "games be locked to code holders").
+   (users.beta = 1). Testers get the beta badge, the Beta Tester frame and the games below. Only code holders can play (Noah, 2026-11-26: "games be locked to code holders"); the owner is let in automatically.
 
    Every game is play coins only. The coins move in one D1 batch with the game row: the stake comes off only when the wallet
    has it, the row is written only when the stake came off, and a payout is credited only while the row is still open, then
@@ -254,7 +254,7 @@ async function viewHigher(env, helpers, request, row) {
   const { above, below } = hlCounts(d.pool, cur[1]);
   const done = row.state !== 'open';
   return { id: row.id, game: 'higher', state: row.state, stake: coins(row.stake), set: set ? { id: set.id, name: set.name } : null,
-    shown: d.shown.map(brief), last: d.last ? brief(d.last) : null, mult: done ? row.mult : d.mult, guesses: d.shown.length - 1,
+    shown: d.shown.map(brief), last: d.last ? brief(d.last) : null, mult: done ? row.mult : d.mult, guesses: d.right ?? d.shown.length - 1, // shown keeps the last 12 cards only
     pays: done ? null : { higher: guessMultiplier(above, below, 'higher'), lower: guessMultiplier(above, below, 'lower') },
     odds: done ? null : { above, below }, payout: coins(row.payout), createdAt: row.created_at };
 }
@@ -303,7 +303,7 @@ async function higher(env, helpers, user, action, body, method, request) {
     } else {
       const mult = Math.floor(d.mult * pays * 100 + 1e-9) / 100;
       const shown = [...d.shown, next].slice(-12);
-      const data = JSON.stringify({ ...d, shown, mult });
+      const data = JSON.stringify({ ...d, shown, mult, right: (d.right ?? d.shown.length - 1) + 1 });
       const pay = payoutCents(run.stake, mult);
       if (pay >= BETA_RULES.maxWin * 100) await env.DB.batch(cashOut(env, run, 'cashed', pay, mult, data, now));
       else await env.DB.prepare("UPDATE beta_runs SET data = ? WHERE id = ? AND state = 'open' AND data = ?").bind(data, run.id, run.data).run();
@@ -343,7 +343,7 @@ export async function loadTins(env, helpers, request) {
     let ev = 0;
     for (const c of cards) { c.odds = tinWeight(c.cents) / total; ev += c.odds * c.cents; }
     cards.sort((a, b) => b.cents - a.cents);
-    out.push({ id: tin.id, name: tin.name, price: Math.max(100, Math.ceil(ev / BETA_RULES.tinEdge)), cards });
+    out.push({ id: tin.id, name: tin.name, line: tin.line || '', color: tin.color || '', price: Math.max(100, Math.ceil(ev / BETA_RULES.tinEdge)), cards });
   }
   tinCache = { at: Date.now(), tins: out };
   return out;
@@ -353,7 +353,7 @@ const viewTinRun = (row) => {
   const d = parse(row.data) || {};
   return { id: row.id, game: 'tins', tin: d.tin, tinName: d.tinName, card: d.card, price: coins(row.stake), createdAt: row.created_at };
 };
-const publicTin = (t) => ({ id: t.id, name: t.name, price: coins(t.price), cards: t.cards.map(({ cents, ...c }) => c) });
+const publicTin = (t) => ({ id: t.id, name: t.name, line: t.line, color: t.color, price: coins(t.price), cards: t.cards.map(({ cents, ...c }) => c) });
 async function tins(env, helpers, user, action, body, method, request) {
   const list = await loadTins(env, helpers, request);
   if (method === 'GET') return helpers.json({ tins: list.map(publicTin), recent: (await recent(env, user.id, 'tins')).map(viewTinRun), serverNow: Date.now() });
@@ -476,6 +476,14 @@ export async function handleBeta(path, method, request, env, helpers) {
       if (!body) error('Expected JSON.');
     } else if (method !== 'GET') error('Not found.', 404);
     const admin = isBetaAdmin(env, user);
+    // The owner always has the beta (Noah, 2026-11-26: he could not get in with a code as @polar): joined once, with the badge and frame.
+    if (admin && !isMember(user)) {
+      await env.DB.batch([
+        env.DB.prepare("INSERT OR IGNORE INTO beta_members (user_id, code, joined_at) VALUES (?, 'OWNER', ?)").bind(user.id, Date.now()),
+        env.DB.prepare('UPDATE users SET beta = 1 WHERE id = ?').bind(user.id),
+      ]);
+      user.beta = 1;
+    }
 
     if (!part) {
       if (method !== 'GET') error('Not found.', 404);

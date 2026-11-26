@@ -1,5 +1,42 @@
 [
   {
+    "id": "2026-11-26-mystery-tins",
+    "date": "2026-11-26",
+    "title": "Mystery Tins get real tins, and six more",
+    "summary": "Every Mystery Tin is now drawn as its own painted tin, and opening one is a proper moment: the tin shakes, the lid pops off, the cards spin past and your card rises out on a slab.",
+    "items": [
+      "Six new tins: Gengar, Mew and Mewtwo, Dragon, Legendary birds, Kanto starters, and Umbreon and Darkrai. That makes ten.",
+      "A big hit, worth three times what the tin cost or more, gets a yellow slab and name plate.",
+      "Open another tin straight from the reveal.",
+      "Every tin still lists all its cards and their odds. Tins are in Beta testing, for invited testers."
+    ]
+  },
+  {
+    "id": "2026-11-26-packs-fixes",
+    "date": "2026-11-26",
+    "title": "Packs page fixes",
+    "summary": "Sets inside each era are in release order, and the set strip shows the set you're on in full.",
+    "items": [
+      "Scarlet & Violet sets were out of order on the Packs page (151, Shrouded Fable and Stellar Crown sat among the wrong neighbours). Every era now runs newest first, and the McDonald's and other special packs do too.",
+      "On a set or kit page the strip at the top no longer cuts off the name of the set you're on, and fades at its edges instead of clipping.",
+      "A one-card pouch says 1 card, not 1 cards.",
+      "BETA Higher or Lower: a run past 11 right guesses keeps counting them. The payout was always right."
+    ]
+  },
+  {
+    "id": "2026-11-26-wishlist",
+    "date": "2026-11-26",
+    "title": "Card wishlist",
+    "summary": "Heart any card, owned or not, and the new Wishlist page lists them by set with the pack or product each one comes from, so you know what to rip.",
+    "items": [
+      "Tap the heart on a card's page, on any missing card in a set, or beside a card in search.",
+      "Wishlist, under Binder in the menu, groups your cards by set. Each one says whether it comes from that set's packs or from a box or collection, and the set has an Open a pack key.",
+      "Still hunting and Got it split the cards you're missing from the ones you've pulled since.",
+      "A set's page in Collection gets a Wishlist filter once one of its cards is hearted.",
+      "Your wishlist is saved on your account. Hearts you give before signing in move onto it when you sign in."
+    ]
+  },
+  {
     "id": "2026-11-26-level-battle-rewards",
     "date": "2026-11-26",
     "title": "Level coins and bot battles rebalanced",

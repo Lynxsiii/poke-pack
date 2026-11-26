@@ -89,11 +89,19 @@ export function guessMultiplier(above, below, dir) {
 
 // ---- Mystery Tins -------------------------------------------------------------
 /** Each tin: a name, the sets it draws from, and which cards count (by name, or by rarity). */
+const POP_SETS = ["sv3pt5", "sv4pt5", "sv3", "sv8", "sv8pt5", "sv10", "sv6pt5", "me1", "me2", "swsh7", "swsh9", "swsh11", "swsh12pt5", "cel25", "sm115", "sm12", "xy12"];
+/** Each tin: a name, a line, its colour (the tin's paint, art only), the sets it draws from, and which cards count (by name, or by rarity). */
 export const TINS = [
-  { id: "eevee", name: "Eeveelution tin", sets: ["sv8pt5"], names: /\b(eevee|vaporeon|jolteon|flareon|espeon|umbreon|leafeon|glaceon|sylveon)\b/i },
-  { id: "charizard", name: "Charizard tin", sets: ["sv3", "sv3pt5", "sv4pt5", "sv10", "swsh12pt5", "cel25", "sm115", "xy12"], names: /\b(charmander|charmeleon|charizard)\b/i },
-  { id: "pikachu", name: "Pikachu tin", sets: ["sv8", "me55", "sv3pt5", "cel25", "swsh12pt5", "sv4pt5"], names: /\bpikachu\b/i },
-  { id: "kanto", name: "151 hits tin", sets: ["sv3pt5"], hitsOnly: true },
+  { id: "eevee", name: "Eeveelution tin", line: "Eevee and all eight evolutions.", color: "#c98a4b", sets: ["sv8pt5"], names: /\b(eevee|vaporeon|jolteon|flareon|espeon|umbreon|leafeon|glaceon|sylveon)\b/i },
+  { id: "charizard", name: "Charizard tin", line: "The whole Charmander line.", color: "#e8622c", sets: ["sv3", "sv3pt5", "sv4pt5", "sv10", "swsh12pt5", "cel25", "sm115", "xy12"], names: /\b(charmander|charmeleon|charizard)\b/i },
+  { id: "pikachu", name: "Pikachu tin", line: "Pikachu from six sets.", color: "#f2c418", sets: ["sv8", "me55", "sv3pt5", "cel25", "swsh12pt5", "sv4pt5"], names: /\bpikachu\b/i },
+  { id: "kanto", name: "151 hits tin", line: "Only the rare pulls from 151.", color: "#d23b3b", sets: ["sv3pt5"], hitsOnly: true },
+  { id: "gengar", name: "Gengar tin", line: "Gastly, Haunter and Gengar.", color: "#6b4fb3", sets: POP_SETS, names: /\b(gastly|haunter|gengar)\b/i },
+  { id: "mew", name: "Mew and Mewtwo tin", line: "The two psychic legends.", color: "#e58fbf", sets: POP_SETS, names: /\b(mew|mewtwo)\b/i },
+  { id: "dragons", name: "Dragon tin", line: "Rayquaza, Dragonite, Giratina and more.", color: "#2f8a5e", sets: POP_SETS, names: /\b(rayquaza|dragonite|garchomp|salamence|dragapult|giratina|latias|latios)\b/i },
+  { id: "birds", name: "Legendary birds tin", line: "Articuno, Zapdos and Moltres.", color: "#3f7fd0", sets: POP_SETS, names: /\b(articuno|zapdos|moltres)\b/i },
+  { id: "starters", name: "Kanto starters tin", line: "Bulbasaur and Squirtle lines.", color: "#3aa6a0", sets: POP_SETS, names: /\b(bulbasaur|ivysaur|venusaur|squirtle|wartortle|blastoise)\b/i },
+  { id: "night", name: "Umbreon and Darkrai tin", line: "Dark types after midnight.", color: "#2b3046", sets: POP_SETS, names: /\b(umbreon|darkrai|zoroark|tyranitar)\b/i },
 ];
 /** A card's weight in a tin: cheaper cards come up more often, but a big hit is never out of reach. */
 export const tinWeight = (cents) => 1 / Math.pow(Math.max(1, cents), 0.7);
