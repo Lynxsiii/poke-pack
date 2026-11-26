@@ -13,6 +13,7 @@
 .tg-en[data-en="Lightning"] { --en: #ffd83a; } .tg-en[data-en="Psychic"] { --en: #b77bd6; } .tg-en[data-en="Fighting"] { --en: #d68a52; }
 .tg-en[data-en="Darkness"] { --en: #5a6b7a; color: var(--w0); } .tg-en[data-en="Metal"] { --en: #aab6be; }
 .tg-en[data-en="Fairy"] { --en: #f19ac6; } .tg-en[data-en="Dragon"] { --en: #c9ad4b; }
+.tg-en[data-en="Any"] { background: conic-gradient(from 30deg, #f47a45, #ffd83a, #6cc35f, #55aaf0, #b77bd6, #f47a45); }
 .tg-pips { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 2px; }
 .tg-pips small { color: var(--k-3); font: 600 12px var(--font-h); }
 

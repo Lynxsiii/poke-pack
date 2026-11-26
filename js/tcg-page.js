@@ -32,7 +32,7 @@ import { coinStageHTML, flipCoin } from "./coin.js?v=5";
 const ME = 0;
 const BOT = 1;
 const BOT_NAME = "House bot";
-const EN_CODE = { Grass: "G", Fire: "R", Water: "W", Lightning: "L", Psychic: "P", Fighting: "F", Darkness: "D", Metal: "M", Fairy: "Y", Dragon: "N", Colorless: "C" };
+const EN_CODE = { Any: "★", Grass: "G", Fire: "R", Water: "W", Lightning: "L", Psychic: "P", Fighting: "F", Darkness: "D", Metal: "M", Fairy: "Y", Dragon: "N", Colorless: "C" };
 
 const COND_NAME = { asleep: "Asleep", burned: "Burned", confused: "Confused", paralyzed: "Paralyzed", poisoned: "Poisoned" };
 
@@ -119,7 +119,12 @@ export function initTcg(deps) {
 
   /* ---------- small parts ---------- */
 
-  const pip = (type) => `<i class="tg-en" data-en="${esc(type)}" title="${esc(type)}">${EN_CODE[type] || "?"}</i>`;
+  // "Any" is every type at once (Rainbow Energy); "Fire|Water" is one of those, one at a time.
+  const pip = (type) => {
+    const one = type.includes("|") ? "Any" : type;
+    const title = type === "Any" ? "Any type" : type.split("|").join(" or ");
+    return `<i class="tg-en" data-en="${esc(one)}" title="${esc(title)}">${EN_CODE[one] || "?"}</i>`;
+  };
   const pips = (types) => types.map(pip).join("");
   const stageName = (def) => (def.stage === "basic" ? "Basic" : `Evolves from ${def.evolvesFrom}`);
 
@@ -137,7 +142,7 @@ export function initTcg(deps) {
     const seen = new Set();
     for (const id of Object.keys(deck.cards)) {
       const def = defs(id);
-      if (def?.kind === "energy") def.provides.forEach((t) => seen.add(t));
+      if (def?.kind === "energy" && def.basic) def.provides.forEach((t) => seen.add(t));
     }
     return [...seen];
   }
@@ -243,13 +248,14 @@ export function initTcg(deps) {
     const ids = new Set([...Object.keys(have).filter((id) => have[id] > 0), ...Object.keys(deck.cards)]);
     for (const id of ids) {
       const def = defs(id);
-      if (!def || (def.kind !== "pokemon" && def.kind !== "trainer") || !def.playable) continue;
+      // Pokémon, Trainers and Special Energy come from the collection; basic Energy has its own box.
+      if (!def || !def.playable || (def.kind !== "pokemon" && def.kind !== "trainer" && !(def.kind === "energy" && !def.basic))) continue;
       if (editor.tab === "deck" && !deck.cards[id]) continue;
       if (editor.type && !(def.types || []).includes(editor.type)) continue;
       if (q && !def.name.toLowerCase().includes(q)) continue;
       rows.push({ id, def, owned: have[id] || 0, inDeck: deck.cards[id] || 0 });
     }
-    const typeAt = (def) => (def.kind === "trainer" ? 100 : ENERGY_TYPES.indexOf(def.types[0]) + 1 || 99);
+    const typeAt = (def) => (def.kind === "energy" ? 101 : def.kind === "trainer" ? 100 : ENERGY_TYPES.indexOf(def.types[0]) + 1 || 99);
     rows.sort((a, b) => typeAt(a.def) - typeAt(b.def) || a.def.name.localeCompare(b.def.name) || a.id.localeCompare(b.id));
     return rows;
   }
@@ -271,7 +277,7 @@ export function initTcg(deps) {
         ${row.inDeck ? `<span class="tg-tile-n">${row.inDeck}</span>` : ""}
       </button>
       <b class="tg-tile-name">${esc(def.name)}</b>
-      <span class="tg-tile-meta">${def.kind === "trainer" ? (def.sub === "supporter" ? "Supporter" : def.sub === "tool" ? "Tool" : def.sub === "stadium" ? "Stadium" : "Item") : `${def.stage === "basic" ? "Basic" : "Evolution"}, ${def.hp} HP`}</span>
+      <span class="tg-tile-meta">${def.kind === "energy" ? "Special Energy" : def.kind === "trainer" ? (def.sub === "supporter" ? "Supporter" : def.sub === "tool" ? "Tool" : def.sub === "stadium" ? "Stadium" : "Item") : `${def.stage === "basic" ? "Basic" : "Evolution"}, ${def.hp} HP`}</span>
       ${stepHtml(id, row.inDeck, room, def.name, `of ${row.owned}`)}
     </div>`;
   }
@@ -282,7 +288,7 @@ export function initTcg(deps) {
     // Energy prints the player owns sit in decks made before; they still count.
     for (const [id, n] of Object.entries(deck.cards)) {
       const def = defs(id);
-      if (def?.kind === "energy" && !isFreeEnergy(id)) rows.push({ id, type: def.provides[0], n, ownedPrint: have[id] || 0 });
+      if (def?.kind === "energy" && def.basic && !isFreeEnergy(id)) rows.push({ id, type: def.provides[0], n, ownedPrint: have[id] || 0 });
     }
     return `<div class="rt-box tg-energy">
       <h3>Basic Energy <small>free, as many as you need</small></h3>
@@ -581,6 +587,16 @@ export function initTcg(deps) {
         const asked = d(slotOf(ME, waiting.spots[0]).uid);
         return { text: `Use ${asked.name}'s ${asked.ability.name}?`, keys: `<button type="button" class="solid sm" data-act="ability-yes">Use it</button><button type="button" class="ghost sm" data-act="pick-skip">Not now</button>` };
       }
+      const fx = waiting.effect;
+      const moving = {
+        moveEnergyFrom: () => `Choose the Pokémon to move ${fx.type ? `a ${fx.type}` : "an"} Energy from.`,
+        moveEnergyTo: () => `Choose the Pokémon that gets the ${d(fx.uid)?.name || "Energy"}.`,
+        moveCountersFrom: () => "Choose the Pokémon to move damage counters from.",
+        moveCountersTo: () => `Choose ${whose === "your" ? "another of your" : "one of their"} Pokémon to take the damage counters.`,
+        attachHeld: () => `Choose the Pokémon that gets ${fx.uids.length > 1 ? "the Energy" : `the ${d(fx.uids[0])?.name || "Energy"}`}.`,
+      }[op]?.();
+      if (moving) return { text: moving, keys: "" };
+      if (op === "switch" && waiting.side === ME && waiting.player === ME && state.current !== ME) return { text: "Your Active Pokémon is pushed out. Choose the Benched Pokémon that comes in.", keys: "" };
       const text = op === "attachFrom" ? `Choose the Pokémon that gets the ${d(waiting.effect.uid).name}.` : op === "switch" ? (waiting.side === ME ? "Choose the Benched Pokémon that comes in." : "Choose which of their Benched Pokémon to pull forward.") : op === "heal" ? `Choose one of your Pokémon to heal ${waiting.effect.n}.` : op === "discardEnergy" ? `Choose one of ${whose} Pokémon to lose an Energy.` : `Choose ${waiting.side === ME ? "one of your" : "one of their"} Pokémon for ${waiting.effect.n} damage${waiting.left > 1 ? ` (${waiting.left} to choose)` : ""}.`;
       return { text, keys: waiting.optional ? `<button type="button" class="ghost sm" data-act="pick-skip">Stay in</button>` : "" };
     }
@@ -882,10 +898,17 @@ export function initTcg(deps) {
     const state = match.state;
     match.choice = new Set([...(match.choice || [])].filter((uid) => waiting.uids.includes(uid)));
     const { min, max } = waiting;
-    const kind = { basic: "Basic Pokémon", evolution: "Evolution Pokémon", pokemon: "Pokémon", basicEnergy: "basic Energy", supporter: "Supporter", item: "Item", trainer: "Trainer", any: "card" }[waiting.what] || "card";
-    const many = (n) => (kind === "card" ? plural(n, "card") : n === 1 ? `1 ${kind}${kind === "basic Energy" ? " card" : ""}` : `${n} ${kind}${kind === "basic Energy" ? " cards" : ""}`);
+    // "basic:Water" reads as "Basic Water Pokémon", "name=Deoxys" as "Deoxys".
+    const [what, type = ""] = String(waiting.what).split(":");
+    const named = /^name[=^]/.test(what) ? what.slice(5) : "";
+    const label = { basic: "Basic Pokémon", evolution: "Evolution Pokémon", pokemon: "Pokémon", basicEnergy: "basic Energy", energy: "Energy", supporter: "Supporter", item: "Item", trainer: "Trainer", tool: "Pokémon Tool", stadium: "Stadium", any: "card" }[what] || "card";
+    const kind = named || (type ? label.replace(/(Pokémon|Energy)$/, `${type} $1`) : label);
+    const energyCard = /Energy$/.test(kind);
+    const many = (n) => (kind === "card" ? plural(n, "card") : n === 1 ? `1 ${kind}${energyCard ? " card" : ""}` : `${n} ${kind}${energyCard ? " cards" : ""}`);
     const title = waiting.effect.op === "discard" ? `Discard ${many(min)} from your hand`
       : waiting.effect.op === "toBench" ? `Choose ${max > 1 ? `up to ${many(max)}` : "a Basic Pokémon"} for your Bench`
+      : waiting.effect.op === "attach" ? `Attach ${max > 1 ? `up to ${many(max)}` : many(1)} from your ${waiting.top ? `top ${waiting.top} cards` : "deck"}`
+      : waiting.effect.op === "swapIn" ? `Switch in ${kind} from your deck`
       : waiting.zone === "discard" ? `Take ${min < max ? "up to " : ""}${many(max)} from your discard pile`
       : `Take ${max > 1 ? `up to ${many(max)}` : many(1)} from your deck`;
     const cards = waiting.uids.slice().sort((a, b) => d(a).name.localeCompare(d(b).name) || state.cards[a].localeCompare(state.cards[b]));
@@ -1001,7 +1024,10 @@ export function initTcg(deps) {
         if (event.why === "poisoned" || event.why === "burned") return `${COND_NAME[event.why]}: ${event.n} damage to ${event.p === ME ? "your" : "their"} Active Pokémon.`;
         if (event.why === "confused") return "Confused: it hurt itself for 30.";
         return `${event.n} damage${event.weak ? ", it's weak to that" : ""}${event.resist ? ", resisted" : ""}${event.self ? " to itself" : ""}.`;
-      case "heal": return `Healed ${event.n}.`;
+      case "heal": return event.why === "move" ? "" : event.why === "ability" ? `${event.p === ME ? "Your" : "Their"} Pokémon healed ${event.n} between turns.` : `Healed ${event.n}.`;
+      case "move-energy": return `${who(event.p)} moved ${name(event.uid)}.`;
+      case "form": return `${who(event.p)} switched in ${name(event.uid)}.`;
+      case "turn-ends": return `${event.name} ends the turn.`;
       case "ko": return `${name(event.uid)} was Knocked Out.`;
       case "prize": return `${who(event.p)} took ${plural(event.uids.length, "prize card")}.`;
       case "switch": return `${event.p === ME ? "Your" : "Their"} Active Pokémon was switched out.`;
@@ -1143,7 +1169,7 @@ export function initTcg(deps) {
       cards.forEach((card, i) => flyIn(deckSpot(ME), card, { ms: 320, delay: i * 90 }));
       return 320 + (cards.length - 1) * 90;
     }
-    const src = from || handSpot(event.p);
+    const src = from || (event.from === "deck" ? deckSpot(event.p) : handSpot(event.p));
     if (event.t === "bench") {
       flyIn(src, root.querySelector(monSel(event.p, event.spot)), { ms: 300 });
       return 300;
@@ -1162,6 +1188,17 @@ export function initTcg(deps) {
       const to = { left: arena.left + arena.width / 2 - w / 2, top: arena.top + arena.height / 2 - w * 0.7, width: w, height: w * 1.4 };
       ghost(img(match.state.cards[event.uid]), src, to, { ms: event.p === ME ? 900 : 1300, width: w, show: true });
       return event.p === ME ? 800 : 1200;
+    }
+    if (event.t === "move-energy") {
+      const at = rectOf(`${monSel(event.p, event.from)} img`);
+      const to = rectOf(`${monSel(event.p, event.spot)} img`);
+      if (at && to) ghost(img(match.state.cards[event.uid]), at, to, { ms: 360, width: to.width * 0.5, absorb: true });
+      setTimeout(() => cue(monSel(event.p, event.spot), "charged", 460), 260);
+      return 440;
+    }
+    if (event.t === "form") {
+      cue(monSel(event.p, event.spot), "evolved", 560);
+      return 560;
     }
     if (event.t === "attach" || event.t === "tool") {
       const to = rectOf(`${monSel(event.p, event.spot)} img`);

@@ -10,7 +10,7 @@
  */
 
 import { trainerAim } from "./trainers.js";
-import { ACTIVE, damageAfterTyping, defOf, energyOf, hpLeft, inPlay, legalActions, other, unpaid } from "./engine.js";
+import { ACTIVE, damageAfterTyping, defOf, energyOf, hpLeft, inPlay, legalActions, other, unpaid, usableAttacks } from "./engine.js";
 
 /** How much an attack is worth against this defender, before any coin flip. */
 function attackWorth(attack, def, foeDef, foeHp) {
@@ -97,6 +97,20 @@ export function botAction(state, player, defs) {
         const after = plan(state, slot, defs, defOf(state, waiting.effect.uid, defs).provides);
         return (plan(state, slot, defs).short - after.short) * 100 + after.score + (a.spot === ACTIVE ? 30 : 0);
       }
+      if (waiting.effect.op === "attachHeld") {
+        const provides = waiting.effect.uids.flatMap((uid) => defOf(state, uid, defs).provides || []);
+        const after = plan(state, slot, defs, provides);
+        return (plan(state, slot, defs).short - after.short) * 100 + after.score + (a.spot === ACTIVE ? 30 : 0);
+      }
+      // Moving Energy: off whoever needs it least, onto the Active Pokémon when it helps.
+      if (waiting.effect.op === "moveEnergyFrom") return (a.spot === ACTIVE ? -50 : 0) + plan(state, slot, defs).short * 10 + slot.energy.length;
+      if (waiting.effect.op === "moveEnergyTo") {
+        const provides = defOf(state, waiting.effect.uid, defs).provides || [];
+        const after = plan(state, slot, defs, provides);
+        return (plan(state, slot, defs).short - after.short) * 100 + (a.spot === ACTIVE ? 30 : 0);
+      }
+      if (waiting.effect.op === "moveCountersFrom") return slot.damage + (a.spot === ACTIVE ? 5 : 0);
+      if (waiting.effect.op === "moveCountersTo") return waiting.side === player ? left : (left <= waiting.effect.n ? 1000 : 0) - left;
       if (waiting.effect.op === "heal") return Math.min(slot.damage, waiting.effect.n) + (a.spot === ACTIVE ? 5 : 0);
       if (waiting.effect.op === "discardEnergy") return slot.energy.length + (a.spot === ACTIVE ? 0.5 : 0);
       // Pulling one of theirs forward: the one closest to a Knock Out. Bringing up one of its own: the readiest.
@@ -127,9 +141,19 @@ export function botAction(state, player, defs) {
   // Abilities: the ones that are plainly good to use (cards, Energy, healing, damage counters).
   for (const action of actions.filter((a) => a.type === "ability")) {
     const slot = action.spot === ACTIVE ? side.active : side.bench[action.spot];
-    const { steps } = defOf(state, slot.uid, defs).ability.use;
+    const { use } = defOf(state, slot.uid, defs).ability;
+    const steps = use.steps.flatMap((s) => (s.op === "flip" ? s.heads : [s]));
     const aim = trainerAim(steps);
     const heal = steps.find((s) => s.op === "heal");
+    // Knocking itself out hands over a Prize: only when its damage counters Knock Out something worth more.
+    if (use.selfKo) {
+      const n = steps.find((s) => s.op === "counters")?.n || 0;
+      const worth = inPlay(state, other(player)).some(([foeSlot]) => hpLeft(state, foeSlot, defs) <= n && defOf(state, foeSlot.uid, defs).prizes > defOf(state, slot.uid, defs).prizes);
+      if (!worth) continue;
+    }
+    // An Ability that ends the turn waits until there is nothing to attack with.
+    if (use.ends && usableAttacks(state, player, defs).length) continue;
+    if (aim === "form" || aim === "move" || aim === "gust") continue;
     if (aim === "energize" || aim === "counters" || aim === "cure") return action;
     if ((aim === "draw" || aim === "search" || aim === "recover") && side.deck.length > 8) return action;
     if (aim === "trade" && side.hand.length >= 4 && side.deck.length > 8) return action;

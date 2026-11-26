@@ -132,11 +132,37 @@ wordings the engine can't read. Work down that list:
    turn unless "as often as you like", `slot.used`), read through
    `compileTrainer` plus `energize`, `switchSelf`, `counters`; and "when
    you play this Pokémon" ones, asked as an optional pick (`effect.op:
-   "ability"`). 682 of 4,214 Pokémon with an Ability have it live. Next:
-   move Energy, attach from deck, form changes, "your turn ends", locks.
+   "ability"`). 682 of 4,214 Pokémon with an Ability have it live.
+   Second batch (2026-11-26): moving Energy and damage counters (two picks,
+   `moveEnergyFrom` then `moveEnergyTo`, asked only when there is a choice),
+   Energy from the deck onto a Pokémon (`fetchEnergy`: this one, one picked,
+   or a pick per card), form changes (`formChange`: another card of the name
+   takes the slot), Special Conditions on their Active Pokémon, pushing their
+   Active Pokémon out (they choose), searches by type ("a Water Pokémon",
+   "Basic Fire Energy", Tools, Stadiums; `fits` reads "basic:Water"), and the
+   flags around a use: VSTAR Power once a game (`side.vstarUsed`), "your turn
+   ends", "this Pokémon is Knocked Out", "can't be used with a Special
+   Condition". Standing ones: immune to some or all Special Conditions,
+   Bench guard for the team, a coin flip to hang on, the other Active
+   Pokémon's Retreat Cost raised, early evolution, mending between turns,
+   no effects of attacks except damage, no damage while Asleep. 1,073 live.
+   Next: "when this Pokémon moves to the Active Spot", Ability locks, attack
+   costs that change, more Energy from the discard pile.
+   `node scripts/test-tcg.mjs --coverage` lists the commonest unread texts.
 
-6. **Special Energy**, then the odd card types: V-UNION, LEGEND, Restored,
-   BREAK keeping its earlier attacks, Lv.X.
+6. **Special Energy**. First batch live (2026-11-26, `js/tcg/energy.js`,
+   `compileSpecialEnergy`, text in `data/tcg/trainers.json` beside the
+   Trainers). Read a sentence at a time; one unread sentence keeps the card
+   out of decks. What it provides (`provides`; "Any" is every type at once,
+   "Fire|Water" one of those), who it can go on (`special.only`: types,
+   Evolved, not ex), standing changes to the holder folded into `toolOf`
+   (HP, more or less damage, less damage taken, no Weakness, immune), and
+   what it does when attached from the hand (`special.attach`: draw, heal,
+   cure, a damage counter, switch, search). 89 of 214 Special Energy cards.
+   Next: end-of-turn discards (Boost, Triple Acceleration), Energy that
+   changes with the board (Prism, Twin, Counter, Scramble), "Discard a
+   Special Energy" attacks. Then the odd card types: V-UNION, LEGEND,
+   Restored, BREAK keeping its earlier attacks, Lv.X.
 
 Rules for this work: one op per mechanic in `OPS`, wordings mapped to it in
 `PATTERNS`, a test per op. Text that isn't fully read stays "not live" rather

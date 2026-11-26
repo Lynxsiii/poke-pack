@@ -9,7 +9,7 @@
  *   pokemon  { id, kind, name, stage: "basic" | "evolution", evolvesFrom, hp, types, attacks, weakness,
  *              resistance, retreat, prizes, playable, why, notes }
  *            attack: { name, cost, damage, text, fx (steps, js/tcg/effects.js), plain (true when text isn't read yet) }
- *   energy   { id, kind, name, provides: [type], basic, playable }
+ *   energy   { id, kind, name, provides: [type], basic, playable, special? (js/tcg/energy.js) }
  *   trainer  { id, kind, name, playable: false }
  *
  * `playable` false keeps a card out of decks, with `why` to tell the player.
@@ -19,6 +19,7 @@
 import { compileAbility } from "./abilities.js";
 import { compileAttack } from "./effects.js";
 import { compileStadium, compileTool, compileTrainer } from "./trainers.js";
+import { compileSpecialEnergy } from "./energy.js";
 
 export const ENERGY_TYPES = ["Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Darkness", "Metal", "Fairy"];
 
@@ -98,7 +99,11 @@ export function defineCard(card, row, text = "") {
   if (card.supertype === "Energy" || card.energy) {
     const type = ENERGY_TYPES.find((t) => new RegExp(`^(Basic )?${t} Energy$`).test(card.name));
     const basic = Boolean(type) && (card.subtypes || []).includes("Basic");
-    return { ...base, kind: "energy", provides: type ? [type] : [], basic, playable: basic, why: basic ? "" : "Special Energy isn't in yet." };
+    if (basic) return { ...base, kind: "energy", provides: [type], basic, playable: true, why: "" };
+    // Special Energy: what it provides and does comes from its text (js/tcg/energy.js).
+    const special = compileSpecialEnergy(text, card.name);
+    if (!special) return { ...base, kind: "energy", provides: [], basic: false, text: text || "", playable: false, why: "This Special Energy's text isn't live yet." };
+    return { ...base, kind: "energy", provides: special.provides, basic: false, special, text, playable: true, why: "" };
   }
   if (card.supertype !== "Pokémon") {
     const subs = card.subtypes || [];

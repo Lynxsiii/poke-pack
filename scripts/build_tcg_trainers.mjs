@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
- * Builds data/tcg/trainers.json: what each Trainer card says. Our card files
- * carry a Trainer's name and picture but not its text, and the game needs the text.
+ * Builds data/tcg/trainers.json: what each Trainer card and each Special Energy
+ * card says. Our card files carry the name and picture but not the text, and the
+ * game needs the text.
  *
  * Source: github.com/PokemonTCG/pokemon-tcg-data (cards/en/<set>.json), whose
  * card ids match ours. Run after adding a set:
@@ -33,6 +34,9 @@ const BOILERPLATE = [
 ];
 const textOf = (card) => (card.rules || []).map((r) => r.replace(/\s+/g, " ").trim()).filter((r) => r && !BOILERPLATE.some((b) => b.test(r))).join(" ");
 
+/** Trainers, and Energy that isn't basic (Special Energy says what it does in its rules text). */
+const wanted = (c) => c.supertype === "Trainer" || (c.supertype === "Energy" && !(c.subtypes || []).includes("Basic"));
+
 const cache = new Map();
 async function source(setId) {
   if (cache.has(setId)) return cache.get(setId);
@@ -49,7 +53,7 @@ const byName = new Map();
   sets.sort((a, b) => String(a.releaseDate).localeCompare(String(b.releaseDate)));
   for (let i = 0; i < sets.length; i += 12) {
     const batch = await Promise.all(sets.slice(i, i + 12).map((s) => source(s.id)));
-    for (const cards of batch) for (const c of cards || []) if (c.supertype === "Trainer" && textOf(c)) byName.set(c.name, c);
+    for (const cards of batch) for (const c of cards || []) if (wanted(c) && textOf(c)) byName.set(c.name, c);
   }
 }
 
@@ -66,7 +70,7 @@ for (const setId of readdirSync("data").filter((f) => f.endsWith(".json")).map((
     continue;
   }
   if (!Array.isArray(ours) || !ours[0]?.supertype) continue;
-  const trainers = ours.filter((c) => c.supertype === "Trainer");
+  const trainers = ours.filter(wanted);
   if (!trainers.length) continue;
   const theirs = new Map(((await source(setId)) || []).map((c) => [c.id, c]));
   const set = {};
@@ -91,5 +95,5 @@ for (const setId of readdirSync("data").filter((f) => f.endsWith(".json")).map((
 }
 
 writeFileSync(OUT, JSON.stringify({ texts, cards }));
-console.log(`${total} Trainers, ${texts.length} different texts -> ${OUT}`);
+console.log(`${total} Trainers and Special Energy, ${texts.length} different texts -> ${OUT}`);
 for (const line of report) console.log(line);

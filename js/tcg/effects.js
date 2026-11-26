@@ -153,7 +153,7 @@ export const OPS = {
     const slot = self ? ctx.slot : ctx.state.players[other(ctx.player)].active;
     const p = self ? ctx.player : other(ctx.player);
     if (!slot || (!self && ctx.shielded)) return;
-    if (addCondition(ctx.state, slot, kind)) ctx.events.push({ t: "condition", p, kind });
+    if (addCondition(ctx.state, slot, kind, ctx.defs)) ctx.events.push({ t: "condition", p, kind });
   },
   /** The attacker hurts itself. No Weakness or Resistance: it is not an attack on it. */
   selfDamage(ctx, { n }) {
