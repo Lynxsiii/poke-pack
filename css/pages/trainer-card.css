@@ -30,6 +30,11 @@
   border-left: var(--line-w) solid var(--k); background: var(--cy); background-image: var(--dots-light); background-size: 14px 14px;
   transform: skewX(var(--skew)); transform-origin: 0 100%; pointer-events: none;
 }
+/* A mastery banner is the reward, so it gets a taller band with nothing over its art: no cut
+   corner across the pack and card, and the face sits lower so the set's logo and ribbon stay clear above it. */
+.tcard-band:has(> .mbn) { height: 132px; }
+.tcard-band:has(> .mbn)::after { display: none; }
+.tcard:has(> .tcard-band > .mbn) .tcard-face { margin-top: calc(var(--face) * -0.42 - 10px); }
 .tcard-id {
   position: relative; z-index: 1;
   display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: start; gap: 0 14px;
@@ -340,6 +345,10 @@ body.no-motion :is(#view-account .tcard-xp, .setc-rows > li > .setc-row), body.n
   #view-account .tcard { --face: 112px; padding: 0 24px 20px; }
   .tcard-band { height: 118px; margin: 0 -24px; }
   .tcard-band::after { width: 96px; right: -30px; }
+  /* Wide: the band is short again, so the logo and ribbon start past the face instead of above it. */
+  .tcard-band:has(> .mbn) { height: 132px; }
+  .tcard:has(> .tcard-band > .mbn) .tcard-face { margin-top: calc(var(--face) * -0.62 - 10px); }
+  .tcard-band > .mbn .mbn-head { left: calc(24px + 112px + 24px); }
   .tcard-face > .lvl-frame { --face: 112px; }
   .tcard-id { gap: 0 20px; }
   #view-account .tcard-actions .solid { flex: none; }
