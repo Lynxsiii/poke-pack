@@ -167,49 +167,95 @@ function homePage(ctx, root) {
 }
 
 // ---- Tall Grass -----------------------------------------------------------------------------
+/* A patch of tall grass, five by five, swaying. Cutting a clear tile sends the blades flying and leaves a sparkle
+   stamped with the multiplier it took you to. Over the field: what cashing out pays now, and an HP bar for how
+   likely the next tile is clear. Under it: what the next tiles pay. A Voltorb shakes the whole patch. */
+const TUFT = `<svg class="bz-tuft is-b" viewBox="0 0 40 40" aria-hidden="true"><path d="M2 38c1-8 2-13 4-18 1 6 2 9 3 12 1-9 3-17 6-23 1 8 2 15 3 21 1-7 3-13 5-19 2 7 3 14 4 20 1-5 2-9 5-13 1 7 2 13 6 20z"/></svg>
+  <svg class="bz-tuft is-f" viewBox="0 0 40 40" aria-hidden="true"><path d="M5 39c1-7 2-11 5-16 1 5 1 8 2 11 2-8 4-14 8-20 1 8 2 13 3 19 1-4 3-8 6-11 1 6 2 11 6 17z"/><path class="bz-glint" d="M19 17c-2 5-3 9-4 14M29 25c-1 3-2 6-2 9"/></svg>`;
+const STUBBLE = `<svg class="bz-stubble" viewBox="0 0 40 12" aria-hidden="true"><path d="M3 11l2-7 3 7 3-9 3 9 3-7 3 7 3-9 3 9 3-6 3 6 3-7 2 7z"/></svg>`;
+const SPARK = `<svg class="bz-spark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1l2.800 8.200L23 12l-8.200 2.800L12 23l-2.800-8.200L1 12l8.200-2.800z"/></svg>`;
+const ZAP = `<svg class="bz-zap" viewBox="0 0 60 60" aria-hidden="true"><path d="M30 2l6 14 13-8-4 15 14 3-12 8 9 12-15-2-2 15-9-12-9 12-2-15-15 2 9-12-12-8 14-3-4-15 13 8z"/></svg>`;
 function grassPage(ctx, root) {
   return page(ctx, root, "grass", (p) => {
     let run = null;
     let recent = [];
     let last = { stake: 10, mines: 3 };
-    let boom = -1;
+    let fresh = -1; // the tile the last tap turned over: only it animates
+    let ended = false; // true for the one paint where the run just ended: the board reveals
     const tile = (i) => {
-      const open = run?.open?.includes(i);
+      const at = run?.open?.indexOf(i) ?? -1;
+      const open = at >= 0;
       const volt = run?.voltorb?.includes(i);
       const hit = run?.hit === i;
       const live = run?.state === "open";
       const cls = open ? "is-open" : volt ? `is-volt${hit ? " is-hit" : ""}` : run && !live ? "is-left" : "";
-      return `<button type="button" class="bz-tile ${cls}${hit && boom === i ? " is-boom" : ""}" data-tile="${i}" ${live && !open ? "" : "disabled"} aria-label="Tile ${i + 1}${open ? ", clear" : volt ? ", Voltorb" : ""}">${volt ? VOLTORB : open ? `<i class="bz-leaf"></i>` : ""}</button>`;
+      const inner = volt ? `${hit ? ZAP : ""}${VOLTORB}`
+        : open ? `${STUBBLE}${SPARK}<b>${fmtX(grassMultiplier(run.mines, at + 1))}</b>${fresh === i ? `<i class="bz-bit"></i><i class="bz-bit"></i><i class="bz-bit"></i><i class="bz-bit"></i>` : ""}`
+        : TUFT;
+      return `<button type="button" class="bz-tile ${cls}${fresh === i ? " is-new" : ""}" style="--i:${i}" data-tile="${i}" ${live && !open ? "" : "disabled"} aria-label="Tile ${i + 1}${open ? ", clear" : volt ? ", Voltorb" : ""}">${inner}</button>`;
     };
+    /** What the next clear tiles pay, the very next one first. */
+    const ladder = (mines, n) => {
+      const left = GRASS.tiles - mines - n;
+      const steps = Array.from({ length: Math.min(4, left) }, (_, k) => grassMultiplier(mines, n + k + 1));
+      return steps.length ? `<p class="bz-ladder" aria-label="What the next clear tiles pay"><small>Next</small>${steps.map((m, k) => `<span class="${k ? "" : "is-next"}">${fmtX(m)}</span>`).join("")}</p>` : `<p class="bz-ladder"><small>The field is clear. Cash out.</small></p>`;
+    };
+    /** How likely the next tile is clear, as an HP bar. */
+    const safety = (mines, n) => {
+      const left = GRASS.tiles - n;
+      const safe = left > 0 ? Math.max(0, (left - mines) / left) : 0;
+      const tone = safe >= 0.6 ? "" : safe >= 0.35 ? " is-mid" : " is-low";
+      return `<p class="bz-safe${tone}"><span class="bz-safe-bar" aria-hidden="true"><i style="transform:scaleX(${safe.toFixed(3)})"></i></span><small><b>${Math.round(safe * 100)}%</b> the next tile is clear</small><span class="bz-safe-volt">${VOLTORB}<b>${mines}</b></span></p>`;
+    };
+    const clearLine = (m) => `${GRASS.tiles - m} clear tiles, ${Math.round(((GRASS.tiles - m) / GRASS.tiles) * 100)}% safe`;
+    /** Before a run: how many Voltorb hide, as quick picks with a step either side. */
+    const picker = () => `<div class="bz-volts" role="group" aria-label="How many Voltorb hide in the grass"><span class="bz-safe-volt">${VOLTORB}<b data-mines-out>${last.mines}</b></span>
+      <button type="button" class="ghost sm" data-mines-step="-1" aria-label="One fewer Voltorb">-</button>
+      ${[1, 3, 5, 10, 20].map((m) => `<button type="button" class="rt-word${last.mines === m ? " on" : ""}" data-mines="${m}">${m}</button>`).join("")}
+      <button type="button" class="ghost sm" data-mines-step="1" aria-label="One more Voltorb">+</button></div>`;
+    const recentHTML = () => recentRows(recent.map((r) => ({ won: r.state === "cashed", line: `${r.mines} Voltorb, ${r.open.length} clear`, mult: r.mult, stake: r.stake, payout: r.payout })));
     function paint() {
       const live = run?.state === "open";
       const n = run?.open?.length || 0;
       const pay = live ? Math.min(BETA_RULES.maxWin, Math.floor(run.stake * run.mult * 100) / 100) : 0;
-      const status = !run ? `<p class="bz-status">Pick a stake and how many Voltorb hide in the grass.</p>`
-        : live ? `<p class="bz-status">${n ? `${n} clear, cash out for ${coinTag(pay)} (${fmtX(run.mult)})` : "Tap a tile."} Next clear tile: ${fmtX(run.next)}</p>`
-        : run.state === "lost" ? `<p class="bz-status is-bad">A wild Voltorb. The stake is gone.</p>`
-        : `<p class="bz-status is-good">Cashed out ${coinTag(run.payout)} at ${fmtX(run.mult)}.</p>`;
+      const mines = run ? run.mines : last.mines;
+      const bump = fresh >= 0 && live ? " is-bump" : "";
+      const hud = !run ? `<div class="bz-hud"><p class="bz-hud-fig"><small>First clear tile pays</small><b data-first-hud>${fmtX(grassMultiplier(last.mines, 1))}</b></p><p class="bz-hud-side"><small data-clear-hud>${clearLine(last.mines)}</small><small>More Voltorb, bigger steps</small></p></div>`
+        : live ? `<div class="bz-hud is-live"><p class="bz-hud-fig"><small>${n ? "Cash out now for" : "Tap a tile"}</small><b class="${bump}">${n ? fmtX(run.mult) : "1.00x"}</b></p><p class="bz-hud-side">${n ? coinTag(pay) : coinTag(run.stake)}<small>${GRASS.tiles - run.mines - n} clear left</small></p></div>`
+        : run.state === "lost" ? `<div class="bz-hud is-bad"><p class="bz-hud-fig"><small>A wild Voltorb</small><b>Boom</b></p><p class="bz-hud-side">${coinTag(run.stake)}<small>stake lost after ${n} clear</small></p></div>`
+        : `<div class="bz-hud is-good"><p class="bz-hud-fig"><small>Cashed out at</small><b>${fmtX(run.mult)}</b></p><p class="bz-hud-side">${coinTag(run.payout)}<small>${n} clear, ${run.mines} Voltorb dodged</small></p></div>`;
       root.innerHTML = `<div class="cs-page bz-page bz-grass">${p.head("Tall Grass")}
         <div class="bz-play">
-          <div class="bz-board-wrap">${status}<div class="bz-grid" style="--n:5">${Array.from({ length: GRASS.tiles }, (_, i) => tile(i)).join("")}</div></div>
+          <div class="bz-board-wrap"><div class="bz-patch${run && !live ? " is-over" : ""}${ended ? " is-ended" : ""}${ended && run?.state === "lost" ? " is-boom" : ""}">${hud}
+            ${live ? safety(mines, n) : picker()}
+            <div class="bz-grid${run ? "" : " is-idle"}" style="--n:5">${Array.from({ length: GRASS.tiles }, (_, i) => tile(i)).join("")}</div>
+            <div data-ladder>${ladder(mines, live ? n : 0)}</div></div></div>
           <form class="rt-box bz-box bz-controls" data-go>
-            ${live ? `<p class="bz-fig"><small>Stake</small>${coinTag(run.stake)}<small>Voltorb</small><b>${run.mines}</b></p>
-              <button type="button" class="solid rt-go" data-cash ${n ? "" : "disabled"}>Cash out ${n ? coinTag(pay) : ""}</button>`
+            ${live ? `<button type="button" class="solid rt-go" data-cash ${n ? "" : "disabled"}>Cash out ${n ? coinTag(pay) : ""}</button>
+              <p class="bz-note">${n ? `Or keep walking: the next clear tile takes it to ${fmtX(run.next)}.` : "Every clear tile raises the payout. Hit a Voltorb and the stake is gone."}</p>`
             : `${stakeField("gr-stake", last.stake)}
-              <label class="bz-field"><span>Voltorb <b data-mines-out>${last.mines}</b></span><input class="bz-range" type="range" name="mines" min="${GRASS.minMines}" max="${GRASS.maxMines}" value="${last.mines}" /></label>
-              <p class="bz-note" data-mines-note>First clear tile pays ${fmtX(grassMultiplier(last.mines, 1))}, five pay ${fmtX(grassMultiplier(last.mines, Math.min(5, 25 - last.mines)))}.</p>
-              <button class="solid rt-go" type="submit">Walk into the grass</button>`}
+              <button class="solid rt-go" type="submit">${run ? "Walk in again" : "Walk into the grass"}</button>`}
           </form>
         </div>
-        ${recentRows(recent.map((r) => ({ won: r.state === "cashed", line: `${r.mines} Voltorb, ${r.open.length} clear`, mult: r.mult, stake: r.stake, payout: r.payout })))}
+        <div data-recent>${recentHTML()}</div>
       </div>`;
+      ended = false;
     }
-    root.addEventListener("input", (e) => {
-      if (e.target.name === "mines") {
-        last.mines = Number(e.target.value);
-        root.querySelector("[data-mines-out]").textContent = last.mines;
-        root.querySelector("[data-mines-note]").textContent = `First clear tile pays ${fmtX(grassMultiplier(last.mines, 1))}, five pay ${fmtX(grassMultiplier(last.mines, Math.min(5, 25 - last.mines)))}.`;
-      }
+    /** Pick how many Voltorb hide: everything that depends on it follows at once. */
+    function setMines(n) {
+      last.mines = Math.max(GRASS.minMines, Math.min(GRASS.maxMines, n));
+      const put = (sel, text) => { const el = root.querySelector(sel); if (el) el.textContent = text; };
+      put("[data-mines-out]", last.mines);
+      put("[data-clear-hud]", clearLine(last.mines));
+      put("[data-first-hud]", fmtX(grassMultiplier(last.mines, 1)));
+      root.querySelectorAll("[data-mines]").forEach((x) => x.classList.toggle("on", Number(x.dataset.mines) === last.mines));
+      root.querySelector("[data-ladder]").innerHTML = ladder(last.mines, 0);
+    }
+    root.addEventListener("click", (e) => {
+      if (run?.state === "open") return;
+      const pick = e.target.closest("[data-mines]"), step = e.target.closest("[data-mines-step]");
+      if (pick) setMines(Number(pick.dataset.mines));
+      else if (step) setMines(last.mines + Number(step.dataset.minesStep));
     });
     root.addEventListener("submit", async (e) => {
       if (!e.target.closest("[data-go]")) return;
@@ -220,7 +266,7 @@ function grassPage(ctx, root) {
       try {
         const res = p.apply(await post("/api/casino/beta/grass/start", { stake: last.stake, mines: last.mines, requestId: uuid() }));
         run = res.run;
-        boom = -1;
+        fresh = -1;
         paint();
       } catch (err) { p.fail(err); } finally { p.state.busy = false; }
     });
@@ -233,17 +279,24 @@ function grassPage(ctx, root) {
       try {
         const res = p.apply(t ? await post("/api/casino/beta/grass/tap", { id: run.id, tile: Number(t.dataset.tile) }) : await post("/api/casino/beta/grass/cash", { id: run.id }));
         run = res.run;
-        if (run.state === "lost") { boom = run.hit; ctx.buzz?.([60, 40, 90]); }
-        if (run.state !== "open") load(true);
+        fresh = t ? Number(t.dataset.tile) : -1;
+        ended = run.state !== "open";
+        if (run.state === "lost") { fresh = run.hit; ctx.buzz?.([60, 40, 90]); }
+        else if (t) ctx.buzz?.(12);
         paint();
+        if (run.state !== "open") load(true);
       } catch (err) { p.fail(err); } finally { p.state.busy = false; }
     });
     async function load(quiet) {
       try {
         const res = await api("/api/casino/beta/grass");
-        if (!quiet) run = res.run;
         recent = res.recent || [];
-        if (p.visible()) paint();
+        if (!p.visible()) return;
+        // After a round the board is mid-reveal: only the list under it changes.
+        if (quiet) { const el = root.querySelector("[data-recent]"); if (el) el.innerHTML = recentHTML(); return; }
+        run = res.run;
+        fresh = -1;
+        paint();
       } catch (err) { p.fail(err); }
     }
     return { show() { paint(); load(); } };
@@ -259,6 +312,27 @@ function recentRows(rows) {
 }
 
 // ---- Rocket ------------------------------------------------------------------------------
+/* The sky is a scene and a chart at once. The rocket stands on its pad through the countdown, then climbs a fixed
+   flight path as the multiplier grows (the far end is 10x), lighting the trail and the 1.5x, 2x, 3x, 5x and 10x
+   markers behind it. The ground falls away, clouds sink past and stars come down. Cash-outs plant flags on the path.
+   It bursts where the round pops. The sky is drawn once and only transforms, opacity and classes change after. */
+const SHIP = `<svg viewBox="0 0 72 40" aria-hidden="true"><g class="bz-flame"><path d="M20 20 1 9l7 11-7 11z" fill="var(--hp-low)" stroke="var(--k0)" stroke-width="2.5" stroke-linejoin="round"/><path d="M20 20 9 14.500l4 5.500-4 5.500z" fill="var(--yel)"/></g>
+  <path d="M15 5l13 8v14l-13 8z" fill="var(--cy)" stroke="var(--k0)" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M21 9h24c11 0 20 6.500 24 11-4 4.500-13 11-24 11H21z" fill="#fff" stroke="var(--k0)" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M53 11c6.500 2 11.500 5.500 15 9-3.500 3.500-8.500 7-15 9z" fill="var(--hp-low)"/><path d="M26 9v22" stroke="var(--k0)" stroke-width="2.500"/>
+  <circle cx="39" cy="20" r="5.500" fill="var(--cy)" stroke="var(--k0)" stroke-width="2.500"/><path d="M36.500 18.500a3.500 3.500 0 0 1 3-2" stroke="#fff" stroke-width="2" stroke-linecap="round" fill="none"/></svg>`;
+const BURST = `<svg viewBox="0 0 60 60" aria-hidden="true"><path d="M30 2l6 14 13-8-4 15 14 3-12 8 9 12-15-2-2 15-9-12-9 12-2-15-15 2 9-12-12-8 14-3-4-15 13 8z" fill="var(--yel)" stroke="var(--k0)" stroke-width="2.500" stroke-linejoin="round"/></svg>`;
+const CLOUD = `<svg viewBox="0 0 80 40" aria-hidden="true"><path d="M14 35a10 10 0 0 1 2-20 14 14 0 0 1 26-5 12 12 0 0 1 22 7 9 9 0 0 1 0 18z"/></svg>`;
+const STAR = `<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0l1.600 4.400L12 6 7.600 7.600 6 12 4.400 7.600 0 6l4.400-1.600z"/></svg>`;
+const GROUND = `<svg viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden="true"><path class="bz-hill" d="M0 30V17c9-7 18-9 28-4 9-9 22-11 34-3 11-6 25-5 38 3v17z" vector-effect="non-scaling-stroke"/></svg>`;
+const ARC = [[15, 78], [66, 80], [91, 13]]; // the flight path, in % of the sky: the pad, the pull, 10x
+const arcAt = (t) => ARC[0].map((_, k) => (1 - t) ** 2 * ARC[0][k] + 2 * t * (1 - t) * ARC[1][k] + t * t * ARC[2][k]);
+const arcT = (m) => Math.min(1, Math.log(Math.max(1, m)) / Math.log(10));
+const ARC_MARKS = [1.5, 2, 3, 5, 10];
+const ARC_DOTS = 44;
+// Fixed spots for the scenery, so the sky is the same sky every round: [left %, top %, width px].
+const CLOUDS = [[6, 46, 78], [58, 30, 96], [34, 8, 64], [78, 58, 70], [-4, 14, 60]];
+const STARS = [[8, 12], [22, 38], [31, 9], [44, 26], [52, 58], [61, 14], [70, 42], [83, 22], [90, 64], [14, 70], [38, 78], [76, 84], [95, 6], [3, 50]];
 function rocketPage(ctx, root) {
   return page(ctx, root, "rocket", (p) => {
     let data = null;
@@ -266,58 +340,125 @@ function rocketPage(ctx, root) {
     let raf = 0;
     let stake = 10;
     let auto = 2;
-    let painted = "";
+    let cache = {};
+    let seen = { ph: "", lit: -1, marks: -1 };
     const phase = () => {
       if (!data) return "";
       const now = ctx.clock.now();
       if (data.round.phase === "popped") return "popped";
       return now < data.round.launchAt ? "betting" : "flying";
     };
+    /** Write a part of the page only when it changed, so typing and running animations are left alone. */
+    const set = (sel, html) => {
+      if (cache[sel] === html) return;
+      const el = root.querySelector(sel);
+      if (!el) return;
+      el.innerHTML = html;
+      cache[sel] = html;
+    };
+    const betRow = (b) => `<div class="rt-row bz-row${b.status === "won" ? " is-won" : ""}${b.mine ? " is-mine" : ""}"><span class="rt-row-lab">${b.cashed ? fmtX(b.cashed) : b.status === "lost" ? "Popped" : "In"}</span>
+      <span class="rt-row-name">${esc(b.name)}${b.mine ? " (you)" : ""}<small>Stake ${num(b.stake)}${b.mine && b.auto ? `, auto ${fmtX(b.auto)}` : ""}</small></span><span class="rt-row-val">${b.status === "won" ? coinTag(b.payout) : ""}</span></div>`;
+    function skeleton() {
+      const at = (xy) => `left:${xy[0].toFixed(1)}%;top:${xy[1].toFixed(1)}%`;
+      root.innerHTML = `<div class="cs-page bz-page bz-rocket">${p.head("Rocket")}
+        <div class="bz-play"><div class="bz-board-wrap">
+          <div class="bz-sky"><div class="bz-scene">
+            <span class="bz-stars" aria-hidden="true">${STARS.map(([x, y], i) => `<i style="left:${x}%;top:${y}%;--i:${i}">${STAR}</i>`).join("")}</span>
+            <span class="bz-clouds" aria-hidden="true">${CLOUDS.map(([x, y, w], i) => `<i style="left:${x}%;top:${y}%;width:${w}px;--i:${i}">${CLOUD}</i>`).join("")}</span>
+            <span class="bz-ground" aria-hidden="true">${GROUND}<i class="bz-pad" style="left:${ARC[0][0]}%"></i></span>
+            <svg class="bz-arc" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M${ARC[0]} Q${ARC[1]} ${ARC[2]}" vector-effect="non-scaling-stroke"/></svg>
+            <span class="bz-trail" aria-hidden="true">${Array.from({ length: ARC_DOTS }, (_, i) => `<i style="${at(arcAt((i + 1) / ARC_DOTS))}"></i>`).join("")}</span>
+            ${ARC_MARKS.map((m) => `<span class="bz-mark" style="${at(arcAt(arcT(m)))}"><i></i>${m}x</span>`).join("")}
+            <span data-rk-flags></span>
+            <span class="bz-puffs" aria-hidden="true" style="${at(ARC[0])}"><i></i><i></i><i></i></span>
+            <span class="bz-ship" aria-hidden="true">${SHIP}</span>
+            <span class="bz-burst" aria-hidden="true">${BURST}<i></i><i></i><i></i><i></i><i></i></span></div>
+            <p class="bz-mult"><small data-rk-lab></small><b data-rk-fig>-</b></p>
+            <span class="bz-fuse" aria-hidden="true"><i data-rk-fuse></i></span></div>
+          <p class="bz-hist" aria-label="Last rounds" data-rk-hist></p>
+        </div>
+        <form class="rt-box bz-box bz-controls" data-go data-rk-controls></form></div>
+        <section class="cs-section bz-recent"><h2 class="cs-h">In this round</h2><div class="cs-rows" data-rk-bets></div></section></div>`;
+      cache = {};
+      seen = { ph: "", lit: -1, marks: -1 };
+    }
+    /** Everything around the sky: the controls, who is in, the last rounds, the cash-out flags. */
+    function parts() {
+      if (!root.querySelector(".bz-sky")) skeleton();
+      const ph = phase();
+      const mine = data?.mine;
+      const controls = !data ? "" : ph === "betting" && !mine ? `${stakeField("rk-stake", stake)}
+          <label class="bz-field bz-inline"><span>Auto cash-out at</span><input id="rk-auto" class="bz-input" type="number" inputmode="decimal" min="${ROCKET.minAuto}" max="${ROCKET.maxMult}" step="0.01" value="${auto}" /></label>
+          <div class="bz-autos" role="group" aria-label="Quick auto cash-out">${[1.5, 2, 3, 5, 10].map((a) => `<button type="button" class="rt-word${Number(auto) === a ? " on" : ""}" data-auto="${a}">${a}x</button>`).join("")}</div>
+          <button class="solid rt-go" type="submit">Join this round</button>`
+        : mine?.status === "open" && ph === "flying" ? `<button type="button" class="solid rt-go" data-rk-cash>Cash out</button><p class="bz-note">Auto cash-out at ${fmtX(mine.auto)}.</p>`
+        : mine ? `<p class="bz-status ${mine.status === "won" ? "is-good" : mine.status === "lost" ? "is-bad" : ""}">${mine.status === "won" ? `You cashed out at ${fmtX(mine.cashed)} for ${coinTag(mine.payout)}.` : mine.status === "lost" ? "It popped before you cashed out." : `You're in with ${coinTag(mine.stake)}, auto at ${fmtX(mine.auto)}.`}</p>`
+        : `<p class="bz-note">${ph === "flying" ? "This round is in the air. Bets open again when it pops." : "Next round soon."}</p>`;
+      set("[data-rk-controls]", controls);
+      set("[data-rk-bets]", (data?.bets || []).length ? data.bets.map(betRow).join("") : `<p class="bz-note">Nobody yet. Bets close at launch.</p>`);
+      set("[data-rk-hist]", `<small>Last rounds</small>${(data?.history || []).map((h) => `<span class="${h.crash >= 2 ? "is-hi" : ""}">${fmtX(h.crash)}</span>`).join("")}`);
+      // A flag where each player got out: yours named, up to five others plain.
+      const out = (data?.bets || []).filter((b) => b.cashed).sort((a, b) => Number(b.mine || 0) - Number(a.mine || 0)).slice(0, 6);
+      set("[data-rk-flags]", out.map((b) => { const [x, y] = arcAt(arcT(b.cashed)); return `<span class="bz-flag${b.mine ? " is-mine" : ""}" style="left:${x.toFixed(1)}%;top:${y.toFixed(1)}%"><i></i>${b.mine ? `<b>You ${fmtX(b.cashed)}</b>` : ""}</span>`; }).join(""));
+    }
     function figure() {
-      const el = root.querySelector("[data-rk-fig]");
-      const sky = root.querySelector(".bz-sky");
       if (!p.visible()) return;
-      if (!el || !data) { raf = requestAnimationFrame(figure); return; }
+      raf = requestAnimationFrame(figure);
+      const sky = root.querySelector(".bz-sky");
+      const el = root.querySelector("[data-rk-fig]");
+      if (!sky || !el || !data) return;
       const ph = phase();
       const now = ctx.clock.now();
       let m = 1;
       if (ph === "popped") m = data.round.crash;
       else if (ph === "flying") m = rocketAt(now - data.round.launchAt);
-      el.textContent = ph === "betting" ? `${Math.max(0, Math.ceil((data.round.launchAt - now) / 1000))}s` : fmtX(m);
-      // The balloon rises with the log of the multiplier: transform only.
-      const h = Math.min(1, Math.log(m) / Math.log(ROCKET.maxMult) * 1.6);
-      sky?.style.setProperty("--rise", h.toFixed(3));
+      const text = ph === "betting" ? `${Math.max(0, Math.ceil((data.round.launchAt - now) / 1000))}s` : fmtX(m);
+      if (el.textContent !== text) el.textContent = text;
+      const t = arcT(m);
+      if (ph !== seen.ph) {
+        seen.ph = ph;
+        sky.className = `bz-sky is-${ph}`;
+        root.querySelector("[data-rk-lab]").textContent = ph === "betting" ? "Launch in" : ph === "popped" ? "Popped at" : "Flying";
+        parts();
+      }
+      sky.classList.toggle("is-max", ph === "flying" && t >= 1);
+      // The rocket rides the flight path with the log of the multiplier, upright on the pad and nose along the curve after.
+      const w = sky.clientWidth, hgt = sky.clientHeight;
+      const [x, y] = arcAt(t);
+      const [x2, y2] = arcAt(Math.min(1, t + 0.02)), [x1, y1] = arcAt(Math.max(0, t - 0.02));
+      const along = Math.atan2(((y2 - y1) * hgt) / 100, ((x2 - x1) * w) / 100);
+      const lift = Math.min(1, t / 0.1);
+      const turn = -Math.PI / 2 + (along + Math.PI / 2) * lift;
+      const at = `translate(${((x * w) / 100).toFixed(1)}px, ${((y * hgt) / 100).toFixed(1)}px) translate(-50%, -50%)`;
+      sky.querySelector(".bz-ship").style.transform = `${at} rotate(${turn.toFixed(3)}rad)`;
+      sky.querySelector(".bz-burst").style.transform = at;
+      // The world sinks as it climbs: the ground first, then the clouds, and the stars come down.
+      const climb = ph === "betting" ? 0 : t;
+      sky.querySelector(".bz-ground").style.transform = `translateY(${(Math.min(1, climb * 5) * 130).toFixed(1)}%)`;
+      sky.querySelector(".bz-clouds").style.transform = `translateY(${(climb * 105).toFixed(1)}%)`;
+      sky.querySelector(".bz-stars").style.transform = `translateY(${(climb * 100).toFixed(1)}%)`;
+      // The trail lights dot by dot, the markers as it passes them.
+      const lit = ph === "betting" ? 0 : Math.floor(t * ARC_DOTS);
+      if (lit !== seen.lit) { seen.lit = lit; [...sky.querySelector(".bz-trail").children].forEach((d, i) => d.classList.toggle("on", i < lit)); }
+      const marks = ph === "betting" ? 0 : ARC_MARKS.filter((k) => m >= k).length;
+      if (marks !== seen.marks) {
+        if (marks > seen.marks && ph === "flying") { el.classList.remove("is-bump"); void el.offsetWidth; el.classList.add("is-bump"); }
+        seen.marks = marks;
+        sky.querySelectorAll(".bz-mark").forEach((d, i) => d.classList.toggle("on", i < marks));
+      }
+      const fuse = sky.querySelector("[data-rk-fuse]");
+      fuse.style.transform = `scaleX(${ph === "betting" ? Math.max(0, Math.min(1, (data.round.launchAt - now) / ROCKET.betMs)).toFixed(3) : 0})`;
       const cash = root.querySelector("[data-rk-cash]");
-      if (cash && data.mine?.status === "open" && ph === "flying") cash.innerHTML = `Cash out ${coinTag(Math.floor(data.mine.stake * Math.min(m, data.mine.auto) * 100) / 100)}`;
-      if (phase() !== painted) paint();
-      raf = requestAnimationFrame(figure);
-    }
-    const betRow = (b) => `<div class="rt-row bz-row${b.status === "won" ? " is-won" : ""}${b.mine ? " is-mine" : ""}"><span class="rt-row-lab">${b.cashed ? fmtX(b.cashed) : b.status === "lost" ? "Popped" : "In"}</span>
-      <span class="rt-row-name">${esc(b.name)}${b.mine ? " (you)" : ""}<small>Stake ${num(b.stake)}${b.mine && b.auto ? `, auto ${fmtX(b.auto)}` : ""}</small></span><span class="rt-row-val">${b.status === "won" ? coinTag(b.payout) : ""}</span></div>`;
-    function paint() {
-      const ph = phase();
-      painted = ph;
-      const mine = data?.mine;
-      const controls = !data ? "" : ph === "betting" && !mine ? `${stakeField("rk-stake", stake)}
-          <label class="bz-field"><span>Auto cash-out</span><input id="rk-auto" class="bz-input" type="number" inputmode="decimal" min="${ROCKET.minAuto}" max="${ROCKET.maxMult}" step="0.01" value="${auto}" /></label>
-          <button class="solid rt-go" type="submit">Join this round</button>`
-        : mine?.status === "open" && ph === "flying" ? `<button type="button" class="solid rt-go" data-rk-cash>Cash out</button><p class="bz-note">Auto cash-out at ${fmtX(mine.auto)}.</p>`
-        : mine ? `<p class="bz-status ${mine.status === "won" ? "is-good" : mine.status === "lost" ? "is-bad" : ""}">${mine.status === "won" ? `You cashed out at ${fmtX(mine.cashed)} for ${coinTag(mine.payout)}.` : mine.status === "lost" ? "It popped before you cashed out." : `You're in with ${coinTag(mine.stake)}, auto at ${fmtX(mine.auto)}.`}</p>`
-        : `<p class="bz-note">${ph === "flying" ? "This round is in the air. Bets open again when it pops." : "Next round soon."}</p>`;
-      root.innerHTML = `<div class="cs-page bz-page bz-rocket">${p.head("Rocket")}
-        <div class="bz-play"><div class="bz-board-wrap">
-          <div class="bz-sky is-${ph}" style="--rise:0"><span class="bz-balloon" aria-hidden="true"><svg viewBox="0 0 40 52"><path d="M20 2C9 2 3 10 3 19c0 11 10 18 17 22 7-4 17-11 17-22C37 10 31 2 20 2z" fill="var(--yel)" stroke="var(--k0)" stroke-width="2.5"/><path d="M20 41v9" stroke="var(--k0)" stroke-width="2"/></svg></span>
-            <p class="bz-mult"><small>${ph === "betting" ? "Launch in" : ph === "popped" ? "Popped at" : "Now"}</small><b data-rk-fig>-</b></p></div>
-          <p class="bz-hist" aria-label="Last rounds">${(data?.history || []).map((h) => `<span class="${h.crash >= 2 ? "is-hi" : ""}">${fmtX(h.crash)}</span>`).join("")}</p>
-        </div>
-        <form class="rt-box bz-box bz-controls" data-go>${controls}</form></div>
-        <section class="cs-section bz-recent"><h2 class="cs-h">In this round</h2><div class="cs-rows">${(data?.bets || []).length ? data.bets.map(betRow).join("") : `<p class="bz-note">Nobody yet. Bets close at launch.</p>`}</div></section></div>`;
+      if (cash && data.mine?.status === "open" && ph === "flying") {
+        const html = `Cash out ${coinTag(Math.floor(data.mine.stake * Math.min(m, data.mine.auto) * 100) / 100)}`;
+        if (cash._html !== html) { cash.innerHTML = html; cash._html = html; }
+      }
     }
     async function load() {
       clearTimeout(timer);
       try {
         data = p.apply(await api("/api/casino/beta/rocket"));
-        if (p.visible() && !p.state.busy) paint();
+        if (p.visible() && !p.state.busy) parts();
       } catch (err) { p.fail(err); }
       if (!p.visible()) return;
       const ph = phase();
@@ -331,17 +472,26 @@ function rocketPage(ctx, root) {
       stake = readStake(root, "rk-stake");
       auto = Number(root.querySelector("#rk-auto")?.value) || auto;
       p.state.busy = true;
-      try { data = p.apply(await post("/api/casino/beta/rocket/bet", { round: data.round.id, stake, auto, requestId: uuid() })); paint(); }
+      try { data = p.apply(await post("/api/casino/beta/rocket/bet", { round: data.round.id, stake, auto, requestId: uuid() })); parts(); }
       catch (err) { p.fail(err); } finally { p.state.busy = false; }
     });
     root.addEventListener("click", async (e) => {
+      const quick = e.target.closest("[data-auto]");
+      if (quick) {
+        auto = Number(quick.dataset.auto);
+        const input = root.querySelector("#rk-auto");
+        if (input) input.value = String(auto);
+        root.querySelectorAll("[data-auto]").forEach((x) => x.classList.toggle("on", x === quick));
+        cache["[data-rk-controls]"] = null; // the keys were changed by hand: the next write starts clean
+        return;
+      }
       if (!e.target.closest("[data-rk-cash]") || p.state.busy) return;
       p.state.busy = true;
-      try { data = p.apply(await post("/api/casino/beta/rocket/cash", {})); paint(); }
+      try { data = p.apply(await post("/api/casino/beta/rocket/cash", {})); ctx.buzz?.(20); parts(); }
       catch (err) { p.fail(err); } finally { p.state.busy = false; }
     });
     return {
-      show() { paint(); load(); cancelAnimationFrame(raf); raf = requestAnimationFrame(figure); },
+      show() { skeleton(); parts(); load(); cancelAnimationFrame(raf); raf = requestAnimationFrame(figure); },
       hide() { clearTimeout(timer); cancelAnimationFrame(raf); },
     };
   });
