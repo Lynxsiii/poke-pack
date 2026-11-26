@@ -126,7 +126,7 @@ import {
 } from "./accounts.js";
 import { api, ApiError } from "./api.js";
 import { THEMES, canUseTheme, resolveLook } from "./themes.js?v=1";
-import { gearItem, normalizeGear } from "./gear.js?v=2";
+import { equippedCoin, gearItem, normalizeGear } from "./gear.js?v=2";
 import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=15";
 import { initBattles } from "./battles.js?v=10";
 import { initCasino } from "./casino.js?v=21";
@@ -424,6 +424,7 @@ const els = {
   viewShop: document.getElementById("view-shop"),
   viewBattles: document.getElementById("view-battles"),
   viewGear: document.getElementById("view-gear"),
+  viewTcg: document.getElementById("view-tcg"),
   viewCasino: document.getElementById("view-casino"),
   viewGrading: document.getElementById("view-grading"), // grading
   viewTrades: document.getElementById("view-trades"), // trades
@@ -5514,6 +5515,7 @@ const VIEW_SECTIONS = {
   shop: "viewShop",
   battles: "viewBattles",
   gear: "viewGear",
+  tcg: "viewTcg",
   casino: "viewCasino",
   grading: "viewGrading", // grading
   trades: "viewTrades", // trades
@@ -5536,6 +5538,7 @@ const VIEW_PATHS = {
   shop: "/packs",
   battles: "/battles",
   gear: "/gear",
+  tcg: "/play",
   casino: "/casino",
   grading: "/grading", // grading
   trades: "/trades", // trades
@@ -5594,6 +5597,7 @@ const VIEW_TITLES = {
   shop: "Packs | poke-pack.rip",
   battles: "Pack battles | poke-pack.rip",
   gear: "Sleeves & coins | poke-pack.rip",
+  tcg: "Play | poke-pack.rip",
   casino: "Casino | poke-pack.rip",
   grading: "Grading | poke-pack.rip", // grading
   trades: "Trades | poke-pack.rip", // trades
@@ -5619,6 +5623,7 @@ const VIEW_RENDER = {
   shop: () => centerQuickSet(),
   battles: () => battles.show(battlePath),
   gear: () => gearPage.show(),
+  tcg: () => showTcg(),
   casino: () => casino.show(casinoPath),
   grading: () => grading.show(gradingPath), // grading
   trades: () => trades.show(tradesPath), // trades
@@ -5663,6 +5668,11 @@ function viewFromPath(pathname) {
   if (TRADES_ROUTE.test(path)) {
     tradesPath = path.toLowerCase();
     return "trades";
+  }
+  // The card game (js/tcg-page.js): /play, /play/deck/<id>, /play/match. Not in any menu yet.
+  if (TCG_ROUTE.test(path)) {
+    tcgPath = path;
+    return "tcg";
   }
   const legal = path.match(/^\/(terms|privacy|legal)$/);
   if (legal) {
@@ -5729,6 +5739,7 @@ function pathForView(name) {
   if (name === "casino") return casinoPath;
   if (name === "grading") return gradingPath; // grading
   if (name === "trades") return tradesPath; // trades
+  if (name === "tcg") return tcgPath;
   if (name === "profile") return profilePath(profileHandle || "trainer", profilePageWanted);
   if (name === "shop") return `/packs/${liveSet.id}`;
   if (name === "social") return socialTab === "rankings" ? "/rankings" : socialTab === "lounge" ? "/lounge" : dmHandle ? `/social/${dmHandle}` : "/social";
@@ -5778,6 +5789,7 @@ function applyView(next, hist) {
   if (next !== "trades") trades.hide(); // trades
   if (next !== "profile") profileView.leaveProfileRoom(); // the room's tint and backdrop belong to the profile only
   if (next !== "cart") cartPage.hide();
+  if (next !== "tcg") tcgPage?.hide();
   if (next !== "vault") vaultPage.hide();
   if (next !== "binder") binderEditor?.close(); // an unsaved draft is dropped when you leave
   if (next !== "auth" && next !== "battles") battleReturnPath = "";
@@ -10292,6 +10304,56 @@ async function routeFromLocation() {
   }
   if (!atRoot) history.replaceState({ view: "home" }, "", "/");
   setView("home", { history: "none" });
+}
+
+/*
+ * The card game (/play). Its code loads the first time the page is opened, so
+ * nobody who never plays pays for it. Rules: js/tcg/; screen: js/tcg-page.js.
+ */
+const TCG_ROUTE = /^\/play(?:\/match|\/deck\/[a-z0-9]+)?$/;
+let tcgPath = "/play";
+let tcgPage = null;
+let tcgLoading = null;
+function showTcg() {
+  if (tcgPage) return tcgPage.show(tcgPath);
+  els.viewTcg.innerHTML = `<div class="tg-page"><div class="rt-skel tg-loading">Loading</div></div>`;
+  tcgLoading ||= import("./tcg-page.js?v=1")
+    .then(({ initTcg }) => {
+      tcgPage = initTcg({
+        root: els.viewTcg,
+        esc,
+        toast,
+        buzz,
+        reduceMotion: () => reduceMotion() || state.settings.motion === false || state.settings.lite,
+        navigate: (path) => {
+          if (!TCG_ROUTE.test(path)) return navigateTo(path);
+          const same = view === "tcg";
+          tcgPath = path;
+          if (!same) return setView("tcg");
+          if (normalizePath(location.pathname) !== path) history.pushState({ view: "tcg" }, "", path);
+          window.scrollTo(0, 0);
+          tcgPage.show(path);
+        },
+        playerName: () => (cloudUser?.handle ? `@${cloudUser.handle}` : "You"),
+        storeKey: () => cloudUser?.id || cloudUser?.handle || "guest",
+        owned: () => ownedMapNow(),
+        findCard,
+        loadOwnedSets: () => loadSetsInto(setsThePlayerHas()),
+        loadSet: (id) => loadSetData(getSet(id)),
+        setOf: (id) => setForCardId(id),
+        face: (card) => tcgFace(card, { stamp: false }),
+        backHtml: () => cardBackHtml(state.gear, liveSet.cardBack),
+        coinFaces: () => {
+          const coin = equippedCoin(state.gear, getGearCatalog());
+          return coin && !coin.house && coin.front ? { heads: coinOf(coin, "front"), tails: coinOf(coin, "back") } : null;
+        },
+      });
+      if (view === "tcg") tcgPage.show(tcgPath);
+    })
+    .catch(() => {
+      tcgLoading = null;
+      if (view === "tcg") els.viewTcg.innerHTML = `<div class="tg-page"><p class="rt-empty tg-none">Couldn't load the game. Check your connection and try again.</p></div>`;
+    });
 }
 
 const gearPage = initGear({

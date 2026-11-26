@@ -108,7 +108,7 @@ export function buildDeck(pool, format = "standard", { prefer = "", rand = Math.
   const first = prefer && tally[prefer] ? prefer : ranked[0];
   if (!first) return null;
 
-  const target = Math.round(rules.deckSize * 0.42);
+  const target = Math.round(rules.deckSize * 0.5);
   const cards = {};
   const names = {};
   let count = 0;
