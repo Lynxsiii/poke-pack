@@ -24,7 +24,8 @@
  *             status: { main: "" | "asleep" | "confused" | "paralyzed", poisoned, burned, since }  (Active Pokémon only)
  *             history for attack text: upOn (the turn it moved up from the Bench), healedOn, struckOn / struckFor
  *             (the turn an attack last damaged it, and by how much)
- *   side      lostOn, downedOn: the turns one of their Pokémon was Knocked Out on the opponent's turn (downedOn: by an attack's damage)
+ *   side      lostOn: the turns one of their Pokémon was Knocked Out on the opponent's turn; downed: [{ turn, uid }] the
+ *             ones Knocked Out by damage from the opponent's attack
  *   strike    { p, uid, index, turn, hit }   the attack being made this turn: its damage waits here while a choice
  *             before the damage is answered (effects.js OPS.ask, OPS.pay)
  *   phase     "setup" | "main" | "over"
@@ -882,7 +883,8 @@ export function resolveKnockOuts(state, defs, events, { between = false } = {}) 
       // (the checkup between turns is no one's turn).
       if (state.current === other(p) && !between) side.lostOn = [...new Set([...(side.lostOn || []).filter((t) => t >= state.turn - 1), state.turn])];
       // And for "Knocked Out by damage from an attack" (not damage counters, not the checkup): `downedOn`.
-      if (byAttack(slot, p)) side.downedOn = [...new Set([...(side.downedOn || []).filter((t) => t >= state.turn - 1), state.turn])];
+      // `downed` keeps which card it was, for "if any of your Fighting Pokémon were Knocked Out ...".
+      if (byAttack(slot, p)) side.downed = [...(side.downed || []).filter((d) => d.turn >= state.turn - 1), { turn: state.turn, uid: slot.uid }];
     }
     side.bench = side.bench.filter(Boolean);
   }
@@ -1446,10 +1448,17 @@ const HANDLERS = {
       // An attack's price before its damage (effects.js OPS.pay): Energy off its side's Pokémon, or cards from the
       // hand, to the discard pile; the attack counts them ("for each card you discarded in this way").
       for (const uid of picked) {
-        side.discard.push(uid);
-        if (waiting.zone === "hand") continue;
-        const at = inPlay(state, player).find(([slot]) => slot.energy.includes(uid));
+        if (waiting.zone === "hand") {
+          side.discard.push(uid);
+          continue;
+        }
+        const at = inPlay(state, player).find(([slot]) => slot.energy.includes(uid) || slot.tool === uid);
         if (!at) continue;
+        if (at[0].tool === uid) {
+          dropTool(state, player, at[1], at[0], defs, events);
+          continue;
+        }
+        side.discard.push(uid);
         at[0].energy.splice(at[0].energy.indexOf(uid), 1);
         events.push({ t: "discard-energy", p: player, spot: at[1], uids: [uid] });
       }

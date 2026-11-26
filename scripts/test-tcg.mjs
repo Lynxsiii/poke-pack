@@ -3804,6 +3804,69 @@ test("what happened earlier: moved up this turn, healed this turn, a Knock Out b
   assert.equal(state.players[1].active.damage, 10);
 });
 
+lab("lab-p2", [
+  ["Either", 10, "You may discard any amount of basic Fire Energy or any amount of basic Lightning Energy from this Pokémon. This attack does 50 more damage for each card you discarded in this way."],
+  ["Pay", 10, "You may discard a card from your hand. If you do, this attack does 60 more damage."],
+  ["Tools", 10, "Before doing damage, you may discard any number of Pokémon Tools from your Pokémon. This attack does 40 more damage for each card you discarded in this way."],
+  ["Kin", 10, "If any of your Water Pokémon were Knocked Out by damage from an attack during your opponent's last turn, this attack does 70 more damage."],
+]);
+
+test("prices before the damage: one kind of Energy only, a card from the hand, Tools from your Pokémon", () => {
+  for (const a of defs("lab-p2").attacks) assert.ok(!a.plain, a.name);
+  let state = labgame("lab-p2", "lab-2");
+  const front = state.players[0].active;
+  const fires = [handed(state, 0, F), handed(state, 0, F)];
+  const water = front.energy[0];
+  front.energy.push(...fires);
+  state.players[0].hand = state.players[0].hand.filter((u) => !fires.includes(u));
+  use(state, 0, "Either");
+  assert.ok(!state.pending[0].uids.includes(water), "Water Energy isn't offered");
+  // Both kinds would be fine one at a time; here only Fire is attached besides the Water, so all of it.
+  act(state, { type: "choose", player: 0, uids: fires });
+  assert.equal(state.players[1].active.damage, 110);
+  assert.deepEqual(state.players[0].active.energy, [water]);
+  // A card from the hand: asked only with a card to discard, then the card is chosen.
+  state = labgame("lab-p2", "lab-2");
+  const hand = state.players[0].hand.length;
+  use(state, 0, "Pay");
+  act(state, { type: "option", player: 0, index: 0 });
+  assert.equal(state.pending[0].type, "choose");
+  assert.equal(state.pending[0].min, 1);
+  act(state, { type: "choose", player: 0, uids: [state.players[0].hand[0]] });
+  assert.equal(state.players[0].hand.length, hand - 1);
+  assert.equal(state.players[1].active.damage, 70);
+  state = labgame("lab-p2", "lab-2");
+  state.players[0].discard.push(...state.players[0].hand.splice(0));
+  use(state, 0, "Pay");
+  assert.equal(state.pending.length, 0);
+  assert.equal(state.players[1].active.damage, 10);
+  // Tools off any of your Pokémon.
+  state = labgame("lab-p2", "lab-2");
+  const tool = handed(state, 0, "base1-94");
+  state.players[0].hand.pop();
+  state.players[0].bench[0].tool = tool;
+  use(state, 0, "Tools");
+  act(state, { type: "choose", player: 0, uids: [tool] });
+  assert.equal(state.players[0].bench[0].tool, undefined);
+  assert.ok(state.players[0].discard.includes(tool));
+  assert.equal(state.players[1].active.damage, 50);
+});
+
+test("a Knock Out of one of your Water Pokémon by an attack's damage: the type is the Knocked Out card's", () => {
+  const kin = (koId) => {
+    const state = labgame(koId, "lab-2");
+    state.cards[state.players[0].bench[0].uid] = "lab-p2";
+    act(state, { type: "end", player: 0 });
+    state.players[0].active.damage = defs(koId).hp - 10;
+    use(state, 1, "Pierce");
+    act(state, { type: "promote", player: 0, spot: 0 });
+    use(state, 0, "Kin");
+    return state.players[1].active.damage;
+  };
+  assert.equal(kin("base1-63"), 80, "Squirtle is a Water Pokémon");
+  assert.equal(kin("base1-46"), 10, "Charmander isn't");
+});
+
 test("base damage instead, and all of your Benched Pokémon", () => {
   let state = labgame("lab-h1", "lab-2");
   use(state, 0, "Swap");
