@@ -1,19 +1,14 @@
-// BETA TESTING (worker/beta.js): invite codes, the tester flag, and the five games' money paths.
+// BETA TESTING (worker/beta.js): invite codes, the tester flag, and the games' money paths.
 // Runs the real Worker against in-memory sqlite. Run: node scripts/test-beta.mjs
 import assert from 'node:assert/strict';
 import { DatabaseSync } from 'node:sqlite';
 import { readFileSync, readdirSync } from 'node:fs';
 import worker from '../worker/index.js';
 import { seedLevel } from './lib/level-seed.mjs';
-import { DROP_SLOTS, dropOdds, grassMultiplier, guessMultiplier, rocketCrash, stakeCents, payoutCents, TINS } from '../js/beta-rules.js';
+import { grassMultiplier, rocketCrash, stakeCents, payoutCents, TINS } from '../js/beta-rules.js';
 import { frameChoice } from '../worker/perks.js';
 
 // ---- The odds: every game returns at most 95% on average --------------------------------
-for (const [risk, slots] of Object.entries(DROP_SLOTS)) {
-  const ev = slots.reduce((s, m, k) => s + m * dropOdds(k), 0);
-  assert.ok(ev <= 0.95 && ev > 0.94, `drop ${risk} returns ${ev}`);
-  assert.equal(slots.length, 13);
-}
 for (let mines = 1; mines <= 20; mines++) {
   for (let safe = 1; safe <= 25 - mines; safe++) {
     let p = 1;
@@ -23,8 +18,6 @@ for (let mines = 1; mines <= 20; mines++) {
 }
 assert.equal(grassMultiplier(3, 0), 1);
 assert.ok(Math.abs(grassMultiplier(3, 5) - 2.0) < 0.1, 'about 2x for 3 Voltorb and 5 clear tiles, as the design said');
-assert.equal(guessMultiplier(30, 10, 'higher'), 1.26);
-assert.equal(guessMultiplier(0, 10, 'higher'), 0);
 assert.equal(rocketCrash(0), 1);
 assert.equal(rocketCrash(0.5), 1.9);
 assert.equal(rocketCrash(0.9999999), 100);
@@ -88,7 +81,7 @@ assert.equal(made.status, 200, JSON.stringify(made.body));
 assert.equal(made.body.made.length, 2);
 assert.match(made.body.made[0], /^BETA-[A-Z2-9]{6}$/);
 const [code, code2] = made.body.made;
-assert.equal((await call('/api/casino/beta/drop/play', 'POST', { risk: 'low', stake: 5, requestId: rid() }, ash.sid)).status, 403, 'not a tester yet');
+assert.equal((await call('/api/casino/beta/grass/start', 'POST', { stake: 5, mines: 3, requestId: rid() }, ash.sid)).status, 403, 'not a tester yet');
 assert.equal((await call('/api/casino/beta/join', 'POST', { code: 'BETA-NOPE00' }, ash.sid)).status, 400);
 const joined = await call('/api/casino/beta/join', 'POST', { code: code.toLowerCase() }, ash.sid);
 assert.equal(joined.status, 200, JSON.stringify(joined.body));
@@ -103,7 +96,7 @@ assert.equal((await call('/api/casino/beta', 'GET', null, owner.sid)).body.codes
 // The owner is always in, with the badge, without a code.
 assert.equal((await call('/api/casino/beta', 'GET', null, owner.sid)).body.member, true);
 assert.equal(db.prepare('SELECT beta FROM users WHERE id = ?').get(owner.id).beta, 1);
-const ownerTry = await call('/api/casino/beta/drop/play', 'POST', { risk: 'low', stake: 5, requestId: rid() }, owner.sid);
+const ownerTry = await call('/api/casino/beta/tins', 'GET', null, owner.sid);
 assert.equal(ownerTry.status, 200, JSON.stringify(ownerTry.body));
 assert.equal((await call('/api/casino/beta/tins', 'GET', null, misty.sid)).status, 403, 'a game list is locked too');
 
@@ -116,24 +109,12 @@ assert.equal((await call('/api/me', 'PATCH', { frame: 'gen-beta' }, misty.sid)).
 const prof = await call('/api/u/ashketch', 'GET');
 assert.equal(prof.body.user?.beta ?? prof.body.profile?.beta ?? prof.body.beta, true, 'the beta badge shows on the profile');
 
-// Poké Ball Drop: one tap pays once, the wallet moves by stake and payout.
+// The removed games answer 404 and take nothing.
 {
-  const before = coinsOf(ash.id);
-  const requestId = rid();
-  const a = await call('/api/casino/beta/drop/play', 'POST', { risk: 'high', stake: 10, requestId }, ash.sid);
-  assert.equal(a.status, 200, JSON.stringify(a.body));
-  const again = await call('/api/casino/beta/drop/play', 'POST', { risk: 'high', stake: 10, requestId }, ash.sid);
-  assert.equal(again.body.run.id, a.body.run.id);
-  const r = a.body.run;
-  assert.equal(r.slot, r.path.reduce((x, y) => x + y, 0));
-  assert.equal(r.mult, DROP_SLOTS.high[r.slot]);
-  assert.ok(Math.abs(coinsOf(ash.id) - (before - 10 + r.payout)) < 1e-6);
-  assert.equal((await call('/api/casino/beta/drop/play', 'POST', { risk: 'low', stake: 5000, requestId: rid() }, ash.sid)).status, 400, 'over the stake cap');
-  db.prepare('UPDATE profiles SET coins = 3 WHERE user_id = ?').run(ash.id);
-  const broke = await call('/api/casino/beta/drop/play', 'POST', { risk: 'low', stake: 5, requestId: rid() }, ash.sid);
-  assert.equal(broke.status, 400);
-  assert.equal(coinsOf(ash.id), 3);
   db.prepare('UPDATE profiles SET coins = 1000 WHERE user_id = ?').run(ash.id);
+  assert.equal((await call('/api/casino/beta/drop/play', 'POST', { risk: 'high', stake: 10, requestId: rid() }, ash.sid)).status, 404);
+  assert.equal((await call('/api/casino/beta/higher/start', 'POST', { stake: 10, requestId: rid() }, ash.sid)).status, 404);
+  assert.equal(coinsOf(ash.id), 1000);
 }
 
 // Tall Grass: a clear tile raises the payout, a Voltorb ends it, cashing out pays once.
@@ -164,27 +145,19 @@ assert.equal(prof.body.user?.beta ?? prof.body.profile?.beta ?? prof.body.beta, 
   assert.equal(late.body.run.state, 'lost');
 }
 
-// Higher or Lower: guesses pay by the set's real price spread; a wrong guess loses.
+// A Higher or Lower run left open when the game was removed is cashed out on the player's next call: the stake
+// comes back, times whatever multiplier the run had reached. Once only.
 {
   db.prepare('UPDATE profiles SET coins = 1000 WHERE user_id = ?').run(ash.id);
-  const s = await call('/api/casino/beta/higher/start', 'POST', { stake: 10, requestId: rid() }, ash.sid);
-  assert.equal(s.status, 200, JSON.stringify(s.body));
-  const run = s.body.run;
-  assert.ok(run.set?.name && run.shown.length === 1 && run.shown[0].price > 0);
-  assert.equal((await call('/api/casino/beta/higher/cash', 'POST', { id: run.id }, ash.sid)).status, 400, 'no guess yet');
-  const dir = run.pays.higher && run.pays.higher < run.pays.lower ? 'higher' : run.pays.lower ? 'lower' : 'higher';
-  const g = await call('/api/casino/beta/higher/guess', 'POST', { id: run.id, dir }, ash.sid);
-  assert.equal(g.status, 200, JSON.stringify(g.body));
-  if (g.body.run.state === 'open') {
-    assert.equal(g.body.run.guesses, 1);
-    const c = await call('/api/casino/beta/higher/cash', 'POST', { id: run.id }, ash.sid);
-    assert.equal(c.body.run.state, 'cashed');
-    assert.ok(Math.abs(coinsOf(ash.id) - (990 + payoutCents(1000, c.body.run.mult) / 100)) < 1e-6);
-  } else {
-    assert.equal(g.body.run.state, 'lost');
-    assert.ok(g.body.run.last);
-    assert.equal(coinsOf(ash.id), 990);
-  }
+  const put = (id, mult) => db.prepare("INSERT INTO beta_runs (id, user_id, game, request_id, stake, state, data, mult, payout, created_at) VALUES (?, ?, 'higher', ?, 2000, 'open', ?, 0, 0, ?)")
+    .run(id, ash.id, rid(), JSON.stringify({ set: 'sv3pt5', pool: [], shown: [], mult }), Date.now());
+  put('old-run-1', 1);
+  put('old-run-2', 2.5);
+  await Promise.all([1, 2, 3].map(() => call('/api/casino/beta', 'GET', null, ash.sid)));
+  assert.equal(coinsOf(ash.id), 1000 + 20 + 50, 'both stakes back, one at 2.5x, paid once');
+  assert.equal(db.prepare("SELECT COUNT(*) AS n FROM beta_runs WHERE game = 'higher' AND state = 'open'").get().n, 0);
+  await call('/api/casino/beta', 'GET', null, ash.sid);
+  assert.equal(coinsOf(ash.id), 1070);
 }
 
 // Mystery Tins: a tin has a price and full odds; opening takes the price and puts the card in the collection.
@@ -207,6 +180,23 @@ assert.equal(prof.body.user?.beta ?? prof.body.profile?.beta ?? prof.body.beta, 
   assert.ok(Math.abs(coinsOf(ash.id) - (100000 - tin.price)) < 1e-6);
   assert.equal(db.prepare('SELECT qty FROM cards WHERE user_id = ? AND card_id = ?').get(ash.id, o.body.run.card.id).qty >= 1, true);
   assert.ok(TINS.some((t) => t.id === tin.id));
+  // Five at once: one payment, five cards, the same answer if the tap is sent twice, and nothing if the coins fall short.
+  const before = coinsOf(ash.id);
+  const cardsBefore = db.prepare('SELECT COALESCE(SUM(qty), 0) AS n FROM cards WHERE user_id = ?').get(ash.id).n;
+  const requestId = rid();
+  const [m1, m2] = await Promise.all([1, 2].map(() => call('/api/casino/beta/tins/open', 'POST', { tin: tin.id, price: tin.price, count: 5, requestId }, ash.sid)));
+  assert.equal(m1.status, 200, JSON.stringify(m1.body));
+  assert.equal(m1.body.runs.length, 5);
+  assert.deepEqual(m1.body.runs.map((r) => r.id).sort(), m2.body.runs.map((r) => r.id).sort());
+  assert.ok(Math.abs(coinsOf(ash.id) - (before - tin.price * 5)) < 1e-6, 'five tins paid for once');
+  assert.equal(db.prepare('SELECT COALESCE(SUM(qty), 0) AS n FROM cards WHERE user_id = ?').get(ash.id).n, cardsBefore + 5);
+  assert.equal((await call('/api/casino/beta/tins/open', 'POST', { tin: tin.id, price: tin.price, count: 6, requestId: rid() }, ash.sid)).status, 400);
+  db.prepare('UPDATE profiles SET coins = ? WHERE user_id = ?').run(tin.price * 3, ash.id);
+  const short = await call('/api/casino/beta/tins/open', 'POST', { tin: tin.id, price: tin.price, count: 5, requestId: rid() }, ash.sid);
+  assert.equal(short.status, 400);
+  assert.ok(Math.abs(coinsOf(ash.id) - tin.price * 3) < 1e-6, 'nothing taken when five cannot be paid for');
+  assert.equal(db.prepare('SELECT COALESCE(SUM(qty), 0) AS n FROM cards WHERE user_id = ?').get(ash.id).n, cardsBefore + 5);
+  db.prepare('UPDATE profiles SET coins = 100000 WHERE user_id = ?').run(ash.id);
 }
 
 // Rocket: bet in the window, an auto cash-out the round reaches pays, the rest lose; manual cash pays the clock's multiplier.
