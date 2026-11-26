@@ -38,6 +38,24 @@
     },
     "bwp052": {
       "foilAs": "Rare Holo"
+    },
+    "98-cracked-ice": {
+      "like": "98",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (DragonSnarl Theme Deck)",
+      "tcgplayerId": 91392,
+      "tcgplayerGroup": 1840
+    },
+    "91-cracked-ice": {
+      "like": "91",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (DragonSpeed Theme Deck)",
+      "tcgplayerId": 91391,
+      "tcgplayerGroup": 1840
     }
   },
   "products": [
@@ -150,6 +168,30 @@
       "packs": 3,
       "promos": [],
       "note": "Three packs (random Black & White, Emerging Powers and Noble Victories packs in the real blister, one retail source; opened here as Dragons Exalted packs) and a Mirror Parallel Holo Scraggy from Dark Explorers (a reprint, not simulated)."
+    },
+    {
+      "id": "theme-deck-dragonsnarl",
+      "name": "Theme Deck \"DragonSnarl\"",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "98-cracked-ice"
+      ],
+      "price": 24.21,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Hydreigon, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-dragonspeed",
+      "name": "Theme Deck \"DragonSpeed\"",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "91-cracked-ice"
+      ],
+      "price": 46.49,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Garchomp, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ]
 }

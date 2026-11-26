@@ -87,6 +87,32 @@
       "price": 57.3,
       "priceSource": "The box has no TCGplayer listing or market price; priced at its cosmos holo Darkrai promo's TCGplayer market price (DP24, listing 84701, $57.30, tcgcsv 2026-10-01)",
       "note": "The real box (12 May 2008, Bulbapedia's merchandise page and Collector's Cache's 'Darkrai Premium Box Exclusive' titles) held an EX Crystal Guardians pack, an EX Dragon Frontiers pack and a Secret Wonders theme deck with the cosmos holo Darkrai promo (DP24) and a jumbo Darkrai; the pack and deck mix is medium confidence and none of it is a Majestic Dawn pack, so only the promo is opened here (the jumbo and the deck are not simulated)."
+    },
+    {
+      "id": "theme-deck-forest-force",
+      "name": "Theme Deck \"Forest Force\"",
+      "kind": "deck",
+      "tcgplayerId": 229134,
+      "packs": 0,
+      "promos": [
+        "24"
+      ],
+      "price": 65.01,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Leafeon, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-polar-frost",
+      "name": "Theme Deck \"Polar Frost\"",
+      "kind": "deck",
+      "tcgplayerId": 229132,
+      "packs": 0,
+      "promos": [
+        "20"
+      ],
+      "price": 91.49,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Glaceon, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ]
 }

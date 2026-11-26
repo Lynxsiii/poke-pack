@@ -230,6 +230,42 @@
         "hsp21"
       ],
       "note": "Four packs of the 2010 print: HeartGold & SoulSilver, Undaunted, Arceus and a Platinum pack, and the Suicune promo (HGSS21)."
+    },
+    {
+      "id": "theme-deck-ember-spark",
+      "name": "Theme Deck \"Ember Spark\"",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "32"
+      ],
+      "price": 193.91,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Typhlosion, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-growth-clash",
+      "name": "Theme Deck \"Growth Clash\"",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "26"
+      ],
+      "price": 71.45,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Meganium, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-mind-flood",
+      "name": "Theme Deck \"Mind Flood\"",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "20"
+      ],
+      "price": 68.12,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Feraligatr, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ]
 }

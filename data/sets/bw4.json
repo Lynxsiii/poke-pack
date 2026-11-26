@@ -50,6 +50,24 @@
     },
     "bwp043": {
       "foilAs": "Rare Ultra"
+    },
+    "21-cracked-ice": {
+      "like": "21",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Tinsel Holo (Explosive Edge Theme Deck)",
+      "tcgplayerId": 91398,
+      "tcgplayerGroup": 1840
+    },
+    "50-cracked-ice": {
+      "like": "50",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Tinsel Holo (Voltage Vortex Theme Deck)",
+      "tcgplayerId": 91401,
+      "tcgplayerGroup": 1840
     }
   },
   "products": [
@@ -167,6 +185,32 @@
       "packs": 1,
       "promos": [],
       "note": "One pack and a Sampling Pack (not simulated), with Cracked Ice Holo Cubchoo and Beartic from Emerging Powers (the reprints are not simulated). North America."
+    },
+    {
+      "id": "theme-deck-explosive-edge",
+      "name": "Theme Deck \"Explosive Edge\"",
+      "kind": "deck",
+      "tcgplayerId": 98633,
+      "packs": 0,
+      "promos": [
+        "21-cracked-ice"
+      ],
+      "price": 19.66,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Reshiram, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-voltage-vortex",
+      "name": "Theme Deck \"Voltage Vortex\"",
+      "kind": "deck",
+      "tcgplayerId": 98634,
+      "packs": 0,
+      "promos": [
+        "50-cracked-ice"
+      ],
+      "price": 32.11,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Zekrom, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ]
 }

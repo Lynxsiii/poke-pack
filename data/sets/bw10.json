@@ -41,6 +41,24 @@
     },
     "bwp099": {
       "foilAs": "Rare Holo"
+    },
+    "10-cracked-ice": {
+      "like": "10",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Mind Wipe Theme Deck)",
+      "tcgplayerId": 91258,
+      "tcgplayerGroup": 1840
+    },
+    "13-cracked-ice": {
+      "like": "13",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Solar Strike Theme Deck)",
+      "tcgplayerId": 91370,
+      "tcgplayerGroup": 1840
     }
   },
   "products": [
@@ -151,6 +169,30 @@
         "bwp099"
       ],
       "note": "Two Black & White Series packs (set not named by Bulbapedia, single source: dealt as Plasma Blast), BW99 Red Genesect and a 60-card deck of Parallel Holo cards that is not simulated."
+    },
+    {
+      "id": "theme-deck-mind-wipe",
+      "name": "Theme Deck \"Mind Wipe\"",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "10-cracked-ice"
+      ],
+      "price": 13.78,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Genesect, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-solar-strike",
+      "name": "Theme Deck \"Solar Strike\"",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "13-cracked-ice"
+      ],
+      "price": 59.27,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Volcarona, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ]
 }

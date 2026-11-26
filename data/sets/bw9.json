@@ -38,6 +38,24 @@
     },
     "bwp080": {
       "foilAs": "Rare Holo"
+    },
+    "23-cracked-ice": {
+      "like": "23",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Frost Ray Theme Deck)",
+      "tcgplayerId": 91385,
+      "tcgplayerGroup": 1840
+    },
+    "11-cracked-ice": {
+      "like": "11",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Psy Crusher Theme Deck)",
+      "tcgplayerId": 91386,
+      "tcgplayerGroup": 1840
     }
   },
   "products": [
@@ -118,6 +136,32 @@
       "tcgplayerId": 98516,
       "packs": 36,
       "promos": []
+    },
+    {
+      "id": "theme-deck-frost-ray",
+      "name": "Theme Deck \"Frost Ray\"",
+      "kind": "deck",
+      "tcgplayerId": 486243,
+      "packs": 0,
+      "promos": [
+        "23-cracked-ice"
+      ],
+      "price": 51.76,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Glaceon, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-psy-crusher",
+      "name": "Theme Deck \"Psy Crusher\"",
+      "kind": "deck",
+      "tcgplayerId": 486245,
+      "packs": 0,
+      "promos": [
+        "11-cracked-ice"
+      ],
+      "price": 56.14,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Leafeon, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ]
 }

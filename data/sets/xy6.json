@@ -169,6 +169,32 @@
       "tcgplayerId": 98026,
       "packs": 36,
       "promos": []
+    },
+    {
+      "id": "theme-deck-aurora-blast",
+      "name": "Theme Deck \"Aurora Blast\"",
+      "kind": "deck",
+      "tcgplayerId": 98029,
+      "packs": 0,
+      "promos": [
+        "16-cracked-ice"
+      ],
+      "price": 19.43,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Articuno, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-storm-rider",
+      "name": "Theme Deck \"Storm Rider\"",
+      "kind": "deck",
+      "tcgplayerId": 98030,
+      "packs": 0,
+      "promos": [
+        "23-cracked-ice"
+      ],
+      "price": 49.73,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Zapdos, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ],
   "promoCards": {
@@ -201,6 +227,24 @@
     },
     "xyp066": {
       "foilAs": "Rare Holo EX"
+    },
+    "16-cracked-ice": {
+      "like": "16",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Aurora Blast Theme Deck)",
+      "tcgplayerId": 131315,
+      "tcgplayerGroup": 1840
+    },
+    "23-cracked-ice": {
+      "like": "23",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Storm Rider Theme Deck)",
+      "tcgplayerId": 131318,
+      "tcgplayerGroup": 1840
     }
   }
 }

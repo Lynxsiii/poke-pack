@@ -173,7 +173,8 @@
     }
    ],
    "confidence": "single-source",
-   "crossCheck": "TCGplayer product text names the featured cards; all are in the list"
+   "crossCheck": "TCGplayer product text names the featured cards; all are in the list",
+   "product": "theme-deck-green-tornado"
   },
   {
    "set": "bw1",
@@ -290,7 +291,8 @@
     }
    ],
    "confidence": "single-source",
-   "crossCheck": "TCGplayer product text names the featured cards; all are in the list"
+   "crossCheck": "TCGplayer product text names the featured cards; all are in the list",
+   "product": "theme-deck-red-frenzy"
   },
   {
    "set": "bw1",
@@ -412,7 +414,8 @@
     }
    ],
    "confidence": "single-source",
-   "crossCheck": "TCGplayer product text names the featured cards; all are in the list"
+   "crossCheck": "TCGplayer product text names the featured cards; all are in the list",
+   "product": "theme-deck-blue-assault"
   },
   {
    "set": "bw2",
@@ -534,7 +537,8 @@
     }
    ],
    "confidence": "single-source",
-   "crossCheck": "TCGplayer product text names the featured cards; all are in the list"
+   "crossCheck": "TCGplayer product text names the featured cards; all are in the list",
+   "product": "theme-deck-toxic-tricks"
   },
   {
    "set": "bw2",
@@ -661,7 +665,8 @@
     }
    ],
    "confidence": "single-source",
-   "crossCheck": "TCGplayer product text names the featured cards; all are in the list"
+   "crossCheck": "TCGplayer product text names the featured cards; all are in the list",
+   "product": "theme-deck-power-play"
   },
   {
    "set": "bw3",
@@ -788,7 +793,8 @@
     }
    ],
    "confidence": "single-source",
-   "crossCheck": "TCGplayer product text names the featured cards; all are in the list"
+   "crossCheck": "TCGplayer product text names the featured cards; all are in the list",
+   "product": "theme-deck-fast-daze"
   },
   {
    "set": "bw3",
@@ -915,7 +921,8 @@
     }
    ],
    "confidence": "single-source",
-   "crossCheck": "TCGplayer product text names the featured cards; all are in the list"
+   "crossCheck": "TCGplayer product text names the featured cards; all are in the list",
+   "product": "theme-deck-furious-knights"
   },
   {
    "set": "bw4",
@@ -1046,8 +1053,16 @@
      "n": 6
     }
    ],
-   "confidence": "single-source",
-   "crossCheck": "TCGplayer product text names the featured cards; all are in the list"
+   "confidence": "verified",
+   "crossCheck": "TCGplayer product text names the featured cards; all are in the list; second list 2026-11-26: agrees",
+   "secondSource": {
+    "url": "https://cmd-sg.blogspot.com/2011/12/pokemon-bw3-next-destinies-theme-decks.html",
+    "quote": "Explosive Edge - Theme Deck (Fire/Water) ... 1x Reshiram (Holographic Rare) 1x Reshiram (Rare) 4x Litwick 2x Lampent 1x Chandelure ... 2x Heavy Ball 2x Energy Retrieval 2x Energy Search ... 1x Skyarrow Bridge 12x Fire Energy 6x Water Energy"
+   },
+   "showcaseCard": "bw4-21",
+   "showcaseTcgplayerId": 91398,
+   "showcaseTcgplayerName": "Reshiram - 21/99 (Tinsel Holo)",
+   "product": "theme-deck-explosive-edge"
   },
   {
    "set": "bw4",
@@ -1173,8 +1188,16 @@
      "n": 6
     }
    ],
-   "confidence": "single-source",
-   "crossCheck": "TCGplayer product text names the featured cards; all are in the list"
+   "confidence": "verified",
+   "crossCheck": "TCGplayer product text names the featured cards; all are in the list; second list 2026-11-26: agrees",
+   "secondSource": {
+    "url": "https://cmd-sg.blogspot.com/2011/12/pokemon-bw3-next-destinies-theme-decks.html",
+    "quote": "Voltage Vortex - Theme Deck (Lightning/Darkness) ... 1x Zekrom (Holographic Rare) 1x Zekrom (Rare) 2x Pikachu 2x Raichu 4x Shinx ... 4x Seedot ... 12x Lightning Energy 6x Darkness Energy"
+   },
+   "showcaseCard": "bw4-50",
+   "showcaseTcgplayerId": 91401,
+   "showcaseTcgplayerName": "Zekrom - 50/99 (Tinsel Holo)",
+   "product": "theme-deck-voltage-vortex"
   },
   {
    "set": "bw5",
@@ -1305,8 +1328,16 @@
      "n": 6
     }
    ],
-   "confidence": "single-source",
-   "crossCheck": "none (not on TCGplayer)"
+   "confidence": "verified",
+   "crossCheck": "none (not on TCGplayer); second list 2026-11-26: agrees",
+   "secondSource": {
+    "url": "https://cmd-sg.blogspot.com/2012/05/pokemon-bw5-dark-explorers-theme-decks.html",
+    "quote": "Raiders deck list: 1x Cofagrigus (Rare), 1x Cofagrigus (Holographic Rare), ... 12x Darkness Energy, 6x Psychic Energy (60 cards, all names and counts match)"
+   },
+   "showcaseCard": "bw5-52",
+   "showcaseTcgplayerId": 210884,
+   "showcaseTcgplayerName": "Cofagrigus - 52/108 (Cracked Ice Holo)",
+   "product": "theme-deck-raiders"
   },
   {
    "set": "bw5",
@@ -1432,8 +1463,16 @@
      "n": 6
     }
    ],
-   "confidence": "single-source",
-   "crossCheck": "none (not on TCGplayer)"
+   "confidence": "verified",
+   "crossCheck": "none (not on TCGplayer); second list 2026-11-26: agrees",
+   "secondSource": {
+    "url": "https://cmd-sg.blogspot.com/2012/05/pokemon-bw5-dark-explorers-theme-decks.html",
+    "quote": "Shadows deck list: 1x Zoroark (Rare), 1x Zoroark (Holographic Rare), 4x Zorua, ... Empoleon exclusive non-holo (match on all 60; cmd-sg typo \"Lillipip\" for Lillipup)"
+   },
+   "showcaseCard": "bw5-71",
+   "showcaseTcgplayerId": 191906,
+   "showcaseTcgplayerName": "Zoroark - 71/108 (Cracked Ice Holo)",
+   "product": "theme-deck-shadows"
   },
   {
    "set": "bw6",
@@ -1569,8 +1608,16 @@
      "n": 8
     }
    ],
-   "confidence": "single-source",
-   "crossCheck": "none (not on TCGplayer)"
+   "confidence": "verified",
+   "crossCheck": "none (not on TCGplayer); second list 2026-11-26: agrees",
+   "secondSource": {
+    "url": "https://www.pokebeach.com/2012/07/dragons-exalted-dragonspeed-dragonsnarl-theme-decks",
+    "quote": "DragonSnarl: 2x Hydreigon (1 special holo, 1 non-holo) 3x Zweilous 4x Deino ... 2x Cheren (emerging-powers/91) 1x Cilan (next-destinies/86) 2x Energy Retrieval 2x Energy Search 1x Giant Cape 2x Pokemon Communication 1x Rescue Scarf 1x Blend Energy GRPD 9x Psychic 8x Darkness"
+   },
+   "showcaseCard": "bw6-98",
+   "showcaseTcgplayerId": 91392,
+   "showcaseTcgplayerName": "Hydreigon - 98/124 (Cracked Ice Holo)",
+   "product": "theme-deck-dragonsnarl"
   },
   {
    "set": "bw6",
@@ -1668,16 +1715,11 @@
     {
      "id": "bw1-93",
      "name": "Energy Search",
-     "n": 2
+     "n": 3
     },
     {
      "id": "bw1-94",
      "name": "Energy Switch",
-     "n": 1
-    },
-    {
-     "id": "bw6-114",
-     "name": "Giant Cape",
      "n": 1
     },
     {
@@ -1711,8 +1753,16 @@
      "n": 6
     }
    ],
-   "confidence": "single-source",
-   "crossCheck": "none (not on TCGplayer)"
+   "confidence": "verified",
+   "crossCheck": "none (not on TCGplayer); second list 2026-11-26: bw.json has Energy Search x2 and Giant Cape (bw6-114) x1; PokeBeach and CMD-SG both have Energy Search x3 and NO Giant Cape. Bulbapedia (wikitext) has ES x2 + Giant Cape x1. Both lists total 60. Two sources vs one: use 3 Energy Search, drop Giant Cape.",
+   "secondSource": {
+    "url": "https://www.pokebeach.com/2012/07/dragons-exalted-dragonspeed-dragonsnarl-theme-decks",
+    "quote": "DragonSpeed: ... 1x Cheren 2x Energy Retrieval 3x Energy Search 1x Energy Switch 1x Pokemon Communication 2x Potion 1x Rescue Scarf 1x Blend Energy WLFM 11x Water Energy 6x Fighting Energy (no Giant Cape)"
+   },
+   "showcaseCard": "bw6-91",
+   "showcaseTcgplayerId": 91391,
+   "showcaseTcgplayerName": "Garchomp - 91/124 (Cracked Ice Holo)",
+   "product": "theme-deck-dragonspeed"
   },
   {
    "set": "bw7",
@@ -1843,8 +1893,16 @@
      "n": 7
     }
    ],
-   "confidence": "single-source",
-   "crossCheck": "TCGplayer product text names the featured cards; all are in the list"
+   "confidence": "verified",
+   "crossCheck": "TCGplayer product text names the featured cards; all are in the list; second list 2026-11-26: agrees",
+   "secondSource": {
+    "url": "https://www.pokebeach.com/2012/10/boundaries-crossed-iceshock-theme-deck-list",
+    "quote": "2x Black Kyurem 1x Blastoise 2x Wartortle 3x Squirtle 2x Golduck 3x Psyduck 1x Jellicent ... 2x Switch 2x Energy Search 2x Cheren 2x Energy Retrieval 2x Great Ball 1x Pokemon Communication 1x Skyla 11x Water 7x Lightning"
+   },
+   "showcaseCard": "bw7-100",
+   "showcaseTcgplayerId": 123459,
+   "showcaseTcgplayerName": "Black Kyurem - 100/149 (BW Boundaries Crossed)",
+   "product": "theme-deck-ice-shock"
   },
   {
    "set": "bw7",
@@ -1980,8 +2038,16 @@
      "n": 7
     }
    ],
-   "confidence": "single-source",
-   "crossCheck": "TCGplayer product text names the featured cards; all are in the list"
+   "confidence": "verified",
+   "crossCheck": "TCGplayer product text names the featured cards; all are in the list; second list 2026-11-26: agrees",
+   "secondSource": {
+    "url": "https://www.pokebeach.com/2012/10/boundaries-crossed-coldfire-theme-deck-list",
+    "quote": "2x White Kyurem 1x Samurott 2x Dewott 3x Oshawott 2x Cryogonal 1x Keldeo 2x Delibird 2x Darmanitan 2x Darumaka 1x Camerupt 2x Numel 2x Snorlax 2x Delcatty 2x Skitty 2x Lillipup 2x Dunsparce ... 11x Water Energy 7x Fire Energy"
+   },
+   "showcaseCard": "bw7-102",
+   "showcaseTcgplayerId": 123460,
+   "showcaseTcgplayerName": "White Kyurem - 102/149 (BW Boundaries Crossed)",
+   "product": "theme-deck-cold-fire"
   },
   {
    "set": "bw8",
@@ -2112,8 +2178,16 @@
      "n": 6
     }
    ],
-   "confidence": "single-source",
-   "crossCheck": "none (not on TCGplayer)"
+   "confidence": "verified",
+   "crossCheck": "none (not on TCGplayer); second list 2026-11-26: CMD-SG lists Turtwig x2 so its list totals 59 cards; bw.json (from Bulbapedia) has Turtwig x3 = 60. Likely a CMD typo; kept bw.json 3. Every other card matches.",
+   "secondSource": {
+    "url": "https://cmd-sg.blogspot.com/2012/12/blog-post.html",
+    "quote": "PlasmaShadow Cardlist: 2x Giratina (1 Holographic Rare / 1 Rare) 1x Garbodor 2x Trubbish 1x Weezing 2x Koffing 2x Golbat 3x Zubat ... 2x Grotle 2x Turtwig ... 2x Team Plasma Grunt 1x Hypnotoxic Laser 12x Psychic Energy 6x Grass Energy; Coin: Team Plasma Coin"
+   },
+   "showcaseCard": "bw8-62",
+   "showcaseTcgplayerId": 91388,
+   "showcaseTcgplayerName": "Giratina - 62/135 (BW Plasma Storm)",
+   "product": "theme-deck-plasma-shadow"
   },
   {
    "set": "bw8",
@@ -2244,8 +2318,16 @@
      "n": 9
     }
    ],
-   "confidence": "single-source",
-   "crossCheck": "none (not on TCGplayer)"
+   "confidence": "verified",
+   "crossCheck": "none (not on TCGplayer); second list 2026-11-26: agrees",
+   "secondSource": {
+    "url": "https://cmd-sg.blogspot.com/2012/12/blog-post.html",
+    "quote": "PlasmaClaw Cardlist: 2x Druddigon (1 Holographic Rare / 1 Rare) 1x Infernape 2x Monferno 3x Chimchar 1x Sharpedo 2x Carvanha 1x Jellicent 2x Frillish 2x Vanillish 2x Vanillite 2x Simisear 3x Pansear 2x Lampent 2x Litwick 2x Lotad 2x Cubchoo 2x Energy Search 2x Colress 1x Hypnotoxic Laser 2x Pokemon Communication 2x Potion 2x Team Plasma Grunt 9x Water 9x Fire"
+   },
+   "showcaseCard": "bw8-94",
+   "showcaseTcgplayerId": 131334,
+   "showcaseTcgplayerName": "Druddigon - 94/135 (BW Plasma Storm)",
+   "product": "theme-deck-plasma-claw"
   },
   {
    "set": "bw9",
@@ -2381,8 +2463,16 @@
      "n": 9
     }
    ],
-   "confidence": "single-source",
-   "crossCheck": "TCGplayer product text names the featured cards; all are in the list"
+   "confidence": "verified",
+   "crossCheck": "TCGplayer product text names the featured cards; all are in the list; second list 2026-11-26: agrees",
+   "secondSource": {
+    "url": "https://cmd-sg.blogspot.com/2013/05/pokemon-bw9-plasma-freeze-theme-decks.html",
+    "quote": "Decklist: 1x Glaceon (Holographic Rare) 1x Glaceon (R) 2x Vaporeon 2x Jolteon 4x Eevee - 89/116 1x Vanilluxe ... 1x Superior Energy Retrieval 9x Water Energy 9x Lightning Energy Coin: Deoxys"
+   },
+   "showcaseCard": "bw9-23",
+   "showcaseTcgplayerId": 91385,
+   "showcaseTcgplayerName": "Glaceon - 23/116 (BW Plasma Freeze)",
+   "product": "theme-deck-frost-ray"
   },
   {
    "set": "bw9",
@@ -2518,8 +2608,16 @@
      "n": 8
     }
    ],
-   "confidence": "single-source",
-   "crossCheck": "TCGplayer product text names the featured cards; all are in the list"
+   "confidence": "verified",
+   "crossCheck": "TCGplayer product text names the featured cards; all are in the list; second list 2026-11-26: agrees",
+   "secondSource": {
+    "url": "https://cmd-sg.blogspot.com/2013/05/pokemon-bw9-plasma-freeze-theme-decks.html",
+    "quote": "Decklist: 1x Leafeon (Holographic Rare) 1x Leafeon (R) 2x Espeon 4x Eevee - 90/116 1x Cofagrigus (R) - 57/116 ... 10x Psychic Energy 8x Grass Energy"
+   },
+   "showcaseCard": "bw9-11",
+   "showcaseTcgplayerId": 91386,
+   "showcaseTcgplayerName": "Leafeon - 11/116 (BW Plasma Freeze)",
+   "product": "theme-deck-psy-crusher"
   },
   {
    "set": "bw10",
@@ -2650,8 +2748,16 @@
      "n": 7
     }
    ],
-   "confidence": "single-source",
-   "crossCheck": "none (not on TCGplayer)"
+   "confidence": "verified",
+   "crossCheck": "none (not on TCGplayer); second list 2026-11-26: agrees",
+   "secondSource": {
+    "url": "https://www.pokebeach.com/?p=30970 (https://www.pokebeach.com/2013/07/plasma-blast)",
+    "quote": "Mind Wipe Theme Deck List: Genesect x2 Solosis x3 Duosion x2 Reuniclus x1 Drifloon x2 Drifblim x1 Munna x2 Musharna x2 Golett x2 Golurk x1 Tropius x2 Karrablast x2 Porygon x2 Porygon 2 x2 Kangaskhan x2 Surskit x2; Caitlin x2 Cheren x2 Energy Retrieval x2 Energy Search x2 Potion x2 Switch x2; Psychic x11 Grass x7"
+   },
+   "showcaseCard": "bw10-10",
+   "showcaseTcgplayerId": 91258,
+   "showcaseTcgplayerName": "Genesect - 10/101 (BW Plasma Blast)",
+   "product": "theme-deck-mind-wipe"
   },
   {
    "set": "bw10",
@@ -2782,8 +2888,16 @@
      "n": 6
     }
    ],
-   "confidence": "single-source",
-   "crossCheck": "none (not on TCGplayer)"
+   "confidence": "verified",
+   "crossCheck": "none (not on TCGplayer); second list 2026-11-26: agrees",
+   "secondSource": {
+    "url": "https://www.pokebeach.com/2013/07/plasma-blast",
+    "quote": "Solar Strike Theme Deck List: Larvesta x3 Volcarona x2 (special holo) Snorunt x3 Glalie x2 Froslass x1 Lapras x2 Squirtle x3 Wartortle x2 Blastoise x1 Teddiursa x2 Ursaring x2 Ducklett x2 Suicune x1 Remoraid x2 Octillery x2; Professor Juniper x2 Cheren x2 Reversal Trigger x2 Pokemon Catcher x1 Energy Search x2 Energy Retrieval x2 Ultra Ball x1; 12 Water 6 Fire"
+   },
+   "showcaseCard": "bw10-13",
+   "showcaseTcgplayerId": 91370,
+   "showcaseTcgplayerName": "Volcarona - 13/101 (BW Plasma Blast)",
+   "product": "theme-deck-solar-strike"
   }
  ]
 }

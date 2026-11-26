@@ -4271,6 +4271,100 @@
     "etchMap": "assets/foil/maps/xy4/122-etch.webp"
   },
   {
+    "id": "xy4-10-cracked-ice",
+    "name": "Talonflame",
+    "number": "10-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "130",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "In the fever of an exciting battle, it showers embers from the gaps between its feathers and takes to the air.",
+    "evolvesFrom": "Fletchinder",
+    "image": "assets/cards/xy4/10.webp",
+    "imageSmall": "assets/cards/xy4/10-sm.webp",
+    "attacks": [
+      {
+        "name": "Acrobatics",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "30+",
+        "text": "Flip 2 coins. This attack does 30 more damage for each heads."
+      },
+      {
+        "name": "Jet Shoot",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "During your opponent's next turn, any damage done to this Pokémon by attacks is increased by 40 (after applying Weakness and Resistance)."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-10/large",
+    "printedNumber": "10",
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Burning Winds Theme Deck)",
+    "tcgplayerId": 94751,
+    "market": 2.26
+  },
+  {
+    "id": "xy4-27-cracked-ice",
+    "name": "Galvantula",
+    "number": "27-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "80",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "They employ an electrically charged web to trap their prey. While it is immobilized by shock, they leisurely consume it.",
+    "evolvesFrom": "Joltik",
+    "image": "assets/cards/xy4/27.webp",
+    "imageSmall": "assets/cards/xy4/27-sm.webp",
+    "attacks": [
+      {
+        "name": "Cobweb Trip",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "Switch 1 of your opponent's Benched Pokémon with your opponent's Active Pokémon. The new Active Pokémon is now Confused."
+      },
+      {
+        "name": "Electroweb",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "The Defending Pokémon can't retreat during your opponent's next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy4-27/large",
+    "printedNumber": "27",
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Bolt Twister Theme Deck)",
+    "tcgplayerId": 131323,
+    "market": 1.1
+  },
+  {
     "id": "xy4-xyp022",
     "name": "Darkrai",
     "number": "xyp022",
@@ -4308,7 +4402,7 @@
         "text": "If your opponent's Active Pokémon is Asleep, this attack does 60 more damage and heal 30 damage from this Pokémon."
       }
     ],
-    "market": 17.79,
+    "market": 20.25,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY22/large",
     "printedNumber": "XY 022",
     "tcgplayerId": 96385,
@@ -4354,13 +4448,13 @@
         "text": "Flip 2 coins. This attack does 30 more damage for each heads."
       }
     ],
+    "market": 0.94,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY23/large",
     "printedNumber": "XY 023",
     "tcgplayerId": 96386,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 0.77
+    "foilAs": "Rare Holo"
   },
   {
     "id": "xy4-xyp024",
@@ -4398,13 +4492,13 @@
         "type": "Ability"
       }
     ],
+    "market": 160.08,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY24/large",
     "printedNumber": "XY 024",
     "tcgplayerId": 96387,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 125.89
+    "foilAs": "Rare Holo"
   },
   {
     "id": "xy4-xyp034",
@@ -4414,7 +4508,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Metal"
@@ -4445,13 +4539,13 @@
         "text": "Flip 4 coins. This attack does 50 damage times the number of heads."
       }
     ],
+    "market": 43.63,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY34/large",
     "printedNumber": "XY 034",
     "tcgplayerId": 96397,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo EX",
-    "market": 31.76
+    "foilAs": "Rare Holo EX"
   },
   {
     "id": "xy4-xyp035",
@@ -4460,8 +4554,8 @@
     "rarity": "Promo",
     "supertype": "Pokémon",
     "subtypes": [
-      "MEGA",
-      "EX"
+      "Mega",
+      "ex"
     ],
     "types": [
       "Metal"
@@ -4484,13 +4578,13 @@
         "text": "This attack does 10 more damage for each Metal Energy attached to this Pokémon."
       }
     ],
+    "market": 71.91,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY35/large",
     "printedNumber": "XY 035",
     "tcgplayerId": 96398,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo EX",
-    "market": 69.94
+    "foilAs": "Rare Holo EX"
   },
   {
     "id": "xy4-xyp036",
@@ -4519,13 +4613,13 @@
         "text": "Flip a coin. If heads, this attack does 10 more damage."
       }
     ],
+    "market": 5.84,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY36/large",
     "printedNumber": "XY 036",
     "tcgplayerId": 96419,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 4.02
+    "foilAs": "Rare Holo"
   },
   {
     "id": "xy4-xyp037",
@@ -4554,13 +4648,13 @@
         "text": "Flip a coin. If tails, discard a Fire Energy attached to this Pokémon."
       }
     ],
+    "market": 12.5,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY37/large",
     "printedNumber": "XY 037",
     "tcgplayerId": 96420,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 5.08
+    "foilAs": "Rare Holo"
   },
   {
     "id": "xy4-xyp038",
@@ -4598,13 +4692,13 @@
         "text": ""
       }
     ],
+    "market": 15.36,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY38/large",
     "printedNumber": "XY 038",
     "tcgplayerId": 96421,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 8.58
+    "foilAs": "Rare Holo"
   },
   {
     "id": "xy4-xyp043",
@@ -4614,7 +4708,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Fairy"
@@ -4644,13 +4738,13 @@
         "text": "Flip 2 coins. This attack does 40 more damage for each heads."
       }
     ],
+    "market": 11.45,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY43/large",
     "printedNumber": "XY 043",
     "tcgplayerId": 96416,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo EX",
-    "market": 10.99
+    "foilAs": "Rare Holo EX"
   },
   {
     "id": "xy4-xyp044",
@@ -4659,8 +4753,8 @@
     "rarity": "Promo",
     "supertype": "Pokémon",
     "subtypes": [
-      "MEGA",
-      "EX"
+      "Mega",
+      "ex"
     ],
     "types": [
       "Fairy"
@@ -4682,13 +4776,13 @@
         "text": "During your opponent's next turn, prevent all damage done to each of your Pokémon from your opponent's Pokémon-EX. (If this Pokémon is no longer your Active Pokémon, this effect ends.)"
       }
     ],
+    "market": 27.65,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY44/large",
     "printedNumber": "XY 044",
     "tcgplayerId": 96417,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo EX",
-    "market": 28.59
+    "foilAs": "Rare Holo EX"
   },
   {
     "id": "xy4-xyp045",
@@ -4730,7 +4824,7 @@
         "text": "This Pokémon can't use Cross Slash during your next turn."
       }
     ],
-    "market": 3.47,
+    "market": 4.16,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY45/large",
     "printedNumber": "XY 045",
     "tcgplayerId": 96418,

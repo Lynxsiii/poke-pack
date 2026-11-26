@@ -3902,6 +3902,99 @@
     "etchMap": "assets/foil/maps/xy6/110-etch.webp"
   },
   {
+    "id": "xy6-16-cracked-ice",
+    "name": "Articuno",
+    "number": "16-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "120",
+    "artist": "Naoki Saito",
+    "flavorText": "A legendary bird Pokémon that is said to appear to doomed people who are lost in icy mountains.",
+    "image": "assets/cards/xy6/16.webp",
+    "imageSmall": "assets/cards/xy6/16-sm.webp",
+    "attacks": [
+      {
+        "name": "Find Ice",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 3 Water Energy cards, reveal them, and put them into your hand. Shuffle your deck afterward."
+      },
+      {
+        "name": "Freezing Wind",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy6-16/large",
+    "printedNumber": "16",
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Aurora Blast Theme Deck)",
+    "tcgplayerId": 131315,
+    "market": 10.12
+  },
+  {
+    "id": "xy6-23-cracked-ice",
+    "name": "Zapdos",
+    "number": "23-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "120",
+    "artist": "Hitoshi Ariga",
+    "flavorText": "A legendary Pokémon that is said to live in thunderclouds. It freely controls lightning bolts.",
+    "image": "assets/cards/xy6/23.webp",
+    "imageSmall": "assets/cards/xy6/23-sm.webp",
+    "attacks": [
+      {
+        "name": "Drill Peck",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Raging Thunder",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "This attack does 40 damage to 1 of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy6-23/large",
+    "printedNumber": "23",
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Storm Rider Theme Deck)",
+    "tcgplayerId": 131318,
+    "market": 7.84
+  },
+  {
     "id": "xy6-xyp049",
     "name": "Regirock",
     "number": "xyp049",
@@ -3939,13 +4032,13 @@
         "text": "Flip a coin. If heads, this attack does 40 more damage."
       }
     ],
+    "market": 8.11,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY49/large",
     "printedNumber": "XY 049",
     "tcgplayerId": 100507,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 7.55
+    "foilAs": "Rare Holo"
   },
   {
     "id": "xy6-xyp050",
@@ -3984,13 +4077,13 @@
         "type": "Ability"
       }
     ],
+    "market": 2.6,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY50/large",
     "printedNumber": "XY 050",
     "tcgplayerId": 100508,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 2.59
+    "foilAs": "Rare Holo"
   },
   {
     "id": "xy6-xyp053",
@@ -4029,7 +4122,7 @@
         "text": "This Pokémon can't use Strong Slash during your next turn."
       }
     ],
-    "market": 10.24,
+    "market": 10.95,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY53/large",
     "printedNumber": "XY 053",
     "tcgplayerId": 100509,
@@ -4077,7 +4170,7 @@
         "text": "Flip a coin for each Fire Energy attached to this Pokémon. This attack does 20 more damage for each heads."
       }
     ],
-    "market": 9.47,
+    "market": 13.32,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY54/large",
     "printedNumber": "XY 054",
     "tcgplayerId": 100510,
@@ -4094,7 +4187,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Water"
@@ -4126,13 +4219,13 @@
         "text": "This Pokémon does 20 damage to itself."
       }
     ],
+    "market": 10.1,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY55/large",
     "printedNumber": "XY 055",
     "tcgplayerId": 100511,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo EX",
-    "market": 11.16
+    "foilAs": "Rare Holo EX"
   },
   {
     "id": "xy6-xyp062",
@@ -4142,7 +4235,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Darkness"
@@ -4171,13 +4264,13 @@
         "text": "During your opponent's next turn, any damage done by attacks from the Defending Pokémon is reduced by 20 (before applying Weakness and Resistance)."
       }
     ],
+    "market": 17.05,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY62/large",
     "printedNumber": "XY 062",
     "tcgplayerId": 100512,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo EX",
-    "market": 15.39
+    "foilAs": "Rare Holo EX"
   },
   {
     "id": "xy6-xyp063",
@@ -4186,8 +4279,8 @@
     "rarity": "Promo",
     "supertype": "Pokémon",
     "subtypes": [
-      "MEGA",
-      "EX"
+      "Mega",
+      "ex"
     ],
     "types": [
       "Darkness"
@@ -4208,13 +4301,13 @@
         "text": "Discard the top card of your opponent's deck. If that card is a Trainer card, this attack does 80 more damage."
       }
     ],
+    "market": 29.96,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY63/large",
     "printedNumber": "XY 063",
     "tcgplayerId": 100513,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo EX",
-    "market": 29.48
+    "foilAs": "Rare Holo EX"
   },
   {
     "id": "xy6-xyp064",
@@ -4253,13 +4346,13 @@
         "type": "Ability"
       }
     ],
+    "market": 68.98,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY64/large",
     "printedNumber": "XY 064",
     "tcgplayerId": 100514,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 54.94
+    "foilAs": "Rare Holo"
   },
   {
     "id": "xy6-xyp065",
@@ -4299,13 +4392,13 @@
         "text": ""
       }
     ],
+    "market": 18.31,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY65/large",
     "printedNumber": "XY 065",
     "tcgplayerId": 102804,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 18.46
+    "foilAs": "Rare Holo"
   },
   {
     "id": "xy6-xyp066",
@@ -4315,7 +4408,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Colorless"
@@ -4346,12 +4439,12 @@
         "text": "Flip a coin. If tails, discard 2 Energy attached to this Pokémon."
       }
     ],
+    "market": 110.47,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY66/large",
     "printedNumber": "XY 066",
     "tcgplayerId": 100515,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo EX",
-    "market": 66.05
+    "foilAs": "Rare Holo EX"
   }
 ]

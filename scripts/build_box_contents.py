@@ -58,8 +58,9 @@ EX_KITS_RESEARCH = ROOT / "scripts" / "box-research" / "ex-kits.json"  # e5: the
 WOTC_RESEARCH = ROOT / "scripts" / "box-research" / "wotc.json"
 WOTC_W1_RESEARCH = ROOT / "scripts" / "box-research" / "wotc-w1.json"
 WOTC_NEO_RESEARCH = ROOT / "scripts" / "box-research" / "wotc-neo.json"
-# EX-era theme decks (ex1-ex16), same shape as wotc.json; Bulbapedia lists checked against Serebii (2026-11-26).
-EX_DECKS_RESEARCH = [ROOT / "scripts" / "box-research" / f"ex-decks-{part}.json" for part in ("a", "b")]
+# Theme decks of the EX (ex1-ex16), Diamond & Pearl to Call of Legends and XY eras, same shape as wotc.json;
+# Bulbapedia lists checked against a second list (Serebii, pokewiki.de, TCGsync), 2026-11-26.
+EX_DECKS_RESEARCH = [ROOT / "scripts" / "box-research" / name for name in ("ex-decks-a.json", "ex-decks-b.json", "dp-decks.json", "xy-decks.json")]
 # Noah chose (2026-09-30) to ship single-source lists too. --verified-only drops them again;
 # --trial writes the same build to a scratch file.
 ALLOW_SINGLE = True
@@ -666,6 +667,9 @@ def wotc_decks(research: dict, out: dict, rep: Report, offers: dict, cards: set[
         rows = [[c["id"], c["n"]] for c in deck["cards"]]
         for promo in offer.get("promos", []):  # the featured card is the product's promo, dealt once: it replaces one copy
             hit = next((r for r in rows if r[0] == promo and r[1] > 0), None)
+            if not hit:  # a deck-only print of a list card ("dp2-33-theme" is the deck's copy of dp2-33)
+                base = re.sub(r"^((?:[a-z]+\d*[a-z]*\d*)-[A-Za-z]*\d+)-[a-z-]+$", r"\1", promo)
+                hit = next((r for r in rows if base != promo and r[0] == base and r[1] > 0), None)
             if hit:
                 hit[1] -= 1
             else:

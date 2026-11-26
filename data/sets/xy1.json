@@ -164,6 +164,32 @@
       "tcgplayerId": 91601,
       "packs": 36,
       "promos": []
+    },
+    {
+      "id": "theme-deck-resilient-life",
+      "name": "Theme Deck \"Resilient Life\"",
+      "kind": "deck",
+      "tcgplayerId": 91603,
+      "packs": 0,
+      "promos": [
+        "96-cracked-ice"
+      ],
+      "price": 16.79,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Xerneas, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-destruction-rush",
+      "name": "Theme Deck \"Destruction Rush\"",
+      "kind": "deck",
+      "tcgplayerId": 91604,
+      "packs": 0,
+      "promos": [
+        "78-cracked-ice"
+      ],
+      "price": 12.17,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Yveltal, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ],
   "promoCards": {
@@ -193,6 +219,24 @@
     },
     "xyp009": {
       "foilAs": "Rare Holo EX"
+    },
+    "96-cracked-ice": {
+      "like": "96",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Resilient Life Theme Deck)",
+      "tcgplayerId": 123478,
+      "tcgplayerGroup": 1840
+    },
+    "78-cracked-ice": {
+      "like": "78",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Destruction Rush Theme Deck)",
+      "tcgplayerId": 91252,
+      "tcgplayerGroup": 1840
     }
   }
 }

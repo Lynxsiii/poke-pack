@@ -60,6 +60,24 @@
     },
     "xyp045": {
       "foilAs": "Rare Holo EX"
+    },
+    "10-cracked-ice": {
+      "like": "10",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Burning Winds Theme Deck)",
+      "tcgplayerId": 94751,
+      "tcgplayerGroup": 1840
+    },
+    "27-cracked-ice": {
+      "like": "27",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Bolt Twister Theme Deck)",
+      "tcgplayerId": 131323,
+      "tcgplayerGroup": 1840
     }
   },
   "products": [
@@ -221,6 +239,32 @@
       "packs": 1,
       "promos": [],
       "note": "One pack and a galaxy-holofoil reprint of XY Talonflame (the reprint card is not simulated)."
+    },
+    {
+      "id": "theme-deck-burning-winds",
+      "name": "Theme Deck \"Burning Winds\"",
+      "kind": "deck",
+      "tcgplayerId": 94624,
+      "packs": 0,
+      "promos": [
+        "10-cracked-ice"
+      ],
+      "price": 13.76,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Talonflame, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-bolt-twister",
+      "name": "Theme Deck \"Bolt Twister\"",
+      "kind": "deck",
+      "tcgplayerId": 94625,
+      "packs": 0,
+      "promos": [
+        "27-cracked-ice"
+      ],
+      "price": 17.78,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Galvantula, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ]
 }

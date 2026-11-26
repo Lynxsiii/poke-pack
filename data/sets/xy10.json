@@ -87,6 +87,24 @@
     },
     "xyp156": {
       "foilAs": "Rare Holo"
+    },
+    "78-cracked-ice": {
+      "like": "78",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Sky Guardian Theme Deck)",
+      "tcgplayerId": 123466,
+      "tcgplayerGroup": 1840
+    },
+    "53-cracked-ice": {
+      "like": "53",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Battle Ruler Theme Deck)",
+      "tcgplayerId": 123467,
+      "tcgplayerGroup": 1840
     }
   },
   "products": [
@@ -260,6 +278,32 @@
       "tcgplayerId": 117478,
       "packs": 36,
       "promos": []
+    },
+    {
+      "id": "theme-deck-sky-guardian",
+      "name": "Theme Deck \"Sky Guardian\"",
+      "kind": "deck",
+      "tcgplayerId": 117479,
+      "packs": 0,
+      "promos": [
+        "78-cracked-ice"
+      ],
+      "price": 30.43,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Lugia, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-battle-ruler",
+      "name": "Theme Deck \"Battle Ruler\"",
+      "kind": "deck",
+      "tcgplayerId": 117480,
+      "packs": 0,
+      "promos": [
+        "53-cracked-ice"
+      ],
+      "price": 11.3,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Zygarde, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ]
 }

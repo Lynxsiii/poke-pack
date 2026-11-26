@@ -146,6 +146,32 @@
         "xyp073"
       ],
       "note": "Two Ancient Origins, one Roaring Skies and one Primal Clash pack in the real tin; only the Ancient Origins packs are shown."
+    },
+    {
+      "id": "theme-deck-iron-tide",
+      "name": "Theme Deck \"Iron Tide\"",
+      "kind": "deck",
+      "tcgplayerId": 100491,
+      "packs": 0,
+      "promos": [
+        "49-cracked-ice"
+      ],
+      "price": 76.18,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Metagross, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-stone-heart",
+      "name": "Theme Deck \"Stone Heart\"",
+      "kind": "deck",
+      "tcgplayerId": 100492,
+      "packs": 0,
+      "promos": [
+        "40-cracked-ice"
+      ],
+      "price": 8.47,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Regirock, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ],
   "promoCards": {
@@ -175,6 +201,24 @@
     },
     "xyp073": {
       "foilAs": "Rare Holo EX"
+    },
+    "49-cracked-ice": {
+      "like": "49",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Iron Tide Theme Deck)",
+      "tcgplayerId": 131313,
+      "tcgplayerGroup": 1840
+    },
+    "40-cracked-ice": {
+      "like": "40",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Stone Heart Theme Deck)",
+      "tcgplayerId": 131311,
+      "tcgplayerGroup": 1840
     }
   }
 }

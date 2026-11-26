@@ -4272,6 +4272,98 @@
     "etchMap": "assets/foil/maps/xy11/116-etch.webp"
   },
   {
+    "id": "xy11-25-cracked-ice",
+    "name": "Volcanion",
+    "number": "25-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "130",
+    "artist": "5ban Graphics",
+    "flavorText": "It expels its internal steam from the arms on its back. It has enough power to blow away a mountain.",
+    "image": "assets/cards/xy11/25.webp",
+    "imageSmall": "assets/cards/xy11/25-sm.webp",
+    "attacks": [
+      {
+        "name": "Power Heater",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "20",
+        "text": "Choose 2 of your Benched Pokémon. Attach a Fire Energy card from your discard pile to each of those Pokémon."
+      },
+      {
+        "name": "Steam Artillery",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire"
+        ],
+        "damage": "100",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy11-25/large",
+    "printedNumber": "25",
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Gears of Fire Theme Deck)",
+    "tcgplayerId": 123462,
+    "market": 1.63
+  },
+  {
+    "id": "xy11-51-cracked-ice",
+    "name": "Hoopa",
+    "number": "51-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "130",
+    "artist": "Yoshinobu Saito",
+    "flavorText": "It is said to be able to seize anything it desires with its six rings and six huge arms. With its power sealed, it is transformed into a much smaller form.",
+    "image": "assets/cards/xy11/51.webp",
+    "imageSmall": "assets/cards/xy11/51-sm.webp",
+    "attacks": [
+      {
+        "name": "Hyperspace Punch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 20 damage to 2 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Portal Strike",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "130",
+        "text": "This Pokémon can't use Portal Strike during your next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy11-51/large",
+    "printedNumber": "51",
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Ring of Lightning Theme Deck)",
+    "tcgplayerId": 123464,
+    "market": 1.05
+  },
+  {
     "id": "xy11-xyp139",
     "name": "Floette",
     "number": "xyp139",
@@ -4308,7 +4400,7 @@
         "text": "Flip a coin. If heads, this attack does 20 more damage and heal 20 damage from this Pokémon."
       }
     ],
-    "market": 3.03,
+    "market": 2.81,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY139/large",
     "printedNumber": "XY 139",
     "tcgplayerId": 123479,
@@ -4355,7 +4447,7 @@
         "text": "This attack's damage isn't affected by Resistance."
       }
     ],
-    "market": 9.94,
+    "market": 15.87,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY140/large",
     "printedNumber": "XY 140",
     "tcgplayerId": 134921,
@@ -4403,13 +4495,13 @@
         "text": "Discard 1 Fire Energy and 1 Lightning Energy attached to this Pokémon."
       }
     ],
+    "market": 77.62,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY141/large",
     "printedNumber": "XY 141",
     "tcgplayerId": 134922,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 60.58
+    "foilAs": "Rare Holo"
   },
   {
     "id": "xy11-xyp142",
@@ -4448,7 +4540,7 @@
         "text": "Your opponent's Active Pokémon is now Confused."
       }
     ],
-    "market": 10.08,
+    "market": 13.08,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY142/large",
     "printedNumber": "XY 142",
     "tcgplayerId": 123636,
@@ -4494,7 +4586,7 @@
         "type": "Ability"
       }
     ],
-    "market": 11.5,
+    "market": 12.36,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY144/large",
     "printedNumber": "XY 144",
     "tcgplayerId": 129374,
@@ -4540,7 +4632,7 @@
         "text": ""
       }
     ],
-    "market": 19.81,
+    "market": 24.61,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY145/large",
     "printedNumber": "XY 145",
     "tcgplayerId": 129376,
@@ -4586,7 +4678,7 @@
         "type": "Ability"
       }
     ],
-    "market": 20.35,
+    "market": 22.05,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY146/large",
     "printedNumber": "XY 146",
     "tcgplayerId": 129378,
@@ -4632,7 +4724,7 @@
         "text": "This Pokémon can't use Portal Strike during your next turn."
       }
     ],
-    "market": 24.56,
+    "market": 27.22,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY147/large",
     "printedNumber": "XY 147",
     "tcgplayerId": 129380,
@@ -4678,7 +4770,7 @@
         "type": "Ability"
       }
     ],
-    "market": 4.0,
+    "market": 3.22,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY173/large",
     "printedNumber": "XY 173",
     "tcgplayerId": 123455,
@@ -4725,7 +4817,7 @@
         "text": "Discard all Energy attached to this Pokémon."
       }
     ],
-    "market": 31.33,
+    "market": 88.68,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY174/large",
     "printedNumber": "XY 174",
     "tcgplayerId": 123454,
@@ -4770,7 +4862,7 @@
         "type": "Ability"
       }
     ],
-    "market": 2.52,
+    "market": 2.29,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY175/large",
     "printedNumber": "XY 175",
     "tcgplayerId": 123453,
@@ -4791,7 +4883,7 @@
     "artist": "You Iribi",
     "image": "assets/cards/xy11/xyp177.webp",
     "imageSmall": "assets/cards/xy11/xyp177-sm.webp",
-    "market": 11.63,
+    "market": 7.54,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY177/large",
     "printedNumber": "XY 177",
     "tcgplayerId": 123438,
