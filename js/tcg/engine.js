@@ -20,7 +20,8 @@
  *   cards     { uid: catalogId }        every physical card of both decks
  *   players   [{ name, deck, hand, discard, prizes: [uid], active: slot|null, bench: [slot],
  *                placed, mulligans, energyUsed, retreated }]
- *   slot      { uid, under: [uid], energy: [uid], damage, since }   uid is the top card, `since` the turn it arrived
+ *   slot      { uid, under: [uid], energy: [uid], damage, since, status? }   uid is the top card, `since` the turn it arrived
+ *             status: { main: "" | "asleep" | "confused" | "paralyzed", poisoned, burned, since }  (Active Pokémon only)
  *   phase     "setup" | "main" | "over"
  *   current   whose turn (0 | 1), first: who went first, turn: 1, 2, 3...
  *   pending   [{ type: "promote", player }]   answers the game waits for before anything else
@@ -40,8 +41,11 @@
  * What is in: Basic Pokémon, evolution, one Energy a turn, attacks, Weakness
  * and Resistance, retreat, prizes (more for the cards whose rule says so), the
  * three ways to win, mulligans, the first player not attacking on turn 1.
+ * Special Conditions and the checkup between turns (the current rules: Poison
+ * 10, Burn 20 then a flip to shake it, Sleep a flip to wake, Paralysis gone
+ * after its owner's next turn, Confusion a flip to attack or 30 to itself).
  * Attack text runs through js/tcg/effects.js; text it can't read yet does the
- * printed damage only. Not in yet: Trainers, Abilities, Special Conditions.
+ * printed damage only. Not in yet: Trainers, Abilities.
  */
 
 import { runAttackEffects } from "./effects.js";
@@ -135,6 +139,72 @@ export function canPay(state, slot, cost, defs) {
   return unpaid(cost, energyOf(state, slot, defs)) === 0;
 }
 
+/* ---------- Special Conditions ---------- */
+
+export const CONDITIONS = ["asleep", "burned", "confused", "paralyzed", "poisoned"];
+const NO_STATUS = { main: "", poisoned: false, burned: false, since: 0 };
+
+/** A slot's conditions, never undefined (a match saved before they existed has none). */
+export const statusOf = (slot) => slot?.status || NO_STATUS;
+
+/** The conditions on a slot as a list of names, for the screen. */
+export function conditionsOn(slot) {
+  const st = statusOf(slot);
+  return [st.main, st.poisoned ? "poisoned" : "", st.burned ? "burned" : ""].filter(Boolean);
+}
+
+/** Asleep, Confused and Paralyzed replace each other; Burned and Poisoned sit beside them. */
+export function addCondition(state, slot, kind) {
+  if (!slot || !CONDITIONS.includes(kind)) return false;
+  const st = (slot.status ||= { ...NO_STATUS });
+  if (kind === "poisoned" || kind === "burned") {
+    if (st[kind]) return false;
+    st[kind] = true;
+  } else {
+    st.main = kind;
+    st.since = state.turn;
+  }
+  return true;
+}
+
+/** Leaving the Active spot or evolving clears every condition. */
+function clearConditions(slot) {
+  if (slot) delete slot.status;
+}
+
+const stuck = (slot) => ["asleep", "paralyzed"].includes(statusOf(slot).main);
+
+/** Between turns: Poison, Burn, Sleep and Paralysis take their turn on both Active Pokémon. */
+function checkup(state, defs, events) {
+  const ended = state.current;
+  for (const p of [ended, other(ended)]) {
+    const slot = state.players[p].active;
+    const st = slot?.status;
+    if (!st) continue;
+    if (st.poisoned) {
+      slot.damage += 10;
+      events.push({ t: "damage", p, spot: ACTIVE, n: 10, why: "poisoned" });
+    }
+    if (st.burned) {
+      slot.damage += 20;
+      events.push({ t: "damage", p, spot: ACTIVE, n: 20, why: "burned" });
+      if (flip(state)) {
+        st.burned = false;
+        events.push({ t: "cure", p, kind: "burned" });
+      }
+    }
+    if (st.main === "asleep" && flip(state)) {
+      st.main = "";
+      events.push({ t: "cure", p, kind: "asleep" });
+    }
+    // Paralysis lasts through its owner's next turn, then goes.
+    if (st.main === "paralyzed" && p === ended && st.since < state.turn) {
+      st.main = "";
+      events.push({ t: "cure", p, kind: "paralyzed" });
+    }
+  }
+}
+
 /** Each player's first turn: no evolving. Turn 1 only: the player who went first doesn't attack. */
 const firstTurnOf = (state) => state.turn <= 2;
 
@@ -148,14 +218,14 @@ function canEvolveOnto(state, slot, def, defs) {
 export function usableAttacks(state, player, defs) {
   const slot = state.players[player].active;
   if (!slot || state.phase !== "main" || state.current !== player || state.pending.length) return [];
-  if (state.turn === 1) return [];
+  if (state.turn === 1 || stuck(slot)) return [];
   const def = defOf(state, slot.uid, defs);
   return def.attacks.map((attack, index) => (canPay(state, slot, attack.cost, defs) ? index : -1)).filter((i) => i >= 0);
 }
 
 export function canRetreat(state, player, defs) {
   const side = state.players[player];
-  if (!side.active || side.retreated || !side.bench.length) return false;
+  if (!side.active || side.retreated || !side.bench.length || stuck(side.active)) return false;
   const def = defOf(state, side.active.uid, defs);
   return energyOf(state, side.active, defs).length >= def.retreat;
 }
@@ -252,6 +322,7 @@ function startTurn(state, events) {
   state.turn += 1;
   state.current = state.turn === 1 ? state.first : other(state.current);
   state.ending = false;
+  state.checked = false;
   const side = state.players[state.current];
   side.energyUsed = false;
   side.retreated = false;
@@ -260,10 +331,16 @@ function startTurn(state, events) {
   draw(state, state.current, 1, events);
 }
 
-/** Move on once nothing is waiting: a turn that was ending hands over. */
-function settle(state, events) {
-  if (state.phase !== "main" || state.pending.length) return;
-  if (state.ending) startTurn(state, events);
+/** Move on once nothing is waiting: a turn that was ending gets its checkup, then hands over. */
+function settle(state, defs, events) {
+  if (state.phase !== "main" || state.pending.length || !state.ending) return;
+  if (!state.checked) {
+    state.checked = true;
+    checkup(state, defs, events);
+    resolveKnockOuts(state, defs, events);
+    if (state.phase !== "main" || state.pending.length) return;
+  }
+  startTurn(state, events);
 }
 
 function discardSlot(state, player, slot) {
@@ -312,17 +389,17 @@ export function resolveKnockOuts(state, defs, events) {
 }
 
 /** Weakness then Resistance, on damage done to the other Active Pokémon. */
-export function damageAfterTyping(base, attackerDef, defenderDef) {
+export function damageAfterTyping(base, attackerDef, defenderDef, { noWeakness = false, noResistance = false } = {}) {
   let amount = base;
   let weak = false;
   let resist = false;
   if (amount <= 0) return { amount: 0, weak, resist };
   const hits = (side) => side && attackerDef.types.includes(side.type);
-  if (hits(defenderDef.weakness)) {
+  if (!noWeakness && hits(defenderDef.weakness)) {
     weak = true;
     amount = defenderDef.weakness.op === "x" ? amount * defenderDef.weakness.n : amount + defenderDef.weakness.n;
   }
-  if (hits(defenderDef.resistance)) {
+  if (!noResistance && hits(defenderDef.resistance)) {
     resist = true;
     amount -= defenderDef.resistance.n;
   }
@@ -394,6 +471,7 @@ const HANDLERS = {
     slot.under.unshift(slot.uid);
     slot.uid = uid;
     slot.since = state.turn;
+    clearConditions(slot);
     events.push({ t: "evolve", p: player, uid, spot });
   },
 
@@ -416,6 +494,7 @@ const HANDLERS = {
     const next = side.bench[to];
     if (!next) fail("Choose a Benched Pokémon to bring up.");
     const slot = side.active;
+    if (stuck(slot)) fail(statusOf(slot).main === "asleep" ? "An Asleep Pokémon can't retreat." : "A Paralyzed Pokémon can't retreat.");
     const cost = defOf(state, slot.uid, defs).retreat;
     if (energyOf(state, slot, defs).length < cost) fail("Not enough Energy to retreat.");
     // Pay with the chosen cards, or the first ones attached when none are named.
@@ -432,6 +511,7 @@ const HANDLERS = {
     }
     if (paid < cost) fail("That doesn't cover the retreat cost.");
     side.discard.push(...gone);
+    clearConditions(slot);
     side.bench[to] = slot;
     side.active = next;
     side.retreated = true;
@@ -446,13 +526,26 @@ const HANDLERS = {
     const attack = def.attacks[index];
     if (!attack) fail("That Pokémon has no such attack.");
     if (!canPay(state, slot, attack.cost, defs)) fail("Not enough Energy for that attack.");
+    if (stuck(slot)) fail(`${def.name} is ${statusOf(slot).main === "asleep" ? "Asleep" : "Paralyzed"} and can't attack.`);
     const foe = other(player);
     const target = state.players[foe].active;
     events.push({ t: "attack", p: player, index, name: attack.name, uid: slot.uid });
     const hit = { damage: attack.damage, cancelled: false };
+    if (statusOf(slot).main === "confused") {
+      // Confused: tails and the attack fails, with 30 damage to itself.
+      const heads = flip(state);
+      events.push({ t: "flip", p: player, results: [heads], why: "confused" });
+      if (!heads) {
+        slot.damage += 30;
+        events.push({ t: "damage", p: player, spot: ACTIVE, n: 30, self: true, why: "confused" });
+        state.ending = true;
+        resolveKnockOuts(state, defs, events);
+        return;
+      }
+    }
     runAttackEffects("before", attack, { state, defs, events, player, slot, target, hit });
     if (!hit.cancelled && target) {
-      const dealt = damageAfterTyping(hit.damage, def, defOf(state, target.uid, defs));
+      const dealt = damageAfterTyping(hit.damage, def, defOf(state, target.uid, defs), hit);
       if (dealt.amount > 0) {
         target.damage += dealt.amount;
         events.push({ t: "damage", p: foe, spot: ACTIVE, n: dealt.amount, weak: dealt.weak, resist: dealt.resist });
@@ -504,7 +597,7 @@ export function apply(state, action, defs) {
     if (state.ending) fail("Your turn is over.");
   }
   handler(state, action, defs, events);
-  settle(state, events);
+  settle(state, defs, events);
   return events;
 }
 

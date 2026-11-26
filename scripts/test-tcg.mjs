@@ -8,7 +8,7 @@
  */
 import { readFileSync, readdirSync } from "node:fs";
 import assert from "node:assert/strict";
-import { ACTIVE, FORMATS, RuleError, apply, createGame, damageAfterTyping, legalActions, unpaid, viewFor } from "../js/tcg/engine.js";
+import { ACTIVE, FORMATS, RuleError, addCondition, apply, canRetreat, conditionsOn, createGame, damageAfterTyping, legalActions, unpaid, usableAttacks, viewFor } from "../js/tcg/engine.js";
 import { createDefs, defineCard, FREE_ENERGY } from "../js/tcg/cards.js";
 import { compileAttack } from "../js/tcg/effects.js";
 import { botAction } from "../js/tcg/bot.js";
@@ -321,6 +321,139 @@ test("an attack that knocks out both Active Pokémon is judged at once", () => {
   assert.equal(state.phase, "over");
   assert.equal(state.winner, null);
   assert.equal(state.reason, "tie");
+});
+
+/** A water-against-fire match on player 0's turn 3 or later, Energy on their Squirtle. */
+function midgame(seed = 3) {
+  const state = started(seed, water, fire);
+  while (!(state.current === 0 && state.turn >= 3)) {
+    const p = state.current;
+    if (p === 0 && !state.players[0].energyUsed) act(state, { type: "attach", player: 0, uid: give(state, 0, W), spot: ACTIVE });
+    if (p === 1 && !state.players[1].bench.length) act(state, { type: "bench", player: 1, uid: give(state, 1, "base1-46") });
+    act(state, { type: "end", player: p });
+  }
+  if (!state.players[0].bench.length) act(state, { type: "bench", player: 0, uid: give(state, 0, "base1-63") });
+  return state;
+}
+/** Force the next coin flips: the seed is searched until the engine's own flips come out as asked. */
+function rigFlips(state, wanted) {
+  for (let seed = 1; seed < 5000; seed += 1) {
+    const probe = { rng: seed };
+    const got = wanted.map(() => {
+      probe.rng = (probe.rng + 0x6d2b79f5) | 0;
+      let t = probe.rng;
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296 < 0.5;
+    });
+    if (got.every((g, i) => g === wanted[i])) {
+      state.rng = seed;
+      return;
+    }
+  }
+  throw new Error("no seed found");
+}
+
+test("condition wordings", () => {
+  assert.deepEqual(compileAttack("Your opponent's Active Pokémon is now Poisoned."), [{ op: "condition", when: "after", kind: "poisoned" }]);
+  assert.deepEqual(compileAttack("The Defending Pokémon is now Asleep."), [{ op: "condition", when: "after", kind: "asleep" }]);
+  assert.deepEqual(compileAttack("Flip a coin. If heads, the Defending Pokémon is now Paralyzed."), [{ op: "flip", when: "after", heads: [{ op: "condition", when: "after", kind: "paralyzed" }] }]);
+  assert.equal(compileAttack("Your opponent's Active Pokémon is now Burned and Poisoned.").length, 2);
+  assert.deepEqual(compileAttack("This Pokémon is now Asleep."), [{ op: "condition", when: "after", kind: "asleep", self: true }]);
+  // Two sentences, both read; one unread sentence spoils the lot.
+  assert.deepEqual(compileAttack("Your opponent's Active Pokémon is now Confused. This Pokémon also does 20 damage to itself.").map((s) => s.op), ["condition", "selfDamage"]);
+  assert.equal(compileAttack("Your opponent's Active Pokémon is now Confused. Search your deck for a card."), null);
+  assert.equal(compileAttack("This attack's damage isn't affected by Resistance.")[0].noResistance, true);
+});
+
+test("poison and burn tick between turns, burn can be shaken off", () => {
+  const state = midgame();
+  const foe = state.players[1].active;
+  addCondition(state, foe, "poisoned");
+  addCondition(state, foe, "burned");
+  assert.deepEqual(conditionsOn(foe), ["poisoned", "burned"]);
+  rigFlips(state, [false]); // burn stays
+  let events = act(state, { type: "end", player: 0 });
+  assert.equal(foe.damage, 30);
+  assert.deepEqual(events.filter((e) => e.t === "damage").map((e) => e.why), ["poisoned", "burned"]);
+  assert.equal(state.current, 1);
+});
+
+test("burn is shaken off on heads", () => {
+  const state = midgame();
+  const foe = state.players[1].active;
+  addCondition(state, foe, "burned");
+  rigFlips(state, [true]);
+  const events = act(state, { type: "end", player: 0 });
+  assert.equal(foe.damage, 20);
+  assert.ok(events.some((e) => e.t === "cure" && e.kind === "burned"));
+  assert.deepEqual(conditionsOn(foe), []);
+});
+
+test("a checkup knock out gives a prize and waits for a new Active", () => {
+  const state = midgame();
+  const foe = state.players[1].active;
+  foe.damage = 40; // 50 HP Charmander, poison finishes it
+  addCondition(state, foe, "poisoned");
+  const prizes = state.players[0].prizes.length;
+  const turn = state.turn;
+  act(state, { type: "end", player: 0 });
+  assert.equal(state.players[0].prizes.length, prizes - 1);
+  assert.deepEqual(state.pending, [{ type: "promote", player: 1 }]);
+  act(state, { type: "promote", player: 1, spot: 0 });
+  assert.equal(state.current, 1);
+  assert.equal(state.turn, turn + 1);
+});
+
+test("asleep: no attack, no retreat, a flip to wake", () => {
+  const state = midgame();
+  const mine = state.players[0].active;
+  addCondition(state, mine, "asleep");
+  assert.deepEqual(usableAttacks(state, 0, defs), []);
+  assert.equal(canRetreat(state, 0, defs), false);
+  throws(() => act(state, { type: "attack", player: 0, index: 0 }), /Asleep/);
+  rigFlips(state, [false]);
+  act(state, { type: "end", player: 0 });
+  assert.deepEqual(conditionsOn(mine), ["asleep"]);
+  rigFlips(state, [true]);
+  const events = act(state, { type: "end", player: 1 });
+  assert.ok(events.some((e) => e.t === "cure" && e.kind === "asleep"));
+  assert.deepEqual(conditionsOn(mine), []);
+});
+
+test("paralyzed lasts through its owner's next turn only", () => {
+  const state = midgame();
+  const foe = state.players[1].active;
+  addCondition(state, foe, "paralyzed"); // during player 0's turn
+  act(state, { type: "end", player: 0 });
+  assert.deepEqual(conditionsOn(foe), ["paralyzed"]);
+  assert.deepEqual(usableAttacks(state, 1, defs), []);
+  act(state, { type: "end", player: 1 });
+  assert.deepEqual(conditionsOn(foe), []);
+});
+
+test("confused: tails fails the attack and hurts the attacker", () => {
+  const state = midgame();
+  const mine = state.players[0].active;
+  addCondition(state, mine, "confused");
+  rigFlips(state, [false]);
+  const events = act(state, { type: "attack", player: 0, index: 0 });
+  assert.equal(mine.damage, 30);
+  assert.equal(state.players[1].active.damage, 0);
+  assert.ok(events.some((e) => e.t === "damage" && e.why === "confused"));
+  assert.equal(state.current, 1);
+});
+
+test("retreating and evolving clear conditions; the newer of sleep, confusion and paralysis wins", () => {
+  const state = midgame();
+  const mine = state.players[0].active;
+  addCondition(state, mine, "confused");
+  addCondition(state, mine, "poisoned");
+  addCondition(state, mine, "asleep");
+  assert.deepEqual(conditionsOn(mine), ["asleep", "poisoned"]);
+  mine.status.main = "confused";
+  act(state, { type: "retreat", player: 0, to: 0 });
+  assert.deepEqual(conditionsOn(state.players[0].bench[0]), []);
 });
 
 /* ---------- bot against bot ---------- */

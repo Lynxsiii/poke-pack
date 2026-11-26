@@ -22,7 +22,7 @@
  *   coinFaces()         { heads, tails } art of the equipped coin, or null for the house coin
  */
 
-import { ACTIVE, FORMATS, RuleError, apply, canRetreat, createGame, defOf, energyOf, hpLeft, legalActions, other, usableAttacks } from "./tcg/engine.js";
+import { ACTIVE, FORMATS, RuleError, apply, canRetreat, conditionsOn, createGame, defOf, energyOf, hpLeft, legalActions, other, usableAttacks } from "./tcg/engine.js";
 import { ENERGY_TYPES, FREE_ENERGY, createDefs, isFreeEnergy } from "./tcg/cards.js";
 import { botAction } from "./tcg/bot.js";
 import { MAX_DECKS, buildBotDeck, buildDeck, checkDeck, deckList, deckSize, roomFor } from "./tcg/decks.js";
@@ -32,6 +32,8 @@ const ME = 0;
 const BOT = 1;
 const BOT_NAME = "House bot";
 const EN_CODE = { Grass: "G", Fire: "R", Water: "W", Lightning: "L", Psychic: "P", Fighting: "F", Darkness: "D", Metal: "M", Fairy: "Y", Dragon: "N", Colorless: "C" };
+
+const COND_NAME = { asleep: "Asleep", burned: "Burned", confused: "Confused", paralyzed: "Paralyzed", poisoned: "Poisoned" };
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const plural = (n, word) => `${n} ${word}${n === 1 ? "" : "s"}`;
@@ -485,6 +487,7 @@ export function initTcg(deps) {
       <b class="tg-hud-name">${esc(def.name)}</b>
       <span class="tg-pips">${energy.length ? pips(energy) : `<small>No Energy</small>`}</span>
       <span class="tg-hud-hp"><em>HP</em>${hpBar(left, def.hp)}<span class="num">${left}/${def.hp}</span></span>
+      ${conditionsOn(slot).length ? `<span class="tg-conds">${conditionsOn(slot).map((c) => `<i class="tg-cond" data-cond="${c}">${COND_NAME[c]}</i>`).join("")}</span>` : ""}
     </div>`;
   }
 
@@ -604,7 +607,8 @@ export function initTcg(deps) {
     const usable = new Set(usableAttacks(state, ME, defs));
     const units = energyOf(state, slot, defs);
     const retreat = canRetreat(state, ME, defs) && myTurn();
-    const why = state.turn === 1 ? "No attack on the first turn" : "Not enough Energy";
+    const held = conditionsOn(slot).find((c) => c === "asleep" || c === "paralyzed");
+    const why = state.turn === 1 ? "No attack on the first turn" : held ? `${COND_NAME[held]}: can't attack` : "Not enough Energy";
     return `<div class="tg-sheet-bg" data-act="cancel"></div>
       <div class="tg-sheet tg-attacks" role="dialog" aria-label="${esc(def.name)}">
         <header><h3>${esc(def.name)}</h3><span class="tg-pips">${units.length ? pips(units) : "<small>No Energy attached</small>"}</span></header>
@@ -710,9 +714,14 @@ export function initTcg(deps) {
       case "attach": return `${who(event.p)} attached ${name(event.uid)}.`;
       case "retreat": return `${who(event.p)} retreated.`;
       case "attack": return `${name(event.uid)} used ${event.name}.`;
+      case "condition": return `${event.p === ME ? "Your" : "Their"} Active Pokémon is now ${COND_NAME[event.kind]}.`;
+      case "cure": return `${event.p === ME ? "Your" : "Their"} Active Pokémon is no longer ${COND_NAME[event.kind]}.`;
       case "flip": return event.results.length === 1 ? (event.results[0] ? "Heads." : "Tails.") : `${event.results.filter(Boolean).length} heads of ${event.results.length}.`;
       case "miss": return "The attack did nothing.";
-      case "damage": return `${event.n} damage${event.weak ? ", it's weak to that" : ""}${event.resist ? ", resisted" : ""}${event.self ? " to itself" : ""}.`;
+      case "damage":
+        if (event.why === "poisoned" || event.why === "burned") return `${COND_NAME[event.why]}: ${event.n} damage to ${event.p === ME ? "your" : "their"} Active Pokémon.`;
+        if (event.why === "confused") return "Confused: it hurt itself for 30.";
+        return `${event.n} damage${event.weak ? ", it's weak to that" : ""}${event.resist ? ", resisted" : ""}${event.self ? " to itself" : ""}.`;
       case "heal": return `Healed ${event.n}.`;
       case "ko": return `${name(event.uid)} was Knocked Out.`;
       case "prize": return `${who(event.p)} took ${plural(event.uids.length, "prize card")}.`;
@@ -787,12 +796,12 @@ export function initTcg(deps) {
       paintTable();
       cue(`.tg-spot[data-p="${p}"] .tg-mon`, p === ME ? "lunge-up" : "lunge-down", 420);
       await wait(380);
-      const flips = events.find((e) => e.t === "flip");
-      if (flips) {
+      for (const flips of events.filter((e) => e.t === "flip")) {
         say(flips);
         await showFlips(flips.results);
       }
       for (const event of events) {
+        if (event.why === "poisoned" || event.why === "burned") continue; // the checkup, told after the attack
         if (event.t === "damage" || event.t === "heal") {
           const slot = before.players[event.p].active;
           if (slot) slot.damage = Math.max(0, slot.damage + (event.t === "heal" ? -event.n : event.n));
@@ -823,13 +832,16 @@ export function initTcg(deps) {
     }
 
     for (const event of events) {
-      if (before && ["attack", "flip", "damage", "heal", "miss", "ko", "prize"].includes(event.t)) continue;
+      if (before && ["attack", "flip", "damage", "heal", "miss", "ko", "prize"].includes(event.t) && !["poisoned", "burned"].includes(event.why)) continue;
       if (event.t === "over") continue;
       say(event);
       paintTable();
       if (event.t === "turn") {
         cue(".tg-table", event.p === ME ? "turn-me" : "turn-foe", 900);
         await wait(520);
+      } else if (event.why === "poisoned" || event.why === "burned" || event.t === "cure" || event.t === "condition") {
+        if (event.t === "damage") cue(`.tg-spot[data-p="${event.p}"] .tg-mon`, "hit", 420);
+        await wait(620);
       } else if (event.p === BOT || event.t === "promote") {
         await wait(480);
       } else if (event.t === "draw" && event.p === ME) {

@@ -207,6 +207,14 @@ body.tg-playing { overflow: hidden; }
 .tg-hud-hp .num { font: 700 13px var(--font-n); font-variant-numeric: tabular-nums; }
 .tg-hud .tg-pips { font-size: 11px; flex-wrap: nowrap; }
 .tg-hud .tg-pips small { font-size: 11px; }
+.tg-conds { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 4px; }
+.tg-cond { padding: 0 7px 1px; border-radius: 3px; background: var(--hp-low); color: var(--w0); font: italic 700 12px/1.5 var(--font-h); }
+/* Their plate has no room to grow down (your Active sits under it), so its tags hang off the bottom edge. */
+.tg-info-foe { z-index: 1; } .tg-info-foe .tg-hud { position: relative; }
+.tg-info-foe .tg-conds { position: absolute; top: 100%; right: 8px; margin-top: -8px; flex-wrap: nowrap; justify-content: flex-end; }
+.tg-info-foe .tg-cond { box-shadow: 0 0 0 1.5px var(--k0); }
+.tg-cond[data-cond="asleep"] { background: #5a63d8; } .tg-cond[data-cond="confused"] { background: var(--yel); color: var(--k0); }
+.tg-cond[data-cond="paralyzed"] { background: var(--hp-mid); color: var(--k0); } .tg-cond[data-cond="poisoned"] { background: #8a56d8; }
 .tg-line { margin: 0; color: var(--on-k); font: italic 800 14px/1.2 var(--font-xc); text-wrap: balance; }
 .tg-line:empty { display: none; }
 
