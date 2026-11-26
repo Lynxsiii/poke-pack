@@ -99,8 +99,8 @@ async function loadRules(env, request) {
       if (!res.ok) throw new Error(`Missing ${path}`);
       return res.json();
     };
-    const [rules, trainers] = await Promise.all([get("/data/tcg/rules.json"), get("/data/tcg/trainers.json")]);
-    defs = createDefs((id) => cardMap.get(id) || null, rules, trainers);
+    const [rules, trainers, legal] = await Promise.all([get("/data/tcg/rules.json"), get("/data/tcg/trainers.json"), get("/data/tcg/legal.json")]);
+    defs = createDefs((id) => cardMap.get(id) || null, rules, trainers, legal);
   })().catch((err) => {
     rulesWork = null;
     throw err;
@@ -124,7 +124,8 @@ async function defsFor(env, request, ids, h) {
 function readDeck(raw) {
   if (!raw || typeof raw !== "object" || !raw.cards || typeof raw.cards !== "object") fail("Choose a deck.");
   const format = String(raw.format || "");
-  if (!FORMATS[format]) fail("Choose a Full deck or a Half deck.");
+  // Only the tournament formats (js/tcg/engine.js FORMATS `pick`); an old Half deck is refused here, and checkDeck says why.
+  if (!FORMATS[format]?.pick) fail("Choose a Standard, Expanded or Unlimited deck (60 cards).");
   const entries = Object.entries(raw.cards);
   if (entries.length > 80) fail("That deck has too many different cards.");
   const cards = {};
@@ -156,6 +157,7 @@ const decksOf = (row) => [JSON.parse(row.deck0), JSON.parse(row.deck1 || "{}")];
 /** Who owes the next decision: both players during setup until each has placed, else one. */
 export function owing(state) {
   if (!state || state.phase === "over") return [];
+  if (state.phase === "setup" && state.dealt === false) return [state.flipWinner];
   if (state.phase === "setup") return [0, 1].filter((p) => !state.players[p].placed);
   const waiting = state.pending[0];
   return [waiting ? waiting.player : state.current];
@@ -263,7 +265,7 @@ function stepsSince(row, seat, lookup, since) {
   if (!(since >= 0) || since >= log.length) return { steps: [] };
   const cached = JSON.parse(row.state);
   const [deck0, deck1] = decksOf(row);
-  const state = createGame({ decks: [deckList({ cards: deck0 }), deckList({ cards: deck1 })], names: cached.players.map((p) => p.name), format: row.format, seed: row.seed }, lookup);
+  const state = createGame({ decks: [deckList({ cards: deck0 }), deckList({ cards: deck1 })], names: cached.players.map((p) => p.name), format: row.format, seed: row.seed, chooseFirst: "dealt" in cached }, lookup);
   const steps = [];
   for (let i = 0; i < log.length && steps.length < STEP_LIMIT; i++) {
     let events;
@@ -418,12 +420,12 @@ export async function handleTcg(path, method, request, env, h) {
     }
     const users = await usersOf(env, row);
     const lookup = await defsFor(env, request, [...Object.keys(theirs.cards), ...Object.keys(deck.cards)], h);
-    const state = createGame({ decks: [deckList(theirs), deckList(deck)], names: users.map((u) => (u.handle ? `@${u.handle}` : u.name)), format: row.format, seed: row.seed }, lookup);
+    const state = createGame({ decks: [deckList(theirs), deckList(deck)], names: users.map((u) => (u.handle ? `@${u.handle}` : u.name)), format: row.format, seed: row.seed, chooseFirst: true }, lookup);
     const res = await env.DB.prepare(
-      `UPDATE tcg_matches SET status = 'active', deck1 = ?, deck1_name = ?, state = ?, log = '[]', seq = 0, to_move = '0,1', deadline = ?, updated_at = ?
+      `UPDATE tcg_matches SET status = 'active', deck1 = ?, deck1_name = ?, state = ?, log = '[]', seq = 0, to_move = ?, deadline = ?, updated_at = ?
        WHERE id = ? AND status = 'open'`
     )
-      .bind(JSON.stringify(deck.cards), deck.name, JSON.stringify(state), now + TCG_TIMING.SETUP_MS, now, id)
+      .bind(JSON.stringify(deck.cards), deck.name, JSON.stringify(state), owing(state).join(","), now + TCG_TIMING.SETUP_MS, now, id)
       .run();
     if (!res.meta.changes) fail("That challenge is closed.", 409);
     return json({ match: summary(await getRow(env, id), seat, users) });

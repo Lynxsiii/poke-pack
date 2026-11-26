@@ -20,6 +20,7 @@ import { compileAbility } from "./abilities.js";
 import { compileAttack } from "./effects.js";
 import { compileStadium, compileTool, compileTrainer } from "./trainers.js";
 import { compileSpecialEnergy } from "./energy.js";
+import { deckName, legalityOf } from "./formats.js";
 
 export const ENERGY_TYPES = ["Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Darkness", "Metal", "Fairy"];
 
@@ -41,8 +42,11 @@ function side(text) {
 }
 
 function attackOf(raw) {
-  const fx = compileAttack(raw.text);
+  // GX attacks and VSTAR Power attacks are once a game (rulebook): the reminder is a rule, not an effect.
+  const once = /\(You can't use more than 1 GX attack in a game\.\)/.test(raw.text || "") ? "gx" : /\(You can't use more than 1 VSTAR Power in a game\.\)/.test(raw.text || "") ? "vstar" : "";
+  const fx = compileAttack(String(raw.text || "").replace(/\s*\(You can't use more than 1 (?:GX attack|VSTAR Power) in a game\.\)/, "").trim());
   return {
+    ...(once ? { once } : {}),
     name: raw.name,
     cost: (raw.cost || []).filter((c) => c !== "Free"),
     damage: parseInt(raw.damage, 10) || 0,
@@ -53,17 +57,27 @@ function attackOf(raw) {
 }
 
 /**
- * Deck limits a card prints on itself: one Radiant Pokémon and one ACE SPEC card in a
- * whole deck (`club`), one of each Prism Star card by name (`cap`).
+ * Deck limits a card prints on itself: one Radiant Pokémon, one ACE SPEC card and one
+ * Pokémon ★ in a whole deck (`club`); one of each Prism Star card and of each Neo Shining
+ * Pokémon by name (`cap`); the Arceus of Platinum—Arceus and its DP promos say "You may have
+ * as many of this card in your deck as you like" (`any`).
  */
 function limitsOf(card) {
   const subs = card.subtypes || [];
   const rarity = String(card.rarity || "");
-  if (subs.includes("Radiant") || /^Radiant /.test(card.name || "")) return { club: "Radiant Pokémon" };
+  const name = card.name || "";
+  if (subs.includes("Radiant") || /^Radiant /.test(name)) return { club: "Radiant Pokémon" };
   if (subs.includes("ACE SPEC") || /ACE SPEC/i.test(rarity)) return { club: "ACE SPEC card" };
-  if (subs.includes("Prism Star") || /◇/.test(card.name || "")) return { cap: 1 };
+  if (subs.includes("Star") || / ★/.test(name)) return { club: "Pokémon ★" };
+  // Prism Star cards also go to the Lost Zone instead of the discard pile (engine.js toLostZone).
+  if (subs.includes("Prism Star") || /◇/.test(name)) return { cap: 1, prism: true };
+  if (/^Shining /.test(name) && /^neo/.test(card.id || "")) return { cap: 1 };
+  if (/^Arceus( LV\.X)?$/.test(name) && /^(pl4|dpp)-|^[a-z0-9]+-dpp/.test(card.id || "")) return { any: true };
   return {};
 }
+
+/** A Classic Collection reprint (Celebrations, 30th Celebration): legal in Unlimited only. */
+const isClassic = (card) => card.rarity === "Classic Collection" || /^[a-z0-9]+-cc\d/.test(card.id || "");
 
 /**
  * Prize cards the opponent takes for a Knock Out. The rules table reads it off the card's own
@@ -97,8 +111,27 @@ function boxOf(card) {
  * `row` is the card's entry in data/tcg/rules.json, or undefined when it has none.
  * `lines`: Stage 1 names to the names they evolve from (data/tcg/trainers.json `lines`), for Rare Candy.
  */
-export function defineCard(card, row, text = "", lines = null) {
-  const base = { id: card.id, name: card.name, ...limitsOf(card) };
+export function defineCard(card, row, text = "", lines = null, print = null) {
+  const def = defineRules(card, row, text, lines, print);
+  // Which formats it may be played in (js/tcg/formats.js), as a reason to show the player.
+  def.legal = legalityOf(def, print?.reprints);
+  return def;
+}
+
+/**
+ * `print`: what data/tcg/legal.json says of this print, { mark, reprints }
+ * (js/tcg/formats.js). Without it a card has no regulation mark.
+ */
+function defineRules(card, row, text, lines, print) {
+  const base = {
+    id: card.id,
+    name: card.name,
+    // The name it counts under for the 4-copy rule ("Gengar LV.X" is a Gengar).
+    deckName: deckName(card.name),
+    mark: print?.mark || "",
+    ...(isClassic(card) ? { classic: true } : {}),
+    ...limitsOf(card),
+  };
   if (card.supertype === "Energy" || card.energy) {
     const type = ENERGY_TYPES.find((t) => new RegExp(`^(Basic )?${t} Energy$`).test(card.name));
     const basic = Boolean(type) && (card.subtypes || []).includes("Basic");
@@ -120,7 +153,8 @@ export function defineCard(card, row, text = "", lines = null) {
   }
 
   const subs = card.subtypes || [];
-  const megaEvolved = subs.includes("MEGA") && subs.includes("EX");
+  // The XY era's Mega Evolution Pokémon-EX ("M Charizard-EX", subtypes "MEGA"/"Mega" in the data) and Primal Reversion.
+  const megaEvolved = (subs.includes("MEGA") && subs.includes("EX")) || /^(M|Primal) .+-EX$/.test(card.name || "");
   let stage = "";
   if (card.evolvesFrom && (subs.some((s) => EVOLVED.test(s)) || megaEvolved)) stage = "evolution";
   else if (subs.includes("Basic") || subs.includes("Baby")) stage = "basic";
@@ -136,6 +170,8 @@ export function defineCard(card, row, text = "", lines = null) {
 
   let why = "";
   if (!stage) why = "This kind of Pokémon isn't in yet.";
+  // A BREAK keeps the Weakness, Resistance, Retreat Cost and attacks of what it evolved from; until the table reads those through, it waits.
+  else if (subs.includes("BREAK")) why = "BREAK Evolution isn't in yet.";
   else if (!row) why = "We don't have this card's play data yet.";
   else if (!attacks.length) why = "It has no attack to use yet.";
 
@@ -159,6 +195,9 @@ export function defineCard(card, row, text = "", lines = null) {
     // "A Pokémon that doesn't have a Rule Box" (Pokémon ex, V, GX, Radiant, Prism Star ...).
     rule: Boolean(boxOf(card)) || subs.some((s) => /^(Radiant|Prism Star|BREAK|LEGEND|V-UNION|Level-Up|Star|TAG TEAM|MEGA)$/.test(s)),
     ...(ability ? { ability } : {}),
+    // Old Mega Evolution Pokémon-EX (and Primal Reversion) end the turn they come into play by evolving; the new Mega ex don't.
+    ...(megaEvolved ? { megaEnds: true } : {}),
+    ...(subs.includes("Tera") ? { tera: true } : {}),
     playable: !why && Number(card.hp) > 0,
     why,
     notes,
@@ -173,17 +212,24 @@ export function rulesKey(id) {
 
 /**
  * A lookup the engine can call: defs(id) -> definition.
- * `findCard(id)` finds the site's card; `rules` is data/tcg/rules.json, `trainers` data/tcg/trainers.json.
+ * `findCard(id)` finds the site's card; `rules` is data/tcg/rules.json, `trainers` data/tcg/trainers.json,
+ * `legal` data/tcg/legal.json (regulation marks: without it only basic Energy is legal in Standard).
  */
-export function createDefs(findCard, rules, trainers = null) {
+export function createDefs(findCard, rules, trainers = null, legal = null) {
   const cache = new Map();
   return function defs(id) {
     let def = cache.get(id);
     if (def) return def;
     const card = findCard(id);
     if (!card) return null;
-    const [set, key] = rulesKey(id);
-    def = defineCard(card, rules?.[set]?.[key], trainers?.texts[trainers.cards?.[set]?.[key]] || "", trainers?.lines);
+    const [set, full] = rulesKey(id);
+    // A special print ("swsh1-15-cracked-ice", a stamped promo) plays as the card it reprints.
+    const base = full.replace(/-.*$/, "");
+    const key = rules?.[set]?.[full] || trainers?.cards?.[set]?.[full] != null ? full : base;
+    const textKey = trainers?.cards?.[set]?.[key];
+    const marks = legal?.marks?.[set];
+    const print = { mark: marks?.[full] ?? marks?.[key] ?? marks?._ ?? "", reprints: legal?.reprints || null };
+    def = defineCard(card, rules?.[set]?.[key], trainers?.texts[textKey] || "", trainers?.lines, print);
     cache.set(id, def);
     return def;
   };

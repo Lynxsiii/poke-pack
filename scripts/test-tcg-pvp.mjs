@@ -30,7 +30,8 @@ const byId = new Map(me5.map((c) => [c.id, c]));
 for (const e of FREE_ENERGY) byId.set(e.id, { id: e.id, name: `${e.type} Energy`, supertype: "Energy", subtypes: ["Basic"], energy: true });
 const rules = JSON.parse(readFileSync(new URL("../data/tcg/rules.json", import.meta.url), "utf8"));
 const trainers = JSON.parse(readFileSync(new URL("../data/tcg/trainers.json", import.meta.url), "utf8"));
-const defs = createDefs((id) => byId.get(id), rules, trainers);
+const legal = JSON.parse(readFileSync(new URL("../data/tcg/legal.json", import.meta.url), "utf8"));
+const defs = createDefs((id) => byId.get(id), rules, trainers, legal);
 
 const { db, env } = createTestDb();
 const req = requester(worker, env, null);
@@ -51,7 +52,7 @@ const befriend = async (a, b) => {
 };
 const api = (user, path, method = "GET", body) => req(path, method, body, user);
 const ownedOf = (user) => Object.fromEntries(db.prepare("SELECT card_id, qty FROM cards WHERE user_id = ?").all(user).map((r) => [r.card_id, r.qty]));
-const deckFor = (user, format = "half", seed = 1) => {
+const deckFor = (user, format = "standard", seed = 1) => {
   let s = seed;
   const rand = () => ((s = (s * 16807) % 2147483647) / 2147483647);
   const pool = Object.entries(ownedOf(user)).map(([id, n]) => ({ def: defs(id), owned: n })).filter((p) => p.def);
@@ -91,6 +92,17 @@ await check("challenges: friends only, decks checked against what you own", asyn
   assert.equal(r.status, 400);
   r = await api("ann", "/api/tcg/challenge", "POST", { to: "bob", deck: { ...deck, cards: { "sv1-001": 1, ...deck.cards } } });
   assert.equal(r.status, 400, "a card ann doesn't own");
+  r = await api("ann", "/api/tcg/challenge", "POST", { to: "bob", deck: { ...deck, format: "half" } });
+  assert.equal(r.status, 400, "the old Half deck is not a format any more");
+  assert.match(r.body.error, /Standard, Expanded or Unlimited/);
+  // A card she owns but that rotated out of Standard (Scarlet & Violet, regulation mark G) is refused there.
+  db.prepare("INSERT OR REPLACE INTO cards(user_id,card_id,qty,reverse_qty) VALUES(?,?,2,0)").run("ann", "sv1-1");
+  const energy = Object.keys(deck.cards).find((id) => id.startsWith("energy-"));
+  const rotated = { ...deck, cards: { ...deck.cards, [energy]: deck.cards[energy] - 1, "sv1-1": 1 } };
+  r = await api("ann", "/api/tcg/challenge", "POST", { to: "bob", deck: rotated });
+  assert.equal(r.status, 400, "a rotated card in a Standard deck");
+  assert.match(r.body.error, /Pineco isn't legal in Standard: regulation mark G rotated out/);
+  db.prepare("DELETE FROM cards WHERE user_id = ? AND card_id = ?").run("ann", "sv1-1");
   r = await api("ann", "/api/tcg/challenge", "POST", { to: "@Bob", deck });
   assert.equal(r.status, 200, JSON.stringify(r.body));
   assert.equal(r.body.match.status, "open");
@@ -106,15 +118,27 @@ await check("challenges: friends only, decks checked against what you own", asyn
   assert.equal(r.status, 404, "a stranger can't read it");
   r = await api("ann", `/api/tcg/matches/${matchId}/accept`, "POST", { deck });
   assert.equal(r.status, 403, "the challenger can't accept");
-  r = await api("bob", `/api/tcg/matches/${matchId}/accept`, "POST", { deck: deckFor("bob", "standard") });
+  r = await api("bob", `/api/tcg/matches/${matchId}/accept`, "POST", { deck: deckFor("bob", "unlimited") });
   assert.equal(r.status, 400, "the format must match");
 });
 
 await check("accept starts the match: each player sees only their side", async () => {
-  const r = await api("bob", `/api/tcg/matches/${matchId}/accept`, "POST", { deck: deckFor("bob", "half", 7) });
+  const r = await api("bob", `/api/tcg/matches/${matchId}/accept`, "POST", { deck: deckFor("bob", "standard", 7) });
   assert.equal(r.status, 200, JSON.stringify(r.body));
   assert.equal(r.body.match.status, "active");
-  assert.deepEqual(r.body.match.toMove, [0, 1]);
+  // The flip comes first: its winner chooses who goes first before any hand is dealt.
+  const flipWinner = stateOf(matchId).flipWinner;
+  assert.deepEqual(r.body.match.toMove, [flipWinner]);
+  for (const [user, seat] of [["ann", 0], ["bob", 1]]) {
+    const g = await api(user, `/api/tcg/matches/${matchId}`);
+    assert.equal(g.body.view.players[seat].hand.length, 0, "no hands before the order is chosen");
+    assert.deepEqual(g.body.legal.map((a) => a.type), seat === flipWinner ? ["order", "order"] : []);
+  }
+  const loser = ["ann", "bob"][1 - flipWinner];
+  assert.equal((await api(loser, `/api/tcg/matches/${matchId}/action`, "POST", { action: { type: "order", first: true } })).status, 400, "only the flip's winner chooses");
+  const o = await api(["ann", "bob"][flipWinner], `/api/tcg/matches/${matchId}/action`, "POST", { action: { type: "order", first: true } });
+  assert.equal(o.status, 200, JSON.stringify(o.body));
+  assert.deepEqual(rowOf(matchId).to_move, "0,1");
   for (const [user, seat] of [["ann", 0], ["bob", 1]]) {
     const g = await api(user, `/api/tcg/matches/${matchId}`);
     assert.equal(g.status, 200);
@@ -149,12 +173,9 @@ await check("a whole match through the API, both clients kept in step by events"
   const views = { ann: null, bob: null };
   const kinds = new Set();
   let moves = 0;
+  // The flip's winner already chose to go first (the test above).
   let row = rowOf(matchId);
-  // Who flips first decides; the winner of the flip chooses to go first.
-  const state0 = stateOf(matchId);
-  const winner = ["ann", "bob"][state0.flipWinner];
-  let r = await api(winner, `/api/tcg/matches/${matchId}/action`, "POST", { action: { type: "order", first: true }, since: seen[winner] });
-  assert.equal(r.status, 200, JSON.stringify(r.body));
+  let r;
   while (row.status === "active" && moves < 2000) {
     const state = JSON.parse(row.state);
     const seat = owing(state)[0];
@@ -200,13 +221,16 @@ await check("a whole match through the API, both clients kept in step by events"
 });
 
 const startMatch = async (a = "ann", b = "bob") => {
-  const c = await api(a, "/api/tcg/challenge", "POST", { to: b, deck: deckFor(a, "half", 3) });
+  const c = await api(a, "/api/tcg/challenge", "POST", { to: b, deck: deckFor(a, "standard", 3) });
   assert.equal(c.status, 200, JSON.stringify(c.body));
-  const r = await api(b, `/api/tcg/matches/${c.body.match.id}/accept`, "POST", { deck: deckFor(b, "half", 5) });
+  const r = await api(b, `/api/tcg/matches/${c.body.match.id}/accept`, "POST", { deck: deckFor(b, "standard", 5) });
   assert.equal(r.status, 200, JSON.stringify(r.body));
   return c.body.match.id;
 };
 const placeBoth = async (id) => {
+  const flipWinner = stateOf(id).flipWinner;
+  const o = await api(["ann", "bob"][flipWinner], `/api/tcg/matches/${id}/action`, "POST", { action: { type: "order", first: true } });
+  assert.equal(o.status, 200, JSON.stringify(o.body));
   for (const [user, seat] of [["ann", 0], ["bob", 1]]) {
     const state = stateOf(id);
     const r = await api(user, `/api/tcg/matches/${id}/action`, "POST", { action: botAction(state, seat, defs) });
@@ -217,13 +241,13 @@ const placeBoth = async (id) => {
 await check("concede: the other player wins", async () => {
   const id = await startMatch();
   await placeBoth(id);
-  const r = await api("ann", `/api/tcg/matches/${id}/concede`, "POST", { since: 2 });
+  const r = await api("ann", `/api/tcg/matches/${id}/concede`, "POST", { since: 3 });
   assert.equal(r.status, 200);
   assert.equal(r.body.match.status, "over");
   assert.equal(r.body.match.winner, 1);
   assert.equal(r.body.match.reason, "concede");
   assert.ok(r.body.steps.at(-1).events.some((e) => e.t === "over" && e.p === 1));
-  const bob = await api("bob", `/api/tcg/matches/${id}?since=2`);
+  const bob = await api("bob", `/api/tcg/matches/${id}?since=3`);
   assert.equal(bob.body.steps.length, 1, "bob hears it on his next poll");
   assert.equal(bob.body.steps[0].action.type, "concede");
 });
@@ -249,16 +273,16 @@ await check("the clock: running out of time loses, settled on read", async () =>
 await check("the clock: scheduled maintenance settles matches nobody reads, and setup no-shows", async () => {
   const a = await startMatch();
   await placeBoth(a);
-  const b = await startMatch(); // nobody places
-  const c = await api("ann", "/api/tcg/challenge", "POST", { to: "bob", deck: deckFor("ann", "half", 9) }); // never answered
+  const b = await startMatch(); // the flip's winner never chooses who goes first
+  const c = await api("ann", "/api/tcg/challenge", "POST", { to: "bob", deck: deckFor("ann", "standard", 9) }); // never answered
   clock += TCG_TIMING.CHALLENGE_MS + 1000;
   const n = await maintainTcg(env, clock);
   assert.ok(n >= 3, `settled ${n}`);
   assert.equal(rowOf(a).status, "over");
   assert.equal(rowOf(a).reason, "timeout");
   assert.equal(rowOf(b).status, "over");
-  assert.equal(rowOf(b).reason, "abandoned");
-  assert.equal(rowOf(b).winner, null);
+  assert.equal(rowOf(b).reason, "timeout");
+  assert.equal(rowOf(b).winner, 1 - stateOf(b).flipWinner);
   assert.equal(rowOf(c.body.match.id).status, "expired");
   const list = await api("bob", "/api/tcg/matches");
   assert.equal(list.body.incoming.length, 0);
@@ -287,6 +311,8 @@ await check("decline, cancel, and a challenger who sold their cards", async () =
 
 await check("two moves at once: one lands, the other is judged on top of it", async () => {
   const id = await startMatch();
+  const w = stateOf(id).flipWinner;
+  await api(["ann", "bob"][w], `/api/tcg/matches/${id}/action`, "POST", { action: { type: "order", first: true } });
   const s = stateOf(id);
   const [a, b] = await Promise.all([
     api("ann", `/api/tcg/matches/${id}/action`, "POST", { action: botAction(s, 0, defs), since: 0 }),
@@ -295,10 +321,10 @@ await check("two moves at once: one lands, the other is judged on top of it", as
   assert.equal(a.status, 200, JSON.stringify(a.body));
   assert.equal(b.status, 200, JSON.stringify(b.body));
   const row = rowOf(id);
-  assert.equal(row.seq, 2);
+  assert.equal(row.seq, 3);
   assert.equal(JSON.parse(row.state).phase, "main", "both placed, the game began");
-  const later = a.body.seq === 2 ? a : b;
-  assert.equal(later.body.steps.length, 2, "the later one hears both steps");
+  const later = a.body.seq === 3 ? a : b;
+  assert.equal(later.body.steps.length, 3, "the later one hears every step since 0");
 });
 
 Date.now = realNow;

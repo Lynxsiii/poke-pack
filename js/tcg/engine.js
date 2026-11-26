@@ -51,9 +51,17 @@
 import { runAttackEffects } from "./effects.js";
 import { T_OPS, boostOf, energyIn, fieldFits, moveTargets, prizesLeft, runTrainer, stripEnergy, trainerReady } from "./trainers.js";
 
+/**
+ * The official Constructed formats (Play! Pokémon Tournament Handbook, section 4): 60 cards,
+ * 6 Prize cards, 4 of a card by name. Which cards each allows is js/tcg/formats.js.
+ * `half` is not a format a deck can be built for (`pick` false): only the lesson's stacked
+ * practice match (js/tcg/tutorial.js) and the rules tests deal it.
+ */
 export const FORMATS = {
-  standard: { id: "standard", name: "Full deck", deckSize: 60, prizes: 6, bench: 5, copies: 4 },
-  half: { id: "half", name: "Half deck", deckSize: 30, prizes: 3, bench: 5, copies: 2 },
+  standard: { id: "standard", name: "Standard", deckSize: 60, prizes: 6, bench: 5, copies: 4, pick: true },
+  expanded: { id: "expanded", name: "Expanded", deckSize: 60, prizes: 6, bench: 5, copies: 4, pick: true },
+  unlimited: { id: "unlimited", name: "Unlimited", deckSize: 60, prizes: 6, bench: 5, copies: 4, pick: true },
+  half: { id: "half", name: "Half deck", deckSize: 30, prizes: 3, bench: 5, copies: 2, pick: false },
 };
 
 export const ACTIVE = -1;
@@ -491,6 +499,7 @@ export function evolveSlot(state, player, spot, uid, defs, events, from = "hand"
   clearConditions(slot);
   events.push({ t: "evolve", p: player, uid, spot, ...(from !== "hand" ? { from } : {}) });
   offerAbility(state, player, spot, "evolve", defs);
+  if (defOf(state, uid, defs)?.megaEnds && state.phase === "main" && state.current === player) state.ending = true;
 }
 
 /** The attacks the Active Pokémon can pay for right now, by index. */
@@ -500,7 +509,9 @@ export function usableAttacks(state, player, defs) {
   if (state.turn === 1 || stuck(slot) || markOn(state, slot, "noAttack")) return [];
   const def = defOf(state, slot.uid, defs);
   const barred = (slot.marks || []).filter((m) => m.kind === "noUse" && m.turn === state.turn).map((m) => m.name);
-  return def.attacks.map((attack, index) => (canPay(state, slot, attack.cost, defs) && !barred.includes(attack.name) ? index : -1)).filter((i) => i >= 0);
+  const side = state.players[player];
+  const spent = (attack) => (attack.once === "gx" && side.gxUsed) || (attack.once === "vstar" && side.vstarUsed);
+  return def.attacks.map((attack, index) => (canPay(state, slot, attack.cost, defs) && !barred.includes(attack.name) && !spent(attack) ? index : -1)).filter((i) => i >= 0);
 }
 
 export function canRetreat(state, player, defs) {
@@ -528,7 +539,7 @@ const isBasic = (state, uid, defs) => {
  * A new match, dealt and waiting for both players to place their Pokémon.
  * `decks` are two lists of catalog ids (a card held four times appears four times).
  */
-export function createGame({ decks, names = ["You", "Opponent"], format = "standard", seed = 1 }, defs) {
+export function createGame({ decks, names = ["You", "Opponent"], format = "standard", seed = 1, chooseFirst = false }, defs) {
   const rules = FORMATS[format] || FORMATS.standard;
   const state = {
     v: 1,
@@ -575,6 +586,20 @@ export function createGame({ decks, names = ["You", "Opponent"], format = "stand
   state.first = flip(state) ? 0 : 1;
   state.flipWinner = state.first;
   events.push({ t: "first", p: state.first });
+  // The rules have the flip winner choose before anyone draws (rulebook, setup steps 2-4), so a
+  // match that asks them (`chooseFirst`) deals only once "order" is answered.
+  if (chooseFirst) {
+    state.dealt = false;
+    return state;
+  }
+  deal(state, defs);
+  return state;
+}
+
+/** Shuffle and draw the opening hands, with a mulligan for every hand that has no Basic Pokémon. */
+function deal(state, defs) {
+  const events = state.opening;
+  state.dealt = true;
   for (const p of [0, 1]) {
     const side = state.players[p];
     for (;;) {
@@ -587,7 +612,6 @@ export function createGame({ decks, names = ["You", "Opponent"], format = "stand
       side.deck.push(...side.hand.splice(0));
     }
   }
-  return state;
 }
 
 /* ---------- the turn ---------- */
@@ -957,6 +981,11 @@ const HANDLERS = {
     if (stuck(slot)) fail(`${def.name} is ${statusOf(slot).main === "asleep" ? "Asleep" : "Paralyzed"} and can't attack.`);
     if (markOn(state, slot, "noAttack")) fail(`${def.name} can't attack this turn.`);
     if ((slot.marks || []).some((m) => m.kind === "noUse" && m.turn === state.turn && m.name === attack.name)) fail(`${def.name} can't use ${attack.name} this turn.`);
+    if (attack.once === "gx" && side.gxUsed) fail("You've already used your GX attack this game.");
+    if (attack.once === "vstar" && side.vstarUsed) fail("You've already used your VSTAR Power this game.");
+    // Declared is used, even if Confusion then stops it.
+    if (attack.once === "gx") side.gxUsed = true;
+    if (attack.once === "vstar") side.vstarUsed = true;
     const foe = other(player);
     const target = state.players[foe].active;
     events.push({ t: "attack", p: player, index, name: attack.name, uid: slot.uid });
@@ -1209,6 +1238,8 @@ export function stadiumBlock(state, player, defs) {
 /** Does an Ability keep this Benched Pokémon safe from attack damage? */
 export function benchSafe(state, slot, spot, defs) {
   if (spot === ACTIVE) return false;
+  // Tera Pokémon ex take no damage from attacks while on the Bench (rulebook).
+  if (defOf(state, slot.uid, defs)?.tera) return true;
   if (abilityOn(state, slot, defs)?.benchSafe) return true;
   const owner = ownerOf(state, slot);
   return owner >= 0 && inPlay(state, owner).some(([mate]) => abilityOn(state, mate, defs)?.benchWall);
@@ -1425,6 +1456,7 @@ export function apply(state, action, defs) {
   const handler = HANDLERS[type];
   if (!handler && type !== "order") fail("Unknown action.");
   if (type === "place") {
+    if (state.dealt === false) fail("The coin flip's winner hasn't chosen who goes first yet.");
     handler(state, action, defs, events);
     return events;
   }
@@ -1432,8 +1464,15 @@ export function apply(state, action, defs) {
     // The winner of the opening flip says who goes first, before the first turn starts.
     if (state.phase !== "setup") fail("The match has already started.");
     if (player !== (state.flipWinner ?? state.first)) fail("The winner of the coin flip chooses.");
+    if (state.dealt !== false && state.ordered) fail("Who goes first is already chosen.");
     state.first = action.first ? player : other(player);
+    state.ordered = true;
     events.push({ t: "order", p: player, first: state.first });
+    if (state.dealt === false) {
+      const from = state.opening.length;
+      deal(state, defs);
+      events.push(...state.opening.slice(from));
+    }
     return events;
   }
   if (state.phase !== "main") fail("Place your Pokémon first.");
@@ -1446,8 +1485,19 @@ export function apply(state, action, defs) {
     if (state.ending) fail("Your turn is over.");
   }
   handler(state, action, defs, events);
+  toLostZone(state, defs);
   settle(state, defs, events);
+  toLostZone(state, defs);
   return events;
+}
+
+/** Prism Star cards never stay in a discard pile: they go to the Lost Zone, out of the game. */
+function toLostZone(state, defs) {
+  for (const side of state.players) {
+    if (!side.discard.some((uid) => defOf(state, uid, defs)?.prism)) continue;
+    side.lost = [...(side.lost || []), ...side.discard.filter((uid) => defOf(state, uid, defs)?.prism)];
+    side.discard = side.discard.filter((uid) => !defOf(state, uid, defs)?.prism);
+  }
 }
 
 /** Every action `player` may take right now. The screen lights these up and the bot picks from them. */
@@ -1455,6 +1505,7 @@ export function legalActions(state, player, defs) {
   const side = state.players[player];
   if (state.phase === "over") return [];
   if (state.phase === "setup") {
+    if (state.dealt === false) return player === state.flipWinner ? [true, false].map((first) => ({ type: "order", player, first })) : [];
     if (side.placed) return [];
     return side.hand.filter((uid) => isBasic(state, uid, defs)).map((uid) => ({ type: "place", player, active: uid, bench: [] }));
   }
@@ -1506,6 +1557,7 @@ export function viewFor(state, player) {
   view.players.forEach((side, p) => {
     if (p === player) side.hand.forEach((uid) => shown.add(uid));
     side.discard.forEach((uid) => shown.add(uid));
+    (side.lost || []).forEach((uid) => shown.add(uid));
     for (const slot of [side.active, ...side.bench]) {
       if (!slot || (state.phase === "setup" && p !== player)) continue;
       [slot.uid, ...slot.under, ...slot.energy, ...(slot.tool ? [slot.tool] : [])].forEach((uid) => shown.add(uid));
