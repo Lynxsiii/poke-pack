@@ -605,6 +605,7 @@ export function initTcg(deps) {
         moveCountersTo: () => `Choose ${whose === "your" ? "another of your" : "one of their"} Pokémon to take the damage counters.`,
         attachHeld: () => `Choose the Pokémon that gets ${fx.uids.length > 1 ? "the Energy" : `the ${d(fx.uids[0])?.name || "Energy"}`}.`,
         bounce: () => "Choose the Pokémon to put back into your hand.",
+        evolveHeld: () => `Choose the Pokémon that evolves into ${d(fx.uid)?.name || "it"}.`,
       }[op]?.();
       if (op === "gatherFrom") return { text: `Choose a Pokémon to move ${fx.type ? `a ${fx.type}` : "an"} Energy from, or finish.`, keys: `<button type="button" class="ghost sm" data-act="pick-skip">Done</button>` };
       if (moving) return { text: moving, keys: "" };
@@ -919,9 +920,14 @@ export function initTcg(deps) {
     const many = (n) => (kind === "card" ? plural(n, "card") : n === 1 ? `1 ${kind}${energyCard ? " card" : ""}` : `${n} ${kind}${energyCard ? " cards" : ""}`);
     const title = waiting.effect.op === "discard" ? `Discard ${many(min)} from your hand`
       : waiting.effect.op === "toBench" ? `Choose ${max > 1 ? `up to ${many(max)}` : "a Basic Pokémon"} for your Bench`
+      : waiting.effect.op === "attach" && waiting.zone !== "deck" ? `Attach ${max > 1 ? `up to ${many(max)}` : many(1)} from your ${waiting.zone === "hand" ? "hand" : "discard pile"}`
       : waiting.effect.op === "attach" ? `Attach ${max > 1 ? `up to ${many(max)}` : many(1)} from your ${waiting.top ? `top ${waiting.top} cards` : "deck"}`
       : waiting.effect.op === "swapIn" ? `Switch in ${kind} from your deck`
       : waiting.effect.op === "toDeck" ? `Shuffle ${min < max ? "up to " : ""}${many(max)} into your deck`
+      : waiting.effect.op === "evolveFrom" ? `Choose the card to evolve with from your ${waiting.zone === "deck" ? "deck" : "hand"}`
+      : waiting.effect.op === "dropInPlay" ? `Discard ${min < max ? "up to " : ""}${plural(max, "card")} in play`
+      : waiting.effect.op === "toTop" ? `Put ${many(max)} from your hand on top of your deck`
+      : waiting.effect.op === "toBottom" ? `${waiting.shuffle ? "Shuffle" : "Put"} ${many(max)} from your hand ${waiting.shuffle ? "into" : "on the bottom of"} your deck`
       : waiting.zone === "discard" ? `Take ${min < max ? "up to " : ""}${many(max)} from your discard pile`
       : `Take ${max > 1 ? `up to ${many(max)}` : many(1)} from your deck`;
     const cards = waiting.uids.slice().sort((a, b) => d(a).name.localeCompare(d(b).name) || state.cards[a].localeCompare(state.cards[b]));
@@ -1038,6 +1044,8 @@ export function initTcg(deps) {
       case "boost": return `${event.p === ME ? "Your" : "Their"} attacks can do ${event.n} more damage this turn.`;
       case "energy-to-hand": return `${plural(event.uids.length, "Energy card")} went back to ${event.p === ME ? "your" : "their"} hand.`;
       case "stadium-gone": return `${name(event.uid)} was discarded.`;
+      case "discard-tool": return `${name(event.uid)} was discarded from ${event.p === ME ? "your" : "their"} Pokémon.`;
+      case "hand-to-deck": return `${who(event.p)} put ${plural(event.uids.length, "card")} from ${event.p === ME ? "your" : "its"} hand ${event.at === "top" ? "on top of" : event.at === "bottom" ? "on the bottom of" : "into"} the deck.`;
       case "damage":
         if (event.why === "poisoned" || event.why === "burned") return `${COND_NAME[event.why]}: ${event.n} damage to ${event.p === ME ? "your" : "their"} Active Pokémon.`;
         if (event.why === "confused") return "Confused: it hurt itself for 30.";

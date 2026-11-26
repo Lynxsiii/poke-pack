@@ -451,14 +451,46 @@ function checkup(state, defs, events) {
 /** Each player's first turn: no evolving. Turn 1 only: the player who went first doesn't attack. */
 const firstTurnOf = (state) => state.turn <= 2;
 
-function canEvolveOnto(state, slot, def, defs) {
-  if (!slot || def.kind !== "pokemon" || !def.evolvesFrom) return false;
+/**
+ * May `def` go on top of this Pokémon? `how`, from a Trainer that evolves (all optional):
+ *   skip: "2" a Stage 2 straight onto the Basic Pokémon it comes from (Rare Candy), "any" that or a Stage 1 onto it
+ *   lift: on the first turn, or on a Pokémon put into play this turn, too
+ *   noEx: neither card is a Pokémon-EX; noAbility: the card has no Ability
+ */
+export function canEvolveOnto(state, slot, def, defs, how = {}) {
+  if (!slot || def?.kind !== "pokemon" || !def.evolvesFrom || !mayEvolve(state, slot, defs, how)) return false;
+  const below = defOf(state, slot.uid, defs);
+  if (how.noEx && def.box === "EX") return false;
+  if (how.noAbility && def.abilityKind) return false;
+  if (how.skip) return below.stage === "basic" && ((def.line === 2 && (def.roots || []).includes(below.name)) || (how.skip === "any" && def.line === 1 && below.name === def.evolvesFrom));
+  return below.name === def.evolvesFrom;
+}
+
+/** May this Pokémon evolve right now, whatever into: not on the first turn, nor the turn it came into play, unless lifted. */
+export function mayEvolve(state, slot, defs, how = {}) {
+  if (!slot) return false;
+  if (how.noEx && defOf(state, slot.uid, defs).box === "EX") return false;
   // Some Pokémon may evolve on the first turn, or the turn they are played (an Ability says so).
   const early = abilityOn(state, slot, defs)?.early;
   const owner = ownerOf(state, slot);
-  const lifted = early === "any" || (early === "active" && state.players[owner]?.active === slot) || (early === "second" && state.first !== owner && slot.since < state.turn);
-  if (!lifted && (firstTurnOf(state) || slot.since >= state.turn)) return false;
-  return defOf(state, slot.uid, defs).name === def.evolvesFrom;
+  const lifted = how.lift || early === "any" || (early === "active" && state.players[owner]?.active === slot) || (early === "second" && state.first !== owner && slot.since < state.turn);
+  return lifted || !(firstTurnOf(state) || slot.since >= state.turn);
+}
+
+/** The spots of `player`'s Pokémon that `def` may evolve, the way `how` says (`where` "active": only the Active one). */
+export function evolveSpots(state, player, def, defs, how = {}, where = "") {
+  return inPlay(state, player).filter(([slot, spot]) => (where !== "active" || spot === ACTIVE) && canEvolveOnto(state, slot, def, defs, how)).map(([, spot]) => spot);
+}
+
+/** Put `uid` on top of the Pokémon at `spot` (from the hand, the deck, or a choice): it has evolved. */
+export function evolveSlot(state, player, spot, uid, defs, events, from = "hand") {
+  const slot = slotAt(state, player, spot);
+  slot.under.unshift(slot.uid);
+  slot.uid = uid;
+  slot.since = state.turn;
+  clearConditions(slot);
+  events.push({ t: "evolve", p: player, uid, spot, ...(from !== "hand" ? { from } : {}) });
+  offerAbility(state, player, spot, "evolve", defs);
 }
 
 /** The attacks the Active Pokémon can pay for right now, by index. */
@@ -766,12 +798,7 @@ const HANDLERS = {
       fail(`${def.name} doesn't evolve from that Pokémon.`);
     }
     takeFromHand(state, player, uid);
-    slot.under.unshift(slot.uid);
-    slot.uid = uid;
-    slot.since = state.turn;
-    clearConditions(slot);
-    events.push({ t: "evolve", p: player, uid, spot });
-    offerAbility(state, player, spot, "evolve", defs);
+    evolveSlot(state, player, spot, uid, defs, events);
   },
 
   /** Play a Trainer from the hand: it goes to the discard pile and does what it says. */
@@ -1044,17 +1071,60 @@ const HANDLERS = {
     if (picked.some((uid) => !waiting.uids.includes(uid))) fail("That card can't be chosen.");
     if (picked.length < waiting.min) fail(waiting.min === 1 ? "Choose a card." : `Choose ${waiting.min} cards.`);
     if (picked.length > waiting.max) fail(waiting.max === 1 ? "Choose only one card." : `Choose at most ${waiting.max} cards.`);
-    const pile = side[waiting.zone];
-    for (const uid of picked) pile.splice(pile.indexOf(uid), 1);
+    // Cards in play (Tools, the Stadium) leave where they are in the effect itself.
+    const pile = waiting.zone === "play" ? [] : side[waiting.zone];
+    for (const uid of picked) if (pile.includes(uid)) pile.splice(pile.indexOf(uid), 1);
     const { op } = waiting.effect;
-    if (op === "discard") {
+    if (op === "dropInPlay") {
+      // Tools or Energy off any Pokémon in play, the Stadium: each to its owner's discard pile.
+      for (const uid of picked) {
+        if (state.stadium?.uid === uid) {
+          state.players[state.stadium.owner].discard.push(uid);
+          events.push({ t: "stadium-gone", p: state.stadium.owner, uid });
+          state.stadium = null;
+          continue;
+        }
+        for (const p of [0, 1]) {
+          const hit = inPlay(state, p).find(([slot]) => slot.tool === uid || slot.energy.includes(uid));
+          if (!hit) continue;
+          const [slot, spot] = hit;
+          state.players[p].discard.push(uid);
+          if (slot.tool === uid) {
+            delete slot.tool;
+            events.push({ t: "discard-tool", p, spot, uid });
+          } else {
+            slot.energy.splice(slot.energy.indexOf(uid), 1);
+            events.push({ t: "discard-energy", p, spot, uids: [uid] });
+          }
+        }
+      }
+    } else if (op === "evolveFrom") {
+      // A card that evolves one of your Pokémon (Rare Candy from the hand, Evosoda from the deck): onto which one.
+      const uid = picked[0];
+      const spots = uid ? evolveSpots(state, player, defOf(state, uid, defs), defs, waiting.effect.how, waiting.effect.where) : [];
+      if (uid && !spots.length) pile.push(uid);
+      else if (spots.length === 1) evolveSlot(state, player, spots[0], uid, defs, events, waiting.zone);
+      else if (spots.length) {
+        askPick(state, { player, side: player, spots, left: 1, effect: { op: "evolveHeld", uid, zone: waiting.zone }, ...(waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) });
+        waiting.then = null;
+      } else if (waiting.zone === "deck") events.push({ t: "search", p: player, uids: [], from: "deck", to: "hand" });
+    } else if (op === "toTop" || op === "toBottom") {
+      // From the hand onto the top or the bottom of the deck (or into it, when it is shuffled next).
+      if (op === "toTop") side.deck.unshift(...picked);
+      else side.deck.push(...picked);
+      if (picked.length) events.push({ t: "hand-to-deck", p: player, uids: picked, at: waiting.shuffle ? "into" : op === "toTop" ? "top" : "bottom" });
+    } else if (op === "discard") {
       side.discard.push(...picked);
       if (picked.length) events.push({ t: "discard-hand", p: player, uids: picked });
     } else if (op === "attach") {
       // Energy from the deck onto Pokémon: a fixed one, one picked for all, or a pick for each card.
+      // A Trainer may name which Pokémon can take it (`spots`), and the zone it comes from (hand, discard pile).
       const to = waiting.effect.to;
-      const spots = inPlay(state, player).map(([, s]) => s);
-      if (picked.length && waiting.effect.spot != null && slotAt(state, player, waiting.effect.spot)) {
+      const spots = (waiting.effect.spots || inPlay(state, player).map(([, s]) => s)).filter((s) => slotAt(state, player, s));
+      // "Attach up to 2 ... If you do": none attached, nothing after.
+      if (!picked.length && waiting.effect.need) waiting.then = null;
+      if (picked.length && !spots.length && waiting.effect.spot == null) pile.push(...picked);
+      else if (picked.length && waiting.effect.spot != null && slotAt(state, player, waiting.effect.spot)) {
         const slot = slotAt(state, player, waiting.effect.spot);
         slot.energy.push(...picked);
         for (const uid of picked) events.push({ t: "attach", p: player, uid, spot: waiting.effect.spot, from: "deck" });
@@ -1062,9 +1132,9 @@ const HANDLERS = {
         picked.forEach((uid, i) => askPick(state, { player, side: player, spots, left: 1, effect: { op: "attachHeld", uids: [uid] }, ...(i === picked.length - 1 && waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) }));
         waiting.then = null;
       } else if (picked.length) {
-        askPick(state, { player, side: player, spots, left: 1, effect: { op: "attachHeld", uids: picked }, ...(waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) });
+        askPick(state, { player, side: player, spots, left: 1, effect: { op: "attachHeld", uids: picked, ...(waiting.zone !== "deck" ? { zone: waiting.zone } : {}) }, ...(waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) });
         waiting.then = null;
-      } else events.push({ t: "search", p: player, uids: [], from: waiting.zone, to: "hand" });
+      } else if (!picked.length && waiting.zone === "deck") events.push({ t: "search", p: player, uids: [], from: waiting.zone, to: "hand" });
       // Cards looked at from the top and not taken go to the hand (the Ability says so), else the deck is shuffled.
       if (waiting.rest === "hand" && waiting.top) {
         const rest = side.deck.splice(0, waiting.top - picked.length);
@@ -1187,6 +1257,9 @@ function applyPick(state, waiting, spot, defs, events) {
     if (key === "rise") slot.used = { uid: slot.uid, turn: state.turn };
     events.push({ t: "ability", p, spot, uid: slot.uid, name: ability.name });
     runTrainer(ability[key].steps, { state, defs, events, player: p, spot, src: "ability" });
+  } else if (effect.op === "evolveHeld") {
+    // The card chosen to evolve with (it rides on the pick) goes on the Pokémon picked.
+    evolveSlot(state, p, spot, effect.uid, defs, events, effect.zone);
   } else if (effect.op === "gatherFrom") {
     // "Move any amount of Energy from your other Pokémon to it": one card a pick, until the player stops.
     const slot = slotAt(state, p, spot);
@@ -1272,10 +1345,16 @@ function applyPick(state, waiting, spot, defs, events) {
     const slot = slotAt(state, p, spot);
     for (const uid of effect.uids) {
       slot.energy.push(uid);
-      events.push({ t: "attach", p, uid, spot, from: "deck" });
+      events.push({ t: "attach", p, uid, spot, from: effect.zone || "deck" });
     }
   } else if (effect.op === "discardEnergy") {
     const slot = slotAt(state, p, spot);
+    // "Discard a Pokémon Tool and a Special Energy from 1 of your opponent's Pokémon": the Tool goes too.
+    if (effect.tool && slot.tool) {
+      side.discard.push(slot.tool);
+      events.push({ t: "discard-tool", p, spot, uid: slot.tool });
+      delete slot.tool;
+    }
     // A Special Energy only: the last one attached.
     const special = effect.special ? [...slot.energy].reverse().find((uid) => !defOf(state, uid, defs).basic) : null;
     const gone = effect.special ? (special ? slot.energy.splice(slot.energy.indexOf(special), 1) : []) : slot.energy.splice(Math.max(0, slot.energy.length - effect.n), effect.n);
@@ -1429,7 +1508,7 @@ export function viewFor(state, player) {
     side.discard.forEach((uid) => shown.add(uid));
     for (const slot of [side.active, ...side.bench]) {
       if (!slot || (state.phase === "setup" && p !== player)) continue;
-      [slot.uid, ...slot.under, ...slot.energy].forEach((uid) => shown.add(uid));
+      [slot.uid, ...slot.under, ...slot.energy, ...(slot.tool ? [slot.tool] : [])].forEach((uid) => shown.add(uid));
     }
     if (p !== player) {
       side.hand = side.hand.length;
@@ -1441,6 +1520,13 @@ export function viewFor(state, player) {
     side.deck = side.deck.length;
     side.prizes = side.prizes.length;
   });
+  // The Stadium is in plain sight, and so are the cards a player is being asked to choose from.
+  if (state.stadium) shown.add(state.stadium.uid);
+  for (const waiting of state.pending) {
+    if (waiting.player !== player) continue;
+    if (waiting.type === "choose") waiting.uids.forEach((uid) => shown.add(uid));
+    if (waiting.type === "pick" && waiting.effect?.op === "evolveHeld") shown.add(waiting.effect.uid);
+  }
   view.cards = Object.fromEntries(Object.entries(view.cards).filter(([uid]) => shown.has(uid)));
   delete view.seed;
   delete view.rng;
