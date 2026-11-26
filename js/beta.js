@@ -7,7 +7,7 @@
 
    The page only asks and shows. Every stake, roll and payout is the Worker's. */
 import { api, esc, coinTag, uuid } from "./casino-kit.js";
-import { BETA_GAMES, BETA_RULES, GRASS, ROCKET, TIN_MAX_OPEN, rocketAt, grassMultiplier } from "./beta-rules.js?v=2";
+import { BETA_GAMES, BETA_RULES, GRASS, ROCKET, TIN_MAX_OPEN, rocketAt, grassMultiplier } from "./beta-rules.js?v=3";
 
 const fmtX = (m) => `${Number(m || 0).toFixed(2)}x`;
 const num = (v) => Number(v).toLocaleString("en-US", { maximumFractionDigits: 2 });

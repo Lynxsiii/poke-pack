@@ -278,6 +278,30 @@ export function compileTrainer(text) {
   return compileParts(clean);
 }
 
+/**
+ * A Pokémon Tool stays on the Pokémon it is attached to and changes its numbers:
+ *   { hp: +n, retreat: n fewer | "all", plus: n more damage to their Active Pokémon,
+ *     less: n less damage taken from attacks, noWeakness }
+ * or null when the text isn't read yet.
+ */
+const TOOLS = [
+  [/^The Pokémon this card is attached to gets \+(\d+) HP\.$/, (m) => ({ hp: Number(m[1]) })],
+  [/^The Retreat Cost of the Pokémon this card is attached to is ((?:Colorless)+) less\.$/, (m) => ({ retreat: m[1].length / 9 })],
+  [/^The Pokémon this card is attached to has no Retreat Cost\.$/, () => ({ retreat: "all" })],
+  [/^The Pokémon this card is attached to has no Weakness\.$/, () => ({ noWeakness: true })],
+  [/^(?:The attacks of|Attacks used by) the Pokémon this card is attached to do (\d+) more damage to (?:your opponent's|the) Active Pokémon(?: \(before applying Weakness and Resistance\))?\.$/, (m) => ({ plus: Number(m[1]) })],
+  [/^(?:Any damage done to|Damage done to) the Pokémon this card is attached to by (?:an opponent's |your opponent's )?attacks is reduced by (\d+)(?: \(after applying Weakness and Resistance\))?\.$/, (m) => ({ less: Number(m[1]) })],
+  [/^The Pokémon this card is attached to takes (\d+) less damage from (?:your opponent's )?attacks(?: \(after applying Weakness and Resistance\))?\.$/, (m) => ({ less: Number(m[1]) })],
+];
+export function compileTool(text) {
+  const clean = String(text || "").replace(/\s+/g, " ").trim();
+  for (const [pattern, build] of TOOLS) {
+    const m = clean.match(pattern);
+    if (m) return build(m);
+  }
+  return null;
+}
+
 /** A card may be played when it would do something, and every price it asks can be paid. */
 export function trainerReady(steps, ctx) {
   if (steps.some((step) => T_OPS[step.op]?.must && !T_OPS[step.op].ready(ctx, step))) return false;

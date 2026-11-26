@@ -110,8 +110,13 @@ wordings the engine can't read. Work down that list:
    `choose`, action `choose` with the uids): deck searches to the hand or
    the Bench, cards back from the discard pile, a price paid from the hand
    first, a coin flip in front. Steps after a choice ride on it (`then`).
-   407 of 2,888 Trainers playable. Next: Stadiums, Tools, moving Energy,
-   Rare Candy, damage boosts for a turn.
+   Pokémon Tools (same day): attached with action `tool`, one to a Pokémon,
+   kept on `slot.tool`; `compileTool` reads the ones that change numbers
+   (HP, Retreat Cost, damage dealt or taken, no Weakness) and the engine
+   asks `toolOf` / `maxHp` / `retreatCost` wherever those numbers are used.
+   423 of 2,888 Trainers playable. Next: Stadiums (the same kind of
+   standing modifier, for both players), Tools with conditions, moving
+   Energy, Rare Candy, damage boosts for a turn.
 5. **Abilities and Poké-Powers**: a hook per timing (on play, once a turn,
    always on).
 6. **Special Energy**, then the odd card types: V-UNION, LEGEND, Restored,

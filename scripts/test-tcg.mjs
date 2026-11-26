@@ -8,7 +8,7 @@
  */
 import { readFileSync, readdirSync } from "node:fs";
 import assert from "node:assert/strict";
-import { ACTIVE, FORMATS, RuleError, addCondition, apply, canRetreat, conditionsOn, createGame, damageAfterTyping, legalActions, resolveKnockOuts, unpaid, usableAttacks, viewFor } from "../js/tcg/engine.js";
+import { ACTIVE, FORMATS, RuleError, addCondition, apply, canRetreat, conditionsOn, createGame, damageAfterTyping, legalActions, maxHp, resolveKnockOuts, retreatCost, unpaid, usableAttacks, viewFor } from "../js/tcg/engine.js";
 import { createDefs, defineCard, FREE_ENERGY } from "../js/tcg/cards.js";
 import { compileAttack } from "../js/tcg/effects.js";
 import { botAction } from "../js/tcg/bot.js";
@@ -836,7 +836,7 @@ function playOut(decks, format, seed) {
       const seen = [];
       for (const side of state.players) {
         seen.push(...side.deck, ...side.hand, ...side.discard, ...side.prizes);
-        for (const slot of [side.active, ...side.bench]) if (slot) seen.push(slot.uid, ...slot.under, ...slot.energy);
+        for (const slot of [side.active, ...side.bench]) if (slot) seen.push(slot.uid, ...slot.under, ...slot.energy, ...(slot.tool ? [slot.tool] : []));
       }
       assert.equal(seen.length, Object.keys(state.cards).length);
       assert.equal(new Set(seen).size, seen.length);
@@ -962,6 +962,85 @@ test("Energy comes back from the discard pile; a coin can stand in front of a se
   assert.ok(energy.slice(0, 2).every((u) => me.hand.includes(u)));
   assert.deepEqual(defs(S.coin).fx[0].op, "flip");
   assert.ok(defs(S.coin).playable);
+});
+
+/* ---------- Pokémon Tools ---------- */
+
+const labTool = (key, text) => {
+  const id = labTrainer(key, "Pokémon Tool", text);
+  return id;
+};
+const TOOL = {
+  cape: labTool("cape", "The Pokémon this card is attached to gets +50 HP."),
+  stone: labTool("stone", "The Pokémon this card is attached to has no Retreat Cost."),
+  band: labTool("band", "The attacks of the Pokémon this card is attached to do 30 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance)."),
+  vest: labTool("vest", "The Pokémon this card is attached to has no Weakness."),
+  odd: labTool("oddtool", "The Pokémon this card is attached to can dance."),
+};
+
+test("a Tool is attached, one to a Pokémon, and leaves play with it", () => {
+  assert.ok(defs(TOOL.cape).playable && defs(TOOL.cape).tool.hp === 50);
+  assert.ok(!defs(TOOL.odd).playable);
+  const state = started();
+  state.current = 0;
+  const me = state.players[0];
+  const cape = hold(state, 0, TOOL.cape);
+  const stone = hold(state, 0, TOOL.stone);
+  assert.ok(legalActions(state, 0, defs).some((a) => a.type === "tool" && a.uid === cape && a.spot === ACTIVE));
+  assert.ok(!legalActions(state, 0, defs).some((a) => a.type === "play" && a.uid === cape));
+  const hp = maxHp(state, me.active, defs);
+  apply(state, { type: "tool", player: 0, uid: cape, spot: ACTIVE }, defs);
+  assert.equal(maxHp(state, me.active, defs), hp + 50);
+  assert.throws(() => apply(state, { type: "tool", player: 0, uid: stone, spot: ACTIVE }, defs), RuleError);
+  // The extra HP keeps it standing; past it, the Tool goes to the discard pile with the Pokémon.
+  me.active.damage = hp + 40;
+  resolveKnockOuts(state, defs, []);
+  assert.ok(me.active);
+  me.active.damage = hp + 50;
+  me.bench = me.bench.length ? me.bench : [{ uid: me.deck.shift(), under: [], energy: [], damage: 0, since: 0 }];
+  resolveKnockOuts(state, defs, []);
+  assert.ok(!me.active && me.discard.includes(cape));
+});
+
+test("Tools change retreat cost, damage dealt and Weakness", () => {
+  const state = started();
+  state.current = 0;
+  state.turn = 3;
+  const [me, foe] = state.players;
+  if (!me.bench.length) me.bench.push({ uid: me.deck.shift(), under: [], energy: [], damage: 0, since: 0 });
+  assert.ok(retreatCost(state, me.active, defs) > 0);
+  assert.ok(!canRetreat(state, 0, defs));
+  apply(state, { type: "tool", player: 0, uid: hold(state, 0, TOOL.stone), spot: ACTIVE }, defs);
+  assert.equal(retreatCost(state, me.active, defs), 0);
+  assert.ok(canRetreat(state, 0, defs));
+
+  // Charmander's Scratch does 10; with the band 40. Squirtle isn't weak to Fire, so no doubling here.
+  me.active.tool = hold(state, 0, TOOL.band);
+  me.hand.pop();
+  me.active.energy = me.deck.filter((u) => defs(state.cards[u]).kind === "energy").slice(0, 2);
+  me.deck = me.deck.filter((u) => !me.active.energy.includes(u));
+  const hit = apply(state, { type: "attack", player: 0, index: 0 }, defs).find((e) => e.t === "damage" && e.p === 1);
+  assert.equal(hit.n, 40);
+
+  // No Weakness: a Fire Pokémon hit by Water takes the printed damage only.
+  const typed = (tool) => {
+    const s2 = started();
+    s2.current = 1;
+    s2.turn = 4;
+    s2.players[1].active.energy = s2.players[1].deck.filter((u) => defs(s2.cards[u]).kind === "energy").slice(0, 2);
+    s2.players[1].deck = s2.players[1].deck.filter((u) => !s2.players[1].active.energy.includes(u));
+    if (tool) s2.players[0].active.tool = hold(s2, 0, tool);
+    const index = usableAttacks(s2, 1, defs)[0];
+    const dmg = defs(s2.cards[s2.players[1].active.uid]).attacks[index].damage;
+    const hit2 = apply(s2, { type: "attack", player: 1, index }, defs).find((e) => e.t === "damage" && e.p === 0);
+    return [hit2?.n || 0, dmg];
+  };
+  const [plain, printed] = typed(null);
+  const [vested] = typed(TOOL.vest);
+  if (printed > 0) {
+    assert.equal(plain, printed * 2, "Charmander is weak to Water");
+    assert.equal(vested, printed);
+  }
 });
 
 /* ---------- the rulebook audit (2026-11-26) ---------- */

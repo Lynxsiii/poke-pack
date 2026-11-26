@@ -14,6 +14,34 @@
     ]
   },
   {
+    "id": "2026-11-26-tear-and-backs",
+    "date": "2026-11-26",
+    "title": "Packs no longer vanish when you tear them",
+    "summary": "Grabbing a pack in the first half second after it landed froze it see-through, so the whole tear ran on an invisible pack. A grab now finishes the pack's entrance at once.",
+    "items": [
+      "Cards out of packs, boxes and battles show the real Pokémon card back again. Your sleeves are for the card game."
+    ]
+  },
+  {
+    "id": "2026-11-26-hud-face",
+    "date": "2026-11-26",
+    "title": "Your picture sits in its level ring",
+    "summary": "On phones the profile picture in the top left is round now, so it sits centred in the level ring instead of poking its corners into it.",
+    "items": [
+      "The level tag under it sits a little lower, so more of your picture shows."
+    ]
+  },
+  {
+    "id": "2026-11-26-holo-fit-stamped",
+    "date": "2026-11-26",
+    "title": "22 more stamped cards have their holo lined up",
+    "summary": "A second pass on cards whose foil sat slightly off the print. These are stamped, Pokémon Center and prerelease versions that were wearing the foil of the plain card.",
+    "items": [
+      "Nine Prismatic Evolutions stamped ex cards (the Eevee family and Tyranitar), the Dragon Vault stamped holos (5 cards), and Pokémon Center promos from Mega Evolution and Scarlet & Violet now have foil and texture sitting on the print.",
+      "The check that finds these now also compares each special version with the plain card it came from, so new ones get caught before they ship."
+    ]
+  },
+  {
     "id": "2026-11-26-grass-five-wide",
     "date": "2026-11-26",
     "title": "Tall Grass is five tiles wide again",

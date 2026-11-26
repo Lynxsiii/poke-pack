@@ -94,6 +94,29 @@ def confirmed(scan_path, map_path, r, min_gain):
     return close >= 3
 
 
+def variant_fit(t):
+    """A variant print (id `<base id>-<suffix>`) against its base print: scan to scan, which fits far more surely than
+    map to scan (correlations near 0.9). When the variant's scan is cropped differently from the base's and the
+    variant's map sits better on the variant's scan after the same move, the map was made for the base's geometry."""
+    cid, key, scan, mp, base_scan = t
+    try:
+        a = cv2.GaussianBlur(lum(os.path.join(ROOT, scan)), (0, 0), 1.2)
+        b = cv2.GaussianBlur(lum(os.path.join(ROOT, base_scan)), (0, 0), 1.2)
+        cc, w = cv2.findTransformECC(a, b, np.eye(2, 3, dtype=np.float32), cv2.MOTION_AFFINE,
+                                     (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 200, 1e-6), None, 5)
+        pts = np.array([[0, 0, 1], [W, 0, 1], [0, H, 1], [W, H, 1]], dtype=np.float32)
+        off = float(np.abs(pts @ w.T - pts[:, :2]).max() / W * 100)
+        ea, em = edges(lum(os.path.join(ROOT, scan))), edges(alpha(os.path.join(ROOT, mp)))
+        moved = cv2.warpAffine(em, w, (W, H), flags=cv2.INTER_LINEAR | cv2.WARP_INVERSE_MAP)
+
+        def ncc(x, y):
+            x, y = x - x.mean(), y - y.mean()
+            return float((x * y).sum() / np.sqrt((x * x).sum() * (y * y).sum() + 1e-9))
+        return cid, key, scan, mp, (float(cc), off, w.tolist(), ncc(ea, moved) - ncc(ea, em))
+    except (cv2.error, OSError, ValueError):
+        return cid, key, scan, mp, None
+
+
 def job(t):
     cid, key, scan, mp = t
     r = fit(os.path.join(ROOT, scan), os.path.join(ROOT, mp))
@@ -144,6 +167,16 @@ def main():
     json.dump([{"id": i, "key": k, "scan": s, "map": m, "fit": r} for i, k, s, m, r in res], open(args.out, "w"))
     bad = [(i, k, s, m, r) for i, k, s, m, r in res if r and r[0] >= args.min_cc and r[1] > args.max and r[3] >= args.min_gain]
     bad = [t for t in bad if confirmed(os.path.join(ROOT, t[2]), os.path.join(ROOT, t[3]), t[4], args.min_gain)]
+    # variant prints, scan against the base print's scan
+    by_id = {c["id"]: c for _, c in cards(set())}
+    vt = [(i, k, sc, m, by_id[i.rsplit("-", 1)[0]]["image"]) for i, k, sc, m in todo
+          if i.rsplit("-", 1)[0] in by_id and by_id[i.rsplit("-", 1)[0]].get("image") and i.count("-") >= 2]
+    with Pool(args.jobs) as p:
+        vres = p.map(variant_fit, vt, chunksize=8)
+    have = {(t[0], t[1]) for t in bad}
+    for i, k, sc, m, r in vres:
+        if r and r[0] >= 0.75 and r[1] > args.max and r[3] >= 0.02 and (i, k) not in have:
+            bad.append((i, k, sc, m, (r[0], r[1], r[2], r[3])))
     unmeasured = sum(1 for *_, r in res if not r or r[0] < args.min_cc)
     for i, k, s, m, r in sorted(bad, key=lambda t: -t[4][1]):
         print(f"{i:28} {k:8} off {r[1]:5.2f}%  cc {r[0]:.2f} (+{r[3]:.2f})  {m}")

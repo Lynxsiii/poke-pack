@@ -310,7 +310,7 @@ export function initGear(deps) {
           : `${MATERIALS[item.material] || "Coin"}${item.subject ? `, ${item.subject}` : ""}`
         : item
           ? `${item.count || 65} sleeves${item.subject ? `, ${item.subject}` : ""}`
-          : "Every face-down card shows the printed back.";
+          : "Your cards in the card game show the printed back.";
     const canClear = kind === "coin" ? !item.house : Boolean(item);
     const pop = view.pop === kind;
     const swap = !pop && view.swap === kind;
@@ -338,7 +338,7 @@ export function initGear(deps) {
   function render() {
     if (!deps.user()) {
       root.innerHTML = `<div class="gear-head"><h1>Sleeves &amp; coins</h1>
-          <p class="gear-lede">Coins for the casino's flips, sleeves for every face-down card.</p></div>
+          <p class="gear-lede">Coins for the casino's flips, sleeves for your cards in the card game.</p></div>
         <section class="gear-hero gear-gate-hero coin">
           <div class="gear-hero-stage">
             <span class="gear-hero-slab" aria-hidden="true"></span>
