@@ -1782,7 +1782,14 @@ function centerQuickSet(id = "shop-quick-sets") {
   const row = document.getElementById(id);
   const on = row?.querySelector(".st.active");
   if (!on || !row.clientWidth) return;
-  row.scrollLeft = on.offsetLeft - (row.clientWidth - on.offsetWidth) / 2;
+  // Centre it in the part of the row that shows: a pinned (sticky) All packs link at the
+  // front covers the left of the row, and offsetLeft can be measured from another parent.
+  const first = row.firstElementChild;
+  const pin = first && first !== on && getComputedStyle(first).position === "sticky" ? first.getBoundingClientRect().width : 0;
+  const box = row.getBoundingClientRect();
+  const at = on.getBoundingClientRect().left - box.left + row.scrollLeft;
+  const room = row.clientWidth - pin;
+  row.scrollLeft = Math.max(0, at - pin - Math.max(0, (room - on.offsetWidth) / 2));
 }
 
 /** Sets whose price history has loaded for the shop's trend buttons. */
@@ -6963,7 +6970,7 @@ function pullsPageHtml(best) {
     : activeWrapper?.name
       ? `${activeWrapper.name} wrapper`
       : "";
-  const sub = [set.name, wrap, `${currentPulls.length} cards`, fresh ? `${fresh} new` : ""].filter(Boolean).join(", ");
+  const sub = [set.name, wrap, `${currentPulls.length} card${currentPulls.length === 1 ? "" : "s"}`, fresh ? `${fresh} new` : ""].filter(Boolean).join(", ");
   const view = pullsView();
   const spots = pileSpots(currentPulls, best);
   return `<div class="pulls-page">

@@ -1,5 +1,17 @@
 [
   {
+    "id": "2026-11-26-packs-fixes",
+    "date": "2026-11-26",
+    "title": "Packs page fixes",
+    "summary": "Sets inside each era are in release order, and the set strip shows the set you're on in full.",
+    "items": [
+      "Scarlet & Violet sets were out of order on the Packs page (151, Shrouded Fable and Stellar Crown sat among the wrong neighbours). Every era now runs newest first, and the McDonald's and other special packs do too.",
+      "On a set or kit page the strip at the top no longer cuts off the name of the set you're on, and fades at its edges instead of clipping.",
+      "A one-card pouch says 1 card, not 1 cards.",
+      "BETA Higher or Lower: a run past 11 right guesses keeps counting them. The payout was always right."
+    ]
+  },
+  {
     "id": "2026-11-26-wishlist",
     "date": "2026-11-26",
     "title": "Card wishlist",

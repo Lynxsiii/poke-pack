@@ -6957,6 +6957,24 @@ export function erasWithSets() {
     if (!liveByEra.has(key)) liveByEra.set(key, []);
     liveByEra.get(key).push(set);
   }
+  // Newest first inside an era, by release date (the catalog's own order slips: 151 and
+  // Stellar Crown sat among the wrong neighbours). A set with no date keeps its place.
+  const when = (set) => { const t = Date.parse(set.released || ""); return Number.isFinite(t) ? t : null; };
+  // Each kind (boosters, promos, special packs, kits) is sorted inside the places it already
+  // holds, so a McDonald's pack doesn't land between two boosters.
+  for (const list of liveByEra.values()) {
+    const byKind = new Map();
+    list.forEach((set, i) => {
+      const kind = setCategory(set);
+      if (!byKind.has(kind)) byKind.set(kind, []);
+      byKind.get(kind).push({ set, i, t: when(set) });
+    });
+    for (const group of byKind.values()) {
+      const slots = group.map((d) => d.i);
+      group.sort((a, b) => (a.t == null || b.t == null ? a.i - b.i : b.t - a.t || a.i - b.i));
+      group.forEach((d, k) => { list[slots[k]] = d.set; });
+    }
+  }
   const blocks = ROADMAP.map((block) => {
     const live = liveByEra.get(block.era) || [];
     liveByEra.delete(block.era);

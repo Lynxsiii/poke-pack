@@ -68,7 +68,7 @@ const fileFor=pathname=>{
   return clean!=='/'&&existsSync(u)&&statSync(u).isFile()?u:null;
 };
 // Sign-ups carrying testerKey: 'dev-tester-key' become test accounts (worker/testers.js).
-const env={DB,TEST_ACCOUNT_KEY:'dev-tester-key',SITE_ORIGIN:`http://127.0.0.1:${PORT}`,ASSETS:{fetch:async request=>{
+const env={DB,TEST_ACCOUNT_KEY:'dev-tester-key',BETA_ADMINS:'devtester',SITE_ORIGIN:`http://127.0.0.1:${PORT}`,ASSETS:{fetch:async request=>{
   const f=fileFor(new URL(request.url).pathname);
   return f?new Response(readFileSync(f),{headers:{'content-type':MIME[extname(f.pathname)]||'application/octet-stream'}}):new Response('',{status:404});
 }}};
