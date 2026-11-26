@@ -6,7 +6,7 @@
  * cannot decide it has earned one. `at(ctx)` returns raw progress against
  * `goal`, which is what draws the bar and what the claim check compares.
  */
-import { titleContext, ownedPerSet, ownedMap } from "./titles.js";
+import { titleContext, ownedPerSet, ownedBoxPromos, ownedMap } from "./titles.js";
 import { RARITY_ORDER } from "./catalog.js";
 import { tallyRarity } from "./engine.js";
 import { nameHas, tokens, setIdOfCard, isTagTeamName } from "./achievement-kit.js";
@@ -14,7 +14,7 @@ import { SET_INFO, RARITIES_IN_PRINT } from "./achievement-eras.js";
 import { RIP, CHASE, COLLECT, WEALTH, TRAINER } from "./achievement-core.js";
 import { DEX } from "./achievement-dex.js";
 import { RARITY, MARKET, BATTLE, SOCIAL, QUESTS } from "./achievement-misc.js";
-import { SETS_GENERAL, SET_ROWS } from "./achievement-sets.js";
+import { SETS_GENERAL, SET_ROWS, RETIRED_SET_ROWS } from "./achievement-sets.js";
 import { SECRETS } from "./achievement-secrets.js";
 
 export const ACH_CATEGORIES = [
@@ -53,9 +53,28 @@ export const ACHIEVEMENTS = ACH_CATEGORIES.flatMap((cat) => [
   ...SECRETS.filter((row) => row.cat === cat.id),
 ]);
 
-const BY_ID = new Map(ACHIEVEMENTS.map((row) => [row.id, row]));
+/**
+ * Rows that can no longer be earned: the half and mastery rows the extras had (js/achievement-sets.js). Not in
+ * ACHIEVEMENTS, so no table, total or "ready to claim" list sees them, but still found by id and by set, because a
+ * claimed one keeps paying its XP and still draws its emblem.
+ */
+export const RETIRED_ACHIEVEMENTS = RETIRED_SET_ROWS;
+
+/** True for a row nobody can earn any more. */
+export function isRetired(row) {
+  return Boolean(row && row.retired === true);
+}
+
+/** The rows a player's badge wall shows: every live row, then the retired ones they claimed back when those could be earned. */
+export function achievementsFor(claimed) {
+  const have = claimed instanceof Set ? claimed : new Set(claimed || []);
+  const kept = RETIRED_ACHIEVEMENTS.filter((row) => have.has(row.id));
+  return kept.length ? [...ACHIEVEMENTS, ...kept] : ACHIEVEMENTS;
+}
+
+const BY_ID = new Map([...ACHIEVEMENTS, ...RETIRED_ACHIEVEMENTS].map((row) => [row.id, row]));
 const BY_SET = new Map();
-for (const row of ACHIEVEMENTS) {
+for (const row of [...ACHIEVEMENTS, ...RETIRED_ACHIEVEMENTS]) {
   if (!row.set) continue;
   if (!BY_SET.has(row.set)) BY_SET.set(row.set, []);
   BY_SET.get(row.set).push(row);
@@ -70,7 +89,7 @@ export function isSecret(row) {
   return Boolean(row && row.secret === true);
 }
 
-/** Every row tied to one set: its halfway row, then its mastery row. */
+/** Every row tied to one set: its halfway row, then its mastery row (retired rows for an extra: see isRetired). */
 export function achievementsBySet(setId) {
   return (BY_SET.get(String(setId || "")) || []).slice();
 }
@@ -183,6 +202,7 @@ export function achievementContext(save, options = {}) {
   }
 
   const owned = ownedPerSet(collection);
+  const boxOwned = ownedBoxPromos(collection);
   const setOwned = (id) => owned.get(id) || 0;
   const setTotal = (id) => SET_INFO.get(id)?.total || 0;
   const setPct = (id) => {
@@ -200,6 +220,8 @@ export function achievementContext(save, options = {}) {
   let setsRipped = 0;
   let bestSetPacks = 0;
   let promoOwned = 0;
+  // Every owned card that is not a booster set's pack card: the extras' cards and the booster sets' box promos.
+  let extrasOwned = 0;
   const eraCards = new Map();
   const eraRipped = new Set();
   const editionCards = new Map();
@@ -208,21 +230,26 @@ export function achievementContext(save, options = {}) {
   for (const info of SET_INFO.values()) {
     const have = setOwned(info.id);
     const packs = setPacks(info.id);
-    if (info.total && have >= info.total) setsDone += 1;
-    if (info.total && have * 2 >= info.total) setsHalf += 1;
-    if (have > 0) setsStarted += 1;
-    if (info.total >= 100 && have > 0 && have >= info.total - 1) setsAlmost += 1;
+    const box = boxOwned.get(info.id) || 0;
+    // "A set" in a count of finished sets is a booster set: a kit or a 12-card Happy Meal year is an extra.
+    if (info.booster && info.total && have >= info.total) setsDone += 1;
+    if (info.booster && info.total && have * 2 >= info.total) setsHalf += 1;
+    if (have + box > 0) setsStarted += 1;
+    if (info.booster && info.total >= 100 && have > 0 && have >= info.total - 1) setsAlmost += 1;
+    extrasOwned += info.booster ? box : have;
     if (packs > 0) {
       setsRipped += 1;
       eraRipped.add(info.era);
     }
     if (packs > bestSetPacks) bestSetPacks = packs;
     if (info.promo) promoOwned += have;
-    eraCards.set(info.era, (eraCards.get(info.era) || 0) + have);
-    editionCards.set(info.edition, (editionCards.get(info.edition) || 0) + have);
+    // A box promo is still a card of its era.
+    eraCards.set(info.era, (eraCards.get(info.era) || 0) + have + box);
+    editionCards.set(info.edition, (editionCards.get(info.edition) || 0) + have + box);
     if (info.total && have >= info.total) {
       editionDone.set(info.edition, (editionDone.get(info.edition) || 0) + 1);
-      eraDone.set(info.era, (eraDone.get(info.era) || 0) + 1);
+      // A crown counts the era's mastered booster sets.
+      if (info.booster) eraDone.set(info.era, (eraDone.get(info.era) || 0) + 1);
     }
   }
 
@@ -240,6 +267,7 @@ export function achievementContext(save, options = {}) {
     setsRipped,
     bestSetPacks,
     promoOwned,
+    extrasOwned,
     erasStarted: [...eraCards.values()].filter((n) => n > 0).length,
     erasRipped: eraRipped.size,
     eraOwned: (era) => eraCards.get(era) || 0,
@@ -264,7 +292,8 @@ export function achievementProgress(row, ctx) {
     at = 0;
   }
   const goal = row.goal || 1;
-  const done = at >= goal;
+  // A retired row can't be finished: it is never ready to claim and the Worker refuses it.
+  const done = at >= goal && !isRetired(row);
   return {
     at: Math.min(at, goal),
     goal,

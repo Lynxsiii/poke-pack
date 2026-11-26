@@ -5,9 +5,9 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import { DatabaseSync } from "node:sqlite";
 import worker from "../worker/index.js";
-import { PLAYABLE_SETS, dataSetsOf, homeCards } from "../js/catalog.js";
+import { isBoosterSet, PLAYABLE_SETS, dataSetsOf, homeCards } from "../js/catalog.js";
 import { ACHIEVEMENTS, achievementById, achievementsBySet, masteryRowFor } from "../js/achievements.js";
-import { CROWN_ERAS, eraSlug, eraTotal, setsInEra } from "../js/achievement-eras.js";
+import { CROWN_ERAS, eraSlug, eraTotal, setsInEra, boosterSetsInEra } from "../js/achievement-eras.js";
 import { MASTERY_COIN, HALF_COIN, CROWN_COIN, halfCoins, masteryCoins, crownCoins } from "../js/achievement-sets.js";
 import { MASTERY_GIFTS, CROWN_GIFTS } from "../js/mastery-gifts.js";
 import { ERA_CROWNS, MASTERY_RANKS, eraCrownRewards, masteryRank, masteryRewards, rankProgress } from "../js/mastery-ranks.js";
@@ -194,8 +194,9 @@ for (const total of [12, 33, 99, 100, 101, 370]) {
   const masters = ACHIEVEMENTS.filter((row) => row.kind === "mastery");
   const halves = ACHIEVEMENTS.filter((row) => row.kind === "half");
   const crowns = ACHIEVEMENTS.filter((row) => row.kind === "crown");
-  const oldMasters = PLAYABLE_SETS.reduce((n, set) => n + OLD_MASTER(set.totalCount), 0);
-  const oldHalves = PLAYABLE_SETS.reduce((n, set) => n + OLD_HALF(set.totalCount), 0);
+  // Only booster sets have rows to earn (the extras' rows are retired), so the old pay is summed over the same sets.
+  const oldMasters = PLAYABLE_SETS.filter(isBoosterSet).reduce((n, set) => n + OLD_MASTER(set.totalCount), 0);
+  const oldHalves = PLAYABLE_SETS.filter(isBoosterSet).reduce((n, set) => n + OLD_HALF(set.totalCount), 0);
   console.log(`mastery coins ${sum(masters)} (was ${oldMasters}), half ${sum(halves)} (was ${oldHalves}), crowns ${sum(crowns)} (new), all achievements ${sum(ACHIEVEMENTS)}`);
   ok(sum(masters) > oldMasters && sum(masters) < oldMasters * 2, "mastery pay grew, by less than double");
   // 600k with the 71 sets of 2026-10-01 morning; every era back to Base Set (171 sets) sits near 660k.
@@ -316,7 +317,7 @@ eq(giftJson, { sets: MASTERY_GIFTS, crowns: CROWN_GIFTS }, "js/mastery-gifts.js 
   for (const crown of ERA_CROWNS) {
     eq(eraCrownRewards(crown.era), crown);
     eq(eraCrownRewards(crown.slug), crown);
-    eq([crown.sets, crown.xp], [setsInEra(crown.era).length, XP_WEIGHTS.crown]);
+    eq([crown.sets, crown.xp], [boosterSetsInEra(crown.era).length, XP_WEIGHTS.crown]);
     ok(crown.title.endsWith("Champion") && crown.title.length <= 32, `${crown.era} title`);
     ok(crown.gear.every((g) => g.name), `${crown.era} gear`);
     if ((CROWN_GIFTS[crown.slug] || []).length) ok(crown.gear.length > 0, `${crown.era} gear`);
@@ -388,8 +389,9 @@ const coinsOf = (user) => db.prepare("SELECT coins FROM profiles WHERE user_id=?
 const gearRows = (user) => db.prepare("SELECT kind,item_id,qty FROM user_gear WHERE user_id=? ORDER BY kind,item_id").all(user.id).map((r) => ({ ...r }));
 const claimedOf = (user) => JSON.parse(db.prepare("SELECT claimed FROM profiles WHERE user_id=?").get(user.id).claimed);
 const claim = (user, body) => request("/api/achievements/claim", "POST", body, user.sid);
-const withGear = PLAYABLE_SETS.filter((set) => masteryRowFor(set.id).reward.gear.length === 2).sort((a, b) => a.totalCount - b.totalCount);
-const bare = PLAYABLE_SETS.filter((set) => masteryRowFor(set.id).reward.gear.length === 0).sort((a, b) => a.totalCount - b.totalCount)[0];
+const BOOSTERS = PLAYABLE_SETS.filter(isBoosterSet);
+const withGear = BOOSTERS.filter((set) => masteryRowFor(set.id).reward.gear.length === 2).sort((a, b) => a.totalCount - b.totalCount);
+const bare = BOOSTERS.filter((set) => masteryRowFor(set.id).reward.gear.length === 0).sort((a, b) => a.totalCount - b.totalCount)[0];
 const [setA, setB, setC] = withGear;
 const items = (set) => masteryRowFor(set.id).reward.gear.map(({ kind, id }) => ({ kind, item_id: id, qty: 1 }));
 
@@ -478,6 +480,21 @@ const items = (set) => masteryRowFor(set.id).reward.gear.map(({ kind, id }) => (
   eq([res.body.gear, res.body.rewards[0].gear], [[], []], "no gear to report");
   eq(gearRows(u), [], "nothing granted");
   eq(res.body.coins, masteryRowFor(bare.id).coins);
+  // An extra (a Trainer Kit half, a Happy Meal year, a promo binder) has no mastery to earn: owning every card of one
+  // is not a claim, its rows are in no table, and a mastery claimed back when it existed keeps its XP, title and seal.
+  const kit = PLAYABLE_SETS.find((set) => set.id === "xytk7a");
+  const k = addUser();
+  giveSet(k, kit);
+  const before = coinsOf(k);
+  for (const id of [`set-${kit.id}-master`, `set-${kit.id}-half`]) {
+    const refused = await claim(k, { id });
+    eq(refused.status, 400, `${id} can no longer be claimed`);
+  }
+  eq(coinsOf(k), before, "a retired row pays nothing");
+  ok(!(await claim(k, {})).body.rewards?.some((r) => /^set-xytk7a-/.test(r.id)), "claim-all skips retired rows");
+  ok(PLAYABLE_SETS.filter((set) => !isBoosterSet(set)).every((set) => masteryRowFor(set.id).retired && !ACHIEVEMENTS.includes(masteryRowFor(set.id))), "every extra's mastery row is retired and out of the tables");
+  ok(BOOSTERS.every((set) => !masteryRowFor(set.id).retired && ACHIEVEMENTS.includes(masteryRowFor(set.id))), "every booster set keeps its live mastery row");
+  eq(computeXp({ claimed: [`set-${kit.id}-master`] }).total, XP_WEIGHTS.mastery, "a retired mastery claimed earlier still counts its XP");
   // Unknown ids and unfinished sets grant nothing.
   eq((await claim(u, { id: "set-nope-master" })).status, 400);
   const w = addUser();
@@ -504,7 +521,7 @@ const items = (set) => masteryRowFor(set.id).reward.gear.map(({ kind, id }) => (
   const era = [...CROWN_ERAS].filter((e) => (CROWN_GIFTS[eraSlug(e)] || []).length).sort((a, b) => eraTotal(a) - eraTotal(b))[0];
   const crown = ACHIEVEMENTS.find((row) => row.kind === "crown" && row.era === era);
   const u = addUser();
-  const sets = setsInEra(era);
+  const sets = boosterSetsInEra(era);
   for (const set of sets.slice(0, -1)) giveSet(u, set);
   const sweep = await claim(u, { all: true });
   eq(sweep.status, 200, JSON.stringify(sweep.body).slice(0, 200));

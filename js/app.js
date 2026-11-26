@@ -30,8 +30,12 @@ import {
   hasCardData,
   dataSetsOf,
   homeCards,
+  boxPromoCards,
+  isBoosterSet,
+  setCategory,
+  SET_CATEGORIES,
 } from "./catalog.js";
-import { dexIds, foldCopies, homeSetId, promoHomeOf } from "./card-home.js";
+import { dexIds, foldCopies, homeSetId, isBoxPromoId, promoHomeOf } from "./card-home.js";
 import { createCardPicker } from "./card-picker.js?v=3";
 import { HIT_RARITIES, canPullReverse, isHit, tallyRarity } from "./engine.js";
 import { initRadio } from "./radio.js?v=5";
@@ -60,6 +64,7 @@ import { slabHTML, gradeWord } from "./slab.js?v=2";
 import { GRADING_LIMITS, gradedValue } from "./grading-rules.js";
 import {
   ACHIEVEMENTS,
+  achievementsFor,
   ACH_CATEGORIES,
   achievementById,
   achievementContext,
@@ -76,7 +81,7 @@ import * as questRules from "./quests.js";
 import { masteryEmblemHtml as masteryEmblem, masterySetIds, masteryBannerId } from "./mastery.js";
 import { bannerBlockHtml } from "./mastery-banner.js";
 import { masteryShelfProfileHtml } from "./mastery-shelf.js";
-import * as questArea from "./quest-area.js?v=9";
+import * as questArea from "./quest-area.js?v=10";
 import * as levelUi from "./level-ui.js";
 import { rollFigures, growBars, flyCoins, markPicks, landPreview } from "./acct-motion.js";
 import { createXpFeed } from "./level-feed.js";
@@ -332,6 +337,8 @@ let productList = {};
 let boxContents = {};
 let cards = [];
 let setCards = [];
+/** The live set's box promos (stamped and cosmos prints from its blisters and boxes): on its collection page under their own word, never in its dex or its count. */
+let boxCards = [];
 let byId = {};
 let view = "home";
 let viewFadeGen = 0;
@@ -839,10 +846,12 @@ const RARITY_GROUPS = [
   ["uncommon", "Uncommon"],
   ["rare", "Rare"],
   ["hits", "Hits"],
+  ["box", "Box promos"],
 ];
-const GROUP_ALL_WORD = { common: "All commons", uncommon: "All uncommons", rare: "All rares", hits: "All hits" };
+const GROUP_ALL_WORD = { common: "All commons", uncommon: "All uncommons", rare: "All rares", hits: "All hits", box: "All box promos" };
 
 function rarityGroupOf(card) {
+  if (isBoxPromoId(card.id)) return "box";
   if (card.rarity === "Common" || card.rarity === "Energy") return "common";
   if (card.rarity === "Uncommon") return "uncommon";
   // A WotC holo Rare is a hit; a later holo Rare is the rare slot's usual card.
@@ -858,6 +867,11 @@ function groupCounts() {
       counts[key].total += 1;
       counts[key].have += have;
     }
+  }
+  // Box promos are counted under their own word only: "All" is the set's pack cards.
+  for (const card of boxCards) {
+    counts.box.total += 1;
+    counts.box.have += ownedQty(card.id) > 0 ? 1 : 0;
   }
   return counts;
 }
@@ -2045,6 +2059,7 @@ async function activateSet(id, force = false, quiet = false) {
   // under ME Black Star Promos, not under the set that sells them).
   const fileCards = dataSetsOf(next).flatMap((source) => setCache[source.id]);
   setCards = homeCards(next, dataSetsOf(next).map((source) => setCache[source.id]));
+  boxCards = boxPromoCards(next, dataSetsOf(next).map((source) => setCache[source.id]));
   cards = [...setCards, ...BASIC_ENERGY];
   byId = Object.fromEntries([...fileCards, ...BASIC_ENERGY].map((c) => [c.id, c]));
   activeWrapper = liveSet.wrappers[0];
@@ -2356,6 +2371,15 @@ function renderCollection({ refreshSets = true } = {}) {
     if (countEl && signed) {
       if (!countEl.firstElementChild) countEl.innerHTML = `<b class="num"></b> cards`;
       rollCollFigure(countEl.firstElementChild, `${num(owned)}/${num(total)}`);
+      // An extra (a promo binder, a Happy Meal year, a kit) has no mastery: a full one is stamped Complete instead.
+      const complete = !isBoosterSet(liveSet) && total > 0 && owned >= total;
+      let stamp = countEl.querySelector(".coll-stamp");
+      if (complete && !stamp) {
+        stamp = document.createElement("span");
+        stamp.className = "coll-stamp";
+        stamp.textContent = "Complete";
+        countEl.append(" ", stamp);
+      } else if (!complete && stamp) stamp.remove();
     }
     const figure = document.getElementById("coll-worth-v");
     if (figure) {
@@ -2375,7 +2399,7 @@ function renderCollection({ refreshSets = true } = {}) {
 
   const ofSet = new Set(setCards);
   // Everything but the show filter, so the show words can say how many each would show.
-  const base = cards.filter((card) => {
+  const base = (rarityGroup === "box" ? boxCards : cards).filter((card) => {
     const count = ownedQty(card.id);
     if (rarityGroup !== "all" && rarityGroupOf(card) !== rarityGroup) return false;
     if (rarityMode !== "all" && card.rarity !== rarityMode) return false;
@@ -2428,7 +2452,11 @@ function renderCollection({ refreshSets = true } = {}) {
   if (els.binderNote) {
     const shown = list.length;
     const filtered = ownedMode !== "all" || rarityGroup !== "all" || rarityMode !== "all" || q;
-    els.binderNote.textContent = `${num(shown)} card${shown === 1 ? "" : "s"}${filtered ? `, filtered from ${num(total)} in the set` : ""}`;
+    // Box promos are not part of the set's count, so their note says where they come from instead.
+    els.binderNote.textContent =
+      rarityGroup === "box"
+        ? `${num(shown)} box promo${shown === 1 ? "" : "s"}. They come in ${liveSet.name} boxes and blisters, and don't count toward the set.`
+        : `${num(shown)} card${shown === 1 ? "" : "s"}${filtered ? `, filtered from ${num(total)} in the set` : ""}`;
   }
 
   // A set change cross-fades the grid; a set or filter change lifts the first screen of slots.
@@ -2860,7 +2888,7 @@ function renderCatalog() {
   const ownedBy = activeTrainer() ? new Map() : null;
   if (ownedBy) {
     for (const [id, count] of Object.entries(ownedMapNow())) {
-      if (count > 0) {
+      if (count > 0 && !isBoxPromoId(id)) {
         const home = homeSetId(id);
         ownedBy.set(home, (ownedBy.get(home) || 0) + 1);
       }
@@ -2977,7 +3005,7 @@ function miniCardRow(cards, emptyNote, rowClass = "") {
 
 function ownedInSet(set) {
   return Object.entries(ownedMapNow()).reduce(
-    (n, [id, count]) => n + (count > 0 && homeSetId(id) === set.id ? 1 : 0),
+    (n, [id, count]) => n + (count > 0 && homeSetId(id) === set.id && !isBoxPromoId(id) ? 1 : 0),
     0
   );
 }
@@ -3577,9 +3605,15 @@ function guestHasProgress() {
   return save.packsOpened > 0 || owned || save.coins !== STARTING_COINS || Boolean(save.lastDaily);
 }
 
+/** Booster sets, then any extra whose mastery was claimed while it existed (it keeps its seal, title and banner). */
+function masterySets() {
+  const claimed = claimedIds();
+  return PLAYABLE_SETS.filter((set) => isBoosterSet(set) || claimed.has(`set-${set.id}-master`));
+}
+
 function setCompletionRows() {
   const perSet = ownedPerSet(ownedMapNow());
-  return PLAYABLE_SETS.map((set) => {
+  return masterySets().map((set) => {
     const owned = perSet.get(set.id) || 0;
     const total = set.totalCount || 1;
     return { set, owned, total, pct: Math.round((owned / total) * 100) };
@@ -3614,8 +3648,11 @@ function achievementStats() {
   const ctx = achieveCtx();
   const claimed = claimedIds();
   const ready = readyToClaim(ctx, claimed);
-  const done = ACHIEVEMENTS.filter((row) => claimed.has(row.id) || isAchievementDone(row, ctx)).length;
-  const banked = ACHIEVEMENTS.reduce((n, row) => n + (claimed.has(row.id) ? row.coins : 0), 0);
+  // The live rows, plus any retired row this player claimed while it could still be earned (an extra's old mastery).
+  const rows = achievementsFor(claimed);
+  const done = rows.filter((row) => claimed.has(row.id) || isAchievementDone(row, ctx)).length;
+  const banked = rows.reduce((n, row) => n + (claimed.has(row.id) ? row.coins : 0), 0);
+  const claimedShown = rows.reduce((n, row) => n + (claimed.has(row.id) ? 1 : 0), 0);
   return {
     ctx,
     claimed,
@@ -3623,8 +3660,8 @@ function achievementStats() {
     done,
     banked,
     waiting: claimTotal(ready),
-    total: ACHIEVEMENTS.length,
-    pct: Math.round((claimed.size / ACHIEVEMENTS.length) * 100),
+    total: rows.length,
+    pct: Math.round((claimedShown / rows.length) * 100),
     setRows: setCompletionRows(),
   };
 }
@@ -3643,9 +3680,14 @@ const areaDeps = {
   num,
   setIdentity,
   eraTitle,
-  sets: PLAYABLE_SETS,
+  // The sets with a mastery: every booster set, plus an extra whose mastery this player claimed before it was retired.
+  get sets() {
+    return masterySets();
+  },
   setById: (id) => SET_BY_ID.get(id) || null,
-  rows: ACHIEVEMENTS,
+  get rows() {
+    return achievementsFor(claimedIds());
+  },
   categories: ACH_CATEGORIES,
   achievementProgress,
   achievementFace,
