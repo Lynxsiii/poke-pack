@@ -20,7 +20,7 @@
  * `--foil-map-xc` (the lab's reset keeps `--foil-map*`), and `cure: true` adds the `.cure` layer that lights the dots.
  * A face with no map (a card added later) gets nothing from here and keeps the era's recipe.
  */
-import { isEx, exPattern } from "../ex-foil.js?v=8";
+import { isEx, exPattern } from "../ex-foil.js?v=9";
 
 const has = (pattern, cls) => ` ${pattern || ""} `.includes(` ${cls} `);
 
