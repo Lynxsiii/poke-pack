@@ -2,7 +2,7 @@
 //   node scripts/tcg-theme-coverage.mjs [rows]
 import { readFileSync, readdirSync } from "node:fs";
 import { createDefs } from "../js/tcg/cards.js";
-import { boxCardList } from "../js/catalog.js";
+import { BASIC_ENERGY, boxCardList } from "../js/catalog.js";
 const rules = JSON.parse(readFileSync("data/tcg/rules.json", "utf8"));
 const byId = new Map();
 for (const file of readdirSync("data")) {
@@ -11,6 +11,7 @@ for (const file of readdirSync("data")) {
   if (Array.isArray(list)) for (const c of list) if (c?.id) byId.set(c.id, c);
   else if (Array.isArray(list?.cards)) for (const c of list.cards) if (c?.id) byId.set(c.id, c);
 }
+for (const e of BASIC_ENERGY) byId.set(e.id, e);
 const trainers = JSON.parse(readFileSync("data/tcg/trainers.json", "utf8"));
 const defs = createDefs((id) => byId.get(id), rules, trainers);
 const products = JSON.parse(readFileSync("data/products.json", "utf8"));
