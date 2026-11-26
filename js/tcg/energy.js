@@ -16,6 +16,8 @@
  * card out, so nothing is half working.
  */
 
+import { compileTrainer, tidy } from "./trainers.js";
+
 const TYPE = "(?:Grass|Fire|Water|Lightning|Psychic|Fighting|Darkness|Metal|Fairy|Dragon|Colorless)";
 const AFTER = "(?: \\(after applying Weakness and Resistance\\))?";
 const BEFORE = "(?: \\(before applying Weakness and Resistance\\))?";
@@ -33,6 +35,8 @@ const ASIDES = [
   /\s*\(Has no effect other than providing Energy\.\)/g,
   /\s*\(Don't apply Weakness and Resistance\.\)/g,
   /\s*Doesn't count as a basic Energy card\./g,
+  /\s*\(Doesn't count as a [Bb]asic card\.\)/g,
+  /\s*\(While not in play, this card counts as Colorless Energy\.\)/g,
   /\s*\(If this card is attached to anything other than an? .+? Pokémon, discard this card\.\)/g,
   /\s*If this card is attached to anything other than an? .+? Pokémon, discard this card\./g,
 ];
@@ -54,11 +58,19 @@ const SENTENCES = [
   [new RegExp(`^${HOLDER} has no Weakness$`, "i"), (m, out) => mod(out, m[1], { noWeakness: true })],
   [new RegExp(`^${HOLDER} gets \\+(\\d+) HP$`, "i"), (m, out) => mod(out, m[1], { hp: Number(m[2]) })],
   [new RegExp(`^The attacks of ${HOLDER} do (\\d+) (more|less) damage to your opponent's (?:Active )?Pokémon${BEFORE}$`), (m, out) => mod(out, m[1], { plus: Number(m[2]) * (m[3] === "less" ? -1 : 1) })],
-  [new RegExp(`^${HOLDER} takes (\\d+) less damage from (?:your opponent's )?attacks${AFTER}$`, "i"), (m, out) => mod(out, m[1], { less: Number(m[2]) })],
+  [new RegExp(`^${HOLDER} takes (\\d+) less damage from (?:attacks from your opponent's Pokémon|(?:your opponent's )?attacks)${AFTER}$`, "i"), (m, out) => mod(out, m[1], { less: Number(m[2]) })],
+  [new RegExp(`^${HOLDER} has no Retreat Cost$`, "i"), (m, out) => mod(out, m[1], { retreat: "all" })],
+  [new RegExp(`^Attacks used by ${HOLDER} do (\\d+) more damage to your opponent's Active Pokémon${BEFORE}$`), (m, out) => mod(out, m[1], { plus: Number(m[2]) })],
+  // More on some Pokémon than on others: `alt` is what it gives where `who` fits (see energyOf).
+  [/^If (?:the Pokémon this card is attached to is|this card is attached to) a Basic Pokémon, this card provides every type of Energy but provides only 1 Energy at a time$/, (m, out) => alt(out, { stage: "basic" }, ["Any"])],
+  [/^While attached to a Pokémon that has δ on its card, this card provides every type of Energy but provides only 1 Energy at a time$/, (m, out) => alt(out, { delta: true }, ["Any"])],
+  [/^As long as this card is attached to a Pokémon that isn't a Pokémon V or a Pokémon-GX, it provides ColorlessColorless Energy$/, (m, out) => alt(out, { notBoxes: ["V", "VMAX", "VSTAR", "GX"] }, ["Colorless", "Colorless"])],
+  [/^If this card is attached to a Pokémon V or a Pokémon-GX, it provides Colorless Energy instead$/, (m, out) => give(out, ["Colorless"])],
+  [/^If you have more Prize cards remaining than your opponent, and if this card is attached to a Pokémon that isn't a Pokémon-GX or Pokémon-EX, this card provides every type of Energy but provides only 2 Energy at a time$/, (m, out) => alt(out, { notBoxes: ["GX", "EX"], behind: true }, ["Any", "Any"])],
   [new RegExp(`^${HOLDER} (?:recovers from all Special Conditions and )?can't be affected by any Special Conditions$`, "i"), (m, out) => mod(out, m[1], { immune: ["all"] })],
   // Old Metal and Darkness Energy: the change, then "Ignore this effect if ... isn't Metal".
-  [new RegExp(`^Damage done (?:by attacks )?to the Pokémon (?:that )?this card is attached to is reduced by (\\d+)${AFTER}$`), (m, out) => mod(out, "", { less: Number(m[1]) })],
-  [new RegExp(`^If the Pokémon this card is attached to attacks, the attack does (\\d+) more damage to the Active Pokémon${BEFORE}$`), (m, out) => mod(out, "", { plus: Number(m[1]) })],
+  [new RegExp(`^Damage done (?:by attacks )?to the Pokémon (?:that )?this card (?:is )?attached to is reduced by (\\d+)${AFTER}$`), (m, out) => mod(out, "", { less: Number(m[1]) })],
+  [new RegExp(`^If the Pokémon this card is attached to attacks?, the attack does (\\d+) more damage to the Active Pokémon${BEFORE}$`), (m, out) => mod(out, "", { plus: Number(m[1]) })],
   [new RegExp(`^Ignore this effect if the Pokémon (?:that )?this card is attached to isn't (${TYPE})$`, "i"), (m, out) => {
     const last = out.mods[out.mods.length - 1];
     if (!last || last.who.types) return false;
@@ -76,7 +88,8 @@ const SENTENCES = [
   [/^If you play this card from your hand, (.+)$/, (m, out) => onAttach(out, m[1], "")],
   [/^When you (?:attach this card from your hand|play this card from your hand and attach it) to your Active Pokémon, (?:switch 1 of the Defending Pokémon with 1 of your opponent's Benched Pokémon|your opponent switches (?:his or her|their) Active Pokémon with 1 of (?:his or her|their) Benched Pokémon)$/, (m, out) => ((out.attach = { steps: [{ op: "foeSwitch" }], where: "active" }), true)],
   [/^Your opponent chooses the Benched Pokémon to switch$/, (m, out) => out.attach?.steps[0]?.op === "foeSwitch"],
-  [/^When you attach this card from your hand to your Active Pokémon, switch that Pokémon with 1 of your Benched Pokémon$/, (m, out) => ((out.attach = { steps: [{ op: "switch" }], where: "active" }), true)],
+  [new RegExp(`^When you attach this card from your hand to an? (${TYPE.slice(3, -1)}) Pokémon, (.+)$`), (m, out) => onAttach(out, m[2], "", m[1])],
+  [/^When you attach this card from your hand to your Active Pokémon, switch (?:that Pokémon|your Active Pokémon) with 1 of your Benched Pokémon$/, (m, out) => ((out.attach = { steps: [{ op: "switch" }], where: "active" }), true)],
   [/^When you attach this card from your hand to 1 of your Benched Pokémon, switch that Pokémon with your Active Pokémon$/, (m, out) => ((out.attach = { steps: [{ op: "switchSelf" }], where: "bench" }), true)],
 ];
 
@@ -95,21 +108,32 @@ const ATTACHED = [
   [/^the Pokémon you attach it to is no longer (?:Asleep, Confused, Paralyzed, or Poisoned|affected by a Special Condition)$/, () => [{ op: "cure", to: "self" }]],
   [/^remove (\d+) damage counters? and all Special Conditions from that Pokémon$/, (m) => [{ op: "heal", n: Number(m[1]) * 10, to: "self" }, { op: "cure", to: "self" }]],
   [/^search your deck for a Basic Pokémon and put it onto your Bench\. Then, shuffle your deck$/, () => [{ op: "search", what: "basic", n: 1, to: "bench" }]],
+  [/^heal (\d+) damage from that Pokémon$/, (m) => [{ op: "heal", n: Number(m[1]), to: "self" }]],
 ];
 
-function onAttach(out, words, where) {
+/** `type`: it happens only when the Pokémon it goes on is of that type ("to a Lightning Pokémon"). */
+function onAttach(out, words, where, type = "") {
   for (const [pattern, build] of ATTACHED) {
     const m = words.match(pattern);
     if (m) {
-      out.attach = { steps: build(m), where };
+      out.attach = { steps: build(m), where, ...(type ? { type } : {}) };
       return true;
     }
   }
-  return false;
+  // Anything a Trainer could say that doesn't name "that Pokémon" ("draw 4 cards").
+  const steps = !/that Pokémon/.test(words) && compileTrainer(`${words[0].toUpperCase()}${words.slice(1)}.`);
+  if (!steps) return false;
+  out.attach = { steps, where, ...(type ? { type } : {}) };
+  return true;
+}
+
+function alt(out, who, provides) {
+  (out.alt ||= []).push({ who, provides });
+  return true;
 }
 
 export function compileSpecialEnergy(text, cardName = "", debug = false) {
-  let clean = String(text || "").replace(/\s+/g, " ").trim();
+  let clean = tidy(text);
   if (!clean) return null;
   // The card's own name means "this card", except where it names the Energy it gives ("Metal Energy provides Metal Energy").
   if (cardName) clean = clean.replace(new RegExp(`(?<!provides )${cardName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`, "g"), "this card");
@@ -135,5 +159,6 @@ export function compileSpecialEnergy(text, cardName = "", debug = false) {
   if (out.only) special.only = out.only;
   if (out.mods.length) special.mods = out.mods;
   if (out.attach) special.attach = out.attach;
+  if (out.alt) special.alt = out.alt;
   return special;
 }

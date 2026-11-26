@@ -8,7 +8,7 @@
    the challenger just made. */
 import { api, esc, coins, coinTag, icon, uuid, timeLeft, plural, countLine, stakeStack, pileTiles, playerChip, playerName, emptyLine, emptyBox, seatAvatar, receiptHTML, coinArtHTML, loadingPage, arrivals, rollCoins } from "./casino-kit.js";
 import { COINFLIP_RULES } from "./casino-rules.js";
-import { coinStageHTML, flipCoin, restCoin } from "./coin.js?v=5";
+import { coinStageHTML, flipCoin, restCoin } from "./coin.js?v=6";
 import { mountWinnings, winningsSlot } from "./casino-winnings.js";
 import { gateLock, gateNoticeHTML, gateRefusal } from "./gate-notice.js";
 
@@ -364,7 +364,7 @@ export function createCoinflip(ctx) {
     const line = root.querySelector(".cf-result");
     if (line) line.textContent = "In the air";
     page?.classList.add("is-flipping");
-    if (coin) await flipCoin(coin, flip.winner === "host" ? "heads" : "tails", { ms: TOSS_MS, motion: ctx.motion() });
+    if (coin) await flipCoin(coin, flip.winner === "host" ? "heads" : "tails", { ms: TOSS_MS });
     if (mark !== playing || !visible) return;
     page?.classList.remove("is-flipping");
     settle(flip, true);

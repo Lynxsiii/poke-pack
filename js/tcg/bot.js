@@ -17,7 +17,7 @@
  */
 
 import { trainerAim } from "./trainers.js";
-import { ACTIVE, damageAfterTyping, defOf, energyOf, hpLeft, inPlay, legalActions, other, retreatCost, statusOf, unpaid, usableAttacks } from "./engine.js";
+import { ACTIVE, apply, damageAfterTyping, defOf, energyOf, hpLeft, inPlay, legalActions, other, retreatCost, statusOf, unpaid, usableAttacks } from "./engine.js";
 
 /** How much an attack is worth against this defender, before any coin flip. */
 function attackWorth(attack, def, foeDef, foeHp) {
@@ -123,6 +123,70 @@ function betterOnBench(state, player, defs) {
   return best;
 }
 
+/**
+ * What an attack is really worth, found by playing it out on copies of the table: coin flips,
+ * bonus damage, Bench damage, Special Conditions, discards and recoil all come out in the
+ * numbers instead of being guessed from the printed damage. Each copy gets its own coin luck
+ * (never the real one), so the score is an average, not a peek at the next flip.
+ */
+const SAMPLES = 6;
+let simulating = false;
+const COND_WORTH = { paralyzed: 45, asleep: 25, confused: 20, poisoned: 15, burned: 15 };
+
+function tally(state, player, defs) {
+  const me = state.players[player];
+  const foe = state.players[other(player)];
+  const hurt = (side) => [side.active, ...side.bench].filter(Boolean).reduce((a, slot) => a + slot.damage, 0);
+  const conds = (slot) => (slot ? Object.entries(statusOf(slot)).reduce((a, [k, on]) => a + (on ? COND_WORTH[k] || 0 : 0), 0) : 0);
+  const energy = (side) => [side.active, ...side.bench].filter(Boolean).reduce((a, slot) => a + slot.energy.length, 0);
+  return {
+    taken: me.prizes.length,
+    lost: foe.prizes.length,
+    foeHurt: hurt(foe),
+    myHurt: hurt(me),
+    foeCond: conds(foe.active),
+    myEnergy: energy(me),
+    foeEnergy: energy(foe),
+    hand: me.hand.length,
+    foeCount: [foe.active, ...foe.bench].filter(Boolean).length,
+  };
+}
+
+function attackValue(state, player, action, defs) {
+  let total = 0;
+  for (let i = 1; i <= SAMPLES; i += 1) {
+    const copy = JSON.parse(JSON.stringify(state));
+    copy.rng = (state.rng ^ Math.imul(i, 0x9e3779b1)) | 0;
+    const before = tally(copy, player, defs);
+    simulating = true;
+    try {
+      apply(copy, action, defs);
+      // Choices the attack opens (targets, the other side's new Active Pokémon) are made as the bot would.
+      for (let k = 0; k < 12 && copy.phase === "main" && copy.pending.length; k += 1) {
+        const next = botAction(copy, copy.pending[0].player, defs);
+        if (!next) break;
+        apply(copy, next, defs);
+      }
+    } catch {
+      simulating = false;
+      return -Infinity;
+    } finally {
+      simulating = false;
+    }
+    if (copy.phase === "over") {
+      total += copy.winner === player ? 100000 : copy.winner == null ? 0 : -100000;
+      continue;
+    }
+    const after = tally(copy, player, defs);
+    // A Knocked Out Pokémon leaves with its damage counters: count the Prize, not the counters lost.
+    const prizes = before.taken - after.taken;
+    total += prizes * 1000 + (prizes ? 0 : after.foeHurt - before.foeHurt) + after.foeCond - before.foeCond
+      + (before.foeEnergy - after.foeEnergy) * 20 - (after.myHurt - before.myHurt) - (before.myEnergy - after.myEnergy) * 15
+      + Math.min(4, after.hand - before.hand) * 4 - (before.lost - after.lost) * 1000;
+  }
+  return total / SAMPLES;
+}
+
 /** Whether an attack hurts its own side (discards its own Energy, damages itself). */
 const costly = (attack) => (attack.fx || []).some((f) => f.op === "discardEnergy" || f.op === "selfDamage");
 
@@ -184,6 +248,18 @@ export function botAction(state, player, defs) {
     const picks = actions.filter((a) => a.spot != null);
     // "When you play this Pokémon, you may": yes, unless it would draw from a deck that is nearly out.
     if (waiting.effect.op === "ability") return side.deck.length > 4 ? picks[0] : actions.find((a) => a.spot == null);
+    // "Move any amount of Energy to it": keep taking while the Pokémon it goes to can't pay for its best attack.
+    if (waiting.effect.op === "gatherFrom" && picks.length) {
+      const to = waiting.effect.to === ACTIVE ? side.active : side.bench[waiting.effect.to];
+      if (to && plan(state, to, defs).short > 0) {
+        const spare = (a) => {
+          const slot = a.spot === ACTIVE ? side.active : side.bench[a.spot];
+          return slot.energy.length - plan(state, slot, defs).short * 2;
+        };
+        return picks.slice().sort((a, b) => spare(b) - spare(a))[0];
+      }
+      return actions.find((a) => a.spot == null) || picks[0];
+    }
     if (!picks.length || waiting.optional) return actions.find((a) => a.spot == null) || picks[0];
     const theirs = state.players[waiting.side];
     const slotOf = (spot) => (spot === ACTIVE ? theirs.active : theirs.bench[spot]);
@@ -344,6 +420,10 @@ export function botAction(state, player, defs) {
   }
 
   const attacks = actions.filter((a) => a.type === "attack");
+  if (attacks.length && !simulating) {
+    const scored = attacks.map((a) => ({ a, v: attackValue(state, player, a, defs) })).sort((x, y) => y.v - x.v);
+    if (scored[0].v > -Infinity) return scored[0].a;
+  }
   if (attacks.length) {
     const def = defOf(state, side.active.uid, defs);
     const foeHp = foe ? hpLeft(state, foe, defs) : 0;

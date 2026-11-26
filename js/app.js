@@ -128,8 +128,8 @@ import { THEMES, canUseTheme, resolveLook } from "./themes.js?v=1";
 import { equippedCoin, gearItem, normalizeGear } from "./gear.js?v=2";
 import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=16";
 import { initBattles } from "./battles.js?v=10";
-import { initCasino } from "./casino.js?v=28";
-import { coinOf } from "./coin.js?v=5";
+import { initCasino } from "./casino.js?v=29";
+import { coinOf } from "./coin.js?v=6";
 // grading
 import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=16";
 // trades
@@ -10458,7 +10458,7 @@ let tcgLoading = null;
 function showTcg() {
   if (tcgPage) return tcgPage.show(tcgPath);
   els.viewTcg.innerHTML = `<div class="tg-page"><div class="rt-skel tg-loading">Loading</div></div>`;
-  tcgLoading ||= import("./tcg-page.js?v=20")
+  tcgLoading ||= import("./tcg-page.js?v=21")
     .then(({ initTcg }) => {
       tcgPage = initTcg({
         root: els.viewTcg,

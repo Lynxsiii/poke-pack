@@ -8,8 +8,9 @@
  */
 import { readFileSync, readdirSync } from "node:fs";
 import assert from "node:assert/strict";
-import { ACTIVE, FORMATS, RuleError, addCondition, apply, benchSafe, canRetreat, energyOf, toolOf, conditionsOn, createGame, damageAfterTyping, legalActions, maxHp, resolveKnockOuts, retreatCost, unpaid, usableAttacks, viewFor } from "../js/tcg/engine.js";
+import { ACTIVE, FORMATS, RuleError, abilityOn, addCondition, apply, benchSafe, canRetreat, energyOf, toolOf, conditionsOn, createGame, damageAfterTyping, legalActions, maxHp, resolveKnockOuts, retreatCost, unpaid, usableAttacks, viewFor } from "../js/tcg/engine.js";
 import { createDefs, defineCard, FREE_ENERGY } from "../js/tcg/cards.js";
+import { boostOf, compileTrainer, fits, whatOf } from "../js/tcg/trainers.js";
 import { compileAttack } from "../js/tcg/effects.js";
 import { botAction } from "../js/tcg/bot.js";
 import { LESSON, LESSON_CARDS, createLesson } from "../js/tcg/tutorial.js";
@@ -1518,6 +1519,243 @@ test("form change: another of the same name takes over, cards and damage and all
   assert.ok(me.deck.some((uid) => state.cards[uid] === "ex8-16"), "the old one went back in the deck");
 });
 
+/* ---------- Abilities, third batch: triggers and locks ---------- */
+
+const AB3 = {
+  ward: power("ward3", "Prevent all effects of your opponent's Pokémon's Abilities done to this Pokémon."),
+  itemWard: power("itemward", "Whenever your opponent plays an Item or Supporter card from their hand, prevent all effects of that card done to this Pokémon."),
+  ping: power("ping", "Once during your turn, you may put 2 damage counters on 1 of your opponent's Pokémon."),
+  noKo: power("noko", "Pokémon in play (both yours and your opponent's) lose any Ability that requires the Pokémon using it to Knock Out itself."),
+  gas: power("gas", "As long as this Pokémon is in the Active Spot, your opponent's Pokémon in play have no Abilities, except for Power gas."),
+  front: power("frontlock", "As long as this Pokémon is in the Active Spot, your opponent's Active Pokémon has no Abilities, except for Power frontlock."),
+  hurtLock: power("hurtlock", "As long as this Pokémon is in the Active Spot, your opponent's Pokémon in play that have any damage counters on them have no Abilities, except for Pokémon ex."),
+  toxin: power("toxin", "If this Pokémon has a Pokémon Tool card attached to it, each Pokémon in play, in each player's hand, and in each player's discard pile has no Abilities (except for Power toxin)."),
+  rise: power("rise", "Once during your turn, when this Pokémon moves from your Bench to the Active Spot, you may put 2 damage counters on 1 of your opponent's Pokémon."),
+  pull: power("gather", "Once during your turn, when this Pokémon moves from your Bench to the Active Spot, you may move any amount of Water Energy from your other Pokémon to it."),
+  koSearch: power("kosearch", "If this Pokémon is Knocked Out by damage from an attack from your opponent's Pokémon, search your deck for a card and put it into your hand. Then, shuffle your deck."),
+  koHand: power("kohand", "If this Pokémon is Knocked Out by damage from an attack from your opponent's Pokémon, put it into your hand instead of the discard pile. (Discard all attached cards.)"),
+  koSting: power("kosting", "If this Pokémon is in the Active Spot and is Knocked Out by damage from an attack from your opponent's Pokémon, put 6 damage counters on the Attacking Pokémon."),
+  sting: power("sting", "Whenever your opponent attaches an Energy card from their hand to 1 of their Pokémon, put 2 damage counters on that Pokémon."),
+  lost: power("lost", "Once during your turn, if any of your Pokémon were Knocked Out during your opponent's last turn, you may draw 3 cards. You can't use more than 1 Power lost Ability each turn."),
+  fan: power("fan", "Once during your first turn, you may search your deck for up to 3 Colorless Pokémon with 100 HP or less, reveal them, and put them into your hand. Then, shuffle your deck. You can't use more than 1 Power fan Ability during your turn."),
+  grit: power("grit", "If this Pokémon's remaining HP is 30 or less, its attacks do 80 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance)."),
+  charged: power("charged", "If this Pokémon has any Special Energy attached, it gets +100 HP."),
+  pure: power("pure", "Prevent all damage done to this Pokémon by attacks from your opponent's Pokémon that have Special Energy attached."),
+};
+lab("lab-9", [["Smash", 300, ""]]);
+
+test("Ability text, third batch: triggers, locks and wards are read", () => {
+  assert.ok(defs(AB3.ward).ability.ward && defs(AB3.itemWard).ability.trainerWard);
+  assert.deepEqual(defs(AB3.gas).ability.lock, { side: "foe", except: "Power gas" });
+  assert.equal(defs(AB3.gas).ability.where, "active");
+  assert.ok(defs(AB3.toxin).ability.when.tool);
+  assert.deepEqual(defs(AB3.rise).ability.rise.steps, [{ op: "counters", n: 20 }]);
+  assert.deepEqual(defs(AB3.pull).ability.rise.steps, [{ op: "gather", type: "Water" }]);
+  assert.deepEqual(defs(AB3.koSting).ability.ko, { counters: 60, active: true });
+  assert.equal(defs(AB3.sting).ability.foeAttach, 20);
+  assert.ok(defs(AB3.lost).ability.use.need.lost && defs(AB3.lost).ability.use.single);
+  assert.equal(defs(AB3.fan).ability.use.steps[0].what, "pokemon:Colorless@100");
+  assert.deepEqual(defs(AB3.grit).ability.when, { hpMax: 30 });
+  // Real cards: Mimikyu-like wards, Garbodor's Garbotoxin, Pecharunt-era locks, Iron Hands' trigger.
+  assert.ok(defs("me3-31").ability.ward);
+  assert.ok(defs("bw6-54").ability.lock && defs("bw6-54").ability.when.tool);
+  assert.ok(defs("sv4-89").ability.rise);
+  assert.ok(defs("me3-50").ability.ko.toHand);
+  assert.ok(defs("sv5-78").ability.lock.active, "the other player's curly apostrophe printing reads too");
+});
+
+test("Ability locks: from the Active Spot, on damaged Pokémon, with a Tool, on Knock Out-itself Abilities", () => {
+  let state = labgame(AB.draw, AB3.gas);
+  const usable = (s) => legalActions(s, 0, defs).some((a) => a.type === "ability");
+  assert.ok(!usable(state), "Neutralizing Gas: no Abilities for the other side");
+  // Moved to the Bench, it stops.
+  const gas = state.players[1].active;
+  state.players[1].active = state.players[1].bench[0];
+  state.players[1].bench[0] = gas;
+  assert.ok(usable(state));
+
+  state = labgame(AB.draw, AB3.front);
+  assert.ok(!usable(state), "the Active one loses it");
+  benchSlot(state, 0, AB.draw);
+  assert.ok(legalActions(state, 0, defs).some((a) => a.type === "ability" && a.spot !== ACTIVE), "a Benched one keeps it");
+
+  state = labgame(AB.draw, AB3.hurtLock);
+  assert.ok(usable(state));
+  state.players[0].active.damage = 10;
+  assert.ok(!usable(state), "damaged: no Ability");
+
+  state = labgame(AB.draw, AB3.toxin);
+  assert.ok(usable(state), "no Tool, no lock");
+  state.players[1].active.tool = hold(state, 1, TOOL.cape);
+  state.players[1].hand.pop();
+  assert.ok(!usable(state));
+  // Its own side loses theirs too.
+  const mate = benchSlot(state, 1, AB.tough);
+  assert.equal(toolOf(state, mate, defs).less || 0, 0, "Garbotoxin reaches both sides");
+
+  state = labgame();
+  const spread = benchSlot(state, 0, AB2.spread);
+  const at = state.players[0].bench.indexOf(spread);
+  assert.ok(legalActions(state, 0, defs).some((a) => a.type === "ability" && a.spot === at));
+  benchSlot(state, 1, AB3.noKo);
+  assert.ok(!legalActions(state, 0, defs).some((a) => a.type === "ability" && a.spot === at), "no Abilities that Knock Out themselves");
+});
+
+test("wards: an Ability keeps off the other side's Abilities, another their Items and Supporters", () => {
+  let state = labgame(AB3.ping, AB3.ward);
+  act(state, { type: "ability", player: 0, spot: ACTIVE });
+  assert.ok(!state.pending[0].spots.includes(ACTIVE), "damage counters can't go on the warded one");
+  // And a lock is an effect of an Ability too.
+  state = labgame(AB3.gas, AB3.ward);
+  assert.ok(abilityOn(state, state.players[1].active, defs), "the lock doesn't reach it");
+  // A heavier Retreat Cost from their Ability doesn't reach it.
+  state = labgame(AB3.ward);
+  const base = retreatCost(state, state.players[0].active, defs);
+  benchSlot(state, 1, AB2.heavy);
+  assert.equal(retreatCost(state, state.players[0].active, defs), base);
+
+  state = labgame();
+  state.cards[state.players[1].bench[0].uid] = AB3.itemWard;
+  benchSlot(state, 1, "base1-46");
+  act(state, { type: "play", player: 0, uid: hold(state, 0, T.boss) });
+  assert.deepEqual(state.pending[0].spots, [1], "Boss's Orders can't pull the warded one");
+  throws(() => act(state, { type: "pick", player: 0, spot: 0 }), /can't be chosen/);
+});
+
+test("when this Pokémon moves from the Bench to the Active Spot: asked once a turn, on its owner's turn", () => {
+  const state = labgame();
+  const [me, foe] = state.players;
+  const slot = benchSlot(state, 0, AB3.rise);
+  const to = me.bench.indexOf(slot);
+  act(state, { type: "retreat", player: 0, to });
+  assert.equal(me.active, slot);
+  assert.equal(state.pending[0].effect.op, "ability");
+  act(state, { type: "pick", player: 0, spot: ACTIVE });
+  assert.equal(state.pending[0].effect.op, "damage");
+  act(state, { type: "pick", player: 0, spot: ACTIVE });
+  assert.equal(foe.active.damage, 20);
+  // Switched out and back in the same turn: not again.
+  act(state, { type: "play", player: 0, uid: hold(state, 0, T.swap) });
+  act(state, { type: "pick", player: 0, spot: 0 });
+  act(state, { type: "play", player: 0, uid: hold(state, 0, T.swap) });
+  act(state, { type: "pick", player: 0, spot: me.bench.indexOf(slot) });
+  assert.equal(me.active, slot);
+  assert.equal(state.pending.length, 0);
+
+  // "Move any amount of Water Energy from your other Pokémon to it": a pick a card, until the player stops.
+  const s2 = labgame();
+  const m2 = s2.players[0];
+  const old = m2.active;
+  for (let i = 0; i < 2; i += 1) old.energy.push(m2.hand.splice(m2.hand.indexOf(hold(s2, 0, W)), 1)[0]);
+  const had = old.energy.length;
+  assert.ok(had >= 2);
+  const puller = benchSlot(s2, 0, AB3.pull);
+  act(s2, { type: "play", player: 0, uid: hold(s2, 0, T.swap) });
+  act(s2, { type: "pick", player: 0, spot: m2.bench.indexOf(puller) });
+  act(s2, { type: "pick", player: 0, spot: ACTIVE });
+  const from = m2.bench.indexOf(old);
+  act(s2, { type: "pick", player: 0, spot: from });
+  assert.equal(s2.pending[0].effect.op, "gatherFrom");
+  act(s2, { type: "pick", player: 0, spot: from });
+  if (s2.pending.length) act(s2, { type: "pick", player: 0, spot: null });
+  assert.equal(puller.energy.length, 2);
+  assert.equal(old.energy.length, had - 2);
+  assert.equal(s2.pending.length, 0);
+});
+
+test("Knocked Out by an attack: search, back to the hand, damage counters on the attacker", () => {
+  let state = labgame("lab-9", AB3.koSearch);
+  let [me, foe] = state.players;
+  use(state, 0, "Smash");
+  assert.equal(state.pending[0].type, "choose");
+  assert.equal(state.pending[0].player, 1);
+  const pick = state.pending[0].uids[0];
+  act(state, { type: "choose", player: 1, uids: [pick] });
+  assert.ok(foe.hand.includes(pick));
+  assert.equal(state.pending[0].type, "promote");
+  assert.ok((foe.lostOn || []).includes(state.turn), "remembered for next turn");
+
+  state = labgame("lab-9", AB3.koHand);
+  [me, foe] = state.players;
+  const uid = foe.active.uid;
+  use(state, 0, "Smash");
+  assert.ok(foe.hand.includes(uid) && !foe.discard.includes(uid));
+
+  state = labgame("lab-9", AB3.koSting);
+  use(state, 0, "Smash");
+  assert.equal(state.players[0].active.damage, 60);
+
+  // Not by an attack: no trigger.
+  state = labgame(AB3.ping, AB3.koHand);
+  state.players[1].active.damage = 90;
+  const front = state.players[1].active.uid;
+  act(state, { type: "ability", player: 0, spot: ACTIVE });
+  act(state, { type: "pick", player: 0, spot: ACTIVE });
+  assert.ok(state.players[1].discard.includes(front));
+});
+
+test("after a Knock Out last turn, on the first turn, with an Energy attached: Abilities with terms", () => {
+  const state = labgame("lab-9", AB3.lost);
+  const lost = benchSlot(state, 1, AB3.lost);
+  state.players[1].bench.unshift(state.players[1].bench.pop());
+  use(state, 0, "Smash");
+  act(state, { type: "promote", player: 1, spot: 0 });
+  assert.equal(state.current, 1);
+  assert.ok(legalActions(state, 1, defs).some((a) => a.type === "ability" && a.spot === ACTIVE));
+  assert.equal(state.players[1].active, lost);
+  act(state, { type: "end", player: 1 });
+  act(state, { type: "end", player: 0 });
+  assert.ok(!legalActions(state, 1, defs).some((a) => a.type === "ability"), "only the turn after");
+
+  const s2 = labgame(AB3.fan);
+  assert.ok(!legalActions(s2, 0, defs).some((a) => a.type === "ability"), "not after the first turn");
+  s2.first = 1;
+  s2.turn = 2;
+  assert.ok(legalActions(s2, 0, defs).some((a) => a.type === "ability"));
+
+  // Their Energy attached from the hand: 2 damage counters.
+  const s3 = labgame(AB.draw, AB3.sting);
+  s3.players[0].energyUsed = false;
+  act(s3, { type: "attach", player: 0, uid: give(s3, 0, W), spot: 0 });
+  assert.equal(s3.players[0].bench[0].damage, 20);
+});
+
+test("standing Abilities with terms: low HP hits harder, Special Energy adds HP or walls", () => {
+  const state = labgame(AB3.grit);
+  const slot = state.players[0].active;
+  assert.equal(toolOf(state, slot, defs).plus || 0, 0);
+  slot.damage = 70;
+  assert.equal(toolOf(state, slot, defs).plus, 80);
+
+  const s2 = labgame(AB3.charged);
+  assert.equal(maxHp(s2, s2.players[0].active, defs), 100);
+  s2.players[0].active.energy.push(hold(s2, 0, "bw11-113"));
+  s2.players[0].hand.pop();
+  assert.equal(maxHp(s2, s2.players[0].active, defs), 200);
+
+  const s3 = labgame("lab-1", AB3.pure);
+  use(s3, 0, "Tire");
+  assert.equal(s3.players[1].active.damage, 10);
+  const s4 = labgame("lab-1", AB3.pure);
+  s4.players[0].active.energy.push(hold(s4, 0, "bw11-113"));
+  s4.players[0].hand.pop();
+  use(s4, 0, "Tire");
+  assert.equal(s4.players[1].active.damage, 0);
+});
+
+test("the bot plays through decks full of the new Abilities", () => {
+  const shapes = (a) => a && (a.rise || a.ko || a.lock || a.ward || a.trainerWard || a.foeAttach || a.use?.need || a.when?.hpMax || a.when?.special);
+  const picks = [...byId.values()].filter((c) => {
+    const d = defs(c.id);
+    return d.kind === "pokemon" && d.playable && d.stage === "basic" && shapes(d.ability);
+  });
+  assert.ok(picks.length >= 10);
+  for (let seed = 1; seed <= 6; seed += 1) {
+    const deckFor = (k) => [...Array(10)].flatMap((_, i) => Array(3).fill(picks[(seed * 7 + k * 13 + i * 3) % picks.length].id)).concat(...["energy-water", "energy-fire", "energy-psychic", "energy-grass", "energy-lightning", "energy-fighting"].map((e) => Array(5).fill(e)));
+    playOut([deckFor(0), deckFor(1)], "standard", seed);
+  }
+});
+
 /* ---------- Special Energy ---------- */
 
 test("Special Energy: what it provides, who it's for, what it does", () => {
@@ -1572,6 +1810,312 @@ test("Special Energy that acts when attached: Warp to the Bench, Draw a card", (
   const hand = s2.players[0].hand.length;
   act(s2, { type: "attach", player: 0, uid: hold(s2, 0, "sm12-209"), spot: 0 });
   assert.equal(s2.players[0].hand.length, hand + 1, "attached from the hand, and a card drawn");
+});
+
+/* ---------- Trainers, third batch ---------- */
+
+const U = {
+  acro: labTrainer("acro", "Item", "Look at the top 2 cards of your deck and put 1 of them into your hand. Discard the other card."),
+  janine: labTrainer("janine", "Supporter", "Look at the top 4 cards of your deck and put 2 of them into your hand. Shuffle the other cards back into your deck."),
+  rika: labTrainer("rika", "Supporter", "Look at the top 4 cards of your deck and put 2 of them into your hand. Shuffle the other cards and put them on the bottom of your deck."),
+  lacey: labTrainer("lacey", "Supporter", "Shuffle your hand into your deck. Then, draw 4 cards. If your opponent has 3 or fewer Prize cards remaining, draw 8 cards instead."),
+  emcee: labTrainer("emcee", "Supporter", "Draw 2 cards. If your opponent has 3 or fewer Prize cards remaining, draw 2 more cards."),
+  catcher: labTrainer("catcher", "Item", "You can play this card only if you have more Prize cards remaining than your opponent. Switch 1 of your opponent's Benched Pokémon with their Active Pokémon."),
+  grunt: labTrainer("grunt", "Supporter", "You can use this card only if any of your Pokémon were Knocked Out during your opponent's last turn. Discard an Energy from 1 of your opponent's Pokémon."),
+  carmine: labTrainer("carmine", "Supporter", "If you go first, you may use this card during your first turn. Discard your hand and draw 5 cards."),
+  iono: labTrainer("iono", "Supporter", "Each player shuffles their hand and puts it on the bottom of their deck. If either player put any cards on the bottom of their deck in this way, each player draws a card for each of their remaining Prize cards."),
+  rod: labTrainer("rod", "Item", "Shuffle up to 3 in any combination of Pokémon and basic Energy cards from your discard pile into your deck."),
+  stretcher: labTrainer("stretcher", "Item", "Put a Pokémon or a Basic Energy card from your discard pile into your hand."),
+  revive: labTrainer("revive", "Item", "Put a Basic Pokémon from your discard pile onto your Bench."),
+  hammer: labTrainer("hammer", "Item", "Discard a Special Energy from 1 of your opponent's Pokémon."),
+  giacomo: labTrainer("giacomo", "Supporter", "Discard a Special Energy from each of your opponent's Pokémon."),
+  yell: labTrainer("yell", "Supporter", "Put an Energy attached to 1 of your opponent's Pokémon into their hand."),
+  belt: labTrainer("belt", "Supporter", "During this turn, attacks used by your Pokémon do 40 more damage to your opponent's Active Pokémon ex (before applying Weakness and Resistance)."),
+  power: labTrainer("power", "Item", "During this turn, your Pokémon's attacks do 10 more damage to the Active Pokémon (before applying Weakness and Resistance)."),
+  scoop: labTrainer("scoop", "Item", "Put 1 of your Pokémon and all cards attached to it into your hand."),
+  turo: labTrainer("turo", "Supporter", "Put 1 of your Pokémon in play into your hand. (Discard all cards attached to that Pokémon.)"),
+  lady: labTrainer("lady", "Supporter", "Heal 60 damage and remove all Special Conditions from 1 of your Pokémon."),
+  maxpotion: labTrainer("maxpotion", "Item", "Heal all damage from 1 of your Pokémon. If you do, discard all Energy from that Pokémon."),
+  guzma: labTrainer("guzma", "Supporter", "Switch 1 of your opponent's Benched Pokémon with their Active Pokémon. If you do, switch your Active Pokémon with 1 of your Benched Pokémon."),
+  warp: labTrainer("warp", "Item", "Your opponent switches 1 of his or her Defending Pokémon with 1 of his or her Benched Pokémon, if any. You switch 1 of your Active Pokémon with 1 of your Benched Pokémon, if any."),
+  quick: labTrainer("quick", "Item", "You can play this card only if you discard another card from your hand. Search your deck for a Basic Pokémon, reveal it, and put it into your hand. Then, shuffle your deck."),
+  kindler: labTrainer("kindler", "Supporter", "You can use this card only if you discard a Fire Energy card from your hand. Look at the top 7 cards of your deck and put up to 2 of them into your hand. Shuffle the other cards back into your deck."),
+  worker: labTrainer("worker", "Supporter", "Draw 3 cards. Discard a Stadium in play."),
+  band: labTrainer("cband", "Pokémon Tool", "The attacks of the Pokémon this card is attached to do 30 more damage to your opponent's Active Pokémon-GX or Active Pokémon-EX (before applying Weakness and Resistance)."),
+  vessel: labTrainer("vessel", "Stadium", "Once during each player's turn, that player may discard a card from their hand. If they do, that player searches their deck for a basic Energy card, reveals it, and puts it into their hand. Then, that player shuffles their deck."),
+};
+byId.set("lab-ex", { id: "lab-ex", name: "Lab ex", supertype: "Pokémon", subtypes: ["Basic", "ex"], types: ["Colorless"], hp: "300", attacks: [{ name: "Thump", cost: [], damage: "20", text: "" }] });
+byId.set("lab-v", { id: "lab-v", name: "Lab V", supertype: "Pokémon", subtypes: ["Basic", "V"], types: ["Colorless"], hp: "300", attacks: [{ name: "Thump", cost: [], damage: "20", text: "" }] });
+
+test("Trainer text, third batch: the new wordings are read", () => {
+  for (const id of Object.values(U)) assert.ok(defs(id).playable, defs(id).text);
+  const named = (name) => [...byId.values()].filter((c) => c.name === name && c.supertype === "Trainer").map((c) => defs(c.id));
+  for (const name of ["Iono", "Arven", "Buddy-Buddy Poffin", "Acro Bike", "Super Rod", "Enhanced Hammer", "Lacey", "Carmine", "Black Belt's Training", "Super Scoop Up", "Pokémon Center Lady", "Night Stretcher", "Poké Pad", "Counter Catcher", "Guzma", "Choice Band", "Artazon", "Quick Ball", "Earthen Vessel", "Ultra Ball"]) assert.ok(named(name).some((d) => d.playable), name);
+  // What a search names: either of two kinds, an HP cap, no Rule Box, no Pokémon-ex.
+  assert.equal(whatOf("a Pokémon or a Basic Energy card"), "pokemon|basicEnergy");
+  assert.equal(whatOf("in any combination of Water Pokémon and Water Energy cards"), "pokemon:Water|basicEnergy:Water");
+  assert.equal(whatOf("Basic Pokémon with 70 HP or less"), "basic@70");
+  assert.equal(whatOf("a Pokémon that doesn't have a Rule Box"), "pokemon!rule");
+  assert.equal(whatOf("a Basic Pokémon or Evolution card (excluding Pokémon-ex)"), "basic!ex|evolution!ex");
+  assert.ok(fits(defs("base1-63"), "basic@40") && !fits(defs("base1-63"), "basic@30"));
+  assert.ok(fits(defs("base1-63"), "pokemon!rule") && !fits(defs("lab-ex"), "pokemon!rule") && !fits(defs("lab-ex"), "basic!ex"));
+  // An Item and a Pokémon Tool: one search each.
+  assert.deepEqual(compileTrainer("Search your deck for an Item card and a Pokémon Tool card, reveal them, and put them into your hand. Then, shuffle your deck.").map((s) => s.what), ["item", "tool"]);
+  // Still unread: a Stadium can't be dropped by a condition it doesn't know.
+  assert.equal(compileTrainer("You can use this card only if you have any Tera Pokémon in play. Draw 2 cards."), null);
+});
+
+test("a look at the top cards: take some, the rest discarded, shuffled in, or put on the bottom", () => {
+  const state = midgame();
+  const me = state.players[0];
+  const top = me.deck.slice(0, 2);
+  act(state, { type: "play", player: 0, uid: hold(state, 0, U.acro) });
+  assert.deepEqual(state.pending[0].uids, top);
+  assert.equal(state.pending[0].min, 1);
+  throws(() => act(state, { type: "choose", player: 0, uids: [] }), /Choose a card/);
+  act(state, { type: "choose", player: 0, uids: [top[1]] });
+  assert.ok(me.hand.includes(top[1]) && me.discard.includes(top[0]));
+
+  const s2 = midgame();
+  const deck = s2.players[0].deck.length;
+  const four = s2.players[0].deck.slice(0, 4);
+  act(s2, { type: "play", player: 0, uid: hold(s2, 0, U.rika) });
+  act(s2, { type: "choose", player: 0, uids: four.slice(0, 2) });
+  assert.equal(s2.players[0].deck.length, deck - 2);
+  assert.deepEqual(s2.players[0].deck.slice(-2).sort(), four.slice(2).sort(), "the other two went to the bottom");
+});
+
+test("conditions: Prize counts, a Knock Out last turn, the first turn", () => {
+  const state = midgame();
+  const [me, foe] = state.players;
+  foe.prizes.push(foe.deck.pop()); // 4 left: not yet "3 or fewer"
+  act(state, { type: "play", player: 0, uid: hold(state, 0, U.lacey) });
+  assert.equal(me.hand.length, 4);
+  const s2 = midgame();
+  s2.players[1].prizes.length = 3;
+  act(s2, { type: "play", player: 0, uid: hold(s2, 0, U.lacey) });
+  assert.equal(s2.players[0].hand.length, 8);
+  const s3 = midgame();
+  s3.players[1].prizes.length = 2;
+  const hand = s3.players[0].hand.length;
+  act(s3, { type: "play", player: 0, uid: hold(s3, 0, U.emcee) });
+  assert.equal(s3.players[0].hand.length, hand + 4);
+
+  // Counter Catcher: only while behind on Prize cards.
+  const catcher = hold(state, 0, U.catcher);
+  throws(() => act(state, { type: "play", player: 0, uid: catcher }), /would do nothing/);
+  foe.prizes.length = 2;
+  act(state, { type: "play", player: 0, uid: catcher });
+  assert.equal(state.pending[0].side, 1);
+  act(state, { type: "pick", player: 0, spot: 0 });
+
+  // Knocked Out during the opponent's last turn: the engine remembers it.
+  const s4 = midgame();
+  const grunt = hold(s4, 0, U.grunt);
+  s4.players[1].active.energy.push(give(s4, 1, F));
+  assert.ok(!legalActions(s4, 0, defs).some((a) => a.uid === grunt));
+  act(s4, { type: "end", player: 0 });
+  s4.players[0].bench[0].damage = 999;
+  resolveKnockOuts(s4, defs, []);
+  act(s4, { type: "end", player: 1 });
+  assert.ok(legalActions(s4, 0, defs).some((a) => a.uid === grunt));
+
+  // Carmine on the very first turn; another Supporter can't be.
+  const fresh = started();
+  const first = fresh.current;
+  act(fresh, { type: "play", player: first, uid: hold(fresh, first, U.carmine) });
+  assert.equal(fresh.players[first].hand.length, 5);
+});
+
+test("hands to the bottom of the deck, cards back from the discard pile", () => {
+  const state = midgame();
+  const [me, foe] = state.players;
+  me.prizes.length = 2;
+  const mine = me.hand.slice();
+  act(state, { type: "play", player: 0, uid: hold(state, 0, U.iono) });
+  assert.equal(me.hand.length, 2);
+  assert.equal(foe.hand.length, foe.prizes.length);
+  assert.ok(mine.every((u) => me.deck.slice(-mine.length).includes(u)), "the old hand is at the bottom");
+
+  const rod = hold(state, 0, U.rod);
+  throws(() => act(state, { type: "play", player: 0, uid: rod }), /would do nothing/);
+  const gone = me.deck.splice(0, 3);
+  me.discard.push(...gone);
+  act(state, { type: "play", player: 0, uid: rod });
+  const fitting = state.pending[0].uids;
+  act(state, { type: "choose", player: 0, uids: fitting });
+  assert.ok(fitting.every((u) => me.deck.includes(u)));
+
+  const s2 = midgame();
+  const squirtle = s2.players[0].deck.find((u) => s2.cards[u] === "base1-63");
+  s2.players[0].deck.splice(s2.players[0].deck.indexOf(squirtle), 1);
+  s2.players[0].discard.push(squirtle);
+  const bench = s2.players[0].bench.length;
+  act(s2, { type: "play", player: 0, uid: hold(s2, 0, U.revive) });
+  act(s2, { type: "choose", player: 0, uids: [squirtle] });
+  assert.equal(s2.players[0].bench.length, bench + 1);
+});
+
+test("Special Energy off their Pokémon; an Energy back to their hand", () => {
+  const state = midgame();
+  const foe = state.players[1];
+  const hammer = hold(state, 0, U.hammer);
+  throws(() => act(state, { type: "play", player: 0, uid: hammer }), /would do nothing/);
+  const dce = hold(state, 1, "base1-96");
+  foe.hand.splice(foe.hand.indexOf(dce), 1);
+  foe.active.energy.unshift(dce);
+  act(state, { type: "play", player: 0, uid: hammer });
+  act(state, { type: "pick", player: 0, spot: ACTIVE });
+  assert.ok(foe.discard.includes(dce) && foe.active.energy.every((u) => defs(state.cards[u]).basic));
+
+  const s2 = midgame();
+  const f2 = s2.players[1];
+  const two = [hold(s2, 1, "base1-96"), hold(s2, 1, "base1-96")];
+  f2.hand = f2.hand.filter((u) => !two.includes(u));
+  f2.active.energy.push(two[0]);
+  f2.bench[0].energy.push(two[1]);
+  act(s2, { type: "play", player: 0, uid: hold(s2, 0, U.giacomo) });
+  assert.ok(two.every((u) => f2.discard.includes(u)));
+  assert.equal(s2.pending.length, 0);
+
+  const s3 = midgame();
+  const f3 = s3.players[1];
+  f3.active.energy.push(give(s3, 1, F));
+  const hand = f3.hand.length;
+  act(s3, { type: "play", player: 0, uid: hold(s3, 0, U.yell) });
+  act(s3, { type: "pick", player: 0, spot: ACTIVE });
+  assert.equal(f3.hand.length, hand + 1);
+});
+
+test("more damage this turn: all attacks, or only against Pokémon ex; a Tool against GX and EX", () => {
+  const hit = (target, card) => {
+    const state = labgame("lab-2", target);
+    if (card) act(state, { type: "play", player: 0, uid: hold(state, 0, card) });
+    use(state, 0, "Pierce");
+    return state.players[1].active.damage;
+  };
+  assert.equal(hit("lab-2"), 50);
+  assert.equal(hit("lab-2", U.power), 60);
+  assert.equal(hit("lab-2", U.belt), 50, "not an ex");
+  assert.equal(hit("lab-ex", U.belt), 90);
+  // Only that turn.
+  const state = labgame("lab-2", "lab-ex");
+  act(state, { type: "play", player: 0, uid: hold(state, 0, U.belt) });
+  act(state, { type: "end", player: 0 });
+  act(state, { type: "end", player: 1 });
+  use(state, 0, "Pierce");
+  assert.equal(state.players[1].active.damage, 50);
+  // Choice Band: on the attacker, against a Pokémon-EX only.
+  assert.deepEqual(defs(U.band).tool.plusVs, { n: 30, vs: ["GX", "EX"] });
+  const s2 = labgame("lab-2", "lab-v");
+  s2.players[0].active.tool = hold(s2, 0, U.band);
+  s2.players[0].hand.pop();
+  assert.equal(boostOf(s2, 0, s2.players[0].active, s2.players[1].active, defs), 0);
+});
+
+test("a Pokémon back to the hand, never the last one; healing that cures; Max Potion strips", () => {
+  const state = midgame();
+  const me = state.players[0];
+  const benched = me.bench[0];
+  benched.energy.push(give(state, 0, W));
+  act(state, { type: "play", player: 0, uid: hold(state, 0, U.turo) });
+  act(state, { type: "pick", player: 0, spot: 0 });
+  assert.ok(me.hand.includes(benched.uid) && me.discard.includes(benched.energy[0]));
+  assert.equal(me.bench.length, 0);
+  const scoop = hold(state, 0, U.scoop);
+  throws(() => act(state, { type: "play", player: 0, uid: scoop }), /would do nothing/);
+  // The Active one: it goes with its Energy, and a new Active Pokémon is chosen.
+  act(state, { type: "bench", player: 0, uid: give(state, 0, "base1-63") });
+  const front = me.active;
+  act(state, { type: "play", player: 0, uid: scoop });
+  act(state, { type: "pick", player: 0, spot: ACTIVE });
+  assert.ok(me.hand.includes(front.uid) && front.energy.every((u) => me.hand.includes(u)));
+  assert.equal(state.pending[0].type, "promote");
+  act(state, { type: "promote", player: 0, spot: 0 });
+
+  const s2 = midgame();
+  const m2 = s2.players[0];
+  addCondition(s2, m2.active, "poisoned");
+  act(s2, { type: "play", player: 0, uid: hold(s2, 0, U.lady) });
+  assert.deepEqual(s2.pending[0].spots, [ACTIVE], "only a condition, no damage, still counts");
+  act(s2, { type: "pick", player: 0, spot: ACTIVE });
+  assert.deepEqual(conditionsOn(m2.active), []);
+  m2.active.damage = 30;
+  act(s2, { type: "play", player: 0, uid: hold(s2, 0, U.maxpotion) });
+  act(s2, { type: "pick", player: 0, spot: ACTIVE });
+  assert.equal(m2.active.damage, 0);
+  assert.equal(m2.active.energy.length, 0);
+});
+
+test("switch both ways; a price in cards of a kind; Stadiums dropped and paid for", () => {
+  const state = midgame();
+  const [me, foe] = state.players;
+  const guzma = hold(state, 0, U.guzma);
+  const keep = foe.bench.splice(0);
+  throws(() => act(state, { type: "play", player: 0, uid: guzma }), /would do nothing/);
+  foe.bench.push(...keep);
+  const mine = me.active.uid;
+  act(state, { type: "play", player: 0, uid: guzma });
+  act(state, { type: "pick", player: 0, spot: 0 });
+  assert.equal(state.pending[0].side, 0);
+  act(state, { type: "pick", player: 0, spot: 0 });
+  assert.notEqual(me.active.uid, mine);
+
+  // Warp Point: their player picks first, then the card's player gets their own pick.
+  const s2 = midgame();
+  act(s2, { type: "play", player: 0, uid: hold(s2, 0, U.warp) });
+  assert.equal(s2.pending[0].player, 1);
+  act(s2, { type: "pick", player: 1, spot: 0 });
+  assert.equal(s2.pending[0].player, 0);
+  assert.equal(s2.pending[0].side, 0);
+  act(s2, { type: "pick", player: 0, spot: 0 });
+
+  // Kindler: only a Fire Energy card pays.
+  const s3 = midgame();
+  const kindler = hold(s3, 0, U.kindler);
+  s3.players[0].hand = s3.players[0].hand.filter((u) => s3.cards[u] !== F);
+  throws(() => act(s3, { type: "play", player: 0, uid: kindler }), /would do nothing/);
+  const fire = hold(s3, 0, F);
+  act(s3, { type: "play", player: 0, uid: kindler });
+  assert.deepEqual(s3.pending[0].uids, [fire]);
+
+  // Worker drops the Stadium; a Stadium's own price counts every card in the hand.
+  const s4 = midgame();
+  act(s4, { type: "play", player: 0, uid: hold(s4, 0, U.vessel) });
+  assert.equal(defs(U.vessel).stadium.use[0].spare, 0);
+  s4.players[0].hand = [s4.players[0].hand[0]];
+  act(s4, { type: "stadium", player: 0 });
+  act(s4, { type: "choose", player: 0, uids: s4.players[0].hand.slice(0, 1) });
+  act(s4, { type: "choose", player: 0, uids: [] });
+  act(s4, { type: "play", player: 0, uid: hold(s4, 0, U.worker) });
+  assert.ok(!s4.stadium && s4.players[0].discard.some((u) => s4.cards[u] === U.vessel));
+});
+
+test("Special Energy, third batch: more on some Pokémon, a type to act on, healing", () => {
+  // Prism Energy: every type on a Basic Pokémon.
+  const state = labgame();
+  const prism = hold(state, 0, "bw4-93");
+  act(state, { type: "attach", player: 0, uid: prism, spot: ACTIVE });
+  assert.ok(energyOf(state, state.players[0].active, defs).includes("Any"));
+  assert.deepEqual(defs("bw4-93").provides, ["Colorless"]);
+  // Twin Energy: two on a Pokémon that isn't a V, one on a V, and a retreat counts it right.
+  const s2 = labgame();
+  s2.players[0].active.energy = [hold(s2, 0, "swsh2-174")];
+  s2.players[0].hand.pop();
+  assert.deepEqual(energyOf(s2, s2.players[0].active, defs), ["Colorless", "Colorless"]);
+  s2.cards[s2.players[0].active.uid] = "lab-v";
+  assert.deepEqual(energyOf(s2, s2.players[0].active, defs), ["Colorless"]);
+  // Speed Lightning Energy draws only on a Lightning Pokémon.
+  const s3 = labgame();
+  const hand = s3.players[0].hand.length;
+  act(s3, { type: "attach", player: 0, uid: hold(s3, 0, "swsh2-173"), spot: ACTIVE });
+  assert.equal(s3.players[0].hand.length, hand, "Lab is Colorless");
+  // Medical Energy heals what it is attached to.
+  const s4 = labgame();
+  s4.players[0].active.damage = 50;
+  act(s4, { type: "attach", player: 0, uid: hold(s4, 0, "sv4-182"), spot: ACTIVE });
+  assert.equal(s4.players[0].active.damage, 20);
+  for (const id of ["sv8-191", "me3-88", "me4-85", "me5-84", "swsh3-175", "swsh4-164", "ex13-98", "sm4-100", "ex10-96", "hgss1-104", "ecard2-147"]) assert.ok(defs(id).playable, id);
 });
 
 console.log(`${passed} checks passed${process.exitCode ? ", some failed" : ""}`);
