@@ -83,7 +83,7 @@ function gradeIndex(raw, key) {
   return byKey.get(key);
 }
 
-export function createTargetPicker({ allCards, sealedTargets }) {
+export function createTargetPicker({ allCards, sealedTargets, wishlist = () => [] }) {
   let root = null;
   let state = null;
   let returnFocus = null;
@@ -145,9 +145,12 @@ export function createTargetPicker({ allCards, sealedTargets }) {
     if (!index) { state.view = []; return; }
     const tokens = state.query.trim().toLowerCase().split(/\s+/).filter(Boolean);
     const hits = state.kind === "card" && state.hits;
+    // The Wishlist tab: the card list, cut to the cards the player has hearted (js/wishlist.js).
+    const wish = state.kind === "card" && state.wish ? new Set(wishlist()) : null;
     const src = state.sort === "name" ? index.names() : index.asc;
     const pass = (w) => {
       if (hits && !w.hit) return false;
+      if (wish && !wish.has(w.r.id)) return false;
       for (let t = 0; t < tokens.length; t++) if (!w.key.includes(tokens[t]) && w.num !== tokens[t]) return false;
       return true;
     };
@@ -209,6 +212,10 @@ export function createTargetPicker({ allCards, sealedTargets }) {
 
   function emptyText() {
     if (state.kind === "sealed") return state.query.trim() ? "No sealed product matches that." : "No sealed products are on sale right now.";
+    if (state.wish) {
+      if (!wishlist().length) return "Your wishlist is empty. Tap the heart on any card to add it.";
+      return state.query.trim() || state.hits ? "Nothing on your wishlist matches that." : "None of your wishlist cards can be picked here.";
+    }
     if (state.hits && state.query.trim()) return "No hit matches that.";
     return state.query.trim() ? "No card matches that." : state.hits ? "No hits to show." : "No cards to show.";
   }
@@ -256,7 +263,8 @@ export function createTargetPicker({ allCards, sealedTargets }) {
 
   function paintTools() {
     const card = state.kind === "card";
-    root.querySelectorAll("[data-kind]").forEach((b) => b.classList.toggle("on", b.dataset.kind === state.kind));
+    root.querySelectorAll("[data-kind]").forEach((b) => b.classList.toggle("on", b.dataset.kind === state.kind && !state.wish));
+    root.querySelector("[data-wish-tab]")?.classList.toggle("on", Boolean(state.wish));
     root.querySelectorAll("[data-sort]").forEach((b) => { b.classList.toggle("on", b.dataset.sort === state.sort); b.setAttribute("aria-pressed", String(b.dataset.sort === state.sort)); });
     const grades = root.querySelector(".tp-grades");
     grades.hidden = !card;
@@ -269,7 +277,7 @@ export function createTargetPicker({ allCards, sealedTargets }) {
     hits.classList.toggle("on", state.hits);
     hits.setAttribute("aria-pressed", String(state.hits));
     const search = root.querySelector(".cs-search input");
-    search.placeholder = card ? "Search cards, numbers, sets" : "Search sealed products or sets";
+    search.placeholder = state.wish ? "Search your wishlist" : card ? "Search cards, numbers, sets" : "Search sealed products or sets";
     search.setAttribute("aria-label", search.placeholder);
   }
 
@@ -333,7 +341,7 @@ export function createTargetPicker({ allCards, sealedTargets }) {
       kind: current?.kind === "sealed" ? "sealed" : "card",
       // With no stake there is nothing to rank by odds, so lead with the dearest.
       grade: current?.grade ? (current.blackLabel ? "bl" : String(current.grade)) : "raw",
-      sort: stake > 0 ? "step" : "value", hits: false, query: "", shown: PAGE,
+      sort: stake > 0 ? "step" : "value", hits: false, wish: false, query: "", shown: PAGE,
       index: { card: loaded.card, sealed: loaded.sealed }, view: [], failed: { card: false, sealed: false },
     };
     root = document.createElement("div");
@@ -347,7 +355,7 @@ export function createTargetPicker({ allCards, sealedTargets }) {
         <div class="cs-tools">
           <label class="cs-search">${icon("search")}<input type="search" inputmode="search" autocomplete="off" enterkeyhint="search" /></label>
           <div class="cs-seg" role="group" aria-label="What to go for">
-            <button type="button" data-kind="card">Cards</button><button type="button" data-kind="sealed">Sealed</button>
+            <button type="button" data-kind="card">Cards</button><button type="button" data-kind="sealed">Sealed</button><button type="button" data-wish-tab>Wishlist</button>
           </div>
           <div class="cs-tool-row tp-grades" role="group" aria-label="Grade">
             <span class="tp-grade-label">Grade</span>
@@ -383,9 +391,18 @@ export function createTargetPicker({ allCards, sealedTargets }) {
         update();
         return;
       }
+      if (e.target.closest("[data-wish-tab]")) {
+        if (state.wish) return;
+        state.wish = true;
+        state.kind = "card";
+        paintTools();
+        if (state.index.card) update(); else ensureList(false);
+        return;
+      }
       const kind = e.target.closest("[data-kind]");
       if (kind) {
-        if (kind.dataset.kind === state.kind) return;
+        if (kind.dataset.kind === state.kind && !state.wish) return;
+        state.wish = false;
         state.kind = kind.dataset.kind;
         paintTools();
         if (state.index[state.kind]) update(); else ensureList(false);
