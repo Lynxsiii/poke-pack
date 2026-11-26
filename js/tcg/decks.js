@@ -212,25 +212,171 @@ export function buildDeck(pool, format = "standard", { prefer = "", rand = Math.
 }
 
 /**
- * A deck for the house bot out of one set's ordinary cards (one-prize Pokémon,
- * as many copies as the format allows), so its strength tracks the set and not luck.
+ * A deck for the house bot, put together the way a person builds one out of a single
+ * set: a main attacker's whole evolution line, a partner line on the same Energy, a
+ * Pokémon whose Ability helps (draw, search, Energy), then Trainers by job (draw, search,
+ * switch, gust, healing) and the rest Energy. Only one-prize Pokémon, so its strength
+ * tracks the set and not luck. Returns { cards, types, theme } or null, where `theme`
+ * is the main attacker's name ("Charizard"), for the table to show.
  */
 export function buildBotDeck(setDefs, format, rand = Math.random) {
   const rules = FORMATS[format] || FORMATS.standard;
-  const seen = new Set();
-  const pool = [];
+  const scale = rules.deckSize / 60;
+  const n = (x) => Math.max(1, Math.min(rules.copies, Math.round(x * scale)));
+  const total = (x) => Math.round(x * scale);
+  // The strongest print of each name.
+  const best = new Map();
+  const trainers = [];
+  const specials = [];
   for (const def of setDefs) {
-    if (!def?.playable || seen.has(def.name)) continue;
+    if (!def?.playable) continue;
     if (def.kind === "trainer") {
-      seen.add(def.name);
-      pool.push({ def, owned: 2 });
-      continue;
+      if (!trainers.some((t) => t.name === def.name)) trainers.push(def);
+    } else if (def.kind === "energy") {
+      if (!def.basic && !specials.some((t) => t.name === def.name)) specials.push(def);
+    } else if (def.kind === "pokemon" && def.prizes === 1) {
+      const had = best.get(def.name);
+      if (!had || worth(def) > worth(had)) best.set(def.name, def);
     }
-    if (def.kind !== "pokemon" || def.prizes > 1) continue;
-    seen.add(def.name);
-    pool.push({ def, owned: rules.copies });
   }
-  const types = [...new Set(pool.filter((p) => p.def.stage === "basic").flatMap((p) => [...needsOf(p.def)]))];
-  const prefer = types[Math.floor(rand() * types.length)] || "";
-  return buildDeck(pool, format, { prefer, rand });
+  const mons = [...best.values()];
+  const basics = mons.filter((d) => d.stage === "basic");
+  if (!basics.length) return null;
+  const from = (name) => mons.filter((d) => d.evolvesFrom === name);
+  const helps = (def) => {
+    const use = def.ability?.use;
+    if (!use) return 0;
+    const aim = trainerAim(use.steps);
+    return { draw: 6, search: 6, energize: 8, heal: 3, recover: 2 }[aim] || 0;
+  };
+
+  // Every evolution line the set can make, scored by what its last stage hits for.
+  const lines = [];
+  for (const basic of basics) {
+    lines.push([basic]);
+    for (const one of from(basic.name)) {
+      lines.push([basic, one]);
+      for (const two of from(one.name)) lines.push([basic, one, two]);
+    }
+  }
+  const typeOf = (line) => [...needsOf(line[line.length - 1])][0] || "";
+  const score = (line) => {
+    const top = line[line.length - 1];
+    if (needsOf(top).size > 1) return 0;
+    return worth(top) * (1 + 0.12 * (line.length - 1)) + line.reduce((a, d) => a + helps(d), 0);
+  };
+  const ranked = lines.filter((l) => score(l) > 0).sort((a, b) => score(b) - score(a));
+  if (!ranked.length) return null;
+  // A little variety: one of the three best lines leads.
+  const lead = ranked[Math.floor(rand() * Math.min(3, ranked.length))];
+  const type = typeOf(lead) || ranked.map(typeOf).find(Boolean) || FREE_ENERGY[0].type;
+  const used = new Set();
+  const cards = {};
+  let count = 0;
+  const put = (def, k) => {
+    if (!def || used.has(def.name) && !cards[def.id]) return 0;
+    const take = Math.min(k, rules.copies - (cards[def.id] || 0));
+    if (take <= 0) return 0;
+    used.add(def.name);
+    cards[def.id] = (cards[def.id] || 0) + take;
+    count += take;
+    return take;
+  };
+  const putLine = (line, counts) => line.forEach((def, i) => put(def, n(counts[i])));
+  const SIZES = { main: [[4], [4, 3], [4, 3, 3]], partner: [[4], [4, 3], [4, 2, 2]], support: [[2], [2, 2], [2, 1, 1]] };
+  putLine(lead, SIZES.main[lead.length - 1]);
+  const free = (line) => !line.some((d) => used.has(d.name));
+  const partner = ranked.find((l) => free(l) && [...needsOf(l[l.length - 1])].every((t) => t === type));
+  if (partner) putLine(partner, SIZES.partner[partner.length - 1]);
+  const support = lines
+    .filter((l) => free(l) && helps(l[l.length - 1]) && [...needsOf(l[l.length - 1])].every((t) => t === type))
+    .sort((a, b) => helps(b[b.length - 1]) - helps(a[a.length - 1]) || a.length - b.length)[0];
+  if (support) putLine(support, SIZES.support[support.length - 1]);
+  // A deck needs enough Basic Pokémon to start with: top up with the sturdiest that fit.
+  const monCount = () => Object.entries(cards).reduce((a, [id, k]) => a + (mons.some((d) => d.id === id) ? k : 0), 0);
+  const basicCount = () => Object.entries(cards).reduce((a, [id, k]) => a + (mons.find((d) => d.id === id)?.stage === "basic" ? k : 0), 0);
+  const extras = basics.filter((d) => !used.has(d.name) && fits(d, [type])).sort((a, b) => worth(b) - worth(a));
+  for (const def of extras) {
+    if (basicCount() >= total(16) && monCount() >= total(16)) break;
+    put(def, n(2));
+  }
+
+  // A small set leaves few to choose from: more copies of what is in, then any Basic that hits for Colorless.
+  for (const def of mons.filter((d) => cards[d.id] && d.stage === "basic")) if (basicCount() < total(12)) put(def, rules.copies);
+  for (const def of basics.filter((d) => !used.has(d.name) && needsOf(d).size === 0)) if (basicCount() < total(12)) put(def, n(3));
+  for (const def of mons.filter((d) => cards[d.id])) if (monCount() < total(14)) put(def, rules.copies);
+
+  // Trainers by job, the way a list is written: cards first, then search, switching, gusting.
+  const QUOTA = [["draw", 6], ["refresh", 4], ["search", 7], ["switch", 3], ["gust", 2], ["energize", 3], ["heal", 2], ["tool", 3], ["stadium", 2], ["trade", 2], ["recover", 2], ["hammer", 2], ["cure", 1]];
+  const jobOf = (def) => (def.sub === "tool" ? "tool" : def.sub === "stadium" ? "stadium" : trainerAim(def.fx));
+  const clubs = new Set();
+  const ENERGY = total(13);
+  let room = rules.deckSize - count - ENERGY;
+  const putTrainer = (def, k) => {
+    if (def.club && (clubs.has(def.club) || cards[def.id])) return 0;
+    const take = Math.max(0, Math.min(def.club ? 1 : def.cap || rules.copies, rules.copies) - (cards[def.id] || 0));
+    const got = Math.min(take, k, room);
+    if (got <= 0) return 0;
+    if (def.club) clubs.add(def.club);
+    cards[def.id] = (cards[def.id] || 0) + got;
+    count += got;
+    room -= got;
+    return got;
+  };
+  // Within a job: a Supporter that draws more, a search that finds Pokémon over one that finds Energy.
+  const pickFirst = (def) => {
+    const steps = def.fx || [];
+    const draw = steps.find((st) => st.op === "draw");
+    const search = steps.find((st) => st.op === "search");
+    return (draw?.n || 0) + (search ? (/energy/i.test(String(search.what)) ? 0 : 3) + (search.n || 1) : 0);
+  };
+  for (const [job, want] of QUOTA) {
+    let left = n(want);
+    for (const def of trainers.filter((t) => jobOf(t) === job).sort((a, b) => pickFirst(b) - pickFirst(a))) if (left > 0) left -= putTrainer(def, left);
+  }
+  // Room left over: another line on the same Energy, then the useful Trainers up to a full playset.
+  const more = ranked.filter((l) => free(l) && [...needsOf(l[l.length - 1])].every((t) => t === type));
+  for (const line of more) {
+    if (room <= line.length || monCount() >= total(22)) break;
+    if (!free(line)) continue;
+    const before = count;
+    putLine(line, SIZES.partner[line.length - 1]);
+    room -= count - before;
+  }
+  for (const job of ["draw", "refresh", "search", "switch", "energize"]) for (const def of trainers.filter((t) => jobOf(t) === job && cards[t.id])) putTrainer(def, room);
+  // A set short on Trainers would leave a pile of Energy: past about 18, more Pokémon and more Trainers instead.
+  const spare = () => rules.deckSize - count - total(18);
+  const lineSize = (line) => SIZES.partner[line.length - 1].reduce((a, k) => a + n(k), 0);
+  for (const line of more) if (spare() >= lineSize(line) && free(line)) putLine(line, SIZES.partner[line.length - 1]);
+  for (const def of basics.filter((d) => !used.has(d.name) && needsOf(d).size === 0)) if (spare() > 0) put(def, Math.min(n(3), spare()));
+  for (const def of basics.filter((d) => cards[d.id])) if (spare() > 0) put(def, Math.min(rules.copies, spare()));
+  room = spare();
+  for (const def of trainers.filter((t) => cards[t.id])) putTrainer(def, room);
+
+  // Energy: a Special Energy that suits the attackers, then basic Energy for the rest.
+  let plain = 0;
+  let typed = 0;
+  for (const [id, k] of Object.entries(cards)) {
+    const def = mons.find((d) => d.id === id);
+    if (!def) continue;
+    for (const c of def.attacks.flatMap((a) => a.cost)) if (c === "Colorless") plain += k;
+    else typed += k;
+  }
+  for (const def of specials) {
+    const gives = def.provides || [];
+    const only = def.special?.only?.types;
+    if (only && !only.includes(type)) continue;
+    const suits = gives.includes(type) || (gives.length > 1 && gives.every((g) => g === "Colorless") && plain > typed / 2);
+    if (!suits || gives.some((g) => g !== type && g !== "Colorless")) continue;
+    const take = Math.min(def.club ? 1 : rules.copies, n(gives.length > 1 ? 4 : 2), rules.deckSize - count - total(8));
+    if (take <= 0 || (def.club && clubs.has(def.club))) continue;
+    if (def.club) clubs.add(def.club);
+    cards[def.id] = take;
+    count += take;
+  }
+  const energyType = type || "Colorless";
+  const energy = FREE_ENERGY.find((e) => e.type === energyType) || FREE_ENERGY[0];
+  cards[energy.id] = (cards[energy.id] || 0) + rules.deckSize - count;
+
+  return { cards, types: [energy.type], theme: lead[lead.length - 1].name };
 }
