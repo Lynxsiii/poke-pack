@@ -181,8 +181,8 @@
 .bz-view-keys .solid { min-height: 54px; font-size: 18px; }
 .bz-view-keys .bz-note { text-align: center; }
 .bz-all { margin-top: 26px; }
-.bz-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px 10px; }
-@media (min-width: 640px) { .bz-grid { grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: 20px 14px; } }
+.bz-all .bz-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px 10px; }
+@media (min-width: 640px) { .bz-all .bz-grid { grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: 20px 14px; } }
 .bz-cell { all: unset; display: grid; align-content: start; gap: 2px; cursor: pointer; min-width: 0; }
 .bz-cell:focus-visible { outline: 3px solid var(--yel); outline-offset: 3px; }
 .bz-cell img { width: 100%; aspect-ratio: 63 / 88; object-fit: contain; border-radius: 4.5%; margin-bottom: 5px; }

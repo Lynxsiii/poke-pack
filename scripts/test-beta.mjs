@@ -5,7 +5,7 @@ import { DatabaseSync } from 'node:sqlite';
 import { readFileSync, readdirSync } from 'node:fs';
 import worker from '../worker/index.js';
 import { seedLevel } from './lib/level-seed.mjs';
-import { grassMultiplier, rocketCrash, stakeCents, payoutCents, TINS } from '../js/beta-rules.js';
+import { grassMultiplier, rocketCrash, stakeCents, payoutCents, TINS, isPieceCard } from '../js/beta-rules.js';
 import { frameChoice } from '../worker/perks.js';
 
 // ---- The odds: every game returns at most 95% on average --------------------------------
@@ -18,6 +18,8 @@ for (let mines = 1; mines <= 20; mines++) {
 }
 assert.equal(grassMultiplier(3, 0), 1);
 assert.ok(Math.abs(grassMultiplier(3, 5) - 2.0) < 0.1, 'about 2x for 3 Voltorb and 5 clear tiles, as the design said');
+assert.ok(isPieceCard({ name: 'Pikachu V-UNION' }) && isPieceCard({ name: 'Lugia LEGEND' }) && isPieceCard({ name: 'X', subtypes: ['V-UNION'] }));
+assert.ok(!isPieceCard({ name: 'Legendary Pikachu V' }) && !isPieceCard({ name: 'Greninja BREAK', subtypes: ['BREAK'] }));
 assert.equal(rocketCrash(0), 1);
 assert.equal(rocketCrash(0.5), 1.9);
 assert.equal(rocketCrash(0.9999999), 100);
@@ -173,6 +175,7 @@ assert.equal(prof.body.user?.beta ?? prof.body.profile?.beta ?? prof.body.beta, 
     assert.ok(ev <= t.price * 0.95 + 0.01, `${t.name} returns ${ev / t.price}`);
     assert.ok(t.back > 0.5 && t.back <= 0.95, `${t.name} says it returns ${t.back}`);
     assert.ok(!t.sets, 'a tin never names its sets');
+    assert.ok(!t.cards.some((c) => /V-UNION|LEGEND$/.test(c.name)), `${t.name} holds a piece of a multi-card card`);
   }
   const tin = list.body.tins[0];
   const o = await call('/api/casino/beta/tins/open', 'POST', { tin: tin.id, price: tin.price, requestId: rid() }, ash.sid);

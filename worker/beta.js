@@ -1,7 +1,7 @@
 import { PLAYABLE_SETS, ALL_SETS, sellValue } from '../js/catalog.js';
 import {
   BETA_RULES, BETA_ADMINS, stakeCents, payoutCents, GRASS, grassMultiplier,
-  ROCKET, rocketAt, rocketMsFor, rocketCrash, TINS, TIN_MAX_OPEN, tinWeight, tinPrice,
+  ROCKET, rocketAt, rocketMsFor, rocketCrash, TINS, TIN_MAX_OPEN, tinWeight, tinPrice, isPieceCard,
 } from '../js/beta-rules.js';
 import { gateResponse } from './gates.js';
 
@@ -243,6 +243,7 @@ export async function loadTins(env, helpers, request) {
       for (const p of await pricedCards(env, helpers, request, set)) {
         if (seen.has(p.card.id)) continue;
         if (p.card.energy || p.card.supertype === 'Energy') continue;
+        if (isPieceCard(p.card)) continue;
         if (tin.names && !tin.names.test(p.card.name || '')) continue;
         if (tin.types && !(p.card.supertype === 'Pokémon' && tin.types.some((t) => p.card.types?.includes(t)))) continue;
         if (tin.kind === 'supporter' && !(p.card.supertype === 'Trainer' && p.card.subtypes?.includes('Supporter'))) continue;
