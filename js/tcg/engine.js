@@ -209,6 +209,8 @@ export function abilityOn(state, slot, defs) {
 export function warded(state, slot, { player, src }, defs) {
   if (!slot || !src || ownerOf(state, slot) === player) return false;
   const ability = abilityOn(state, slot, defs);
+  // An attack's effects (js/tcg/effects.js, src "attack"): an Ability that keeps them off, or a shield an earlier attack left.
+  if (src === "attack") return Boolean(ability?.noEffects) || Boolean(markOn(state, slot, "shield"));
   return src === "ability" ? Boolean(ability?.ward) : src === "trainer" ? Boolean(ability?.trainerWard) : false;
 }
 
@@ -1321,7 +1323,8 @@ const HANDLERS = {
     } else {
       if (!waiting.spots.includes(spot)) fail("That Pokémon can't be chosen.");
       applyPick(state, waiting, spot, defs, events);
-      waiting.spots = waiting.spots.filter((x) => x !== spot);
+      // `again`: the same Pokémon may be picked more than once ("in any way you like").
+      if (!waiting.again) waiting.spots = waiting.spots.filter((x) => x !== spot);
       waiting.left -= 1;
     }
     if (spot == null || waiting.left <= 0 || !waiting.spots.length) {
@@ -1423,7 +1426,7 @@ const HANDLERS = {
         slot.energy.push(...picked);
         for (const uid of picked) events.push({ t: "attach", p: player, uid, spot: waiting.effect.spot, from: "deck" });
       } else if (picked.length && to === "spread") {
-        picked.forEach((uid, i) => askPick(state, { player, side: player, spots, left: 1, effect: { op: "attachHeld", uids: [uid] }, ...(i === picked.length - 1 && waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) }));
+        picked.forEach((uid, i) => askPick(state, { player, side: player, spots, left: 1, effect: { op: "attachHeld", uids: [uid], ...(waiting.zone !== "deck" ? { zone: waiting.zone } : {}) }, ...(i === picked.length - 1 && waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) }));
         waiting.then = null;
       } else if (picked.length) {
         askPick(state, { player, side: player, spots, left: 1, effect: { op: "attachHeld", uids: picked, ...(waiting.zone !== "deck" ? { zone: waiting.zone } : {}) }, ...(waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) });
@@ -1486,6 +1489,8 @@ const HANDLERS = {
         askPick(state, { player, side: owner, spots, left: 1, effect: { op: "moveEnergyCards", from: waiting.effect.from, uids: picked }, ...(waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) });
         waiting.then = null;
       }
+    } else if (op === "look") {
+      // "Look at your opponent's hand": the cards were seen, nothing moves.
     } else {
       side.hand.push(...picked);
       events.push({ t: "search", p: owner, uids: picked, from: waiting.zone, to: "hand" });
