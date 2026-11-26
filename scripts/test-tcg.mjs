@@ -8,7 +8,7 @@
  */
 import { readFileSync, readdirSync } from "node:fs";
 import assert from "node:assert/strict";
-import { ACTIVE, FORMATS, RuleError, addCondition, apply, canRetreat, conditionsOn, createGame, damageAfterTyping, legalActions, unpaid, usableAttacks, viewFor } from "../js/tcg/engine.js";
+import { ACTIVE, FORMATS, RuleError, addCondition, apply, canRetreat, conditionsOn, createGame, damageAfterTyping, legalActions, resolveKnockOuts, unpaid, usableAttacks, viewFor } from "../js/tcg/engine.js";
 import { createDefs, defineCard, FREE_ENERGY } from "../js/tcg/cards.js";
 import { compileAttack } from "../js/tcg/effects.js";
 import { botAction } from "../js/tcg/bot.js";
@@ -881,6 +881,170 @@ test("a deck built from a small collection is legal", () => {
     assert.deepEqual(check.problems, []);
   }
   assert.equal(buildDeck([], "half"), null);
+});
+
+/* ---------- Trainers that choose cards ---------- */
+
+const S = {
+  ball: labTrainer("ball", "Item", "Search your deck for a Basic Pokémon, reveal it, and put it into your hand. Then, shuffle your deck."),
+  nest: labTrainer("nest", "Item", "Search your deck for a Basic Pokémon and put it onto your Bench. Then, shuffle your deck."),
+  ultra: labTrainer("ultra", "Item", "You can use this card only if you discard 2 other cards from your hand. Search your deck for a Pokémon, reveal it, and put it into your hand. Then, shuffle your deck."),
+  retrieve: labTrainer("retrieve", "Item", "Put 2 basic Energy cards from your discard pile into your hand."),
+  coin: labTrainer("coin", "Item", "Flip a coin. If heads, search your deck for a Pokémon, reveal it, and put it into your hand. Then, shuffle your deck."),
+};
+
+test("a deck search: the player chooses among the cards that fit, or none, and the deck is shuffled", () => {
+  const state = started();
+  state.current = 0;
+  const me = state.players[0];
+  const uid = hold(state, 0, S.ball);
+  apply(state, { type: "play", player: 0, uid }, defs);
+  const waiting = state.pending[0];
+  assert.equal(waiting.type, "choose");
+  assert.ok(waiting.uids.length > 0 && waiting.uids.every((u) => defs(state.cards[u]).stage === "basic"));
+  assert.throws(() => apply(state, { type: "end", player: 0 }, defs), RuleError);
+  assert.throws(() => apply(state, { type: "choose", player: 0, uids: waiting.uids.slice(0, 2) }, defs), RuleError);
+  const want = waiting.uids[0];
+  const hand = me.hand.length;
+  const events = apply(state, { type: "choose", player: 0, uids: [want] }, defs);
+  assert.ok(me.hand.includes(want) && !me.deck.includes(want));
+  assert.equal(me.hand.length, hand + 1);
+  assert.ok(events.some((e) => e.t === "search" && e.to === "hand"));
+  assert.equal(state.pending.length, 0);
+  // Taking nothing is allowed: the deck is hidden, so a search may fail.
+  const again = hold(state, 0, S.ball);
+  apply(state, { type: "play", player: 0, uid: again }, defs);
+  apply(state, { type: "choose", player: 0, uids: [] }, defs);
+  assert.equal(state.pending.length, 0);
+});
+
+test("a search onto the Bench needs room; a price is paid before the search", () => {
+  const state = started();
+  state.current = 0;
+  const me = state.players[0];
+  const nest = hold(state, 0, S.nest);
+  const bench = me.bench.length;
+  apply(state, { type: "play", player: 0, uid: nest }, defs);
+  apply(state, { type: "choose", player: 0, uids: [state.pending[0].uids[0]] }, defs);
+  assert.equal(me.bench.length, bench + 1);
+
+  // Ultra Ball: not with fewer than 2 other cards; with them, discard 2 and then search.
+  const ultra = hold(state, 0, S.ultra);
+  const spare = me.hand.filter((u) => u !== ultra);
+  me.deck.push(...me.hand.splice(0));
+  me.hand.push(ultra, spare[0]);
+  assert.ok(!legalActions(state, 0, defs).some((a) => a.type === "play" && a.uid === ultra));
+  me.deck.splice(me.deck.indexOf(spare[1]), 1);
+  me.hand.push(spare[1]);
+  apply(state, { type: "play", player: 0, uid: ultra }, defs);
+  assert.equal(state.pending[0].effect.op, "discard");
+  assert.throws(() => apply(state, { type: "choose", player: 0, uids: [spare[0]] }, defs), RuleError);
+  apply(state, { type: "choose", player: 0, uids: [spare[0], spare[1]] }, defs);
+  assert.equal(me.hand.length, 0);
+  assert.equal(state.pending[0].effect.op, "toHand");
+  apply(state, { type: "choose", player: 0, uids: [state.pending[0].uids[0]] }, defs);
+  assert.equal(me.hand.length, 1);
+  assert.equal(state.pending.length, 0);
+});
+
+test("Energy comes back from the discard pile; a coin can stand in front of a search", () => {
+  const state = started();
+  state.current = 0;
+  const me = state.players[0];
+  const retrieve = hold(state, 0, S.retrieve);
+  assert.ok(!legalActions(state, 0, defs).some((a) => a.type === "play" && a.uid === retrieve), "nothing to bring back yet");
+  const energy = me.deck.filter((u) => defs(state.cards[u]).kind === "energy").slice(0, 3);
+  for (const u of energy) me.deck.splice(me.deck.indexOf(u), 1);
+  me.discard.push(...energy);
+  apply(state, { type: "play", player: 0, uid: retrieve }, defs);
+  assert.equal(state.pending[0].min, 2);
+  apply(state, { type: "choose", player: 0, uids: energy.slice(0, 2) }, defs);
+  assert.ok(energy.slice(0, 2).every((u) => me.hand.includes(u)));
+  assert.deepEqual(defs(S.coin).fx[0].op, "flip");
+  assert.ok(defs(S.coin).playable);
+});
+
+/* ---------- the rulebook audit (2026-11-26) ---------- */
+
+test("the flip winner chooses who goes first, only during setup", () => {
+  const state = createGame({ decks: [fire, water], format: "half", seed: 3 }, defs);
+  const w = state.flipWinner;
+  assert.equal(state.first, w);
+  assert.throws(() => apply(state, { type: "order", player: 1 - w, first: true }, defs), RuleError);
+  apply(state, { type: "order", player: w, first: false }, defs);
+  assert.equal(state.first, 1 - w);
+  for (const p of [0, 1]) apply(state, legalActions(state, p, defs)[0], defs);
+  assert.equal(state.current, 1 - w);
+  assert.equal(state.turn, 1);
+  assert.throws(() => apply(state, { type: "order", player: w, first: true }, defs), RuleError);
+});
+
+test("mulligans both players took cancel out; only the difference is drawn", () => {
+  const state = createGame({ decks: [fire, water], format: "half", seed: 11 }, defs);
+  state.players[0].mulligans = 3;
+  state.players[1].mulligans = 1;
+  const hands = state.players.map((s) => s.hand.length);
+  for (const p of [0, 1]) apply(state, legalActions(state, p, defs)[0], defs);
+  const turnDraw = (p) => (state.current === p ? 1 : 0);
+  // Each placed one Basic; player 1 draws 2 for the two mulligans player 0 took beyond their own.
+  assert.equal(state.players[0].hand.length, hands[0] - 1 + turnDraw(0));
+  assert.equal(state.players[1].hand.length, hands[1] - 1 + 2 + turnDraw(1));
+});
+
+test("prize cards: 6 in a full deck, 3 in a half deck, more for ex, V, VMAX and Mega ex", () => {
+  assert.equal(FORMATS.standard.prizes, 6);
+  assert.equal(FORMATS.half.prizes, 3);
+  const kinds = { plain: [1, 0], ex: [2, 0], megaEx: [3, 0], vmax: [3, 0], v: [2, 0], gx: [2, 0], tag: [3, 0], megaEX: [2, 0] };
+  for (const card of byId.values()) {
+    if (card.supertype !== "Pokémon") continue;
+    const subs = card.subtypes || [];
+    const def = defs(card.id);
+    const is = (s) => subs.includes(s);
+    let kind = "";
+    if (is("VMAX")) kind = "vmax";
+    else if (is("TAG TEAM")) kind = "tag";
+    else if (is("MEGA") && is("EX")) kind = "megaEX";
+    else if (/^Mega /.test(card.name) && / ex$/.test(card.name)) kind = "megaEx";
+    else if (is("ex")) kind = "ex";
+    else if (is("V")) kind = "v";
+    else if (is("GX")) kind = "gx";
+    if (!kind) continue;
+    kinds[kind][1] += 1;
+    assert.equal(def.prizes, kinds[kind][0], `${card.id} ${card.name} gives ${def.prizes}`);
+  }
+  for (const [kind, [, seen]] of Object.entries(kinds)) if (kind !== "plain") assert.ok(seen > 0, `no ${kind} cards checked`);
+});
+
+test("a Knock Out that wins both ways beats one that wins one way", () => {
+  const state = started();
+  state.current = 0;
+  const [me, foe] = state.players;
+  // Both Active Pokémon go down at once. Player 0 takes their last prize and leaves player 1
+  // with no Pokémon; player 1 only takes their last prize.
+  me.prizes.length = 1;
+  foe.prizes.length = 1;
+  me.bench = [{ uid: me.deck.find((uid) => state.cards[uid] === "base1-46"), damage: 0, energy: [], since: 0 }];
+  foe.bench = [];
+  me.active.damage = 999;
+  foe.active.damage = 999;
+  const events = [];
+  resolveKnockOuts(state, defs, events);
+  assert.equal(state.phase, "over");
+  assert.equal(state.winner, 0);
+});
+
+test("one Radiant Pokémon and one ACE SPEC card a deck; one of each Prism Star", () => {
+  const radiant = [...byId.values()].filter((c) => defs(c.id).club === "Radiant Pokémon" && defs(c.id).playable).slice(0, 2);
+  assert.equal(radiant.length, 2, "two playable Radiant Pokémon to test with");
+  const owned = { [radiant[0].id]: 2, [radiant[1].id]: 1 };
+  const deck = { format: "standard", cards: { [radiant[0].id]: 1 } };
+  assert.equal(roomFor(deck, radiant[0].id, owned, defs), 0);
+  assert.equal(roomFor(deck, radiant[1].id, owned, defs), 0);
+  deck.cards[radiant[1].id] = 1;
+  assert.ok(checkDeck(deck, owned, defs).problems.some((p) => /only 1 Radiant/.test(p)));
+  assert.ok([...byId.values()].some((c) => defs(c.id).club === "ACE SPEC card"), "ACE SPEC cards are recognised");
+  const prism = [...byId.values()].find((c) => defs(c.id).cap === 1);
+  assert.ok(prism, "Prism Star cards are recognised");
 });
 
 console.log(`${passed} checks passed${process.exitCode ? ", some failed" : ""}`);

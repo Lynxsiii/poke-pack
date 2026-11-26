@@ -64,6 +64,31 @@ nothing pays out.
 - The screen never decides a rule. It asks `legalActions` what to light up
   and sends an action; the bot does the same.
 
+## Rules audit (2026-11-26, against the current rulebook)
+
+Checked and right: 60 cards and 6 prizes (the official Half Deck is 30 cards,
+3 prizes, 2 copies), 7-card hand, mulligans shown, Bench of 5, one Energy a
+turn, one Supporter a turn and none for the first player on turn 1, no attack
+for the first player on turn 1, no evolving on a player's first turn or the
+turn a Pokémon came into play, one retreat a turn (not while Asleep or
+Paralyzed), Weakness and Resistance on the Active Pokémon only, the checkup
+(Poison 10, Burn 20 then a flip, Sleep flip, Paralysis gone after its owner's
+next turn), Confusion 30 to itself, the three ways to win, the defending
+player choosing a new Active first.
+
+Fixed that day:
+- The winner of the opening flip now chooses to go first or second (`order`).
+- Mulligans both players took cancel out; only the difference is drawn.
+- Prize counts no longer depend on the source's rule box alone: Mega ex 3,
+  VMAX and TAG TEAM 3, ex / EX / GX / V / VSTAR 2 (`prizesFor` in cards.js).
+  Before, 46 Mega ex gave 2 or 1 and a few promo ex and V gave 1.
+- A double Knock Out where one player meets more win conditions is theirs.
+- Deck limits: one Radiant Pokémon, one ACE SPEC card, one of each Prism Star.
+
+Known gaps: Sudden Death (a level double win is a tie); mulligan extra draws
+are taken automatically (the rulebook makes them optional); the retreat cost
+is paid with Energy the engine picks.
+
 ## Phase 2: card effects at scale
 
 Driven by `node scripts/test-tcg.mjs --coverage`, which lists the commonest
@@ -80,9 +105,13 @@ wordings the engine can't read. Work down that list:
    turn, none on the first turn of the match) that draw, refresh the hand,
    heal, switch, pull a Benched Pokémon forward, discard Energy or cure
    (`js/tcg/trainers.js`; text from `data/tcg/trainers.json`, built by
-   `scripts/build_tcg_trainers.mjs`). 260 of 2,888 Trainers playable. A
-   Trainer whose text isn't read stays out of decks. Next: deck searches
-   (needs a card-list choice), Stadiums, Tools.
+   `scripts/build_tcg_trainers.mjs`). A Trainer whose text isn't read stays
+   out of decks. Second batch the same day: choices of cards (pending
+   `choose`, action `choose` with the uids): deck searches to the hand or
+   the Bench, cards back from the discard pile, a price paid from the hand
+   first, a coin flip in front. Steps after a choice ride on it (`then`).
+   407 of 2,888 Trainers playable. Next: Stadiums, Tools, moving Energy,
+   Rare Candy, damage boosts for a turn.
 5. **Abilities and Poké-Powers**: a hook per timing (on play, once a turn,
    always on).
 6. **Special Energy**, then the odd card types: V-UNION, LEGEND, Restored,

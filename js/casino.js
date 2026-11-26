@@ -17,10 +17,10 @@ import { createJackpot } from "./jackpot.js?v=9";
 import { createUpgrader } from "./upgrader.js?v=9";
 import { chanceText } from "./upgrader-rules.js?v=3";
 import { gateLock, gateNoticeHTML } from "./gate-notice.js";
-import { createBetaPages, BETA_KEYS, BETA_ART } from "./beta.js?v=6";
+import { createBetaPages, BETA_KEYS, BETA_ART } from "./beta.js?v=7";
 
 const HUB_POLL_MS = 8000;
-const ROUTE = /^\/casino(?:\/(coinflip|jackpot|upgrader|beta|grass|drop|rocket|higher|tins)(?:\/([a-zA-Z0-9-]{1,80}))?)?$/;
+const ROUTE = /^\/casino(?:\/(coinflip|jackpot|upgrader|beta|grass|rocket|tins)(?:\/([a-zA-Z0-9-]{1,80}))?)?$/;
 
 /** Where each game lives, in the order the sub-nav shows them. */
 export const CASINO_LINKS = [
@@ -32,7 +32,7 @@ export const CASINO_LINKS = [
   { key: "beta", href: "/casino/beta", label: "Beta" },
 ];
 /** The beta games light up the Beta word in the sub-nav. */
-const BAR_KEY = { grass: "beta", drop: "beta", rocket: "beta", higher: "beta", tins: "beta" };
+const BAR_KEY = { grass: "beta", rocket: "beta", tins: "beta" };
 
 export function initCasino(deps = {}) {
   const root = deps.root;

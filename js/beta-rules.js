@@ -17,9 +17,7 @@ export const BETA_ADMINS = ["polar"];
 
 export const BETA_GAMES = [
   { key: "grass", href: "/casino/grass", title: "Tall Grass", line: "Clear the patch, dodge the Voltorb." },
-  { key: "drop", href: "/casino/drop", title: "Poké Ball Drop", line: "Drop a ball down the pegs." },
   { key: "rocket", href: "/casino/rocket", title: "Rocket", line: "Cash out before it pops." },
-  { key: "higher", href: "/casino/higher", title: "Higher or Lower", line: "Guess the next card's price." },
   { key: "tins", href: "/casino/tins", title: "Mystery Tins", line: "Crack a themed tin of cards." },
 ];
 
@@ -52,18 +50,6 @@ export function grassMultiplier(mines, safe) {
   return Math.floor(BETA_RULES.edge * fair * 100 + 1e-9) / 100;
 }
 
-// ---- Poké Ball Drop -----------------------------------------------------------
-/** 12 rows of pegs, 13 slots. Each row is a fair left/right bounce, so slot k has odds C(12,k)/4096. Edges first. */
-export const DROP_ROWS = 12;
-const HALF = {
-  low: [4, 2, 1.4, 1.2, 1, 0.9, 0.75],
-  medium: [12, 5, 3, 1.6, 1.1, 0.7, 0.48],
-  high: [25, 10, 5, 2, 1, 0.5, 0.3],
-};
-export const DROP_RISKS = ["low", "medium", "high"];
-export const DROP_SLOTS = Object.fromEntries(Object.entries(HALF).map(([k, h]) => [k, [...h, ...h.slice(0, 6).reverse()]]));
-export const dropOdds = (slot) => choose(DROP_ROWS, slot) / 2 ** DROP_ROWS;
-
 // ---- Rocket -------------------------------------------------------------------
 export const ROCKET = {
   betMs: 7000, // the betting window before launch
@@ -78,15 +64,6 @@ export const rocketAt = (ms) => Math.floor(Math.exp((ROCKET.rate * Math.max(0, m
 export const rocketMsFor = (mult) => (Math.log(Math.max(1, mult)) / ROCKET.rate) * 1000;
 /** The pop point from a uniform draw u in [0,1): P(crash >= m) = 0.95 / m, capped at 100. */
 export const rocketCrash = (u) => Math.min(ROCKET.maxMult, Math.max(1, Math.floor((BETA_RULES.edge / (1 - u)) * 100) / 100));
-
-// ---- Higher or Lower ----------------------------------------------------------
-/** The multiplier a guess pays given how many cards in the pool are worth more and less than the one showing. */
-export function guessMultiplier(above, below, dir) {
-  const n = above + below;
-  const hits = dir === "higher" ? above : below;
-  if (!n || !hits) return 0;
-  return Math.floor((BETA_RULES.edge * n * 100) / hits + 1e-9) / 100;
-}
 
 // ---- Mystery Tins -------------------------------------------------------------
 /* A tin is never about a set (anyone can just open that set). It is a Pokémon, an evolution line, a type or a kind
@@ -154,6 +131,8 @@ export const TINS = [
   tin("pika-bust", "Pikachu or bust tin", "Bulk, or a Pikachu worth 75 coins or more.", "#c99a0c", { names: /\b(pichu|pikachu|raichu)\b/i, gap: [1, 75], pow: 0.45, risk: "high", back: 0.85 }),
 ];
 /** A card's weight in a tin: cheaper cards come up more often, but a big hit is never out of reach. */
+/** How many tins one tap may open. */
+export const TIN_MAX_OPEN = 5;
 /** A tin's price in cents for an average return: rounded up to a tidy figure, so the real payback is never above `back`. */
 export function tinPrice(evCents, back = BETA_RULES.tinEdge) {
   const raw = evCents / Math.min(BETA_RULES.tinMaxEdge, back);

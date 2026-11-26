@@ -65,6 +65,21 @@ export function botAction(state, player, defs) {
     return actions.slice().sort((a, b) => rank(b) - rank(a))[0];
   }
 
+  if (actions[0].type === "choose") {
+    const waiting = state.pending[0];
+    const inPlayNames = new Set(inPlay(state, player).map(([slot]) => defOf(state, slot.uid, defs).name));
+    const worth = (uid) => {
+      const def = defOf(state, uid, defs);
+      if (def.kind === "pokemon") return (def.evolvesFrom && inPlayNames.has(def.evolvesFrom) ? 100 : def.stage === "basic" && side.bench.length < state.rules.bench ? 50 : 20) + def.hp / 10;
+      if (def.kind === "energy") return side.hand.filter((u) => defOf(state, u, defs).kind === "energy").length > 1 && waiting.zone === "hand" ? 5 : 30;
+      return 25;
+    };
+    const ranked = waiting.uids.slice().sort((x, y) => worth(y) - worth(x));
+    // A price is paid with the cards worth least; anything else takes the best on offer.
+    const uids = waiting.effect.op === "discard" ? ranked.reverse().slice(0, waiting.min) : ranked.slice(0, waiting.max);
+    return { type: "choose", player, uids };
+  }
+
   if (actions[0].type === "pick") {
     const waiting = state.pending[0];
     const picks = actions.filter((a) => a.spot != null);
@@ -97,6 +112,9 @@ export function botAction(state, player, defs) {
     // Drawing is only good while there is a deck to draw from.
     if (aim === "draw" && side.deck.length > 8) return action;
     if (aim === "refresh" && side.hand.length <= 3 && side.deck.length > 8) return action;
+    if ((aim === "search" || aim === "recover") && side.deck.length > 4) return action;
+    // Paying cards for a search is worth it only from a full hand.
+    if (aim === "trade" && side.hand.length >= 5 && side.deck.length > 8) return action;
     if (aim === "heal" && inPlay(state, player).some(([slot]) => slot.damage >= heal.n)) return action;
   }
 

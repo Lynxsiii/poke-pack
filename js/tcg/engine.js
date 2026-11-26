@@ -315,7 +315,10 @@ export function createGame({ decks, names = ["You", "Opponent"], format = "stand
     });
   });
   const events = state.opening;
+  // The winner of the opening flip chooses who goes first ("order", during setup). Until they
+  // choose, they are down to go first themselves.
   state.first = flip(state) ? 0 : 1;
+  state.flipWinner = state.first;
   events.push({ t: "first", p: state.first });
   for (const p of [0, 1]) {
     const side = state.players[p];
@@ -401,13 +404,16 @@ export function resolveKnockOuts(state, defs, events) {
   }
   const won = [0, 1].map((p) => {
     const foe = state.players[other(p)];
-    if (took[p] && !state.players[p].prizes.length) return "prizes";
-    if (!foe.active && !foe.bench.length) return "bench";
-    return "";
+    const ways = [];
+    if (took[p] && !state.players[p].prizes.length) ways.push("prizes");
+    if (!foe.active && !foe.bench.length) ways.push("bench");
+    return ways;
   });
-  if (won[0] && won[1]) return win(state, null, "tie", events);
-  if (won[0]) return win(state, 0, won[0], events);
-  if (won[1]) return win(state, 1, won[1], events);
+  // Both at once: whoever met more of the ways to win takes it; level, it is a tie
+  // (the rulebook plays Sudden Death there, which isn't in yet).
+  if (won[0].length && won[1].length && won[0].length === won[1].length) return win(state, null, "tie", events);
+  if (won[0].length && won[0].length >= won[1].length) return win(state, 0, won[0][0], events);
+  if (won[1].length) return win(state, 1, won[1][0], events);
   // The player whose turn it is not chooses first, as the rules have it.
   for (const p of [other(state.current), state.current]) {
     if (!state.players[p].active) state.pending.push({ type: "promote", player: p });
@@ -463,10 +469,10 @@ const HANDLERS = {
     events.push({ t: "place", p: player });
     if (!state.players.every((s) => s.placed)) return;
     for (const p of [0, 1]) state.players[p].prizes = state.players[p].deck.splice(0, state.rules.prizes);
-    // A mulligan lets the other player draw a card for each one.
+    // A mulligan lets the other player draw a card for each one; mulligans both players took cancel out.
     for (const p of [0, 1]) {
-      const extra = state.players[other(p)].mulligans;
-      if (extra) draw(state, p, extra, events);
+      const extra = state.players[other(p)].mulligans - state.players[p].mulligans;
+      if (extra > 0) draw(state, p, extra, events);
     }
     state.phase = "main";
     events.push({ t: "reveal" });
@@ -633,7 +639,36 @@ const HANDLERS = {
       waiting.spots = waiting.spots.filter((x) => x !== spot);
       waiting.left -= 1;
     }
-    if (spot == null || waiting.left <= 0 || !waiting.spots.length) state.pending.shift();
+    if (spot == null || waiting.left <= 0 || !waiting.spots.length) {
+      state.pending.shift();
+      resume(state, waiting, defs, events);
+    }
+    if (!state.pending.length) resolveKnockOuts(state, defs, events);
+  },
+
+  choose(state, { player, uids = [] }, defs, events) {
+    const waiting = state.pending[0];
+    const side = state.players[player];
+    const picked = [...new Set(uids)];
+    if (picked.some((uid) => !waiting.uids.includes(uid))) fail("That card can't be chosen.");
+    if (picked.length < waiting.min) fail(waiting.min === 1 ? "Choose a card." : `Choose ${waiting.min} cards.`);
+    if (picked.length > waiting.max) fail(waiting.max === 1 ? "Choose only one card." : `Choose at most ${waiting.max} cards.`);
+    const pile = side[waiting.zone];
+    for (const uid of picked) pile.splice(pile.indexOf(uid), 1);
+    const { op } = waiting.effect;
+    if (op === "discard") {
+      side.discard.push(...picked);
+      if (picked.length) events.push({ t: "discard-hand", p: player, uids: picked });
+    } else if (op === "toBench") {
+      for (const uid of picked) side.bench.push(newSlot(state, uid));
+      events.push({ t: "search", p: player, uids: picked, from: waiting.zone, to: "bench" });
+    } else {
+      side.hand.push(...picked);
+      events.push({ t: "search", p: player, uids: picked, from: waiting.zone, to: "hand" });
+    }
+    if (waiting.shuffle) shuffle(state, side.deck);
+    state.pending.shift();
+    resume(state, waiting, defs, events);
     if (!state.pending.length) resolveKnockOuts(state, defs, events);
   },
 
@@ -713,6 +748,20 @@ export function askPick(state, pick) {
   state.pending.push({ type: "pick", optional: false, ...pick });
 }
 
+/**
+ * Leave a choice of cards: from the deck (a search), the discard pile or the hand.
+ * { player, zone, what, uids: the cards that may be chosen, min, max, effect: { op }, shuffle }
+ * effect.op: "toHand", "toBench" (Basic Pokémon, from the deck), "discard" (from the hand).
+ */
+export function askChoose(state, choice) {
+  state.pending.push({ type: "choose", ...choice, min: Math.min(choice.min, choice.uids.length), max: Math.min(choice.max, choice.uids.length) });
+}
+
+/** A choice was made: carry on with whatever the card said to do after it. */
+function resume(state, waiting, defs, events) {
+  if (waiting.then?.length) runTrainer(waiting.then, { state, defs, events, player: waiting.player });
+}
+
 /** Apply one action. Changes `state`, returns what happened, throws RuleError when it isn't allowed. */
 export function apply(state, action, defs) {
   const events = [];
@@ -724,17 +773,25 @@ export function apply(state, action, defs) {
     return events;
   }
   const handler = HANDLERS[type];
-  if (!handler) fail("Unknown action.");
+  if (!handler && type !== "order") fail("Unknown action.");
   if (type === "place") {
     handler(state, action, defs, events);
+    return events;
+  }
+  if (type === "order") {
+    // The winner of the opening flip says who goes first, before the first turn starts.
+    if (state.phase !== "setup") fail("The match has already started.");
+    if (player !== (state.flipWinner ?? state.first)) fail("The winner of the coin flip chooses.");
+    state.first = action.first ? player : other(player);
+    events.push({ t: "order", p: player, first: state.first });
     return events;
   }
   if (state.phase !== "main") fail("Place your Pokémon first.");
   const waiting = state.pending[0];
   if (waiting) {
-    if (waiting.type !== type || waiting.player !== player) fail(waiting.type === "pick" ? "Waiting for a Pokémon to be chosen." : "Waiting for a new Active Pokémon.");
+    if (waiting.type !== type || waiting.player !== player) fail(waiting.type === "pick" ? "Waiting for a Pokémon to be chosen." : waiting.type === "choose" ? "Waiting for cards to be chosen." : "Waiting for a new Active Pokémon.");
   } else {
-    if (type === "promote" || type === "pick") fail("Nothing to choose.");
+    if (type === "promote" || type === "pick" || type === "choose") fail("Nothing to choose.");
     if (state.current !== player) fail("It isn't your turn.");
     if (state.ending) fail("Your turn is over.");
   }
@@ -754,6 +811,8 @@ export function legalActions(state, player, defs) {
   const waiting = state.pending[0];
   if (waiting) {
     if (waiting.player !== player) return [];
+    // Which cards to take is the player's call; the one listed here is the plainest legal answer.
+    if (waiting.type === "choose") return [{ type: "choose", player, uids: waiting.uids.slice(0, waiting.min) }];
     if (waiting.type === "pick") return [...waiting.spots.map((spot) => ({ type: "pick", player, spot })), ...(waiting.optional ? [{ type: "pick", player, spot: null }] : [])];
     return side.bench.map((_, spot) => ({ type: "promote", player, spot }));
   }
