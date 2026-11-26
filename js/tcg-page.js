@@ -1179,6 +1179,7 @@ export function initTcg(deps) {
         }[event.kind] || "";
       }
       case "lock": return `${event.p === ME ? "You" : "They"} can't play ${event.kinds.map((k) => ({ item: "Item", supporter: "Supporter", stadium: "Stadium", special: "Special Energy", trainer: "Trainer" })[k]).join(" or ")} cards next turn.`;
+      case "copy": return `It used ${event.name}.`;
       case "devolve": return `${name(event.uid)} went back to ${event.p === ME ? "your" : "their"} hand.`;
       case "discard-energy": return `${plural(event.uids.length, "Energy card")} discarded from ${event.p === ME ? "your" : "their"} Active Pokémon.`;
       case "mill": return `${plural(event.uids.length, "card")} discarded from ${event.p === ME ? "your" : "their"} deck.`;

@@ -19,7 +19,7 @@
  *        shielded (the target takes no effects this turn) }
  */
 
-import { ACTIVE, abilityOn, addCondition, addMark, askChoose, askPick, benchSafe, conditionsOn, damageAfterTyping, defOf, devolveSlot, energyOf, flip, heldOn, hpLeft, inPlay, markOn, maxHp, other, rand, retreatCost, shuffle, switchActive, toolGone, unpaid, warded } from "./engine.js";
+import { ACTIVE, abilityOn, addCondition, addMark, askChoose, askPick, benchSafe, conditionsOn, damageAfterTyping, defOf, devolveSlot, energyOf, flip, heldOn, hpLeft, inPlay, markOn, maxHp, other, rand, retreatCost, shuffle, strike, switchActive, toolGone, unpaid, warded } from "./engine.js";
 import { T_OPS, compileTrainer, runTrainer, trainerReady, whatOf } from "./trainers.js";
 
 const WORDS = { a: 1, an: 1, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6 };
@@ -549,6 +549,41 @@ export const OPS = {
   bounty(ctx, { n }) {
     if (ctx.target) addMark(ctx.state, ctx.target, { kind: "bounty", turn: ctx.state.turn, n });
   },
+  /** The damage, once the steps before it are done (engine.js). */
+  strike(ctx) {
+    strike(ctx);
+    // It is the last step: what it leaves waiting (a new Active Pokémon) is not the attack's own choice.
+    ctx.detached = true;
+  },
+  /**
+   * "Choose 1 of your opponent's Active Pokémon's attacks and use it as this attack": its damage and its effects,
+   * as if it were the attacker's own (`tera`: only a Tera Pokémon's). A GX attack copied counts as this player's.
+   */
+  copyAttack(ctx, { tera = false }) {
+    const { state, player, defs } = ctx;
+    const target = state.players[other(player)].active;
+    const def = target && defOf(state, target.uid, defs);
+    if (!def || (tera && !def.tera)) return;
+    const side = state.players[player];
+    const can = def.attacks.map((a, index) => index).filter((index) => !(def.attacks[index].once === "gx" && side.gxUsed) && !(def.attacks[index].once === "vstar" && side.vstarUsed));
+    if (!can.length) return;
+    if (can.length === 1) OPS.useAttack(ctx, { card: def.id, index: can[0] });
+    else state.pending.push({ type: "option", player, why: "copy", prompt: "Choose the attack to use.", labels: can.map((index) => def.attacks[index].name), options: can.map((index) => [{ op: "fx", steps: [{ op: "useAttack", card: def.id, index }], uid: ctx.slot.uid, hit: ctx.hit, atk: ctx.atk }]) });
+    // This attack's own damage doesn't follow: the copied one's has (or will, once it is chosen).
+    ctx.detached = true;
+  },
+  /** The copied attack, from its steps before the damage on (copyAttack). */
+  useAttack(ctx, { card, index }) {
+    const attack = ctx.defs(card).attacks[index];
+    const side = ctx.state.players[ctx.player];
+    if (attack.once === "gx") side.gxUsed = true;
+    if (attack.once === "vstar") side.vstarUsed = true;
+    ctx.attack = attack;
+    ctx.atk = [card, index];
+    ctx.hit.damage = attack.damage;
+    ctx.events.push({ t: "copy", p: ctx.player, name: attack.name });
+    runSteps([...(attack.fx || []).filter((step) => step.when === "before"), { op: "strike" }], ctx);
+  },
 };
 
 const N = "(\\d+|an?|one|two|three|four|five|six)";
@@ -801,6 +836,10 @@ const PATTERNS = [
   [new RegExp(`^Your opponent switches the Defending Pokémon with ${N} of (?:his or her|their) Benched Pokémon, if any\\.(?: \\(Do the damage before switching the Pokémon\\.\\))?$`, "i"), () => [{ op: "switchFoe", when: "after" }]],
   [new RegExp(`^If your opponent has any Benched Pokémon, (?:he or she|they) chooses? ${N} of them and switch(?:es)? it with the Defending Pokémon\\.(?: \\(Do the damage before switching the Pokémon\\.\\))?$`, "i"), () => [{ op: "switchFoe", when: "after" }]],
   [new RegExp(`^You may have your opponent switch (?:his or her|their) Active Pokémon with ${N} of (?:his or her|their) Benched Pokémon\\.$`, "i"), () => [{ op: "may", when: "after", steps: fromDeck([{ op: "foeSwitch" }]), prompt: "Have them switch their Active Pokémon?" }]],
+  // A choice before the damage: a Pokémon switched in to take it, an attack of theirs to use.
+  [new RegExp(`^(?:Switch ${N} of your opponent's Benched Pokémon with (?:their|his or her|your opponent's) Active Pokémon|Switch in ${N} of your opponent's Benched Pokémon to the Active Spot)\\. This attack does (\\d+) damage to the new Active Pokémon\\.$`, "i"), (m) => [{ op: "trainer", when: "before", steps: [{ op: "gust" }] }, { op: "setDamage", when: "before", n: Number(m[3]) }]],
+  [/^Choose 1 of (?:your opponent's Active Pokémon's|the Defending Pokémon's|your opponent's Active (Tera) Pokémon's) attacks and use it as this attack\.$/, (m) => [{ op: "copyAttack", when: "before", ...(m[1] ? { tera: true } : {}) }]],
+  [/^Don't apply Weakness and Resistance for this attack\. \(Any other effects that would happen after applying Weakness and Resistance still happen\.\)$/, () => [{ op: "typing", when: "before", noWeakness: true, noResistance: true }]],
   // Damage to Benched Pokémon (and to their Active one too, with Weakness and Resistance for it alone), in every wording (spreadTo).
   [new RegExp(`^(?:This attack (?:also )?does|Does) (\\d+) damage to (.+?)( that (?:has|have) any damage counters on (?:it|them)| that (?:doesn't|don't) have any damage counters on (?:it|them))?(?: \\(\\d+ if there is only \\d+\\))?\\.${NO_TYPING_NOTE}$`), (m) => spreadTo(m[2], Number(m[1]), m[3])],
   [new RegExp(`^Choose ${N} of your opponent's (Benched )?Pokémon( that (?:has|have) any damage counters on (?:it|them)| that (?:doesn't|don't) have any damage counters on (?:it|them))?\\. This attack does (\\d+) damage to (?:it|that Pokémon|each of them|each of those Pokémon)\\.${NO_TYPING_NOTE}$`, "i"), (m) => spreadTo(`${m[1]} of your opponent's ${m[2] ? "Benched " : ""}Pokémon`, Number(m[4]), m[3])],
@@ -1010,9 +1049,17 @@ function runSteps(steps, ctx) {
   for (let i = 0; i < steps.length; i += 1) {
     const before = ctx.state.pending.length;
     OPS[steps[i].op]?.(ctx, steps[i]);
+    // The step took the rest of the attack over (an attack copied: its own steps and damage).
+    if (ctx.detached) {
+      delete ctx.detached;
+      return;
+    }
     if (ctx.state.pending.length > before) {
       const waiting = ctx.state.pending[ctx.state.pending.length - 1];
-      if (i < steps.length - 1) waiting.then = [...(waiting.then || []), { op: "fx", steps: steps.slice(i + 1), uid: ctx.slot.uid, ...(ctx.hit.coin != null ? { coin: ctx.hit.coin } : {}) }];
+      const rest = steps.slice(i + 1);
+      // Before the damage, the damage so far and the attack go along with the rest.
+      const carry = rest.some((step) => step.op === "strike") ? { hit: ctx.hit, atk: ctx.atk } : ctx.hit.coin != null ? { coin: ctx.hit.coin } : {};
+      if (rest.length) waiting.then = [...(waiting.then || []), { op: "fx", steps: rest, uid: ctx.slot.uid, ...carry }];
       // The other player's choice ("your opponent switches"): what follows is still the attacker's.
       if (waiting.player !== ctx.player && waiting.by == null) waiting.by = ctx.player;
       return;
@@ -1021,15 +1068,17 @@ function runSteps(steps, ctx) {
 }
 
 /** Steps that waited on a choice (trainers.js T_OPS.fx): the attack's context again, if the attacker is still in play. */
-export function runFx(tctx, { steps, uid, coin = null }) {
+export function runFx(tctx, { steps, uid, coin = null, hit = null, atk = null }) {
   const { state, defs, player } = tctx;
   const mine = inPlay(state, player).find(([slot]) => slot.uid === uid);
   if (!mine) return;
   const target = state.players[other(player)].active;
   const shielded = Boolean(target && (markOn(state, target, "shield") || abilityOn(state, target, defs)?.noEffects));
-  runSteps(steps, { state, defs, events: tctx.events, player, slot: mine[0], target, hit: { damage: 0, cancelled: false, ...(coin != null ? { coin } : {}) }, shielded });
+  const attack = atk ? defs(atk[0]).attacks[atk[1]] : null;
+  runSteps(steps, { state, defs, events: tctx.events, player, slot: mine[0], target, attack, atk, hit: hit ? { ...hit } : { damage: 0, cancelled: false, ...(coin != null ? { coin } : {}) }, shielded });
 }
 
-export function runAttackEffects(when, attack, ctx) {
-  runSteps((attack.fx || []).filter((step) => step.when === when), ctx);
+/** The attack's steps for one phase; `withStrike`: the damage (engine.js strike) after the steps before it, when they are done. */
+export function runAttackEffects(when, attack, ctx, withStrike = false) {
+  runSteps([...(attack.fx || []).filter((step) => step.when === when), ...(withStrike ? [{ op: "strike" }] : [])], ctx);
 }

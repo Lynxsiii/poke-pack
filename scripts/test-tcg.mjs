@@ -3797,9 +3797,49 @@ test("Energy to their hand, devolving, an extra Prize card, a price or nothing, 
   assert.equal(state.players[1].active.damage, 190);
 });
 
+lab("lab-t4", [
+  ["Drag", 0, "Switch 1 of your opponent's Benched Pokémon with their Active Pokémon. This attack does 30 damage to the new Active Pokémon."],
+  ["Mimic", 0, "Choose 1 of your opponent's Active Pokémon's attacks and use it as this attack."],
+  ["Plain", 0, "Don't apply Weakness and Resistance for this attack. (Any other effects that would happen after applying Weakness and Resistance still happen.)"],
+]);
+
+test("a choice before the damage: the Pokémon switched in takes it, even across a save", () => {
+  for (const a of defs("lab-t4").attacks) assert.ok(!a.plain, a.name);
+  let state = labgame("lab-t4", "lab-2");
+  const old = state.players[1].active;
+  use(state, 0, "Drag");
+  assert.equal(state.pending[0].type, "pick");
+  assert.equal(old.damage, 0);
+  state = JSON.parse(JSON.stringify(state)); // a match saved while it waits
+  act(state, { type: "pick", player: 0, spot: 0 });
+  assert.equal(state.players[1].active.damage, 30);
+  assert.equal(state.players[1].bench[0].damage, 0);
+  assert.equal(state.current, 1);
+});
+
+test("an attack of theirs used as this attack: its damage and its effects", () => {
+  let state = labgame("lab-t4", "lab-2");
+  use(state, 0, "Mimic");
+  assert.equal(state.pending[0].why, "copy");
+  assert.deepEqual(state.pending[0].labels.slice(0, 4), ["Smoke", "Hide", "Pierce", "Sting"]);
+  state = JSON.parse(JSON.stringify(state));
+  act(state, { type: "option", player: 0, index: 3 });
+  assert.deepEqual(conditionsOn(state.players[1].active), ["poisoned"]);
+  assert.equal(state.players[1].active.damage, 50 + 10);
+  assert.equal(state.current, 1);
+  // The bot takes the one that hits hardest; with one attack to copy there is no choice.
+  state = labgame("lab-t4", "lab-2");
+  use(state, 0, "Mimic");
+  assert.equal(state.pending[0].labels[botAction(state, 0, defs).index], "Crush"); // 300, added to lab-2 above
+  state = labgame("lab-t4", "lab-wet");
+  use(state, 0, "Mimic");
+  assert.equal(state.players[1].active.damage, 30);
+  assert.equal(state.current, 1);
+});
+
 test("the bot plays through decks of the long-tail attacks", () => {
   for (let i = 0; i < 8; i += 1) {
-    const a = deckOf(["lab-t1", 6], ["lab-t2", 6], ["base1-63", 6], [W, 12]);
+    const a = deckOf(["lab-t1", 6], ["lab-t4", 6], ["base1-63", 6], [W, 12]);
     const b = deckOf(["lab-t3", 6], ["lab-t2", 4], ["base1-46", 8], [F, 12]);
     playOut([a, b], "half", 1300 + i);
   }

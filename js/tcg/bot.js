@@ -271,6 +271,14 @@ export function botAction(state, player, defs) {
       const hits = waiting.labels.map((name) => Math.max(0, ...foeDef.attacks.filter((a) => a.name === name).map((a) => a.damage)));
       return actions[hits.indexOf(Math.max(...hits))];
     }
+    // "Choose 1 of your opponent's Active Pokémon's attacks and use it as this attack": the one that hits hardest.
+    if (waiting.why === "copy") {
+      const hits = waiting.options.map((steps) => {
+        const use = steps[0].steps[0];
+        return defs(use.card).attacks[use.index].damage;
+      });
+      return actions[hits.indexOf(Math.max(...hits))];
+    }
     // An attack's "you may": yes, except to take its own Pokémon out of play.
     if (waiting.why === "may" && JSON.stringify(waiting.options[0]).includes('"selfAway"')) return actions[1];
     return actions[0];
