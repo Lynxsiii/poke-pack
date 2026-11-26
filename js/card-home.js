@@ -72,10 +72,18 @@ export const PROMO_HOMES = {
 export const PROMO_HOME_LIKE = Object.values(PROMO_HOMES).flatMap((home) => home.like);
 
 /** The promo set a card id is filed under when it sits in another set's file ("mep", "xyp"), else "". */
+const PROMO_HOME_LIST = Object.entries(PROMO_HOMES);
+const promoHomeMemo = new Map(); // a collection asks about the same ids over and over
+
 export function promoHomeOf(cardId) {
   const id = String(cardId || "");
-  for (const [setId, home] of Object.entries(PROMO_HOMES)) if (home.test.test(id)) return setId;
-  return "";
+  let home = promoHomeMemo.get(id);
+  if (home !== undefined) return home;
+  home = "";
+  for (const [setId, entry] of PROMO_HOME_LIST) if (entry.test.test(id)) { home = setId; break; }
+  if (promoHomeMemo.size > 100000) promoHomeMemo.clear();
+  promoHomeMemo.set(id, home);
+  return home;
 }
 
 export function isMepCardId(cardId) {

@@ -15,7 +15,7 @@
  * ctx: { state, defs, events, player }
  */
 
-import { ACTIVE, addCondition, askChoose, askPick, conditionsOn, defOf, flip, inPlay, other, rand, shuffle, slotAt, switchActive, warded } from "./engine.js";
+import { ACTIVE, addCondition, askChoose, askPick, conditionsOn, defOf, evolveSpots, flip, inPlay, mayEvolve, other, rand, shuffle, slotAt, switchActive, warded } from "./engine.js";
 
 const WORDS = { a: 1, an: 1, another: 1, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8 };
 const count = (word) => WORDS[String(word).toLowerCase()] || Number(word) || 0;
@@ -75,7 +75,20 @@ const isSpecial = (ctx, uid) => {
   const def = defOf(ctx.state, uid, ctx.defs);
   return def.kind === "energy" && !def.basic;
 };
-const withEnergy = (ctx, special = false) => open(ctx).filter(([slot]) => (special ? slot.energy.some((uid) => isSpecial(ctx, uid)) : slot.energy.length)).map(([, spot]) => spot);
+const withEnergy = (ctx, special = false, tool = false) => open(ctx).filter(([slot]) => (tool && slot.tool) || (special ? slot.energy.some((uid) => isSpecial(ctx, uid)) : slot.energy.length)).map(([, spot]) => spot);
+/** Cards from your hand that would evolve one of your Pokémon the way `how` says (Rare Candy). */
+const candyCards = (ctx, how) => mine(ctx).hand.filter((uid) => evolveSpots(ctx.state, ctx.player, defOf(ctx.state, uid, ctx.defs), ctx.defs, how).length > 0);
+/** Cards in play a card may discard: Tools, Special Energy (yours too when `mine` is "both"), the Stadium. */
+function inPlayCards(ctx, { tools = "", special = "", stadium = false }) {
+  const out = [];
+  const sides = (who) => (who === "both" ? [...inPlay(ctx.state, ctx.player), ...open(ctx)] : who === "foe" ? open(ctx) : []);
+  for (const [slot] of sides(tools)) if (slot.tool) out.push(slot.tool);
+  for (const [slot] of sides(special)) out.push(...slot.energy.filter((uid) => isSpecial(ctx, uid)));
+  if (stadium && ctx.state.stadium) out.push(ctx.state.stadium.uid);
+  return out;
+}
+/** Cards in your hand a step may put into your deck: one fewer while the card itself is still there. */
+const stashable = (ctx, { what = "any", spare = ctx.spot != null ? 0 : 1 }) => fitting(ctx, mine(ctx).hand, what).length - (what === "any" ? spare : 0);
 /** Your Pokémon that are hurt or have a Special Condition. */
 const careSpots = (ctx) => inPlay(ctx.state, ctx.player).filter(([slot]) => slot.damage > 0 || conditionsOn(slot).length).map(([, spot]) => spot);
 /** Every Energy on one of your Pokémon goes to the discard pile. */
@@ -262,9 +275,9 @@ export const T_OPS = {
   },
   /** Discard an Energy from one of their Pokémon. `special`: a Special Energy only; `each`: one from each of them, no choice. */
   hammer: {
-    ready: (ctx, { special = false }) => withEnergy(ctx, special).length > 0,
-    run(ctx, { n = 1, special = false, each = false, toHand = false }) {
-      const spots = withEnergy(ctx, special);
+    ready: (ctx, { special = false, tool = false }) => withEnergy(ctx, special, tool).length > 0,
+    run(ctx, { n = 1, special = false, each = false, toHand = false, tool = false }) {
+      const spots = withEnergy(ctx, special, tool);
       if (each) {
         for (const spot of spots) {
           const slot = slotAt(ctx.state, other(ctx.player), spot);
@@ -275,7 +288,60 @@ export const T_OPS = {
         }
         return;
       }
-      if (spots.length) askPick(ctx.state, { player: ctx.player, side: other(ctx.player), spots, left: 1, effect: { op: "discardEnergy", n, ...(special ? { special } : {}), ...(toHand ? { toHand } : {}) } });
+      if (spots.length) askPick(ctx.state, { player: ctx.player, side: other(ctx.player), spots, left: 1, effect: { op: "discardEnergy", n, ...(special ? { special } : {}), ...(toHand ? { toHand } : {}), ...(tool ? { tool } : {}) } });
+    },
+  },
+  /**
+   * Rare Candy: a card from your hand evolves one of your Pokémon. `how` as canEvolveOnto reads it
+   * (skip "2": a Stage 2 straight onto its Basic Pokémon). The card is chosen, then the Pokémon.
+   */
+  candy: {
+    ready: (ctx, { how = {} }) => candyCards(ctx, how).length > 0,
+    run(ctx, { how = {} }) {
+      const uids = candyCards(ctx, how);
+      if (uids.length) askChoose(ctx.state, { player: ctx.player, zone: "hand", what: "evolution", uids, min: 1, max: 1, effect: { op: "evolveFrom", how } });
+    },
+  },
+  /**
+   * Energy from the hand or the discard pile onto one of your Pokémon (`to`, `whoType` as energize reads
+   * them): the player chooses the card (or up to n, `upTo`), then the Pokémon.
+   */
+  attachPick: {
+    ready: (ctx, step) => fitting(ctx, mine(ctx)[step.zone], step.what).length > 0 && energySpots(ctx, step).length > 0,
+    run(ctx, step) {
+      const uids = fitting(ctx, mine(ctx)[step.zone], step.what);
+      const spots = energySpots(ctx, step);
+      if (uids.length && spots.length) askChoose(ctx.state, { player: ctx.player, zone: step.zone, what: step.what, uids, min: step.upTo ? 0 : 1, max: step.n || 1, effect: { op: "attach", to: "one", spots, need: true } });
+    },
+  },
+  /** Evosoda, Wally: a card from the deck evolves one of your Pokémon (`where` "active": the Active one). */
+  evolveDeck: {
+    ready: (ctx, { how = {}, where = "" }) => hasDeck(ctx) && inPlay(ctx.state, ctx.player).some(([slot, spot]) => (where !== "active" || spot === ACTIVE) && mayEvolve(ctx.state, slot, ctx.defs, how)),
+    run(ctx, { how = {}, where = "" }) {
+      const uids = mine(ctx).deck.filter((uid) => evolveSpots(ctx.state, ctx.player, defOf(ctx.state, uid, ctx.defs), ctx.defs, how, where).length > 0);
+      askChoose(ctx.state, { player: ctx.player, zone: "deck", what: "evolution", uids, min: 0, max: 1, effect: { op: "evolveFrom", how, ...(where ? { where } : {}) }, shuffle: true });
+    },
+  },
+  /**
+   * Discard cards in play: Tools (`tools` "both" or "foe"), Special Energy (`special` the same), the Stadium.
+   * Up to n of them, or exactly `min`.
+   */
+  dropInPlay: {
+    ready: (ctx, step) => inPlayCards(ctx, step).length > 0,
+    run(ctx, step) {
+      const uids = inPlayCards(ctx, step);
+      if (uids.length) askChoose(ctx.state, { player: ctx.player, zone: "play", what: "any", uids, min: step.min || 0, max: step.n || 1, effect: { op: "dropInPlay" } });
+    },
+  },
+  /**
+   * Cards from your hand into your deck: `at` "into" (shuffled), "top" or "bottom". `need`: the card
+   * can't be played without them (a price); otherwise as many as there are, up to n.
+   */
+  stash: {
+    ready: (ctx, step) => !step.need || stashable(ctx, step) >= (step.n || 1),
+    run(ctx, { n = 1, what = "any", at = "into" }) {
+      const uids = fitting(ctx, mine(ctx).hand, what);
+      if (uids.length) askChoose(ctx.state, { player: ctx.player, zone: "hand", what, uids, min: Math.min(n, uids.length), max: n, effect: { op: at === "top" ? "toTop" : "toBottom" }, ...(at === "into" ? { shuffle: true } : {}) });
     },
   },
   /** This Pokémon, on the Bench, trades places with the Active one. */
@@ -310,7 +376,10 @@ export const T_OPS = {
   /** Their Active Pokémon goes to the Bench; they choose what comes in. */
   foeSwitch: {
     ready: (ctx) => frontOpen(ctx) && theirs(ctx).bench.length > 0,
-    run: (ctx) => askPick(ctx.state, { player: other(ctx.player), side: other(ctx.player), spots: benchSpots(theirs(ctx)), left: 1, effect: { op: "switch" } }),
+    run(ctx) {
+      // A card can carry on past this step ("... Then, switch your Active Pokémon"), so it checks again here.
+      if (frontOpen(ctx) && theirs(ctx).bench.length) askPick(ctx.state, { player: other(ctx.player), side: other(ctx.player), spots: benchSpots(theirs(ctx)), left: 1, effect: { op: "switch" } });
+    },
   },
   /**
    * Move an Energy (of `type`, or any) from one of your Pokémon to another. `from`: "any", "self"
@@ -359,7 +428,7 @@ export const T_OPS = {
     },
   },
   /** The top n cards of the other player's deck go to their discard pile. */
-  mill: {
+  foeMill: {
     ready: (ctx) => theirs(ctx).deck.length > 0,
     run(ctx, { n }) {
       const side = theirs(ctx);
@@ -627,6 +696,29 @@ const PATTERNS = [
   [/^Discard a Special Energy from 1 of your opponent's Pokémon, and discard a Stadium in play\.$/, () => [{ op: "hammer", special: true }, { op: "dropStadium" }]],
   [/^Put an Energy attached to 1 of your opponent's Pokémon into their hand\.$/, () => [{ op: "hammer", toHand: true }]],
   [/^Put a Basic Pokémon from your discard pile onto your Bench\.$/, () => [{ op: "recover", what: "basic", n: 1, to: "bench" }]],
+  // Evolving from the hand past a Stage (Rare Candy), or from the deck (Evosoda, Wally).
+  [/^Choose 1 of your Basic Pokémon in play\. If you have a Stage 2 card in your hand that evolves from that Pokémon, put that card (?:onto|on) the Basic Pokémon(?: to evolve it(?:, skipping the Stage 1)?)?\.(?: \(This counts as evolving that Pokémon\.\))? You can't use this card during your first turn or on a Basic Pokémon that was put into play this turn\.$/, () => [{ op: "candy", how: { skip: "2" } }]],
+  [/^Choose 1 of your Basic Pokémon in play\. If you have a Stage 1 or Stage 2 card that evolves from that Pokémon in your hand, put that card on the Basic Pokémon\. \(This counts as evolving that Pokémon\.\)(?: If you choose a Stage 2 Pokémon in your hand, put that Pokémon on the Basic Pokémon instead of on a Stage 1 Pokémon\.)?$/, () => [{ op: "candy", how: { skip: "any" } }]],
+  [/^Put a Stage 2 Evolution card from your hand on the matching Basic Pokémon\. You can (?:only play this card|play this card only) when you would be allowed to evolve that Pokémon anyway\.$/, () => [{ op: "candy", how: { skip: "2" } }]],
+  [/^Search your deck for a card that evolves from 1 of your Pokémon and put it onto that Pokémon\. \(This counts as evolving that Pokémon\.\) Shuffle your deck afterward\. You can't use this card during your first turn or on a Pokémon that was put into play this turn\.$/, () => [{ op: "evolveDeck" }]],
+  [/^Search your deck for a card that evolves from 1 of your Pokémon \(excluding Pokémon-EX\) and put it onto that Pokémon\. \(This counts as evolving that Pokémon\.\) Shuffle your deck afterward\. You can use this card during your first turn or on a Pokémon that was put into play this turn\.$/, () => [{ op: "evolveDeck", how: { lift: true, noEx: true } }]],
+  [/^Search your deck for a card that evolves from your Active Pokémon \(choose 1 if there are 2\) and put it on your Active Pokémon\. \(This counts as evolving that Pokémon\.\) Shuffle your deck afterward\.$/, () => [{ op: "evolveDeck", where: "active" }]],
+  [/^Search your deck for a card that has no Abilities and evolves from 1 of your Pokémon, and put it onto that Pokémon to evolve it\. Then, shuffle your deck\. You can use this card on a Pokémon you put down when you were setting up to play or on a Pokémon that was put into play this turn\.$/, () => [{ op: "evolveDeck", how: { lift: true, noAbility: true } }]],
+  // Tools, Special Energy and the Stadium in play, discarded.
+  [/^Choose up to (\d+) Pokémon Tools? (?:cards )?attached to Pokémon(?: in play)? \(yours or your opponent's\) and discard them\.$/, (m) => [{ op: "dropInPlay", n: Number(m[1]), tools: "both" }]],
+  [/^Choose up to (\d+) in any combination of Pokémon Tool cards and Stadium cards in play \(yours or your opponent's\) and discard them\.$/, (m) => [{ op: "dropInPlay", n: Number(m[1]), tools: "both", stadium: true }]],
+  [/^Choose a Pokémon Tool or Special Energy card attached to a Pokémon in play \(yours or your opponent's\) and discard it\.$/, () => [{ op: "dropInPlay", n: 1, min: 1, tools: "both", special: "both" }]],
+  [/^Discard a Pokémon Tool or Special Energy card from 1 of your opponent's Pokémon, or discard (?:a|any) Stadium (?:card )?in play\.$/, () => [{ op: "dropInPlay", n: 1, min: 1, tools: "foe", special: "foe", stadium: true }]],
+  [/^Discard a Pokémon Tool and a Special Energy from 1 of your opponent's Pokémon\.$/, () => [{ op: "hammer", special: true, tool: true }]],
+  // Cards from the hand into the deck.
+  [/^Reveal a Pokémon from your hand and put it into your deck\. If you do, search your deck for a Pokémon, reveal it, and put it into your hand\. Then, shuffle your deck\.$/, () => [{ op: "stash", what: "pokemon", n: 1, need: true }, { op: "search", what: "pokemon", n: 1 }]],
+  [/^(?:Reveal a Pokémon in your hand|Choose 1 Pokémon in your hand, show it to your opponent,) and put it on top of your deck\. If you do, search your deck for a Pokémon, (?:reveal it|show it to your opponent), and put it into your hand\. Shuffle your deck afterward\.$/, () => [{ op: "stash", what: "pokemon", n: 1, at: "top", need: true }, { op: "search", what: "pokemon", n: 1 }]],
+  [/^Shuffle a card from your hand into your deck\. If you do, draw (\d+) cards\.$/, (m) => [{ op: "stash", n: 1, need: true }, { op: "draw", n: Number(m[1]) }]],
+  [/^Shuffle (\d+) cards from your hand into your deck\. \(If you can't shuffle \d+ cards into your deck, you can't play this card\.\) Then, draw a card\.$/, (m) => [{ op: "stash", n: Number(m[1]), need: true }, { op: "draw", n: 1 }]],
+  [/^Shuffle (\d+) of the other cards from your hand into your deck in order to draw a card\.$/, (m) => [{ op: "stash", n: Number(m[1]), need: true }, { op: "draw", n: 1 }]],
+  [/^Choose a card from your hand and put it on top of your deck\. Search your deck for a Pokémon, show it to your opponent, and put it into your hand\. Shuffle your deck afterward\. \(If this is the only card in your hand, you can't play this card\.\)$/, () => [{ op: "stash", n: 1, at: "top", need: true }, { op: "search", what: "pokemon", n: 1 }]],
+  [new RegExp(`^Draw ${N} cards?\\. Then, choose a card from your hand and put it on the bottom of your deck\\.$`), (m) => [{ op: "draw", n: count(m[1]) }, { op: "stash", n: 1, at: "bottom" }]],
+  [new RegExp(`^Draw ${N} cards?\\. Then, shuffle ${N} cards? from your hand into your deck\\.$`), (m) => [{ op: "draw", n: count(m[1]) }, { op: "stash", n: count(m[2]) }]],
   // More damage this turn.
   [/^During this turn, attacks used by your Pokémon do (\d+) more damage to your opponent's Active Pokémon ex \(before applying Weakness and Resistance\)\.$/, (m) => [{ op: "boost", n: Number(m[1]), vs: ["ex"] }]],
   [/^During this turn, (?:your Pokémon's attacks|attacks used by your Pokémon) do (\d+) more damage to (?:the|your opponent's) Active Pokémon \(before applying Weakness and Resistance\)\.$/, (m) => [{ op: "boost", n: Number(m[1]) }]],
@@ -721,6 +813,8 @@ const COSTS = [
 ];
 /** A price paid in cards of a kind: "only if you discard a Fire Energy card from your hand". */
 const TYPED_COST = /^You can (?:use|play) this card only if you discard (an?|\d+) (.+?) from your hand\. (.+)$/;
+/** "Attach a basic Energy card from your discard pile to 1 of your Benched Pokémon. If you do, draw 3 cards." */
+const ATTACH = new RegExp(`^Attach (an?|up to (\\d+)) (.+?) from your (hand|discard pile) to (1 of your Pokémon|1 of your Benched Pokémon|your Active Pokémon|1 of your (${TYPE_WORD}) Pokémon|1 of your Benched (${TYPE_WORD}) Pokémon)\\.(?: If you do, (.+))?$`);
 const upper = (words) => words[0].toUpperCase() + words.slice(1);
 const benchable = (what) => what.split("|").every((w) => /^basic(?=$|[:@!])/.test(w));
 
@@ -767,6 +861,15 @@ function compileParts(clean) {
   }
   m = clean.match(TAKE_ONE);
   if (m && count(m[1]) > 1) return [{ op: "topTake", n: 1, top: count(m[1]) }, { op: "under", n: count(m[1]) - 1 }];
+  m = clean.match(ATTACH);
+  if (m) {
+    const what = whatOf(m[3]);
+    const rest = m[8] ? compileTrainer(upper(m[8])) : [];
+    if (!/^basicEnergy(:\w+)?$/.test(what) || !rest) return null;
+    const to = /Active/.test(m[5]) ? "active" : /Benched/.test(m[5]) ? "bench" : "any";
+    const step = { op: "attachPick", zone: m[4] === "hand" ? "hand" : "discard", what, to, whoType: m[6] || m[7] || "", n: m[2] ? Number(m[2]) : 1, ...(m[2] ? { upTo: true } : {}), ...(rest.length ? { need: true } : {}) };
+    return [step, ...rest];
+  }
   m = clean.match(TYPED_COST);
   if (m && !/other cards?$|^card$/.test(m[2])) {
     const what = whatOf(`${m[1]} ${m[2]}`);
@@ -883,7 +986,7 @@ export function compileStadium(text) {
   const use = once && compileTrainer(asYours(once[1]));
   // A Stadium is in play, not in the hand: a price in cards counts every card held.
   if (use && use.some((step) => step.op === "only" || step.op === "early" || step.when)) return null;
-  return use ? { use: use.map((step) => (step.op === "cost" ? { ...step, spare: 0 } : step)) } : null;
+  return use ? { use: use.map((step) => (step.op === "cost" || step.op === "stash" ? { ...step, spare: 0 } : step)) } : null;
 }
 
 /** Does a Stadium's standing change reach this Pokémon? */
@@ -930,8 +1033,17 @@ export function runTrainer(steps, ctx) {
 /** For the bot and the screen: what a Trainer is for, by its first step that matters. */
 export function trainerAim(steps) {
   const ops = steps.flatMap((s) => (s.op === "flip" ? s.heads : [s])).map((s) => s.op);
+  if (ops.includes("attachPick")) return "energize";
   for (const own of ["energize", "fetchEnergy", "counters", "condition", "moveCounters", "switchSelf"]) if (ops.includes(own)) return own === "fetchEnergy" ? "energize" : own === "moveCounters" || own === "condition" ? "counters" : own;
   if (ops.includes("formChange")) return "form";
+  // Rare Candy: the bot needs to know it (a Stage 2 in hand on a Basic in play, always worth it once it is ready).
+  if (ops.includes("candy")) return "evolve";
+  // Evolving from the deck is a search the bot already plays: it takes the card that evolves and puts it on.
+  if (ops.includes("evolveDeck")) return "search";
+  // Discarding Tools or the Stadium (yours too): the bot leaves these alone until it can tell whose to hit.
+  if (ops.includes("dropInPlay")) return "tools";
+  // Cards from the hand back into the deck: the bot would put back its best card, so it leaves these alone.
+  if (ops.includes("stash")) return "stash";
   // Putting your own Pokémon back in your hand, or the other player's hand away: the bot leaves these alone.
   if (ops.includes("moveEnergy") || ops.includes("gather") || ops.includes("bounce") || ops.includes("foeShuffle") || steps.some((s) => s.op === "handBottom" && s.who === "foe")) return "move";
   // More damage this turn: it is about hurting their Pokémon, and needs an attack to follow.

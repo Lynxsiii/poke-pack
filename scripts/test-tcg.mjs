@@ -10,7 +10,7 @@ import { readFileSync, readdirSync } from "node:fs";
 import assert from "node:assert/strict";
 import { ACTIVE, FORMATS, RuleError, abilityOn, addCondition, apply, benchSafe, canRetreat, energyOf, toolOf, conditionsOn, createGame, damageAfterTyping, legalActions, maxHp, resolveKnockOuts, retreatCost, unpaid, usableAttacks, viewFor } from "../js/tcg/engine.js";
 import { createDefs, defineCard, FREE_ENERGY } from "../js/tcg/cards.js";
-import { boostOf, compileTrainer, fits, whatOf } from "../js/tcg/trainers.js";
+import { boostOf, compileTrainer, fits, runTrainer, trainerAim, whatOf } from "../js/tcg/trainers.js";
 import { compileAttack } from "../js/tcg/effects.js";
 import { botAction } from "../js/tcg/bot.js";
 import { LESSON, LESSON_CARDS, createLesson } from "../js/tcg/tutorial.js";
@@ -823,6 +823,19 @@ test("Full Heal clears conditions; the bot plays what helps it", () => {
   assert.deepEqual(conditionsOn(me.active), []);
   hold(state, 0, T.draw);
   assert.equal(botAction(state, 0, defs).type === "play" || botAction(state, 0, defs).type === "bench", true);
+});
+
+test("review fixes: an Ability's mill hits the other deck; Warp Point with no Bench on their side doesn't hang", () => {
+  const state = midgame();
+  const [mine, theirs] = [state.players[0].deck.length, state.players[1].deck.length];
+  runTrainer([{ op: "foeMill", n: 2 }], { state, defs, events: [], player: 0 });
+  assert.equal(state.players[0].deck.length, mine);
+  assert.equal(state.players[1].deck.length, theirs - 2);
+  const s2 = midgame();
+  for (const slot of s2.players[1].bench.splice(0)) s2.players[1].discard.push(slot.uid);
+  runTrainer([{ op: "foeSwitch" }, { op: "switch" }], { state: s2, defs, events: [], player: 0 });
+  assert.ok(!s2.pending.some((w) => w.type === "pick" && !w.spots.length), "no pick with nothing to pick");
+  assert.ok(legalActions(s2, 0, defs).length > 0);
 });
 
 /* ---------- bot against bot ---------- */
@@ -2116,6 +2129,350 @@ test("Special Energy, third batch: more on some Pokémon, a type to act on, heal
   act(s4, { type: "attach", player: 0, uid: hold(s4, 0, "sv4-182"), spot: ACTIVE });
   assert.equal(s4.players[0].active.damage, 20);
   for (const id of ["sv8-191", "me3-88", "me4-85", "me5-84", "swsh3-175", "swsh4-164", "ex13-98", "sm4-100", "ex10-96", "hgss1-104", "ecard2-147"]) assert.ok(defs(id).playable, id);
+});
+
+/* ---------- Trainers, fourth batch: evolving, cards in play discarded, cards back into the deck ---------- */
+
+// base1: Squirtle 63 -> Wartortle 42 -> Blastoise 2. In midgame() player 0's Active Squirtle has been in play
+// since turn 1; its Benched Squirtle came in this turn.
+const CANDY = "bw10-85", OLD_CANDY = "dp4-102", EVOSODA = "xy1-116", WALLY = "xy6-94", WALLY_TRAINING = "ex2-89";
+const playable = (state, uid) => legalActions(state, 0, defs).some((a) => a.type === "play" && a.uid === uid);
+/** Put a card of this id into a player's deck (it need not be in the deck list). */
+function stock(state, p, id) {
+  const uid = `x${Object.keys(state.cards).length}`;
+  state.cards[uid] = id;
+  state.players[p].deck.push(uid);
+  return uid;
+}
+
+test("evolution lines: a Stage 2 knows the Basic Pokémon it comes from", () => {
+  assert.deepEqual(defs("base1-2").roots, ["Squirtle"]);
+  assert.equal(defs("base1-2").line, 2);
+  assert.equal(defs("base1-42").line, 1);
+  assert.equal(defs("base1-63").line, undefined);
+  for (const id of [CANDY, OLD_CANDY, "base1-76", EVOSODA, WALLY, WALLY_TRAINING, "sv5-160"]) assert.ok(defs(id).playable, id);
+});
+
+test("Rare Candy: a Stage 2 from the hand onto its Basic Pokémon, never on the first turn or one new this turn", () => {
+  const state = midgame();
+  const me = state.players[0];
+  const candy = hold(state, 0, CANDY);
+  // Nothing to put on, or only a Stage 1: it would do nothing.
+  throws(() => act(state, { type: "play", player: 0, uid: candy }), /would do nothing/);
+  const wartortle = hold(state, 0, "base1-42");
+  assert.ok(!playable(state, candy), "a Stage 1 isn't skipped to");
+  const blastoise = hold(state, 0, "base1-2");
+  // The first turn: not yet.
+  state.turn = 2;
+  assert.ok(!playable(state, candy));
+  state.turn = 3;
+  const squirtle = me.active.uid;
+  act(state, { type: "play", player: 0, uid: candy });
+  assert.equal(state.pending[0].type, "choose");
+  assert.deepEqual(state.pending[0].uids, [blastoise]);
+  // Only the Active Squirtle may take it (the Benched one came in this turn): no Pokémon to pick.
+  const events = act(state, { type: "choose", player: 0, uids: [blastoise] });
+  assert.equal(me.active.uid, blastoise);
+  assert.deepEqual(me.active.under, [squirtle]);
+  assert.ok(events.some((e) => e.t === "evolve" && e.uid === blastoise && e.spot === ACTIVE));
+  assert.ok(!me.hand.includes(blastoise) && me.hand.includes(wartortle));
+  assert.equal(state.pending.length, 0);
+  // It evolved this turn: no further evolving; and Rare Candy never goes on what isn't a Basic Pokémon.
+  me.active.since = 1;
+  const again = hold(state, 0, CANDY);
+  hold(state, 0, "base1-2");
+  assert.ok(!playable(state, again));
+
+  // Two Basic Pokémon that may take it: the player picks, and the card rides on the pick.
+  const s2 = midgame();
+  const two = s2.players[0];
+  two.bench[0].since = 1;
+  const b2 = hold(s2, 0, "base1-2");
+  act(s2, { type: "play", player: 0, uid: hold(s2, 0, CANDY) });
+  act(s2, { type: "choose", player: 0, uids: [b2] });
+  assert.equal(s2.pending[0].type, "pick");
+  assert.deepEqual(s2.pending[0].spots.sort(), [ACTIVE, 0].sort());
+  assert.equal(viewFor(s2, 0).cards[b2], "base1-2", "the chooser sees the card it holds");
+  act(s2, { type: "pick", player: 0, spot: 0 });
+  assert.equal(two.bench[0].uid, b2);
+  assert.equal(s2.pending.length, 0);
+});
+
+test("old Rare Candy and Pokémon Breeder: a Stage 1 too for the old one, the usual timing for both", () => {
+  const state = midgame();
+  const me = state.players[0];
+  const wartortle = hold(state, 0, "base1-42");
+  const candy = hold(state, 0, OLD_CANDY);
+  assert.ok(!playable(state, hold(state, 0, "base1-76")), "Pokémon Breeder: a Stage 2 only");
+  act(state, { type: "play", player: 0, uid: candy });
+  act(state, { type: "choose", player: 0, uids: [wartortle] });
+  assert.equal(me.active.uid, wartortle);
+  // A Basic Pokémon put into play this turn is never one it goes on.
+  const s2 = midgame();
+  s2.players[0].active.since = s2.turn;
+  hold(s2, 0, "base1-2");
+  assert.ok(!playable(s2, hold(s2, 0, "base1-76")));
+});
+
+test("Evosoda, Wally, Wally's Training: a card from the deck evolves one of your Pokémon", () => {
+  const state = midgame();
+  const me = state.players[0];
+  const wartortle = stock(state, 0, "base1-42");
+  stock(state, 0, "base1-2");
+  const soda = hold(state, 0, EVOSODA);
+  state.turn = 2;
+  assert.ok(!playable(state, soda), "not on the first turn");
+  state.turn = 3;
+  act(state, { type: "play", player: 0, uid: soda });
+  // Only what evolves from a Pokémon in play is offered: Wartortle, not Blastoise.
+  assert.deepEqual(state.pending[0].uids, [wartortle]);
+  assert.equal(state.pending[0].min, 0);
+  const events = act(state, { type: "choose", player: 0, uids: [wartortle] });
+  assert.equal(me.active.uid, wartortle);
+  assert.ok(!me.deck.includes(wartortle));
+  assert.ok(events.some((e) => e.t === "evolve" && e.from === "deck"));
+  // A search may come up empty.
+  const s0 = midgame();
+  act(s0, { type: "play", player: 0, uid: hold(s0, 0, EVOSODA) });
+  assert.deepEqual(s0.pending[0].uids, []);
+  act(s0, { type: "choose", player: 0, uids: [] });
+  assert.equal(s0.pending.length, 0);
+
+  // Wally: on the first turn too, and on the Squirtle benched this turn, so the player picks which.
+  const s2 = midgame();
+  const w = stock(s2, 0, "base1-42");
+  s2.turn = 2;
+  const wally = hold(s2, 0, WALLY);
+  s2.players[0].supporterUsed = false;
+  assert.ok(playable(s2, wally));
+  act(s2, { type: "play", player: 0, uid: wally });
+  act(s2, { type: "choose", player: 0, uids: [w] });
+  assert.equal(s2.pending[0].effect.op, "evolveHeld");
+  act(s2, { type: "pick", player: 0, spot: 0 });
+  assert.equal(s2.players[0].bench[0].uid, w);
+
+  // Wally's Training: the Active Pokémon only.
+  const s3 = midgame();
+  s3.players[0].bench[0].since = 1;
+  const w3 = stock(s3, 0, "base1-42");
+  act(s3, { type: "play", player: 0, uid: hold(s3, 0, WALLY_TRAINING) });
+  act(s3, { type: "choose", player: 0, uids: [w3] });
+  assert.equal(s3.players[0].active.uid, w3);
+  assert.equal(s3.pending.length, 0);
+});
+
+const IN_PLAY = {
+  scrapper: "bw6-116",
+  blower: "sm2-125",
+  xerosic: "xy4-110",
+  blowtorch: "me2-86",
+  ruffian: "sv9-157",
+};
+
+test("Tool Scrapper and Field Blower: Tools on either side and the Stadium go to their owners' discard piles", () => {
+  const state = midgame();
+  const [me, foe] = state.players;
+  const scrapper = hold(state, 0, IN_PLAY.scrapper);
+  throws(() => act(state, { type: "play", player: 0, uid: scrapper }), /would do nothing/);
+  const mine = hold(state, 0, TOOL.cape);
+  act(state, { type: "tool", player: 0, uid: mine, spot: ACTIVE });
+  const theirs = `x${Object.keys(state.cards).length}`;
+  state.cards[theirs] = TOOL.band;
+  foe.active.tool = theirs;
+  assert.equal(viewFor(state, 0).cards[theirs], TOOL.band, "a Tool in play is in plain sight");
+  act(state, { type: "play", player: 0, uid: scrapper });
+  assert.equal(state.pending[0].zone, "play");
+  assert.deepEqual(state.pending[0].uids.sort(), [mine, theirs].sort());
+  assert.equal(state.pending[0].max, 2);
+  const events = act(state, { type: "choose", player: 0, uids: [theirs] });
+  assert.ok(!foe.active.tool && foe.discard.includes(theirs));
+  assert.equal(me.active.tool, mine);
+  assert.ok(events.some((e) => e.t === "discard-tool" && e.p === 1 && e.uid === theirs));
+
+  // Field Blower: the Stadium too.
+  const vessel = hold(state, 1, U.vessel);
+  state.stadium = { uid: vessel, owner: 1 };
+  state.players[1].hand.splice(state.players[1].hand.indexOf(vessel), 1);
+  act(state, { type: "play", player: 0, uid: hold(state, 0, IN_PLAY.blower) });
+  assert.deepEqual(state.pending[0].uids.sort(), [mine, vessel].sort());
+  act(state, { type: "choose", player: 0, uids: [vessel, mine] });
+  assert.ok(!state.stadium && foe.discard.includes(vessel));
+  assert.ok(!me.active.tool && me.discard.includes(mine));
+  // HP a Tool gave is gone with it.
+  const s2 = midgame();
+  const cape = hold(s2, 0, TOOL.cape);
+  act(s2, { type: "tool", player: 0, uid: cape, spot: ACTIVE });
+  const caped = s2.players[0].active.uid;
+  s2.players[0].active.damage = maxHp(s2, s2.players[0].active, defs) - 10;
+  act(s2, { type: "play", player: 0, uid: hold(s2, 0, IN_PLAY.scrapper) });
+  act(s2, { type: "choose", player: 0, uids: [cape] });
+  assert.ok(s2.players[0].discard.includes(cape));
+  assert.ok(s2.players[0].discard.includes(caped), "Knocked Out once the Tool's HP is gone");
+});
+
+test("Xerosic, Blowtorch, Ruffian: a Tool or a Special Energy; only theirs for Blowtorch; both from one Pokémon", () => {
+  const state = midgame();
+  const [me, foe] = state.players;
+  const twin = (p, slot) => {
+    const uid = `x${Object.keys(state.cards).length}`;
+    state.cards[uid] = "swsh2-174";
+    slot.energy.push(uid);
+    return uid;
+  };
+  const myTwin = twin(0, me.active);
+  const theirTwin = twin(1, foe.active);
+  act(state, { type: "play", player: 0, uid: hold(state, 0, IN_PLAY.xerosic) });
+  assert.deepEqual(state.pending[0].uids.sort(), [myTwin, theirTwin].sort());
+  assert.equal(state.pending[0].min, 1);
+  throws(() => act(state, { type: "choose", player: 0, uids: [] }), /Choose a card/);
+  act(state, { type: "choose", player: 0, uids: [myTwin] });
+  assert.ok(!me.active.energy.includes(myTwin) && me.discard.includes(myTwin));
+
+  // Blowtorch: a Basic Fire Energy pays; only their cards are offered.
+  give(state, 0, W);
+  const torch = hold(state, 0, IN_PLAY.blowtorch);
+  throws(() => act(state, { type: "play", player: 0, uid: torch }), /would do nothing/);
+  const fire = hold(state, 0, F);
+  act(state, { type: "play", player: 0, uid: torch });
+  act(state, { type: "choose", player: 0, uids: [fire] });
+  assert.deepEqual(state.pending[0].uids, [theirTwin]);
+  act(state, { type: "choose", player: 0, uids: [theirTwin] });
+  assert.ok(foe.discard.includes(theirTwin));
+
+  // Ruffian: the Tool and a Special Energy from the one Pokémon chosen.
+  const s2 = midgame();
+  const foe2 = s2.players[1];
+  const band = `x${Object.keys(s2.cards).length}`;
+  s2.cards[band] = TOOL.band;
+  foe2.active.tool = band;
+  const t2 = `x${Object.keys(s2.cards).length}`;
+  s2.cards[t2] = "swsh2-174";
+  foe2.active.energy.push(t2);
+  act(s2, { type: "play", player: 0, uid: hold(s2, 0, IN_PLAY.ruffian) });
+  act(s2, { type: "pick", player: 0, spot: ACTIVE });
+  assert.ok(!foe2.active.tool && foe2.discard.includes(band) && foe2.discard.includes(t2));
+});
+
+const STASH = {
+  communication: labTrainer("communication", "Item", "Reveal a Pokémon from your hand and put it into your deck. If you do, search your deck for a Pokémon, reveal it, and put it into your hand. Then, shuffle your deck."),
+};
+
+test("cards from the hand into the deck: Pokémon Communication, Maintenance, Bebe's Search, Professor Oak's Visit", () => {
+  const state = midgame();
+  const me = state.players[0];
+  me.deck.push(...me.hand.splice(0));
+  const comm = hold(state, 0, STASH.communication);
+  give(state, 0, W);
+  throws(() => act(state, { type: "play", player: 0, uid: comm }), /would do nothing/);
+  const squirtle = give(state, 0, "base1-63");
+  act(state, { type: "play", player: 0, uid: comm });
+  assert.deepEqual(state.pending[0].uids, [squirtle]);
+  act(state, { type: "choose", player: 0, uids: [squirtle] });
+  assert.ok(me.deck.includes(squirtle) && !me.hand.includes(squirtle));
+  assert.equal(state.pending[0].effect.op, "toHand");
+  assert.ok(state.pending[0].uids.every((u) => defs(state.cards[u]).kind === "pokemon"));
+  act(state, { type: "choose", player: 0, uids: [state.pending[0].uids[0]] });
+  assert.equal(state.pending.length, 0);
+
+  // Maintenance: two other cards, or it can't be played.
+  const s2 = midgame();
+  const m2 = s2.players[0];
+  m2.deck.push(...m2.hand.splice(0));
+  const maint = hold(s2, 0, "xy3-96");
+  give(s2, 0, W);
+  assert.ok(!playable(s2, maint));
+  const two = [m2.hand[1], give(s2, 0, W)];
+  const deck = m2.deck.length;
+  const events = act(s2, { type: "play", player: 0, uid: maint });
+  assert.equal(s2.pending[0].min, 2);
+  act(s2, { type: "choose", player: 0, uids: two });
+  assert.equal(m2.deck.length, deck + 1);
+  assert.equal(m2.hand.length, 1);
+  assert.ok(!events.some((e) => e.t === "hand-to-deck"));
+
+  // Bebe's Search: on top, then a search; Professor Oak's Visit: draw, then one to the bottom.
+  const s3 = midgame();
+  const m3 = s3.players[0];
+  const bebe = hold(s3, 0, "dp2-109");
+  const top = m3.hand.find((u) => u !== bebe);
+  act(s3, { type: "play", player: 0, uid: bebe });
+  const moved = act(s3, { type: "choose", player: 0, uids: [top] });
+  assert.ok(moved.some((e) => e.t === "hand-to-deck" && e.at === "top"));
+  assert.equal(s3.pending[0].effect.op, "toHand");
+  act(s3, { type: "choose", player: 0, uids: [] });
+  const oak = hold(s3, 0, "dp3-122");
+  s3.players[0].supporterUsed = false;
+  act(s3, { type: "play", player: 0, uid: oak });
+  const last = m3.hand[0];
+  act(s3, { type: "choose", player: 0, uids: [last] });
+  assert.equal(m3.deck[m3.deck.length - 1], last);
+});
+
+test("the new Trainer ops have an aim the bot and the deck builder read", () => {
+  assert.equal(trainerAim(defs(CANDY).fx), "evolve");
+  assert.equal(trainerAim(defs(EVOSODA).fx), "search");
+  assert.equal(trainerAim(defs(IN_PLAY.scrapper).fx), "tools");
+  assert.equal(trainerAim(defs(IN_PLAY.blowtorch).fx), "tools");
+  assert.equal(trainerAim(defs(IN_PLAY.ruffian).fx), "hammer");
+  assert.equal(trainerAim(defs("xy3-96").fx), "stash");
+  assert.equal(trainerAim(defs("swsh1-157").fx), "energize");
+});
+
+test("Energy from the hand or the discard pile onto a Pokémon the card names: Bede, Dark Patch, Welder, Raihan", () => {
+  // Bede: a basic Energy from the hand, which one is the player's call, onto a Benched Pokémon only.
+  const state = midgame();
+  const me = state.players[0];
+  me.hand = me.hand.filter((u) => defs(state.cards[u]).kind !== "energy");
+  const bede = hold(state, 0, "swsh1-157");
+  assert.ok(!playable(state, bede), "no Energy in hand");
+  const water = give(state, 0, W);
+  const grass = give(state, 0, G);
+  const used = me.energyUsed;
+  act(state, { type: "play", player: 0, uid: bede });
+  assert.deepEqual(state.pending[0].uids.sort(), [water, grass].sort());
+  act(state, { type: "choose", player: 0, uids: [grass] });
+  assert.deepEqual(state.pending[0].spots, [0]);
+  act(state, { type: "pick", player: 0, spot: 0 });
+  assert.ok(me.bench[0].energy.includes(grass) && me.hand.includes(water));
+  assert.equal(me.energyUsed, used, "not the Energy of the turn");
+
+  // Dark Patch: a Darkness Energy only, onto a Benched Darkness Pokémon only.
+  const s2 = midgame();
+  s2.players[0].discard.push(hold(s2, 0, "energy-darkness"));
+  s2.players[0].hand.pop();
+  assert.ok(!playable(s2, hold(s2, 0, "bw5-93")), "no Darkness Pokémon on the Bench");
+
+  // Welder: up to 2 Fire Energy, and the draw only if any were attached.
+  const s3 = midgame();
+  const m3 = s3.players[0];
+  m3.hand = m3.hand.filter((u) => defs(s3.cards[u]).kind !== "energy");
+  const fires = [hold(s3, 0, F), hold(s3, 0, F)];
+  act(s3, { type: "play", player: 0, uid: hold(s3, 0, "sm10-189") });
+  assert.equal(s3.pending[0].max, 2);
+  const hand = m3.hand.length;
+  act(s3, { type: "choose", player: 0, uids: [] });
+  assert.equal(s3.pending.length, 0);
+  assert.equal(m3.hand.length, hand, "none attached: no cards drawn");
+  s3.players[0].supporterUsed = false;
+  act(s3, { type: "play", player: 0, uid: hold(s3, 0, "sm10-189") });
+  act(s3, { type: "choose", player: 0, uids: fires });
+  act(s3, { type: "pick", player: 0, spot: ACTIVE });
+  assert.ok(fires.every((u) => m3.active.energy.includes(u)));
+  assert.equal(m3.hand.length, hand - 2 + 3);
+
+  // Raihan: only after a Knock Out last turn, from the discard pile, then a search.
+  const s4 = midgame();
+  const m4 = s4.players[0];
+  m4.discard.push(hold(s4, 0, W));
+  m4.hand.pop();
+  const raihan = hold(s4, 0, "swsh7-152");
+  assert.ok(!playable(s4, raihan));
+  m4.lostOn = [s4.turn - 1];
+  act(s4, { type: "play", player: 0, uid: raihan });
+  act(s4, { type: "choose", player: 0, uids: [s4.pending[0].uids[0]] });
+  act(s4, { type: "pick", player: 0, spot: ACTIVE });
+  assert.equal(s4.pending[0].effect.op, "toHand");
+  assert.equal(s4.pending[0].zone, "deck");
 });
 
 console.log(`${passed} checks passed${process.exitCode ? ", some failed" : ""}`);

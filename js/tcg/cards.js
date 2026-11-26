@@ -6,7 +6,7 @@
  * resistance, retreat and prizes. defineCard() joins the two into what
  * js/tcg/engine.js reads:
  *
- *   pokemon  { id, kind, name, stage: "basic" | "evolution", evolvesFrom, hp, types, attacks, weakness,
+ *   pokemon  { id, kind, name, stage: "basic" | "evolution", evolvesFrom, line?: 1 | 2, roots? (a Stage 2's Basics), hp, types, attacks, weakness,
  *              resistance, retreat, prizes, playable, why, notes }
  *            attack: { name, cost, damage, text, fx (steps, js/tcg/effects.js), plain (true when text isn't read yet) }
  *   energy   { id, kind, name, provides: [type], basic, playable, special? (js/tcg/energy.js) }
@@ -93,8 +93,11 @@ function boxOf(card) {
   return "";
 }
 
-/** `row` is the card's entry in data/tcg/rules.json, or undefined when it has none. */
-export function defineCard(card, row, text = "") {
+/**
+ * `row` is the card's entry in data/tcg/rules.json, or undefined when it has none.
+ * `lines`: Stage 1 names to the names they evolve from (data/tcg/trainers.json `lines`), for Rare Candy.
+ */
+export function defineCard(card, row, text = "", lines = null) {
   const base = { id: card.id, name: card.name, ...limitsOf(card) };
   if (card.supertype === "Energy" || card.energy) {
     const type = ENERGY_TYPES.find((t) => new RegExp(`^(Basic )?${t} Energy$`).test(card.name));
@@ -141,6 +144,9 @@ export function defineCard(card, row, text = "") {
     kind: "pokemon",
     stage,
     evolvesFrom: stage === "evolution" ? card.evolvesFrom : "",
+    // Stage 1 or Stage 2 (Rare Candy asks); a Stage 2's `roots` are the Basic Pokémon its Stage 1 evolves from.
+    ...(stage === "evolution" && subs.includes("Stage 1") ? { line: 1 } : {}),
+    ...(stage === "evolution" && subs.includes("Stage 2") ? { line: 2, roots: lines?.[card.evolvesFrom] || [] } : {}),
     hp: Number(card.hp) || 0,
     types: card.types || [],
     attacks,
@@ -177,7 +183,7 @@ export function createDefs(findCard, rules, trainers = null) {
     const card = findCard(id);
     if (!card) return null;
     const [set, key] = rulesKey(id);
-    def = defineCard(card, rules?.[set]?.[key], trainers?.texts[trainers.cards?.[set]?.[key]] || "");
+    def = defineCard(card, rules?.[set]?.[key], trainers?.texts[trainers.cards?.[set]?.[key]] || "", trainers?.lines);
     cache.set(id, def);
     return def;
   };

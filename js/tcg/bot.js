@@ -237,9 +237,18 @@ export function botAction(state, player, defs) {
       if (def.kind === "energy") return side.hand.filter((u) => defOf(state, u, defs).kind === "energy").length > 1 && waiting.zone === "hand" ? 5 : 30;
       return 25;
     };
+    // Tools, Special Energy or the Stadium in play: only the other side's.
+    if (waiting.effect.op === "dropInPlay") {
+      const foeOwns = new Set(inPlay(state, other(player)).flatMap(([slot]) => [slot.tool, ...slot.energy].filter(Boolean)));
+      if (state.stadium && state.stadium.owner !== player) foeOwns.add(state.stadium.uid);
+      const theirs = waiting.uids.filter((u) => foeOwns.has(u));
+      const mine = waiting.uids.filter((u) => !foeOwns.has(u));
+      return { type: "choose", player, uids: [...theirs.slice(0, waiting.max), ...mine.slice(0, Math.max(0, waiting.min - theirs.length))] };
+    }
     const ranked = waiting.uids.slice().sort((x, y) => worth(y) - worth(x));
     // A price is paid with the cards worth least; anything else takes the best on offer.
-    const uids = waiting.effect.op === "discard" ? ranked.reverse().slice(0, waiting.min) : ranked.slice(0, waiting.max);
+    const away = ["discard", "toTop", "toBottom"].includes(waiting.effect.op);
+    const uids = away ? ranked.reverse().slice(0, waiting.min) : ranked.slice(0, waiting.max);
     return { type: "choose", player, uids };
   }
 
@@ -324,8 +333,16 @@ export function botAction(state, player, defs) {
     const def = defOf(state, action.uid, defs);
     const aim = trainerAim(def.fx);
     const heal = def.fx.find((s) => s.op === "heal");
+    // A card that also discards the Stadium in play is not played over its own Stadium.
+    if (def.fx.some((s) => s.op === "dropStadium") && state.stadium?.owner === player) continue;
     if (aim === "cure" && inPlay(state, player).some(([slot]) => Object.values(statusOf(slot)).some(Boolean))) return action;
     if (aim === "hammer" && inPlay(state, other(player)).some(([slot]) => slot.energy.length)) return action;
+    // Rare Candy is only playable when it fits, and Energy from a Trainer is always welcome.
+    if (aim === "evolve" || aim === "energize") return action;
+    // Tool and Stadium removal: only when the other side has something to lose.
+    if (aim === "tools" && (inPlay(state, other(player)).some(([slot]) => slot.tool) || (state.stadium && state.stadium.owner !== player))) return action;
+    // Cards back into the deck: worth it from a full hand, putting back the least useful.
+    if (aim === "stash" && side.hand.length >= 5 && side.deck.length > 6) return action;
     if (aim === "cure" || aim === "hammer" || aim === "switch" || aim === "gust") continue;
     // An empty Bench loses the game to one Knock Out: dig for a Basic Pokémon whatever the deck size.
     const thin = !side.bench.length && !side.hand.some((uid) => defOf(state, uid, defs).stage === "basic");

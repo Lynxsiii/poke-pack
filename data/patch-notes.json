@@ -41,6 +41,18 @@
     ]
   },
   {
+    "id": "2026-11-26-faster-site",
+    "date": "2026-11-26",
+    "title": "A faster site, most of all on phones",
+    "summary": "Pages load sooner and big collections no longer slow everything down. Nothing looks or plays any different.",
+    "items": [
+      "With a big collection, every visit spent about a second adding up your cards set by set. That now takes a tenth of the time.",
+      "The site's code used to arrive in 15 steps, one after the other. Your phone now asks for all of it at once.",
+      "The shop's price lists and your account load side by side instead of in a queue, and the biggest list is no longer downloaded twice.",
+      "Collection pages draw their first screen of cards in one go, and Play opens without reading the rules of every card you own first."
+    ]
+  },
+  {
     "id": "2026-11-26-coin-toss",
     "date": "2026-11-26",
     "title": "The coin flips again",

@@ -163,8 +163,34 @@ wordings the engine can't read. Work down that list:
    you do", "in order to"; Stadium prices count the whole hand (`spare: 0`).
    Discarding a Stadium (`dropStadium`). The ACE SPEC rule line is dropped
    before reading (`tidy`; the deck limit comes from the subtype).
-   Next: Rare Candy and evolving from the deck, Tool and Stadium removal,
-   Lost Zone, choices between two effects ("Choose 1:"), Fossils.
+   Fourth batch (2026-11-26): 1,061 of 2,888 Trainers playable (498 Items,
+   498 Supporters, 23 Tools, 42 Stadiums). Evolving by a Trainer: Rare Candy
+   and Pokémon Breeder (`candy`: a Stage 2 from the hand straight onto the
+   Basic Pokémon it comes from; the old Rare Candy takes a Stage 1 too), and
+   Evosoda, Wally, Wally's Training, Salvatore (`evolveDeck`: a card from the
+   deck). The card is chosen first (`choose` effect `evolveFrom`), then the
+   Pokémon when more than one can take it (`pick` effect `evolveHeld`); the
+   usual timing holds (not on the first turn, not on a Pokémon put into play
+   this turn) unless the card lifts it (`how.lift`), and `how.noEx` /
+   `how.noAbility` narrow it. `canEvolveOnto(state, slot, def, defs, how)`,
+   `mayEvolve`, `evolveSpots` and `evolveSlot` are shared with the plain
+   `evolve` action. A Stage 2 knows its Basic Pokémon through `def.roots`,
+   from `lines` in data/tcg/trainers.json (Stage 1 names to what they evolve
+   from, `scripts/build_tcg_lines.mjs`, from our own card files); `def.line`
+   is 1 or 2. Cards in play discarded (`dropInPlay`, choose zone "play"):
+   Tool Scrapper, Field Blower (the Stadium too), Xerosic (a Tool or a
+   Special Energy, either side), Blowtorch and Dangerous Drill (theirs, or the
+   Stadium); Ruffian (`hammer { special, tool }`). Cards from the hand into
+   the deck (`stash`, choose effects `toTop` / `toBottom`, shuffled for
+   "into"): Pokémon Communication, Maintenance, Bill's Maintenance, Bebe's
+   Search, Professor Oak's Visit, Mary. Energy from the hand or the discard
+   pile onto a Pokémon the card names, the player choosing the card
+   (`attachPick`: Bede, Dark Patch and the other Patches, Welder, Philippe,
+   Zinnia, Raihan, Mela). `viewFor` now shows Tools and the Stadium in play,
+   and the cards a player is choosing from.
+   Next: choices between two effects ("Choose 1:": the engine needs a way
+   to name the one picked, and the page a sheet to offer them), Lost Zone,
+   Fossils, "put them on top in any order".
 5. **Abilities and Poké-Powers**: a hook per timing (on play, once a turn,
    always on).
    First batch live (2026-11-26, `js/tcg/abilities.js`, `compileAbility`):
