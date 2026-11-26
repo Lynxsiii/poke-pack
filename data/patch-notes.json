@@ -1,5 +1,18 @@
 [
   {
+    "id": "2026-11-26-level-battle-rewards",
+    "date": "2026-11-26",
+    "title": "Level coins and bot battles rebalanced",
+    "summary": "Level ups paid enough coins to buy the packs for the next level, so a new account could climb to level 47 in one sitting. Level coins and battles against bots now pay less.",
+    "items": [
+      "Each level now pays 20 coins plus 2 per level, and every 5th level adds 10 per level. Level 10 pays 140 coins, level 50 pays 620 and level 200 pays 2,420.",
+      "Every level up to 200 now pays 85,178 coins in all, down from 332,366.",
+      "Pack battles with only bots in the other seats give 5 XP to play and 10 more for a win, down from 20 and 50. Battles with other players are unchanged.",
+      "Beating bots still counts for the play a battle quests, but the win a battle quests now need a win against another player.",
+      "Levels you already claimed keep the coins they paid, and battles you already played keep their XP."
+    ]
+  },
+  {
     "id": "2026-11-26-happy-meal-pouches",
     "date": "2026-11-26",
     "title": "Better Happy Meal pouches",

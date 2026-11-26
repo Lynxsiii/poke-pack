@@ -315,7 +315,7 @@ export const SOURCES = {
   quests: { weight: `${w.quest} XP a quest, ${w.chest} a chest`, start: "Claim a quest.", noun: ["quest", "quests"] },
   achievements: { weight: `${w.achievement[1]} to ${w.achievement[4]} XP, by tier`, start: "Claim an achievement.", noun: ["claimed", "claimed"] },
   mastery: { weight: `${w.mastery} XP a set`, start: "Master a whole set.", noun: ["set", "sets"] },
-  battles: { weight: `${w.battle} XP a battle, ${w.battleWin} more for a win`, start: "Play a pack battle.", noun: ["battle", "battles"], gate: ["battles"] },
+  battles: { weight: `${w.battle} XP a battle, ${w.battleWin} more for a win (${w.botBattle} and ${w.botBattleWin} against bots only)`, start: "Play a pack battle.", noun: ["battle", "battles"], gate: ["battles"] },
   casino: { weight: `${w.casino} XP a game, ${w.casinoWin} more for a win`, start: "Play your first game.", noun: ["game", "games"], gate: ["coinflip", "jackpot"] },
   grading: { weight: `${w.graded} XP a card, ${w.gemMint} more for a Gem Mint 10`, start: "Send a card to grading.", noun: ["card", "cards"], gate: ["grading"] },
   friends: { weight: `${w.friend} XP a friend, up to ${FRIEND_CAP}`, start: "Add a friend.", noun: ["friend", "friends"] },

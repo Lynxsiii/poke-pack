@@ -38,6 +38,8 @@ export const XP_WEIGHTS = {
   hourly: 25, // each hourly claim
   battle: 20, // each pack battle played
   battleWin: 50, // each pack battle won (on top of playing it)
+  botBattle: 5, // each pack battle with no other human seat (free bots only), instead of `battle`
+  botBattleWin: 10, // each one of those won, instead of `battleWin`
   casino: 15, // each coinflip or jackpot played
   casinoWin: 30, // each one won (on top of playing it)
   graded: 40, // each card sent to grading
@@ -104,7 +106,7 @@ function count(value) {
 /** The raw tallies XP is made from. Stored as the starting point of a prestige cycle. */
 export const COUNT_KEYS = [
   "packs", "hits", "unique", "sealed", "quests", "chests", "ach1", "ach2", "ach3", "ach4", "crowns", "masteries",
-  "battles", "battleWins", "casino", "casinoWon", "graded", "gemMint", "friends", "hourly",
+  "battles", "battleWins", "botBattles", "botBattleWins", "casino", "casinoWon", "graded", "gemMint", "friends", "hourly",
 ];
 
 /**
@@ -125,6 +127,8 @@ export function xpCounts(save) {
     ach1: 0, ach2: 0, ach3: 0, ach4: 0, crowns: 0, masteries: 0,
     battles: count(c.battles),
     battleWins: count(c.battleWins),
+    botBattles: count(c.botBattles),
+    botBattleWins: count(c.botBattleWins),
     casino: count(c.casinoPlayed),
     casinoWon: count(c.casinoWon),
     graded: count(c.graded),
@@ -189,13 +193,24 @@ export function computeXp(save, start = null) {
     { id: "quests", label: "Quests", count: n.quests, xp: n.quests * w.quest + n.chests * w.chest },
     { id: "achievements", label: "Achievements", count: achievements, xp: achievementXp },
     { id: "mastery", label: "Set masteries", count: n.masteries, xp: n.masteries * w.mastery },
-    { id: "battles", label: "Pack battles", count: n.battles, xp: n.battles * w.battle + n.battleWins * w.battleWin },
+    { id: "battles", label: "Pack battles", count: n.battles, xp: battleXp(n, w) },
     { id: "casino", label: "Casino", count: n.casino, xp: n.casino * w.casino + n.casinoWon * w.casinoWin },
     { id: "grading", label: "Grading", count: n.graded, xp: n.graded * w.graded + n.gemMint * w.gemMint },
     { id: "friends", label: "Friends", count: n.friends, xp: n.friends * w.friend },
     { id: "hourly", label: "Hourly claims", count: n.hourly, xp: n.hourly * w.hourly },
   ];
   return { total: parts.reduce((sum, p) => sum + p.xp, 0), parts };
+}
+
+/**
+ * Battle XP. `battles`/`battleWins` count every battle; `botBattles`/`botBattleWins`
+ * (counted since 2026-11-26) are the ones among them with no other human seat,
+ * which pay the smaller bot weights instead. Battles before that keep full XP.
+ */
+function battleXp(n, w) {
+  const bot = Math.min(n.botBattles, n.battles);
+  const botWins = Math.min(n.botBattleWins, n.battleWins);
+  return (n.battles - bot) * w.battle + (n.battleWins - botWins) * w.battleWin + bot * w.botBattle + botWins * w.botBattleWin;
 }
 
 /** The summary the Worker puts on `save.xp` and the client draws from. `start` as in computeXp. */

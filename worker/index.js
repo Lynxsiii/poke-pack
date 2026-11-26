@@ -89,7 +89,7 @@ const CLAIM_ATTEMPTS = 4;
 const QUEST_EVENT_KEEP_MS = 40 * DAY_MS;
 const QUEST_CLAIM_KEEP_MS = 400 * DAY_MS;
 const COUNTER_KEYS = [
-  "sold", "bonus", "sealed", "battles", "battleWins", "questsClaimed", "chests",
+  "sold", "bonus", "sealed", "battles", "battleWins", "botBattles", "botBattleWins", "questsClaimed", "chests",
   "hitsPulled", "maxDrought", "streak", "streakBest",
   // Counted from the casino and grading tables at read time (worker/xp.js loadXpCounters).
   "casinoPlayed", "casinoWon", "graded", "gemMint",

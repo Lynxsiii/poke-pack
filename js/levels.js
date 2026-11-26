@@ -89,11 +89,18 @@ function step(steps, level) {
   return out;
 }
 
-/** Coins paid for reaching `level`: 30 + 4 per level, and every 5th level adds 60 per level. Level 1 pays nothing. */
+/**
+ * Coins paid for reaching `level`: 20 + 2 per level, and every 5th level adds
+ * 10 per level. Level 1 pays nothing. Until 2026-11-26 it was 30 + 4 per level
+ * plus 60 per level every 5th (332,366 coins to level 200, now 85,178): that
+ * paid for the packs that earned the next level, so a new account could buy
+ * its way to level 47 in one sitting. Levels already claimed keep what they paid.
+ */
+export const LEVEL_PAY = { base: 20, perLevel: 2, fifth: 10 };
 export function levelCoins(level) {
   const lv = clampLevel(level);
   if (lv < 2) return 0;
-  return 30 + 4 * lv + (lv % 5 === 0 ? 60 * lv : 0);
+  return LEVEL_PAY.base + LEVEL_PAY.perLevel * lv + (lv % 5 === 0 ? LEVEL_PAY.fifth * lv : 0);
 }
 
 export function levelGear(level) {
