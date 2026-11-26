@@ -315,7 +315,10 @@ export function createGame({ decks, names = ["You", "Opponent"], format = "stand
     });
   });
   const events = state.opening;
+  // The winner of the opening flip chooses who goes first ("order", during setup). Until they
+  // choose, they are down to go first themselves.
   state.first = flip(state) ? 0 : 1;
+  state.flipWinner = state.first;
   events.push({ t: "first", p: state.first });
   for (const p of [0, 1]) {
     const side = state.players[p];
@@ -401,13 +404,16 @@ export function resolveKnockOuts(state, defs, events) {
   }
   const won = [0, 1].map((p) => {
     const foe = state.players[other(p)];
-    if (took[p] && !state.players[p].prizes.length) return "prizes";
-    if (!foe.active && !foe.bench.length) return "bench";
-    return "";
+    const ways = [];
+    if (took[p] && !state.players[p].prizes.length) ways.push("prizes");
+    if (!foe.active && !foe.bench.length) ways.push("bench");
+    return ways;
   });
-  if (won[0] && won[1]) return win(state, null, "tie", events);
-  if (won[0]) return win(state, 0, won[0], events);
-  if (won[1]) return win(state, 1, won[1], events);
+  // Both at once: whoever met more of the ways to win takes it; level, it is a tie
+  // (the rulebook plays Sudden Death there, which isn't in yet).
+  if (won[0].length && won[1].length && won[0].length === won[1].length) return win(state, null, "tie", events);
+  if (won[0].length && won[0].length >= won[1].length) return win(state, 0, won[0][0], events);
+  if (won[1].length) return win(state, 1, won[1][0], events);
   // The player whose turn it is not chooses first, as the rules have it.
   for (const p of [other(state.current), state.current]) {
     if (!state.players[p].active) state.pending.push({ type: "promote", player: p });
@@ -463,10 +469,10 @@ const HANDLERS = {
     events.push({ t: "place", p: player });
     if (!state.players.every((s) => s.placed)) return;
     for (const p of [0, 1]) state.players[p].prizes = state.players[p].deck.splice(0, state.rules.prizes);
-    // A mulligan lets the other player draw a card for each one.
+    // A mulligan lets the other player draw a card for each one; mulligans both players took cancel out.
     for (const p of [0, 1]) {
-      const extra = state.players[other(p)].mulligans;
-      if (extra) draw(state, p, extra, events);
+      const extra = state.players[other(p)].mulligans - state.players[p].mulligans;
+      if (extra > 0) draw(state, p, extra, events);
     }
     state.phase = "main";
     events.push({ t: "reveal" });
@@ -724,9 +730,17 @@ export function apply(state, action, defs) {
     return events;
   }
   const handler = HANDLERS[type];
-  if (!handler) fail("Unknown action.");
+  if (!handler && type !== "order") fail("Unknown action.");
   if (type === "place") {
     handler(state, action, defs, events);
+    return events;
+  }
+  if (type === "order") {
+    // The winner of the opening flip says who goes first, before the first turn starts.
+    if (state.phase !== "setup") fail("The match has already started.");
+    if (player !== (state.flipWinner ?? state.first)) fail("The winner of the coin flip chooses.");
+    state.first = action.first ? player : other(player);
+    events.push({ t: "order", p: player, first: state.first });
     return events;
   }
   if (state.phase !== "main") fail("Place your Pokémon first.");

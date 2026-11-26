@@ -50,9 +50,37 @@ function attackOf(raw) {
   };
 }
 
+/**
+ * Deck limits a card prints on itself: one Radiant Pokémon and one ACE SPEC card in a
+ * whole deck (`club`), one of each Prism Star card by name (`cap`).
+ */
+function limitsOf(card) {
+  const subs = card.subtypes || [];
+  const rarity = String(card.rarity || "");
+  if (subs.includes("Radiant") || /^Radiant /.test(card.name || "")) return { club: "Radiant Pokémon" };
+  if (subs.includes("ACE SPEC") || /ACE SPEC/i.test(rarity)) return { club: "ACE SPEC card" };
+  if (subs.includes("Prism Star") || /◇/.test(card.name || "")) return { cap: 1 };
+  return {};
+}
+
+/**
+ * Prize cards the opponent takes for a Knock Out. The rules table reads it off the card's own
+ * rule box; where that box is missing from our source, the card's kind decides.
+ */
+function prizesFor(card, row) {
+  const subs = card.subtypes || [];
+  const name = card.name || "";
+  const has = (s) => subs.some((x) => x.toLowerCase() === s.toLowerCase());
+  let n = 1;
+  if (has("VMAX") || has("TAG TEAM") || / VMAX$/.test(name)) n = 3;
+  else if (/^Mega /.test(name) && (subs.includes("ex") || / ex$/.test(name))) n = 3;
+  else if (subs.includes("ex") || has("EX") || has("GX") || has("V") || has("VSTAR") || / ex$|-EX$|-GX$| V$| VSTAR$/.test(name)) n = 2;
+  return Math.max(n, Number(row?.[3]) || 1);
+}
+
 /** `row` is the card's entry in data/tcg/rules.json, or undefined when it has none. */
 export function defineCard(card, row, text = "") {
-  const base = { id: card.id, name: card.name };
+  const base = { id: card.id, name: card.name, ...limitsOf(card) };
   if (card.supertype === "Energy" || card.energy) {
     const type = ENERGY_TYPES.find((t) => new RegExp(`^(Basic )?${t} Energy$`).test(card.name));
     const basic = Boolean(type) && (card.subtypes || []).includes("Basic");
@@ -94,7 +122,7 @@ export function defineCard(card, row, text = "") {
     weakness: side(row?.[0]),
     resistance: side(row?.[1]),
     retreat: Number(row?.[2]) || 0,
-    prizes: Number(row?.[3]) || 1,
+    prizes: prizesFor(card, row),
     playable: !why && Number(card.hp) > 0,
     why,
     notes,
