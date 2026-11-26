@@ -395,7 +395,10 @@ function satisfy(row,at=clock) {
   save=await me();
   assert.equal(save.stats.counters.battles,1);
   assert.equal(save.stats.counters.battleWins,1);
+  assert.equal(save.stats.counters.botBattles,1,'a battle with only bots is a bot battle');
+  assert.equal(save.stats.counters.botBattleWins,1);
   assert.equal(db.prepare("SELECT COUNT(*) AS n FROM quest_events WHERE user_id='test' AND kind='battles'").get().n,1);
+  assert.equal(db.prepare("SELECT COUNT(*) AS n FROM quest_events WHERE user_id='test' AND kind='battleWins'").get().n,0,'beating bots is no win quest');
   settle('b2',[1]);
   save=await me();
   assert.equal(save.stats.counters.battles,2);
@@ -408,7 +411,7 @@ function satisfy(row,at=clock) {
   const todays=activeQuests(save.quests.periods);
   for(const row of todays.daily.concat(todays.weekly)) {
     if(row.kind==='battles') assert.equal(save.quests.progress[row.id],3);
-    if(row.kind==='battleWins') assert.equal(save.quests.progress[row.id],1);
+    if(row.kind==='battleWins') assert.equal(save.quests.progress[row.id]||0,0,'bot wins do not count for win quests');
   }
 
   // Reading again counts nothing twice; only new settlements are added.
@@ -424,6 +427,9 @@ function satisfy(row,at=clock) {
   const otherSave=await me('sid-other');
   assert.equal(otherSave.stats.counters.battles,1);
   assert.equal(otherSave.stats.counters.battleWins,1);
+  assert.equal(otherSave.stats.counters.botBattles||0,0,'a battle with two humans is not a bot battle');
+  assert.equal(db.prepare("SELECT COUNT(*) AS n FROM quest_events WHERE user_id='other' AND kind='battleWins'").get().n,1,'beating a player counts for win quests');
+  assert.equal(save.stats.counters.botBattles,3);
   assert.equal((await me('sid-other')).stats.counters.battles,1,'and once for them too');
   // A battle from long ago counts for the lifetime counters but not for any current period.
   settle('b5',[0],{at:clock-50*DAY});

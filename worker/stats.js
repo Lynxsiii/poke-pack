@@ -274,7 +274,8 @@ export async function syncBattleStats(env, userId, counters, now = Date.now()) {
           `SELECT t.rowid AS row, t.at AS at,
              CASE WHEN json_valid(b.result)
                THEN EXISTS (SELECT 1 FROM json_each(b.result, '$.winners') w WHERE w.value = s.seat)
-               ELSE 0 END AS won
+               ELSE 0 END AS won,
+             (SELECT COUNT(*) FROM battle_seats h WHERE h.battle_id = t.battle_id AND h.bot = 0) AS humans
            FROM battle_settlements t
            JOIN battle_seats s ON s.battle_id = t.battle_id AND s.user_id = ? AND s.bot = 0
            JOIN battles b ON b.id = t.battle_id
@@ -294,11 +295,16 @@ export async function syncBattleStats(env, userId, counters, now = Date.now()) {
     if (!claimed.meta?.changes) return counters;
     const out = { ...counters, _battleRow: next };
     const wins = rows.filter((row) => row.won).length;
+    // Battles with no other human seat (free bots only) cost the house nothing to
+    // lose, so they pay the smaller bot XP (js/xp.js botBattle) and a win there
+    // does not count for the "win a battle" quests. They still count as played.
+    const solo = rows.filter((row) => Number(row.humans) < 2);
+    const soloWins = solo.filter((row) => row.won).length;
     const events = [];
     for (const row of rows) {
       if (row.at < now - QUEST_EVENT_KEEP_MS) continue;
       events.push({ kind: "battles", at: row.at });
-      if (row.won) events.push({ kind: "battleWins", at: row.at });
+      if (row.won && Number(row.humans) >= 2) events.push({ kind: "battleWins", at: row.at });
     }
     try {
       const stmts = [];
@@ -312,6 +318,8 @@ export async function syncBattleStats(env, userId, counters, now = Date.now()) {
       }
       if (rows.length) stmts.push(bumpStatStmt(env, userId, "battles", rows.length));
       if (wins) stmts.push(bumpStatStmt(env, userId, "battleWins", wins));
+      if (solo.length) stmts.push(bumpStatStmt(env, userId, "botBattles", solo.length));
+      if (soloWins) stmts.push(bumpStatStmt(env, userId, "botBattleWins", soloWins));
       if (stmts.length) await env.DB.batch(stmts);
     } catch (err) {
       await env.DB.prepare("UPDATE player_stats SET value = ? WHERE user_id = ? AND key = '_battleRow' AND value = ?").bind(mark, userId, next).run();
@@ -319,6 +327,8 @@ export async function syncBattleStats(env, userId, counters, now = Date.now()) {
     }
     if (rows.length) out.battles = (out.battles || 0) + rows.length;
     if (wins) out.battleWins = (out.battleWins || 0) + wins;
+    if (solo.length) out.botBattles = (out.botBattles || 0) + solo.length;
+    if (soloWins) out.botBattleWins = (out.botBattleWins || 0) + soloWins;
     return out;
   } catch (err) {
     if (!isMissingTable(err)) console.error("syncBattleStats", err);

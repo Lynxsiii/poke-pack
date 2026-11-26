@@ -97,13 +97,18 @@ const gearKeys=gear=>gear.map(g=>`${g.kind}:${g.id}`);
   assert.equal(levelFromXp(10**9).level,LEVEL_CAP);
   assert.ok(levelFromXp(10**9).maxed);
   assert.equal(levelCoins(1),0);
-  assert.equal(levelCoins(2),38);
-  assert.equal(levelCoins(5),50+300);
+  assert.equal(levelCoins(2),24);
+  assert.equal(levelCoins(5),30+50);
   const all=levelPayout(2,LEVEL_CAP);
-  assert.ok(all.coins>300_000&&all.coins<360_000,`a whole climb pays ${all.coins}`);
-  assert.ok(levelPayout(2,100).coins>80_000&&levelPayout(2,100).coins<95_000,'the first hundred levels');
+  assert.equal(all.coins,85_178,`a whole climb pays ${all.coins}`);
+  assert.equal(levelPayout(2,100).coins,22_578,'the first hundred levels');
   assert.deepEqual(all.gear,[],'levels hand out no sleeves or coins');
   assert.equal(levelPayout(1,1).coins,0,'level 1 pays nothing');
+  // Battles: 20 + 50 a win with another human, 5 + 10 with only bots; older battles keep full XP.
+  const bxp=(c)=>computeXp({stats:{counters:c}}).parts.find(p=>p.id==='battles').xp;
+  assert.equal(bxp({battles:4,battleWins:2}),4*20+2*50,'battles before the change keep full XP');
+  assert.equal(bxp({battles:4,battleWins:2,botBattles:3,botBattleWins:1}),1*20+1*50+3*5+1*10);
+  assert.equal(bxp({battles:1,battleWins:0,botBattles:5,botBattleWins:5}),5,'never more bot battles than battles');
 }
 
 // ---- A veteran starts at their real level; nothing is paid until they claim ----

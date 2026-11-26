@@ -38,7 +38,7 @@ export const DAILY_POOL = [
   daily("daily-shine-eight", "reverses", 8, 35, "Foil rain", "Pull eight reverse holos."),
   daily("daily-box", "sealed", 1, 50, "Crack a box", "Open a sealed product."),
   daily("daily-battle", "battles", 1, 30, "Enter the arena", "Finish a pack battle."),
-  daily("daily-win", "battleWins", 1, 50, "Take the pot", "Win a pack battle."),
+  daily("daily-win", "battleWins", 1, 50, "Take the pot", "Beat another player in a pack battle."),
 ];
 
 export const WEEKLY_POOL = [
@@ -51,7 +51,7 @@ export const WEEKLY_POOL = [
   weekly("weekly-shine", "reverses", 20, 100, "Foil collector", "Pull 20 reverse holos."),
   weekly("weekly-sealed", "sealed", 2, 150, "Box night", "Open two sealed products."),
   weekly("weekly-battles", "battles", 3, 100, "Arena regular", "Finish three pack battles."),
-  weekly("weekly-wins", "battleWins", 2, 150, "Pot collector", "Win two pack battles."),
+  weekly("weekly-wins", "battleWins", 2, 150, "Pot collector", "Beat other players in two pack battles."),
 ];
 
 export const MONTHLY_QUESTS = [
