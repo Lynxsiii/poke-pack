@@ -42,10 +42,10 @@ function side(text) {
   return { type: m[1], op: m[2] === "×" || m[2] === "x" ? "x" : m[2] === "+" ? "+" : "-", n: Number(m[3]) };
 }
 
-function attackOf(raw) {
+function attackOf(raw, name = "") {
   // GX attacks and VSTAR Power attacks are once a game (rulebook): the reminder is a rule, not an effect.
   const once = /\(You can't use more than 1 GX attack in a game\.\)/.test(raw.text || "") ? "gx" : /\(You can't use more than 1 VSTAR Power in a game\.\)/.test(raw.text || "") ? "vstar" : "";
-  const fx = compileAttack(String(raw.text || "").replace(/\s*\(You can't use more than 1 (?:GX attack|VSTAR Power) in a game\.\)/, "").trim());
+  const fx = compileAttack(String(raw.text || "").replace(/\s*\(You can't use more than 1 (?:GX attack|VSTAR Power) in a game\.\)/, "").trim(), name);
   return {
     ...(once ? { once } : {}),
     name: raw.name,
@@ -164,7 +164,7 @@ function defineRules(card, row, text, lines, print) {
   else if (subs.includes("Basic") || subs.includes("Baby")) stage = "basic";
   else if (card.evolvesFrom && !subs.some((s) => NOT_YET.test(s))) stage = "evolution";
 
-  const attacks = (card.attacks || []).map(attackOf);
+  const attacks = (card.attacks || []).map((a) => attackOf(a, card.name));
   const notes = [];
   // One Ability a card, as nearly every card has it; a second one waits with the unread ones.
   const printed = card.abilities || [];

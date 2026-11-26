@@ -172,7 +172,7 @@ test("attack text", () => {
   assert.deepEqual(compileAttack("Draw 2 cards.")[0], { op: "draw", when: "after", n: 2 });
   assert.equal(compileAttack("This Pokémon also does 30 damage to itself.")[0].op, "selfDamage");
   assert.equal(compileAttack("Electabuzz does 10 damage to itself.")[0].n, 10);
-  assert.equal(compileAttack("Flip a coin. If tails, Electabuzz does 10 damage to itself.")?.[0].op === "selfDamage", false);
+  assert.equal(compileAttack("Flip a coin. If tails, Electabuzz does 10 damage to itself.", "Electabuzz")[0].tails[0].op, "selfDamage");
 });
 
 test("setup: seven cards, prizes, a draw for the first player", () => {
@@ -3211,6 +3211,205 @@ test("the bot plays through decks full of the theme decks' Tools, Stadiums and S
     reasons[end.reason] = (reasons[end.reason] || 0) + 1;
   }
   assert.ok(Object.keys(reasons).length);
+});
+
+/* ---------- how much damage: counts, coins, and changes that last into the next turn ---------- */
+
+// A Water stand-in, so Charmander (base1-46: 50 HP, Water ×2) shows where Weakness comes in.
+const labW = (id, attacks) => byId.set(id, { id, name: "Lab Wave", supertype: "Pokémon", subtypes: ["Basic"], types: ["Water"], hp: "200", attacks: attacks.map(([name, damage, text, cost = []]) => ({ name, cost, damage: String(damage), text })) });
+labW("lab-dmg-1", [
+  ["Growl", 0, "During your opponent's next turn, any damage done by attacks from the Defending Pokémon is reduced by 20 (before applying Weakness and Resistance)."],
+  ["Granite", 0, "During your opponent's next turn, any damage done to Lab Wave by attacks is reduced by 20 (after applying Weakness and Resistance)."],
+  ["Splash", 30, ""],
+  ["Glare", 0, "During your next turn, the Defending Pokémon takes 30 more damage from attacks (after applying Weakness and Resistance)."],
+]);
+labW("lab-dmg-2", [
+  ["Echo", 20, "During your next turn, this Pokémon's Echo attack does 50 more damage (before applying Weakness and Resistance)."],
+  ["Tap", 10, ""],
+  ["Spin", 20, "Flip a coin until you get tails. This attack does 10 more damage for each heads."],
+  ["Thunder", 40, "Flip a coin. If tails, Lab Wave does 10 damage to itself."],
+]);
+labW("lab-dmg-3", [
+  ["Water Gun", 10, "Does 10 damage plus 10 more damage for each Water Energy attached to Lab Wave but not used to pay for this attack's Energy cost. You can't add more than 20 damage in this way.", ["Water", "Colorless"]],
+  ["Rout", 10, "This attack does 20 more damage for each of your opponent's Benched Pokémon."],
+  ["Knot", 0, "This attack does 30 damage for each Colorless in your opponent's Active Pokémon's Retreat Cost."],
+  ["Drain", 30, "Heal from this Pokémon the same amount of damage you did to your opponent's Active Pokémon."],
+]);
+labW("lab-dmg-4", [
+  ["Harden", 0, "During your opponent's next turn, if this Pokémon would be damaged by an attack, prevent that attack's damage done to this Pokémon if that damage is 30 or less."],
+  ["Balloon", 0, "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Basic Pokémon."],
+  ["Cutter", 10, "Flip 3 coins. If 1 of them is heads, this attack does 10 damage plus 10 more damage. If 2 of them are heads, this attack does 10 damage plus 20 more damage. If all of them are heads, this attack does 10 damage plus 40 more damage."],
+  ["Fly", 30, "Flip a coin. If tails, this attack does nothing. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent's next turn."],
+  ["Fang", 20, "If your opponent's Active Pokémon is a Pokémon ex, this attack does 60 more damage."],
+]);
+
+test("damage wordings: the lab cards are read, and old cards' own names read as this Pokémon", () => {
+  for (const id of ["lab-dmg-1", "lab-dmg-2", "lab-dmg-3", "lab-dmg-4"]) for (const a of defs(id).attacks) assert.ok(!a.plain, a.name);
+  assert.deepEqual(compileAttack("Flip a coin. If tails, Zapdos does 30 damage to itself.", "Zapdos"), [{ op: "flip", when: "after", tails: [{ op: "selfDamage", n: 30 }] }]);
+  assert.deepEqual(compileAttack("Does 10 damage plus 10 more damage for each damage counter on Machop.", "Machop"), [{ op: "bonusPer", when: "before", n: 10, per: "selfCounters" }]);
+  assert.equal(compileAttack("Does 10 damage times the number of damage counters on Mewtwo.", "Mew"), null, "Mew isn't Mewtwo");
+  assert.deepEqual(compileAttack("Does 10 damage plus 10 more damage for each damage counter on the Defending Pokémon.")[0].per, "foeCounters");
+  assert.deepEqual(compileAttack("Does 50 damage minus 10 damage for each damage counter on this Pokémon.")[0], { op: "bonusPer", when: "before", how: "less", n: 10, per: "selfCounters" });
+  assert.deepEqual(compileAttack("This attack's damage isn't affected by Weakness, Resistance, Poké-Powers, Poké-Bodies, or any other effects on the Defending Pokémon.")[0], { op: "typing", when: "before", noWeakness: true, noResistance: true, noEffects: true });
+  assert.equal(compileAttack("This attack's damage isn't affected by Weakness or Poké-Bodies."), null, "Poké-Bodies only beside any other effects");
+  assert.equal(compileAttack("If this Pokémon was healed during this turn, this attack does 60 more damage."), null, "a test it doesn't know");
+  assert.deepEqual(compileAttack("If the Defending Pokémon is Pokémon-ex, this attack does 40 damage plus 30 more damage.")[0], { op: "bonusIf", when: "before", n: 30, test: "foeBox", boxes: ["ex"] });
+});
+
+test("less damage before Weakness (the attacker's) and after it (the defender's)", () => {
+  // Growl on the Water attacker: (30 - 20) × 2 = 20 on Charmander.
+  let state = labgame("lab-dmg-1", "lab-dmg-1");
+  use(state, 0, "Growl");
+  state.cards[state.players[0].active.uid] = "base1-46";
+  use(state, 1, "Splash");
+  assert.equal(state.players[0].active.damage, 20);
+  // On the defender instead: 30 × 2 - 20 = 40.
+  state = labgame("lab-dmg-1", "lab-dmg-1");
+  use(state, 0, "Granite");
+  state.cards[state.players[0].active.uid] = "base1-46";
+  use(state, 1, "Splash");
+  assert.equal(state.players[0].active.damage, 40);
+  // Growl lasts one turn: the turn after, the full 30.
+  state = labgame("lab-dmg-1", "lab-dmg-1");
+  use(state, 0, "Growl");
+  act(state, { type: "end", player: 1 });
+  act(state, { type: "end", player: 0 });
+  use(state, 1, "Splash");
+  assert.equal(state.players[0].active.damage, 30);
+});
+
+test("more damage next turn: before Weakness for the attacker's own attack, after it on the Defending Pokémon", () => {
+  let state = labgame("lab-dmg-2", "lab-1");
+  use(state, 0, "Echo");
+  assert.equal(state.players[1].active.damage, 20);
+  act(state, { type: "end", player: 1 });
+  use(state, 0, "Tap");
+  assert.equal(state.players[1].active.damage, 30, "only Echo does more");
+  act(state, { type: "end", player: 1 });
+  act(state, { type: "end", player: 0 });
+  act(state, { type: "end", player: 1 });
+  use(state, 0, "Echo");
+  assert.equal(state.players[1].active.damage, 50, "the turn after next, plain again");
+  state = labgame("lab-dmg-2", "lab-1");
+  use(state, 0, "Echo");
+  act(state, { type: "end", player: 1 });
+  use(state, 0, "Echo");
+  assert.equal(state.players[1].active.damage, 20 + 70);
+  // Glare on Charmander, then a 10 next turn: 10 × 2 + 30 = 50, not (10 + 30) × 2.
+  state = labgame("lab-dmg-1", "base1-46");
+  use(state, 0, "Glare");
+  act(state, { type: "end", player: 1 });
+  state.cards[state.players[0].active.uid] = "lab-dmg-2";
+  const events = use(state, 0, "Tap");
+  assert.equal(events.find((e) => e.t === "damage" && e.p === 1).n, 50);
+});
+
+test("coins: heads until tails add on, tails hurts itself", () => {
+  const state = labgame("lab-dmg-2", "lab-1");
+  rigFlips(state, [true, true, false]);
+  use(state, 0, "Spin");
+  assert.equal(state.players[1].active.damage, 40);
+  act(state, { type: "end", player: 1 });
+  rigFlips(state, [false]);
+  use(state, 0, "Thunder");
+  assert.equal(state.players[0].active.damage, 10, "no Weakness or Resistance on itself");
+  act(state, { type: "end", player: 1 });
+  rigFlips(state, [true]);
+  use(state, 0, "Thunder");
+  assert.equal(state.players[0].active.damage, 10);
+  assert.equal(state.players[1].active.damage, 120);
+  const s2 = labgame("lab-dmg-4", "lab-1");
+  rigFlips(s2, [true, false, true]);
+  use(s2, 0, "Cutter");
+  assert.equal(s2.players[1].active.damage, 30, "two heads of three");
+});
+
+test("counts: spare Water Energy up to a cap, the opponent's Bench, Retreat Cost; healing what it did", () => {
+  const state = labgame("lab-dmg-3", "lab-1");
+  const me = state.players[0];
+  // Fresh Energy cards: the half deck's own run short.
+  const spawn = (id) => { const uid = `x${Object.keys(state.cards).length}`; state.cards[uid] = id; return uid; };
+  me.active.energy = [spawn(W), spawn(W), spawn(W)];
+  use(state, 0, "Water Gun");
+  assert.equal(state.players[1].active.damage, 20, "Water and Colorless paid, 1 Water spare");
+  act(state, { type: "end", player: 1 });
+  me.active.energy.push(spawn(W), spawn(W));
+  use(state, 0, "Water Gun");
+  assert.equal(state.players[1].active.damage, 20 + 30, "3 spare, but no more than 20 added");
+  act(state, { type: "end", player: 1 });
+  me.active.energy = [spawn(W), spawn(G)];
+  use(state, 0, "Water Gun");
+  assert.equal(state.players[1].active.damage, 50 + 10, "the Grass pays the Colorless; nothing spare");
+  act(state, { type: "end", player: 1 });
+  const bench = state.players[1].bench.length;
+  assert.ok(bench > 0);
+  use(state, 0, "Rout");
+  assert.equal(state.players[1].active.damage, 60 + 10 + 20 * bench);
+  act(state, { type: "end", player: 1 });
+  me.active.damage = 50;
+  use(state, 0, "Drain");
+  assert.equal(me.active.damage, 20);
+  act(state, { type: "end", player: 1 });
+  state.players[1].active.damage = 0;
+  state.cards[state.players[1].active.uid] = "base1-4";
+  const events = use(state, 0, "Knot");
+  assert.equal(events.find((e) => e.t === "damage" && e.p === 1).n, 90 * 2, "Charizard's Retreat Cost of 3, then its Weakness");
+});
+
+test("prevented damage: 30 or less, from Basic Pokémon, and Fly's coin", () => {
+  let state = labgame("lab-dmg-4", "lab-dmg-1");
+  use(state, 0, "Harden");
+  use(state, 1, "Splash");
+  assert.equal(state.players[0].active.damage, 0, "30 is stopped");
+  state = labgame("lab-dmg-4", "lab-dmg-3");
+  state.players[1].active.damage = 30;
+  use(state, 0, "Harden");
+  use(state, 1, "Drain");
+  assert.equal(state.players[0].active.damage, 0);
+  assert.equal(state.players[1].active.damage, 30, "nothing done, nothing healed");
+  state = labgame("lab-dmg-4", "lab-dmg-1");
+  use(state, 0, "Harden");
+  state.cards[state.players[0].active.uid] = "base1-4";
+  use(state, 1, "Splash");
+  assert.equal(state.players[0].active.damage, 60, "judged after Weakness");
+  state = labgame("lab-dmg-4", "lab-dmg-1");
+  use(state, 0, "Balloon");
+  use(state, 1, "Splash");
+  assert.equal(state.players[0].active.damage, 0, "Lab Wave is a Basic Pokémon");
+  state = labgame("lab-dmg-4", "lab-dmg-1");
+  rigFlips(state, [false]);
+  use(state, 0, "Fly");
+  assert.equal(state.players[1].active.damage, 0, "tails: nothing");
+  use(state, 1, "Splash");
+  assert.equal(state.players[0].active.damage, 30);
+  act(state, { type: "end", player: 0 });
+  state.players[0].active.damage = 0;
+  act(state, { type: "end", player: 1 });
+  rigFlips(state, [true]);
+  use(state, 0, "Fly");
+  assert.equal(state.players[1].active.damage, 30);
+  use(state, 1, "Splash");
+  assert.equal(state.players[0].active.damage, 0, "heads: protected");
+  state = labgame("lab-dmg-4", "lab-ex");
+  use(state, 0, "Fang");
+  assert.equal(state.players[1].active.damage, 80);
+});
+
+labW("lab-dmg-5", [
+  ["Feint", 0, "Choose 1 of your opponent's Pokémon. This attack does 30 damage to that Pokémon. This attack's damage isn't affected by Weakness, Resistance, Poké-Powers, Poké-Bodies, or any other effects on that Pokémon."],
+  ["Snipe", 0, "This attack does 20 damage to 1 of your opponent's Pokémon. This damage isn't affected by Weakness or Resistance."],
+]);
+
+test("a chosen target that skips Weakness: the choice keeps it", () => {
+  const state = labgame("lab-dmg-5", "base1-4");
+  assert.ok(state.players[1].bench.length > 0);
+  use(state, 0, "Feint");
+  act(state, { type: "pick", player: 0, spot: ACTIVE });
+  assert.equal(state.players[1].active.damage, 30, "not 60 on a Water-weak Charizard");
+  act(state, { type: "end", player: 1 });
+  use(state, 0, "Snipe");
+  act(state, { type: "pick", player: 0, spot: ACTIVE });
+  assert.equal(state.players[1].active.damage, 50);
 });
 
 console.log(`${passed} checks passed${process.exitCode ? ", some failed" : ""}`);

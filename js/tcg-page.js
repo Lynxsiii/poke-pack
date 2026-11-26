@@ -48,7 +48,7 @@ const enIcon = (type) => (EN_FILE[type] ? `<img src="/assets/tcg/energy/${EN_FIL
 const COND_NAME = { asleep: "Asleep", burned: "Burned", confused: "Confused", paralyzed: "Paralyzed", poisoned: "Poisoned" };
 
 /** What a turn-long effect is called on a name plate. */
-const markLabel = (m) => ({ noAttack: "Can't attack", noUse: `No ${m.name}`, less: `-${m.n} damage`, shield: "Protected", guard: "No damage", noRetreat: "Can't retreat", mustFlip: "Flips to attack" })[m.kind] || "";
+const markLabel = (m) => ({ noAttack: "Can't attack", noUse: `No ${m.name}`, less: `-${m.n} damage`, shield: "Protected", guard: "No damage", noRetreat: "Can't retreat", mustFlip: "Flips to attack", stronger: `+${m.n} damage`, weaker: `Does -${m.n}`, exposed: `Takes +${m.n}`, harden: `Ignores ${m.n} or less` })[m.kind] || "";
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const plural = (n, word) => `${n} ${word}${n === 1 ? "" : "s"}`;
@@ -1168,6 +1168,10 @@ export function initTcg(deps) {
           guard: `${whose} Active Pokémon takes no damage next turn.`,
           noRetreat: `${whose} Active Pokémon can't retreat next turn.`,
           mustFlip: `${whose} Active Pokémon must flip to attack next turn.`,
+          stronger: `${whose} Active Pokémon's ${event.name || "attacks"} will do ${event.n} more damage next turn.`,
+          weaker: `${whose} Active Pokémon's attacks do ${event.n} less damage next turn.`,
+          exposed: `${whose} Active Pokémon will take ${event.n} more damage next turn.`,
+          harden: `${whose} Active Pokémon takes no damage of ${event.n} or less next turn.`,
         }[event.kind] || "";
       }
       case "discard-energy": return `${plural(event.uids.length, "Energy card")} discarded from ${event.p === ME ? "your" : "their"} Active Pokémon.`;
