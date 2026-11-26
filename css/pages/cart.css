@@ -22,6 +22,7 @@
 .cart-ctl { flex: 1 0 100%; min-width: 0; }
 .cart-ctl .cart-add { width: 100%; }
 .cart-step {
+  container-type: inline-size;
   display: grid; grid-template-columns: 40px minmax(0, 1fr) 40px; align-items: stretch; min-height: 42px;
   border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); overflow: hidden;
   animation: rt-pop 0.2s var(--ease-out);
@@ -37,10 +38,12 @@
   color: var(--k-2); font: 700 13px var(--font); white-space: nowrap; font-variant-numeric: tabular-nums;
 }
 .cart-step-n input {
-  width: 3ch; min-width: 0; height: 30px; padding: 0; border: 0; border-radius: 4px; background: transparent; color: var(--k);
+  flex: none; width: 3ch; min-width: 0; height: 30px; padding: 0; border: 0; border-radius: 4px; background: transparent; color: var(--k);
   font: 700 17px var(--font-h); text-align: center; font-variant-numeric: tabular-nums; -moz-appearance: textfield; appearance: textfield;
 }
 .cart-step-n input::-webkit-outer-spin-button, .cart-step-n input::-webkit-inner-spin-button { margin: 0; -webkit-appearance: none; }
+/* A narrow tile (two to a row on a phone) keeps the number and drops the words. */
+@container (max-width: 170px) { .cart-step-w { display: none; } }
 .cart-step-n input:focus { outline: none; background: var(--cy-3); }
 .cart-mark { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; transition: transform 0.1s var(--ease-out); }
 

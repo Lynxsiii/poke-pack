@@ -242,7 +242,15 @@ export function initGrading(deps) {
       const set = ALL_SETS.find((s) => s.live) || ALL_SETS[0];
       try {
         const list = await deps.loadSetData(set);
-        cardId = list?.find((c) => c.image)?.id || "";
+        // The set's priciest card, so the stand-in shows off what a slab can hold.
+        let top = 0;
+        for (const c of list || []) {
+          const v = c?.image ? sellValue(c) : 0;
+          if (v > top || (!cardId && c?.image)) {
+            top = Math.max(top, v);
+            cardId = c.id;
+          }
+        }
       } catch {
         return null;
       }
@@ -634,6 +642,12 @@ export function initGrading(deps) {
   async function paintLanding() {
     if (!signedIn()) {
       root.innerHTML = gate();
+      // Signed out, the stage shows the sample slab too, not an empty outline.
+      const sample = await sampleSlab();
+      if (!sample || signedIn() || !visible || route.kind !== "landing") return;
+      const stage = root.querySelector(".gd-gate .gd-stage");
+      if (!stage) return;
+      stage.outerHTML = stageHTML(`<span class="gd-stand rt-drop">${slabMarkup(sample, "inspect")}</span><span class="gd-stage-tag">Sample slab</span>`);
       return;
     }
     const slabs = sortedSlabs("newest");
