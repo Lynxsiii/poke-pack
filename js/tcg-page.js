@@ -950,12 +950,12 @@ export function initTcg(deps) {
     el.animate([{ opacity: 0 }, { opacity: 0 }], { duration: ms + delay });
   }
 
-  function banner(text, tone) {
+  function banner(text, tone, sub = "") {
     if (!fx || still()) return;
     fx.querySelector(".tg-banner")?.remove();
     const el = document.createElement("div");
-    el.className = `tg-banner ${tone}`;
-    el.innerHTML = `<b>${esc(text)}</b>`;
+    el.className = `tg-banner ${tone}${sub ? " call" : ""}`;
+    el.innerHTML = `<b>${sub ? `<small>${esc(sub)}</small>` : ""}${esc(text)}</b>`;
     const arena = rectOf(".tg-arena");
     if (arena) el.style.top = `${arena.top + arena.height / 2}px`;
     fx.appendChild(el);
@@ -1106,6 +1106,13 @@ export function initTcg(deps) {
       if (action.type === "attack") {
         say(events.find((e) => e.t === "attack"));
         paintTable();
+        // The attack is called out by name before it lands, so a bot's turn can be followed.
+        const user = before.players[p].active;
+        const used = user && defOf(before, user.uid, defs);
+        if (used?.attacks[action.index]) {
+          banner(used.attacks[action.index].name, p === ME ? "me" : "foe", used.name);
+          await wait(430);
+        }
         cue(`.tg-spot[data-p="${p}"] .tg-mon`, p === ME ? "lunge-up" : "lunge-down", 420);
         await wait(380);
       }
