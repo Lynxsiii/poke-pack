@@ -38,6 +38,7 @@ export const FRAME_CATALOG = [
   { id: "gen-pixel", name: "Pixel Border", group: "Extras", level: 0, fx: "", fx2: "", c: ["#9bbc0f","#306230"] },
   { id: "gen-sakura", name: "Sakura Branch", group: "Extras", level: 0, fx: "fall", fx2: "fall", c: ["#ffb3cf","#8a5232"] },
   { id: "gen-starry", name: "Starry Night", group: "Extras", level: 0, fx: "pulse", fx2: "pulse", c: ["#3a2a9a","#ffd75e"] },
+  { id: "gen-beta", name: "Beta Tester", group: "Extras", level: 0, fx: "pulse", fx2: "", c: ["#00b4c8","#ffd21f"] },
 ];
 
 const BY_ID = new Map(FRAME_CATALOG.map((frame) => [frame.id, frame]));

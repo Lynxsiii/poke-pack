@@ -1,9 +1,9 @@
 /**
- * Draw each set's link-preview image: assets/og/sets/<set>-v1.jpg, 1200x630.
+ * Draw each set's link-preview image: assets/og/sets/<set>-v2.jpg, 1200x630.
  *
  * worker/seo.js puts it in the head of /packs/<set>, so a set link pasted
  * into Discord, iMessage or X shows that set (its logo, a wrapper and its
- * chase cards on a red band) instead of the home page's card. The Worker
+ * chase cards on the cyan slab) instead of the home page's card. The Worker
  * falls back to assets/og-v2.jpg for a set that has no image yet, so a new set
  * works before this is run; run it after adding one:
  *
@@ -15,7 +15,7 @@
  * must ship under the next version: bump SET_IMAGE_VERSION in worker/seo.js
  * and here, then run with --all.
  *
- * Built with the site's own parts: Sofia Sans from assets/fonts, the set logo
+ * Built with the site's own parts: Kanit from assets/fonts, the set logo
  * and wrapper art from assets/, the card scans the set lists as its heroes.
  * Needs Playwright (installed globally in the sandbox).
  */
@@ -26,7 +26,7 @@ import { execSync } from "node:child_process";
 import { extname, join, resolve } from "node:path";
 import { PLAYABLE_SETS, setIdentity } from "../js/catalog.js";
 
-const VERSION = 1;
+const VERSION = 2;
 const ROOT = resolve(new URL("..", import.meta.url).pathname);
 const OUT = join(ROOT, "assets", "og", "sets");
 
@@ -112,28 +112,31 @@ function pageFor(set) {
     .join("");
   return `<!doctype html><html><head><meta charset="utf-8" />
 <style>
-@font-face { font-family: "Sofia Sans"; src: url(/assets/fonts/sofia-sans-latin.woff2) format("woff2"); font-weight: 1 1000; }
-@font-face { font-family: "Sofia Sans Semi Condensed"; src: url(/assets/fonts/sofia-sans-semi-condensed-latin.woff2) format("woff2"); font-weight: 1 1000; }
-@font-face { font-family: "Sofia Sans Extra Condensed"; src: url(/assets/fonts/sofia-sans-extra-condensed-latin.woff2) format("woff2"); font-weight: 1 1000; }
+@font-face { font-family: "Kanit Title"; src: url(/assets/fonts/kanit-800i-latin-v1.woff2) format("woff2"); font-style: italic; font-weight: 800; }
+@font-face { font-family: "Kanit"; src: url(/assets/fonts/kanit-600-latin-v1.woff2) format("woff2"); font-weight: 600; }
+@font-face { font-family: "Kanit"; src: url(/assets/fonts/kanit-700-latin-v1.woff2) format("woff2"); font-weight: 700; }
 * { box-sizing: border-box; margin: 0; }
-html, body { width: 1200px; height: 630px; overflow: hidden; background: #0b0b0c; }
-body { position: relative; font-family: "Sofia Sans", sans-serif; color: #f3f1ec; }
-.left { position: absolute; left: 64px; top: 56px; bottom: 56px; width: 470px; display: flex; flex-direction: column; }
-.brand { display: flex; align-items: center; gap: 12px; font: 700 26px/1 "Sofia Sans Semi Condensed", sans-serif; letter-spacing: 0.02em; }
-.brand img { width: 44px; height: 44px; border-radius: 3px; }
-.logo { margin-top: auto; max-width: 440px; max-height: 190px; object-fit: contain; object-position: left center; align-self: flex-start; }
-.kicker { margin-top: 26px; font: 800 44px/0.9 "Sofia Sans Extra Condensed", sans-serif; text-transform: uppercase; letter-spacing: 0.005em; }
-.meta { margin-top: 12px; font: 500 23px/1.3 "Sofia Sans", sans-serif; color: #a3a3ab; }
-.url { margin-top: auto; padding-top: 22px; font: 700 24px/1 "Sofia Sans Semi Condensed", sans-serif; letter-spacing: 0.03em; color: #c9c7c2; }
-.band { position: absolute; left: 560px; right: 0; top: 248px; height: 150px; background: #e3132b; }
+html, body { width: 1200px; height: 630px; overflow: hidden; }
+body { position: relative; background-color: #eef2f3; background-image: radial-gradient(rgb(20 23 27 / 0.09) 2.4px, transparent 2.6px); background-size: 22px 22px; font-family: "Kanit", sans-serif; color: #14171b; }
+.left { position: absolute; left: 64px; top: 52px; bottom: 52px; width: 470px; display: flex; flex-direction: column; }
+.brand { display: flex; align-items: center; gap: 13px; font: italic 800 31px/1 "Kanit Title"; letter-spacing: -0.02em; }
+.brand img { width: 54px; height: 54px; border-radius: 12px; }
+.brand i { display: inline-block; margin-left: -7px; padding: 4px 9px 6px 7px; border-radius: 4px; background: #14171b; transform: skewX(-14deg); font-style: inherit; }
+.brand b { display: block; color: #ffd21f; transform: skewX(14deg); font-weight: inherit; }
+.logo { margin-top: auto; max-width: 440px; max-height: 190px; object-fit: contain; object-position: left center; align-self: flex-start; filter: drop-shadow(0 0 1.5px #14171b) drop-shadow(0 0 1.5px #14171b) drop-shadow(4px 5px 0 rgb(0 40 50 / 0.2)); }
+.kicker { margin-top: 24px; align-self: flex-start; position: relative; z-index: 0; padding: 7px 18px 9px 14px; font: italic 800 34px/1 "Kanit Title"; color: #14171b; }
+.kicker::before { content: ""; position: absolute; inset: 0; z-index: -1; background: #ffd21f; border: 3px solid #14171b; transform: skewX(-14deg); }
+.meta { margin-top: 14px; font: 600 24px/1.3 "Kanit", sans-serif; color: #566069; }
+.url { margin-top: auto; padding-top: 20px; font: 700 24px/1 "Kanit", sans-serif; color: #14171b; }
+.slab { position: absolute; left: 700px; top: -40px; width: 620px; height: 720px; background: #00b4c8; transform: skewX(-14deg); }
 .stage { position: absolute; left: 580px; top: 0; width: 600px; height: 630px; }
-.card { position: absolute; top: 120px; height: 380px; border-radius: 14px; transform-origin: 50% 90%; }
-.pack { position: absolute; left: 50%; top: 50%; height: 560px; transform: translate(-50%, -50%); z-index: 5; filter: drop-shadow(0 18px 24px rgba(0,0,0,.55)); }
+.card { position: absolute; top: 120px; height: 380px; border-radius: 14px; transform-origin: 50% 90%; filter: drop-shadow(8px 10px 0 rgb(0 40 50 / 0.28)); }
+.pack { position: absolute; left: 50%; top: 50%; height: 560px; transform: translate(-50%, -50%); z-index: 5; filter: drop-shadow(10px 12px 0 rgb(0 40 50 / 0.3)); }
 </style></head><body>
-<div class="band"></div>
+<div class="slab"></div>
 <div class="stage">${cards}${wrapperArt ? `<img class="pack" src="/${esc(wrapperArt)}" />` : ""}</div>
 <div class="left">
-  <div class="brand"><img src="/assets/mark-v2.png" />poke-pack.rip</div>
+  <div class="brand"><img src="/assets/mark-v2.png" /><span>poke-pack</span><i><b>.rip</b></i></div>
   <img class="logo" src="/${esc(logo)}" />
   <div class="kicker">${esc(line)}</div>
   <div class="meta">${esc(meta)}</div>

@@ -56,6 +56,7 @@ import { handleBattles, maintainBattles } from "./battles.js";
 import { ensureGearSchema, gearSummary, prepareRewardGear, handleGear, loadGearCatalog, prepareGrant } from "./gear.js";
 import { productGear, rollGear } from "../js/gear.js";
 import { handleCasino, maintainCoinflips } from "./casino.js";
+import { ensureBetaSchema } from "./beta.js";
 import { ensureGradingSchema, gradedCounts, gradedSlabs, gradedTotal, handleGrading, shownSlabs } from "./grading.js";
 import { handleBinderLook, lookColumns, resetEditionStmts, trainerLookFields } from "./binder-look.js";
 import { bestHistory, rollSealedProduct, tallyOpened } from "./sealed-roll.js";
@@ -160,6 +161,7 @@ export default {
   // each set's market prices once a UTC day into D1. See worker/prices.js.
   async scheduled(controller, env, ctx) {
     await ensureTesterSchema(env);
+  await ensureBetaSchema(env).catch((err) => console.error("ensureBetaSchema", err));
     ctx.waitUntil(maintainBattles(env, Date.now(), { settleLimit: 10 }).catch(err => console.error('battle maintenance', err)));
     ctx.waitUntil(maintainCoinflips(env).catch(err => console.error('coinflip maintenance', err)));
     ctx.waitUntil(flushFeed(env).catch(err => console.error('discord feed', err)));
@@ -558,7 +560,7 @@ async function patchMe(request, env) {
     if (refusal) return json({ error: refusal.error, needLevel: refusal.needLevel }, refusal.status);
   }
   if (Object.prototype.hasOwnProperty.call(body, "frame")) {
-    const choice = frameChoice(body.frame, await level(), (await standing()).prestige, user.frame);
+    const choice = frameChoice(body.frame, await level(), (await standing()).prestige, user.frame, Number(user.beta) === 1);
     if (choice.error) return json({ error: choice.error, needLevel: choice.needLevel }, choice.status);
     social.frame = choice.value;
   }
@@ -1757,6 +1759,8 @@ function publicUser(row) {
     createdAt: row.created_at,
     lastPlayed: row.last_played,
     ...socialUserFields(row),
+    // The beta tester badge (worker/beta.js).
+    ...(Number(row.beta) === 1 ? { beta: true } : {}),
   };
 }
 

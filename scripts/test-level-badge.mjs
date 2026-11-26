@@ -108,7 +108,7 @@ for (const f of FRAME_CATALOG.filter((f) => !/^(type|ball)-/.test(f.id))) {
   ok(html.indexOf(AVATAR) < html.indexOf("lf-ring") && html.includes("lf-on"), `${f.id}: ring after the avatar, online mark kept`);
   eq(html.includes("lf-fx"), Boolean(f.fx), `${f.id}: moving layer only when it has one`);
   const need = frameInfo(f.id);
-  eq(frameChoice(f.id, need.level || 1, need.prestige || 0).value, f.id, `${f.id}: the server lets it be worn once earned`);
+  eq(frameChoice(f.id, need.level || 1, need.prestige || 0, null, Boolean(need.beta)).value, f.id, `${f.id}: the server lets it be worn once earned`);
   if (need.level > 1) {
     eq(frameChoice(f.id, need.level - 1).status, 403, `${f.id}: refused a level short`);
     eq(frameChoice(f.id, need.level - 1, 0, f.id).value, f.id, `${f.id}: a frame already worn stays wearable`);
@@ -125,8 +125,9 @@ eq(frameInfo("type-fire"), null, "a retired frame is not a frame any more");
 eq(frameChoice("ball-master", LEVEL_CAP, PRESTIGE_CAP).status, 400, "a retired frame cannot be picked");
 ok(EXTRA_FRAMES.length >= 20 && EXTRA_FRAMES.every((f) => !frameOpen(f, 1, 0)), "every kept extra frame is earned");
 ok(EXTRA_FRAMES.every((f) => (f.level || 0) <= LEVEL_CAP && (f.prestige || 0) <= PRESTIGE_CAP), "every extra frame can be earned");
-const all = picks({ level: LEVEL_CAP, prestige: PRESTIGE_CAP, frame: "" });
-ok(EXTRA_FRAMES.every((f) => all.includes(`data-set-frame="${f.id}"`)), "every extra frame is pickable at the cap with every star");
+const all = picks({ level: LEVEL_CAP, prestige: PRESTIGE_CAP, frame: "", beta: true });
+ok(EXTRA_FRAMES.every((f) => all.includes(`data-set-frame="${f.id}"`)), "every extra frame is pickable at the cap with every star (and the beta flag)");
+ok(picks({ level: LEVEL_CAP, prestige: PRESTIGE_CAP, frame: "" }).includes('data-frame-locked="gen-beta"'), "the Beta Tester frame stays locked for players who are not testers");
 ok(picks({ level: 1, frame: "" }).includes('data-frame-locked="mon-pikachu"') && picks({ level: 1, frame: "" }).includes("<small>Level 3</small>"), "a locked extra frame says its level");
 ok(picks({ level: 1, frame: "mon-mew" }).includes('data-set-frame="mon-mew"'), "a worn extra frame is never locked under the player");
 ok(FRAME_GROUPS.every((g) => !EXTRA_FRAMES.some((f) => f.group === g) === !open.includes(`<h3>${g}</h3>`)), "tiles sit under their group names, retired groups gone");

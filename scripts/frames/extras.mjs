@@ -423,5 +423,47 @@ const starry = {
   },
 };
 
-export const frames = [laurel, crown, neon, pixel, sakura, starry];
+// ============================================================ BETA
+const beta = {
+  id: "gen-beta",
+  name: "Beta Tester",
+  group: "Extras",
+  of: 0.14,
+  c: ["#00b4c8", "#ffd21f"],
+  fx: "pulse",
+  fxs: 2.6,
+  base: ({ ra }) => {
+    const r1 = ra - 1.5, r2 = ra + 8.6;
+    const e0 = r1 + 2.2, e1 = r2 - 2.2; // the enamel lies between two thin ink-edged steel lips
+    const steel = [[0.4, "#5a6068"], [0.6, "#d8dde2"], [0.85, "#9aa1a8"], [1, "#4a5058"]];
+    const [px, py] = pt(ra + 3.5, 180);
+    const [lx, ly] = pt(ra + 3.5, 38);
+    const defs = litDef(0.3, 0.3) + lin("bt", [[0, "#e9eef2"], [0.5, "#b4bcc4"], [1, "#6a727a"]], [px - 9, py - 9, px + 9, py + 9]);
+    // a beta: stem, upper bowl, lower bowl, as one stroked line
+    const beta = "M-2.6 7.6L-2.6 -3.4C-2.6 -8.2 3.2 -8.6 3.6 -4.4C3.8 -1.6 1.6 -0.6 -0.2 -0.4C3 -0.4 5.2 1.4 5.2 3.8C5.2 7 2 8.4 -0.4 7.2C-1.4 6.7 -2 5.8 -2.6 4.6";
+    const plate =
+      `<circle cx="${g(px)}" cy="${g(py + 0.8)}" r="10.6" fill="${INK}" fill-opacity=".4"/>` +
+      `<circle cx="${g(px)}" cy="${g(py)}" r="10.6" fill="url(#bt)" stroke="${INK}" stroke-width="1.6"/>` +
+      `<circle cx="${g(px)}" cy="${g(py)}" r="8" fill="${INK}" stroke="#5a6068" stroke-width=".7"/>` +
+      `<g transform="translate(${g(px)} ${g(py)})"><path d="${beta}" fill="none" stroke="${INK}" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/><path d="${beta}" fill="none" stroke="#00b4c8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="${beta}" fill="none" stroke="#7ae6f2" stroke-opacity=".8" stroke-width=".7" stroke-linecap="round" stroke-linejoin="round" transform="translate(-.6 -.6)"/></g>` +
+      [-1, 1].map((k) => `<circle cx="${g(px + k * 7.4)}" cy="${g(py - 5.4)}" r="1.1" fill="#ffd21f" stroke="${INK}" stroke-width=".5"/>`).join("");
+    // the status lamp: a yellow rivet set in the enamel
+    const lamp = `<circle cx="${g(lx)}" cy="${g(ly)}" r="3.5" fill="${INK}"/><circle cx="${g(lx)}" cy="${g(ly)}" r="2.5" fill="#ffd21f" stroke="#a87a00" stroke-width=".5"/><circle cx="${g(lx - 0.7)}" cy="${g(ly - 0.8)}" r=".8" fill="#fff" fill-opacity=".85"/>`;
+    const body =
+      ring(r2 + 0.7, 2, INK, 0.95) +
+      bands(e1, r2, steel) + bands(r1, e0, [[0.5, "#d8dde2"], [1, "#4a5058"]]) +
+      `<path d="${donut(e0, e1)}" fill="#00b4c8"/>` +
+      arcP((e0 + e1) / 2 + 0.7, 292, 14, 1.2, "#7ae6f2", 0.85) +
+      arcP((e0 + e1) / 2 - 0.3, 110, 150, 1, "#00707e", 0.8) +
+      litP(r1, r2) + ring(e0, 0.7, INK, 0.7) + ring(e1, 0.7, INK, 0.7) + ring(r1 + 0.5, 1.4, INK, 0.7) +
+      plate + lamp;
+    return doc(body, defs);
+  },
+  glow: ({ ra }) => {
+    const [x, y] = pt(ra + 3.5, 38);
+    return doc(`<circle cx="${g(x)}" cy="${g(y)}" r="5.2" fill="#ffd21f" fill-opacity=".45"/><circle cx="${g(x)}" cy="${g(y)}" r="2.6" fill="#fff3a8"/>`);
+  },
+};
+
+export const frames = [laurel, crown, neon, pixel, sakura, starry, beta];
 void C; void rad;

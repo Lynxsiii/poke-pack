@@ -129,7 +129,7 @@ import { THEMES, canUseTheme, resolveLook } from "./themes.js?v=1";
 import { gearItem, normalizeGear } from "./gear.js?v=2";
 import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=15";
 import { initBattles } from "./battles.js?v=10";
-import { initCasino } from "./casino.js?v=19";
+import { initCasino } from "./casino.js?v=20";
 import { coinOf } from "./coin.js?v=5";
 // grading
 import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=16";
@@ -4722,6 +4722,7 @@ function lookTab(trainer, stats) {
         ${framePicksHtml({
           level: unlockOf(trainer),
           prestige: trainer.prestige || 0,
+          beta: Boolean(trainer.beta || cloudUser?.beta),
           frame: trainer.frame,
           color: avatarColor(trainer.color).hex,
           avatar: faceHtml({ ...trainer, online: false }, "md", { frame: false }),
@@ -8736,7 +8737,7 @@ els.accountBody.addEventListener("click", async (e) => {
   const lockedFrame = e.target.closest("[data-frame-locked]");
   if (lockedFrame) {
     const info = frameInfo(lockedFrame.dataset.frameLocked);
-    if (info) toast(`Reach ${frameNeed(info).toLowerCase()} to wear the ${info.name} frame.`);
+    if (info) toast(info.beta ? `The ${info.name} frame is for beta testers. Join in the casino with an invite code.` : `Reach ${frameNeed(info).toLowerCase()} to wear the ${info.name} frame.`);
     return;
   }
   const lockedMotion = e.target.closest("[data-motion-locked]");
@@ -10490,6 +10491,8 @@ const casino = initCasino({
     setView("casino");
   },
   signIn: () => openAuth("signin"),
+  // After joining the beta: the badge and the frame read the fresh account.
+  refreshUser: () => refreshSession().then(() => renderHeader()),
   toast,
   buzz,
   ownedCards: casinoOwnedCards,

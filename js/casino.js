@@ -17,9 +17,10 @@ import { createJackpot } from "./jackpot.js?v=9";
 import { createUpgrader } from "./upgrader.js?v=9";
 import { chanceText } from "./upgrader-rules.js?v=3";
 import { gateLock, gateNoticeHTML } from "./gate-notice.js";
+import { createBetaPages, BETA_KEYS, BETA_ART } from "./beta.js?v=1";
 
 const HUB_POLL_MS = 8000;
-const ROUTE = /^\/casino(?:\/(coinflip|jackpot|upgrader)(?:\/([a-zA-Z0-9-]{1,80}))?)?$/;
+const ROUTE = /^\/casino(?:\/(coinflip|jackpot|upgrader|beta|grass|drop|rocket|higher|tins)(?:\/([a-zA-Z0-9-]{1,80}))?)?$/;
 
 /** Where each game lives, in the order the sub-nav shows them. */
 export const CASINO_LINKS = [
@@ -28,7 +29,10 @@ export const CASINO_LINKS = [
   { key: "jackpot", href: "/casino/jackpot", label: "Jackpot" },
   { key: "upgrader", href: "/casino/upgrader", label: "Upgrader" },
   { key: "battles", href: "/battles", label: "Battles" },
+  { key: "beta", href: "/casino/beta", label: "Beta" },
 ];
+/** The beta games light up the Beta word in the sub-nav. */
+const BAR_KEY = { grass: "beta", drop: "beta", rocket: "beta", higher: "beta", tins: "beta" };
 
 export function initCasino(deps = {}) {
   const root = deps.root;
@@ -62,6 +66,7 @@ export function initCasino(deps = {}) {
     coinflip: document.createElement("div"),
     jackpot: document.createElement("div"),
     upgrader: document.createElement("div"),
+    ...Object.fromEntries(BETA_KEYS.map((k) => [k, document.createElement("div")])),
   };
   for (const [key, el] of Object.entries(pages)) {
     el.className = `casino-page casino-page-${key} hidden`;
@@ -70,7 +75,7 @@ export function initCasino(deps = {}) {
   const coinflip = createCoinflip({ ...ctx, root: pages.coinflip });
   const jackpot = createJackpot({ ...ctx, root: pages.jackpot });
   const upgrader = createUpgrader({ ...ctx, root: pages.upgrader });
-  const games = { coinflip, jackpot, upgrader };
+  const games = { coinflip, jackpot, upgrader, ...createBetaPages(ctx, pages) };
 
   let visible = false;
   let current = "";
@@ -282,6 +287,7 @@ export function initCasino(deps = {}) {
       </header>
       ${ageShut ? gateNoticeHTML(ageLock) : ""}
       <ul class="hub-games" aria-label="The games">${tiles.join("")}</ul>
+      <a class="rt-box hub-beta" href="/casino/beta" data-hub-link><span class="hub-beta-art" aria-hidden="true">${BETA_ART.rocket}</span><span class="hub-beta-copy"><b>Beta testing <span class="rt-tag">Beta</span></b><span>Five new games for invited testers: Tall Grass, Poké Ball Drop, Rocket, Higher or Lower and Mystery Tins.</span></span><i class="hub-game-go" aria-hidden="true"></i></a>
       <div class="cs-cols hub-live">${live}</div>
       ${recordHTML}
     </div>`;
@@ -328,7 +334,7 @@ export function initCasino(deps = {}) {
     }
     current = game;
     for (const [key, el] of Object.entries(pages)) el.classList.toggle("hidden", key !== game);
-    paintBar(game);
+    paintBar(BAR_KEY[game] || game);
     if (games[game]) games[game].show(id);
     else {
       paintHub();
@@ -345,6 +351,7 @@ export function initCasino(deps = {}) {
     coinflip.hide();
     jackpot.hide();
     upgrader.hide();
+    for (const k of BETA_KEYS) games[k].hide();
     picker.close();
   }
 
