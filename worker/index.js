@@ -64,6 +64,7 @@ import { ensureOrdersSchema, handleOrders, vaultKept } from "./orders.js";
 import { applyRestores } from "./restores.js";
 import { handleInteraction } from "./discord-commands.js";
 import { handleTrades } from "./trades.js";
+import { handleTcg, maintainTcg } from "./tcg.js";
 import { seoResponse } from "./seo.js";
 import { handleWishlist, wishlistFor } from "./wishlist.js";
 import { DISCORD_URL, ensureFeedSchema, flushFeed, postNewPatchNotes, pullFeedStmts, sharesFeed } from "./discord.js";
@@ -165,6 +166,7 @@ export default {
   await ensureBetaSchema(env).catch((err) => console.error("ensureBetaSchema", err));
     ctx.waitUntil(maintainBattles(env, Date.now(), { settleLimit: 10 }).catch(err => console.error('battle maintenance', err)));
     ctx.waitUntil(maintainCoinflips(env).catch(err => console.error('coinflip maintenance', err)));
+    ctx.waitUntil(maintainTcg(env).catch(err => console.error('tcg maintenance', err)));
     ctx.waitUntil(flushFeed(env).catch(err => console.error('discord feed', err)));
     ctx.waitUntil(postNewPatchNotes(env).catch(err => console.error('discord patch notes', err)));
     ctx.waitUntil(maintainRankings(env, { findCatalogCard }).catch(err => console.error('rankings', err)));
@@ -218,6 +220,12 @@ export async function handleApi(request, env, url) {
     return handleTrades(path, method, request, env, {
       json, requireUser, readJson, loadSave, findCatalogCard, inventoryMap, ownedWithSlabs, reconcileBinder, parseJson, publicUser, normalizeHandle,
     });
+  }
+
+  // the card game between two players (worker/tcg.js); no stakes
+  if (path.startsWith('/api/tcg/')) {
+    await ensureSocialSchema(env);
+    return handleTcg(path, method, request, env, { json, requireUser, readJson, findCatalogCard, inventoryMap, ownedWithSlabs, normalizeHandle });
   }
 
   if (path.startsWith('/api/binder/editions')) {

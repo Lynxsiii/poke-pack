@@ -5776,6 +5776,102 @@
     "etchMap": "assets/foil/maps/xy5/164-etch.webp"
   },
   {
+    "id": "xy5-53-cracked-ice",
+    "name": "Kyogre",
+    "number": "53-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "130",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "A mythical Pokémon said to have swelled the seas with rain and tidal waves. It battled with Groudon.",
+    "image": "assets/cards/xy5/53.webp",
+    "imageSmall": "assets/cards/xy5/53-sm.webp",
+    "attacks": [
+      {
+        "name": "Spring Tides",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "Flip a coin until you get tails. This attack does 30 damage times the number of heads."
+      },
+      {
+        "name": "Ocean Cyclone",
+        "cost": [
+          "Water",
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "This attack does 10 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-53/large",
+    "printedNumber": "53",
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Ocean's Core Theme Deck)",
+    "tcgplayerId": 131320,
+    "market": 9.04
+  },
+  {
+    "id": "xy5-84-cracked-ice",
+    "name": "Groudon",
+    "number": "84-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "130",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "This legendary Pokémon is said to represent the land. It went to sleep after dueling Kyogre.",
+    "image": "assets/cards/xy5/84.webp",
+    "imageSmall": "assets/cards/xy5/84-sm.webp",
+    "attacks": [
+      {
+        "name": "Rock Smash",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Flip a coin. If heads, this attack does 20 more damage."
+      },
+      {
+        "name": "Break Ground",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "This attack does 10 damage to each of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-84/large",
+    "printedNumber": "84",
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Earth's Pulse Theme Deck)",
+    "tcgplayerId": 131321,
+    "market": 5.35
+  },
+  {
     "id": "xy5-xyp040",
     "name": "Ditto",
     "number": "xyp040",
@@ -5809,7 +5905,7 @@
         "type": "Ability"
       }
     ],
-    "market": 93.83,
+    "market": 95.98,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY40/large",
     "printedNumber": "XY 040",
     "tcgplayerId": 96415,
@@ -5856,7 +5952,7 @@
         "text": "Return 2 Water Energy attached to this Pokémon to your hand."
       }
     ],
-    "market": 14.01,
+    "market": 16.9,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY41/large",
     "printedNumber": "XY 041",
     "tcgplayerId": 108591,
@@ -5903,7 +5999,7 @@
         "text": ""
       }
     ],
-    "market": 18.95,
+    "market": 21.08,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY42/large",
     "printedNumber": "XY 042",
     "tcgplayerId": 108592,
@@ -5950,13 +6046,13 @@
         "text": "This attack does 10 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
+    "market": 42.92,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY51/large",
     "printedNumber": "XY 051",
     "tcgplayerId": 98732,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 21.71
+    "foilAs": "Rare Holo"
   },
   {
     "id": "xy5-xyp052",
@@ -5997,13 +6093,13 @@
         "text": "This attack does 10 damage to each of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
+    "market": 32.72,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY52/large",
     "printedNumber": "XY 052",
     "tcgplayerId": 98733,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 23.93
+    "foilAs": "Rare Holo"
   },
   {
     "id": "xy5-xyp061",
@@ -6042,7 +6138,7 @@
         "type": "Ability"
       }
     ],
-    "market": 13.24,
+    "market": 13.31,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY61/large",
     "printedNumber": "XY 061",
     "tcgplayerId": 98734,

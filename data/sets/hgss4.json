@@ -64,6 +64,30 @@
         "hsp23"
       ],
       "note": "Two Triumphant packs, a Platinum pack, a coin and the Porygon2 promo (HGSS23)."
+    },
+    {
+      "id": "theme-deck-royal-guard",
+      "name": "Theme Deck \"Royal Guard\"",
+      "kind": "deck",
+      "packs": 1,
+      "promos": [
+        "6"
+      ],
+      "price": 503.47,
+      "priceSource": "Sum of the deck's 60 cards and its booster pack at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Nidoking, with one booster pack of the set (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-verdant-frost",
+      "name": "Theme Deck \"Verdant Frost\"",
+      "kind": "deck",
+      "packs": 1,
+      "promos": [
+        "5"
+      ],
+      "price": 471.43,
+      "priceSource": "Sum of the deck's 60 cards and its booster pack at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Mamoswine, with one booster pack of the set (Bulbapedia deck list, checked against a second list)."
     }
   ]
 }

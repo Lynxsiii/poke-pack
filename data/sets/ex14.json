@@ -103,6 +103,42 @@
       "packs": 36,
       "promos": [],
       "note": "36 packs of 9 cards, no code card (Potomac Distribution box page and TCGplayer's pack text). TCGplayer lists the box without a market price, so it is priced at 36 packs."
+    },
+    {
+      "id": "deck-green-cyclone",
+      "name": "Theme Deck \"Green Cyclone\"",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "28"
+      ],
+      "price": 138.07,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Venusaur, no booster pack (Bulbapedia and Serebii deck lists)."
+    },
+    {
+      "id": "deck-storm-surge",
+      "name": "Theme Deck \"Storm Surge\"",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "14"
+      ],
+      "price": 99.54,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Blastoise, no booster pack (Bulbapedia and Serebii deck lists)."
+    },
+    {
+      "id": "deck-earth-shower",
+      "name": "Theme Deck \"Earth Shower\"",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "27"
+      ],
+      "price": 89.24,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Swampert, no booster pack (Bulbapedia and Serebii deck lists)."
     }
   ]
 }

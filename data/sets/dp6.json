@@ -80,6 +80,31 @@
         "dpp27"
       ],
       "note": "Two Diamond & Pearl-series packs (opened here as Legends Awakened packs), a Diamond & Pearl-series theme deck (not simulated), the cosmos holo Palkia promo (DP27) and a jumbo Palkia (not simulated); $19.99 at launch. PokeBeach's 2008 post, an Amazon listing and Collector's Cache."
+    },
+    {
+      "id": "theme-deck-bombardment",
+      "name": "Theme Deck \"Bombardment\"",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "37"
+      ],
+      "price": 65.31,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Regigigas, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-metal-surge",
+      "name": "Theme Deck \"Metal Surge\"",
+      "kind": "deck",
+      "tcgplayerId": 693133,
+      "packs": 0,
+      "promos": [
+        "30"
+      ],
+      "price": 52.14,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Heatran, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ]
 }

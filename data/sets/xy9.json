@@ -46,6 +46,24 @@
     },
     "xyp109": {
       "foilAs": "Rare Holo"
+    },
+    "40-cracked-ice": {
+      "like": "40",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Wave Slasher Theme Deck)",
+      "tcgplayerId": 123469,
+      "tcgplayerGroup": 1840
+    },
+    "46-cracked-ice": {
+      "like": "46",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Electric Eye Theme Deck)",
+      "tcgplayerId": 123468,
+      "tcgplayerGroup": 1840
     }
   },
   "products": [
@@ -156,6 +174,32 @@
         "xyp106"
       ],
       "note": "The pack mix is not documented; shown as BREAKpoint packs."
+    },
+    {
+      "id": "theme-deck-wave-slasher",
+      "name": "Theme Deck \"Wave Slasher\"",
+      "kind": "deck",
+      "tcgplayerId": 113530,
+      "packs": 0,
+      "promos": [
+        "40-cracked-ice"
+      ],
+      "price": 19.49,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Greninja, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-electric-eye",
+      "name": "Theme Deck \"Electric Eye\"",
+      "kind": "deck",
+      "tcgplayerId": 113531,
+      "packs": 0,
+      "promos": [
+        "46-cracked-ice"
+      ],
+      "price": 16.41,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Luxray, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ]
 }

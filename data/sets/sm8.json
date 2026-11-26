@@ -82,6 +82,24 @@
     "smp176": {
       "foilAs": "Rare Ultra",
       "notes": "full-art GX (checked against the scan)"
+    },
+    "79-cracked-ice": {
+      "like": "79",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Storm Caller Theme Deck)",
+      "tcgplayerId": 179438,
+      "tcgplayerGroup": 1840
+    },
+    "47-cracked-ice": {
+      "like": "47",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Blazing Volcano Theme Deck)",
+      "tcgplayerId": 179436,
+      "tcgplayerGroup": 1840
     }
   },
   "products": [
@@ -220,6 +238,32 @@
       "tcgplayerId": 175509,
       "packs": 36,
       "promos": []
+    },
+    {
+      "id": "theme-deck-storm-caller",
+      "name": "Theme Deck \"Storm Caller\"",
+      "kind": "deck",
+      "tcgplayerId": 177528,
+      "packs": 0,
+      "promos": [
+        "79-cracked-ice"
+      ],
+      "price": 37.38,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Raikou, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-blazing-volcano",
+      "name": "Theme Deck \"Blazing Volcano\"",
+      "kind": "deck",
+      "tcgplayerId": 177527,
+      "packs": 0,
+      "promos": [
+        "47-cracked-ice"
+      ],
+      "price": 33.97,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Entei, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ]
 }

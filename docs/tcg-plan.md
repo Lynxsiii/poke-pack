@@ -286,6 +286,22 @@ uses what each card prints.
 - Turn timer, reconnect, concede, and a loss for leaving.
 - Friends first (challenge from the friends list), then a queue.
 
+First cut built 2026-11-26 (still hidden, no menu entry, no patch note):
+`worker/tcg.js`, table `tcg_matches` (migration 0038, also applied by the
+Worker itself). A row holds both user ids, the seed, both deck lists, the
+action log and the cached state. Challenges go to friends only, with a deck;
+the accept carries the other deck; both are checked with `checkDeck` against
+what each player owns (raw and graded), the challenger's again at the accept.
+Each decision has 90 s (setup 180 s, an open challenge 15 min); running out
+is a loss, settled on any read and by the scheduled Worker (`maintainTcg`);
+nobody setting up ends the match with no winner. The page (`/play/friends`,
+`/play/online/<id>`) sends actions, polls every 1.5 s, and plays the steps it
+gets back (`{ seq, action, events, view }`, rebuilt by replaying the log)
+through the same path as a bot match; it never runs `apply` itself and takes
+what is legal from the Worker. No stakes, no records, no rewards.
+`node scripts/test-tcg-pvp.mjs` plays matches through the API. Not yet: a
+queue, decks in the save, a Durable Object, rematch, spectating.
+
 ## Phase 4: wager matches
 
 Noah asked for these. They touch money, so each piece needs his yes before it

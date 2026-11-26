@@ -68,6 +68,24 @@
     },
     "smp217": {
       "foilAs": "Rare Holo GX"
+    },
+    "151-cracked-ice": {
+      "like": "151",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Soaring Storm Theme Deck)",
+      "tcgplayerId": 196721,
+      "tcgplayerGroup": 1840
+    },
+    "101-cracked-ice": {
+      "like": "101",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Laser Focus Theme Deck)",
+      "tcgplayerId": 196720,
+      "tcgplayerGroup": 1840
     }
   },
   "products": [
@@ -92,7 +110,7 @@
         "smp205"
       ],
       "pick": 1,
-      "note": "One of four prerelease promos, picked at random. The real box also held a 23-card evolution pack, which isn't simulated."
+      "note": "One of four prerelease promos, picked at random. The box also deals its 23-card evolution pack, the deck that goes with the promo."
     },
     {
       "id": "stakataka-3-pack-blister",
@@ -214,6 +232,32 @@
       "tcgplayerId": 191882,
       "packs": 36,
       "promos": []
+    },
+    {
+      "id": "theme-deck-soaring-storm",
+      "name": "Theme Deck \"Soaring Storm\"",
+      "kind": "deck",
+      "tcgplayerId": 191888,
+      "packs": 0,
+      "promos": [
+        "151-cracked-ice"
+      ],
+      "price": 29.42,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Dragonite, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-laser-focus",
+      "name": "Theme Deck \"Laser Focus\"",
+      "kind": "deck",
+      "tcgplayerId": 191889,
+      "packs": 0,
+      "promos": [
+        "101-cracked-ice"
+      ],
+      "price": 42.9,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Necrozma, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ]
 }

@@ -4295,6 +4295,99 @@
     "etchMap": "assets/foil/maps/xy9/123-etch.webp"
   },
   {
+    "id": "xy9-40-cracked-ice",
+    "name": "Greninja",
+    "number": "40-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "130",
+    "artist": "Naoki Saito",
+    "flavorText": "It appears and vanishes with a ninja's grace. It toys with its enemies using swift movements, while slicing them with throwing stars of sharpest water.",
+    "evolvesFrom": "Frogadier",
+    "image": "assets/cards/xy9/40.webp",
+    "imageSmall": "assets/cards/xy9/40-sm.webp",
+    "attacks": [
+      {
+        "name": "Shadow Stitching",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Until the end of your opponent's next turn, each Pokémon your opponent has in play, in his or her hand, and in his or her discard pile has no Abilities. (This includes cards that come into play on that turn.)"
+      },
+      {
+        "name": "Moonlight Slash",
+        "cost": [
+          "Water"
+        ],
+        "damage": "60+",
+        "text": "You may return a Water Energy from this Pokémon to your hand. If you do, this attack does 20 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy9-40/large",
+    "printedNumber": "40",
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Wave Slasher Theme Deck)",
+    "tcgplayerId": 123469,
+    "market": 17.36
+  },
+  {
+    "id": "xy9-46-cracked-ice",
+    "name": "Luxray",
+    "number": "46-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "140",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "Luxray's ability to see through objects comes in handy when it's scouting for danger.",
+    "evolvesFrom": "Luxio",
+    "image": "assets/cards/xy9/46.webp",
+    "imageSmall": "assets/cards/xy9/46-sm.webp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      },
+      {
+        "name": "Snarl",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "During your opponent's next turn, any damage done by attacks from the Defending Pokémon is reduced by 20 (after applying Weakness and Resistance)."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy9-46/large",
+    "printedNumber": "46",
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Electric Eye Theme Deck)",
+    "tcgplayerId": 123468,
+    "market": 6.4
+  },
+  {
     "id": "xy9-xyp095",
     "name": "Pikachu",
     "number": "xyp095",
@@ -4330,7 +4423,7 @@
         "text": "Flip a coin. If heads, this attack does 20 more damage."
       }
     ],
-    "market": 207.17,
+    "market": 200.32,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY95/large",
     "printedNumber": "XY 095",
     "tcgplayerId": 114004,
@@ -4377,13 +4470,13 @@
         "text": "Turn 1 of your face-down Prize cards face up. If that Prize card is a Pokémon, this attack does 60 more damage. (That Prize card remains up for the rest of the game.)"
       }
     ],
+    "market": 139.13,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY96/large",
     "printedNumber": "XY 096",
     "tcgplayerId": 114005,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 123.34
+    "foilAs": "Rare Holo"
   },
   {
     "id": "xy9-xyp106",
@@ -4423,7 +4516,7 @@
         "text": "This attack does 10 damage to each of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
-    "market": 24.85,
+    "market": 30.1,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY106/large",
     "printedNumber": "XY 106",
     "tcgplayerId": 117701,
@@ -4468,7 +4561,7 @@
         "text": "Switch all damage counters on this Pokémon with those on your opponent's Active Pokémon."
       }
     ],
-    "market": 14.35,
+    "market": 20.46,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY107/large",
     "printedNumber": "XY 107",
     "tcgplayerId": 117702,
@@ -4514,7 +4607,7 @@
         "text": "If this Pokémon is affected by a Special Condition, this attack does 80 more damage. Then, remove all Special Conditions from this Pokémon."
       }
     ],
-    "market": 4.05,
+    "market": 5.0,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY108/large",
     "printedNumber": "XY 108",
     "tcgplayerId": 117703,
@@ -4563,12 +4656,12 @@
         "text": "Flip a coin for each Water Energy attached to this Pokémon. This attack does 30 more damage for each heads."
       }
     ],
+    "market": 64.83,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY109/large",
     "printedNumber": "XY 109",
     "tcgplayerId": 177110,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 66.29
+    "foilAs": "Rare Holo"
   }
 ]

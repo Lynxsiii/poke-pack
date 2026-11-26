@@ -29,6 +29,32 @@
       "promos": [],
       "note": "36 packs, no code card. Rocket's Raikou ex, the secret rare box topper, is not in the packs. TCGplayer lists the box without a market price, so it is priced at 36 packs.",
       "hull": false
+    },
+    {
+      "id": "deck-starcharge",
+      "name": "Theme Deck \"Starcharge\"",
+      "kind": "deck",
+      "tcgplayerId": 232861,
+      "packs": 0,
+      "promos": [
+        "16"
+      ],
+      "price": 77.33,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Deoxys, no booster pack (Bulbapedia and Serebii deck lists)."
+    },
+    {
+      "id": "deck-jetstream",
+      "name": "Theme Deck \"Jetstream\"",
+      "kind": "deck",
+      "tcgplayerId": 232862,
+      "packs": 0,
+      "promos": [
+        "22"
+      ],
+      "price": 105.29,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Rayquaza, no booster pack (Bulbapedia and Serebii deck lists)."
     }
   ]
 }

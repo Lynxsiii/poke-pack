@@ -125,6 +125,45 @@
         "dpp04"
       ],
       "note": "Two Diamond & Pearl packs and a cosmos holofoil Pachirisu promo. One source only (Collector's Cache lists DP04 as the Diamond & Pearl blister exclusive; Bulbapedia's blister excerpt does not name it), so the contents are medium-low confidence."
+    },
+    {
+      "id": "theme-deck-inferno-zone",
+      "name": "Theme Deck \"Inferno Zone\"",
+      "kind": "deck",
+      "tcgplayerId": 228805,
+      "packs": 0,
+      "promos": [
+        "5"
+      ],
+      "price": 43.85,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Infernape, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-royal-frost",
+      "name": "Theme Deck \"Royal Frost\"",
+      "kind": "deck",
+      "tcgplayerId": 228806,
+      "packs": 0,
+      "promos": [
+        "4"
+      ],
+      "price": 39.8,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Empoleon, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-terra-firma",
+      "name": "Theme Deck \"Terra Firma\"",
+      "kind": "deck",
+      "tcgplayerId": 228804,
+      "packs": 0,
+      "promos": [
+        "17"
+      ],
+      "price": 33.84,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Torterra, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ]
 }

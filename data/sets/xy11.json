@@ -57,7 +57,25 @@
     "xyp175": {
       "foilAs": "Rare Holo EX"
     },
-    "xyp177": {}
+    "xyp177": {},
+    "25-cracked-ice": {
+      "like": "25",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Gears of Fire Theme Deck)",
+      "tcgplayerId": 123462,
+      "tcgplayerGroup": 1840
+    },
+    "51-cracked-ice": {
+      "like": "51",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Ring of Lightning Theme Deck)",
+      "tcgplayerId": 123464,
+      "tcgplayerGroup": 1840
+    }
   },
   "products": [
     {
@@ -213,6 +231,32 @@
       "tcgplayerId": 120076,
       "packs": 36,
       "promos": []
+    },
+    {
+      "id": "theme-deck-gears-of-fire",
+      "name": "Theme Deck \"Gears of Fire\"",
+      "kind": "deck",
+      "tcgplayerId": 120698,
+      "packs": 0,
+      "promos": [
+        "25-cracked-ice"
+      ],
+      "price": 10.86,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Volcanion, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-ring-of-lightning",
+      "name": "Theme Deck \"Ring of Lightning\"",
+      "kind": "deck",
+      "tcgplayerId": 120699,
+      "packs": 0,
+      "promos": [
+        "51-cracked-ice"
+      ],
+      "price": 12.69,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Hoopa, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ]
 }

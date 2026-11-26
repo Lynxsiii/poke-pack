@@ -5196,6 +5196,98 @@
     "etchMap": "assets/foil/maps/xy1/146-etch.webp"
   },
   {
+    "id": "xy1-78-cracked-ice",
+    "name": "Yveltal",
+    "number": "78-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "130",
+    "artist": "5ban Graphics",
+    "flavorText": "When this legendary Pokémon's wings and tail feathers spread wide and glow red, it absorbs the life force of all living creatures.",
+    "image": "assets/cards/xy1/78.webp",
+    "imageSmall": "assets/cards/xy1/78-sm.webp",
+    "attacks": [
+      {
+        "name": "Oblivion Wing",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "30",
+        "text": "Attach a Darkness Energy card from your discard pile to 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Darkness Blade",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "Flip a coin. If tails, this Pokémon can't attack during your next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy1-78/large",
+    "printedNumber": "78",
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Destruction Rush Theme Deck)",
+    "tcgplayerId": 91252,
+    "market": 3.98
+  },
+  {
+    "id": "xy1-96-cracked-ice",
+    "name": "Xerneas",
+    "number": "96-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "130",
+    "artist": "5ban Graphics",
+    "flavorText": "Legends say it can share eternal life. It slept for a thousand years in the form of a tree before its revival.",
+    "image": "assets/cards/xy1/96.webp",
+    "imageSmall": "assets/cards/xy1/96-sm.webp",
+    "attacks": [
+      {
+        "name": "Geomancy",
+        "cost": [
+          "Fairy"
+        ],
+        "damage": "",
+        "text": "Choose 2 of your Benched Pokémon. For each of those Pokémon, search your deck for a Fairy Energy card and attach it to that Pokémon. Shuffle your deck afterward."
+      },
+      {
+        "name": "Rainbow Spear",
+        "cost": [
+          "Fairy",
+          "Fairy",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "Discard an Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy1-96/large",
+    "printedNumber": "96",
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Resilient Life Theme Deck)",
+    "tcgplayerId": 123478,
+    "market": 6.95
+  },
+  {
     "id": "xy1-xyp001",
     "name": "Chespin",
     "number": "xyp001",
@@ -5231,13 +5323,13 @@
         "text": ""
       }
     ],
+    "market": 10.37,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY01/large",
     "printedNumber": "XY 001",
     "tcgplayerId": 84270,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 5.3
+    "foilAs": "Rare Holo"
   },
   {
     "id": "xy1-xyp002",
@@ -5275,13 +5367,13 @@
         "text": ""
       }
     ],
+    "market": 11.19,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY02/large",
     "printedNumber": "XY 002",
     "tcgplayerId": 85410,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 10.46
+    "foilAs": "Rare Holo"
   },
   {
     "id": "xy1-xyp003",
@@ -5319,13 +5411,13 @@
         "text": ""
       }
     ],
+    "market": 26.08,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY03/large",
     "printedNumber": "XY 003",
     "tcgplayerId": 85568,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 17.33
+    "foilAs": "Rare Holo"
   },
   {
     "id": "xy1-xyp004",
@@ -5365,13 +5457,13 @@
         "text": ""
       }
     ],
+    "market": 73.66,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY04/large",
     "printedNumber": "XY 004",
     "tcgplayerId": 89729,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 53.19
+    "foilAs": "Rare Holo"
   },
   {
     "id": "xy1-xyp005",
@@ -5410,13 +5502,13 @@
         "text": "Discard an Energy attached to this Pokémon."
       }
     ],
+    "market": 13.24,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY05/large",
     "printedNumber": "XY 005",
     "tcgplayerId": 90670,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 11.23
+    "foilAs": "Rare Holo"
   },
   {
     "id": "xy1-xyp006",
@@ -5455,13 +5547,13 @@
         "text": "Flip a coin. If tails, this Pokémon can't attack during your next turn."
       }
     ],
+    "market": 28.16,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY06/large",
     "printedNumber": "XY 006",
     "tcgplayerId": 90698,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 19.3
+    "foilAs": "Rare Holo"
   },
   {
     "id": "xy1-xyp007",
@@ -5503,7 +5595,7 @@
         "text": "This Pokémon can't use X Blast during your next turn."
       }
     ],
-    "market": 8.79,
+    "market": 10.26,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY07/large",
     "printedNumber": "XY 007",
     "tcgplayerId": 90673,
@@ -5550,7 +5642,7 @@
         "text": "Move an Energy from this Pokémon to 1 of your Benched Pokémon."
       }
     ],
-    "market": 11.68,
+    "market": 13.42,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY08/large",
     "printedNumber": "XY 008",
     "tcgplayerId": 90701,
@@ -5567,7 +5659,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Dragon"
@@ -5597,12 +5689,12 @@
         "text": "Discard an Energy attached to this Pokémon."
       }
     ],
+    "market": 23.77,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY09/large",
     "printedNumber": "XY 009",
     "tcgplayerId": 96369,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo EX",
-    "market": 21.02
+    "foilAs": "Rare Holo EX"
   }
 ]

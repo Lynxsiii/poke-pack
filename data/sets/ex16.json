@@ -31,6 +31,30 @@
       "packs": 1,
       "promos": [],
       "note": "One booster pack in a blister (TCGplayer's product text: \"Each blister comes with a booster pack containing 9 cards\"; no promo is named). TCGplayer lists it without a market price, so it is priced at one pack."
+    },
+    {
+      "id": "deck-dark-blast",
+      "name": "Theme Deck \"Dark Blast\"",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "18"
+      ],
+      "price": 67.47,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Mightyena, no booster pack (Bulbapedia and Serebii deck lists)."
+    },
+    {
+      "id": "deck-mind-game",
+      "name": "Theme Deck \"Mind Game\"",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "14"
+      ],
+      "price": 267.28,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Dusclops, no booster pack (Bulbapedia and Serebii deck lists)."
     }
   ]
 }

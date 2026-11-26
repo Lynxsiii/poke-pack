@@ -113,6 +113,42 @@
       "packs": 1,
       "promos": [],
       "note": "One Great Encounters pack and one POP Series 5 pack (not simulated) with a cosmos holo Riolu from POP Series 6 (a reprint, not simulated). Bulbapedia's merchandise page, one source."
+    },
+    {
+      "id": "theme-deck-endless-night",
+      "name": "Theme Deck \"Endless Night\"",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "4"
+      ],
+      "price": 71.24,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Darkrai, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-eternal-time",
+      "name": "Theme Deck \"Eternal Time\"",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "16"
+      ],
+      "price": 32.92,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Dialga, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-infinite-space",
+      "name": "Theme Deck \"Infinite Space\"",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "26"
+      ],
+      "price": 57.44,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Palkia, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ]
 }

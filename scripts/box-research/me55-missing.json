@@ -1,0 +1,370 @@
+{
+ "_about": "Research on 30th Celebration (me55, TCGplayer group 24722) products not yet on the site, 2026-11-26. Sources: tcgcsv (TCGplayer products and market prices), Pokemon.com 30th Celebration product showcase, TCGplayer descriptions, retailer pages (Next Level UK, Dexhaul, Bill's Archive via search). Terapagos: NO 30th Celebration Terapagos product exists (not among the 224 products of TCGplayer group 24722, not on Pokemon.com showcase; the only Terapagos hits are third-party UPC protectors and the separate Terapagos ex Ultra-Premium Collection, a different set). None of these products adds a new MEP promo: the Mini Tin art cards are not cards-in-play promos, the Binder has none, the blister is the Knock Out Eevee, Costco holds the ETB Nidorina MEP 101.",
+ "terapagos": {
+  "exists": false,
+  "note": "No Terapagos product in me55; TCGplayer group 24722 has none."
+ },
+ "products": [
+  {
+   "tcgplayerId": 704176,
+   "tcgplayerName": "30th Celebration Mini Tin [Espeon]",
+   "name": "Mini Tin: Espeon",
+   "kind": "tin",
+   "packs": 2,
+   "packSets": "30th Celebration (me55)",
+   "promos": [],
+   "otherContents": "1 sticker sheet; 1 art card showing this tin's artwork (collect all 10 to build two larger images, day and night); 1 Pokemon TCG Live code card (TCGplayer). Art card is not a playable promo. No coin.",
+   "marketPrice": 24.6,
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://www.pokemon.com/us/news/pokemon-tcg-30th-celebration-product-showcase",
+     "quote": "Each Pokémon TCG: 30th Celebration Mini Tin comes with two 30th Celebration booster packs, a sticker sheet, and an art card to match the Mini Tin. Collect all ten artworks to create two different images"
+    },
+    {
+     "url": "https://www.tcgplayer.com/product/704176",
+     "quote": "2 Pokémon TCG: 30th Celebration booster packs (cards vary by pack); 1 sticker sheet; A Pokémon art card showing the art from this Mini Tin; A code card for Pokémon TCG Live"
+    },
+    {
+     "url": "https://www.dexhaul.com/blog/pokemon-30th-celebration-mini-tins-2026",
+     "quote": "Each tin contains two booster packs, one variant-specific foil art card, and one sticker sheet. Every tin shares the same sealed contents."
+    }
+   ],
+   "notes": "All 10 tins are identical except art card and sticker artwork. No promo card in the MEP series. Released 2026-10-02 per retailers."
+  },
+  {
+   "tcgplayerId": 704177,
+   "tcgplayerName": "30th Celebration Mini Tin [Day Pikachu]",
+   "name": "Mini Tin: Day Pikachu",
+   "kind": "tin",
+   "packs": 2,
+   "packSets": "30th Celebration (me55)",
+   "promos": [],
+   "otherContents": "1 sticker sheet; 1 art card showing this tin's artwork (collect all 10 to build two larger images, day and night); 1 Pokemon TCG Live code card (TCGplayer). Art card is not a playable promo. No coin.",
+   "marketPrice": 23.8,
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://www.pokemon.com/us/news/pokemon-tcg-30th-celebration-product-showcase",
+     "quote": "Each Pokémon TCG: 30th Celebration Mini Tin comes with two 30th Celebration booster packs, a sticker sheet, and an art card to match the Mini Tin. Collect all ten artworks to create two different images"
+    },
+    {
+     "url": "https://www.tcgplayer.com/product/704177",
+     "quote": "2 Pokémon TCG: 30th Celebration booster packs (cards vary by pack); 1 sticker sheet; A Pokémon art card showing the art from this Mini Tin; A code card for Pokémon TCG Live"
+    },
+    {
+     "url": "https://www.dexhaul.com/blog/pokemon-30th-celebration-mini-tins-2026",
+     "quote": "Each tin contains two booster packs, one variant-specific foil art card, and one sticker sheet. Every tin shares the same sealed contents."
+    }
+   ],
+   "notes": "All 10 tins are identical except art card and sticker artwork. No promo card in the MEP series. Released 2026-10-02 per retailers."
+  },
+  {
+   "tcgplayerId": 704178,
+   "tcgplayerName": "30th Celebration Mini Tin [Mew]",
+   "name": "Mini Tin: Mew",
+   "kind": "tin",
+   "packs": 2,
+   "packSets": "30th Celebration (me55)",
+   "promos": [],
+   "otherContents": "1 sticker sheet; 1 art card showing this tin's artwork (collect all 10 to build two larger images, day and night); 1 Pokemon TCG Live code card (TCGplayer). Art card is not a playable promo. No coin.",
+   "marketPrice": 22.1,
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://www.pokemon.com/us/news/pokemon-tcg-30th-celebration-product-showcase",
+     "quote": "Each Pokémon TCG: 30th Celebration Mini Tin comes with two 30th Celebration booster packs, a sticker sheet, and an art card to match the Mini Tin. Collect all ten artworks to create two different images"
+    },
+    {
+     "url": "https://www.tcgplayer.com/product/704178",
+     "quote": "2 Pokémon TCG: 30th Celebration booster packs (cards vary by pack); 1 sticker sheet; A Pokémon art card showing the art from this Mini Tin; A code card for Pokémon TCG Live"
+    },
+    {
+     "url": "https://www.dexhaul.com/blog/pokemon-30th-celebration-mini-tins-2026",
+     "quote": "Each tin contains two booster packs, one variant-specific foil art card, and one sticker sheet. Every tin shares the same sealed contents."
+    }
+   ],
+   "notes": "All 10 tins are identical except art card and sticker artwork. No promo card in the MEP series. Released 2026-10-02 per retailers."
+  },
+  {
+   "tcgplayerId": 704179,
+   "tcgplayerName": "30th Celebration Mini Tin [Lapras]",
+   "name": "Mini Tin: Lapras",
+   "kind": "tin",
+   "packs": 2,
+   "packSets": "30th Celebration (me55)",
+   "promos": [],
+   "otherContents": "1 sticker sheet; 1 art card showing this tin's artwork (collect all 10 to build two larger images, day and night); 1 Pokemon TCG Live code card (TCGplayer). Art card is not a playable promo. No coin.",
+   "marketPrice": 22.67,
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://www.pokemon.com/us/news/pokemon-tcg-30th-celebration-product-showcase",
+     "quote": "Each Pokémon TCG: 30th Celebration Mini Tin comes with two 30th Celebration booster packs, a sticker sheet, and an art card to match the Mini Tin. Collect all ten artworks to create two different images"
+    },
+    {
+     "url": "https://www.tcgplayer.com/product/704179",
+     "quote": "2 Pokémon TCG: 30th Celebration booster packs (cards vary by pack); 1 sticker sheet; A Pokémon art card showing the art from this Mini Tin; A code card for Pokémon TCG Live"
+    },
+    {
+     "url": "https://www.dexhaul.com/blog/pokemon-30th-celebration-mini-tins-2026",
+     "quote": "Each tin contains two booster packs, one variant-specific foil art card, and one sticker sheet. Every tin shares the same sealed contents."
+    }
+   ],
+   "notes": "All 10 tins are identical except art card and sticker artwork. No promo card in the MEP series. Released 2026-10-02 per retailers."
+  },
+  {
+   "tcgplayerId": 704180,
+   "tcgplayerName": "30th Celebration Mini Tin [Moltres]",
+   "name": "Mini Tin: Moltres",
+   "kind": "tin",
+   "packs": 2,
+   "packSets": "30th Celebration (me55)",
+   "promos": [],
+   "otherContents": "1 sticker sheet; 1 art card showing this tin's artwork (collect all 10 to build two larger images, day and night); 1 Pokemon TCG Live code card (TCGplayer). Art card is not a playable promo. No coin.",
+   "marketPrice": 23.47,
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://www.pokemon.com/us/news/pokemon-tcg-30th-celebration-product-showcase",
+     "quote": "Each Pokémon TCG: 30th Celebration Mini Tin comes with two 30th Celebration booster packs, a sticker sheet, and an art card to match the Mini Tin. Collect all ten artworks to create two different images"
+    },
+    {
+     "url": "https://www.tcgplayer.com/product/704180",
+     "quote": "2 Pokémon TCG: 30th Celebration booster packs (cards vary by pack); 1 sticker sheet; A Pokémon art card showing the art from this Mini Tin; A code card for Pokémon TCG Live"
+    },
+    {
+     "url": "https://www.dexhaul.com/blog/pokemon-30th-celebration-mini-tins-2026",
+     "quote": "Each tin contains two booster packs, one variant-specific foil art card, and one sticker sheet. Every tin shares the same sealed contents."
+    }
+   ],
+   "notes": "All 10 tins are identical except art card and sticker artwork. No promo card in the MEP series. Released 2026-10-02 per retailers."
+  },
+  {
+   "tcgplayerId": 704181,
+   "tcgplayerName": "30th Celebration Mini Tin [Zapdos]",
+   "name": "Mini Tin: Zapdos",
+   "kind": "tin",
+   "packs": 2,
+   "packSets": "30th Celebration (me55)",
+   "promos": [],
+   "otherContents": "1 sticker sheet; 1 art card showing this tin's artwork (collect all 10 to build two larger images, day and night); 1 Pokemon TCG Live code card (TCGplayer). Art card is not a playable promo. No coin.",
+   "marketPrice": 22.83,
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://www.pokemon.com/us/news/pokemon-tcg-30th-celebration-product-showcase",
+     "quote": "Each Pokémon TCG: 30th Celebration Mini Tin comes with two 30th Celebration booster packs, a sticker sheet, and an art card to match the Mini Tin. Collect all ten artworks to create two different images"
+    },
+    {
+     "url": "https://www.tcgplayer.com/product/704181",
+     "quote": "2 Pokémon TCG: 30th Celebration booster packs (cards vary by pack); 1 sticker sheet; A Pokémon art card showing the art from this Mini Tin; A code card for Pokémon TCG Live"
+    },
+    {
+     "url": "https://www.dexhaul.com/blog/pokemon-30th-celebration-mini-tins-2026",
+     "quote": "Each tin contains two booster packs, one variant-specific foil art card, and one sticker sheet. Every tin shares the same sealed contents."
+    }
+   ],
+   "notes": "All 10 tins are identical except art card and sticker artwork. No promo card in the MEP series. Released 2026-10-02 per retailers."
+  },
+  {
+   "tcgplayerId": 704182,
+   "tcgplayerName": "30th Celebration Mini Tin [Umbreon]",
+   "name": "Mini Tin: Umbreon",
+   "kind": "tin",
+   "packs": 2,
+   "packSets": "30th Celebration (me55)",
+   "promos": [],
+   "otherContents": "1 sticker sheet; 1 art card showing this tin's artwork (collect all 10 to build two larger images, day and night); 1 Pokemon TCG Live code card (TCGplayer). Art card is not a playable promo. No coin.",
+   "marketPrice": 24.23,
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://www.pokemon.com/us/news/pokemon-tcg-30th-celebration-product-showcase",
+     "quote": "Each Pokémon TCG: 30th Celebration Mini Tin comes with two 30th Celebration booster packs, a sticker sheet, and an art card to match the Mini Tin. Collect all ten artworks to create two different images"
+    },
+    {
+     "url": "https://www.tcgplayer.com/product/704182",
+     "quote": "2 Pokémon TCG: 30th Celebration booster packs (cards vary by pack); 1 sticker sheet; A Pokémon art card showing the art from this Mini Tin; A code card for Pokémon TCG Live"
+    },
+    {
+     "url": "https://www.dexhaul.com/blog/pokemon-30th-celebration-mini-tins-2026",
+     "quote": "Each tin contains two booster packs, one variant-specific foil art card, and one sticker sheet. Every tin shares the same sealed contents."
+    }
+   ],
+   "notes": "All 10 tins are identical except art card and sticker artwork. No promo card in the MEP series. Released 2026-10-02 per retailers."
+  },
+  {
+   "tcgplayerId": 704183,
+   "tcgplayerName": "30th Celebration Mini Tin [Mewtwo]",
+   "name": "Mini Tin: Mewtwo",
+   "kind": "tin",
+   "packs": 2,
+   "packSets": "30th Celebration (me55)",
+   "promos": [],
+   "otherContents": "1 sticker sheet; 1 art card showing this tin's artwork (collect all 10 to build two larger images, day and night); 1 Pokemon TCG Live code card (TCGplayer). Art card is not a playable promo. No coin.",
+   "marketPrice": 22.6,
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://www.pokemon.com/us/news/pokemon-tcg-30th-celebration-product-showcase",
+     "quote": "Each Pokémon TCG: 30th Celebration Mini Tin comes with two 30th Celebration booster packs, a sticker sheet, and an art card to match the Mini Tin. Collect all ten artworks to create two different images"
+    },
+    {
+     "url": "https://www.tcgplayer.com/product/704183",
+     "quote": "2 Pokémon TCG: 30th Celebration booster packs (cards vary by pack); 1 sticker sheet; A Pokémon art card showing the art from this Mini Tin; A code card for Pokémon TCG Live"
+    },
+    {
+     "url": "https://www.dexhaul.com/blog/pokemon-30th-celebration-mini-tins-2026",
+     "quote": "Each tin contains two booster packs, one variant-specific foil art card, and one sticker sheet. Every tin shares the same sealed contents."
+    }
+   ],
+   "notes": "All 10 tins are identical except art card and sticker artwork. No promo card in the MEP series. Released 2026-10-02 per retailers."
+  },
+  {
+   "tcgplayerId": 704184,
+   "tcgplayerName": "30th Celebration Mini Tin [Night Pikachu]",
+   "name": "Mini Tin: Night Pikachu",
+   "kind": "tin",
+   "packs": 2,
+   "packSets": "30th Celebration (me55)",
+   "promos": [],
+   "otherContents": "1 sticker sheet; 1 art card showing this tin's artwork (collect all 10 to build two larger images, day and night); 1 Pokemon TCG Live code card (TCGplayer). Art card is not a playable promo. No coin.",
+   "marketPrice": 23.14,
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://www.pokemon.com/us/news/pokemon-tcg-30th-celebration-product-showcase",
+     "quote": "Each Pokémon TCG: 30th Celebration Mini Tin comes with two 30th Celebration booster packs, a sticker sheet, and an art card to match the Mini Tin. Collect all ten artworks to create two different images"
+    },
+    {
+     "url": "https://www.tcgplayer.com/product/704184",
+     "quote": "2 Pokémon TCG: 30th Celebration booster packs (cards vary by pack); 1 sticker sheet; A Pokémon art card showing the art from this Mini Tin; A code card for Pokémon TCG Live"
+    },
+    {
+     "url": "https://www.dexhaul.com/blog/pokemon-30th-celebration-mini-tins-2026",
+     "quote": "Each tin contains two booster packs, one variant-specific foil art card, and one sticker sheet. Every tin shares the same sealed contents."
+    }
+   ],
+   "notes": "All 10 tins are identical except art card and sticker artwork. No promo card in the MEP series. Released 2026-10-02 per retailers."
+  },
+  {
+   "tcgplayerId": 704185,
+   "tcgplayerName": "30th Celebration Mini Tin [Greninja]",
+   "name": "Mini Tin: Greninja",
+   "kind": "tin",
+   "packs": 2,
+   "packSets": "30th Celebration (me55)",
+   "promos": [],
+   "otherContents": "1 sticker sheet; 1 art card showing this tin's artwork (collect all 10 to build two larger images, day and night); 1 Pokemon TCG Live code card (TCGplayer). Art card is not a playable promo. No coin.",
+   "marketPrice": 20.78,
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://www.pokemon.com/us/news/pokemon-tcg-30th-celebration-product-showcase",
+     "quote": "Each Pokémon TCG: 30th Celebration Mini Tin comes with two 30th Celebration booster packs, a sticker sheet, and an art card to match the Mini Tin. Collect all ten artworks to create two different images"
+    },
+    {
+     "url": "https://www.tcgplayer.com/product/704185",
+     "quote": "2 Pokémon TCG: 30th Celebration booster packs (cards vary by pack); 1 sticker sheet; A Pokémon art card showing the art from this Mini Tin; A code card for Pokémon TCG Live"
+    },
+    {
+     "url": "https://www.dexhaul.com/blog/pokemon-30th-celebration-mini-tins-2026",
+     "quote": "Each tin contains two booster packs, one variant-specific foil art card, and one sticker sheet. Every tin shares the same sealed contents."
+    }
+   ],
+   "notes": "All 10 tins are identical except art card and sticker artwork. No promo card in the MEP series. Released 2026-10-02 per retailers."
+  },
+  {
+   "tcgplayerId": 704169,
+   "tcgplayerName": "30th Celebration Binder Collection",
+   "name": "Binder Collection",
+   "kind": "collection",
+   "packs": 5,
+   "packSets": "30th Celebration (me55)",
+   "promos": [],
+   "otherContents": "1 thematic 9-pocket binder. No promo card, no coin.",
+   "marketPrice": 89.3,
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://www.pokemon.com/us/news/pokemon-tcg-30th-celebration-product-showcase",
+     "quote": "9-pocket binder featuring a design commemorating 30 years of Pokémon! ... you also get five booster packs from the special 30th Celebration expansion."
+    },
+    {
+     "url": "https://www.tcgplayer.com/product/704169",
+     "quote": "A thematic 9-pocket binder; 5 Pokemon TCG: 30th Celebration booster packs (cards vary by pack)"
+    },
+    {
+     "url": "https://billsarchive.com/articles/30th-anniversary-english-products-msrp.html",
+     "quote": "Binder Collection entry marked 'No promo card' (via web search summary)"
+    }
+   ],
+   "notes": "Release date 2026-12-04 per Pokemon.com/Best Buy (retailers differ: Oct 2). MSRP about 31.99 USD. A GameStop listing line about '1 promo card' is believed to be a copy error from the ETB page; not used."
+  },
+  {
+   "tcgplayerId": 704148,
+   "tcgplayerName": "30th Celebration 2-Pack Blister",
+   "name": "2-Pack Blister",
+   "kind": "blister",
+   "packs": 2,
+   "packSets": "30th Celebration (me55)",
+   "promos": [
+    {
+     "name": "Eevee",
+     "number": "116/128 (30C 116; not an MEP card)",
+     "finish": "foil promo; site models it as black star frame foil",
+     "siteId": "me55-116-blister"
+    }
+   ],
+   "otherContents": "1 plastic Pikachu coin (gold and white blister).",
+   "marketPrice": 62.52,
+   "confidence": "single-source",
+   "sources": [
+    {
+     "url": "https://www.tcgplayer.com/product/704148",
+     "quote": "1 foil promo card featuring Eevee; 1 plastic coin; 2 Pokemon TCG: 30th Celebration booster packs"
+    },
+    {
+     "url": "https://nextleveluk.net/products/pokemon-tcg-30th-celebration-2-pack-blister",
+     "quote": "A foil Basic Eevee card (HP 70, card number 116/128) with the 30th anniversary Pikachu stamp ... Fetch and Hide and Tackle attacks and is illustrated by Wintr Wandr."
+    },
+    {
+     "url": "https://www.pokemon.com/us/news/pokemon-tcg-30th-celebration-product-showcase",
+     "quote": "Knock Out Collection section: a foil Pokémon TCG card featuring Eevee—plus a plastic coin and two booster packs (image 30th_EN_116)"
+    }
+   ],
+   "notes": "Contents text is word-for-word the same as the Knock Out Collection (TCGplayer 704152, already on site as 'knock-out' with promo 116-blister). The blister is almost certainly the same Eevee 116/128 card (Wintr Wandr, Fetch and Hide / Tackle) as the Knock Out Collection, so no new promo is needed; likely the same product under another retailer/region name. The exact-print equivalence is single-source (only Next Level UK gives number+artist for the blister itself). Next Level's 'Pikachu stamp' wording vs the site's 'Black star frame' variant is unresolved. Market price here (62.52) is far above the Knock Out's price, worth checking."
+  },
+  {
+   "tcgplayerId": 729930,
+   "tcgplayerName": "Costco Pokemon 30th Celebration 2-Pack Trainer Box and Booster Bundle",
+   "name": "Costco ETB + Booster Bundle 2-Pack",
+   "kind": "bundle",
+   "packs": 15,
+   "packSets": "30th Celebration (me55)",
+   "promos": [
+    {
+     "name": "Nidorina",
+     "number": "MEP 101",
+     "finish": "full-art foil (standard ETB promo, not Pokemon Center stamped)",
+     "siteId": "mep101"
+    }
+   ],
+   "otherContents": "Contains one standard 30th Celebration ETB (9 packs, 65 sleeves, 45 Energy per TCGplayer listing, dice, coin-flip die, collector box) plus one Booster Bundle (6 packs). Retail ETB lists 16 foil Basic Energy, so the 45 Energy figure in the Costco listing is unverified.",
+   "marketPrice": 174.83,
+   "confidence": "single-source",
+   "sources": [
+    {
+     "url": "https://www.tcgplayer.com/product/729930",
+     "quote": "Costco exclusive 2-pack: one 30th Celebration Elite Trainer Box and one 30th Celebration Booster Bundle ... 15 booster packs in total (9 in the Elite Trainer Box, 6 in the Booster Bundle)"
+    },
+    {
+     "url": "https://www.pokemon.com/us/news/pokemon-tcg-30th-celebration-product-showcase",
+     "quote": "Each ETB contains nine booster packs, a full-art promo card featuring Nidorina ... Booster Bundle features six booster packs"
+    }
+   ],
+   "notes": "Composition is single-source (TCGplayer listing; eBay resale listings only echo it). Pack/promo counts follow from the two official component products (ETB 9 packs + Nidorina MEP 101; bundle 6 packs). Site equivalent: eliteTrainerBox + boosterBundle. Costco's own page not found."
+  }
+ ]
+}

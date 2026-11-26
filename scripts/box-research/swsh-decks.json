@@ -1,0 +1,1141 @@
+{
+  "_about": "Sword & Shield-era English theme decks, written 2026-11-26: 9 decks (Sword & Shield: Rillaboom, Cinderace, Inteleon; Rebel Clash: Zacian, Zamazenta; Darkness Ablaze: Galarian Darmanitan, Galarian Sirfetch'd; Vivid Voltage: Charizard, Drednaw). Bulbapedia's Theme Deck page: V Battle Decks replaced theme decks after Vivid Voltage, so Champion's Path (swsh35), Shining Fates (swsh45), Battle Styles through Crown Zenith and Pokemon GO had none; tcgcsv groups for those sets list no theme decks (Pokemon GO only has V Battle Decks, already out of scope). Lists: Bulbapedia deck pages (MediaWiki API wikitext) and TCGsync product pages' Deck List; all 9 agree card-for-card by name and count. Card ids resolved by set + number against data/<set>.json (all names match; only swsh1-178 is spelled 'Professor's Research (Professor Magnolia)' on the site). Basic Energy: no source names the print; site's Sword & Shield 2020 print assumed (energy-<type>-swsh). TCGplayer: sealed decks are in the set's own group (swsh1 2585, swsh2 2626, swsh3 2675, swsh4 2701); Cracked Ice showcase prints are in group 1840 'Deck Exclusives'. marketPrice = TCGplayer market via tcgcsv at the time of writing. TCGplayer 'Set of N' / Display / Code Card products are not decks and were not used. Skipped as already on site or out of scope: swshp Victini V and Gardevoir V battle decks, V Battle Decks, League Battle Decks, Battle Academy, Trainer's Toolkits, Build & Battle Boxes. Decks hold exactly 60 cards; nothing else is modelled except coin/code card in extras.",
+  "decks": [
+    {
+      "set": "swsh1",
+      "name": "Rillaboom",
+      "showcase": "Rillaboom",
+      "showcaseCard": "swsh1-15",
+      "showcasePrint": "Cracked Ice Holofoil print, exclusive to this theme deck (1 copy); the set's pack print differs. Remaining copies regular Rare.",
+      "showcaseTcgplayerId": 206434,
+      "showcaseTcgplayerName": "Rillaboom - 015/202 (Cracked Ice Holo)",
+      "tcgplayerId": 206037,
+      "tcgplayerName": "Sword & Shield Theme Deck [Rillaboom]",
+      "marketPrice": 14.88,
+      "released": "2020-02-07",
+      "extras": "60-card deck, damage counters, one-player playmat, deckbox, custom coin (featuring Grookey), Quick Start Rules booklet, TCG Online code card (TCGplayer sells the code card separately as 'Code Card - ...'). No booster pack. (Bulbapedia deck page intro.)",
+      "total": 60,
+      "cards": [
+        {
+          "id": "swsh1-15",
+          "name": "Rillaboom",
+          "n": 2
+        },
+        {
+          "id": "swsh1-13",
+          "name": "Thwackey",
+          "n": 3
+        },
+        {
+          "id": "swsh1-11",
+          "name": "Grookey",
+          "n": 3
+        },
+        {
+          "id": "swsh1-21",
+          "name": "Eldegoss",
+          "n": 2
+        },
+        {
+          "id": "swsh1-20",
+          "name": "Gossifleur",
+          "n": 3
+        },
+        {
+          "id": "swsh1-6",
+          "name": "Whimsicott",
+          "n": 2
+        },
+        {
+          "id": "swsh1-5",
+          "name": "Cottonee",
+          "n": 3
+        },
+        {
+          "id": "swsh1-7",
+          "name": "Maractus",
+          "n": 2
+        },
+        {
+          "id": "swsh1-140",
+          "name": "Snorlax",
+          "n": 2
+        },
+        {
+          "id": "swsh1-164",
+          "name": "Great Ball",
+          "n": 4
+        },
+        {
+          "id": "swsh1-165",
+          "name": "Hop",
+          "n": 4
+        },
+        {
+          "id": "swsh1-171",
+          "name": "Ordinary Rod",
+          "n": 1
+        },
+        {
+          "id": "swsh1-173",
+          "name": "Poké Kid",
+          "n": 2
+        },
+        {
+          "id": "swsh1-174",
+          "name": "Pokégear 3.0",
+          "n": 1
+        },
+        {
+          "id": "swsh1-176",
+          "name": "Pokémon Center Lady",
+          "n": 1
+        },
+        {
+          "id": "swsh1-177",
+          "name": "Potion",
+          "n": 2
+        },
+        {
+          "id": "swsh1-178",
+          "name": "Professor's Research (Professor Magnolia)",
+          "n": 3
+        },
+        {
+          "id": "swsh1-183",
+          "name": "Switch",
+          "n": 2
+        },
+        {
+          "id": "energy-grass-swsh",
+          "name": "Grass Energy",
+          "n": 18
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Rillaboom_Theme_Deck_(TCG)",
+          "quote": "Bulbapedia deck list (decklist/entry rows), 60 cards; release date; trivia 'The Cracked Ice Holofoil version of Rillaboom is exclusive to this deck'"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/sword-shield-theme-deck-rillaboom",
+          "quote": "TCGsync product page 'Deck List' matches Bulbapedia card-for-card by name and count"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; the Sword & Shield era's own basic Energy (2020 print) is on the site as energy-<type>-swsh, so energy print assumed. Both lists agree card-for-card by name and count (only difference: the site spells swsh1-178 as 'Professor's Research (Professor Magnolia)', the sources just 'Professor's Research'; Bulbapedia notes the deck copy is the Non Holofoil print). Rillaboom is 2 copies of swsh1-15: Bulbapedia lists 1 Rare Holo (the deck-exclusive Cracked Ice Holofoil) + the rest regular Rare. Card ids resolved by set+number; cards from earlier sets keep their own set id (swsh1/swsh2/swsh3/swsh4).  Showcase TCGplayer product is in group 1840 'Deck Exclusives'.",
+      "product": "theme-deck-rillaboom"
+    },
+    {
+      "set": "swsh1",
+      "name": "Cinderace",
+      "showcase": "Cinderace",
+      "showcaseCard": "swsh1-36",
+      "showcasePrint": "Cracked Ice Holofoil print, exclusive to this theme deck (1 copy); the set's pack print differs. Remaining copies regular Rare.",
+      "showcaseTcgplayerId": 206435,
+      "showcaseTcgplayerName": "Cinderace - 036/202 (Cracked Ice Holo)",
+      "tcgplayerId": 206035,
+      "tcgplayerName": "Sword & Shield Theme Deck [Cinderace]",
+      "marketPrice": 20.4,
+      "released": "2020-02-07",
+      "extras": "60-card deck, damage counters, one-player playmat, deckbox, custom coin (featuring Scorbunny), Quick Start Rules booklet, TCG Online code card (TCGplayer sells the code card separately as 'Code Card - ...'). No booster pack. (Bulbapedia deck page intro.)",
+      "total": 60,
+      "cards": [
+        {
+          "id": "swsh1-36",
+          "name": "Cinderace",
+          "n": 2
+        },
+        {
+          "id": "swsh1-33",
+          "name": "Raboot",
+          "n": 3
+        },
+        {
+          "id": "swsh1-31",
+          "name": "Scorbunny",
+          "n": 3
+        },
+        {
+          "id": "swsh1-23",
+          "name": "Ninetales",
+          "n": 2
+        },
+        {
+          "id": "swsh1-22",
+          "name": "Vulpix",
+          "n": 3
+        },
+        {
+          "id": "swsh1-154",
+          "name": "Dubwool",
+          "n": 2
+        },
+        {
+          "id": "swsh1-153",
+          "name": "Wooloo",
+          "n": 3
+        },
+        {
+          "id": "swsh1-149",
+          "name": "Drampa",
+          "n": 2
+        },
+        {
+          "id": "swsh1-100",
+          "name": "Sudowoodo",
+          "n": 2
+        },
+        {
+          "id": "swsh1-157",
+          "name": "Bede",
+          "n": 2
+        },
+        {
+          "id": "swsh1-164",
+          "name": "Great Ball",
+          "n": 4
+        },
+        {
+          "id": "swsh1-165",
+          "name": "Hop",
+          "n": 4
+        },
+        {
+          "id": "swsh1-171",
+          "name": "Ordinary Rod",
+          "n": 1
+        },
+        {
+          "id": "swsh1-173",
+          "name": "Poké Kid",
+          "n": 2
+        },
+        {
+          "id": "swsh1-174",
+          "name": "Pokégear 3.0",
+          "n": 1
+        },
+        {
+          "id": "swsh1-175",
+          "name": "Pokémon Catcher",
+          "n": 1
+        },
+        {
+          "id": "swsh1-178",
+          "name": "Professor's Research (Professor Magnolia)",
+          "n": 3
+        },
+        {
+          "id": "swsh1-183",
+          "name": "Switch",
+          "n": 2
+        },
+        {
+          "id": "energy-fire-swsh",
+          "name": "Fire Energy",
+          "n": 18
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Cinderace_Theme_Deck_(TCG)",
+          "quote": "Bulbapedia deck list (decklist/entry rows), 60 cards; release date; trivia 'The Cracked Ice Holofoil version of Cinderace is exclusive to this deck'"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/sword-shield-theme-deck-cinderace",
+          "quote": "TCGsync product page 'Deck List' matches Bulbapedia card-for-card by name and count"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; the Sword & Shield era's own basic Energy (2020 print) is on the site as energy-<type>-swsh, so energy print assumed. Both lists agree card-for-card by name and count (only difference: the site spells swsh1-178 as 'Professor's Research (Professor Magnolia)', the sources just 'Professor's Research'; Bulbapedia notes the deck copy is the Non Holofoil print). Cinderace is 2 copies of swsh1-36: Bulbapedia lists 1 Rare Holo (the deck-exclusive Cracked Ice Holofoil) + the rest regular Rare. Card ids resolved by set+number; cards from earlier sets keep their own set id (swsh1/swsh2/swsh3/swsh4).  Showcase TCGplayer product is in group 1840 'Deck Exclusives'.",
+      "product": "theme-deck-cinderace"
+    },
+    {
+      "set": "swsh1",
+      "name": "Inteleon",
+      "showcase": "Inteleon",
+      "showcaseCard": "swsh1-59",
+      "showcasePrint": "Cracked Ice Holofoil print, exclusive to this theme deck (1 copy); the set's pack print differs. Remaining copies regular Rare.",
+      "showcaseTcgplayerId": 206432,
+      "showcaseTcgplayerName": "Inteleon - 059/202 (Cracked Ice Holo)",
+      "tcgplayerId": 206036,
+      "tcgplayerName": "Sword & Shield Theme Deck [Inteleon]",
+      "marketPrice": 15.67,
+      "released": "2020-02-07",
+      "extras": "60-card deck, damage counters, one-player playmat, deckbox, custom coin (featuring Sobble), Quick Start Rules booklet, TCG Online code card (TCGplayer sells the code card separately as 'Code Card - ...'). No booster pack. (Bulbapedia deck page intro.)",
+      "total": 60,
+      "cards": [
+        {
+          "id": "swsh1-59",
+          "name": "Inteleon",
+          "n": 2
+        },
+        {
+          "id": "swsh1-57",
+          "name": "Drizzile",
+          "n": 3
+        },
+        {
+          "id": "swsh1-55",
+          "name": "Sobble",
+          "n": 3
+        },
+        {
+          "id": "swsh1-61",
+          "name": "Drednaw",
+          "n": 2
+        },
+        {
+          "id": "swsh1-60",
+          "name": "Chewtle",
+          "n": 3
+        },
+        {
+          "id": "swsh1-44",
+          "name": "Kingler",
+          "n": 2
+        },
+        {
+          "id": "swsh1-43",
+          "name": "Krabby",
+          "n": 3
+        },
+        {
+          "id": "swsh1-62",
+          "name": "Cramorant",
+          "n": 2
+        },
+        {
+          "id": "swsh1-52",
+          "name": "Mantine",
+          "n": 2
+        },
+        {
+          "id": "swsh1-162",
+          "name": "Energy Switch",
+          "n": 1
+        },
+        {
+          "id": "swsh1-164",
+          "name": "Great Ball",
+          "n": 4
+        },
+        {
+          "id": "swsh1-165",
+          "name": "Hop",
+          "n": 4
+        },
+        {
+          "id": "swsh1-171",
+          "name": "Ordinary Rod",
+          "n": 1
+        },
+        {
+          "id": "swsh1-173",
+          "name": "Poké Kid",
+          "n": 2
+        },
+        {
+          "id": "swsh1-174",
+          "name": "Pokégear 3.0",
+          "n": 1
+        },
+        {
+          "id": "swsh1-175",
+          "name": "Pokémon Catcher",
+          "n": 2
+        },
+        {
+          "id": "swsh1-178",
+          "name": "Professor's Research (Professor Magnolia)",
+          "n": 3
+        },
+        {
+          "id": "swsh1-183",
+          "name": "Switch",
+          "n": 2
+        },
+        {
+          "id": "energy-water-swsh",
+          "name": "Water Energy",
+          "n": 18
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Inteleon_Theme_Deck_(TCG)",
+          "quote": "Bulbapedia deck list (decklist/entry rows), 60 cards; release date; trivia 'The Cracked Ice Holofoil version of Inteleon is exclusive to this deck'"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/sword-shield-theme-deck-inteleon",
+          "quote": "TCGsync product page 'Deck List' matches Bulbapedia card-for-card by name and count"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; the Sword & Shield era's own basic Energy (2020 print) is on the site as energy-<type>-swsh, so energy print assumed. Both lists agree card-for-card by name and count (only difference: the site spells swsh1-178 as 'Professor's Research (Professor Magnolia)', the sources just 'Professor's Research'; Bulbapedia notes the deck copy is the Non Holofoil print). Inteleon is 2 copies of swsh1-59: Bulbapedia lists 1 Rare Holo (the deck-exclusive Cracked Ice Holofoil) + the rest regular Rare. Card ids resolved by set+number; cards from earlier sets keep their own set id (swsh1/swsh2/swsh3/swsh4).  Showcase TCGplayer product is in group 1840 'Deck Exclusives'.",
+      "product": "theme-deck-inteleon"
+    },
+    {
+      "set": "swsh2",
+      "name": "Zacian",
+      "showcase": "Zacian",
+      "showcaseCard": "swsh2-139",
+      "showcasePrint": "Cracked Ice Holofoil print, exclusive to this theme deck (1 copy); the set's pack print differs. Remaining copies regular Rare.",
+      "showcaseTcgplayerId": 213238,
+      "showcaseTcgplayerName": "Zacian - 139/192 (Cracked Ice Holo)",
+      "tcgplayerId": 210571,
+      "tcgplayerName": "Rebel Clash Theme Deck [Zacian]",
+      "marketPrice": 24.02,
+      "released": "2020-05-01",
+      "extras": "60-card deck, damage counters, one-player playmat, deckbox, custom coin (featuring Zacian), Quick Start Rules booklet, TCG Online code card (TCGplayer sells the code card separately as 'Code Card - ...'). No booster pack. (Bulbapedia deck page intro.)",
+      "total": 60,
+      "cards": [
+        {
+          "id": "swsh2-139",
+          "name": "Zacian",
+          "n": 2
+        },
+        {
+          "id": "swsh2-145",
+          "name": "Unfezant",
+          "n": 2
+        },
+        {
+          "id": "swsh2-144",
+          "name": "Tranquill",
+          "n": 3
+        },
+        {
+          "id": "swsh2-143",
+          "name": "Pidove",
+          "n": 3
+        },
+        {
+          "id": "swsh2-127",
+          "name": "Galarian Perrserker",
+          "n": 2
+        },
+        {
+          "id": "swsh1-127",
+          "name": "Galarian Meowth",
+          "n": 3
+        },
+        {
+          "id": "swsh2-131",
+          "name": "Probopass",
+          "n": 2
+        },
+        {
+          "id": "swsh2-96",
+          "name": "Nosepass",
+          "n": 3
+        },
+        {
+          "id": "swsh2-148",
+          "name": "Hawlucha",
+          "n": 2
+        },
+        {
+          "id": "swsh2-158",
+          "name": "Dan",
+          "n": 2
+        },
+        {
+          "id": "swsh1-164",
+          "name": "Great Ball",
+          "n": 2
+        },
+        {
+          "id": "swsh1-165",
+          "name": "Hop",
+          "n": 4
+        },
+        {
+          "id": "swsh1-170",
+          "name": "Metal Saucer",
+          "n": 2
+        },
+        {
+          "id": "swsh1-173",
+          "name": "Poké Kid",
+          "n": 2
+        },
+        {
+          "id": "swsh1-175",
+          "name": "Pokémon Catcher",
+          "n": 2
+        },
+        {
+          "id": "swsh1-178",
+          "name": "Professor's Research (Professor Magnolia)",
+          "n": 2
+        },
+        {
+          "id": "swsh2-167",
+          "name": "Sonia",
+          "n": 2
+        },
+        {
+          "id": "swsh1-183",
+          "name": "Switch",
+          "n": 2
+        },
+        {
+          "id": "energy-metal-swsh",
+          "name": "Metal Energy",
+          "n": 18
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Zacian_Theme_Deck_(TCG)",
+          "quote": "Bulbapedia deck list (decklist/entry rows), 60 cards; release date; trivia 'The Cracked Ice Holofoil version of Zacian is exclusive to this deck'"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/sword-shield-rebel-clash-theme-deck-zacian",
+          "quote": "TCGsync product page 'Deck List' matches Bulbapedia card-for-card by name and count"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; the Sword & Shield era's own basic Energy (2020 print) is on the site as energy-<type>-swsh, so energy print assumed. Both lists agree card-for-card by name and count (only difference: the site spells swsh1-178 as 'Professor's Research (Professor Magnolia)', the sources just 'Professor's Research'; Bulbapedia notes the deck copy is the Non Holofoil print). Zacian is 2 copies of swsh2-139: Bulbapedia lists 1 Rare Holo (the deck-exclusive Cracked Ice Holofoil) + the rest regular Rare. Card ids resolved by set+number; cards from earlier sets keep their own set id (swsh1/swsh2/swsh3/swsh4).  Showcase TCGplayer product is in group 1840 'Deck Exclusives'.",
+      "product": "theme-deck-zacian"
+    },
+    {
+      "set": "swsh2",
+      "name": "Zamazenta",
+      "showcase": "Zamazenta",
+      "showcaseCard": "swsh2-140",
+      "showcasePrint": "Cracked Ice Holofoil print, exclusive to this theme deck (1 copy); the set's pack print differs. Remaining copies regular Rare.",
+      "showcaseTcgplayerId": 213239,
+      "showcaseTcgplayerName": "Zamazenta - 140/192 (Cracked Ice Holo)",
+      "tcgplayerId": 210570,
+      "tcgplayerName": "Rebel Clash Theme Deck [Zamazenta]",
+      "marketPrice": 32.21,
+      "released": "2020-05-01",
+      "extras": "60-card deck, damage counters, one-player playmat, deckbox, custom coin (featuring Zamazenta), Quick Start Rules booklet, TCG Online code card (TCGplayer sells the code card separately as 'Code Card - ...'). No booster pack. (Bulbapedia deck page intro.)",
+      "total": 60,
+      "cards": [
+        {
+          "id": "swsh2-140",
+          "name": "Zamazenta",
+          "n": 2
+        },
+        {
+          "id": "swsh1-135",
+          "name": "Corviknight",
+          "n": 2
+        },
+        {
+          "id": "swsh1-151",
+          "name": "Corvisquire",
+          "n": 3
+        },
+        {
+          "id": "swsh1-150",
+          "name": "Rookidee",
+          "n": 3
+        },
+        {
+          "id": "swsh1-134",
+          "name": "Bisharp",
+          "n": 2
+        },
+        {
+          "id": "swsh1-133",
+          "name": "Pawniard",
+          "n": 3
+        },
+        {
+          "id": "swsh1-131",
+          "name": "Ferrothorn",
+          "n": 2
+        },
+        {
+          "id": "swsh1-130",
+          "name": "Ferroseed",
+          "n": 3
+        },
+        {
+          "id": "swsh2-138",
+          "name": "Duraludon",
+          "n": 2
+        },
+        {
+          "id": "swsh2-158",
+          "name": "Dan",
+          "n": 2
+        },
+        {
+          "id": "swsh1-164",
+          "name": "Great Ball",
+          "n": 2
+        },
+        {
+          "id": "swsh1-165",
+          "name": "Hop",
+          "n": 4
+        },
+        {
+          "id": "swsh1-170",
+          "name": "Metal Saucer",
+          "n": 2
+        },
+        {
+          "id": "swsh1-173",
+          "name": "Poké Kid",
+          "n": 2
+        },
+        {
+          "id": "swsh1-177",
+          "name": "Potion",
+          "n": 2
+        },
+        {
+          "id": "swsh1-178",
+          "name": "Professor's Research (Professor Magnolia)",
+          "n": 2
+        },
+        {
+          "id": "swsh2-167",
+          "name": "Sonia",
+          "n": 2
+        },
+        {
+          "id": "swsh1-183",
+          "name": "Switch",
+          "n": 2
+        },
+        {
+          "id": "energy-metal-swsh",
+          "name": "Metal Energy",
+          "n": 18
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Zamazenta_Theme_Deck_(TCG)",
+          "quote": "Bulbapedia deck list (decklist/entry rows), 60 cards; release date; trivia 'The Cracked Ice Holofoil version of Zamazenta is exclusive to this deck'"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/sword-shield-rebel-clash-theme-deck-zamazenta",
+          "quote": "TCGsync product page 'Deck List' matches Bulbapedia card-for-card by name and count"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; the Sword & Shield era's own basic Energy (2020 print) is on the site as energy-<type>-swsh, so energy print assumed. Both lists agree card-for-card by name and count (only difference: the site spells swsh1-178 as 'Professor's Research (Professor Magnolia)', the sources just 'Professor's Research'; Bulbapedia notes the deck copy is the Non Holofoil print). Zamazenta is 2 copies of swsh2-140: Bulbapedia lists 1 Rare Holo (the deck-exclusive Cracked Ice Holofoil) + the rest regular Rare. Card ids resolved by set+number; cards from earlier sets keep their own set id (swsh1/swsh2/swsh3/swsh4). Duraludon swsh2-138 is a deck-exclusive Non Holofoil print (Bulbapedia trivia); TCGplayer 215606 'Duraludon - 138/192 (SWSH Rebel Clash)' in group 1840. Showcase TCGplayer product is in group 1840 'Deck Exclusives'.",
+      "product": "theme-deck-zamazenta"
+    },
+    {
+      "set": "swsh3",
+      "name": "Galarian Darmanitan",
+      "showcase": "Galarian Darmanitan",
+      "showcaseCard": "swsh3-44",
+      "showcasePrint": "Cracked Ice Holofoil print, exclusive to this theme deck (1 copy); the set's pack print differs. Remaining copies regular Rare.",
+      "showcaseTcgplayerId": 220097,
+      "showcaseTcgplayerName": "Galarian Darmanitan - 44/189 (Cracked Ice Holo)",
+      "tcgplayerId": 216865,
+      "tcgplayerName": "Darkness Ablaze Theme Deck [Galarian Darmanitan]",
+      "marketPrice": 27.99,
+      "released": "2020-08-14",
+      "extras": "60-card deck, damage counters, one-player playmat, deckbox, custom coin, Quick Start Rules booklet, TCG Online code card (TCGplayer sells the code card separately as 'Code Card - ...'). No booster pack. (Bulbapedia deck page intro.)",
+      "total": 60,
+      "cards": [
+        {
+          "id": "swsh3-44",
+          "name": "Galarian Darmanitan",
+          "n": 2
+        },
+        {
+          "id": "swsh3-28",
+          "name": "Galarian Darmanitan",
+          "n": 1
+        },
+        {
+          "id": "swsh3-43",
+          "name": "Galarian Darumaka",
+          "n": 3
+        },
+        {
+          "id": "swsh2-42",
+          "name": "Pelipper",
+          "n": 2
+        },
+        {
+          "id": "swsh2-41",
+          "name": "Wingull",
+          "n": 3
+        },
+        {
+          "id": "swsh3-49",
+          "name": "Beartic",
+          "n": 2
+        },
+        {
+          "id": "swsh3-48",
+          "name": "Cubchoo",
+          "n": 3
+        },
+        {
+          "id": "swsh3-50",
+          "name": "Wishiwashi",
+          "n": 2
+        },
+        {
+          "id": "swsh3-37",
+          "name": "Suicune",
+          "n": 2
+        },
+        {
+          "id": "swsh3-133",
+          "name": "Kangaskhan",
+          "n": 2
+        },
+        {
+          "id": "swsh1-157",
+          "name": "Bede",
+          "n": 2
+        },
+        {
+          "id": "swsh3-159",
+          "name": "Bird Keeper",
+          "n": 2
+        },
+        {
+          "id": "swsh2-156",
+          "name": "Capacious Bucket",
+          "n": 2
+        },
+        {
+          "id": "swsh1-164",
+          "name": "Great Ball",
+          "n": 2
+        },
+        {
+          "id": "swsh1-165",
+          "name": "Hop",
+          "n": 4
+        },
+        {
+          "id": "swsh1-178",
+          "name": "Professor's Research (Professor Magnolia)",
+          "n": 2
+        },
+        {
+          "id": "swsh2-167",
+          "name": "Sonia",
+          "n": 2
+        },
+        {
+          "id": "swsh1-183",
+          "name": "Switch",
+          "n": 2
+        },
+        {
+          "id": "swsh3-172",
+          "name": "Turbo Patch",
+          "n": 2
+        },
+        {
+          "id": "energy-water-swsh",
+          "name": "Water Energy",
+          "n": 18
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Galarian_Darmanitan_Theme_Deck_(TCG)",
+          "quote": "Bulbapedia deck list (decklist/entry rows), 60 cards; release date; trivia 'The Cracked Ice Holofoil version of Galarian Darmanitan is exclusive to this deck'"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/sword-shield-darkness-ablaze-theme-deck-galarian-darmanitan",
+          "quote": "TCGsync product page 'Deck List' matches Bulbapedia card-for-card by name and count"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; the Sword & Shield era's own basic Energy (2020 print) is on the site as energy-<type>-swsh, so energy print assumed. Both lists agree card-for-card by name and count (only difference: the site spells swsh1-178 as 'Professor's Research (Professor Magnolia)', the sources just 'Professor's Research'; Bulbapedia notes the deck copy is the Non Holofoil print). Galarian Darmanitan is 2 copies of swsh3-44: Bulbapedia lists 1 Rare Holo (the deck-exclusive Cracked Ice Holofoil) + the rest regular Rare. Card ids resolved by set+number; cards from earlier sets keep their own set id (swsh1/swsh2/swsh3/swsh4). Deck-exclusive Non Holofoil prints per Bulbapedia: Suicune swsh3-37 (also in Inteleon V League Battle Deck; TCGplayer 220672 in 1840) and Kangaskhan swsh3-133 (also Darkness Ablaze Build & Battle Box; TCGplayer 220095). Bulbapedia: the TCGO deck unlocked by the code card swapped Sonia + Capacious Bucket for Lucky Egg + Air Balloon; the physical list is as given. Showcase TCGplayer product is in group 1840 'Deck Exclusives'.",
+      "product": "theme-deck-galarian-darmanitan"
+    },
+    {
+      "set": "swsh3",
+      "name": "Galarian Sirfetch'd",
+      "showcase": "Galarian Sirfetch'd",
+      "showcaseCard": "swsh3-98",
+      "showcasePrint": "Cracked Ice Holofoil print, exclusive to this theme deck (1 copy); the set's pack print differs. Remaining copies regular Rare.",
+      "showcaseTcgplayerId": 220096,
+      "showcaseTcgplayerName": "Galarian Sirfetch'd - 98/189 (Cracked Ice holo)",
+      "tcgplayerId": 216866,
+      "tcgplayerName": "Darkness Ablaze Theme Deck [Galarian Sirfetch'd]",
+      "marketPrice": 24.46,
+      "released": "2020-08-14",
+      "extras": "60-card deck, damage counters, one-player playmat, deckbox, custom coin, Quick Start Rules booklet, TCG Online code card (TCGplayer sells the code card separately as 'Code Card - ...'). No booster pack. (Bulbapedia deck page intro.)",
+      "total": 60,
+      "cards": [
+        {
+          "id": "swsh3-98",
+          "name": "Galarian Sirfetch'd",
+          "n": 3
+        },
+        {
+          "id": "swsh2-94",
+          "name": "Galarian Farfetch'd",
+          "n": 3
+        },
+        {
+          "id": "swsh3-85",
+          "name": "Dugtrio",
+          "n": 2
+        },
+        {
+          "id": "swsh3-84",
+          "name": "Diglett",
+          "n": 3
+        },
+        {
+          "id": "swsh3-94",
+          "name": "Hippowdon",
+          "n": 2
+        },
+        {
+          "id": "swsh3-93",
+          "name": "Hippopotas",
+          "n": 3
+        },
+        {
+          "id": "swsh2-111",
+          "name": "Stonjourner",
+          "n": 2
+        },
+        {
+          "id": "swsh1-100",
+          "name": "Sudowoodo",
+          "n": 2
+        },
+        {
+          "id": "swsh3-97",
+          "name": "Passimian",
+          "n": 2
+        },
+        {
+          "id": "swsh1-157",
+          "name": "Bede",
+          "n": 2
+        },
+        {
+          "id": "swsh3-159",
+          "name": "Bird Keeper",
+          "n": 2
+        },
+        {
+          "id": "swsh1-164",
+          "name": "Great Ball",
+          "n": 2
+        },
+        {
+          "id": "swsh1-165",
+          "name": "Hop",
+          "n": 4
+        },
+        {
+          "id": "swsh1-175",
+          "name": "Pokémon Catcher",
+          "n": 2
+        },
+        {
+          "id": "swsh1-178",
+          "name": "Professor's Research (Professor Magnolia)",
+          "n": 2
+        },
+        {
+          "id": "swsh2-167",
+          "name": "Sonia",
+          "n": 2
+        },
+        {
+          "id": "swsh1-183",
+          "name": "Switch",
+          "n": 2
+        },
+        {
+          "id": "swsh3-172",
+          "name": "Turbo Patch",
+          "n": 2
+        },
+        {
+          "id": "energy-fighting-swsh",
+          "name": "Fighting Energy",
+          "n": 18
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Galarian_Sirfetch%27d_Theme_Deck_(TCG)",
+          "quote": "Bulbapedia deck list (decklist/entry rows), 60 cards; release date; trivia 'The Cracked Ice Holofoil version of Galarian Sirfetch'd is exclusive to this deck'"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/sword-shield-darkness-ablaze-theme-deck-galarian-sirfetchd",
+          "quote": "TCGsync product page 'Deck List' matches Bulbapedia card-for-card by name and count"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; the Sword & Shield era's own basic Energy (2020 print) is on the site as energy-<type>-swsh, so energy print assumed. Both lists agree card-for-card by name and count (only difference: the site spells swsh1-178 as 'Professor's Research (Professor Magnolia)', the sources just 'Professor's Research'; Bulbapedia notes the deck copy is the Non Holofoil print). Galarian Sirfetch'd is 3 copies of swsh3-98: Bulbapedia lists 1 Rare Holo (the deck-exclusive Cracked Ice Holofoil) + the rest regular Rare. Card ids resolved by set+number; cards from earlier sets keep their own set id (swsh1/swsh2/swsh3/swsh4). Stonjourner swsh2-111 is a deck-exclusive Non Holofoil print (Bulbapedia; TCGplayer 220673 'Stonjourner - 111/192' in 1840). Showcase TCGplayer product is in group 1840 'Deck Exclusives'.",
+      "product": "theme-deck-galarian-sirfetch-d"
+    },
+    {
+      "set": "swsh4",
+      "name": "Charizard",
+      "showcase": "Charizard",
+      "showcaseCard": "swsh4-25",
+      "showcasePrint": "Cracked Ice Holofoil print, exclusive to this theme deck (1 copy); the set's pack print differs. Remaining copies regular Rare.",
+      "showcaseTcgplayerId": 227648,
+      "showcaseTcgplayerName": "Charizard - 25/185 (Cracked Ice Holo)",
+      "tcgplayerId": 221750,
+      "tcgplayerName": "Vivid Voltage Theme Deck [Charizard]",
+      "marketPrice": 30.76,
+      "released": "2020-11-13",
+      "extras": "60-card deck, damage counters, one-player playmat, deckbox, custom coin, Quick Start Rules booklet, TCG Online code card (TCGplayer sells the code card separately as 'Code Card - ...'). No booster pack. (Bulbapedia deck page intro.)",
+      "total": 60,
+      "cards": [
+        {
+          "id": "swsh4-25",
+          "name": "Charizard",
+          "n": 2
+        },
+        {
+          "id": "swsh4-24",
+          "name": "Charmeleon",
+          "n": 3
+        },
+        {
+          "id": "swsh4-23",
+          "name": "Charmander",
+          "n": 3
+        },
+        {
+          "id": "swsh4-7",
+          "name": "Yanmega",
+          "n": 2
+        },
+        {
+          "id": "swsh4-6",
+          "name": "Yanma",
+          "n": 3
+        },
+        {
+          "id": "swsh4-28",
+          "name": "Magcargo",
+          "n": 2
+        },
+        {
+          "id": "swsh4-27",
+          "name": "Slugma",
+          "n": 3
+        },
+        {
+          "id": "swsh1-100",
+          "name": "Sudowoodo",
+          "n": 2
+        },
+        {
+          "id": "swsh3-140",
+          "name": "Lugia",
+          "n": 1
+        },
+        {
+          "id": "swsh1-157",
+          "name": "Bede",
+          "n": 2
+        },
+        {
+          "id": "swsh2-158",
+          "name": "Dan",
+          "n": 2
+        },
+        {
+          "id": "swsh1-163",
+          "name": "Evolution Incense",
+          "n": 1
+        },
+        {
+          "id": "swsh1-164",
+          "name": "Great Ball",
+          "n": 2
+        },
+        {
+          "id": "swsh1-165",
+          "name": "Hop",
+          "n": 4
+        },
+        {
+          "id": "swsh4-154",
+          "name": "Leon",
+          "n": 2
+        },
+        {
+          "id": "swsh1-171",
+          "name": "Ordinary Rod",
+          "n": 2
+        },
+        {
+          "id": "swsh1-178",
+          "name": "Professor's Research (Professor Magnolia)",
+          "n": 2
+        },
+        {
+          "id": "swsh2-167",
+          "name": "Sonia",
+          "n": 2
+        },
+        {
+          "id": "swsh1-183",
+          "name": "Switch",
+          "n": 2
+        },
+        {
+          "id": "energy-fire-swsh",
+          "name": "Fire Energy",
+          "n": 18
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Charizard_Theme_Deck_(TCG)",
+          "quote": "Bulbapedia deck list (decklist/entry rows), 60 cards; release date; trivia 'The Cracked Ice Holofoil version of Charizard is exclusive to this deck'"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/sword-shield-vivid-voltage-theme-deck-charizard",
+          "quote": "TCGsync product page 'Deck List' matches Bulbapedia card-for-card by name and count"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; the Sword & Shield era's own basic Energy (2020 print) is on the site as energy-<type>-swsh, so energy print assumed. Both lists agree card-for-card by name and count (only difference: the site spells swsh1-178 as 'Professor's Research (Professor Magnolia)', the sources just 'Professor's Research'; Bulbapedia notes the deck copy is the Non Holofoil print). Charizard is 2 copies of swsh4-25: Bulbapedia lists 1 Rare Holo (the deck-exclusive Cracked Ice Holofoil) + the rest regular Rare. Card ids resolved by set+number; cards from earlier sets keep their own set id (swsh1/swsh2/swsh3/swsh4). Leon swsh4-154 is a Non Holofoil print shared with the Vivid Voltage Build & Battle Box (TCGplayer 227649 in 1840). Showcase TCGplayer product is in group 1840 'Deck Exclusives'.",
+      "product": "theme-deck-charizard"
+    },
+    {
+      "set": "swsh4",
+      "name": "Drednaw",
+      "showcase": "Drednaw",
+      "showcaseCard": "swsh4-39",
+      "showcasePrint": "Cracked Ice Holofoil print, exclusive to this theme deck (1 copy); the set's pack print differs. Remaining copies regular Rare.",
+      "showcaseTcgplayerId": 227650,
+      "showcaseTcgplayerName": "Drednaw - 39/185 (Cracked Ice Holo)",
+      "tcgplayerId": 221751,
+      "tcgplayerName": "Vivid Voltage Theme Deck [Drednaw]",
+      "marketPrice": 11.72,
+      "released": "2020-11-13",
+      "extras": "60-card deck, damage counters, one-player playmat, deckbox, custom coin, Quick Start Rules booklet, TCG Online code card (TCGplayer sells the code card separately as 'Code Card - ...'). No booster pack. (Bulbapedia deck page intro.)",
+      "total": 60,
+      "cards": [
+        {
+          "id": "swsh4-39",
+          "name": "Drednaw",
+          "n": 3
+        },
+        {
+          "id": "swsh4-38",
+          "name": "Chewtle",
+          "n": 3
+        },
+        {
+          "id": "swsh4-35",
+          "name": "Samurott",
+          "n": 2
+        },
+        {
+          "id": "swsh4-34",
+          "name": "Dewott",
+          "n": 3
+        },
+        {
+          "id": "swsh4-33",
+          "name": "Oshawott",
+          "n": 3
+        },
+        {
+          "id": "swsh4-42",
+          "name": "Barraskewda",
+          "n": 1
+        },
+        {
+          "id": "swsh4-41",
+          "name": "Arrokuda",
+          "n": 3
+        },
+        {
+          "id": "swsh4-40",
+          "name": "Cramorant",
+          "n": 2
+        },
+        {
+          "id": "swsh3-50",
+          "name": "Wishiwashi",
+          "n": 2
+        },
+        {
+          "id": "swsh1-157",
+          "name": "Bede",
+          "n": 2
+        },
+        {
+          "id": "swsh2-158",
+          "name": "Dan",
+          "n": 2
+        },
+        {
+          "id": "swsh1-163",
+          "name": "Evolution Incense",
+          "n": 1
+        },
+        {
+          "id": "swsh1-164",
+          "name": "Great Ball",
+          "n": 2
+        },
+        {
+          "id": "swsh1-165",
+          "name": "Hop",
+          "n": 4
+        },
+        {
+          "id": "swsh4-157",
+          "name": "Nessa",
+          "n": 3
+        },
+        {
+          "id": "swsh1-178",
+          "name": "Professor's Research (Professor Magnolia)",
+          "n": 2
+        },
+        {
+          "id": "swsh2-167",
+          "name": "Sonia",
+          "n": 2
+        },
+        {
+          "id": "swsh1-183",
+          "name": "Switch",
+          "n": 2
+        },
+        {
+          "id": "energy-water-swsh",
+          "name": "Water Energy",
+          "n": 18
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Drednaw_Theme_Deck_(TCG)",
+          "quote": "Bulbapedia deck list (decklist/entry rows), 60 cards; release date; trivia 'The Cracked Ice Holofoil version of Drednaw is exclusive to this deck'"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/sword-shield-vivid-voltage-theme-deck-drednaw",
+          "quote": "TCGsync product page 'Deck List' matches Bulbapedia card-for-card by name and count"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; the Sword & Shield era's own basic Energy (2020 print) is on the site as energy-<type>-swsh, so energy print assumed. Both lists agree card-for-card by name and count (only difference: the site spells swsh1-178 as 'Professor's Research (Professor Magnolia)', the sources just 'Professor's Research'; Bulbapedia notes the deck copy is the Non Holofoil print). Drednaw is 3 copies of swsh4-39: Bulbapedia lists 1 Rare Holo (the deck-exclusive Cracked Ice Holofoil) + the rest regular Rare. Card ids resolved by set+number; cards from earlier sets keep their own set id (swsh1/swsh2/swsh3/swsh4).  Showcase TCGplayer product is in group 1840 'Deck Exclusives'.",
+      "product": "theme-deck-drednaw"
+    }
+  ],
+  "gifts": []
+}

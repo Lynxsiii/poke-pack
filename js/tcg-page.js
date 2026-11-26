@@ -11,6 +11,7 @@
  *   root                the view's section
  *   esc, toast, buzz, navigate(path), reduceMotion()
  *   playerName()        "@handle" or "You"
+ *   signedIn()          whether there is an account (a match against a friend needs one)
  *   storeKey()          a per-account suffix for what is kept on this device
  *   owned()             { cardId: copies } raw and graded together
  *   findCard(id)        a loaded card, or null
@@ -28,10 +29,14 @@ import { botAction } from "./tcg/bot.js";
 import { MAX_DECKS, buildBotDeck, buildDeck, checkDeck, deckList, deckSize, roomFor } from "./tcg/decks.js";
 import { LESSON, LESSON_CARDS, LESSON_SET, createLesson } from "./tcg/tutorial.js";
 import { coinStageHTML, flipCoin } from "./coin.js?v=6";
+import { api } from "./api.js";
 
-const ME = 0;
-const BOT = 1;
+/** The seats on the table. A match against a friend can put you in seat 1 (worker/tcg.js), so these follow the match. */
+let ME = 0;
+let BOT = 1;
 const BOT_NAME = "House bot";
+/** The move clock of a match against a friend (worker/tcg.js TCG_TIMING.DECISION_MS). */
+const TCG_MOVE_SECONDS = 90;
 /**
  * Energy symbols: the real printed symbols, self-hosted as transparent PNGs under
  * assets/tcg/energy/ (source: pokewiki.de "<Type>Symbol_TCG.png" files). "A|B" units show as Any.
@@ -81,7 +86,7 @@ export function initTcg(deps) {
     }
   }
   const saveDecks = () => write("decks", decks);
-  const saveMatch = () => write("match", match && match.state.phase !== "over" ? { state: match.state, deckId: match.deckId, botSet: match.botSet, botTheme: match.botTheme || "", lesson: match.lesson ?? null } : null);
+  const saveMatch = () => !match?.online && write("match", match && match.state.phase !== "over" ? { state: match.state, deckId: match.deckId, botSet: match.botSet, botTheme: match.botTheme || "", lesson: match.lesson ?? null } : null);
 
   /* ---------- loading ---------- */
 
@@ -191,6 +196,10 @@ export function initTcg(deps) {
         <p><b>New to the card game?</b>A practice match on borrowed cards, with a coach for the first turns. About three minutes.</p>
         <button type="button" class="solid sm" data-lesson>Start lesson</button>
       </div>`}
+      <div class="rt-box tg-learn tg-friend-entry">
+        <p><b>Play a friend</b>${lobby.matches?.incoming.length ? `${plural(lobby.matches.incoming.length, "challenge")} waiting for you.` : lobby.matches?.live.length ? `${lobby.matches.live.length === 1 ? "A match is" : `${lobby.matches.live.length} matches are`} on.` : "Challenge a friend with one of your decks."}</p>
+        <button type="button" class="${lobby.matches?.incoming.length || lobby.matches?.live.length ? "solid" : "ghost"} sm" data-go="/play/friends">${lobby.matches?.incoming.length ? "See challenges" : lobby.matches?.live.length ? "Back to it" : "Challenge"}</button>
+      </div>
       <section class="tg-block">
         <h2 class="tg-h2">Your decks</h2>
         ${decks.length ? decks.map(deckRowHtml).join("") : `<p class="rt-empty tg-none">No decks yet. ${playable ? `You own ${playable} Pokémon you can play.` : "Rip a few packs first: a deck needs Pokémon you own."}</p>`}
@@ -205,7 +214,7 @@ export function initTcg(deps) {
           <li>Trainers: Items and Supporters that draw, search your deck, heal, switch or pull a Pokémon forward. More with each update.</li>
           <li>Pokémon Tools that change HP, Retreat Cost, damage or Weakness can be attached, one to a Pokémon.</li>
           <li>Stadiums stay in play for both players. Tap the Stadium on the table to read it or use it.</li>
-          <li>Not yet: Abilities, and some attack text (the printed damage still lands). Matches against other players come later.</li>
+          <li>Not yet: Abilities, and some attack text (the printed damage still lands).</li>
         </ul>
         ${read("learned", false) ? `<button type="button" class="tlink tg-relearn" data-lesson>Run the lesson again</button>` : ""}
       </section>
@@ -472,6 +481,7 @@ export function initTcg(deps) {
     }
     if (!botDeck) return toast("Couldn't build the bot a deck from your sets. Try another deck.");
     const seed = (Math.random() * 0xffffffff) >>> 0;
+    botSeats();
     const state = createGame({ decks: [deckList(deck), deckList(botDeck)], names: [deps.playerName(), BOT_NAME], format: deck.format, seed }, defs);
     match = { state, deckId, botSet, botTheme: botDeck.theme || "", sel: null, sheet: "", busy: false, line: "", setup: { active: null, bench: [] }, opening: true, over: false };
     // The bot sets up at once; its cards stay face down until both are ready.
@@ -480,10 +490,17 @@ export function initTcg(deps) {
     deps.navigate("/play/match");
   }
 
+  /** Against the bot you are always seat 0. */
+  function botSeats() {
+    ME = 0;
+    BOT = 1;
+  }
+
   /** The lesson: a stacked practice match on borrowed cards, with the coach (js/tcg/tutorial.js). */
   async function startLesson() {
     await deps.loadSet(LESSON_SET).catch(() => null);
     if (!LESSON_CARDS.every((id) => defs(id))) return toast("Couldn't load the lesson. Check your connection and try again.");
+    botSeats();
     const state = createLesson([deps.playerName(), BOT_NAME], defs);
     match = { state, deckId: null, botSet: LESSON_SET, lesson: 0, sel: null, sheet: "", busy: false, line: "", setup: { active: null, bench: [] }, opening: false, over: false };
     apply(state, botAction(state, BOT, defs), defs);
@@ -533,21 +550,32 @@ export function initTcg(deps) {
       write("match", null);
       return false;
     }
+    botSeats();
     match = { state: saved.state, deckId: saved.deckId, botSet: saved.botSet, botTheme: saved.botTheme || "", lesson: saved.lesson ?? null, sel: null, sheet: "", busy: false, line: "", setup: { active: null, bench: [] }, opening: false, over: false };
     return true;
   }
 
   const S = () => match.shownState || match.state;
-  const d = (uid) => defOf(match.state, uid, defs);
+  // A match against a friend holds only your view: their hand and both decks are placeholders, so a card may be unknown.
+  const d = (uid) => (match.state.cards[uid] ? defOf(match.state, uid, defs) : null);
   const myTurn = () => match.state.phase === "main" && match.state.current === ME && !match.state.pending.length && !match.state.ending;
-  const legal = () => (match.busy ? [] : legalActions(match.state, ME, defs));
+  // Online, the Worker says what is legal (it alone sees the whole state); against the bot the page asks the engine.
+  const legal = () => (match.busy ? [] : match.online ? match.online.legal : legalActions(match.state, ME, defs));
+  const serverLegal = (test) => (match.online.legal || []).some(test);
+  const usableNow = (state) => (match.online ? match.online.legal.filter((a) => a.type === "attack").map((a) => a.index) : usableAttacks(state, ME, defs));
+  const canRetreatNow = (state) => (match.online ? serverLegal((a) => a.type === "retreat") : canRetreat(state, ME, defs));
+  const abilityWhy = (state, spot) => (match.online ? (serverLegal((a) => a.type === "ability" && a.spot === spot) ? "" : "Can't be used right now.") : abilityBlock(state, ME, spot, defs));
+  const stadiumWhy = (state) => (match.online ? (serverLegal((a) => a.type === "stadium") ? "" : "Can't be used right now.") : stadiumBlock(state, ME, defs));
+  const trainerWhy = (state, def) => (match.online ? "" : trainerBlock(state, ME, def, defs));
+  /** Who sits across the table: the house bot, or the friend you're playing. */
+  const foeName = () => (match?.online ? match.state.players[BOT]?.name || "They" : BOT_NAME);
 
   function monHtml(state, p, slot, spot, { big = false, target = false, chosen = false } = {}) {
     const def = defOf(state, slot.uid, defs);
     const left = hpLeft(state, slot, defs);
     const full = maxHp(state, slot, defs);
     const toolName = slot.tool ? defOf(state, slot.tool, defs).name : "";
-    const ready = p === ME && state.phase === "main" && !match.busy && myTurn() && !state.pending.length && !abilityBlock(state, ME, spot, defs);
+    const ready = p === ME && state.phase === "main" && !match.busy && myTurn() && !state.pending.length && !abilityWhy(state, spot);
     const label = `${p === ME ? "Your" : "Their"} ${def.name}, ${left} of ${full} HP${toolName ? `, holding ${toolName}` : ""}${ready ? `, ${def.ability.name} ready` : ""}`;
     return `<button type="button" class="tg-mon${ready ? " has-ability" : ""}${big ? " big" : ""}${target ? " is-target" : ""}${chosen ? " is-chosen" : ""}" data-p="${p}" data-spot="${spot}" aria-label="${esc(label)}">
       <img src="${img(state.cards[slot.uid], big)}" alt="" draggable="false" decoding="async" />
@@ -585,6 +613,7 @@ export function initTcg(deps) {
     const state = match.state;
     if (match.busy) return { text: match.line || "", keys: "" };
     if (state.phase === "setup") {
+      if (match.online && state.players[ME].placed) return { text: `Waiting for ${foeName()} to set up.`, keys: "" };
       if (!match.setup.active) return { text: "Choose your Active Pokémon from your hand.", keys: "" };
       return { text: "Add Benched Pokémon if you like.", keys: `<button type="button" class="solid sm" data-act="start">Start</button>` };
     }
@@ -614,7 +643,7 @@ export function initTcg(deps) {
       return { text, keys: waiting.optional ? `<button type="button" class="ghost sm" data-act="pick-skip">Stay in</button>` : "" };
     }
     if (waiting?.player === ME) return { text: "Choose your new Active Pokémon.", keys: "" };
-    if (!myTurn()) return { text: match.line || `${BOT_NAME} is thinking`, keys: "" };
+    if (!myTurn()) return { text: match.line || `${foeName()} is thinking`, keys: "" };
     const sel = match.sel;
     if (sel?.kind === "retreat") return { text: "Who comes in? Tap a Benched Pokémon.", keys: `<button type="button" class="ghost sm" data-act="cancel">Cancel</button>` };
     if (sel?.kind === "hand") {
@@ -625,13 +654,13 @@ export function initTcg(deps) {
       else if (acts.some((a) => a.type === "evolve")) text = `${def.name}: tap the Pokémon it evolves from.`;
       else if (acts.some((a) => a.type === "attach" || a.type === "tool")) text = `${def.name}: tap a Pokémon to attach it.`;
       else if (acts.some((a) => a.type === "play")) return { text: def.text || `Play ${def.name}?`, keys: `<button type="button" class="solid sm" data-act="play-card">Play</button><button type="button" class="ghost sm" data-act="look">View</button>` };
-      else if (def.kind === "trainer") text = trainerBlock(state, ME, def, defs) || `${def.name} can't be played right now.`;
+      else if (def.kind === "trainer") text = trainerWhy(state, def) || `${def.name} can't be played right now.`;
       else if (def.kind === "energy") text = "One Energy a turn, and you've attached yours.";
       else if (def.kind === "pokemon" && def.stage === "basic") text = "Your Bench is full.";
       else if (def.kind === "pokemon") text = `${def.name} evolves from ${def.evolvesFrom}, a turn after it comes into play.`;
       return { text, keys: `<button type="button" class="ghost sm" data-act="look">View</button>` };
     }
-    const canAttack = usableAttacks(state, ME, defs).length > 0;
+    const canAttack = usableNow(state).length > 0;
     return {
       text: state.turn === 1 ? "Going first: no attack this turn." : canAttack ? "Tap your Active Pokémon to attack." : "Play cards, then end your turn.",
       keys: `<button type="button" class="${canAttack ? "ghost" : "solid"} sm" data-act="end">End turn</button>`,
@@ -688,16 +717,16 @@ export function initTcg(deps) {
         <span class="tg-count" title="Cards in deck"><i class="tg-ic deck"></i>${foe.deck.length}</span>
       </div>
       <div class="tg-bench tg-bench-foe">
-        ${foe.bench.map((slot, i) => (setup ? foeBack : monHtml(state, BOT, slot, i, { target: foeTargets.has(i) }))).join("")}
+        ${(setup && match.online ? Array(match.online.hidden.bench).fill(null) : foe.bench).map((slot, i) => (setup ? foeBack : monHtml(state, BOT, slot, i, { target: foeTargets.has(i) }))).join("")}
       </div>
       <div class="tg-arena">
         ${state.stadium ? `<button type="button" class="tg-stadium" data-act="stadium" aria-label="Stadium in play: ${esc(defOf(state, state.stadium.uid, defs).name)}"><img src="${img(state.cards[state.stadium.uid])}" alt="" draggable="false" /><b>Stadium</b></button>` : ""}
         <span class="tg-slab" aria-hidden="true"></span>
-        <div class="tg-spot tg-spot-foe" data-p="1">${foe.active ? (setup ? foeBack : monHtml(state, BOT, foe.active, ACTIVE, { big: true, target: foeTargets.has(ACTIVE) })) : ""}</div>
+        <div class="tg-spot tg-spot-foe" data-p="${BOT}">${foe.active || (setup && match.online?.hidden.active) ? (setup ? foeBack : monHtml(state, BOT, foe.active, ACTIVE, { big: true, target: foeTargets.has(ACTIVE) })) : ""}</div>
         <div class="tg-info tg-info-foe">
-          ${setup ? `<div class="tg-hud" data-p="1"><b class="tg-hud-name">${esc(foe.name)}</b><span class="tg-pips"><small>Ready when you are</small></span></div>` : hudHtml(state, BOT)}
+          ${setup ? `<div class="tg-hud" data-p="${BOT}"><b class="tg-hud-name">${esc(foe.name)}</b><span class="tg-pips"><small>${match.online ? (match.online.hidden.placed ? "Ready" : "Choosing their Pokémon") : "Ready when you are"}</small></span></div>` : hudHtml(state, BOT)}
         </div>
-        <div class="tg-spot tg-spot-me" data-p="0">${myActive ? monHtml(state, ME, myActive, ACTIVE, { big: true, target: targets.has(ACTIVE) }) : `<span class="tg-hole">Active</span>`}</div>
+        <div class="tg-spot tg-spot-me" data-p="${ME}">${myActive ? monHtml(state, ME, myActive, ACTIVE, { big: true, target: targets.has(ACTIVE) }) : `<span class="tg-hole">Active</span>`}</div>
         <div class="tg-info tg-info-me">
           <p class="tg-line" aria-live="polite">${esc(match.busy || !myTurn() ? "" : match.line || "")}</p>
           ${setup ? "" : hudHtml(state, ME)}
@@ -709,6 +738,7 @@ export function initTcg(deps) {
       </div>
       <div class="tg-bar tg-bar-me">
         <b class="tg-who">${esc(me.name)}</b>
+        ${match.online && real.phase !== "over" ? clockHtml() : ""}
         ${prizesHtml(state, ME)}
         <span class="tg-count" title="Cards in your deck"><span class="tg-mini">${back}</span>${me.deck.length}</span>
         <span class="tg-count" title="Cards in your discard pile"><i class="tg-ic bin"></i>${me.discard.length}</span>
@@ -734,7 +764,7 @@ export function initTcg(deps) {
     const slot = slotOf(ME, spot);
     const ability = d(slot.uid).ability;
     if (!ability) return "";
-    const why = !ability.use ? "" : !myTurn() ? "Wait for your turn." : abilityBlock(state, ME, spot, defs);
+    const why = !ability.use ? "" : !myTurn() ? "Wait for your turn." : abilityWhy(state, spot);
     const off = !abilityOn(state, slot, defs);
     return `<div class="tg-abil${off ? " off" : ""}">
       <span class="tg-abil-top"><em>${esc(ability.kind)}</em><b>${esc(ability.name)}</b>${ability.use ? `<button type="button" class="solid sm" data-act="ability-use" data-spot="${spot}"${why ? " disabled" : ""}>Use</button>` : ""}</span>
@@ -763,13 +793,13 @@ export function initTcg(deps) {
   function stadiumSheetHtml() {
     const state = match.state;
     const def = defOf(state, state.stadium.uid, defs);
-    const why = def.stadium?.use ? (myTurn() ? stadiumBlock(state, ME, defs) : "Wait for your turn.") : "";
+    const why = def.stadium?.use ? (myTurn() ? stadiumWhy(state) : "Wait for your turn.") : "";
     return `<div class="tg-sheet-bg" data-act="cancel"></div>
       <div class="tg-sheet tg-stadium-sheet" role="dialog" aria-label="${esc(def.name)}">
         <img src="${img(state.cards[state.stadium.uid], true)}" alt="" draggable="false" />
         <div>
           <h3>${esc(def.name)}</h3>
-          <p class="tg-look-meta">Stadium, played by ${state.stadium.owner === ME ? "you" : BOT_NAME}. It affects both players.</p>
+          <p class="tg-look-meta">Stadium, played by ${state.stadium.owner === ME ? "you" : foeName()}. It affects both players.</p>
           <p class="tg-look-text">${esc(def.text)}</p>
           ${why && def.stadium?.use ? `<p class="tg-look-note">${esc(why)}</p>` : ""}
           <div class="tg-sheet-keys">${def.stadium?.use ? `<button type="button" class="solid sm" data-act="stadium-use"${why ? " disabled" : ""}>Use</button>` : ""}<button type="button" class="ghost sm" data-act="cancel">Close</button></div>
@@ -781,9 +811,9 @@ export function initTcg(deps) {
     const state = match.state;
     const slot = state.players[ME].active;
     const def = d(slot.uid);
-    const usable = new Set(usableAttacks(state, ME, defs));
+    const usable = new Set(usableNow(state));
     const units = energyOf(state, slot, defs);
-    const retreat = canRetreat(state, ME, defs) && myTurn();
+    const retreat = canRetreatNow(state) && myTurn();
     const held = conditionsOn(slot).find((c) => c === "asleep" || c === "paralyzed");
     const barred = (attack) => (slot.marks || []).some((m) => m.kind === "noUse" && m.turn === state.turn && m.name === attack.name);
     // What each attack will really do to the Pokémon in front of it: Weakness, Resistance and what last turn left on it.
@@ -836,13 +866,16 @@ export function initTcg(deps) {
     const state = match.state;
     const won = state.winner === ME;
     const tie = state.winner == null;
-    const why = {
-      prizes: won ? "You took your last prize card." : `${BOT_NAME} took its last prize card.`,
+    let why = {
+      prizes: won ? "You took your last prize card." : `${foeName()} took ${match.online ? "their" : "its"} last prize card.`,
       bench: won ? "They had no Pokémon left to send out." : "You had no Pokémon left to send out.",
       deck: won ? "Their deck ran out." : "Your deck ran out.",
-      concede: won ? `${BOT_NAME} gave up.` : "You conceded.",
+      concede: won ? `${foeName()} gave up.` : "You conceded.",
       tie: "Both sides finished at once.",
     }[state.reason];
+    const clock = match.online?.summary.reason;
+    if (clock === "timeout") why = won ? `${foeName()} ran out of time.` : "You ran out of time.";
+    if (clock === "abandoned") why = "Neither of you set up in time.";
     if (match.lesson != null) {
       return `<div class="tg-sheet-bg"></div>
       <div class="tg-sheet tg-over" role="dialog" aria-label="Lesson over">
@@ -859,7 +892,7 @@ export function initTcg(deps) {
         <h2>${tie ? "A tie" : won ? "You win" : "You lose"}</h2>
         <p>${esc(why)} ${plural(state.turn, "turn")}.</p>
         <div class="tg-sheet-keys">
-          <button type="button" class="solid rt-go" data-act="again">Play again</button>
+          <button type="button" class="solid rt-go" data-act="again">${match.online ? "Challenge again" : "Play again"}</button>
           <button type="button" class="ghost" data-go="/play">Decks</button>
         </div>
       </div>`;
@@ -871,7 +904,7 @@ export function initTcg(deps) {
     const mull = state.players.map((s, p) => {
       if (!s.mulligans) return "";
       const extra = s.mulligans - state.players[other(p)].mulligans;
-      return `${p === ME ? "You" : BOT_NAME} had no Basic Pokémon ${s.mulligans === 1 ? "once" : `${s.mulligans} times`} and drew a new hand${extra > 0 ? `, so ${p === ME ? BOT_NAME : "you"} will draw ${plural(extra, "extra card")}` : ""}.`;
+      return `${p === ME ? "You" : foeName()} had no Basic Pokémon ${s.mulligans === 1 ? "once" : `${s.mulligans} times`} and drew a new hand${extra > 0 ? `, so ${p === ME ? foeName() : "you"} will draw ${plural(extra, "extra card")}` : ""}.`;
     }).filter(Boolean);
     return `<div class="tg-sheet-bg"></div>
       <div class="tg-sheet tg-opening" role="dialog" aria-label="Coin flip">
@@ -967,13 +1000,14 @@ export function initTcg(deps) {
   }
 
   function paintTable() {
-    if (!shown || route.name !== "match") return;
+    if (!shown || (route.name !== "match" && route.name !== "online")) return;
     const scroll = root.querySelector(".tg-hand")?.scrollLeft || 0;
     fxLayer(true);
     root.innerHTML = tableHtml();
     const hand = root.querySelector(".tg-hand");
     if (hand) hand.scrollLeft = scroll;
     if (match.opening && !match.openingRun) runOpening();
+    else if (match.opening && match.openingDone) openingLanded();
   }
 
   async function runOpening() {
@@ -984,8 +1018,15 @@ export function initTcg(deps) {
     // Heads is yours: the coin lands on the side of whoever goes first.
     await flipCoin(coin, mine ? "heads" : "tails", { ms: 1700, motion: !deps.reduceMotion() });
     if (!match?.opening) return;
+    match.openingDone = true;
+    openingLanded();
+  }
+
+  /** The flip has landed: say who won and let the keys work. Again after a repaint (a friend's move can repaint the table mid-flip). */
+  function openingLanded() {
+    const mine = (match.state.flipWinner ?? match.state.first) === ME;
     const text = root.querySelector("#tg-first");
-    if (text) text.textContent = mine ? "You won the flip" : `${BOT_NAME} won the flip and goes first`;
+    if (text) text.textContent = mine ? "You won the flip" : `${foeName()} won the flip and goes first`;
     const lab = root.querySelector(".tg-opening-lab");
     if (lab) lab.textContent = mine ? "Heads" : "Tails";
     root.querySelector(".tg-opening-note")?.removeAttribute("hidden");
@@ -996,11 +1037,11 @@ export function initTcg(deps) {
 
   function tell(event) {
     const state = match.state;
-    const who = (p) => (p === ME ? "You" : BOT_NAME);
+    const who = (p) => (p === ME ? "You" : foeName());
     const name = (uid) => d(uid)?.name || "a card";
     switch (event.t) {
-      case "turn": return event.p === ME ? "Your turn." : `${BOT_NAME}'s turn.`;
-      case "draw": return event.p === ME ? `You drew ${event.uids.length === 1 ? name(event.uids[0]) : plural(event.uids.length, "card")}.` : `${BOT_NAME} drew ${event.uids.length === 1 ? "a card" : plural(event.uids.length, "card")}.`;
+      case "turn": return event.p === ME ? "Your turn." : `${foeName()}'s turn.`;
+      case "draw": return event.p === ME ? `You drew ${event.uids.length === 1 ? name(event.uids[0]) : plural(event.uids.length, "card")}.` : `${foeName()} drew ${event.uids.length === 1 ? "a card" : plural(event.uids.length, "card")}.`;
       case "bench": return `${who(event.p)} benched ${name(event.uid)}.`;
       case "evolve": return `${who(event.p)} evolved into ${name(event.uid)}.`;
       case "attach": return `${who(event.p)} attached ${name(event.uid)}.`;
@@ -1217,7 +1258,7 @@ export function initTcg(deps) {
   function animate(event, from) {
     if (still()) return 0;
     if (event.t === "turn") {
-      banner(event.p === ME ? "Your turn" : `${BOT_NAME}'s turn`, event.p === ME ? "me" : "foe");
+      banner(event.p === ME ? "Your turn" : `${foeName()}'s turn`, event.p === ME ? "me" : "foe");
       return 0;
     }
     if (event.t === "draw" || (event.t === "search" && event.to === "hand")) {
@@ -1320,13 +1361,14 @@ export function initTcg(deps) {
    * Do one action and play it back. An attack is shown in beats: the lunge,
    * any coin, the hit on the board as it was, then the board as it is now.
    */
+  /** An attack, or the choice an attack left open, is played in beats on the table as it stood. */
+  const inBeats = (action) => action.type === "attack" || (action.type === "pick" && action.spot != null);
+
   async function run(action) {
+    if (match.online) return runOnline(action);
     const state = match.state;
-    const fast = deps.reduceMotion();
-    const wait = (ms) => sleep(fast ? Math.min(ms, 120) : ms);
     if (action.player === ME && !coachAllows(action)) return false;
-    // An attack, or the choice an attack left open, is played in beats on the table as it stood.
-    const before = action.type === "attack" || (action.type === "pick" && action.spot != null) ? JSON.parse(JSON.stringify(state)) : null;
+    const before = inBeats(action) ? JSON.parse(JSON.stringify(state)) : null;
     // Where the card being played sits in the hand, before the hand is redrawn without it.
     const played = action.player === ME && action.uid ? dropFrom || rectOf(`.tg-hand [data-hand="${action.uid}"]`) : null;
     dropFrom = null;
@@ -1338,6 +1380,13 @@ export function initTcg(deps) {
       else throw err;
       return false;
     }
+    return playBack(action, events, before, played);
+  }
+
+  /** Play one action's events on the table. `match.state` already holds the state after it; `before` the state before an attack. */
+  async function playBack(action, events, before, played) {
+    const fast = deps.reduceMotion();
+    const wait = (ms) => sleep(fast ? Math.min(ms, 120) : ms);
     if (action.player === ME && lessonStep()?.want?.(action)) match.lesson += 1;
     match.busy = true;
     match.sel = null;
@@ -1458,7 +1507,7 @@ export function initTcg(deps) {
 
     match.unseen = null;
     match.busy = false;
-    if (state.phase === "over") return finish();
+    if (match.state.phase === "over") return finish();
     paintTable();
     botTurn();
     return true;
@@ -1468,6 +1517,8 @@ export function initTcg(deps) {
     if (match.over) return true;
     match.over = true;
     match.busy = false;
+    // A match against a friend is kept by the Worker, and no record or reward comes of it here.
+    if (match.online) return paintTable(), true;
     if (match.lesson != null) write("learned", true);
     else if (match.state.winner === ME) record.wins += 1;
     else if (match.state.winner === BOT) record.losses += 1;
@@ -1479,6 +1530,7 @@ export function initTcg(deps) {
 
   /** The bot plays while it has something to do: its turn, or its new Active Pokémon. */
   async function botTurn() {
+    if (match.online) return;
     const state = match.state;
     const mine = match;
     while (mine === match && shown && state.phase === "main" && !match.busy) {
@@ -1498,11 +1550,322 @@ export function initTcg(deps) {
     }
   }
 
+  /* ---------- a match against a friend (worker/tcg.js) ----------
+     The Worker runs the rules. The page sends an action, gets back the steps
+     since the last one it has shown ({ seq, action, events, view }) and plays
+     each through playBack, the same path a bot match takes. While it isn't the
+     player's move it polls for the other player's steps. Nothing is kept on
+     the device and nothing is won. */
+
+  const POLL_MS = 1500;
+  const POLL_IDLE_MS = 4000;
+  let pollTimer = 0;
+  let clockTimer = 0;
+
+  /** The engine's view with counts turned back into lists, so the table can count them; the cards stay unknown. */
+  function hydrate(view, online) {
+    const hidden = { active: false, bench: 0, placed: false };
+    view.players.forEach((side, p) => {
+      const fill = (n, tag) => (typeof n === "number" ? Array.from({ length: n }, (_, i) => `?${tag}${p}-${i}`) : n);
+      side.hand = fill(side.hand, "h");
+      side.deck = fill(side.deck, "d");
+      side.prizes = fill(side.prizes, "p");
+      if (view.phase === "setup" && p !== ME) {
+        // Their picks stay face down until both are ready; the table only shows that there are some.
+        hidden.active = Boolean(side.active);
+        hidden.bench = side.bench.length;
+        hidden.placed = Boolean(side.placed);
+        side.active = null;
+        side.bench = [];
+      }
+    });
+    if (online) online.hidden = hidden;
+    return view;
+  }
+
+  /** Your placed Pokémon, as the setup screen draws them, once the Worker has them. */
+  function setupFrom(state) {
+    const me = state.players[ME];
+    return state.phase === "setup" && me.placed && me.active?.uid ? { active: me.active.uid, bench: me.bench.map((s) => s.uid) } : { active: null, bench: [] };
+  }
+
+  function takeSummary(online, summary) {
+    if (!summary) return;
+    online.summary = summary;
+    online.skew = summary.now - Date.now();
+  }
+
+  /** Load a match from the Worker onto the table. Resolves the match, `{ waiting }` for a challenge not yet answered, or null. */
+  async function openOnline(id) {
+    const res = await api(`/api/tcg/matches/${id}`);
+    if (res.match.status === "open") return { waiting: res.match };
+    if (!res.view) return null;
+    ME = res.match.seat;
+    BOT = 1 - ME;
+    await ensureCards(Object.values(res.view.cards));
+    const online = { id, seq: res.seq, legal: res.legal || [], summary: null, hidden: null, queue: Promise.resolve() };
+    takeSummary(online, res.match);
+    const state = hydrate(res.view, online);
+    const me = state.players[ME];
+    // The flip is shown to its winner until they choose who goes first, and to the other player when they arrive.
+    const opening = state.phase === "setup" && !me.placed && (state.flipWinner !== ME || !res.match.ordered);
+    match = { online, state, deckId: null, botSet: "", sel: null, sheet: "", busy: false, line: "", setup: setupFrom(state), opening, over: false };
+    if (state.phase === "over" || res.match.status === "over") {
+      state.phase = "over";
+      state.winner ??= res.match.winner;
+      match.over = true;
+    }
+    return match;
+  }
+
+  /** Steps from the Worker, played one after another, in order, never two at once. */
+  function playSteps(res, played = null) {
+    const mine = match;
+    const online = mine.online;
+    online.queue = online.queue
+      .then(async () => {
+        if (mine !== match) return;
+        takeSummary(online, res.match);
+        const fresh = (res.steps || []).filter((step) => step.seq > online.seq);
+        if (res.view && !fresh.length && res.seq !== online.seq) {
+          // The Worker couldn't replay the steps (its rules changed mid-match): take the table as it is now.
+          match.state = hydrate(res.view, online);
+          online.seq = res.seq;
+        }
+        for (const step of fresh) {
+          if (mine !== match) return;
+          const before = inBeats(step.action) ? JSON.parse(JSON.stringify(match.state)) : null;
+          const ours = step.action.player === ME;
+          await ensureCards(Object.values(step.view.cards));
+          match.state = hydrate(step.view, online);
+          online.seq = step.seq;
+          online.legal = step.seq === res.seq ? res.legal || [] : [];
+          match.setup = setupFrom(match.state);
+          if (!ours) match.sel = null;
+          await playBack(step.action, step.events, before, ours ? played : null);
+        }
+        if (online.seq === res.seq) online.legal = res.legal || [];
+        // Neither player set up in time: the Worker ends the match without a step.
+        if (res.match?.status === "over" && match.state.phase !== "over") {
+          match.state.phase = "over";
+          match.state.winner = res.match.winner;
+          finish();
+        }
+        if ((fresh.length || res.view || match.over) && shown && mine === match && !match.busy && route.name === "online") paintTable();
+      })
+      .catch((err) => console.error("tcg online", err));
+    return online.queue;
+  }
+
+  async function runOnline(action) {
+    const online = match.online;
+    if (online.sending && action.type !== "concede") return false;
+    const played = action.player === ME && action.uid ? dropFrom || rectOf(`.tg-hand [data-hand="${action.uid}"]`) : null;
+    dropFrom = null;
+    online.sending = true;
+    match.sel = null;
+    match.sheet = "";
+    match.leaving = false;
+    const mine = match;
+    let res;
+    try {
+      res = await api(`/api/tcg/matches/${online.id}/action`, { method: "POST", body: JSON.stringify({ action, since: online.seq }) });
+    } catch (err) {
+      online.sending = false;
+      if (mine !== match) return false;
+      toast(err.message || "That didn't go through.");
+      paintTable();
+      pollSoon(200);
+      return false;
+    }
+    online.sending = false;
+    if (mine !== match) return false;
+    await playSteps(res, played);
+    pollSoon();
+    return true;
+  }
+
+  const myMove = () => Boolean(match?.online && (match.online.summary?.toMove || []).includes(ME));
+
+  function pollSoon(ms = myMove() ? POLL_IDLE_MS : POLL_MS) {
+    clearTimeout(pollTimer);
+    if (!match?.online || match.over) return;
+    pollTimer = setTimeout(poll, ms);
+  }
+
+  async function poll() {
+    const mine = match;
+    if (!shown || route.name !== "online" || !mine?.online || mine.over) return;
+    if (mine.busy || mine.online.sending) return pollSoon(500);
+    try {
+      const res = await api(`/api/tcg/matches/${mine.online.id}?since=${mine.online.seq}`);
+      if (mine !== match) return;
+      if (!mine.online.sending) await playSteps(res);
+    } catch {
+      /* a dropped poll: the next one catches up */
+    }
+    if (mine === match) pollSoon();
+  }
+
+  /** The move clock on the table: how long is left for whoever owes the move. Text only, no repaint. */
+  function tickClock() {
+    clearInterval(clockTimer);
+    clockTimer = setInterval(() => {
+      if (!shown || route.name !== "online") return clearInterval(clockTimer);
+      const el = root.querySelector("[data-clock]");
+      const clock = clockNow();
+      if (!el || !clock) return;
+      el.textContent = clock.text;
+      el.classList.toggle("is-mine", clock.mine);
+      el.classList.toggle("is-low", clock.low);
+      el.title = clock.title;
+      if (!clock.secs) pollSoon(400);
+    }, 1000);
+  }
+
+  /** Whose move it is and how long they have left, from the Worker's clock. */
+  function clockNow() {
+    const summary = match?.online?.summary;
+    if (!summary) return null;
+    const secs = Math.max(0, Math.round((summary.deadline - (Date.now() + (match.online.skew || 0))) / 1000));
+    const mine = summary.toMove.includes(ME);
+    return { secs, mine, low: mine && secs <= 20, text: `${Math.floor(secs / 60)}:${String(secs % 60).padStart(2, "0")}`, title: mine ? "Your time for this move" : `${foeName()}'s time for this move` };
+  }
+  function clockHtml() {
+    const clock = clockNow();
+    if (!clock) return "";
+    return `<span class="tg-clock${clock.mine ? " is-mine" : ""}${clock.low ? " is-low" : ""}" data-clock title="${esc(clock.title)}">${clock.text}</span>`;
+  }
+
+  /* ---------- the friends page: challenges and matches ---------- */
+
+  const lobby = { friends: null, matches: null, deckId: "", loading: false, error: "", known: new Set() };
+  let lobbyTimer = 0;
+
+  const readyDecks = () => decks.filter((deck) => checkDeck(deck, owned(), defs).ok);
+  const timeLeft = (ms) => (ms < 60000 ? "under a minute" : `${Math.round(ms / 60000)} min`);
+  const handleOf = (u) => (u?.handle ? `@${u.handle}` : u?.name || "A trainer");
+
+  async function loadLobby() {
+    if (lobby.loading) return;
+    if (!deps.signedIn?.()) {
+      lobby.error = "Sign in to play your friends.";
+      if (shown && route.name === "friends") root.innerHTML = friendsHtml();
+      return;
+    }
+    lobby.loading = true;
+    try {
+      const [friends, matches] = await Promise.all([lobby.friends ? Promise.resolve(lobby.friends) : api("/api/friends"), api("/api/tcg/matches")]);
+      lobby.friends = friends;
+      // A challenge you sent was just accepted: go to the table.
+      const started = matches.live.find((m) => m.challenger && lobby.known.has(m.id));
+      lobby.known = new Set(matches.outgoing.map((m) => m.id));
+      lobby.matches = matches;
+      lobby.error = "";
+      if (started && shown && route.name === "friends") {
+        lobby.loading = false;
+        return deps.navigate(`/play/online/${started.id}`);
+      }
+    } catch (err) {
+      lobby.error = err.status === 401 ? "Sign in to play your friends." : err.message || "Couldn't load your friends.";
+    }
+    lobby.loading = false;
+    if (shown && route.name === "friends") root.innerHTML = friendsHtml();
+  }
+
+  function lobbySoon() {
+    clearTimeout(lobbyTimer);
+    lobbyTimer = setTimeout(async () => {
+      if (!shown || route.name !== "friends") return;
+      await loadLobby();
+      lobbySoon();
+    }, 4000);
+  }
+
+  const markHtml = (u, on = false) => `<span class="tg-pvp-mark${on ? " on" : ""}" aria-hidden="true">${esc((u?.handle || u?.name || "?").slice(0, 1).toUpperCase())}</span>`;
+
+  function matchRowHtml(m, keys, line) {
+    return `<article class="rt-box tg-deck tg-pvp-row">
+      ${markHtml(m.them)}
+      <div class="tg-deck-main"><h3>${esc(handleOf(m.them))}</h3><p>${line}</p></div>
+      <div class="tg-deck-keys">${keys}</div>
+    </article>`;
+  }
+
+  function resultOf(x) {
+    const how = x.reason === "timeout" ? " on time" : x.reason === "concede" ? (x.winner === x.seat ? ", they conceded" : ", you conceded") : "";
+    if (x.status === "over") return x.reason === "abandoned" ? "Nobody set up in time" : x.winner == null ? "A tie" : x.winner === x.seat ? `You won${how}` : `You lost${how}`;
+    return x.status === "declined" ? "Declined" : x.status === "expired" ? "Nobody answered" : "Called off";
+  }
+
+  function friendsHtml() {
+    const ready = readyDecks();
+    if (!ready.some((deck) => deck.id === lobby.deckId)) lobby.deckId = ready[0]?.id || "";
+    const chosen = ready.find((deck) => deck.id === lobby.deckId);
+    const m = lobby.matches;
+    const now = Date.now();
+    const fmt = (id) => FORMATS[id]?.name || "Deck";
+    const busyWith = new Set(m ? [...m.incoming, ...m.outgoing, ...m.live].map((x) => x.them.handle) : []);
+    const friends = lobby.friends?.friends || [];
+    return `<div class="tg-page tg-pvp">
+      <header class="tg-head">
+        <button type="button" class="tlink tg-back" data-go="/play">Your decks</button>
+        <h1 class="page-title tg-title">Play a friend</h1>
+        <p class="tg-lede">Challenge a friend with one of your decks. Each move has ${TCG_MOVE_SECONDS} seconds on the clock. Just for fun: nothing is won or lost.</p>
+      </header>
+      ${lobby.error ? `<p class="rt-empty tg-none">${esc(lobby.error)}</p>` : ""}
+      <div class="tg-pvp-deck">
+        <span>Your deck</span>
+        ${ready.length ? `<select class="filter" id="tg-pvp-deck" aria-label="Your deck">${ready.map((deck) => `<option value="${esc(deck.id)}"${deck.id === lobby.deckId ? " selected" : ""}>${esc(deck.name)}, ${fmt(deck.format)}</option>`).join("")}</select>` : `<p>No deck is ready yet. <button type="button" class="tlink" data-go="/play">Build one</button></p>`}
+      </div>
+      ${!m ? (lobby.error ? "" : `<div class="rt-skel tg-loading">Loading</div>`) : `
+      ${m.incoming.length ? `<section class="tg-block"><h2 class="tg-h2">Challenges for you</h2>
+        ${m.incoming.map((x) => matchRowHtml(x, `<button type="button" class="solid sm" data-accept="${x.id}"${chosen?.format === x.format ? "" : " disabled"}>Accept</button><button type="button" class="ghost sm" data-decline="${x.id}">Decline</button>`, `${fmt(x.format)}, ${timeLeft(x.deadline - now)} to answer${chosen?.format === x.format ? "" : `. Pick a ${fmt(x.format)} to accept`}`)).join("")}
+      </section>` : ""}
+      ${m.live.length ? `<section class="tg-block"><h2 class="tg-h2">Matches on</h2>
+        ${m.live.map((x) => matchRowHtml(x, `<button type="button" class="solid sm" data-go="/play/online/${x.id}">Play</button>`, `${fmt(x.format)}, ${x.toMove.includes(x.seat) ? "your move" : "their move"}`)).join("")}
+      </section>` : ""}
+      ${m.outgoing.length ? `<section class="tg-block"><h2 class="tg-h2">Waiting for an answer</h2>
+        ${m.outgoing.map((x) => matchRowHtml(x, `<button type="button" class="ghost sm" data-call-off="${x.id}">Call off</button>`, `${esc(x.deckName)}, ${timeLeft(x.deadline - now)} left`)).join("")}
+      </section>` : ""}
+      <section class="tg-block"><h2 class="tg-h2">Friends</h2>
+        ${friends.length ? friends.map((f) => `<article class="rt-box tg-deck tg-pvp-row">
+          ${markHtml(f, f.online)}
+          <div class="tg-deck-main"><h3>${esc(f.name || handleOf(f))}</h3><p>@${esc(f.handle)}${f.online ? ", online now" : ""}</p></div>
+          <div class="tg-deck-keys"><button type="button" class="ghost sm" data-challenge="${esc(f.handle)}"${chosen && !busyWith.has(f.handle) ? "" : " disabled"}>${busyWith.has(f.handle) ? "Playing" : "Challenge"}</button></div>
+        </article>`).join("") : `<p class="rt-empty tg-none">No friends yet. Add some from their profile, then challenge them here.</p>`}
+      </section>
+      ${m.recent.length ? `<section class="tg-block tg-pvp-recent"><h2 class="tg-h2">Lately</h2>
+        <ul>${m.recent.map((x) => `<li><b>${esc(handleOf(x.them))}</b><span>${esc(resultOf(x))}</span></li>`).join("")}</ul>
+      </section>` : ""}`}
+    </div>`;
+  }
+
+  async function lobbyAct(kind, id) {
+    const deck = decks.find((x) => x.id === lobby.deckId);
+    const send = deck ? { name: deck.name, format: deck.format, cards: deck.cards } : null;
+    try {
+      if (kind === "challenge") {
+        await api("/api/tcg/challenge", { method: "POST", body: JSON.stringify({ to: id, deck: send }) });
+        toast(`Challenge sent to @${id}.`);
+      } else if (kind === "accept") {
+        const res = await api(`/api/tcg/matches/${id}/accept`, { method: "POST", body: JSON.stringify({ deck: send }) });
+        return deps.navigate(`/play/online/${res.match.id}`);
+      } else {
+        await api(`/api/tcg/matches/${id}/${kind}`, { method: "POST", body: "{}" });
+      }
+    } catch (err) {
+      toast(err.message || "That didn't go through.");
+    }
+    return loadLobby();
+  }
+
   /* ---------- taps on the table ---------- */
 
   function tapHand(uid) {
     const state = match.state;
     if (match.busy) return;
+    if (state.phase === "setup" && match.online && state.players[ME].placed) return;
     if (state.phase === "setup") {
       const def = d(uid);
       if (def.kind !== "pokemon" || def.stage !== "basic") return toast("Only Basic Pokémon can start in play.");
@@ -1523,7 +1886,7 @@ export function initTcg(deps) {
     const state = match.state;
     if (match.busy) return;
     if (state.phase === "setup") {
-      if (p !== ME || inLesson()) return;
+      if (p !== ME || inLesson() || (match.online && state.players[ME].placed)) return;
       // Tap a placed Pokémon to take it back.
       if (spot === ACTIVE) match.setup = { active: match.setup.bench.shift() || null, bench: match.setup.bench };
       else match.setup.bench.splice(spot, 1);
@@ -1587,7 +1950,7 @@ export function initTcg(deps) {
   function dropTarget(e) {
     const { x, y } = dropPoint(e);
     const el = document.elementFromPoint(x, y);
-    const mon = el?.closest?.('.tg-mon[data-p="0"]');
+    const mon = el?.closest?.(`.tg-mon[data-p="${ME}"]`);
     if (mon) return { el: mon, spot: Number(mon.dataset.spot) };
     const active = el?.closest?.(".tg-spot-me");
     if (active) return { el: active, spot: ACTIVE, empty: true };
@@ -1734,10 +2097,15 @@ export function initTcg(deps) {
 
   function tableAct(act) {
     const state = match.state;
+    if ((act === "go-first" || act === "go-second") && match.online) {
+      match.opening = false;
+      match.line = act === "go-first" ? "You go first." : `${foeName()} goes first.`;
+      return run({ type: "order", player: ME, first: act === "go-first" });
+    }
     if (act === "go-first" || act === "go-second") {
       apply(state, { type: "order", player: ME, first: act === "go-first" }, defs);
       saveMatch();
-      match.line = act === "go-first" ? "You go first." : `${BOT_NAME} goes first.`;
+      match.line = act === "go-first" ? "You go first." : `${foeName()} goes first.`;
       match.opening = false;
       return paintTable();
     }
@@ -1753,13 +2121,14 @@ export function initTcg(deps) {
       match = null;
       return startLesson();
     }
+    if (act === "again" && match.online) return deps.navigate("/play/friends");
     if (act === "again") {
       const id = match.deckId;
       match = null;
       return startMatch(id).then(() => paint());
     }
     if (act === "leave") {
-      if (state.phase === "over") return deps.navigate("/play");
+      if (state.phase === "over") return deps.navigate(match.online ? "/play/friends" : "/play");
       if (!match.leaving) {
         match.leaving = true;
         paintTable();
@@ -1771,6 +2140,7 @@ export function initTcg(deps) {
         }, 3200);
         return;
       }
+      if (match.online) return run({ type: "concede", player: ME });
       apply(state, { type: "concede", player: ME }, defs);
       return finish();
     }
@@ -1813,9 +2183,14 @@ export function initTcg(deps) {
 
   function paint() {
     if (!shown) return;
-    document.body.classList.toggle("tg-playing", route.name === "match" && Boolean(match));
-    if (route.name === "match" && match) return paintTable();
+    const table = (route.name === "match" && match && !match.online) || (route.name === "online" && match?.online);
+    document.body.classList.toggle("tg-playing", Boolean(table));
+    if (table) return paintTable();
     fxLayer(false);
+    if (route.name === "friends") {
+      root.innerHTML = friendsHtml();
+      return;
+    }
     if (route.name === "deck") {
       const deck = deckById(route.id);
       if (deck) {
@@ -1834,7 +2209,16 @@ export function initTcg(deps) {
     const look = t.closest("[data-look]");
     if (look) return openLook(look.dataset.look);
 
-    if (route.name === "match" && match) {
+    if (route.name === "friends") {
+      const key = t.closest("[data-challenge], [data-accept], [data-decline], [data-call-off]");
+      if (!key || key.disabled) return;
+      key.disabled = true;
+      if (key.dataset.challenge) return lobbyAct("challenge", key.dataset.challenge);
+      if (key.dataset.accept) return lobbyAct("accept", key.dataset.accept);
+      if (key.dataset.decline) return lobbyAct("decline", key.dataset.decline);
+      return lobbyAct("cancel", key.dataset.callOff);
+    }
+    if ((route.name === "match" || route.name === "online") && match) {
       const act = t.closest("[data-act]");
       if (act) return tableAct(act.dataset.act);
       const choice = t.closest("[data-choose]");
@@ -1912,6 +2296,11 @@ export function initTcg(deps) {
     }
   });
   root.addEventListener("change", (e) => {
+    if (route.name === "friends" && e.target.id === "tg-pvp-deck") {
+      lobby.deckId = e.target.value;
+      root.innerHTML = friendsHtml();
+      return;
+    }
     const deck = route.name === "deck" ? deckById(route.id) : null;
     if (deck && e.target.id === "tg-type") {
       editor.type = e.target.value;
@@ -1921,13 +2310,16 @@ export function initTcg(deps) {
   document.addEventListener("keydown", (e) => {
     if (!shown || e.key !== "Escape") return;
     if (root.querySelector(".tg-look-holder")) return closeLook();
-    if (match && route.name === "match" && (match.sel || match.sheet === "attacks")) tableAct("cancel");
+    if (match && (route.name === "match" || route.name === "online") && (match.sel || match.sheet === "attacks")) tableAct("cancel");
   });
 
   function parse(path) {
     const deck = path.match(/^\/play\/deck\/([a-z0-9]+)$/);
     if (deck) return { name: "deck", id: deck[1] };
     if (path === "/play/match") return { name: "match" };
+    if (path === "/play/friends") return { name: "friends" };
+    const online = path.match(/^\/play\/online\/([a-f0-9]{20})$/);
+    if (online) return { name: "online", id: online[1] };
     return { name: "hub" };
   }
 
@@ -1942,6 +2334,30 @@ export function initTcg(deps) {
       return;
     }
     if (!shown) return;
+    // A match against a friend and one against the bot never share the table.
+    if (route.name === "match" && match?.online) match = null;
+    if (route.name === "online" && (!match?.online || match.online.id !== route.id)) {
+      let opened = null;
+      try {
+        opened = await openOnline(route.id);
+      } catch (err) {
+        toast(err.message || "Couldn't open that match.");
+      }
+      if (!shown) return;
+      if (!opened || opened.waiting) {
+        if (opened?.waiting) toast(`Waiting for ${handleOf(opened.waiting.them)} to accept.`);
+        deps.navigate("/play/friends");
+        return;
+      }
+    }
+    if (route.name === "friends") {
+      await ensureCards(decks.flatMap((deck) => Object.keys(deck.cards)));
+      if (!shown) return;
+      paint();
+      loadLobby().then(lobbySoon);
+      return;
+    }
+    if (route.name === "hub" && deps.signedIn?.()) loadLobby().then(() => shown && route.name === "hub" && lobby.matches && (lobby.matches.incoming.length || lobby.matches.live.length) && paint());
     if (route.name === "match" && !match && !(await resumeMatch())) {
       deps.navigate("/play");
       return;
@@ -1957,10 +2373,17 @@ export function initTcg(deps) {
     if (route.name === "hub") await ensureCards(decks.flatMap((deck) => Object.keys(deck.cards)));
     paint();
     if (route.name === "match" && match && !match.busy) botTurn();
+    if (route.name === "online" && match?.online) {
+      tickClock();
+      pollSoon(300);
+    }
   }
 
   function hide() {
     shown = false;
+    clearTimeout(pollTimer);
+    clearTimeout(lobbyTimer);
+    clearInterval(clockTimer);
     closeLook();
     if (drag) dragDone();
     fxLayer(false);

@@ -10661,5 +10661,96 @@
     "foilAs": "Rare Ultra",
     "foilMap": "assets/foil/maps/sm12/smp230.webp",
     "etchMap": "assets/foil/maps/sm12/smp230-etch.webp"
+  },
+  {
+    "id": "sm12-113-cracked-ice",
+    "name": "Groudon",
+    "number": "113-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "130",
+    "artist": "Shin Nagasawa",
+    "flavorText": "Said to have expanded the lands by evaporating water with raging heat. It battled titanically with Kyogre.",
+    "image": "assets/cards/sm12/113.webp",
+    "imageSmall": "assets/cards/sm12/113-sm.webp",
+    "attacks": [
+      {
+        "name": "Drought",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Attach up to 2 Fighting Energy cards from your hand to 1 of your Pokémon."
+      },
+      {
+        "name": "Trembling Ground",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "This Pokémon can't use Trembling Ground during your next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm12-113/large",
+    "printedNumber": "113/236",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Towering Heights Theme Deck)",
+    "tcgplayerId": 202333,
+    "market": 26.84
+  },
+  {
+    "id": "sm12-53-cracked-ice",
+    "name": "Kyogre",
+    "number": "53-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "130",
+    "artist": "kawayoo",
+    "flavorText": "A mythical Pokémon said to have swelled the seas with rain and tidal waves. It battled with Groudon.",
+    "image": "assets/cards/sm12/53.webp",
+    "imageSmall": "assets/cards/sm12/53-sm.webp",
+    "attacks": [
+      {
+        "name": "High Water",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Attach 2 Water Energy cards from your discard pile to 1 of your Pokémon."
+      },
+      {
+        "name": "Swirling Waves",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "Discard an Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm12-53/large",
+    "printedNumber": "53/236",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Unseen Depths Theme Deck)",
+    "tcgplayerId": 202331,
+    "market": 19.16
   }
 ]

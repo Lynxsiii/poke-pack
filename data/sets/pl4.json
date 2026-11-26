@@ -138,6 +138,32 @@
         "dpp56"
       ],
       "note": "Second wave, December 16, 2009: two Arceus packs, one Rising Rivals (or Supreme Victors) and one Stormfront (or Secret Wonders) pack (loosepacks.com; PokeBeach says two Arceus and two Diamond & Pearl or Platinum packs): medium confidence."
+    },
+    {
+      "id": "theme-deck-flamemaster",
+      "name": "Theme Deck \"Flamemaster\"",
+      "kind": "deck",
+      "tcgplayerId": 678179,
+      "packs": 0,
+      "promos": [
+        "AR3"
+      ],
+      "price": 76.01,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Arceus, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-stormshaper",
+      "name": "Theme Deck \"Stormshaper\"",
+      "kind": "deck",
+      "tcgplayerId": 678178,
+      "packs": 0,
+      "promos": [
+        "AR6"
+      ],
+      "price": 68.58,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Arceus, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ]
 }

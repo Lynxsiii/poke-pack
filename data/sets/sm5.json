@@ -65,6 +65,24 @@
       "like": "sm35:10a",
       "keepScan": true,
       "foilAs": "Rare Holo GX"
+    },
+    "99-cracked-ice": {
+      "like": "99",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Mach Strike Theme Deck)",
+      "tcgplayerId": 169670,
+      "tcgplayerGroup": 1840
+    },
+    "34-cracked-ice": {
+      "like": "34",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Imperial Command Theme Deck)",
+      "tcgplayerId": 175169,
+      "tcgplayerGroup": 1840
     }
   },
   "products": [
@@ -169,6 +187,32 @@
       "tcgplayerId": 155661,
       "packs": 36,
       "promos": []
+    },
+    {
+      "id": "theme-deck-mach-strike",
+      "name": "Theme Deck \"Mach Strike\"",
+      "kind": "deck",
+      "tcgplayerId": 155665,
+      "packs": 0,
+      "promos": [
+        "99-cracked-ice"
+      ],
+      "price": 14.7,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Garchomp, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-imperial-command",
+      "name": "Theme Deck \"Imperial Command\"",
+      "kind": "deck",
+      "tcgplayerId": 155666,
+      "packs": 0,
+      "promos": [
+        "34-cracked-ice"
+      ],
+      "price": 10.2,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Empoleon, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ]
 }

@@ -7041,5 +7041,93 @@
     "promo": true,
     "foilAs": "Rare Holo",
     "foilMap": "assets/foil/maps/sm7/smp92.webp"
+  },
+  {
+    "id": "sm7-10-cracked-ice",
+    "name": "Sceptile",
+    "number": "10-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "140",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "It agilely leaps about the jungle and uses the sharp leaves on its arms to strike its prey.",
+    "evolvesFrom": "Grovyle",
+    "image": "assets/cards/sm7/10.webp",
+    "imageSmall": "assets/cards/sm7/10-sm.webp",
+    "attacks": [
+      {
+        "name": "Powerful Storm",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20×",
+        "text": "This attack does 20 damage times the amount of Energy attached to all of your Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Power of Nature",
+        "text": "Prevent all damage done to your Pokémon that have any Grass Energy attached to them by attacks from your opponent's Ultra Beasts.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm7-10/large",
+    "printedNumber": "10",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Leaf Charge Theme Deck)",
+    "tcgplayerId": 173065,
+    "market": 4.74
+  },
+  {
+    "id": "sm7-35-cracked-ice",
+    "name": "Swampert",
+    "number": "35-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "160",
+    "artist": "SATOSHI NAKAI",
+    "flavorText": "It can swim while towing a large ship. It bashes down foes with a swing of its thick arms.",
+    "evolvesFrom": "Marshtomp",
+    "image": "assets/cards/sm7/35.webp",
+    "imageSmall": "assets/cards/sm7/35-sm.webp",
+    "attacks": [
+      {
+        "name": "Hydro Pump",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80+",
+        "text": "This attack does 20 more damage times the amount of Water Energy attached to this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Power Draw",
+        "text": "Once during your turn (before your attack), you may discard a card from your hand. If you do, draw 3 cards.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm7-35/large",
+    "printedNumber": "35",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Hydro Fury Theme Deck)",
+    "tcgplayerId": 173063,
+    "market": 15.99
   }
 ]

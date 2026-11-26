@@ -4578,6 +4578,101 @@
     "etchMap": "assets/foil/maps/bw9/122-etch.webp"
   },
   {
+    "id": "bw9-11-cracked-ice",
+    "name": "Leafeon",
+    "number": "11-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "Team Plasma"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "100",
+    "artist": "5ban Graphics",
+    "flavorText": "With cells similar to those of plants, it performs photosynthesis inside its body and creates pure air.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/bw9/11.webp",
+    "imageSmall": "assets/cards/bw9/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Energy Crush",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Does 20 damage times the amount of Energy attached to all of your opponent's Pokémon."
+      },
+      {
+        "name": "Leaf Blade",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "Flip a coin. If heads, this attack does 20 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bw9-11/large",
+    "printedNumber": "11",
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Psy Crusher Theme Deck)",
+    "tcgplayerId": 91386,
+    "market": 23.79
+  },
+  {
+    "id": "bw9-23-cracked-ice",
+    "name": "Glaceon",
+    "number": "23-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "Team Plasma"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "90",
+    "artist": "5ban Graphics",
+    "flavorText": "It lowers its body heat to freeze its fur. The hairs then become like needles it can fire.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/bw9/23.webp",
+    "imageSmall": "assets/cards/bw9/23-sm.webp",
+    "attacks": [
+      {
+        "name": "Icy Wind",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "The Defending Pokémon is now Asleep."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Freeze Zone",
+        "text": "The Retreat Cost of each of your Team Plasma Pokémon in play is ColorlessColorless less.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bw9-23/large",
+    "printedNumber": "23",
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Frost Ray Theme Deck)",
+    "tcgplayerId": 91385,
+    "market": 26.67
+  },
+  {
     "id": "bw9-bwp073",
     "name": "Darkrai",
     "number": "bwp073",
@@ -4617,13 +4712,13 @@
         "text": "Flip a coin. If heads, the Defending Pokémon is now Asleep."
       }
     ],
+    "market": 261.63,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW73/large",
     "printedNumber": "BW 073",
     "tcgplayerId": 84703,
     "era": "bw",
     "promo": true,
     "foilAs": "Rare Ultra",
-    "market": 283.19,
     "foilMap": "assets/foil/maps/bw9/bwp073.webp",
     "etchMap": "assets/foil/maps/bw9/bwp073-etch.webp",
     "etchDrawn": true
@@ -4669,13 +4764,13 @@
         "text": "Discard a random card from your opponent's hand."
       }
     ],
+    "market": 451.7,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW74/large",
     "printedNumber": "BW 074",
     "tcgplayerId": 85739,
     "era": "bw",
     "promo": true,
     "foilAs": "Rare Ultra",
-    "market": 360.79,
     "foilMap": "assets/foil/maps/bw9/bwp074.webp",
     "etchMap": "assets/foil/maps/bw9/bwp074-etch.webp",
     "etchDrawn": true
@@ -4719,13 +4814,13 @@
         "text": "This Pokémon does 100 damage to itself."
       }
     ],
+    "market": 17.48,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW76/large",
     "printedNumber": "BW 076",
     "tcgplayerId": 85164,
     "era": "bw",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 17.48,
     "foilMap": "assets/foil/maps/bw9/bwp076.webp"
   },
   {
@@ -4768,13 +4863,13 @@
         "text": "The Defending Pokémon can't retreat during your opponent's next turn."
       }
     ],
+    "market": 119.99,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW79/large",
     "printedNumber": "BW 079",
     "tcgplayerId": 86594,
     "era": "bw",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 119.99,
     "foilMap": "assets/foil/maps/bw9/bwp079.webp"
   },
   {
@@ -4815,13 +4910,13 @@
         "text": "During your next turn, each of this Pokémon's attacks does 30 more damage (before applying Weakness and Resistance)."
       }
     ],
+    "market": 1.42,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW80/large",
     "printedNumber": "BW 080",
     "tcgplayerId": 242032,
     "era": "bw",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 1.49,
     "foilMap": "assets/foil/maps/bw9/bwp080.webp"
   }
 ]

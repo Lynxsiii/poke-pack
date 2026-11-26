@@ -7850,5 +7850,98 @@
     "promo": true,
     "foilAs": "Rare Holo GX",
     "foilMap": "assets/foil/maps/sm2/smp050.webp"
+  },
+  {
+    "id": "sm2-61-cracked-ice",
+    "name": "Lunala",
+    "number": "61-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "160",
+    "artist": "5ban Graphics",
+    "flavorText": "It is said to be a female evolution of Cosmog. When its third eye activates, away it flies to another world.",
+    "evolvesFrom": "Cosmoem",
+    "image": "assets/cards/sm2/61.webp",
+    "imageSmall": "assets/cards/sm2/61-sm.webp",
+    "attacks": [
+      {
+        "name": "Shatter Shot",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "40×",
+        "text": "This attack does 40 damage times the amount of Psychic Energy attached to this Pokémon."
+      },
+      {
+        "name": "Wings of the Moone",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "130",
+        "text": "Move all Energy from this Pokémon to your Benched Pokémon in any way you like."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm2-61/large",
+    "printedNumber": "61",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Hidden Moon Theme Deck)",
+    "tcgplayerId": 131297,
+    "market": 1.33
+  },
+  {
+    "id": "sm2-87-cracked-ice",
+    "name": "Solgaleo",
+    "number": "87-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "160",
+    "artist": "5ban Graphics",
+    "flavorText": "It is said to live in another world. The intense light it radiates from the surface of its body can make the darkest of nights light up like midday.",
+    "evolvesFrom": "Cosmoem",
+    "image": "assets/cards/sm2/87.webp",
+    "imageSmall": "assets/cards/sm2/87-sm.webp",
+    "attacks": [
+      {
+        "name": "Shining Arrow",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 50 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Fangs of the Sunne",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "170",
+        "text": "This Pokémon can't use Fangs of the Sunne during your next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm2-87/large",
+    "printedNumber": "87",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Steel Sun Theme Deck)",
+    "tcgplayerId": 131295,
+    "market": 0.7
   }
 ]

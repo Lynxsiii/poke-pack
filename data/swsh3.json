@@ -7665,5 +7665,100 @@
     "foilAs": "Rare Holo",
     "market": 12.02,
     "foilMap": "assets/foil/maps/swsh3/swshp042.webp"
+  },
+  {
+    "id": "swsh3-44-cracked-ice",
+    "name": "Galarian Darmanitan",
+    "number": "44-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "140",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "On days when blizzards blow through, it comes down to where people live. It stashes food in the snowball on its head, taking it home for later.",
+    "evolvesFrom": "Galarian Darumaka",
+    "image": "assets/cards/swsh3/44.webp",
+    "imageSmall": "assets/cards/swsh3/44-sm.webp",
+    "attacks": [
+      {
+        "name": "Blizzard",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "This attack also does 10 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Crushing Headbutt",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "170",
+        "text": "During your next turn, this Pokémon can't use Crushing Headbutt."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-44/large",
+    "printedNumber": "44",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Galarian Darmanitan Theme Deck)",
+    "tcgplayerId": 220097,
+    "market": 2.47
+  },
+  {
+    "id": "swsh3-98-cracked-ice",
+    "name": "Galarian Sirfetch'd",
+    "number": "98-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "130",
+    "artist": "Ryota Murayama",
+    "flavorText": "Only Farfetch'd that have survived many battles can attain this evolution. When this Pokémon's leek withers, it will retire from combat.",
+    "evolvesFrom": "Galarian Farfetch'd",
+    "image": "assets/cards/swsh3/98.webp",
+    "imageSmall": "assets/cards/swsh3/98-sm.webp",
+    "attacks": [
+      {
+        "name": "Pierce",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "40",
+        "text": ""
+      },
+      {
+        "name": "Meteor Assault",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": "This Pokémon can't use Meteor Assault again until it leaves the Active Spot."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-98/large",
+    "printedNumber": "98",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Galarian Sirfetch'd Theme Deck)",
+    "tcgplayerId": 220096,
+    "market": 5.01
   }
 ]

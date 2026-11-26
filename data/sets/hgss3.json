@@ -98,6 +98,30 @@
         "hsp17"
       ],
       "note": "One Undaunted pack, one POP Series 9 pack and the Minun promo (HGSS17, Cracked Ice Holo)."
+    },
+    {
+      "id": "theme-deck-daybreak",
+      "name": "Theme Deck \"Daybreak\"",
+      "kind": "deck",
+      "packs": 1,
+      "promos": [
+        "2"
+      ],
+      "price": 986.03,
+      "priceSource": "Sum of the deck's 60 cards and its booster pack at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Espeon, with one booster pack of the set (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-nightfall",
+      "name": "Theme Deck \"Nightfall\"",
+      "kind": "deck",
+      "packs": 1,
+      "promos": [
+        "10"
+      ],
+      "price": 985.65,
+      "priceSource": "Sum of the deck's 60 cards and its booster pack at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Umbreon, with one booster pack of the set (Bulbapedia deck list, checked against a second list)."
     }
   ]
 }

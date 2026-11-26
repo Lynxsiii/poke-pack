@@ -7689,5 +7689,98 @@
     "foilAs": "Rare Holo V",
     "market": 1.36,
     "foilMap": "assets/foil/maps/swsh4/swshp083.webp"
+  },
+  {
+    "id": "swsh4-25-cracked-ice",
+    "name": "Charizard",
+    "number": "25-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "170",
+    "artist": "Ryuta Fuse",
+    "flavorText": "It spits fire that is hot enough to melt boulders. It may cause forest fires by blowing flames.",
+    "evolvesFrom": "Charmeleon",
+    "image": "assets/cards/swsh4/25.webp",
+    "imageSmall": "assets/cards/swsh4/25-sm.webp",
+    "attacks": [
+      {
+        "name": "Royal Blaze",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "100+",
+        "text": "This attack does 50 more damage for each Leon card in your discard pile."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Battle Sense",
+        "text": "Once during your turn, you may look at the top 3 cards of your deck and put 1 of them into your hand. Discard the other cards.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh4-25/large",
+    "printedNumber": "25",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Charizard Theme Deck)",
+    "tcgplayerId": 227648,
+    "market": 37.24
+  },
+  {
+    "id": "swsh4-39-cracked-ice",
+    "name": "Drednaw",
+    "number": "39-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "140",
+    "artist": "Taira Akitsu",
+    "flavorText": "With jaws that can shear through steel rods, this highly aggressive Pokémon chomps down on its unfortunate prey.",
+    "evolvesFrom": "Chewtle",
+    "image": "assets/cards/swsh4/39.webp",
+    "imageSmall": "assets/cards/swsh4/39-sm.webp",
+    "attacks": [
+      {
+        "name": "Vise Wave",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "If you played Nessa from your hand during this turn, your opponent's Active Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Surf",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "140",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh4-39/large",
+    "printedNumber": "39",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Drednaw Theme Deck)",
+    "tcgplayerId": 227650,
+    "market": 1.49
   }
 ]

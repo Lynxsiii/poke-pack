@@ -29,6 +29,24 @@
     },
     "bwp044": {
       "foilAs": "Rare Holo"
+    },
+    "52-cracked-ice": {
+      "like": "52",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Raiders Theme Deck)",
+      "tcgplayerId": 210884,
+      "tcgplayerGroup": 1840
+    },
+    "71-cracked-ice": {
+      "like": "71",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Shadows Theme Deck)",
+      "tcgplayerId": 191906,
+      "tcgplayerGroup": 1840
     }
   },
   "products": [
@@ -125,6 +143,30 @@
       "packs": 2,
       "promos": [],
       "note": "A Blue Assault theme deck, a Samurott figure, two packs (typically a Call of Legends and an Emerging Powers pack) and a Cracked Ice Holo Dewott (a reprint, not simulated)."
+    },
+    {
+      "id": "theme-deck-raiders",
+      "name": "Theme Deck \"Raiders\"",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "52-cracked-ice"
+      ],
+      "price": 91.33,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Cofagrigus, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-shadows",
+      "name": "Theme Deck \"Shadows\"",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "71-cracked-ice"
+      ],
+      "price": 86.66,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Zoroark, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ]
 }

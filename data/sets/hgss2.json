@@ -92,6 +92,30 @@
       ],
       "packs": 2,
       "note": "Two packs and the Smoochum promo (HGSS13). No source gives the pack mix; opened here as two Unleashed packs."
+    },
+    {
+      "id": "theme-deck-chaos-control",
+      "name": "Theme Deck \"Chaos Control\"",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "26"
+      ],
+      "price": 42.88,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Tyranitar, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-steel-sentinel",
+      "name": "Theme Deck \"Steel Sentinel\"",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "24"
+      ],
+      "price": 30.2,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Steelix, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ]
 }

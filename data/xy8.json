@@ -5834,6 +5834,101 @@
     "etchMap": "assets/foil/maps/xy8/164-etch.webp"
   },
   {
+    "id": "xy8-112-cracked-ice",
+    "name": "Noivern",
+    "number": "112-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "100",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "The ultrasonic waves it emits from its ears can reduce a large boulder to pebbles. It emerges out of the dark to attack.",
+    "evolvesFrom": "Noibat",
+    "image": "assets/cards/xy8/112.webp",
+    "imageSmall": "assets/cards/xy8/112-sm.webp",
+    "attacks": [
+      {
+        "name": "Tuning",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Shuffle your hand into your deck. Then, draw a number of cards equal to the number of cards in your opponent's hand."
+      },
+      {
+        "name": "Air Slash",
+        "cost": [
+          "Psychic",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Discard an Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy8-112/large",
+    "printedNumber": "112",
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Night Striker Theme Deck)",
+    "tcgplayerId": 123473,
+    "market": 0.98
+  },
+  {
+    "id": "xy8-49-cracked-ice",
+    "name": "Raichu",
+    "number": "49-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "90",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "It can loose 100,000-volt bursts of electricity instantly downing foes several times its size.",
+    "evolvesFrom": "Pikachu",
+    "image": "assets/cards/xy8/49.webp",
+    "imageSmall": "assets/cards/xy8/49-sm.webp",
+    "attacks": [
+      {
+        "name": "Thunderclap Shot",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 50 damage to each of your opponent's Pokémon-EX. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Electrosmash",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70+",
+        "text": "Flip a coin. If heads, this attack does 20 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy8-49/large",
+    "printedNumber": "49",
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Burning Spark Theme Deck)",
+    "tcgplayerId": 123471,
+    "market": 18.22
+  },
+  {
     "id": "xy8-xyp067",
     "name": "Jirachi",
     "number": "xyp067",
@@ -5869,7 +5964,7 @@
         "text": "Both Active Pokémon are now Asleep."
       }
     ],
-    "market": 25.3,
+    "market": 35.69,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY67/large",
     "printedNumber": "XY 067",
     "tcgplayerId": 108596,
@@ -5917,13 +6012,13 @@
         "text": "Flip a coin until you get tails. This attack does 20 more damage for each heads."
       }
     ],
+    "market": 76.5,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY74/large",
     "printedNumber": "XY 074",
     "tcgplayerId": 108604,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Ultra",
-    "market": 77.41
+    "foilAs": "Rare Ultra"
   },
   {
     "id": "xy8-xyp075",
@@ -5963,13 +6058,13 @@
         "text": "Your opponent can't attach Energy from his or her hand to the Defending Pokémon during his or her next turn."
       }
     ],
+    "market": 108.91,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY75/large",
     "printedNumber": "XY 075",
     "tcgplayerId": 108605,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Ultra",
-    "market": 84.3
+    "foilAs": "Rare Ultra"
   },
   {
     "id": "xy8-xyp076",
@@ -6010,13 +6105,13 @@
         "text": "This attack does 10 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
+    "market": 122.83,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY76/large",
     "printedNumber": "XY 076",
     "tcgplayerId": 108606,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Ultra",
-    "market": 111.09
+    "foilAs": "Rare Ultra"
   },
   {
     "id": "xy8-xyp077",
@@ -6056,13 +6151,13 @@
         "text": "Your opponent can't play any Pokémon from his or her hand to evolve the Defending Pokémon during his or her next turn."
       }
     ],
+    "market": 59.91,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY77/large",
     "printedNumber": "XY 077",
     "tcgplayerId": 108607,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Ultra",
-    "market": 62.71
+    "foilAs": "Rare Ultra"
   },
   {
     "id": "xy8-xyp078",
@@ -6101,13 +6196,13 @@
         "text": ""
       }
     ],
+    "market": 94.87,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY78/large",
     "printedNumber": "XY 078",
     "tcgplayerId": 108608,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Ultra",
-    "market": 87.84
+    "foilAs": "Rare Ultra"
   },
   {
     "id": "xy8-xyp079",
@@ -6147,13 +6242,13 @@
         "text": "If Latias is on your Bench, this attack does 50 more damage."
       }
     ],
+    "market": 127.19,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY79/large",
     "printedNumber": "XY 079",
     "tcgplayerId": 108609,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Ultra",
-    "market": 133.44
+    "foilAs": "Rare Ultra"
   },
   {
     "id": "xy8-xyp080",
@@ -6195,13 +6290,13 @@
         "text": "This Pokémon does 20 damage to itself."
       }
     ],
+    "market": 64.07,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY80/large",
     "printedNumber": "XY 080",
     "tcgplayerId": 108610,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Ultra",
-    "market": 56.41
+    "foilAs": "Rare Ultra"
   },
   {
     "id": "xy8-xyp081",
@@ -6243,13 +6338,13 @@
         "text": "This Pokémon can't use Flare Blizzard during your next turn."
       }
     ],
+    "market": 61.84,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY81/large",
     "printedNumber": "XY 081",
     "tcgplayerId": 108611,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Ultra",
-    "market": 51.36
+    "foilAs": "Rare Ultra"
   },
   {
     "id": "xy8-xyp082",
@@ -6288,13 +6383,13 @@
         "type": "Ability"
       }
     ],
+    "market": 50.7,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY82/large",
     "printedNumber": "XY 082",
     "tcgplayerId": 108612,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Ultra",
-    "market": 47.81
+    "foilAs": "Rare Ultra"
   },
   {
     "id": "xy8-xyp083",
@@ -6333,13 +6428,13 @@
         "text": "This attack does 30 more damage for each different type of basic Energy attached to this Pokémon."
       }
     ],
+    "market": 79.09,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY83/large",
     "printedNumber": "XY 083",
     "tcgplayerId": 108613,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Ultra",
-    "market": 78.37
+    "foilAs": "Rare Ultra"
   },
   {
     "id": "xy8-xyp084",
@@ -6349,7 +6444,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Lightning"
@@ -6378,13 +6473,13 @@
         "text": "Discard all Lightning Energy attached to this Pokémon. This attack does 50 damage times the number of Energy cards you discarded."
       }
     ],
+    "market": 107.67,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY84/large",
     "printedNumber": "XY 084",
     "tcgplayerId": 108614,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo EX",
-    "market": 82.83
+    "foilAs": "Rare Holo EX"
   },
   {
     "id": "xy8-xyp085",
@@ -6394,7 +6489,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Psychic"
@@ -6423,13 +6518,13 @@
         "text": "Your opponent switches his or her Active Pokémon with 1 of his or her Benched Pokémon."
       }
     ],
+    "market": 22.71,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY85/large",
     "printedNumber": "XY 085",
     "tcgplayerId": 108615,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo EX",
-    "market": 22.06
+    "foilAs": "Rare Holo EX"
   },
   {
     "id": "xy8-xyp086",
@@ -6438,8 +6533,8 @@
     "rarity": "Promo",
     "supertype": "Pokémon",
     "subtypes": [
-      "MEGA",
-      "EX"
+      "Mega",
+      "ex"
     ],
     "types": [
       "Fire"
@@ -6462,13 +6557,13 @@
         "text": "During your next turn, this Pokémon's Moonsault Blaze attack does 100 more damage (before applying Weakness and Resistance)."
       }
     ],
+    "market": 92.24,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY86/large",
     "printedNumber": "XY 086",
     "tcgplayerId": 108616,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo EX",
-    "market": 90.8
+    "foilAs": "Rare Holo EX"
   },
   {
     "id": "xy8-xyp087",
@@ -6477,8 +6572,8 @@
     "rarity": "Promo",
     "supertype": "Pokémon",
     "subtypes": [
-      "MEGA",
-      "EX"
+      "Mega",
+      "ex"
     ],
     "types": [
       "Water"
@@ -6501,13 +6596,13 @@
         "text": "You may do 30 more damage. If you do, discard the top 3 cards of each player's deck."
       }
     ],
+    "market": 70.18,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY87/large",
     "printedNumber": "XY 087",
     "tcgplayerId": 108617,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo EX",
-    "market": 69.31
+    "foilAs": "Rare Holo EX"
   },
   {
     "id": "xy8-xyp088",
@@ -6537,7 +6632,7 @@
         "text": ""
       }
     ],
-    "market": 8.47,
+    "market": 10.94,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY88/large",
     "printedNumber": "XY 088",
     "tcgplayerId": 108618,
@@ -6583,7 +6678,7 @@
         "text": "If Hoopa is on your Bench, this attack does 30 more damage."
       }
     ],
-    "market": 40.96,
+    "market": 40.91,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY89/large",
     "printedNumber": "XY 089",
     "tcgplayerId": 108619,
@@ -6629,7 +6724,7 @@
         "text": "Flip 2 coins. This attack does 30 damage times the number of heads."
       }
     ],
-    "market": 4.39,
+    "market": 9.12,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY90/large",
     "printedNumber": "XY 090",
     "tcgplayerId": 108620,
@@ -6674,13 +6769,13 @@
         "text": ""
       }
     ],
+    "market": 31.52,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY92/large",
     "printedNumber": "XY 092",
     "tcgplayerId": 108621,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 29.46
+    "foilAs": "Rare Holo"
   },
   {
     "id": "xy8-xyp093",
@@ -6716,13 +6811,13 @@
         "type": "Ability"
       }
     ],
+    "market": 29.67,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY93/large",
     "printedNumber": "XY 093",
     "tcgplayerId": 108622,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 23.29
+    "foilAs": "Rare Holo"
   },
   {
     "id": "xy8-xyp097",
@@ -6762,7 +6857,7 @@
         "text": ""
       }
     ],
-    "market": 5.83,
+    "market": 6.58,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY97/large",
     "printedNumber": "XY 097",
     "tcgplayerId": 114007,
@@ -6801,7 +6896,7 @@
         "text": "This attack does 10 damage to each Benched Pokémon (both yours and your opponent's). (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
-    "market": 23.66,
+    "market": 25.32,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY98/large",
     "printedNumber": "XY 098",
     "tcgplayerId": 114008,
@@ -6822,7 +6917,7 @@
     "artist": "5ban Graphics",
     "image": "assets/cards/xy8/xyp099.webp",
     "imageSmall": "assets/cards/xy8/xyp099-sm.webp",
-    "market": 2.16,
+    "market": 2.67,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY99/large",
     "printedNumber": "XY 099",
     "tcgplayerId": 114009,
@@ -6868,7 +6963,7 @@
         "text": "This Pokémon can't use Zen Blade during your next turn."
       }
     ],
-    "market": 28.42,
+    "market": 36.35,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY100/large",
     "printedNumber": "XY 100",
     "tcgplayerId": 108623,
@@ -6916,13 +7011,13 @@
         "text": "This Pokémon can't use Zen Blade during your next turn."
       }
     ],
+    "market": 47.88,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY101/large",
     "printedNumber": "XY 101",
     "tcgplayerId": 108624,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 39.11
+    "foilAs": "Rare Holo"
   },
   {
     "id": "xy8-xyp102",
@@ -6932,7 +7027,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Water"
@@ -6961,13 +7056,13 @@
         "type": "Ability"
       }
     ],
+    "market": 21.36,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY102/large",
     "printedNumber": "XY 102",
     "tcgplayerId": 114010,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo EX",
-    "market": 20.68
+    "foilAs": "Rare Holo EX"
   },
   {
     "id": "xy8-xyp134",
@@ -6997,13 +7092,13 @@
         "text": "This attack does 30 damage times the number of Pokémon your opponent has in play."
       }
     ],
+    "market": 26.35,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY134/large",
     "printedNumber": "XY 134",
     "tcgplayerId": 114011,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare BREAK",
-    "market": 19.21
+    "foilAs": "Rare BREAK"
   },
   {
     "id": "xy8-xyp135",
@@ -7034,13 +7129,13 @@
         "text": "Move as many Psychic Energy attached to your Pokémon to your other Pokémon in any way you like."
       }
     ],
+    "market": 15.92,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY135/large",
     "printedNumber": "XY 135",
     "tcgplayerId": 114012,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare BREAK",
-    "market": 14.07
+    "foilAs": "Rare BREAK"
   },
   {
     "id": "xy8-xyp136",
@@ -7071,12 +7166,12 @@
         "text": "Your opponent reveals his or her hand. This attack does 30 more damage for each Trainer card you find there."
       }
     ],
+    "market": 21.6,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY136/large",
     "printedNumber": "XY 136",
     "tcgplayerId": 114013,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare BREAK",
-    "market": 19.89
+    "foilAs": "Rare BREAK"
   }
 ]

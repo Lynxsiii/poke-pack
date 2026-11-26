@@ -38,6 +38,32 @@
       "promos": [],
       "note": "36 packs, no code card. Groudon, the secret rare box topper, is not in the packs. TCGplayer has no market price for the box, only a single $52,400 listing (its mid price), which is used as it is: thin (36 packs at the $800 pack would be $28,800).",
       "hull": false
+    },
+    {
+      "id": "deck-wish-maker",
+      "name": "Theme Deck \"Wish Maker\"",
+      "kind": "deck",
+      "tcgplayerId": 215766,
+      "packs": 0,
+      "promos": [
+        "8"
+      ],
+      "price": 125.9,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Jirachi, no booster pack (Bulbapedia and Serebii deck lists)."
+    },
+    {
+      "id": "deck-forest-guardian",
+      "name": "Theme Deck \"Forest Guardian\"",
+      "kind": "deck",
+      "tcgplayerId": 215765,
+      "packs": 0,
+      "promos": [
+        "4"
+      ],
+      "price": 162.18,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Dark Celebi, no booster pack (Bulbapedia and Serebii deck lists)."
     }
   ]
 }

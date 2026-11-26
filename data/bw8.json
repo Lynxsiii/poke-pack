@@ -5113,6 +5113,105 @@
     "etchMap": "assets/foil/maps/bw8/138-etch.webp"
   },
   {
+    "id": "bw8-62-cracked-ice",
+    "name": "Giratina",
+    "number": "62-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Team Plasma"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "130",
+    "artist": "5ban Graphics",
+    "flavorText": "It was banished for its violence. It silently gazed upon the old world from the Distortion World.",
+    "image": "assets/cards/bw8/62.webp",
+    "imageSmall": "assets/cards/bw8/62-sm.webp",
+    "attacks": [
+      {
+        "name": "Hex",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "If the Defending Pokémon is affected by a Special Condition, this attack does 50 more damage."
+      },
+      {
+        "name": "Shadow Claw",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "Discard a random card from your opponent's hand."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bw8-62/large",
+    "printedNumber": "62",
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Plasma Shadow Theme Deck)",
+    "tcgplayerId": 91388,
+    "market": 15.17
+  },
+  {
+    "id": "bw8-94-cracked-ice",
+    "name": "Druddigon",
+    "number": "94-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Team Plasma"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "110",
+    "artist": "5ban Graphics",
+    "flavorText": "It runs through the narrow tunnels formed by Excadrill and Onix. It uses its sharp claws to catch prey.",
+    "image": "assets/cards/bw8/94.webp",
+    "imageSmall": "assets/cards/bw8/94-sm.webp",
+    "attacks": [
+      {
+        "name": "Guard Press",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "During your opponent's next turn, any damage done to this Pokémon by attacks is reduced by 20 (after applying Weakness and Resistance)."
+      },
+      {
+        "name": "Dragon Claw",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bw8-94/large",
+    "printedNumber": "94",
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Plasma Claw Theme Deck)",
+    "tcgplayerId": 131334,
+    "market": 5.37
+  },
+  {
     "id": "bw8-bwp058",
     "name": "Black Kyurem",
     "number": "bwp058",
@@ -5151,13 +5250,13 @@
         "text": "Discard an Energy attached to this Pokémon."
       }
     ],
+    "market": 23.65,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW58/large",
     "printedNumber": "BW 058",
     "tcgplayerId": 83852,
     "era": "bw",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 22.29,
     "foilMap": "assets/foil/maps/bw8/bwp058.webp"
   },
   {
@@ -5199,13 +5298,13 @@
         "text": "Flip a coin. If heads, this attack does 40 more damage."
       }
     ],
+    "market": 24.79,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW59/large",
     "printedNumber": "BW 059",
     "tcgplayerId": 90587,
     "era": "bw",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 24.72,
     "foilMap": "assets/foil/maps/bw8/bwp059.webp"
   },
   {
@@ -5216,7 +5315,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Water"
@@ -5244,13 +5343,13 @@
         "type": "Ability"
       }
     ],
+    "market": 3.81,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW61/large",
     "printedNumber": "BW 061",
     "tcgplayerId": 86437,
     "era": "bw",
     "promo": true,
     "foilAs": "Rare Holo EX",
-    "market": 2.99,
     "foilMap": "assets/foil/maps/bw8/bwp061.webp"
   },
   {
@@ -5261,7 +5360,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Dragon"
@@ -5293,13 +5392,13 @@
         "text": "This Pokémon can't attack during your next turn."
       }
     ],
+    "market": 9.99,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW62/large",
     "printedNumber": "BW 062",
     "tcgplayerId": 83855,
     "era": "bw",
     "promo": true,
     "foilAs": "Rare Holo EX",
-    "market": 8.75,
     "foilMap": "assets/foil/maps/bw8/bwp062.webp"
   },
   {
@@ -5310,7 +5409,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Dragon"
@@ -5342,13 +5441,13 @@
         "text": "Discard 2 Fire Energy attached to this Pokémon. The Defending Pokémon is now Burned."
       }
     ],
+    "market": 9.49,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW63/large",
     "printedNumber": "BW 063",
     "tcgplayerId": 90590,
     "era": "bw",
     "promo": true,
     "foilAs": "Rare Holo EX",
-    "market": 8.03,
     "foilMap": "assets/foil/maps/bw8/bwp063.webp"
   },
   {
@@ -5388,13 +5487,13 @@
         "text": "Put 4 damage counters on 1 of your opponent's Pokémon."
       }
     ],
+    "market": 7.33,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW64/large",
     "printedNumber": "BW 064",
     "tcgplayerId": 84950,
     "era": "bw",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 8.26,
     "foilMap": "assets/foil/maps/bw8/bwp064.webp"
   },
   {
@@ -5424,12 +5523,12 @@
         "text": "Flip a coin until you get tails. This attack does 10 damage times the number of heads."
       }
     ],
+    "market": 78.15,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW65/large",
     "printedNumber": "BW 065",
     "tcgplayerId": 86321,
     "era": "bw",
-    "promo": true,
-    "market": 74.55
+    "promo": true
   },
   {
     "id": "bw8-bwp066",
@@ -5466,13 +5565,13 @@
         "type": "Ability"
       }
     ],
+    "market": 38.09,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW66/large",
     "printedNumber": "BW 066",
     "tcgplayerId": 87779,
     "era": "bw",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 36.34,
     "foilMap": "assets/foil/maps/bw8/bwp066.webp"
   },
   {
@@ -5513,13 +5612,13 @@
         "text": "You may discard all Lightning Energy attached to this Pokémon. If you do, this attack does 60 more damage."
       }
     ],
+    "market": 57.76,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW67/large",
     "printedNumber": "BW 067",
     "tcgplayerId": 83548,
     "era": "bw",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 47.0,
     "foilMap": "assets/foil/maps/bw8/bwp067.webp"
   },
   {
@@ -5558,13 +5657,13 @@
         "type": "Ability"
       }
     ],
+    "market": 4.52,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW70/large",
     "printedNumber": "BW 070",
     "tcgplayerId": 90389,
     "era": "bw",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 4.59,
     "foilMap": "assets/foil/maps/bw8/bwp070.webp"
   },
   {
@@ -5604,13 +5703,13 @@
         "type": "Ability"
       }
     ],
+    "market": 3.21,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW71/large",
     "printedNumber": "BW 071",
     "tcgplayerId": 89889,
     "era": "bw",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 3.16,
     "foilMap": "assets/foil/maps/bw8/bwp071.webp"
   },
   {
@@ -5649,13 +5748,13 @@
         "type": "Ability"
       }
     ],
+    "market": 3.71,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW72/large",
     "printedNumber": "BW 072",
     "tcgplayerId": 84379,
     "era": "bw",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 3.71,
     "foilMap": "assets/foil/maps/bw8/bwp072.webp"
   }
 ]

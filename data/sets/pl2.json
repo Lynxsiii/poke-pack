@@ -67,6 +67,30 @@
         "dpp43"
       ],
       "note": "Two Rising Rivals packs and one Majestic Dawn pack, a coin and the Probopass G promo (as the Carnivine G blister). TCGplayer has no listing: priced from its packs."
+    },
+    {
+      "id": "theme-deck-cutting-edge",
+      "name": "Theme Deck \"Cutting Edge\"",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "20"
+      ],
+      "price": 106.75,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Gallade E4, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-drill-point",
+      "name": "Theme Deck \"Drill Point\"",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "32"
+      ],
+      "price": 40.55,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Rhyperior E4, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ]
 }

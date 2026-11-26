@@ -22,6 +22,31 @@
       "packs": 36,
       "promos": [],
       "note": "36 packs of nine cards, no code card (Potomac Distribution box page; TCGplayer text)."
+    },
+    {
+      "id": "deck-oasis",
+      "name": "Theme Deck \"Oasis\"",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "1"
+      ],
+      "price": 101.25,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Armaldo, no booster pack (Bulbapedia and Serebii deck lists)."
+    },
+    {
+      "id": "deck-caravan",
+      "name": "Theme Deck \"Caravan\"",
+      "kind": "deck",
+      "tcgplayerId": 234511,
+      "packs": 0,
+      "promos": [
+        "3"
+      ],
+      "price": 93.47,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Cradily, no booster pack (Bulbapedia and Serebii deck lists)."
     }
   ]
 }

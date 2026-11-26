@@ -31,6 +31,30 @@
       "packs": 1,
       "promos": [],
       "note": "One Dragon Frontiers booster pack in a blister (TCGplayer product 616216; the research found no promo for it). TCGplayer lists it without a market price, so it is priced at one pack."
+    },
+    {
+      "id": "deck-shadow-blaze",
+      "name": "Theme Deck \"Shadow Blaze\"",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "12"
+      ],
+      "price": 161.39,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Typhlosion δ, no booster pack (Bulbapedia and Serebii deck lists)."
+    },
+    {
+      "id": "deck-power-wave",
+      "name": "Theme Deck \"Power Wave\"",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "2"
+      ],
+      "price": 143.47,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Feraligatr δ, no booster pack (Bulbapedia and Serebii deck lists)."
     }
   ]
 }

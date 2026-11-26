@@ -58,6 +58,9 @@ EX_KITS_RESEARCH = ROOT / "scripts" / "box-research" / "ex-kits.json"  # e5: the
 WOTC_RESEARCH = ROOT / "scripts" / "box-research" / "wotc.json"
 WOTC_W1_RESEARCH = ROOT / "scripts" / "box-research" / "wotc-w1.json"
 WOTC_NEO_RESEARCH = ROOT / "scripts" / "box-research" / "wotc-neo.json"
+# Theme decks of the EX (ex1-ex16), Diamond & Pearl to Call of Legends, XY, Sun & Moon and Sword & Shield eras, same shape as wotc.json;
+# Bulbapedia lists checked against a second list (Serebii, pokewiki.de, TCGsync), 2026-11-26.
+EX_DECKS_RESEARCH = [ROOT / "scripts" / "box-research" / name for name in ("ex-decks-a.json", "ex-decks-b.json", "dp-decks.json", "xy-decks.json", "sm-decks.json", "swsh-decks.json")]
 # Noah chose (2026-09-30) to ship single-source lists too. --verified-only drops them again;
 # --trial writes the same build to a scratch file.
 ALLOW_SINGLE = True
@@ -476,6 +479,9 @@ def build(parts_dir: Path) -> int:
         wotc_neo(json.loads(WOTC_NEO_RESEARCH.read_text(encoding="utf-8")), out, rep, offers, cards)
     if WOTC_RESEARCH.exists():
         wotc_decks(json.loads(WOTC_RESEARCH.read_text(encoding="utf-8")), out, rep, offers, cards)
+    for path in EX_DECKS_RESEARCH:
+        if path.exists():
+            wotc_decks(json.loads(path.read_text(encoding="utf-8")), out, rep, offers, cards)
 
     write(out, rep, offers)
     return 0
@@ -661,6 +667,9 @@ def wotc_decks(research: dict, out: dict, rep: Report, offers: dict, cards: set[
         rows = [[c["id"], c["n"]] for c in deck["cards"]]
         for promo in offer.get("promos", []):  # the featured card is the product's promo, dealt once: it replaces one copy
             hit = next((r for r in rows if r[0] == promo and r[1] > 0), None)
+            if not hit:  # a deck-only print of a list card ("dp2-33-theme" is the deck's copy of dp2-33)
+                base = re.sub(r"^((?:[a-z]+\d*[a-z]*\d*)-[A-Za-z]*\d+)-[a-z-]+$", r"\1", promo)
+                hit = next((r for r in rows if base != promo and r[0] == base and r[1] > 0), None)
             if hit:
                 hit[1] -= 1
             else:
