@@ -28,6 +28,10 @@
   Cache-Control: no-cache
 /gear
   Cache-Control: no-cache
+/play
+  Cache-Control: no-cache
+/play/*
+  Cache-Control: no-cache
 /bulk
   Cache-Control: no-cache
 /binder
