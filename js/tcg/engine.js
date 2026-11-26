@@ -53,7 +53,7 @@
  */
 
 import { runAttackEffects } from "./effects.js";
-import { T_OPS, boostOf, energyIn, fieldFits, fits, moveTargets, prizesLeft, runTrainer, stripEnergy, toolFits, trainerReady } from "./trainers.js";
+import { T_OPS, boostOf, energyCards, energyIn, fieldFits, fits, moveTargets, prizesLeft, runTrainer, stripEnergy, toolFits, trainerReady } from "./trainers.js";
 
 /**
  * The official Constructed formats (Play! Pokémon Tournament Handbook, section 4): 60 cards,
@@ -455,10 +455,14 @@ function clearConditions(slot) {
      harden    takes no damage from an attack that would do n or less
      noWeakness has no Weakness     spite     n damage counters on whatever attack damages it
      bounty    n more Prize cards if this turn's attack damage Knocks it Out
+     noHeal    can't be healed         doom      n damage counters on it at the end of that turn
    A guard may say `from`: only attacks from "basic", "evolution" or "basicNonColorless" Pokémon. */
 
 /** A slot's mark of this kind that is in force this turn. */
 export const markOn = (state, slot, kind) => (slot?.marks || []).find((m) => m.kind === kind && m.turn === state.turn) || null;
+
+/** How much damage can be healed from this Pokémon now: none while "it can't be healed" holds (a noHeal mark). */
+export const healRoom = (state, slot) => (markOn(state, slot, "noHeal") ? 0 : slot.damage);
 
 /** Marks in force now or waiting for their turn, for the screen. */
 export const marksOn = (state, slot) => (slot?.marks || []).filter((m) => m.turn >= state.turn);
@@ -526,7 +530,8 @@ function checkup(state, defs, events) {
     for (const [slot, spot] of inPlay(state, p)) {
       const mend = abilityOn(state, slot, defs)?.mend;
       if (!mend || !slot.damage || hpLeft(state, slot, defs) <= 0) continue;
-      const healed = Math.min(mend, slot.damage);
+      const healed = Math.min(mend, healRoom(state, slot));
+      if (!healed) continue;
       slot.damage -= healed;
       slot.healedOn = state.turn;
       events.push({ t: "heal", p, spot, n: healed, why: "ability" });
@@ -541,7 +546,7 @@ function berries(state, defs, events) {
     for (const [slot, spot] of inPlay(state, p)) {
       const between = toolOn(state, slot, defs)?.between;
       if (!between || hpLeft(state, slot, defs) <= 0) continue;
-      if (between.heal && slot.damage >= between.heal) {
+      if (between.heal && healRoom(state, slot) >= between.heal) {
         slot.damage -= between.heal;
         slot.healedOn = state.turn;
         events.push({ t: "heal", p, spot, n: between.heal, why: "tool" });
@@ -560,14 +565,20 @@ function endOfTurn(state, defs, events) {
   const front = state.players[p].active;
   const end = toolOn(state, front, defs)?.endTurn;
   if (end?.draw) draw(state, p, end.draw, events);
-  if (end?.heal && front.damage) {
-    const healed = Math.min(end.heal, front.damage);
+  if (end?.heal && healRoom(state, front)) {
+    const healed = Math.min(end.heal, healRoom(state, front));
     front.damage -= healed;
     front.healedOn = state.turn;
     events.push({ t: "heal", p, spot: ACTIVE, n: healed, why: "tool" });
   }
   for (const q of [0, 1]) {
     for (const [slot, spot] of inPlay(state, q)) {
+      // "At the end of your opponent's next turn, put 6 damage counters on the Defending Pokémon."
+      const doom = markOn(state, slot, "doom");
+      if (doom) {
+        slot.damage += doom.n;
+        events.push({ t: "damage", p: q, spot, n: doom.n, why: "doom" });
+      }
       const lapse = slot.tool && defOf(state, slot.tool, defs)?.tool?.lapse;
       // Strength Charm: the turn it attacked. Buffer Piece: the opponent's turn after it was played.
       if ((lapse === "attack" && slot.toolSpent === state.turn) || (lapse === "foe" && q !== p && slot.toolOn < state.turn)) dropTool(state, q, spot, slot, defs, events);
@@ -623,14 +634,30 @@ export function evolveSlot(state, player, spot, uid, defs, events, from = "hand"
   if (tool?.only?.drop && !toolFits(tool, defOf(state, uid, defs))) dropTool(state, player, spot, slot, defs, events);
   // Viridian City Gym: a Pokémon with Giovanni in its name that evolves sheds 2 damage counters.
   const mend = state.stadium && defOf(state, state.stadium.uid, defs)?.stadium?.evolveHeal;
-  if (mend && slot.damage && fieldFits(mend.who, defOf(state, uid, defs))) {
-    const healed = Math.min(mend.n, slot.damage);
+  if (mend && healRoom(state, slot) && fieldFits(mend.who, defOf(state, uid, defs))) {
+    const healed = Math.min(mend.n, healRoom(state, slot));
     slot.damage -= healed;
     slot.healedOn = state.turn;
     events.push({ t: "heal", p: player, spot, n: healed, why: "stadium" });
   }
   offerAbility(state, player, spot, "evolve", defs);
   if (defOf(state, uid, defs)?.megaEnds && state.phase === "main" && state.current === player) state.ending = true;
+}
+
+/** How much of a Retreat Cost this Energy card pays (Double Colorless Energy: 2). */
+const payUnits = (state, slot, uid, defs) => unitsOn(state, slot, defOf(state, uid, defs), defOf(state, slot.uid, defs), defs).length || 1;
+/**
+ * The Energy a retreat may be paid with, when the player has a real choice (the cards differ and some can stay):
+ * { uids, min, max } in cards, the largest first (so the first `min` of them pay it), or null.
+ */
+function retreatChoice(state, slot, cost, defs) {
+  if (cost <= 0 || energyAlike(state, slot.energy, defs)) return null;
+  const units = new Map(slot.energy.map((uid) => [uid, payUnits(state, slot, uid, defs)]));
+  const total = [...units.values()].reduce((a, b) => a + b, 0);
+  if (total - Math.min(...units.values()) < cost) return null;
+  const uids = slot.energy.slice().sort((a, b) => units.get(b) - units.get(a));
+  const reach = (list) => list.reduce((n, uid, i) => (n.sum >= cost ? n : { sum: n.sum + units.get(uid), k: i + 1 }), { sum: 0, k: 0 }).k;
+  return { uids, min: reach(uids), max: reach(uids.slice().reverse()) };
 }
 
 /** Can this Active Pokémon retreat while Asleep or Paralyzed? (Escape Board.) */
@@ -642,12 +669,24 @@ const balloonOn = (state, slot, defs) => Boolean(toolOn(state, slot, defs)?.ball
 export function usableAttacks(state, player, defs) {
   const slot = state.players[player].active;
   if (!slot || state.phase !== "main" || state.current !== player || state.pending.length) return [];
-  if (state.turn === 1 || stuck(slot) || markOn(state, slot, "noAttack")) return [];
+  if (stuck(slot) || markOn(state, slot, "noAttack")) return [];
   const def = defOf(state, slot.uid, defs);
   const barred = (slot.marks || []).filter((m) => m.kind === "noUse" && m.turn === state.turn).map((m) => m.name);
   const side = state.players[player];
   const spent = (attack) => (attack.once === "gx" && side.gxUsed) || (attack.once === "vstar" && side.vstarUsed);
-  return def.attacks.map((attack, index) => (canPay(state, slot, attack.cost, defs) && !barred.includes(attack.name) && !spent(attack) ? index : -1)).filter((i) => i >= 0);
+  return def.attacks.map((attack, index) => (canPay(state, slot, attack.cost, defs) && !barred.includes(attack.name) && !spent(attack) && !tooEarly(state, player, attack) ? index : -1)).filter((i) => i >= 0);
+}
+
+/**
+ * The first turns: the player who goes first can't attack on turn 1, unless the attack says "If you go first, you can
+ * use this attack on your first turn"; "If you go second, you can't use this attack during your first turn" (turn 2).
+ * Why it can't be used yet, or "".
+ */
+function tooEarly(state, player, attack) {
+  const says = (op) => (attack.fx || []).some((step) => step.op === op);
+  if (state.turn === 1 && !says("firstTurn")) return "The player who goes first can't attack on the first turn.";
+  if (state.turn === 2 && player !== state.first && says("notSecondFirst")) return "If you go second, you can't use this attack during your first turn.";
+  return "";
 }
 
 export function canRetreat(state, player, defs) {
@@ -1185,8 +1224,8 @@ const HANDLERS = {
     events.push({ t: "attach", p: player, uid, spot });
     // Healing Scarf: an Energy card from the hand heals the Pokémon it goes on.
     const scarf = toolOn(state, slot, defs)?.attachHeal;
-    if (scarf && slot.damage) {
-      const healed = Math.min(scarf, slot.damage);
+    if (scarf && healRoom(state, slot)) {
+      const healed = Math.min(scarf, healRoom(state, slot));
       slot.damage -= healed;
       slot.healedOn = state.turn;
       events.push({ t: "heal", p: player, spot, n: healed, why: "tool" });
@@ -1285,7 +1324,10 @@ const HANDLERS = {
       dropTool(state, player, ACTIVE, slot, defs, events);
     } else {
       if (energyOf(state, slot, defs).length < cost) fail("Not enough Energy to retreat.");
-      // Pay with the chosen cards, or the first ones attached when none are named.
+      // Which Energy pays is the retreating player's choice, when it matters: asked first, the retreat happens on the answer.
+      const pay = discard?.length ? null : retreatChoice(state, slot, cost, defs);
+      if (pay) return void askChoose(state, { player, zone: "play", what: "energy", ...pay, effect: { op: "retreat", to }, rule: { covers: cost } });
+      // Pay with the chosen cards, or the first ones attached when none are named (all alike, or all needed).
       let paid = 0;
       const picks = (discard?.length ? discard : slot.energy).slice();
       for (const uid of picks) {
@@ -1309,12 +1351,14 @@ const HANDLERS = {
   },
 
   attack(state, { player, index }, defs, events) {
-    if (state.turn === 1) fail("The player who goes first can't attack on the first turn.");
     const side = state.players[player];
     const slot = side.active;
     const def = defOf(state, slot.uid, defs);
     const attack = def.attacks[index];
+    if (state.turn === 1 && !attack) fail("The player who goes first can't attack on the first turn.");
     if (!attack) fail("That Pokémon has no such attack.");
+    const early = tooEarly(state, player, attack);
+    if (early) fail(early);
     if (!canPay(state, slot, attack.cost, defs)) fail("Not enough Energy for that attack.");
     if (stuck(slot)) fail(`${def.name} is ${statusOf(slot).main === "asleep" ? "Asleep" : "Paralyzed"} and can't attack.`);
     if (markOn(state, slot, "noAttack")) fail(`${def.name} can't attack this turn.`);
@@ -1540,10 +1584,19 @@ const HANDLERS = {
         events.push({ t: "bench", p: owner, uid: picked[0], spot: ACTIVE });
       } else side.hand.push(...picked);
     } else if (op === "carryEnergy") {
-      // Lucian's Assignment: the Energy chosen, then the Pokémon it goes to.
-      const spots = inPlay(state, owner).map(([, s]) => s).filter((s) => s !== waiting.effect.from);
-      if (picked.length && spots.length) {
-        askPick(state, { player, side: owner, spots, left: 1, effect: { op: "moveEnergyCards", from: waiting.effect.from, uids: picked }, ...(waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) });
+      // Lucian's Assignment: the Energy chosen, then the Pokémon it goes to. `spots`: where the card lets it go;
+      // with one place only, it goes there now (and `gather`: the next Pokémon to take from is asked).
+      const fx = waiting.effect;
+      const spots = fx.spots ? fx.spots.filter((s) => slotAt(state, owner, s)) : inPlay(state, owner).map(([, s]) => s).filter((s) => s !== fx.from);
+      if (picked.length && fx.spots && spots.length === 1) {
+        for (const uid of picked) moveEnergy(state, owner, fx.from, spots[0], uid, events);
+        if (fx.again) offerAgain(state, waiting, owner, fx.again, defs);
+        if (fx.gather) {
+          const next = inPlay(state, owner).filter(([s, at]) => at !== fx.gather.to && energyIn({ state, defs }, s, fx.gather.type)).map(([, at]) => at);
+          if (next.length) follow(state, waiting, { player, side: owner, spots: next, left: 1, optional: true, effect: fx.gather });
+        }
+      } else if (picked.length && spots.length) {
+        askPick(state, { player, side: owner, spots, left: 1, effect: { op: "moveEnergyCards", from: waiting.effect.from, uids: picked, ...(fx.again ? { again: fx.again } : {}) }, ...(waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) });
         waiting.then = null;
       }
     } else if (op === "payFor") {
@@ -1568,6 +1621,11 @@ const HANDLERS = {
       // The damage so far rides on the steps waiting for this choice (effects.js runSteps): what went is added to it.
       const fx = (waiting.then || []).find((step) => step.op === "fx" && step.hit);
       if (fx) fx.hit = { ...fx.hit, paid: [...(fx.hit.paid || []), ...picked] };
+    } else if (op === "retreat") {
+      // The Energy chosen for the Retreat Cost: now the retreat itself.
+      state.pending.shift();
+      HANDLERS.retreat(state, { player, to: waiting.effect.to, discard: picked }, defs, events);
+      return;
     } else if (op === "look") {
       // "Look at your opponent's hand": the cards were seen, nothing moves.
     } else {
@@ -1741,6 +1799,9 @@ function applyPick(state, waiting, spot, defs, events) {
     const slot = slotAt(state, p, spot);
     const uid = energyIn({ state, defs }, slot, effect.type);
     if (!uid) return;
+    // Which card, when that Pokémon's differ, is the mover's choice.
+    const cards = energyCards({ state, defs }, slot, effect.type);
+    if (!energyAlike(state, cards, defs)) return void ask(state, waiting, { player: waiting.player, owner: p, zone: "play", what: "energy", uids: cards, min: 1, max: 1, effect: { op: "carryEnergy", from: spot, spots: [effect.to], gather: effect } });
     moveEnergy(state, p, spot, effect.to, uid, events);
     const spots = inPlay(state, p).filter(([s, at]) => at !== effect.to && energyIn({ state, defs }, s, effect.type)).map(([, at]) => at);
     if (spots.length) follow(state, waiting, { player: p, side: p, spots, left: 1, optional: true, effect });
@@ -1769,6 +1830,10 @@ function applyPick(state, waiting, spot, defs, events) {
     events.push({ t: "damage", p, spot, n, weak, resist });
   } else if (effect.op === "switch") {
     switchActive(state, p, spot, events, defs);
+  } else if (effect.op === "knockOut") {
+    // "Knock Out 1 of your opponent's ...": not by damage; judged with the other Knock Outs.
+    const slot = slotAt(state, p, spot);
+    slot.damage = Math.max(slot.damage, maxHp(state, slot, defs));
   } else if (effect.op === "heal") {
     const slot = slotAt(state, p, spot);
     let n = effect.n;
@@ -1780,7 +1845,7 @@ function applyPick(state, waiting, spot, defs, events) {
       n = effect.night ? (heads === effect.flips ? 9990 : 0) : heads * effect.per;
       if (effect.night && !heads) stripEnergy({ state, events }, p, spot);
     }
-    const healed = Math.min(n, slot.damage);
+    const healed = Math.min(n, healRoom(state, slot));
     slot.damage -= healed;
     if (healed) slot.healedOn = state.turn;
     if (healed) events.push({ t: "heal", p, spot, n: healed });
@@ -1830,6 +1895,18 @@ function applyPick(state, waiting, spot, defs, events) {
     if (spots.length && uids.length) follow(state, waiting, { player: waiting.player, side: p, spots, left: 1, effect: { op: "moveEnergyCards", from: spot, uids } });
   } else if (effect.op === "moveEnergyCards") {
     for (const uid of effect.uids) moveEnergy(state, p, effect.from, spot, uid, events);
+    if (effect.again) offerAgain(state, waiting, p, effect.again, defs);
+  } else if (effect.op === "rearrangeFrom") {
+    // "Move any number of Energy from your Pokémon to your other Pokémon in any way you like": one card a time,
+    // from the Pokémon picked (which card, when they differ, is asked), to another; then again, until the player stops.
+    const slot = slotAt(state, p, spot);
+    const cards = energyCards({ state, defs }, slot, effect.type, effect.basic);
+    const spots = inPlay(state, p).map(([, s]) => s).filter((s) => s !== spot);
+    if (!cards.length || !spots.length) return;
+    if (!energyAlike(state, cards, defs)) return void ask(state, waiting, { player: waiting.player, owner: p, zone: "play", what: "energy", uids: cards, min: 1, max: 1, effect: { op: "carryEnergy", from: spot, spots, again: effect } });
+    if (spots.length > 1) return void follow(state, waiting, { player: waiting.player, side: p, spots, left: 1, effect: { op: "moveEnergyCards", from: spot, uids: [cards[cards.length - 1]], again: effect } });
+    moveEnergy(state, p, spot, spots[0], cards[cards.length - 1], events);
+    offerAgain(state, waiting, p, effect, defs);
   } else if (effect.op === "bounce") {
     // Back to the hand: its Pokémon cards (all of them, or only the Basic one), and what was attached when `keep` is "all".
     const slot = slotAt(state, p, spot);
@@ -1856,6 +1933,9 @@ function applyPick(state, waiting, spot, defs, events) {
     const uid = energyIn({ state, defs }, slot, effect.type, effect.basic);
     const spots = moveTargets({ state, defs, player: p, spot: effect.self }, effect, spot);
     if (!uid || !spots.length) return;
+    // Which card, when that Pokémon's differ, is the mover's choice; then where it goes.
+    const cards = energyCards({ state, defs }, slot, effect.type, effect.basic);
+    if (!energyAlike(state, cards, defs)) return void ask(state, waiting, { player: waiting.player, owner: p, zone: "play", what: "energy", uids: cards, min: 1, max: 1, effect: { op: "carryEnergy", from: spot, spots } });
     // Only one place it can go (onto the Active Pokémon): no need to ask.
     if (spots.length === 1) return moveEnergy(state, p, spot, spots[0], uid, events);
     follow(state, waiting, { player: p, side: p, spots, left: 1, effect: { op: "moveEnergyTo", from: spot, uid } });
@@ -1897,13 +1977,14 @@ function applyPick(state, waiting, spot, defs, events) {
       events.push({ t: "discard-tool", p, spot, uid: slot.tool });
       delete slot.tool;
     }
-    // A Special Energy only: the last one attached.
-    const special = effect.special ? [...slot.energy].reverse().find((uid) => !defOf(state, uid, defs).basic) : null;
-    const gone = effect.special ? (special ? slot.energy.splice(slot.energy.indexOf(special), 1) : []) : slot.energy.splice(Math.max(0, slot.energy.length - effect.n), effect.n);
-    // "Put an Energy attached to 1 of your opponent's Pokémon into their hand."
-    if (effect.toHand) side.hand.push(...gone);
-    else side.discard.push(...gone);
-    if (gone.length) events.push({ t: effect.toHand ? "energy-to-hand" : "discard-energy", p, spot, uids: gone });
+    // A Special Energy only, or any. Which card(s), when they differ, is the choice of the player whose card it is.
+    // "Put an Energy attached to 1 of your opponent's Pokémon into their hand": to the hand.
+    const uids = effect.special ? slot.energy.filter((uid) => !defOf(state, uid, defs).basic) : slot.energy.slice();
+    if (shedEnergy(state, waiting.by ?? waiting.player, p, spot, uids, effect.special ? 1 : effect.n, events, defs, { toHand: Boolean(effect.toHand) })) {
+      const asked = state.pending[state.pending.length - 1];
+      if (waiting.then) Object.assign(asked, { then: waiting.then, from: waiting.from, ...carry(waiting) });
+      waiting.then = null;
+    }
   }
 }
 
@@ -1914,6 +1995,35 @@ function dropEnergy(state, p, spot, uids, events) {
   for (const uid of uids) slot.energy.splice(slot.energy.indexOf(uid), 1);
   state.players[p].discard.push(...uids);
   events.push({ t: "discard-energy", p, spot, uids });
+}
+
+/** Whether these Energy cards are all the same (a basic Energy of one type, or one Special Energy card): no choice among them matters. */
+export function energyAlike(state, uids, defs) {
+  const key = (uid) => {
+    const def = defOf(state, uid, defs);
+    return def.basic ? `basic:${(def.provides || []).join("|")}` : state.cards[uid];
+  };
+  return new Set(uids.map(key)).size <= 1;
+}
+
+/**
+ * `n` of these Energy cards (`uids`, all on p's Pokémon at `spot`) leave play: to the discard pile, or (`toHand`) the
+ * hand. Which ones is the chooser's call when it matters (the cards differ and not all of them go): a choice is left
+ * (returns true), the rest of the effect riding on it. Otherwise the last attached go now.
+ */
+export function shedEnergy(state, chooser, p, spot, uids, n, events, defs, { toHand = false } = {}) {
+  if (uids.length > n && !energyAlike(state, uids, defs)) {
+    askChoose(state, { player: chooser, zone: "play", what: "energy", uids, min: n, max: n, effect: { op: toHand ? "takeBack" : "dropInPlay" }, ...(toHand && p !== chooser ? { owner: p } : {}) });
+    return true;
+  }
+  const gone = uids.slice(Math.max(0, uids.length - n));
+  if (!gone.length) return false;
+  if (!toHand) return void dropEnergy(state, p, spot, gone, events);
+  const slot = slotAt(state, p, spot);
+  for (const uid of gone) slot.energy.splice(slot.energy.indexOf(uid), 1);
+  state.players[p].hand.push(...gone);
+  events.push({ t: "energy-to-hand", p, spot, uids: gone });
+  return false;
 }
 
 /**
@@ -1930,6 +2040,14 @@ export function chooseBlock(state, waiting, picked, defs) {
     const free = (i, used) => i === cards.length || rule.apiece.some((what, k) => !used.has(k) && fits(cards[i], what) && free(i + 1, new Set([...used, k])));
     if (!free(0, new Set())) return "Only one card of each kind.";
   }
+  // A Retreat Cost: the cards cover it, and none of them is more than it needs.
+  if (rule.covers) {
+    const slot = state.players[waiting.player].active;
+    const units = picked.map((uid) => payUnits(state, slot, uid, defs));
+    const sum = units.reduce((a, b) => a + b, 0);
+    if (sum < rule.covers) return "That doesn't cover the Retreat Cost.";
+    if (units.some((u) => sum - u >= rule.covers)) return "Discard only what the Retreat Cost needs.";
+  }
   if (rule.distinct) {
     const types = cards.map((def) => def.provides || def.types || []);
     if (types.some((a, i) => types.some((b, j) => j > i && a.some((t) => b.includes(t))))) return "Each card must be a different type.";
@@ -1944,6 +2062,18 @@ function moveEnergy(state, p, from, to, uid, events) {
   source.energy.splice(source.energy.indexOf(uid), 1);
   slot.energy.push(uid);
   events.push({ t: "move-energy", p, uid, from, spot: to });
+}
+
+/** "In any way you like": the Pokémon to move the next Energy from, or stop (rearrangeFrom). */
+function offerAgain(state, waiting, p, again, defs) {
+  const spots = inPlay(state, p).filter(([slot]) => energyCards({ state, defs }, slot, again.type, again.basic).length).map(([, s]) => s);
+  if (spots.length && inPlay(state, p).length > 1) follow(state, waiting, { player: waiting.player, side: p, spots, left: 1, optional: true, effect: again });
+}
+
+/** A pick that leads to a choice of cards: the steps waiting on the pick ride on the choice. */
+function ask(state, waiting, choice) {
+  askChoose(state, { ...choice, ...(waiting.then ? { then: waiting.then } : {}), ...(waiting.from != null ? { from: waiting.from } : {}), ...carry(waiting) });
+  waiting.then = null;
 }
 
 /** A pick that leads to another (move from here, then to there): the steps waiting on the first ride on the second. */
