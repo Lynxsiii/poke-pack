@@ -66,7 +66,8 @@ const GRADES = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
 const SETS_LONGEST_FIRST = [...ALL_SETS].sort((a, b) => b.id.length - a.id.length);
 
 const setOfCard = (cardId) => SETS_LONGEST_FIRST.find((set) => String(cardId || "").startsWith(`${set.id}-`)) || null;
-const pct = (bp) => `${(bp / 100).toFixed(1)}%`;
+// A chance under 0.1% reads "<0.1%", not a flat 0.0% that says it can't happen.
+const pct = (bp) => (bp > 0 && bp < 5 ? "<0.1%" : `${(bp / 100).toFixed(1)}%`);
 /** A date on record, or "Unknown": a missing date never reads as today. */
 const dateWords = (ms) => {
   const n = Number(ms);
@@ -1034,7 +1035,7 @@ export function initGrading(deps) {
     if (slab.grade === 10 && slab.blackLabel) {
       return `A ${BLACK_LABEL.word}: about 1 in ${Math.round((band.blackIn * 10000) / odds).toLocaleString("en-US")} cards from ${band.label} sets.`;
     }
-    return `About ${pct(odds)} of cards from ${band.label} sets come back ${article(slab.grade)} ${slab.grade}.`;
+    return `${odds > 0 && odds < 5 ? "Fewer than 0.1%" : `About ${pct(odds)}`} of cards from ${band.label} sets come back ${article(slab.grade)} ${slab.grade}.`;
   }
 
   /** The line under the numbers: what the slab is worth next to the raw card, and what to do about it. */

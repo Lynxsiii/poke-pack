@@ -9,7 +9,10 @@
       "Casino: putting up cards on a short phone scrolls the whole sheet, so your cards get the room instead of a strip one row tall.",
       "The menu shows a soft shade at its bottom edge when there are more pages to scroll to.",
       "The Beta testing card in the Casino names the games that are actually in it.",
-      "The search box's hint fits on smaller phones."
+      "The search box's hint fits on smaller phones.",
+      "Grading: the odds table fits \"Very Good-Excellent\" on smaller phones, and grades rarer than 0.1% read \"<0.1%\" instead of 0.0%.",
+      "Grading: a slab tile on a narrow screen puts its value under the grade instead of cutting the grade's name.",
+      "Casino: on smaller phones the Duplicates, Everything, Graded and Picked filters show in full, and picked card counts no longer sit on top of the confirm key."
     ]
   },
   {
