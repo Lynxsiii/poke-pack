@@ -768,14 +768,21 @@ export function initTcg(deps) {
   function openingHtml() {
     const state = match.state;
     const faces = deps.coinFaces();
-    const mull = state.players.map((s, p) => (s.mulligans ? `${p === ME ? "You" : BOT_NAME} had no Basic Pokémon ${s.mulligans === 1 ? "once" : `${s.mulligans} times`}, so ${p === ME ? BOT_NAME : "you"} will draw ${plural(s.mulligans, "extra card")}.` : "")).filter(Boolean);
+    const mull = state.players.map((s, p) => {
+      if (!s.mulligans) return "";
+      const extra = s.mulligans - state.players[other(p)].mulligans;
+      return `${p === ME ? "You" : BOT_NAME} had no Basic Pokémon ${s.mulligans === 1 ? "once" : `${s.mulligans} times`} and drew a new hand${extra > 0 ? `, so ${p === ME ? BOT_NAME : "you"} will draw ${plural(extra, "extra card")}` : ""}.`;
+    }).filter(Boolean);
     return `<div class="tg-sheet-bg"></div>
       <div class="tg-sheet tg-opening" role="dialog" aria-label="Coin flip">
         <p class="tg-opening-lab">Flip for the first turn</p>
         <div class="tg-coin">${coinStageHTML({ heads: faces?.heads || null, tails: faces?.tails || null, size: 132, rest: "heads" })}</div>
         <h2 id="tg-first">&nbsp;</h2>
         ${mull.map((m) => `<p>${esc(m)}</p>`).join("")}
-        <div class="tg-sheet-keys"><button type="button" class="solid rt-go" data-act="opened" disabled>Choose your Pokémon</button></div>
+        <p class="tg-opening-note" hidden>Whoever goes first can't attack or play a Supporter on that turn.</p>
+        <div class="tg-sheet-keys">${state.flipWinner === ME
+          ? `<button type="button" class="solid rt-go" data-act="go-first" disabled>Go first</button><button type="button" class="ghost" data-act="go-second" disabled>Go second</button>`
+          : `<button type="button" class="solid rt-go" data-act="opened" disabled>Choose your Pokémon</button>`}</div>
       </div>`;
   }
 
@@ -808,16 +815,17 @@ export function initTcg(deps) {
   async function runOpening() {
     match.openingRun = true;
     const coin = root.querySelector(".tg-opening .cf-coin");
-    const mine = match.state.first === ME;
+    const mine = (match.state.flipWinner ?? match.state.first) === ME;
     await sleep(350);
     // Heads is yours: the coin lands on the side of whoever goes first.
     await flipCoin(coin, mine ? "heads" : "tails", { ms: 1700, motion: !deps.reduceMotion() });
     if (!match?.opening) return;
     const text = root.querySelector("#tg-first");
-    if (text) text.textContent = mine ? "You go first" : `${BOT_NAME} goes first`;
+    if (text) text.textContent = mine ? "You won the flip" : `${BOT_NAME} won the flip and goes first`;
     const lab = root.querySelector(".tg-opening-lab");
     if (lab) lab.textContent = mine ? "Heads" : "Tails";
-    root.querySelector('[data-act="opened"]')?.removeAttribute("disabled");
+    root.querySelector(".tg-opening-note")?.removeAttribute("hidden");
+    root.querySelectorAll(".tg-opening .tg-sheet-keys button").forEach((key) => key.removeAttribute("disabled"));
   }
 
   /* ---------- telling what happened ---------- */
@@ -1432,6 +1440,13 @@ export function initTcg(deps) {
 
   function tableAct(act) {
     const state = match.state;
+    if (act === "go-first" || act === "go-second") {
+      apply(state, { type: "order", player: ME, first: act === "go-first" }, defs);
+      saveMatch();
+      match.line = act === "go-first" ? "You go first." : `${BOT_NAME} goes first.`;
+      match.opening = false;
+      return paintTable();
+    }
     if (act === "opened") {
       match.opening = false;
       return paintTable();
