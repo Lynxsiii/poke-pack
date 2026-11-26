@@ -343,7 +343,7 @@ export async function loadTins(env, helpers, request) {
     let ev = 0;
     for (const c of cards) { c.odds = tinWeight(c.cents) / total; ev += c.odds * c.cents; }
     cards.sort((a, b) => b.cents - a.cents);
-    out.push({ id: tin.id, name: tin.name, price: Math.max(100, Math.ceil(ev / BETA_RULES.tinEdge)), cards });
+    out.push({ id: tin.id, name: tin.name, line: tin.line || '', color: tin.color || '', price: Math.max(100, Math.ceil(ev / BETA_RULES.tinEdge)), cards });
   }
   tinCache = { at: Date.now(), tins: out };
   return out;
@@ -353,7 +353,7 @@ const viewTinRun = (row) => {
   const d = parse(row.data) || {};
   return { id: row.id, game: 'tins', tin: d.tin, tinName: d.tinName, card: d.card, price: coins(row.stake), createdAt: row.created_at };
 };
-const publicTin = (t) => ({ id: t.id, name: t.name, price: coins(t.price), cards: t.cards.map(({ cents, ...c }) => c) });
+const publicTin = (t) => ({ id: t.id, name: t.name, line: t.line, color: t.color, price: coins(t.price), cards: t.cards.map(({ cents, ...c }) => c) });
 async function tins(env, helpers, user, action, body, method, request) {
   const list = await loadTins(env, helpers, request);
   if (method === 'GET') return helpers.json({ tins: list.map(publicTin), recent: (await recent(env, user.id, 'tins')).map(viewTinRun), serverNow: Date.now() });

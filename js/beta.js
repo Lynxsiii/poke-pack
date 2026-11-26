@@ -499,41 +499,91 @@ function higherPage(ctx, root) {
 }
 
 // ---- Mystery Tins ------------------------------------------------------------------------
+/** A tin drawn front-on: its paint, a lid that comes off, a window showing the best card, the name on a plate. */
+let tinSeq = 0;
+function tinArt(t, cls = "") {
+  const id = `tin${++tinSeq}`;
+  const cover = t.cards?.[0]?.image || "";
+  const paint = /^#[0-9a-f]{6}$/i.test(t.color || "") ? t.color : "#00b4c8";
+  return `<span class="bz-tinart ${cls}" style="--paint:${paint}" aria-hidden="true"><svg viewBox="0 0 160 150">
+    <defs><clipPath id="${id}"><circle cx="80" cy="84" r="31"/></clipPath></defs>
+    <ellipse class="bz-tin-shadow" cx="80" cy="143" rx="62" ry="5"/>
+    <g class="bz-tin-body"><rect x="16" y="40" width="128" height="100" rx="10" fill="var(--paint)" stroke="var(--k0)" stroke-width="3"/>
+      <path d="M16 120h128" stroke="var(--k0)" stroke-width="2" opacity=".35"/><path d="M26 50v80" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".28"/>
+      <circle cx="80" cy="84" r="35" fill="#fff" stroke="var(--k0)" stroke-width="3"/>
+      ${cover ? `<image href="${esc(cover)}" x="44" y="40" width="72" height="100" preserveAspectRatio="xMidYMin slice" clip-path="url(#${id})"/>` : ""}
+      <circle cx="80" cy="84" r="31" fill="none" stroke="var(--k0)" stroke-width="2.5"/>
+      <rect x="38" y="122" width="84" height="13" rx="3" fill="#fff" stroke="var(--k0)" stroke-width="2"/><path d="M48 128.5h64" stroke="var(--k0)" stroke-width="2.5" stroke-dasharray="7 4"/></g>
+    <g class="bz-tin-lid"><rect x="10" y="22" width="140" height="24" rx="8" fill="var(--paint)" stroke="var(--k0)" stroke-width="3"/>
+      <rect x="10" y="22" width="140" height="24" rx="8" fill="#000" opacity=".16"/><path d="M22 30h116" stroke="#fff" stroke-width="3.5" stroke-linecap="round" opacity=".35"/>
+      <rect x="62" y="12" width="36" height="12" rx="4" fill="var(--yel)" stroke="var(--k0)" stroke-width="2.5"/></g></svg></span>`;
+}
+
 function tinsPage(ctx, root) {
   return page(ctx, root, "tins", (p) => {
     let tins = null;
     let recent = [];
-    let won = null;
+    let stage = null; // { tin, phase: 'open'|'reel'|'reveal', card }
     const pct = (o) => (o >= 0.01 ? `${(o * 100).toFixed(o >= 0.1 ? 0 : 1)}%` : o >= 0.0001 ? `${(o * 100).toFixed(2)}%` : `1 in ${Math.round(1 / o).toLocaleString("en-US")}`);
-    const tinBox = (t) => `<article class="rt-box bz-box bz-tin" data-tin="${esc(t.id)}">
-      <div class="bz-tin-top"><span class="bz-art bz-tin-art">${ART.tins}</span><div><h2 class="cs-h">${esc(t.name)}</h2><p class="bz-note">${t.cards.length} cards. Best: ${esc(t.cards[0].name)}, worth ${coinTag(t.cards[0].price)}</p></div></div>
-      <div class="bz-tin-strip">${t.cards.slice(0, 5).map((c) => `<img src="${esc(c.image)}" alt="${esc(c.name)}" loading="lazy" decoding="async" />`).join("")}</div>
-      <details class="bz-odds"><summary>All ${t.cards.length} cards and odds</summary><div class="cs-rows">${t.cards.map((c) => `<div class="rt-row bz-row"><span class="rt-row-lab">${pct(c.odds)}</span><span class="rt-row-name">${esc(c.name)}<small>${esc(c.setName || "")}${c.number ? ` ${esc(c.number)}` : ""}</small></span><span class="rt-row-val">${coinTag(c.price)}</span></div>`).join("")}</div></details>
-      <button type="button" class="solid" data-open="${esc(t.id)}">Open for ${coinTag(t.price)}</button></article>`;
+    const big = (t, c) => c.price >= t.price * 3;
+    const tinBox = (t) => `<article class="rt-box bz-tin" data-tin="${esc(t.id)}" style="--paint:${esc(t.color || "")}">
+      <div class="bz-tin-well">${tinArt(t, "is-shelf")}</div>
+      <div class="bz-tin-copy"><h2 class="bz-tin-name">${esc(t.name)}</h2><p class="bz-note">${esc(t.line || "")}</p>
+        <p class="bz-tin-best"><small>Best card</small><b>${esc(t.cards[0].name)}</b>${coinTag(t.cards[0].price)}</p>
+        <details class="bz-odds"><summary>All ${t.cards.length} cards and odds</summary><div class="cs-rows">${t.cards.map((c) => `<div class="rt-row bz-row"><span class="rt-row-lab">${pct(c.odds)}</span><span class="rt-row-name">${esc(c.name)}<small>${esc(c.setName || "")}${c.number ? ` ${esc(c.number)}` : ""}</small></span><span class="rt-row-val">${coinTag(c.price)}</span></div>`).join("")}</div></details>
+        <button type="button" class="ghost bz-open" data-open="${esc(t.id)}">Open for ${coinTag(t.price)}</button></div></article>`;
+    const stageHTML = () => {
+      if (!stage) return "";
+      const { tin, card } = stage;
+      const hit = card && big(tin, card);
+      return `<section class="bz-stage is-${stage.phase}${hit ? " is-hit" : ""}" style="--paint:${esc(tin.color || "")}" aria-live="polite">
+        <div class="bz-stage-tin">${tinArt(tin, "is-stage")}</div>
+        <div class="bz-reel-wrap"><div class="bz-reel"></div></div>
+        ${card ? `<div class="bz-reveal">
+          <span class="bz-reveal-slab" aria-hidden="true"></span>
+          <img class="bz-reveal-card" src="${esc(card.image)}" alt="${esc(card.name)}" decoding="async" />
+          <div class="bz-reveal-plate${hit ? " is-hit" : ""}"><b>${esc(card.name)}</b><span>${esc(card.rarity || "")}${card.setName ? `, ${esc(card.setName)}` : ""}</span></div>
+          <p class="bz-reveal-fig">${coinTag(card.price)} <small>${card.price >= tin.price ? `${(card.price / tin.price).toFixed(1)}x what you paid` : "Added to your collection"}</small></p>
+          <div class="bz-reveal-keys"><button type="button" class="solid rt-go" data-open="${esc(tin.id)}">Open another, ${coinTag(tin.price)}</button><button type="button" class="ghost" data-close>Back to the tins</button></div>
+        </div>` : ""}
+      </section>`;
+    };
     function paint() {
       root.innerHTML = `<div class="cs-page bz-page bz-tins">${p.head("Mystery Tins")}
-        <p class="bz-lede">Every card in a tin and its odds are listed. The card goes straight into your collection.</p>
-        <div class="bz-reel-wrap" ${won ? "" : "hidden"}><div class="bz-reel"></div><p class="bz-status" data-tin-status></p></div>
+        <p class="bz-lede">Pick a tin and crack it open. Every card inside and its odds are listed, and the card goes straight into your collection.</p>
+        <div data-stage>${stageHTML()}</div>
         ${!tins ? `<div class="rt-skel bz-skel"></div>` : `<div class="bz-tin-list">${tins.map(tinBox).join("")}</div>`}
         ${recent.length ? `<section class="cs-section bz-recent"><h2 class="cs-h">Your last tins</h2><div class="cs-rows">${recent.map((r) => `<div class="rt-row bz-row${r.card.price >= r.price ? " is-won" : ""}"><span class="rt-row-lab">${esc(r.tinName.replace(/ tin$/, ""))}</span><span class="rt-row-name">${esc(r.card.name)}<small>Paid ${num(r.price)}</small></span><span class="rt-row-val">${coinTag(r.card.price)}</span></div>`).join("")}</div></section>` : ""}</div>`;
     }
-    async function spin(tin, card) {
-      const wrap = root.querySelector(".bz-reel-wrap");
+    const paintStage = () => { const el = root.querySelector("[data-stage]"); if (el) el.innerHTML = stageHTML(); };
+    const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+    async function play(tin, card) {
+      const moving = ctx.motion();
+      stage = { tin, phase: "open", card: null };
+      paintStage();
+      root.querySelector(".bz-stage")?.scrollIntoView?.({ block: "start", behavior: moving ? "smooth" : "auto" });
+      // 1. The tin shakes and the lid pops (css/pages/beta.css .bz-stage.is-open).
+      if (moving) await wait(1050);
+      // 2. The reel: a strip of weighted picks with the won card near the end slides to a stop under the marker.
+      stage.phase = "reel";
+      root.querySelector(".bz-stage").className = "bz-stage is-reel";
       const reel = root.querySelector(".bz-reel");
-      wrap.hidden = false;
-      wrap.scrollIntoView?.({ block: "nearest", behavior: ctx.motion() ? "smooth" : "auto" });
-      // A strip of weighted picks with the won card near the end; it slides to stop on it.
       const pick = () => { let u = Math.random(); for (const c of tin.cards) { if (u < c.odds) return c; u -= c.odds; } return tin.cards[tin.cards.length - 1]; };
       const strip = Array.from({ length: 34 }, pick);
       strip[30] = card;
       reel.innerHTML = strip.map((c, i) => `<img src="${esc(c.image)}" alt="" class="${i === 30 ? "is-won" : ""}" decoding="async" />`).join("");
       const item = reel.children[30];
       const target = item.offsetLeft + item.offsetWidth / 2 - reel.parentElement.clientWidth / 2;
-      if (ctx.motion()) await reel.animate([{ transform: "translateX(0)" }, { transform: `translateX(${-target}px)` }], { duration: 4200, easing: "cubic-bezier(.12,.6,.12,1)", fill: "forwards" }).finished.catch(() => {});
-      else reel.style.transform = `translateX(${-target}px)`;
+      if (moving) await reel.animate([{ transform: "translateX(0)" }, { transform: `translateX(${-target}px)` }], { duration: 3600, easing: "cubic-bezier(.12,.6,.12,1)", fill: "forwards" }).finished.catch(() => {});
       item.classList.add("is-land");
+      if (moving) await wait(350);
+      // 3. The reveal: the card rises in front of a slab, its name on a plate (yellow for a big hit).
+      stage = { tin, phase: "reveal", card };
+      paintStage();
+      root.querySelector(".bz-stage")?.scrollIntoView?.({ block: "start", behavior: "auto" });
     }
     root.addEventListener("click", async (e) => {
+      if (e.target.closest("[data-close]")) { stage = null; paintStage(); return; }
       const b = e.target.closest("[data-open]");
       if (!b || p.state.busy) return;
       const tin = tins.find((t) => t.id === b.dataset.open);
@@ -541,16 +591,14 @@ function tinsPage(ctx, root) {
       root.querySelectorAll("[data-open]").forEach((x) => (x.disabled = true));
       try {
         const res = await post("/api/casino/beta/tins/open", { tin: tin.id, price: tin.price, requestId: uuid() });
-        won = res.run;
-        await spin(tin, won.card);
+        await play(tin, res.run.card);
         p.apply(res);
         ctx.invalidateCards?.();
-        recent = [won, ...recent].slice(0, 8);
-        const st = root.querySelector("[data-tin-status]");
-        st.innerHTML = `${esc(won.card.name)}, worth ${coinTag(won.card.price)}. It's in your collection.`;
-        st.classList.add(won.card.price >= tin.price ? "is-good" : "is-plain");
-        if (won.card.price >= tin.price * 5) ctx.buzz?.([40, 30, 40, 30, 80]);
-      } catch (err) { p.fail(err); } finally {
+        recent = [res.run, ...recent].slice(0, 8);
+        if (big(tin, res.run.card)) ctx.buzz?.([40, 30, 40, 30, 80]);
+        paint();
+        root.querySelector(".bz-stage")?.scrollIntoView?.({ block: "start", behavior: "auto" });
+      } catch (err) { p.fail(err); stage = null; paintStage(); } finally {
         p.state.busy = false;
         root.querySelectorAll("[data-open]").forEach((x) => (x.disabled = false));
       }
@@ -563,7 +611,7 @@ function tinsPage(ctx, root) {
         if (p.visible() && !p.state.busy) paint();
       } catch (err) { p.fail(err); }
     }
-    return { show() { won = null; paint(); load(); } };
+    return { show() { stage = null; paint(); load(); } };
   });
 }
 
