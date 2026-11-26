@@ -159,6 +159,11 @@ const reduced = () =>
   (typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches) ||
   document.body?.classList.contains("no-motion");
 
+/* The toss is the result of the game, not decoration: only the phone's own Reduce Motion setting
+   shortens it. The Idle shimmer setting and Lite (body.no-motion) are for card effects and no longer
+   stop the coin. */
+const tossReduced = () => typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+
 const sizeOf = (coinEl) => coinEl.offsetWidth || parseFloat(getComputedStyle(coinEl).getPropertyValue("--cf-size")) || 168;
 const shadowOf = (coinEl) => coinEl.parentElement?.querySelector(":scope > .cf-shadow") || null;
 const sheensOf = (coinEl) => ({
@@ -199,7 +204,7 @@ export function flipCoin(coinEl, result = "heads", opts = {}) {
   stopAnimations(coinEl);
   coinEl.dataset.rest = want; // if anything cancels the toss the coin already shows the result
 
-  if (!motion || reduced() || typeof coinEl.animate !== "function") {
+  if (!motion || tossReduced() || typeof coinEl.animate !== "function") {
     if (typeof coinEl.animate !== "function") return Promise.resolve(true);
     return new Promise((resolve) => {
       const fade = coinEl.animate([{ opacity: 0.2 }, { opacity: 1 }], { duration: 180, easing: "ease-out" });
