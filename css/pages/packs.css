@@ -614,7 +614,7 @@ body.no-motion main #view-catalog .cat-tab::before { transition: none; }
 
 /* ==== The set page: "All packs" leads the era's tabs; box promos; the foot ==== */
 #view-shop .st-all { order: -1; padding: 0 12px 0 0; }
-#view-shop .settabs-row { padding-left: 4px; }
+#view-shop .settabs-row { padding-left: 4px; -webkit-mask-image: linear-gradient(90deg, transparent, #000 18px, #000 calc(100% - 18px), transparent); mask-image: linear-gradient(90deg, transparent, #000 18px, #000 calc(100% - 18px), transparent); }
 #view-shop .shop-box .ground-h { align-items: baseline; padding: 34px 0 6px; }
 #view-shop .shop-box .ground-h > span { color: var(--k-2); font: 700 13.5px var(--font); }
 #view-shop .shop-box-note { margin: 0 0 12px; max-width: 60ch; color: var(--k); font-size: 14px; font-weight: 600; line-height: 1.45; }

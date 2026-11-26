@@ -254,7 +254,7 @@ async function viewHigher(env, helpers, request, row) {
   const { above, below } = hlCounts(d.pool, cur[1]);
   const done = row.state !== 'open';
   return { id: row.id, game: 'higher', state: row.state, stake: coins(row.stake), set: set ? { id: set.id, name: set.name } : null,
-    shown: d.shown.map(brief), last: d.last ? brief(d.last) : null, mult: done ? row.mult : d.mult, guesses: d.shown.length - 1,
+    shown: d.shown.map(brief), last: d.last ? brief(d.last) : null, mult: done ? row.mult : d.mult, guesses: d.right ?? d.shown.length - 1, // shown keeps the last 12 cards only
     pays: done ? null : { higher: guessMultiplier(above, below, 'higher'), lower: guessMultiplier(above, below, 'lower') },
     odds: done ? null : { above, below }, payout: coins(row.payout), createdAt: row.created_at };
 }
@@ -303,7 +303,7 @@ async function higher(env, helpers, user, action, body, method, request) {
     } else {
       const mult = Math.floor(d.mult * pays * 100 + 1e-9) / 100;
       const shown = [...d.shown, next].slice(-12);
-      const data = JSON.stringify({ ...d, shown, mult });
+      const data = JSON.stringify({ ...d, shown, mult, right: (d.right ?? d.shown.length - 1) + 1 });
       const pay = payoutCents(run.stake, mult);
       if (pay >= BETA_RULES.maxWin * 100) await env.DB.batch(cashOut(env, run, 'cashed', pay, mult, data, now));
       else await env.DB.prepare("UPDATE beta_runs SET data = ? WHERE id = ? AND state = 'open' AND data = ?").bind(data, run.id, run.data).run();
