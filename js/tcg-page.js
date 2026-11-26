@@ -32,7 +32,26 @@ import { coinStageHTML, flipCoin } from "./coin.js?v=5";
 const ME = 0;
 const BOT = 1;
 const BOT_NAME = "House bot";
-const EN_CODE = { Any: "★", Grass: "G", Fire: "R", Water: "W", Lightning: "L", Psychic: "P", Fighting: "F", Darkness: "D", Metal: "M", Fairy: "Y", Dragon: "N", Colorless: "C" };
+/**
+ * Energy type symbols, drawn for this site (24-unit grid, filled with the badge's ink colour;
+ * strokes in var(--en) cut details back out in the badge colour).
+ */
+const CUT = 'fill="none" stroke="var(--en)" stroke-width="1.8" stroke-linecap="round"';
+const EN_ICON = {
+  Grass: `<path d="M18.5 3.5C9 4 4.5 9.5 5.5 18.5c9 1 14-4 13-15z"/><path ${CUT} d="M7 17 15 9"/>`,
+  Fire: `<path d="M12.5 2c.6 4.2 6 6.3 6 12.3a6.5 6.5 0 0 1-13 0c0-3.2 1.8-5.3 3.3-6.6.1 2 1 3.2 2.2 3.6-.6-3.4-.3-6.4 1.5-9.3z"/>`,
+  Water: `<path d="M12 2.5c3.4 5.2 6.5 8.5 6.5 12.6a6.5 6.5 0 0 1-13 0c0-4.1 3.1-7.4 6.5-12.6z"/><path ${CUT} d="M9 15.5a3 3 0 0 0 2.5 3"/>`,
+  Lightning: `<path d="M14 1.5 4.5 13.5h6.2L8.8 22.5l10.7-13h-6.4L14 1.5z"/>`,
+  Psychic: `<path d="M1.8 12C4.6 7.2 8.2 5 12 5s7.4 2.2 10.2 7c-2.8 4.8-6.4 7-10.2 7S4.6 16.8 1.8 12z"/><circle cx="12" cy="12" r="3.4" fill="var(--en)"/><circle cx="12" cy="12" r="1.5"/>`,
+  Fighting: `<path d="M6.5 8.5a2 2 0 0 1 2-2h8a3 3 0 0 1 3 3v6a5 5 0 0 1-5 5h-3.5a4.5 4.5 0 0 1-4.5-4.5z"/><path ${CUT} d="M10 7v3.5M13.5 7v3.5M17 7.5v3M6.5 13.5h6"/>`,
+  Darkness: `<path d="M15.5 2.5a9.5 9.5 0 1 0 6.3 14.2A7.6 7.6 0 0 1 15.5 2.5z"/>`,
+  Metal: `<path d="M12 1.8 20.8 7v10L12 22.2 3.2 17V7z"/><circle cx="12" cy="12" r="3.6" fill="var(--en)"/>`,
+  Fairy: `<path d="M12 1.5 14.6 9.4 22.5 12l-7.9 2.6L12 22.5l-2.6-7.9L1.5 12l7.9-2.6z"/>`,
+  Dragon: `<path d="M6 21c1-7 3.5-12.5 9.5-18.5-1.5 5.5-1 9.5 3 12.5-4.5 0-7.5 1.5-12.5 6z"/>`,
+  Colorless: `<path d="m12 1.8 2.4 6.3 6.7-.3-5.2 4.2 1.8 6.5L12 14.8l-5.7 3.7 1.8-6.5L2.9 7.8l6.7.3z"/>`,
+  Any: `<path d="M12 1.5 14.6 9.4 22.5 12l-7.9 2.6L12 22.5l-2.6-7.9L1.5 12l7.9-2.6z"/>`,
+};
+const enIcon = (type) => (EN_ICON[type] ? `<svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">${EN_ICON[type]}</svg>` : "?");
 
 const COND_NAME = { asleep: "Asleep", burned: "Burned", confused: "Confused", paralyzed: "Paralyzed", poisoned: "Poisoned" };
 
@@ -123,7 +142,7 @@ export function initTcg(deps) {
   const pip = (type) => {
     const one = type.includes("|") ? "Any" : type;
     const title = type === "Any" ? "Any type" : type.split("|").join(" or ");
-    return `<i class="tg-en" data-en="${esc(one)}" title="${esc(title)}">${EN_CODE[one] || "?"}</i>`;
+    return `<i class="tg-en" data-en="${esc(one)}" title="${esc(title)}" role="img" aria-label="${esc(title)}">${enIcon(one)}</i>`;
   };
   const pips = (types) => types.map(pip).join("");
   const stageName = (def) => (def.stage === "basic" ? "Basic" : `Evolves from ${def.evolvesFrom}`);
@@ -406,6 +425,7 @@ export function initTcg(deps) {
         <div><dt>Retreat</dt><dd>${def.retreat ? pips(Array(def.retreat).fill("Colorless")) : "Free"}</dd></div>
       </dl>
       ${def.ability ? `<p class="tg-look-text tg-ability-text"><b>${esc(def.ability.kind)}: ${esc(def.ability.name)}</b> ${esc(def.ability.text)}</p>` : ""}
+      ${def.attacks.length ? `<ul class="tg-look-attacks">${def.attacks.map((a) => `<li><span class="tg-pips">${a.cost.length ? pips(a.cost) : "Free"}</span><b>${esc(a.name)}</b><em>${a.damage || ""}</em>${a.text ? `<p>${esc(a.text)}</p>` : ""}</li>`).join("")}</ul>` : ""}
       ${def.prizes > 1 ? `<p class="tg-look-note">Gives up ${def.prizes} prize cards when Knocked Out.</p>` : ""}
       ${def.notes.map((n) => `<p class="tg-look-note">${esc(n)}.</p>`).join("")}`;
     return `<div class="tg-sheet-bg" data-close></div>
@@ -415,6 +435,7 @@ export function initTcg(deps) {
           <h3>${esc(def.name)}</h3>
           ${def.kind === "pokemon" ? `<p class="tg-look-meta">${stageName(def)}, ${def.hp} HP</p>` : ""}
           ${def.kind === "trainer" ? `<p class="tg-look-meta">${{ item: "Item", supporter: "Supporter: one a turn", stadium: "Stadium", tool: "Pokémon Tool" }[def.sub]}</p>${def.text ? `<p class="tg-look-text">${esc(def.text)}</p>` : ""}${def.why ? `<p class="tg-look-note">${esc(def.why)}</p>` : ""}` : ""}
+          ${def.kind === "energy" && !def.basic ? `<p class="tg-look-meta">Special Energy</p>${def.text ? `<p class="tg-look-text">${esc(def.text)}</p>` : ""}${def.why ? `<p class="tg-look-note">${esc(def.why)}</p>` : ""}` : ""}
           ${extra}${body}
           <button type="button" class="ghost sm" data-close>Close</button>
         </div>
@@ -1512,6 +1533,8 @@ export function initTcg(deps) {
   let dropFrom = null;
   let dragEndedAt = 0;
   const LIFT = 46; // a finger hides what is under it: the card rides above the touch
+  const HOLD_MS = 450; // held still this long: the card opens to read instead of being dragged
+  const STILL = 9; // px a press may wander and still count as held in place
 
   function dropPoint(e) {
     return { x: e.clientX, y: e.clientY - (drag.touch ? LIFT : 0) };
@@ -1533,10 +1556,20 @@ export function initTcg(deps) {
 
   function dragStart(e) {
     const card = e.target.closest?.("[data-hand]");
-    if (!card || !match || route.name !== "match" || match.busy || match.over || (e.pointerType === "mouse" && e.button !== 0)) return;
+    if (!card || !match || route.name !== "match" || match.over || (e.pointerType === "mouse" && e.button !== 0)) return;
     const setup = match.state.phase === "setup";
-    if (!setup && !myTurn()) return;
-    drag = { uid: card.dataset.hand, x: e.clientX, y: e.clientY, id: e.pointerId, touch: e.pointerType !== "mouse", live: false, ghost: null, over: null, src: card.querySelector("img")?.src || "", w: card.getBoundingClientRect().width };
+    // Holding a card still opens it to read, any time; pulling it plays it, on your own turn.
+    const still = match.busy || (!setup && !myTurn());
+    drag = { uid: card.dataset.hand, x: e.clientX, y: e.clientY, id: e.pointerId, touch: e.pointerType !== "mouse", live: false, still, ghost: null, over: null, src: card.querySelector("img")?.src || "", w: card.getBoundingClientRect().width };
+    const held = drag;
+    held.timer = setTimeout(() => {
+      if (drag !== held || held.live) return;
+      held.examined = true;
+      card.classList.add("is-held");
+      setTimeout(() => card.classList.remove("is-held"), 260);
+      deps.buzz?.(10);
+      openLook(match.state.cards[held.uid]);
+    }, HOLD_MS);
     document.addEventListener("pointermove", dragMove, { passive: false });
     document.addEventListener("pointerup", dragEnd);
     document.addEventListener("pointercancel", dragCancel);
@@ -1544,9 +1577,11 @@ export function initTcg(deps) {
 
   function dragMove(e) {
     if (!drag || e.pointerId !== drag.id) return;
+    if (drag.examined) return void e.preventDefault();
     if (!drag.live) {
-      if (Math.hypot(e.clientX - drag.x, e.clientY - drag.y) < 9) return;
-      if (match.busy) return dragCancel();
+      if (Math.hypot(e.clientX - drag.x, e.clientY - drag.y) < STILL) return;
+      clearTimeout(drag.timer);
+      if (drag.still || match.busy) return dragCancel();
       drag.live = true;
       // Selecting it lights the places it can go, exactly as a tap would.
       // The places it can go light up as they would for a tap. The table is not repainted here:
@@ -1595,6 +1630,7 @@ export function initTcg(deps) {
     document.removeEventListener("pointercancel", dragCancel);
     const was = drag;
     drag = null;
+    clearTimeout(was?.timer);
     was?.over?.classList.remove("drop-over");
     const rect = was?.ghost?.getBoundingClientRect() || null;
     was?.ghost?.remove();
@@ -1613,6 +1649,8 @@ export function initTcg(deps) {
     const live = drag.live;
     const target = live ? dropTarget(e) : null;
     const { was, rect } = dragDone();
+    // A hold that opened the card: letting go leaves it open, and isn't a tap.
+    if (was.examined) return void (dragEndedAt = Date.now());
     if (!live || !match) return; // it never moved: the click that follows is a tap
     dragEndedAt = Date.now();
     const state = match.state;
@@ -1638,6 +1676,10 @@ export function initTcg(deps) {
   }
 
   root.addEventListener("pointerdown", dragStart);
+  // A long press would otherwise bring up the browser's own menu over the card.
+  root.addEventListener("contextmenu", (e) => {
+    if (e.target.closest?.(".tg-hand [data-hand]")) e.preventDefault();
+  });
 
   function tapBench() {
     const sel = match.sel;
