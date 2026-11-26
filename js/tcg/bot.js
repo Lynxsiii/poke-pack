@@ -118,6 +118,10 @@ export function botAction(state, player, defs) {
     if (aim === "heal" && inPlay(state, player).some(([slot]) => slot.damage >= heal.n)) return action;
   }
 
+  // What the Stadium offers is free: take it while there is a deck to work with.
+  const stadium = actions.find((a) => a.type === "stadium");
+  if (stadium && side.deck.length > 6) return stadium;
+
   // A Tool goes on the Active Pokémon, else on whoever is first on the Bench.
   const tool = actions.filter((a) => a.type === "tool").sort((a, b) => a.spot - b.spot)[0];
   if (tool) return tool;
