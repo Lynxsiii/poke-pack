@@ -5085,7 +5085,7 @@ function renderLoungePane(pane) {
   if (!pane.querySelector("#social-chat-log")) {
     pane.innerHTML = `<div class="hub-lounge">
       <section class="lounge-panel hub-chat" aria-labelledby="social-chat-h">
-        <div class="lounge-head"><h3 id="social-chat-h">Global chat</h3><span>Everyone on the site sees this</span></div>
+        <div class="lounge-head"><h3 id="social-chat-h">Global chat</h3><span>Everyone can see this</span></div>
         <div class="chat-log" id="social-chat-log"></div>
         <form class="chat-form" id="social-chat-form">
           <input name="body" maxlength="180" placeholder="Say something to everyone" autocomplete="off" enterkeyhint="send" aria-label="Message the whole site" />
