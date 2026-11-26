@@ -77,92 +77,43 @@
 .bz-code-row.is-off { opacity: 0.55; }
 
 /* ---- Tall Grass ------------------------------------------------------------------ */
-/* A framed patch of grass: the payout over it, the tiles, the ladder of what comes next. */
-.bz-patch { max-width: 480px; border: var(--line-w) solid var(--k); border-radius: 6px; overflow: hidden; background: var(--box); }
-.bz-hud { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; padding: 12px 14px 11px; border-bottom: var(--line-w) solid var(--k); }
-.bz-hud p { margin: 0; }
-.bz-hud-fig { display: grid; gap: 1px; }
-.bz-hud-fig small, .bz-hud-side small { color: var(--k-2); font: 700 13px var(--font-h); }
-.bz-hud-fig b { font: italic 800 44px/1 var(--font-xc); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
-.bz-hud-side { display: grid; justify-items: end; gap: 2px; text-align: right; font: 700 20px var(--font-h); }
-.bz-hud.is-bad { background: var(--hp-low); border-color: var(--k0); }
-.bz-hud.is-bad, .bz-hud.is-bad small { color: #fff; }
-.bz-hud.is-good { background: var(--yel); border-color: var(--k0); }
-.bz-hud.is-good, .bz-hud.is-good small { color: var(--k0); }
-.bz-grid {
-  --grass: var(--hp); --grass-2: color-mix(in srgb, var(--hp) 58%, var(--k0)); --soil: color-mix(in srgb, var(--hp) 26%, var(--box));
-  display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; padding: 12px;
-  background-color: var(--soil); background-image: var(--dots); background-size: 14px 14px;
-}
+.bz-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 7px; max-width: 460px; }
 .bz-tile {
-  position: relative; aspect-ratio: 1; border: var(--line-w) solid var(--k0); border-radius: 6px; padding: 0; overflow: hidden;
-  background: var(--grass); color: var(--k0); cursor: pointer;
+  position: relative; aspect-ratio: 1; border: var(--line-w) solid var(--k); border-radius: 6px; padding: 0;
+  background: var(--hp); color: var(--k0); cursor: pointer;
   transition: transform 0.14s var(--ease-out); -webkit-tap-highlight-color: transparent;
 }
 .bz-tile:disabled { cursor: default; }
-.bz-tuft { position: absolute; left: 8%; bottom: -4%; width: 84%; height: 84%; transform-origin: 50% 100%; transition: transform 0.2s var(--ease-out); }
-.bz-tuft path { fill: var(--grass-2); stroke: var(--k0); stroke-width: 2.2; stroke-linejoin: round; }
 .bz-tile:not(:disabled):active { transform: translateY(2px) scale(0.96); }
-@media (hover: hover) {
-  .bz-tile:not(:disabled):hover { transform: translateY(-2px); }
-  .bz-tile:not(:disabled):hover .bz-tuft { transform: skewX(-7deg) scaleY(1.06); }
-}
-.bz-tile.is-wait .bz-tuft { animation: bz-rustle 0.32s ease-in-out infinite alternate; }
-@keyframes bz-rustle { from { transform: skewX(-9deg); } to { transform: skewX(9deg); } }
-/* Cut down: pale ground, a row of stubble, the multiplier this tile took you to. */
-.bz-tile.is-open { display: grid; place-items: center; background: var(--box); }
-.bz-tile.is-open b { position: relative; font: 800 clamp(13px, 3.9vw, 18px)/1 var(--font-h); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; color: var(--k); }
-.bz-stubble { position: absolute; left: 0; right: 0; bottom: -1px; width: 100%; height: 26%; }
-.bz-stubble path { fill: var(--grass); stroke: var(--k0); stroke-width: 1.6; stroke-linejoin: round; }
-.bz-tile.is-open.is-new { animation: bz-pop 0.3s var(--ease-pop); }
-.bz-tile.is-left { opacity: 0.4; }
-.bz-tile.is-volt { background: var(--box-2); }
-.bz-tile.is-hit { background: var(--hp-low); opacity: 1; }
-.bz-tile.is-hit.is-new svg { animation: bz-boom 0.5s var(--ease-pop); }
-.bz-patch.is-over .bz-tile.is-open { opacity: 0.75; }
+@media (hover: hover) { .bz-tile:not(:disabled):hover { transform: translateY(-2px); } }
+.bz-tile.is-wait { animation: bz-wait 0.6s ease-in-out infinite alternate; }
+@keyframes bz-wait { to { opacity: 0.6; } }
+.bz-tile.is-open { background: var(--box); background-image: none; animation: bz-pop 0.28s var(--ease-pop); }
+.bz-tile.is-left { opacity: 0.45; }
+.bz-tile.is-volt { background: var(--box-2); background-image: none; }
+.bz-tile.is-hit { background: var(--hp-low); }
+.bz-tile.is-boom svg { animation: bz-boom 0.5s var(--ease-pop); }
 .bz-voltorb { position: absolute; inset: 14%; width: 72%; height: 72%; }
-@keyframes bz-pop { from { transform: scale(0.8); } }
+.bz-leaf { position: absolute; inset: 34%; border: var(--line-w) solid var(--k); border-radius: 50% 0; background: var(--hp); transform: rotate(45deg); }
+@keyframes bz-pop { from { transform: scale(0.85); } }
 @keyframes bz-boom { from { transform: scale(0.4) rotate(-20deg); opacity: 0; } }
-.bz-ladder { display: flex; align-items: baseline; gap: 4px 14px; flex-wrap: wrap; margin: 0; padding: 10px 14px 11px; border-top: var(--line-w) solid var(--k); font: 700 15px var(--font-h); font-variant-numeric: tabular-nums; color: var(--k-2); }
-.bz-ladder small { font: inherit; font-size: 13px; }
-.bz-ladder .is-next { color: var(--k); font-size: 19px; }
 
 /* ---- Rocket ------------------------------------------------------------------------- */
 .bz-sky {
-  position: relative; height: clamp(260px, 44vh, 380px); overflow: hidden; border: var(--line-w) solid var(--k); border-radius: 6px;
+  position: relative; height: clamp(190px, 34vh, 280px); overflow: hidden; border: var(--line-w) solid var(--k); border-radius: 6px;
   background-color: var(--box-2); background-image: var(--dots); background-size: 14px 14px;
 }
-.bz-sky::before { content: ""; position: absolute; top: -20px; bottom: -20px; right: 6%; width: 38%; background: var(--cy); opacity: 0.2; transform: skewX(var(--skew)); }
-.bz-arc { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.bz-arc path { fill: none; stroke: var(--k); stroke-width: 2.5; stroke-dasharray: 3 7; stroke-linecap: round; opacity: 0.45; }
-.bz-mark { position: absolute; display: grid; justify-items: center; gap: 3px; transform: translate(-50%, 6px); font: 700 12.5px/1 var(--font-h); color: var(--k-2); font-variant-numeric: tabular-nums; }
-.bz-mark i { width: 9px; height: 9px; margin-top: -11px; border: 2px solid var(--k); border-radius: 50%; background: var(--box); }
-.bz-ship, .bz-burst { position: absolute; left: 0; top: 0; will-change: transform; }
-.bz-ship { width: 74px; filter: drop-shadow(var(--drop-sm)); }
-.bz-ship svg, .bz-burst svg { display: block; width: 100%; overflow: visible; }
-.bz-flame { transform-box: fill-box; transform-origin: 100% 50%; transform: scaleX(0.35); }
-.bz-sky.is-flying .bz-flame { animation: bz-flame 0.16s ease-in-out infinite alternate; }
-@keyframes bz-flame { from { transform: scaleX(0.8) scaleY(0.9); } to { transform: scaleX(1.25) scaleY(1.05); } }
-.bz-sky.is-max .bz-ship svg { animation: bz-shake 0.12s linear infinite alternate; }
-@keyframes bz-shake { from { transform: translateY(-1.5px); } to { transform: translateY(1.5px); } }
-.bz-sky.is-popped .bz-ship { opacity: 0; }
-.bz-burst { width: 96px; opacity: 0; }
-.bz-sky.is-popped .bz-burst { opacity: 1; }
-.bz-sky.is-popped .bz-burst svg { animation: bz-burst 0.4s var(--ease-pop); }
-@keyframes bz-burst { from { transform: scale(0.2) rotate(-30deg); opacity: 0; } }
+.bz-balloon { position: absolute; left: 50%; bottom: 14px; width: 54px; margin-left: -27px; transform: translateY(calc(var(--rise) * -150px)); transition: transform 0.12s linear; }
+.bz-balloon svg { display: block; width: 100%; }
+.bz-sky.is-flying .bz-balloon { animation: bz-sway 1.6s ease-in-out infinite alternate; }
+.bz-sky.is-popped .bz-balloon { opacity: 0; transform: translateY(calc(var(--rise) * -150px)) scale(1.6); transition: opacity 0.25s, transform 0.25s var(--ease-out); }
+@keyframes bz-sway { from { rotate: -4deg; } to { rotate: 4deg; } }
 .bz-mult { position: absolute; top: 14px; left: 16px; margin: 0; display: grid; gap: 2px; }
-.bz-mult small { color: var(--k-2); font: 700 14px var(--font-h); }
-.bz-mult b { font: italic 800 clamp(56px, 17vw, 76px)/0.95 var(--font-xc); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.bz-mult small { color: var(--k-2); font: 700 13px var(--font-h); }
+.bz-mult b { font: italic 800 48px/1 var(--font-xc); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
 .bz-sky.is-popped .bz-mult b { color: var(--hp-low); }
-/* The countdown to launch: an HP bar that drains. */
-.bz-fuse { position: absolute; left: 0; right: 0; bottom: 0; height: 9px; border-top: 2px solid var(--k); background: var(--box); }
-.bz-fuse i { display: block; height: 100%; background: var(--hp); transform-origin: 0 50%; transform: scaleX(0); }
-.bz-sky:not(.is-betting) .bz-fuse { opacity: 0; }
-.bz-hist { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin: 10px 0 0; font: 700 15px var(--font-h); color: var(--k-2); font-variant-numeric: tabular-nums; }
-.bz-hist small { font: inherit; font-size: 13px; }
+.bz-hist { display: flex; flex-wrap: wrap; gap: 4px 12px; margin: 10px 0 0; font: 700 14px var(--font-h); color: var(--k-2); font-variant-numeric: tabular-nums; }
 .bz-hist .is-hi { color: var(--k); }
-.bz-autos { display: flex; gap: 4px; flex-wrap: wrap; }
-.bz-autos .rt-word { min-height: 38px; padding: 0 12px; font-size: 15px; }
 
 /* ---- Mystery Tins ---------------------------------------------------------------- */
 /* The chase cards are the show (js/beta.js tinsPage). A tin's paint (--paint) is art: one slanted band and the tin itself. */

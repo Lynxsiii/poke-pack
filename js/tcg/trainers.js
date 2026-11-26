@@ -15,7 +15,7 @@
  * ctx: { state, defs, events, player }
  */
 
-import { askPick, conditionsOn, flip, inPlay, other, shuffle } from "./engine.js";
+import { askChoose, askPick, conditionsOn, defOf, flip, inPlay, other, shuffle } from "./engine.js";
 
 const WORDS = { a: 1, an: 1, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8 };
 const count = (word) => WORDS[String(word).toLowerCase()] || Number(word) || 0;
@@ -43,7 +43,51 @@ const hurt = (ctx) => inPlay(ctx.state, ctx.player).filter(([slot]) => slot.dama
 const benchSpots = (side) => side.bench.map((_, i) => i);
 const withEnergy = (ctx) => inPlay(ctx.state, other(ctx.player)).filter(([slot]) => slot.energy.length).map(([, spot]) => spot);
 
+/** Does a card fit what a search asks for? */
+export function fits(def, what) {
+  if (!def) return false;
+  if (what === "any") return true;
+  if (what === "pokemon") return def.kind === "pokemon";
+  if (what === "basic") return def.kind === "pokemon" && def.stage === "basic";
+  if (what === "evolution") return def.kind === "pokemon" && def.stage === "evolution";
+  if (what === "basicEnergy") return def.kind === "energy" && def.basic;
+  if (what === "trainer") return def.kind === "trainer";
+  return def.kind === "trainer" && def.sub === what; // item, supporter
+}
+const fitting = (ctx, uids, what) => uids.filter((uid) => fits(defOf(ctx.state, uid, ctx.defs), what));
+
 export const T_OPS = {
+  /**
+   * Search the deck: the player sees the cards that fit and takes up to n (a search may come up
+   * empty: the deck is hidden, so "none" is always allowed). `to`: "hand" or "bench".
+   */
+  search: {
+    ready: (ctx, { to = "hand" }) => hasDeck(ctx) && (to !== "bench" || mine(ctx).bench.length < ctx.state.rules.bench),
+    run(ctx, { what, n = 1, to = "hand", top = 0 }) {
+      const side = mine(ctx);
+      const pool = top ? side.deck.slice(0, top) : side.deck;
+      const room = to === "bench" ? ctx.state.rules.bench - side.bench.length : Infinity;
+      askChoose(ctx.state, { player: ctx.player, zone: "deck", what, uids: fitting(ctx, pool, what), min: 0, max: Math.min(n, room), effect: { op: to === "bench" ? "toBench" : "toHand" }, shuffle: true });
+    },
+  },
+  /** Cards come back from the discard pile to the hand. */
+  recover: {
+    ready: (ctx, { what }) => fitting(ctx, mine(ctx).discard, what).length > 0,
+    run(ctx, { what, n = 1, upTo = false }) {
+      const uids = fitting(ctx, mine(ctx).discard, what);
+      if (uids.length) askChoose(ctx.state, { player: ctx.player, zone: "discard", what, uids, min: upTo ? 0 : Math.min(n, uids.length), max: n, effect: { op: "toHand" } });
+    },
+  },
+  /** The price of playing the card: n other cards from the hand go to the discard pile. */
+  cost: {
+    must: true,
+    // While the card is still in the hand it counts itself, so "other cards" is one fewer.
+    ready: (ctx, { n }) => mine(ctx).hand.length - 1 >= n,
+    run(ctx, { n }) {
+      const uids = mine(ctx).hand.slice();
+      askChoose(ctx.state, { player: ctx.player, zone: "hand", what: "any", uids, min: Math.min(n, uids.length), max: n, effect: { op: "discard" } });
+    },
+  },
   draw: {
     ready: hasDeck,
     run: (ctx, { n }) => draw(ctx, ctx.player, n),
@@ -170,6 +214,59 @@ const PATTERNS = [
   [/^Discard an Energy (?:card )?(?:from|attached to) 1 of your opponent's Pokémon\.$/, () => [{ op: "hammer" }]],
 ];
 
+const WHAT = [
+  [/^(?:an? )?Basic Pokémon(?: cards?)?$/i, "basic"],
+  [/^(?:an? )?Evolution(?: Pokémon)?(?: cards?)?$/i, "evolution"],
+  [/^(?:an? )?Pokémon(?: cards?)?$/i, "pokemon"],
+  [/^(?:an? )?basic Energy(?: cards?)?$/i, "basicEnergy"],
+  [/^(?:an? )?Supporter(?: cards?)?$/i, "supporter"],
+  [/^(?:an? )?Item(?: cards?)?$/i, "item"],
+  [/^(?:an? )?Trainer(?: cards?)?$/i, "trainer"],
+  [/^(?:an? )?cards?$/i, "any"],
+];
+const whatOf = (words) => WHAT.find(([pattern]) => pattern.test(words))?.[1] || "";
+const SHUFFLED = "(?:Then, shuffle your deck\\.|Shuffle your deck afterward\\.)";
+const SEARCH = new RegExp(`^Search your deck for (?:up to ${N} )?(.+?)(?:,? (?:reveal (?:it|them)|show (?:it|them) to your opponent),?)?,? and put (?:it|them) (into your hand|onto your Bench)\\. ${SHUFFLED}$`, "i");
+const RECOVER = new RegExp(`^Put (up to )?${N} (.+?) from your discard pile into your hand\\.$`, "i");
+const TOP = new RegExp(`^Look at the top ${N} cards of your deck\\. You may reveal (.+?) you find there and put it into your hand\\. Shuffle the other cards back into your deck\\.$`, "i");
+const COSTS = [
+  new RegExp(`^You can use this card only if you discard ${N} other cards? from your hand\\. (.+)$`, "i"),
+  new RegExp(`^Discard ${N} (?:other )?cards? from your hand\\. \\(If you can't discard \\d+ cards?, you can't play this card\\.\\) (.+)$`, "i"),
+];
+
+/** Texts built from parts: a search, a card from the discard pile, a price to pay first, a coin flip in front. */
+function compileParts(clean) {
+  let m = clean.match(SEARCH);
+  if (m) {
+    const what = whatOf(m[2]);
+    const to = /Bench/.test(m[3]) ? "bench" : "hand";
+    if (!what || (to === "bench" && what !== "basic")) return null;
+    return [{ op: "search", what, n: m[1] ? count(m[1]) : 1, to }];
+  }
+  m = clean.match(RECOVER);
+  if (m) {
+    const what = whatOf(m[3]);
+    return what && what !== "any" ? [{ op: "recover", what, n: count(m[2]), upTo: Boolean(m[1]) }] : null;
+  }
+  m = clean.match(TOP);
+  if (m) {
+    const what = whatOf(m[2]);
+    return what ? [{ op: "search", what, n: 1, top: count(m[1]) }] : null;
+  }
+  for (const pattern of COSTS) {
+    m = clean.match(pattern);
+    if (!m) continue;
+    const rest = compileParts(m[2]);
+    return rest ? [{ op: "cost", n: count(m[1]) }, ...rest] : null;
+  }
+  m = clean.match(/^Flip a coin\. If heads, (.+)$/);
+  if (m) {
+    const heads = compileParts(m[1][0].toUpperCase() + m[1].slice(1));
+    return heads ? [{ op: "flip", heads }] : null;
+  }
+  return null;
+}
+
 /** The steps of a Trainer's text, or null when it can't be read yet (or it has none). */
 export function compileTrainer(text) {
   const clean = String(text || "").replace(/\s+/g, " ").trim();
@@ -178,20 +275,35 @@ export function compileTrainer(text) {
     const m = clean.match(pattern);
     if (m) return build(m);
   }
-  return null;
+  return compileParts(clean);
 }
 
+/** A card may be played when it would do something, and every price it asks can be paid. */
 export function trainerReady(steps, ctx) {
-  return steps.some((step) => T_OPS[step.op]?.ready(ctx, step));
+  if (steps.some((step) => T_OPS[step.op]?.must && !T_OPS[step.op].ready(ctx, step))) return false;
+  return steps.some((step) => !T_OPS[step.op]?.must && T_OPS[step.op]?.ready(ctx, step));
 }
 
+/**
+ * Run the steps in order. When one leaves a choice for the player, the rest wait on it:
+ * they ride along on that choice (`then`) and the engine picks them up once it is made.
+ */
 export function runTrainer(steps, ctx) {
-  for (const step of steps) T_OPS[step.op]?.run(ctx, step);
+  for (let i = 0; i < steps.length; i += 1) {
+    const before = ctx.state.pending.length;
+    T_OPS[steps[i].op]?.run(ctx, steps[i]);
+    if (ctx.state.pending.length > before && i < steps.length - 1) {
+      ctx.state.pending[ctx.state.pending.length - 1].then = steps.slice(i + 1);
+      return;
+    }
+  }
 }
 
 /** For the bot and the screen: what a Trainer is for, by its first step that matters. */
 export function trainerAim(steps) {
   const ops = steps.flatMap((s) => (s.op === "flip" ? s.heads : [s])).map((s) => s.op);
+  if (ops.includes("search")) return ops.includes("cost") ? "trade" : "search";
+  if (ops.includes("recover")) return "recover";
   if (ops.includes("heal")) return "heal";
   if (ops.includes("cure")) return "cure";
   if (ops.includes("gust")) return "gust";

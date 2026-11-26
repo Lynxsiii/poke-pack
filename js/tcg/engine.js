@@ -639,7 +639,36 @@ const HANDLERS = {
       waiting.spots = waiting.spots.filter((x) => x !== spot);
       waiting.left -= 1;
     }
-    if (spot == null || waiting.left <= 0 || !waiting.spots.length) state.pending.shift();
+    if (spot == null || waiting.left <= 0 || !waiting.spots.length) {
+      state.pending.shift();
+      resume(state, waiting, defs, events);
+    }
+    if (!state.pending.length) resolveKnockOuts(state, defs, events);
+  },
+
+  choose(state, { player, uids = [] }, defs, events) {
+    const waiting = state.pending[0];
+    const side = state.players[player];
+    const picked = [...new Set(uids)];
+    if (picked.some((uid) => !waiting.uids.includes(uid))) fail("That card can't be chosen.");
+    if (picked.length < waiting.min) fail(waiting.min === 1 ? "Choose a card." : `Choose ${waiting.min} cards.`);
+    if (picked.length > waiting.max) fail(waiting.max === 1 ? "Choose only one card." : `Choose at most ${waiting.max} cards.`);
+    const pile = side[waiting.zone];
+    for (const uid of picked) pile.splice(pile.indexOf(uid), 1);
+    const { op } = waiting.effect;
+    if (op === "discard") {
+      side.discard.push(...picked);
+      if (picked.length) events.push({ t: "discard-hand", p: player, uids: picked });
+    } else if (op === "toBench") {
+      for (const uid of picked) side.bench.push(newSlot(state, uid));
+      events.push({ t: "search", p: player, uids: picked, from: waiting.zone, to: "bench" });
+    } else {
+      side.hand.push(...picked);
+      events.push({ t: "search", p: player, uids: picked, from: waiting.zone, to: "hand" });
+    }
+    if (waiting.shuffle) shuffle(state, side.deck);
+    state.pending.shift();
+    resume(state, waiting, defs, events);
     if (!state.pending.length) resolveKnockOuts(state, defs, events);
   },
 
@@ -719,6 +748,20 @@ export function askPick(state, pick) {
   state.pending.push({ type: "pick", optional: false, ...pick });
 }
 
+/**
+ * Leave a choice of cards: from the deck (a search), the discard pile or the hand.
+ * { player, zone, what, uids: the cards that may be chosen, min, max, effect: { op }, shuffle }
+ * effect.op: "toHand", "toBench" (Basic Pokémon, from the deck), "discard" (from the hand).
+ */
+export function askChoose(state, choice) {
+  state.pending.push({ type: "choose", ...choice, min: Math.min(choice.min, choice.uids.length), max: Math.min(choice.max, choice.uids.length) });
+}
+
+/** A choice was made: carry on with whatever the card said to do after it. */
+function resume(state, waiting, defs, events) {
+  if (waiting.then?.length) runTrainer(waiting.then, { state, defs, events, player: waiting.player });
+}
+
 /** Apply one action. Changes `state`, returns what happened, throws RuleError when it isn't allowed. */
 export function apply(state, action, defs) {
   const events = [];
@@ -746,9 +789,9 @@ export function apply(state, action, defs) {
   if (state.phase !== "main") fail("Place your Pokémon first.");
   const waiting = state.pending[0];
   if (waiting) {
-    if (waiting.type !== type || waiting.player !== player) fail(waiting.type === "pick" ? "Waiting for a Pokémon to be chosen." : "Waiting for a new Active Pokémon.");
+    if (waiting.type !== type || waiting.player !== player) fail(waiting.type === "pick" ? "Waiting for a Pokémon to be chosen." : waiting.type === "choose" ? "Waiting for cards to be chosen." : "Waiting for a new Active Pokémon.");
   } else {
-    if (type === "promote" || type === "pick") fail("Nothing to choose.");
+    if (type === "promote" || type === "pick" || type === "choose") fail("Nothing to choose.");
     if (state.current !== player) fail("It isn't your turn.");
     if (state.ending) fail("Your turn is over.");
   }
@@ -768,6 +811,8 @@ export function legalActions(state, player, defs) {
   const waiting = state.pending[0];
   if (waiting) {
     if (waiting.player !== player) return [];
+    // Which cards to take is the player's call; the one listed here is the plainest legal answer.
+    if (waiting.type === "choose") return [{ type: "choose", player, uids: waiting.uids.slice(0, waiting.min) }];
     if (waiting.type === "pick") return [...waiting.spots.map((spot) => ({ type: "pick", player, spot })), ...(waiting.optional ? [{ type: "pick", player, spot: null }] : [])];
     return side.bench.map((_, spot) => ({ type: "promote", player, spot }));
   }

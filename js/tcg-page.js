@@ -189,7 +189,7 @@ export function initTcg(deps) {
           <li>Basic Pokémon, evolution, Energy, attacks, Weakness and Resistance, Special Conditions, retreat, prizes.</li>
           <li>Your own cards only, as many copies as you own. Basic Energy is free.</li>
           <li>Your sleeve is your card back and your coin makes the flips.</li>
-          <li>Trainers: Items and Supporters that draw, heal, switch or pull a Pokémon forward. More with each update.</li>
+          <li>Trainers: Items and Supporters that draw, search your deck, heal, switch or pull a Pokémon forward. More with each update.</li>
           <li>Not yet: Stadiums, Tools, Abilities, and some attack text (the printed damage still lands). Matches against other players come later.</li>
         </ul>
         ${read("learned", false) ? `<button type="button" class="tlink tg-relearn" data-lesson>Run the lesson again</button>` : ""}
@@ -566,6 +566,7 @@ export function initTcg(deps) {
       return { text: "Add Benched Pokémon if you like.", keys: `<button type="button" class="solid sm" data-act="start">Start</button>` };
     }
     const waiting = state.pending[0];
+    if (waiting?.player === ME && waiting.type === "choose") return { text: "Choose from the cards shown.", keys: "" };
     if (waiting?.player === ME && waiting.type === "pick") {
       const op = waiting.effect.op;
       const whose = waiting.side === ME ? "your" : "their";
@@ -799,7 +800,56 @@ export function initTcg(deps) {
     if (match.opening) return openingHtml();
     if (match.sheet === "attacks") return attackSheetHtml();
     if (match.sheet === "flip") return flipSheetHtml();
+    const waiting = match.state.pending[0];
+    if (waiting?.type === "choose" && waiting.player === ME && !match.busy) return chooseSheetHtml(waiting);
     return "";
+  }
+
+  /** A choice of cards: a deck search, cards back from the discard pile, or a price paid from the hand. */
+  function chooseSheetHtml(waiting) {
+    const state = match.state;
+    match.choice = new Set([...(match.choice || [])].filter((uid) => waiting.uids.includes(uid)));
+    const { min, max } = waiting;
+    const kind = { basic: "Basic Pokémon", evolution: "Evolution Pokémon", pokemon: "Pokémon", basicEnergy: "basic Energy", supporter: "Supporter", item: "Item", trainer: "Trainer", any: "card" }[waiting.what] || "card";
+    const many = (n) => (kind === "card" ? plural(n, "card") : n === 1 ? `1 ${kind}${kind === "basic Energy" ? " card" : ""}` : `${n} ${kind}${kind === "basic Energy" ? " cards" : ""}`);
+    const title = waiting.effect.op === "discard" ? `Discard ${many(min)} from your hand`
+      : waiting.effect.op === "toBench" ? `Choose ${max > 1 ? `up to ${many(max)}` : "a Basic Pokémon"} for your Bench`
+      : waiting.zone === "discard" ? `Take ${min < max ? "up to " : ""}${many(max)} from your discard pile`
+      : `Take ${max > 1 ? `up to ${many(max)}` : many(1)} from your deck`;
+    const cards = waiting.uids.slice().sort((a, b) => d(a).name.localeCompare(d(b).name) || state.cards[a].localeCompare(state.cards[b]));
+    const none = waiting.zone === "deck" ? `No ${kind === "card" ? "cards" : kind} ${waiting.top ? `in the top ${waiting.top} cards` : "left in your deck"}.` : "Nothing to choose.";
+    const picked = match.choice.size;
+    return `<div class="tg-sheet-bg"></div>
+      <div class="tg-sheet tg-choose" role="dialog" aria-label="${esc(title)}" data-min="${min}" data-max="${max}">
+        <header><h3>${esc(title)}</h3>${waiting.zone === "deck" ? `<p>Your deck is shuffled afterwards.</p>` : ""}</header>
+        ${cards.length ? `<div class="tg-choose-grid">${cards.map((uid) => `<button type="button" class="tg-choose-card${match.choice.has(uid) ? " is-chosen" : ""}" data-choose="${uid}" aria-pressed="${match.choice.has(uid)}" aria-label="${esc(d(uid).name)}"><img src="${img(state.cards[uid])}" alt="" draggable="false" decoding="async" /></button>`).join("")}</div>` : `<p class="tg-choose-none">${esc(none)}</p>`}
+        <div class="tg-sheet-keys"><button type="button" class="solid rt-go" data-act="choose-done"${picked >= min ? "" : " disabled"}>${chooseLabel(picked, min)}</button></div>
+      </div>`;
+  }
+  const chooseLabel = (picked, min) => (picked < min ? (picked ? `Choose ${min - picked} more` : `Choose ${min}`) : picked ? `Confirm ${picked}` : "Take none");
+
+  function tapChoice(uid) {
+    const sheet = root.querySelector(".tg-choose");
+    if (!sheet || match.busy) return;
+    const min = Number(sheet.dataset.min);
+    const max = Number(sheet.dataset.max);
+    const chosen = (match.choice ||= new Set());
+    if (chosen.has(uid)) chosen.delete(uid);
+    else {
+      // With one card to take, a tap on another swaps the choice.
+      if (max === 1) chosen.clear();
+      if (chosen.size >= max) return toast(`${max} at most.`);
+      chosen.add(uid);
+    }
+    // No repaint: the sheet would play its entrance again and lose its scroll.
+    sheet.querySelectorAll("[data-choose]").forEach((el) => {
+      const on = chosen.has(el.dataset.choose);
+      el.classList.toggle("is-chosen", on);
+      el.setAttribute("aria-pressed", String(on));
+    });
+    const key = sheet.querySelector('[data-act="choose-done"]');
+    key.disabled = chosen.size < min;
+    key.textContent = chooseLabel(chosen.size, min);
   }
 
   function paintTable() {
@@ -842,6 +892,13 @@ export function initTcg(deps) {
       case "attach": return `${who(event.p)} attached ${name(event.uid)}.`;
       case "play": return `${who(event.p)} played ${name(event.uid)}.`;
       case "shuffle-hand": return `${who(event.p)} shuffled ${event.p === ME ? "your" : "its"} hand into the deck.`;
+      case "search": {
+        const names = event.uids.map(name);
+        const list = names.length > 2 ? plural(names.length, "card") : names.join(" and ");
+        const pile = event.from === "discard" ? "discard pile" : "deck";
+        if (!names.length) return `${who(event.p)} took nothing from ${event.p === ME ? "your" : "its"} ${pile}.`;
+        return event.to === "bench" ? `${who(event.p)} put ${list} on ${event.p === ME ? "your" : "its"} Bench.` : `${who(event.p)} took ${list} from ${event.p === ME ? "your" : "its"} ${pile}.`;
+      }
       case "discard-hand": return `${who(event.p)} discarded ${plural(event.uids.length, "card")} from hand.`;
       case "retreat": return `${who(event.p)} retreated.`;
       case "attack": return `${name(event.uid)} used ${event.name}.`;
@@ -1000,7 +1057,8 @@ export function initTcg(deps) {
       banner(event.p === ME ? "Your turn" : `${BOT_NAME}'s turn`, event.p === ME ? "me" : "foe");
       return 0;
     }
-    if (event.t === "draw") {
+    if (event.t === "draw" || (event.t === "search" && event.to === "hand")) {
+      if (!event.uids.length) return 0;
       if (event.p === BOT) {
         cue(".tg-bar-foe .tg-count", "bump", 400);
         return 0;
@@ -1042,6 +1100,18 @@ export function initTcg(deps) {
     if (event.t === "prize") {
       const to = handSpot(event.p);
       const at = rectOf(`.tg-bar-${event.p === ME ? "me" : "foe"} .tg-prizes`);
+      const arena = rectOf(".tg-arena");
+      if (event.p === ME && at && arena) {
+        // Your prize cards turn up face up over the arena for a beat before they join your hand.
+        const n = event.uids.length;
+        const w = Math.min(arena.width * (n > 1 ? 0.3 : 0.4), arena.height * 0.5);
+        event.uids.forEach((uid, i) => {
+          const left = arena.left + arena.width / 2 + (i - (n - 1) / 2) * (w + 8) - w / 2;
+          ghost(img(match.state.cards[uid]), at, { left, top: arena.top + arena.height / 2 - w * 0.7, width: w, height: w * 1.4 }, { ms: 950, width: w, show: true, delay: i * 90 });
+        });
+        cue(".tg-bar-me .tg-prizes", "bump", 420);
+        return 900 + (n - 1) * 90;
+      }
       if (to && at) {
         const width = event.p === ME ? to.height / 1.6 : 26;
         event.uids.forEach((_, i) => ghost("assets/cards/shared/card-back-sm.webp", at, to, { ms: 420, width, absorb: true, delay: i * 110 }));
@@ -1148,22 +1218,28 @@ export function initTcg(deps) {
           say(event);
           paintTable();
           cue(event.spot === ACTIVE ? `.tg-spot[data-p="${event.p}"] .tg-mon` : `.tg-bench .tg-mon[data-p="${event.p}"][data-spot="${event.spot}"]`, "ko", 700);
-          await wait(640);
+          banner("Knocked Out", event.p === ME ? "foe" : "me");
+          deps.buzz?.([24, 40, 24]);
+          await wait(680);
+          // It leaves the table as it stood, so the beats that follow don't bring it back.
+          if (event.spot === ACTIVE) before.players[event.p].active = null;
+          else before.players[event.p].bench[event.spot] = null;
         } else if (event.t === "prize") {
+          for (const side of before.players) side.bench = side.bench.filter(Boolean);
           say(event);
           paintTable();
-          animate(event);
-          await wait(460);
+          await wait(Math.max(460, animate(event)));
         }
       }
       match.shownState = null;
     }
 
-    match.unseen = new Set(events.filter((e) => e.t === "draw" && e.p === ME).flatMap((e) => e.uids));
+    const toHand = (e) => (e.t === "draw" || e.t === "prize" || (e.t === "search" && e.to === "hand")) && e.p === ME;
+    match.unseen = new Set(events.filter(toHand).flatMap((e) => e.uids));
     for (const event of events) {
+      if (toHand(event)) event.uids.forEach((uid) => match.unseen.delete(uid));
       if (before && ["attack", "flip", "damage", "heal", "miss", "blocked", "ko", "prize"].includes(event.t) && !["poisoned", "burned"].includes(event.why)) continue;
       if (event.t === "over") continue;
-      if (event.t === "draw" && event.p === ME) event.uids.forEach((uid) => match.unseen.delete(uid));
       say(event);
       paintTable();
       const moving = animate(event, event.p === ME ? played : null);
@@ -1181,6 +1257,8 @@ export function initTcg(deps) {
       } else if (event.t === "heal") {
         popDamage(event.p, `+${event.n}`, "heal", event.spot);
         await wait(520);
+      } else if (event.t === "search") {
+        await wait(event.p === BOT ? 900 : Math.max(420, moving + 100));
       } else if (event.t === "shuffle-hand" || event.t === "discard-hand") {
         await wait(event.p === BOT ? 620 : 380);
       } else if (event.t === "damage") {
@@ -1493,6 +1571,11 @@ export function initTcg(deps) {
       match.sheet = "";
       return paintTable();
     }
+    if (act === "choose-done") {
+      const uids = [...(match.choice || [])];
+      match.choice = null;
+      return run({ type: "choose", player: ME, uids });
+    }
     if (act === "play-card" && match.sel?.kind === "hand") return run({ type: "play", player: ME, uid: match.sel.uid });
     if (act === "pick-skip") return run({ type: "pick", player: ME, spot: null });
     if (act === "start") return run({ type: "place", player: ME, active: match.setup.active, bench: match.setup.bench });
@@ -1536,6 +1619,8 @@ export function initTcg(deps) {
     if (route.name === "match" && match) {
       const act = t.closest("[data-act]");
       if (act) return tableAct(act.dataset.act);
+      const choice = t.closest("[data-choose]");
+      if (choice) return tapChoice(choice.dataset.choose);
       const attack = t.closest("[data-attack]");
       if (attack && !attack.disabled) return run({ type: "attack", player: ME, index: Number(attack.dataset.attack) });
       const hand = t.closest("[data-hand]");

@@ -51,10 +51,10 @@ export function famExtras(card, url, base) {
     if (!n) return { classes: `fam-wotc-expedition exp-rev${basic ? " exp-basic" : ""}`, style: "", cure: false };
     return {
       classes: "fam-wotc-expedition exp-rev exp-twin",
-      style: `--exp-scan:url('${url(`${DIR}rev-scan-ecard1-${n}-v1.webp`)}');--exp-scan-sm:url('${url(`${DIR}rev-scan-ecard1-${n}-sm-v1.webp`)}')`,
+      style: `--exp-scan:url('${url(`${DIR}rev-scan-ecard1-${n}-v2.webp`)}');--exp-scan-sm:url('${url(`${DIR}rev-scan-ecard1-${n}-sm-v2.webp`)}')`,
       cure: false,
     };
   }
   if (!n) return { classes: "fam-wotc-expedition", style: "", cure: false };
-  return { classes: "fam-wotc-expedition exp-holo", style: `--foil-map:url('${url(`${DIR}holo-ecard1-${n}-v1.webp`)}')`, cure: false };
+  return { classes: "fam-wotc-expedition exp-holo", style: `--foil-map:url('${url(`${DIR}holo-ecard1-${n}-v2.webp`)}')`, cure: false };
 }

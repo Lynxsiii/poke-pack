@@ -2,7 +2,7 @@ import { createCardMotion } from "./card-motion.js?v=4";
 import {
   foilExtras, foilClass as finishClass, foilLayout as finishLayout, foilLook as finishLook, foilPattern as finishPattern,
   reverseKindOf as finishReverseKind, dataFinish,
-} from "./foil-maps.js?v=141";
+} from "./foil-maps.js?v=142";
 import { initFx } from "./fx.js";
 import { PROFILE_PAGE_LIMIT } from "./profile-pages.js";
 import * as profileView from "./profile-view.js"; // the public profile page: hero, sections, room
@@ -129,7 +129,7 @@ import { THEMES, canUseTheme, resolveLook } from "./themes.js?v=1";
 import { equippedCoin, gearItem, normalizeGear } from "./gear.js?v=2";
 import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=15";
 import { initBattles } from "./battles.js?v=10";
-import { initCasino } from "./casino.js?v=27";
+import { initCasino } from "./casino.js?v=26";
 import { coinOf } from "./coin.js?v=5";
 // grading
 import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=16";
@@ -10395,7 +10395,7 @@ let tcgLoading = null;
 function showTcg() {
   if (tcgPage) return tcgPage.show(tcgPath);
   els.viewTcg.innerHTML = `<div class="tg-page"><div class="rt-skel tg-loading">Loading</div></div>`;
-  tcgLoading ||= import("./tcg-page.js?v=9")
+  tcgLoading ||= import("./tcg-page.js?v=11")
     .then(({ initTcg }) => {
       tcgPage = initTcg({
         root: els.viewTcg,
