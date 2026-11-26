@@ -248,6 +248,18 @@ export function botAction(state, player, defs) {
     const picks = actions.filter((a) => a.spot != null);
     // "When you play this Pokémon, you may": yes, unless it would draw from a deck that is nearly out.
     if (waiting.effect.op === "ability") return side.deck.length > 4 ? picks[0] : actions.find((a) => a.spot == null);
+    // "Move any amount of Energy to it": keep taking while the Pokémon it goes to can't pay for its best attack.
+    if (waiting.effect.op === "gatherFrom" && picks.length) {
+      const to = waiting.effect.to === ACTIVE ? side.active : side.bench[waiting.effect.to];
+      if (to && plan(state, to, defs).short > 0) {
+        const spare = (a) => {
+          const slot = a.spot === ACTIVE ? side.active : side.bench[a.spot];
+          return slot.energy.length - plan(state, slot, defs).short * 2;
+        };
+        return picks.slice().sort((a, b) => spare(b) - spare(a))[0];
+      }
+      return actions.find((a) => a.spot == null) || picks[0];
+    }
     if (!picks.length || waiting.optional) return actions.find((a) => a.spot == null) || picks[0];
     const theirs = state.players[waiting.side];
     const slotOf = (spot) => (spot === ACTIVE ? theirs.active : theirs.bench[spot]);
