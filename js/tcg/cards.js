@@ -164,7 +164,7 @@ function defineRules(card, row, text, lines, print) {
   else if (subs.includes("Basic") || subs.includes("Baby")) stage = "basic";
   else if (card.evolvesFrom && !subs.some((s) => NOT_YET.test(s))) stage = "evolution";
 
-  const attacks = (card.attacks || []).map((a) => attackOf(a, card.name));
+  const attacks = (card.attacks || []).map((raw) => attackOf(raw, card.name));
   const notes = [];
   // One Ability a card, as nearly every card has it; a second one waits with the unread ones.
   const printed = card.abilities || [];

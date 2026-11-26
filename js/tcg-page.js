@@ -712,6 +712,7 @@ export function initTcg(deps) {
       }[op]?.();
       if (op === "gatherFrom") return { text: `Choose a Pokémon to move ${fx.type ? `a ${fx.type}` : "an"} Energy from, or finish.`, keys: `<button type="button" class="ghost sm" data-act="pick-skip">Done</button>` };
       if (moving) return { text: moving, keys: "" };
+      if (op === "damage" && fx.counters) return { text: fx.n === 10 && waiting.again ? `Choose one of their Pokémon for a damage counter (${waiting.left} to place).` : `Choose one of their Pokémon for ${fx.n / 10} damage counters${waiting.left > 1 ? ` (${waiting.left} to choose)` : ""}.`, keys: "" };
       if (op === "shuffleIn") return { text: "Choose the Pokémon to shuffle into your deck, or keep them.", keys: `<button type="button" class="ghost sm" data-act="pick-skip">Keep them</button>` };
       if (op === "switch" && waiting.side === ME && waiting.player === ME && state.current !== ME) return { text: "Your Active Pokémon is pushed out. Choose the Benched Pokémon that comes in.", keys: "" };
       const text = op === "attachFrom" ? `Choose the Pokémon that gets the ${d(waiting.effect.uid).name}.` : op === "switch" ? (waiting.side === ME ? "Choose the Benched Pokémon that comes in." : "Choose which of their Benched Pokémon to pull forward.") : op === "heal" ? (waiting.effect.n >= 999 ? "Choose one of your Pokémon to heal all its damage." : `Choose one of your Pokémon to heal ${waiting.effect.n}.`) : op === "discardEnergy" ? `Choose one of ${whose} Pokémon to lose an Energy.` : `Choose ${waiting.side === ME ? "one of your" : "one of their"} Pokémon for ${waiting.effect.n} damage${waiting.left > 1 ? ` (${waiting.left} to choose)` : ""}.`;
@@ -1032,7 +1033,8 @@ export function initTcg(deps) {
     const energyCard = /Energy$/.test(kind);
     const many = (n) => (kind === "card" ? plural(n, "card") : n === 1 ? `1 ${kind}${energyCard ? " card" : ""}` : `${n} ${kind}${energyCard ? " cards" : ""}`);
     const foreign = waiting.owner != null && waiting.owner !== ME;
-    const title = foreign ? `Choose ${min < max ? "up to " : ""}${many(max)} from their ${waiting.zone === "hand" ? "hand" : "deck"}`
+    const title = waiting.effect.op === "look" ? "Their hand"
+      : foreign ? `Choose ${min < max ? "up to " : ""}${many(max)} from their ${waiting.zone === "hand" ? "hand" : "deck"}`
       : waiting.effect.op === "order" ? "Tap the cards in the order you want them, the top one first"
       : waiting.effect.op === "deckTop" ? `Choose ${many(max)} for the top of your deck, the top one first`
       : waiting.effect.op === "keepOne" ? "Choose the card to keep; the rest is shuffled into your deck"
@@ -1060,7 +1062,7 @@ export function initTcg(deps) {
       <div class="tg-sheet tg-choose" role="dialog" aria-label="${esc(title)}" data-min="${min}" data-max="${max}">
         <header><h3>${esc(title)}</h3>${waiting.zone === "deck" ? `<p>Your deck is shuffled afterwards.</p>` : ""}</header>
         ${cards.length ? `<div class="tg-choose-grid">${cards.map((uid) => `<button type="button" class="tg-choose-card${match.choice.has(uid) ? " is-chosen" : ""}" data-choose="${uid}" aria-pressed="${match.choice.has(uid)}" aria-label="${esc(d(uid).name)}"><img src="${img(state.cards[uid])}" alt="" draggable="false" decoding="async" /></button>`).join("")}</div>` : `<p class="tg-choose-none">${esc(none)}</p>`}
-        <div class="tg-sheet-keys"><button type="button" class="solid rt-go" data-act="choose-done"${picked >= min ? "" : " disabled"}>${chooseLabel(picked, min)}</button></div>
+        <div class="tg-sheet-keys"><button type="button" class="solid rt-go" data-act="choose-done"${picked >= min ? "" : " disabled"}>${max === 0 ? "Done" : chooseLabel(picked, min)}</button></div>
       </div>`;
   }
   const chooseLabel = (picked, min) => (picked < min ? (picked ? `Choose ${min - picked} more` : `Choose ${min}`) : picked ? `Confirm ${picked}` : "Take none");
