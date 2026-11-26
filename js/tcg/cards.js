@@ -182,7 +182,10 @@ export function createDefs(findCard, rules, trainers = null) {
     if (def) return def;
     const card = findCard(id);
     if (!card) return null;
-    const [set, key] = rulesKey(id);
+    const [set, full] = rulesKey(id);
+    // A special print ("swsh1-15-cracked-ice", a stamped promo) plays as the card it reprints.
+    const base = full.replace(/-.*$/, "");
+    const key = rules?.[set]?.[full] || trainers?.cards?.[set]?.[full] != null ? full : base;
     def = defineCard(card, rules?.[set]?.[key], trainers?.texts[trainers.cards?.[set]?.[key]] || "", trainers?.lines);
     cache.set(id, def);
     return def;

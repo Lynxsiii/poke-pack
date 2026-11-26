@@ -7610,6 +7610,40 @@ async function loadSetData(set) {
 }
 
 /**
+ * A pre-made deck (a Theme Deck, a Battle Deck) opened here becomes a deck in
+ * the playable TCG under its own name, made of the very cards that came in
+ * it. It waits in this device's inbox until /play picks it up (js/tcg-page.js
+ * takeThemeDecks). Only a single 60-card deck counts: a Trainer Kit's two half
+ * decks or a bundle of several decks have no one list to play.
+ */
+function keepThemeDeck(product, setId, promos, boxCards) {
+  if (product?.kind !== "deck" || /trainer kit/i.test(product.name || "")) return;
+  const cards = {};
+  for (const card of promos || []) cards[card.id] = (cards[card.id] || 0) + 1;
+  for (const card of boxCards || []) cards[card.id] = (cards[card.id] || 0) + (card.n || 1);
+  if (Object.values(cards).reduce((a, b) => a + b, 0) !== 60) return;
+  const quoted = String(product.name || "").match(/"([^"]+)"/);
+  const name = (quoted ? quoted[1] : String(product.name || "Theme deck")).trim();
+  const key = `pp-tcg-inbox-v1:${cloudUser?.id || cloudUser?.handle || "guest"}`;
+  try {
+    const inbox = JSON.parse(localStorage.getItem(key) || "[]");
+    inbox.push({ product: product.id, setId, name, cards, at: Date.now() });
+    localStorage.setItem(key, JSON.stringify(inbox.slice(-40)));
+  } catch {
+    /* private mode: the cards are still owned and can be built into a deck by hand */
+  }
+}
+
+/** Every pre-made deck in an order or a vault opening (an OpenResult), kept for /play. */
+function keepThemeDecks(opened) {
+  for (const box of opened?.boxes || []) {
+    const offer = offerFor(box.setId, box.productId);
+    if (offer) keepThemeDeck({ ...offer, id: box.productId }, box.setId, box.promos, box.boxCards);
+  }
+  return opened;
+}
+
+/**
  * Buy a whole sealed product. The server opens every pack; we deal them one at
  * a time. A product with promo cards shows them first, face up, the way they
  * sit in the window of the real box.
@@ -7653,6 +7687,7 @@ async function startSealed(productId) {
     await Promise.all(
       [...new Set(boxCards.map((card) => setForCard(card)))].map((set) => loadSetData(set).catch(() => null))
     );
+    keepThemeDeck({ ...offer, ...data.product }, liveSet.id, promos, boxCards);
     sealedRun = {
       product: { ...offer, ...data.product },
       packs,
@@ -10939,7 +10974,7 @@ const cartPage = initCart({
     renderHeader();
     renderShop();
   },
-  showOpened: (opened, opts) => batchOpen.show(opened, opts),
+  showOpened: (opened, opts) => batchOpen.show(keepThemeDecks(opened), opts),
   navigate: (path) => navigateTo(path),
   signIn: () => openAuth("signin"),
   toast,
@@ -11066,7 +11101,7 @@ const vaultPage = initVault({
     afterEconomy(save);
     renderHeader();
   },
-  showOpened: (opened, opts) => batchOpen.show(opened, opts),
+  showOpened: (opened, opts) => batchOpen.show(keepThemeDecks(opened), opts),
   navigate: (path) => navigateTo(path),
   signIn: () => openAuth("signin"),
   toast,

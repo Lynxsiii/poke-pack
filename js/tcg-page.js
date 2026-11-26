@@ -160,12 +160,12 @@ export function initTcg(deps) {
   function deckRowHtml(deck) {
     const check = checkDeck(deck, owned(), defs);
     const rulesOf = FORMATS[deck.format];
-    const lead = Object.keys(deck.cards).find((id) => defs(id)?.kind === "pokemon");
+    const lead = (deck.lead && deck.cards[deck.lead] && deck.lead) || Object.keys(deck.cards).find((id) => defs(id)?.kind === "pokemon");
     return `<article class="rt-box tg-deck" data-deck="${esc(deck.id)}">
       <span class="tg-deck-art">${lead ? `<img src="${img(lead)}" alt="" loading="lazy" decoding="async" />` : ""}</span>
       <div class="tg-deck-main">
         <h3>${esc(deck.name)}</h3>
-        <p>${rulesOf.name}, ${check.size} of ${rulesOf.deckSize} cards ${pips(typesOf(deck))}</p>
+        <p>${deck.theme ? "Pre-made, " : ""}${rulesOf.name}, ${check.size} of ${rulesOf.deckSize} cards ${pips(typesOf(deck))}</p>
         <p class="tg-deck-state${check.ok ? " ok" : ""}">${check.ok ? "Ready to play" : esc(check.problems[0])}</p>
       </div>
       <div class="tg-deck-keys">
@@ -245,6 +245,46 @@ export function initTcg(deps) {
     saveDecks();
     draft.open = false;
     return deck;
+  }
+
+  /**
+   * Pre-made decks the player opened in the shop (js/app.js keepThemeDeck):
+   * each becomes a deck under its own name, made of the cards that came in it.
+   * Buying one is the only way to get a ready-made deck.
+   */
+  async function takeThemeDecks() {
+    const inboxKey = `pp-tcg-inbox-v1:${deps.storeKey()}`;
+    let inbox = [];
+    try {
+      inbox = JSON.parse(localStorage.getItem(inboxKey) || "[]");
+    } catch {
+      return;
+    }
+    if (!Array.isArray(inbox) || !inbox.length) return;
+    await ensureCards(inbox.flatMap((item) => Object.keys(item.cards || {})));
+    for (const item of inbox) {
+      if (!item?.cards || !item.name) continue;
+      let name = item.name;
+      for (let n = 2; decks.some((d) => d.name === name); n += 1) name = `${item.name} ${n}`;
+      const ids = Object.keys(item.cards);
+      const lead = (defs(ids[0])?.kind === "pokemon" && ids[0]) || ids.find((id) => defs(id)?.kind === "pokemon" && defs(id)?.stage !== "basic") || ids.find((id) => defs(id)?.kind === "pokemon") || null;
+      decks.push({ id: `t${(item.at || Date.now()).toString(36)}${decks.length}`, name, format: themeFormat(item.cards), cards: { ...item.cards }, theme: item.product || true, lead });
+    }
+    saveDecks();
+    try {
+      localStorage.removeItem(inboxKey);
+    } catch {
+      /* it is read again next time; the names keep their number */
+    }
+  }
+
+  /** The format a pre-made deck is played in as printed: the newest one its cards are all legal in. */
+  function themeFormat(cards) {
+    for (const id of ["standard", "expanded", "unlimited"]) {
+      if (!FORMATS[id]) continue;
+      if (checkDeck({ format: id, cards }, cards, defs).ok) return id;
+    }
+    return FORMATS.unlimited ? "unlimited" : "standard";
   }
 
   function ownedPool() {
@@ -2333,6 +2373,7 @@ export function initTcg(deps) {
       root.innerHTML = `<div class="tg-page"><p class="rt-empty tg-none">Couldn't load the game. Check your connection and try again.</p></div>`;
       return;
     }
+    await takeThemeDecks().catch(() => null);
     if (!shown) return;
     // A match against a friend and one against the bot never share the table.
     if (route.name === "match" && match?.online) match = null;
