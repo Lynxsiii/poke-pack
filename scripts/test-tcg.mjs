@@ -883,6 +883,87 @@ test("a deck built from a small collection is legal", () => {
   assert.equal(buildDeck([], "half"), null);
 });
 
+/* ---------- Trainers that choose cards ---------- */
+
+const S = {
+  ball: labTrainer("ball", "Item", "Search your deck for a Basic Pokémon, reveal it, and put it into your hand. Then, shuffle your deck."),
+  nest: labTrainer("nest", "Item", "Search your deck for a Basic Pokémon and put it onto your Bench. Then, shuffle your deck."),
+  ultra: labTrainer("ultra", "Item", "You can use this card only if you discard 2 other cards from your hand. Search your deck for a Pokémon, reveal it, and put it into your hand. Then, shuffle your deck."),
+  retrieve: labTrainer("retrieve", "Item", "Put 2 basic Energy cards from your discard pile into your hand."),
+  coin: labTrainer("coin", "Item", "Flip a coin. If heads, search your deck for a Pokémon, reveal it, and put it into your hand. Then, shuffle your deck."),
+};
+
+test("a deck search: the player chooses among the cards that fit, or none, and the deck is shuffled", () => {
+  const state = started();
+  state.current = 0;
+  const me = state.players[0];
+  const uid = hold(state, 0, S.ball);
+  apply(state, { type: "play", player: 0, uid }, defs);
+  const waiting = state.pending[0];
+  assert.equal(waiting.type, "choose");
+  assert.ok(waiting.uids.length > 0 && waiting.uids.every((u) => defs(state.cards[u]).stage === "basic"));
+  assert.throws(() => apply(state, { type: "end", player: 0 }, defs), RuleError);
+  assert.throws(() => apply(state, { type: "choose", player: 0, uids: waiting.uids.slice(0, 2) }, defs), RuleError);
+  const want = waiting.uids[0];
+  const hand = me.hand.length;
+  const events = apply(state, { type: "choose", player: 0, uids: [want] }, defs);
+  assert.ok(me.hand.includes(want) && !me.deck.includes(want));
+  assert.equal(me.hand.length, hand + 1);
+  assert.ok(events.some((e) => e.t === "search" && e.to === "hand"));
+  assert.equal(state.pending.length, 0);
+  // Taking nothing is allowed: the deck is hidden, so a search may fail.
+  const again = hold(state, 0, S.ball);
+  apply(state, { type: "play", player: 0, uid: again }, defs);
+  apply(state, { type: "choose", player: 0, uids: [] }, defs);
+  assert.equal(state.pending.length, 0);
+});
+
+test("a search onto the Bench needs room; a price is paid before the search", () => {
+  const state = started();
+  state.current = 0;
+  const me = state.players[0];
+  const nest = hold(state, 0, S.nest);
+  const bench = me.bench.length;
+  apply(state, { type: "play", player: 0, uid: nest }, defs);
+  apply(state, { type: "choose", player: 0, uids: [state.pending[0].uids[0]] }, defs);
+  assert.equal(me.bench.length, bench + 1);
+
+  // Ultra Ball: not with fewer than 2 other cards; with them, discard 2 and then search.
+  const ultra = hold(state, 0, S.ultra);
+  const spare = me.hand.filter((u) => u !== ultra);
+  me.deck.push(...me.hand.splice(0));
+  me.hand.push(ultra, spare[0]);
+  assert.ok(!legalActions(state, 0, defs).some((a) => a.type === "play" && a.uid === ultra));
+  me.deck.splice(me.deck.indexOf(spare[1]), 1);
+  me.hand.push(spare[1]);
+  apply(state, { type: "play", player: 0, uid: ultra }, defs);
+  assert.equal(state.pending[0].effect.op, "discard");
+  assert.throws(() => apply(state, { type: "choose", player: 0, uids: [spare[0]] }, defs), RuleError);
+  apply(state, { type: "choose", player: 0, uids: [spare[0], spare[1]] }, defs);
+  assert.equal(me.hand.length, 0);
+  assert.equal(state.pending[0].effect.op, "toHand");
+  apply(state, { type: "choose", player: 0, uids: [state.pending[0].uids[0]] }, defs);
+  assert.equal(me.hand.length, 1);
+  assert.equal(state.pending.length, 0);
+});
+
+test("Energy comes back from the discard pile; a coin can stand in front of a search", () => {
+  const state = started();
+  state.current = 0;
+  const me = state.players[0];
+  const retrieve = hold(state, 0, S.retrieve);
+  assert.ok(!legalActions(state, 0, defs).some((a) => a.type === "play" && a.uid === retrieve), "nothing to bring back yet");
+  const energy = me.deck.filter((u) => defs(state.cards[u]).kind === "energy").slice(0, 3);
+  for (const u of energy) me.deck.splice(me.deck.indexOf(u), 1);
+  me.discard.push(...energy);
+  apply(state, { type: "play", player: 0, uid: retrieve }, defs);
+  assert.equal(state.pending[0].min, 2);
+  apply(state, { type: "choose", player: 0, uids: energy.slice(0, 2) }, defs);
+  assert.ok(energy.slice(0, 2).every((u) => me.hand.includes(u)));
+  assert.deepEqual(defs(S.coin).fx[0].op, "flip");
+  assert.ok(defs(S.coin).playable);
+});
+
 /* ---------- the rulebook audit (2026-11-26) ---------- */
 
 test("the flip winner chooses who goes first, only during setup", () => {
