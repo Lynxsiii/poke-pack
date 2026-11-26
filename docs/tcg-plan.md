@@ -15,11 +15,15 @@ the cards, sleeves, coins and playmats they have bought in-game.
   no weakness, resistance or retreat cost. `scripts/build_tcg_rules.mjs` adds
   them for 17,986 of 18,121 Pokémon from the open pokemon-tcg-data set.
 - **Attack text** (`js/tcg/effects.js`): text is compiled to steps. Read so
-  far: coin flips for more damage, for nothing, for damage per heads; heal
-  self; damage to self; discard own Energy; draw; the five Special Conditions
-  (with the checkup between turns); damage that skips Weakness or Resistance.
-  A text of several sentences is read when every sentence is. Of 29,147
-  attacks, 7,645 print no text and 5,756 more are read. The rest land their printed damage
+  far: coin flips for more damage, for nothing, for damage per heads, until
+  tails; heal self; damage to self; discard Energy (own or theirs); draw;
+  discard from their deck; the five Special Conditions (with the checkup
+  between turns); damage that skips Weakness, Resistance or effects; damage
+  that counts counters or Energy; effects that last a turn (can't attack,
+  can't use one attack, less damage, no damage, protected, can't retreat,
+  flip to attack). A text of several sentences is read when every sentence
+  is. Of 29,147 attacks, 7,645 print no text and 7,825 more are read. The
+  rest land their printed damage
   and the screen says their text isn't live.
 - **Decks** (`js/tcg/decks.js`): Full deck (60 cards, 6 prizes, 4 of a name)
   and Half deck (30, 3, 2). Only cards you own, as many as you own. Basic
@@ -63,8 +67,8 @@ Driven by `node scripts/test-tcg.mjs --coverage`, which lists the commonest
 wordings the engine can't read. Work down that list:
 
 1. Done 2026-11-26: Special Conditions and the checkup between turns.
-2. **Effects that last a turn**: "can't attack next turn", "takes 30 less
-   damage", "can't retreat". Needs a small list of timed markers on a slot.
+2. Done 2026-11-26: effects that last a turn, as marks on a slot
+   (`engine.js`, "effects that last a turn").
 3. **Bench damage, switching, searching the deck, discarding from hand.** The
    last two need a choice from the player, so `pending` grows beyond
    "promote" into a general "choose N of these".

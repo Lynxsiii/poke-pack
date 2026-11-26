@@ -219,6 +219,7 @@ body.tg-playing { overflow: hidden; }
 .tg-info-foe { z-index: 1; } .tg-info-foe .tg-hud { position: relative; }
 .tg-info-foe .tg-conds { position: absolute; top: 100%; right: 8px; margin-top: -8px; flex-wrap: nowrap; justify-content: flex-end; }
 .tg-info-foe .tg-cond { box-shadow: 0 0 0 1.5px var(--k0); }
+.tg-cond[data-cond="mark"] { background: var(--box-2); color: var(--on-k); box-shadow: 0 0 0 1.5px var(--rule-2); }
 .tg-cond[data-cond="asleep"] { background: #5a63d8; } .tg-cond[data-cond="confused"] { background: var(--yel); color: var(--k0); }
 .tg-cond[data-cond="paralyzed"] { background: var(--hp-mid); color: var(--k0); } .tg-cond[data-cond="poisoned"] { background: #8a56d8; }
 .tg-line { margin: 0; color: var(--on-k); font: italic 800 14px/1.2 var(--font-xc); text-wrap: balance; }

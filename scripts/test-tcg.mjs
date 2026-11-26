@@ -494,6 +494,132 @@ test("the lesson plays through as the coach tells it", () => {
   }
 });
 
+/* ---------- effects that last a turn ---------- */
+
+// A stand-in with one attack per effect under test, swapped onto an Active Pokémon.
+const lab = (id, attacks) => byId.set(id, { id, name: "Lab", supertype: "Pokémon", subtypes: ["Basic"], types: ["Colorless"], hp: "200", attacks: attacks.map(([name, damage, text]) => ({ name, cost: [], damage: String(damage), text })) });
+lab("lab-1", [
+  ["Tire", 10, "During your next turn, this Pokémon can't attack."],
+  ["Brace", 10, "During your opponent's next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance)."],
+  ["Pin", 10, "The Defending Pokémon can't retreat during your opponent's next turn."],
+  ["Once", 10, "During your next turn, this Pokémon can't use Once."],
+]);
+lab("lab-2", [
+  ["Smoke", 10, "If the Defending Pokémon tries to attack during your opponent's next turn, your opponent flips a coin. If tails, that attack does nothing."],
+  ["Hide", 0, "Flip a coin. If heads, during your opponent's next turn, prevent all damage from and effects of attacks done to this Pokémon."],
+  ["Pierce", 50, "This attack's damage isn't affected by any effects on your opponent's Active Pokémon."],
+  ["Sting", 50, "Your opponent's Active Pokémon is now Poisoned."],
+]);
+lab("lab-3", [
+  ["Rage", 10, "This attack does 10 more damage for each damage counter on this Pokémon."],
+  ["Chain", 0, "Flip a coin until you get tails. This attack does 30 damage for each heads."],
+  ["Follow", 20, "If your opponent's Active Pokémon already has any damage counters on it, this attack does 40 more damage."],
+  ["Drain", 10, "Discard an Energy from your opponent's Active Pokémon."],
+]);
+function labgame(mine = "lab-1", theirs = "lab-2") {
+  const state = midgame();
+  state.cards[state.players[0].active.uid] = mine;
+  state.cards[state.players[1].active.uid] = theirs;
+  state.players[0].active.damage = 0;
+  state.players[1].active.damage = 0;
+  return state;
+}
+const attackIndex = (state, p, name) => defs(state.cards[state.players[p].active.uid]).attacks.findIndex((a) => a.name === name);
+const use = (state, p, name) => act(state, { type: "attack", player: p, index: attackIndex(state, p, name) });
+
+test("the lab cards' text is all read", () => {
+  for (const id of ["lab-1", "lab-2", "lab-3"]) for (const a of defs(id).attacks) assert.ok(!a.plain, a.name);
+  assert.ok(!defs("base1-63").attacks[1].plain, "Withdraw");
+});
+
+test("can't attack next turn: holds for that turn only, and leaves with the Pokémon", () => {
+  const state = labgame();
+  use(state, 0, "Tire");
+  act(state, { type: "end", player: 1 });
+  assert.deepEqual(usableAttacks(state, 0, defs), []);
+  throws(() => use(state, 0, "Tire"), /can't attack/);
+  act(state, { type: "end", player: 0 });
+  act(state, { type: "end", player: 1 });
+  assert.ok(usableAttacks(state, 0, defs).length > 0);
+  // Retreating wipes it.
+  use(state, 0, "Tire");
+  act(state, { type: "end", player: 1 });
+  state.players[0].active.energy.push(give(state, 0, W), give(state, 0, W), give(state, 0, W));
+  state.players[0].hand = state.players[0].hand.filter((u) => !state.players[0].active.energy.includes(u));
+  act(state, { type: "retreat", player: 0, to: 0 });
+  assert.equal(state.players[0].bench[0].marks, undefined);
+});
+
+test("can't use one attack next turn; the others still work", () => {
+  const state = labgame();
+  use(state, 0, "Once");
+  act(state, { type: "end", player: 1 });
+  const usable = usableAttacks(state, 0, defs);
+  assert.ok(!usable.includes(attackIndex(state, 0, "Once")) && usable.includes(attackIndex(state, 0, "Tire")));
+  throws(() => use(state, 0, "Once"), /can't use Once/);
+});
+
+test("less damage during the opponent's next turn, unless the attack ignores effects", () => {
+  let state = labgame();
+  use(state, 0, "Brace");
+  use(state, 1, "Sting");
+  assert.equal(state.players[0].active.damage, 20 + 10); // 50 - 30, then poison between turns
+  state = labgame();
+  use(state, 0, "Brace");
+  use(state, 1, "Pierce");
+  assert.equal(state.players[0].active.damage, 50);
+  // And it is gone a turn later.
+  act(state, { type: "end", player: 0 });
+  use(state, 1, "Pierce");
+  assert.equal(state.players[0].active.damage, 100);
+});
+
+test("can't retreat during the opponent's next turn", () => {
+  const state = labgame();
+  use(state, 0, "Pin");
+  assert.equal(canRetreat(state, 1, defs), false);
+  throws(() => act(state, { type: "retreat", player: 1, to: 0 }), /can't retreat/);
+  act(state, { type: "end", player: 1 });
+  act(state, { type: "end", player: 0 });
+  assert.equal(canRetreat(state, 1, defs), true);
+});
+
+test("a shield stops damage and effects; an attacker told to flip can miss", () => {
+  const state = labgame("lab-2", "lab-2");
+  rigFlips(state, [true]);
+  use(state, 0, "Hide");
+  const events = use(state, 1, "Sting");
+  assert.equal(state.players[0].active.damage, 0);
+  assert.deepEqual(conditionsOn(state.players[0].active), []);
+  assert.ok(events.some((e) => e.t === "blocked"));
+  use(state, 0, "Smoke");
+  rigFlips(state, [false]);
+  const missed = use(state, 1, "Pierce");
+  assert.ok(missed.some((e) => e.t === "miss"));
+  assert.equal(state.players[0].active.damage, 0);
+  assert.equal(state.current, 0);
+});
+
+test("damage that counts: counters on the attacker, a damaged target, heads in a row, Energy knocked off", () => {
+  const state = labgame("lab-3", "lab-3");
+  state.players[0].active.damage = 30;
+  use(state, 0, "Rage");
+  assert.equal(state.players[1].active.damage, 40);
+  act(state, { type: "end", player: 1 });
+  use(state, 0, "Follow");
+  assert.equal(state.players[1].active.damage, 100);
+  act(state, { type: "end", player: 1 });
+  rigFlips(state, [true, true, false]);
+  use(state, 0, "Chain");
+  assert.equal(state.players[1].active.damage, 160);
+  state.players[1].active.energy.push(give(state, 1, "energy-fire"));
+  state.players[1].hand.pop();
+  act(state, { type: "end", player: 1 });
+  const before = state.players[1].active.energy.length;
+  use(state, 0, "Drain");
+  assert.equal(state.players[1].active.energy.length, before - 1);
+});
+
 /* ---------- bot against bot ---------- */
 
 function mulberry(seed) {
