@@ -86,6 +86,10 @@ if (process.argv.includes("--coverage")) {
   console.log(`${trainerCards} Trainers: ${trainerRead} playable (Items and Supporters whose text is read)`);
   console.log("Commonest unread Item and Supporter texts:");
   for (const [shape, n] of [...unreadTrainers].sort((a, b) => b[1] - a[1]).slice(0, 15)) console.log(`  ${String(n).padStart(4)}  ${shape.slice(0, 150)}`);
+  for (const sub of ["tool", "stadium"]) {
+    const all = [...byId.values()].map((c) => defs(c.id)).filter((d) => d.kind === "trainer" && d.sub === sub);
+    console.log(`${all.length} ${sub === "tool" ? "Pokémon Tools" : "Stadiums"}: ${all.filter((d) => d.playable).length} live`);
+  }
   const specials = [...byId.values()].filter((c) => c.supertype === "Energy" && !(c.subtypes || []).includes("Basic"));
   const unreadSpecial = new Map();
   for (const c of specials) if (!defs(c.id).playable) unreadSpecial.set(c.name, (unreadSpecial.get(c.name) || 0) + 1);

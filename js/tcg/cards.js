@@ -113,7 +113,7 @@ export function defineCard(card, row, text = "", lines = null) {
     const sub = subs.includes("Supporter") ? "supporter" : subs.includes("Stadium") ? "stadium" : subs.some((x) => /Tool|Technical Machine/.test(x)) ? "tool" : "item";
     const fx = sub === "item" || sub === "supporter" ? compileTrainer(text) : null;
     // A Tool is not played and discarded: it is attached, and its numbers ride on the Pokémon.
-    const tool = sub === "tool" && subs.includes("Pokémon Tool") ? compileTool(text) : null;
+    const tool = sub === "tool" && subs.includes("Pokémon Tool") ? compileTool(text, card.name) : null;
     const stadium = sub === "stadium" ? compileStadium(text) : null;
     const why = sub === "stadium" ? (stadium ? "" : "This Stadium's text isn't live yet.") : sub === "tool" ? (tool ? "" : "This Tool's text isn't live yet.") : fx ? "" : "This Trainer's text isn't live yet.";
     return { ...base, kind: "trainer", sub, text: text || "", fx: fx || [], ...(tool ? { tool } : {}), ...(stadium ? { stadium } : {}), playable: !why, why };
@@ -137,7 +137,8 @@ export function defineCard(card, row, text = "", lines = null) {
   let why = "";
   if (!stage) why = "This kind of Pokémon isn't in yet.";
   else if (!row) why = "We don't have this card's play data yet.";
-  else if (!attacks.length) why = "It has no attack to use yet.";
+  // A Pokémon with no attack of its own may still be played for its Ability (Elekid's Playful Punch).
+  else if (!attacks.length && !ability) why = "It has no attack to use yet.";
 
   return {
     ...base,
@@ -156,6 +157,9 @@ export function defineCard(card, row, text = "", lines = null) {
     prizes: prizesFor(card, row),
     box: boxOf(card),
     ...(printed.length ? { abilityKind: printed[0].type || "Ability" } : {}),
+    // The Baby Pokémon rule (attacking it takes a coin flip), and Team Plasma for the cards that ask.
+    ...(subs.includes("Baby") ? { baby: true } : {}),
+    ...(subs.includes("Team Plasma") ? { plasma: true } : {}),
     // "A Pokémon that doesn't have a Rule Box" (Pokémon ex, V, GX, Radiant, Prism Star ...).
     rule: Boolean(boxOf(card)) || subs.some((s) => /^(Radiant|Prism Star|BREAK|LEGEND|V-UNION|Level-Up|Star|TAG TEAM|MEGA)$/.test(s)),
     ...(ability ? { ability } : {}),

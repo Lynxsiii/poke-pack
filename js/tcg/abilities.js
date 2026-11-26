@@ -173,6 +173,8 @@ const DOES = [
     if (!/^(basicEnergy|energy)/.test(what)) return null;
     return [{ op: "fetchEnergy", what, n: Number(m[1]), to: "self", top: Number(m[1]), rest: "hand" }];
   }],
+  // Old Pokémon Powers that do damage: to the Active Pokémon, with Weakness and Resistance, but not an attack.
+  [/^[Dd]o (\d+) damage to your opponent's Active Pokémon\. \(Apply Weakness and Resistance\.\)$/, (m) => [{ op: "zap", n: Number(m[1]) }]],
   [/^Heal (\d+) damage from each of your Pokémon\.$/, (m) => [{ op: "heal", n: Number(m[1]), to: "all" }]],
   [/^Heal (\d+) damage from your Active Pokémon\.$/, (m) => [{ op: "heal", n: Number(m[1]), to: "active" }]],
   [/^Heal (\d+) damage from this Pokémon\.$/, (m) => [{ op: "heal", n: Number(m[1]), to: "self" }]],
@@ -225,6 +227,7 @@ export function compileAbility(ability, cardName = "") {
     .replace(/ \(This doesn't use up your 1 Energy card attachment for the turn\.\)/, "")
     .replace(/ \(You can't use more than 1 VSTAR Power in a game\.\)/, () => ((vstar = true), ""))
     .replace(/ If you use this (?:Ability|Poké-Power|power), your turn ends\./, () => ((ends = true), ""))
+    .replace(/ Either way, this ends your turn\./, () => ((ends = true), ""))
     .replace(/ (?:If you use this (?:Ability|Poké-Power)|If you searched your deck in this way), this Pokémon is Knocked Out\./, () => ((selfKo = true), ""))
     .replace(/ You can't use more than 1 .+? (?:Ability|Poké-Power)(?: each turn| during your turn)\./, () => ((single = true), ""));
   const base = { name: ability.name || kind, kind, text: String(ability.text || "").replace(/\s+/g, " ").trim() };
