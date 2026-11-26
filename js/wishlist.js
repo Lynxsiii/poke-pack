@@ -17,7 +17,7 @@
      deps.sourceOf(entry)    -> { kind: "pack"|"product"|"none", setId, products: [name] }
      deps.setInfo(setId)     -> { name, symbol } or null
      deps.onChange()         the list changed (the app repaints filters that count hearts) */
-import { loadCardIndex, numberText } from "./search.js?v=6";
+import { loadCardIndex, numberText } from "./search.js?v=7";
 
 const LOCAL_KEY = "pokepack.wishlist";
 const MAX = 500;
