@@ -17,7 +17,7 @@ export const BETA_ADMINS = ["polar"];
 
 export const BETA_GAMES = [
   { key: "grass", href: "/casino/grass", title: "Tall Grass", line: "Clear the patch, dodge the Voltorb." },
-  { key: "rocket", href: "/casino/rocket", title: "Rocket", line: "Cash out before it pops." },
+  { key: "rocket", href: "/casino/rocket", title: "Rayquaza", line: "Cash out before it flies off." },
   { key: "tins", href: "/casino/tins", title: "Mystery Tins", line: "Crack a themed tin of cards." },
 ];
 

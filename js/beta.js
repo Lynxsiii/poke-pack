@@ -2,7 +2,7 @@
 
    /casino/beta     join with an invite code, the perks, the games; the owner makes codes here
    /casino/grass    Tall Grass: clear tiles, dodge the Voltorb, cash out
-   /casino/rocket   Rocket: one shared round, cash out before the pop
+   /casino/rocket   Rayquaza: one shared round, cash out before it flies off
    /casino/tins     Mystery Tins: a themed tin, one card out
 
    The page only asks and shows. Every stake, roll and payout is the Worker's. */
@@ -312,20 +312,21 @@ function recentRows(rows) {
 }
 
 // ---- Rocket ------------------------------------------------------------------------------
-/* The sky is a scene and a chart at once. The rocket stands on its pad through the countdown, then climbs a fixed
+/* Rayquaza. (The game's key, route and tables keep the name "rocket" from its first look.)
+   The sky is a scene and a chart at once. Rayquaza hovers over the hills through the countdown, then climbs a fixed
    flight path as the multiplier grows (the far end is 10x), lighting the trail and the 1.5x, 2x, 3x, 5x and 10x
    markers behind it. The ground falls away, clouds sink past and stars come down. Cash-outs plant flags on the path.
-   It bursts where the round pops. The sky is drawn once and only transforms, opacity and classes change after. */
-const SHIP = `<svg viewBox="0 0 72 40" aria-hidden="true"><g class="bz-flame"><path d="M20 20 1 9l7 11-7 11z" fill="var(--hp-low)" stroke="var(--k0)" stroke-width="2.5" stroke-linejoin="round"/><path d="M20 20 9 14.500l4 5.500-4 5.500z" fill="var(--yel)"/></g>
-  <path d="M15 5l13 8v14l-13 8z" fill="var(--cy)" stroke="var(--k0)" stroke-width="2.5" stroke-linejoin="round"/>
-  <path d="M21 9h24c11 0 20 6.500 24 11-4 4.500-13 11-24 11H21z" fill="#fff" stroke="var(--k0)" stroke-width="2.5" stroke-linejoin="round"/>
-  <path d="M53 11c6.500 2 11.500 5.500 15 9-3.500 3.500-8.500 7-15 9z" fill="var(--hp-low)"/><path d="M26 9v22" stroke="var(--k0)" stroke-width="2.500"/>
-  <circle cx="39" cy="20" r="5.500" fill="var(--cy)" stroke="var(--k0)" stroke-width="2.500"/><path d="M36.500 18.500a3.500 3.500 0 0 1 3-2" stroke="#fff" stroke-width="2" stroke-linecap="round" fill="none"/></svg>`;
+   It is gone in a flash where the round ends. The sky is drawn once and only transforms, opacity and classes change after. */
+const SHIP = `<svg viewBox="0 0 114 56" aria-hidden="true"><g class="bz-seg" style="--s:12"><path d="M9.0 33.4l-8-6 2.500 6-2.500 6z" fill="var(--hp-low)" stroke="var(--k0)" stroke-width="2" stroke-linejoin="round"/></g><g class="bz-seg" style="--s:11"><circle cx="9.0" cy="33.4" r="4.3" fill="var(--k0)"/></g><g class="bz-seg" style="--s:10"><circle cx="16.2" cy="32.4" r="5.5" fill="var(--k0)"/></g><g class="bz-seg" style="--s:9"><circle cx="23.4" cy="28.6" r="6.8" fill="var(--k0)"/></g><g class="bz-seg" style="--s:8"><circle cx="30.6" cy="24.5" r="8.1" fill="var(--k0)"/></g><g class="bz-seg" style="--s:7"><path d="M34.8 16.5l-7-11 12 6zM34.8 28.5l-7 11 12-6z" fill="color-mix(in srgb, var(--hp) 76%, var(--k0))" stroke="var(--k0)" stroke-width="2.4" stroke-linejoin="round"/><path d="M29.2 8.1l-1.400-2.600 3.400 1.800zM29.2 36.9l-1.400 2.600 3.400-1.800z" fill="var(--hp-low)" stroke="var(--hp-low)" stroke-width="1.5" stroke-linejoin="round"/><circle cx="37.8" cy="22.5" r="9.3" fill="var(--k0)"/></g><g class="bz-seg" style="--s:6"><circle cx="45.0" cy="23.8" r="9.3" fill="var(--k0)"/></g><g class="bz-seg" style="--s:5"><circle cx="52.2" cy="27.7" r="9.3" fill="var(--k0)"/></g><g class="bz-seg" style="--s:4"><circle cx="59.4" cy="31.7" r="9.3" fill="var(--k0)"/></g><g class="bz-seg" style="--s:3"><path d="M63.599999999999994 27.5l-7-11 12 6zM63.599999999999994 39.5l-7 11 12-6z" fill="color-mix(in srgb, var(--hp) 76%, var(--k0))" stroke="var(--k0)" stroke-width="2.4" stroke-linejoin="round"/><path d="M58.0 19.1l-1.400-2.600 3.400 1.800zM58.0 47.9l-1.400 2.600 3.400-1.800z" fill="var(--hp-low)" stroke="var(--hp-low)" stroke-width="1.5" stroke-linejoin="round"/><circle cx="66.6" cy="33.5" r="9.3" fill="var(--k0)"/></g><g class="bz-seg" style="--s:2"><circle cx="73.8" cy="31.9" r="9.3" fill="var(--k0)"/></g><g class="bz-seg" style="--s:1"><circle cx="81.0" cy="28.0" r="9.3" fill="var(--k0)"/></g><g class="bz-seg" style="--s:11"><circle cx="9.0" cy="33.4" r="2.1" fill="color-mix(in srgb, var(--hp) 76%, var(--k0))"/></g><g class="bz-seg" style="--s:10"><circle cx="16.2" cy="32.4" r="3.3" fill="color-mix(in srgb, var(--hp) 76%, var(--k0))"/></g><g class="bz-seg" style="--s:9"><circle cx="23.4" cy="28.6" r="4.6" fill="color-mix(in srgb, var(--hp) 76%, var(--k0))"/><circle cx="23.4" cy="28.6" r="2.3" fill="none" stroke="var(--yel)" stroke-width="1.800"/></g><g class="bz-seg" style="--s:8"><circle cx="30.6" cy="24.5" r="5.9" fill="color-mix(in srgb, var(--hp) 76%, var(--k0))"/></g><g class="bz-seg" style="--s:7"><circle cx="37.8" cy="22.5" r="7.1" fill="color-mix(in srgb, var(--hp) 76%, var(--k0))"/><circle cx="37.8" cy="22.5" r="3.4" fill="none" stroke="var(--yel)" stroke-width="1.800"/></g><g class="bz-seg" style="--s:6"><circle cx="45.0" cy="23.8" r="7.1" fill="color-mix(in srgb, var(--hp) 76%, var(--k0))"/></g><g class="bz-seg" style="--s:5"><circle cx="52.2" cy="27.7" r="7.1" fill="color-mix(in srgb, var(--hp) 76%, var(--k0))"/><circle cx="52.2" cy="27.7" r="3.4" fill="none" stroke="var(--yel)" stroke-width="1.800"/></g><g class="bz-seg" style="--s:4"><circle cx="59.4" cy="31.7" r="7.1" fill="color-mix(in srgb, var(--hp) 76%, var(--k0))"/></g><g class="bz-seg" style="--s:3"><circle cx="66.6" cy="33.5" r="7.1" fill="color-mix(in srgb, var(--hp) 76%, var(--k0))"/><circle cx="66.6" cy="33.5" r="3.4" fill="none" stroke="var(--yel)" stroke-width="1.800"/></g><g class="bz-seg" style="--s:2"><circle cx="73.8" cy="31.9" r="7.1" fill="color-mix(in srgb, var(--hp) 76%, var(--k0))"/></g><g class="bz-seg" style="--s:1"><circle cx="81.0" cy="28.0" r="7.1" fill="color-mix(in srgb, var(--hp) 76%, var(--k0))"/><circle cx="81.0" cy="28.0" r="3.4" fill="none" stroke="var(--yel)" stroke-width="1.800"/></g><g class="bz-seg bz-head" style="--s:0"><path d="M88 19 68 3l10 17zM88 37 68 53l10-17z" fill="color-mix(in srgb, var(--hp) 76%, var(--k0))" stroke="var(--k0)" stroke-width="2.4" stroke-linejoin="round"/><path d="M71.500 6.500 68 3l5 2zM71.500 49.500 68 53l5-2z" fill="var(--hp-low)" stroke="var(--hp-low)" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M95 20 85 8l2 12zM95 36 85 48l2-12z" fill="color-mix(in srgb, var(--hp) 76%, var(--k0))" stroke="var(--k0)" stroke-width="2.200" stroke-linejoin="round"/>
+  <path d="M79 19c10-4 22-1 32 7 1 1 1 3 0 4-9 7-22 10-32 7-3-1-5-5-5-9s2-8 5-9z" fill="color-mix(in srgb, var(--hp) 76%, var(--k0))" stroke="var(--k0)" stroke-width="2.500" stroke-linejoin="round"/>
+  <path d="M111 29.500c-5 .500-10 1.500-15 3.500" stroke="var(--k0)" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M80 24c4-2.500 9-3 13-2M79 33c3 1.500 7 2 10 1.500" stroke="var(--yel)" stroke-width="2" stroke-linecap="round" fill="none"/>
+  <path d="M95 22.500l8 2.500-7 2.500z" fill="var(--yel)" stroke="var(--k0)" stroke-width="1.500" stroke-linejoin="round"/><circle cx="98.500" cy="25" r="1.200" fill="var(--k0)"/></g></svg>`;
 const BURST = `<svg viewBox="0 0 60 60" aria-hidden="true"><path d="M30 2l6 14 13-8-4 15 14 3-12 8 9 12-15-2-2 15-9-12-9 12-2-15-15 2 9-12-12-8 14-3-4-15 13 8z" fill="var(--yel)" stroke="var(--k0)" stroke-width="2.500" stroke-linejoin="round"/></svg>`;
 const CLOUD = `<svg viewBox="0 0 80 40" aria-hidden="true"><path d="M14 35a10 10 0 0 1 2-20 14 14 0 0 1 26-5 12 12 0 0 1 22 7 9 9 0 0 1 0 18z"/></svg>`;
 const STAR = `<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0l1.600 4.400L12 6 7.600 7.600 6 12 4.400 7.600 0 6l4.400-1.600z"/></svg>`;
 const GROUND = `<svg viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden="true"><path class="bz-hill" d="M0 30V17c9-7 18-9 28-4 9-9 22-11 34-3 11-6 25-5 38 3v17z" vector-effect="non-scaling-stroke"/></svg>`;
-const ARC = [[15, 78], [66, 80], [91, 13]]; // the flight path, in % of the sky: the pad, the pull, 10x
+const ARC = [[37, 72], [70, 80], [91, 13]]; // the flight path, in % of the sky: the start, the pull, 10x
 const arcAt = (t) => ARC[0].map((_, k) => (1 - t) ** 2 * ARC[0][k] + 2 * t * (1 - t) * ARC[1][k] + t * t * ARC[2][k]);
 const arcT = (m) => Math.min(1, Math.log(Math.max(1, m)) / Math.log(10));
 const ARC_MARKS = [1.5, 2, 3, 5, 10];
@@ -356,21 +357,20 @@ function rocketPage(ctx, root) {
       el.innerHTML = html;
       cache[sel] = html;
     };
-    const betRow = (b) => `<div class="rt-row bz-row${b.status === "won" ? " is-won" : ""}${b.mine ? " is-mine" : ""}"><span class="rt-row-lab">${b.cashed ? fmtX(b.cashed) : b.status === "lost" ? "Popped" : "In"}</span>
+    const betRow = (b) => `<div class="rt-row bz-row${b.status === "won" ? " is-won" : ""}${b.mine ? " is-mine" : ""}"><span class="rt-row-lab">${b.cashed ? fmtX(b.cashed) : b.status === "lost" ? "Missed" : "In"}</span>
       <span class="rt-row-name">${esc(b.name)}${b.mine ? " (you)" : ""}<small>Stake ${num(b.stake)}${b.mine && b.auto ? `, auto ${fmtX(b.auto)}` : ""}</small></span><span class="rt-row-val">${b.status === "won" ? coinTag(b.payout) : ""}</span></div>`;
     function skeleton() {
       const at = (xy) => `left:${xy[0].toFixed(1)}%;top:${xy[1].toFixed(1)}%`;
-      root.innerHTML = `<div class="cs-page bz-page bz-rocket">${p.head("Rocket")}
+      root.innerHTML = `<div class="cs-page bz-page bz-rocket">${p.head("Rayquaza")}
         <div class="bz-play"><div class="bz-board-wrap">
           <div class="bz-sky"><div class="bz-scene">
             <span class="bz-stars" aria-hidden="true">${STARS.map(([x, y], i) => `<i style="left:${x}%;top:${y}%;--i:${i}">${STAR}</i>`).join("")}</span>
             <span class="bz-clouds" aria-hidden="true">${CLOUDS.map(([x, y, w], i) => `<i style="left:${x}%;top:${y}%;width:${w}px;--i:${i}">${CLOUD}</i>`).join("")}</span>
-            <span class="bz-ground" aria-hidden="true">${GROUND}<i class="bz-pad" style="left:${ARC[0][0]}%"></i></span>
+            <span class="bz-ground" aria-hidden="true">${GROUND}</span>
             <svg class="bz-arc" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M${ARC[0]} Q${ARC[1]} ${ARC[2]}" vector-effect="non-scaling-stroke"/></svg>
             <span class="bz-trail" aria-hidden="true">${Array.from({ length: ARC_DOTS }, (_, i) => `<i style="${at(arcAt((i + 1) / ARC_DOTS))}"></i>`).join("")}</span>
             ${ARC_MARKS.map((m) => `<span class="bz-mark" style="${at(arcAt(arcT(m)))}"><i></i>${m}x</span>`).join("")}
             <span data-rk-flags></span>
-            <span class="bz-puffs" aria-hidden="true" style="${at(ARC[0])}"><i></i><i></i><i></i></span>
             <span class="bz-ship" aria-hidden="true">${SHIP}</span>
             <span class="bz-burst" aria-hidden="true">${BURST}<i></i><i></i><i></i><i></i><i></i></span></div>
             <p class="bz-mult"><small data-rk-lab></small><b data-rk-fig>-</b></p>
@@ -392,10 +392,10 @@ function rocketPage(ctx, root) {
           <div class="bz-autos" role="group" aria-label="Quick auto cash-out">${[1.5, 2, 3, 5, 10].map((a) => `<button type="button" class="rt-word${Number(auto) === a ? " on" : ""}" data-auto="${a}">${a}x</button>`).join("")}</div>
           <button class="solid rt-go" type="submit">Join this round</button>`
         : mine?.status === "open" && ph === "flying" ? `<button type="button" class="solid rt-go" data-rk-cash>Cash out</button><p class="bz-note">Auto cash-out at ${fmtX(mine.auto)}.</p>`
-        : mine ? `<p class="bz-status ${mine.status === "won" ? "is-good" : mine.status === "lost" ? "is-bad" : ""}">${mine.status === "won" ? `You cashed out at ${fmtX(mine.cashed)} for ${coinTag(mine.payout)}.` : mine.status === "lost" ? "It popped before you cashed out." : `You're in with ${coinTag(mine.stake)}, auto at ${fmtX(mine.auto)}.`}</p>`
-        : `<p class="bz-note">${ph === "flying" ? "This round is in the air. Bets open again when it pops." : "Next round soon."}</p>`;
+        : mine ? `<p class="bz-status ${mine.status === "won" ? "is-good" : mine.status === "lost" ? "is-bad" : ""}">${mine.status === "won" ? `You cashed out at ${fmtX(mine.cashed)} for ${coinTag(mine.payout)}.` : mine.status === "lost" ? "Rayquaza flew off before you cashed out." : `You're in with ${coinTag(mine.stake)}, auto at ${fmtX(mine.auto)}.`}</p>`
+        : `<p class="bz-note">${ph === "flying" ? "This round is in the air. Bets open again when Rayquaza flies off." : "Next round soon."}</p>`;
       set("[data-rk-controls]", controls);
-      set("[data-rk-bets]", (data?.bets || []).length ? data.bets.map(betRow).join("") : `<p class="bz-note">Nobody yet. Bets close at launch.</p>`);
+      set("[data-rk-bets]", (data?.bets || []).length ? data.bets.map(betRow).join("") : `<p class="bz-note">Nobody yet. Bets close at take-off.</p>`);
       set("[data-rk-hist]", `<small>Last rounds</small>${(data?.history || []).map((h) => `<span class="${h.crash >= 2 ? "is-hi" : ""}">${fmtX(h.crash)}</span>`).join("")}`);
       // A flag where each player got out: yours named, up to five others plain.
       const out = (data?.bets || []).filter((b) => b.cashed).sort((a, b) => Number(b.mine || 0) - Number(a.mine || 0)).slice(0, 6);
@@ -418,20 +418,18 @@ function rocketPage(ctx, root) {
       if (ph !== seen.ph) {
         seen.ph = ph;
         sky.className = `bz-sky is-${ph}`;
-        root.querySelector("[data-rk-lab]").textContent = ph === "betting" ? "Launch in" : ph === "popped" ? "Popped at" : "Flying";
+        root.querySelector("[data-rk-lab]").textContent = ph === "betting" ? "Takes off in" : ph === "popped" ? "Flew off at" : "Flying";
         parts();
       }
       sky.classList.toggle("is-max", ph === "flying" && t >= 1);
-      // The rocket rides the flight path with the log of the multiplier, upright on the pad and nose along the curve after.
+      // Rayquaza rides the flight path with the log of the multiplier, its head on the path and its nose along the curve.
       const w = sky.clientWidth, hgt = sky.clientHeight;
       const [x, y] = arcAt(t);
       const [x2, y2] = arcAt(Math.min(1, t + 0.02)), [x1, y1] = arcAt(Math.max(0, t - 0.02));
       const along = Math.atan2(((y2 - y1) * hgt) / 100, ((x2 - x1) * w) / 100);
-      const lift = Math.min(1, t / 0.1);
-      const turn = -Math.PI / 2 + (along + Math.PI / 2) * lift;
-      const at = `translate(${((x * w) / 100).toFixed(1)}px, ${((y * hgt) / 100).toFixed(1)}px) translate(-50%, -50%)`;
-      sky.querySelector(".bz-ship").style.transform = `${at} rotate(${turn.toFixed(3)}rad)`;
-      sky.querySelector(".bz-burst").style.transform = at;
+      const at = `translate(${((x * w) / 100).toFixed(1)}px, ${((y * hgt) / 100).toFixed(1)}px)`;
+      sky.querySelector(".bz-ship").style.transform = `${at} translate(-92%, -50%) rotate(${along.toFixed(3)}rad)`;
+      sky.querySelector(".bz-burst").style.transform = `${at} translate(-50%, -50%)`;
       // The world sinks as it climbs: the ground first, then the clouds, and the stars come down.
       const climb = ph === "betting" ? 0 : t;
       sky.querySelector(".bz-ground").style.transform = `translateY(${(Math.min(1, climb * 5) * 130).toFixed(1)}%)`;
