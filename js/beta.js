@@ -519,7 +519,7 @@ function tinsPage(ctx, root) {
     const pct = (o) => (o >= 0.01 ? `${(o * 100).toFixed(o >= 0.1 ? 0 : 1)}%` : o >= 0.0001 ? `${(o * 100).toFixed(2)}%` : `1 in ${Math.round(1 / o).toLocaleString("en-US")}`);
     const oneIn = (o) => (o >= 0.5 ? pct(o) : `1 in ${Math.max(2, Math.round(1 / o)).toLocaleString("en-US")}`);
     const big = (t, c) => c.price >= t.price * 3;
-    const shortName = (t) => t.name.replace(/ tin$/i, "");
+    const shortName = (t) => t.name.replace(/( high roller)? tin$/i, "");
     const tinOf = (id) => tins?.find((t) => t.id === id) || null;
 
     /** A card on show: the real face with its foil when the catalog has it, the plain picture until then. */
@@ -546,7 +546,7 @@ function tinsPage(ctx, root) {
       ${t.cards[1] ? `<span class="bz-fan-card is-l">${face(t.cards[1])}</span>` : ""}
       ${t.cards[2] ? `<span class="bz-fan-card is-r">${face(t.cards[2])}</span>` : ""}
       <span class="bz-fan-card is-c">${face(t.cards[0])}</span>
-      <span class="bz-tinfront"><b>${esc(shortName(t))}</b><i>Mystery tin</i></span></span>`;
+      <span class="bz-tinfront"><b>${esc(shortName(t))}</b><i>${t.risk === "high" ? "High roller tin" : "Mystery tin"}</i></span></span>`;
     const tinBox = (t) => `<article class="rt-box bz-tin" style="${tinStyle(t)}">
       <a class="bz-tin-well" href="/casino/tins/${esc(t.id)}" data-bt-link aria-label="${esc(t.name)}: see every card">${fan(t)}</a>
       <div class="bz-tin-copy">
@@ -554,8 +554,15 @@ function tinsPage(ctx, root) {
         <div class="bz-tin-keys"><a class="bz-tin-all" href="/casino/tins/${esc(t.id)}" data-bt-link>All ${t.cards.length} cards and odds</a>
           <button type="button" class="ghost bz-open" data-open="${esc(t.id)}">Open for ${coinTag(t.price)}</button></div></div></article>`;
     const recentHTML = () => (recent.length ? `<section class="cs-section bz-recent"><h2 class="cs-h">Your last tins</h2><div class="cs-rows">${recent.map((r) => `<div class="rt-row bz-row${r.card.price >= r.price ? " is-won" : ""}"><span class="rt-row-lab">${esc(r.tinName.replace(/ tin$/, ""))}</span><span class="rt-row-name">${esc(r.card.name)}<small>Paid ${num(r.price)}</small></span><span class="rt-row-val">${coinTag(r.card.price)}</span></div>`).join("")}</div></section>` : "");
+    /** Two shelves: the themed tins, then the high rollers that cost more and swing harder. */
+    const shelves = () => {
+      const high = tins.filter((t) => t.risk === "high");
+      return `<div class="bz-tin-list">${tins.filter((t) => t.risk !== "high").map(tinBox).join("")}</div>
+        ${high.length ? `<section class="cs-section bz-rollers"><h2 class="cs-h">High rollers</h2><p class="bz-note">These cost more and swing harder: a pricey tin where every card is a hit, or bulk with a small shot at something huge. Each tin's page lists its odds and what comes back on average.</p>
+          <div class="bz-tin-list">${high.map(tinBox).join("")}</div></section>` : ""}`;
+    };
     const shelfHTML = () => `<p class="bz-lede">Each tin is built around its chase cards. Pick one, spin it open, and the card you land on goes straight into your collection.</p>
-      ${!tins ? `<div class="rt-skel bz-skel"></div>` : `<div class="bz-tin-list">${tins.map(tinBox).join("")}</div>`}${recentHTML()}`;
+      ${!tins ? `<div class="rt-skel bz-skel"></div>` : shelves()}${recentHTML()}`;
 
     // ---- A tin's page: the chase cards as faces, the key, every card and its odds.
     const chaseHTML = (t) => `<div class="bz-chase" role="list">${t.cards.slice(0, TIN_CHASE).map((c, i) => `<figure class="bz-chase-card" role="listitem">
@@ -571,7 +578,7 @@ function tinsPage(ctx, root) {
       const again = stage?.phase === "landed";
       return `<div class="bz-view-keys"><button type="button" class="solid rt-go" data-open="${esc(t.id)}">${again ? "Open another" : "Open"} for ${coinTag(t.price)}</button>
         ${again ? `<button type="button" class="ghost" data-close>Back to the chase cards</button>` : ""}
-        <p class="bz-note">${beat.length} of the ${t.cards.length} cards are worth more than the tin, a ${oneIn(chance)} chance. On average 90% of the price comes back.</p></div>`;
+        <p class="bz-note">${beat.length} of the ${t.cards.length} cards are worth more than the tin, a ${oneIn(chance)} chance. On average ${Math.round((t.back || 0.9) * 100)}% of the price comes back.</p></div>`;
     };
     const cell = (c) => `<button type="button" class="bz-cell" data-look="${esc(c.id)}"><img src="${esc(c.image)}" alt="" loading="lazy" decoding="async" />
       <b>${esc(c.name)}</b><small>${esc(c.setName || "")}${c.number ? ` ${esc(c.number)}` : ""}</small><span class="bz-cell-fig"><i>${pct(c.odds)}</i>${coinTag(c.price)}</span></button>`;

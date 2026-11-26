@@ -181,6 +181,9 @@
 .bz-tinfront::after { content: ""; position: absolute; top: -10px; bottom: -10px; left: 9%; width: 16px; background: #fff; opacity: 0.24; transform: skewX(var(--skew)); }
 .bz-tinfront b { margin-top: 8px; font: italic 800 23px/1 var(--font-xc); letter-spacing: -0.02em; white-space: nowrap; }
 .bz-tinfront i { font: 700 11.5px/1 var(--font-h); letter-spacing: 0.04em; opacity: 0.85; }
+.bz-rollers { margin-top: 28px; }
+.bz-rollers > .bz-note { margin: 0 0 14px; max-width: 62ch; }
+.bz-tinfront b { max-width: 94%; overflow: hidden; text-overflow: ellipsis; }
 .bz-tin-copy { display: grid; gap: 12px; align-content: start; padding: 13px 16px 16px; }
 .bz-tin-best { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; margin: 0; font: 700 16px var(--font-h); }
 .bz-tin-best small { width: 100%; color: var(--k-2); font-size: 12.5px; }

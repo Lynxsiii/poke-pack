@@ -1,7 +1,7 @@
 import { PLAYABLE_SETS, ALL_SETS, sellValue } from '../js/catalog.js';
 import {
   BETA_RULES, BETA_ADMINS, stakeCents, payoutCents, GRASS, grassMultiplier, DROP_RISKS, DROP_ROWS, DROP_SLOTS,
-  ROCKET, rocketAt, rocketMsFor, rocketCrash, guessMultiplier, TINS, tinWeight,
+  ROCKET, rocketAt, rocketMsFor, rocketCrash, guessMultiplier, TINS, tinWeight, tinPrice,
 } from '../js/beta-rules.js';
 import { gateResponse } from './gates.js';
 
@@ -332,18 +332,24 @@ export async function loadTins(env, helpers, request) {
       if (!set) continue;
       for (const p of await pricedCards(env, helpers, request, set)) {
         if (seen.has(p.card.id)) continue;
+        if (p.card.energy || p.card.supertype === 'Energy') continue;
         if (tin.names && !tin.names.test(p.card.name || '')) continue;
-        if (tin.hitsOnly && /^(common|uncommon)$/i.test(p.card.rarity || '')) continue;
+        if (tin.types && !(p.card.supertype === 'Pokémon' && tin.types.some((t) => p.card.types?.includes(t)))) continue;
+        if (tin.kind === 'supporter' && !(p.card.supertype === 'Trainer' && p.card.subtypes?.includes('Supporter'))) continue;
+        if (tin.kind === 'tagteam' && !p.card.subtypes?.some((x) => /tag team/i.test(x))) continue;
+        if (tin.hits && /^(common|uncommon)$/i.test(p.card.rarity || '')) continue;
+        if (tin.min && p.cents < tin.min * 100) continue;
+        if (tin.gap && p.cents > tin.gap[0] * 100 && p.cents < tin.gap[1] * 100) continue;
         seen.add(p.card.id);
         cards.push({ ...cardBrief(p.card, p.cents), cents: p.cents, setName: set.name });
       }
     }
     if (cards.length < 5) continue;
-    const total = cards.reduce((s, c) => s + tinWeight(c.cents), 0);
+    const total = cards.reduce((s, c) => s + tinWeight(c.cents, tin.pow), 0);
     let ev = 0;
-    for (const c of cards) { c.odds = tinWeight(c.cents) / total; ev += c.odds * c.cents; }
+    for (const c of cards) { c.odds = tinWeight(c.cents, tin.pow) / total; ev += c.odds * c.cents; }
     cards.sort((a, b) => b.cents - a.cents);
-    out.push({ id: tin.id, name: tin.name, line: tin.line || '', color: tin.color || '', price: Math.max(100, Math.ceil(ev / BETA_RULES.tinEdge)), cards });
+    out.push({ id: tin.id, name: tin.name, line: tin.line || '', color: tin.color || '', risk: tin.risk || '', price: tinPrice(ev, tin.back), ev, cards });
   }
   tinCache = { at: Date.now(), tins: out };
   return out;
@@ -353,7 +359,7 @@ const viewTinRun = (row) => {
   const d = parse(row.data) || {};
   return { id: row.id, game: 'tins', tin: d.tin, tinName: d.tinName, card: d.card, price: coins(row.stake), createdAt: row.created_at };
 };
-const publicTin = (t) => ({ id: t.id, name: t.name, line: t.line, color: t.color, price: coins(t.price), cards: t.cards.map(({ cents, ...c }) => c) });
+const publicTin = (t) => ({ id: t.id, name: t.name, line: t.line, color: t.color, risk: t.risk, back: Math.round((t.ev / t.price) * 1000) / 1000, price: coins(t.price), cards: t.cards.map(({ cents, ...c }) => c) });
 async function tins(env, helpers, user, action, body, method, request) {
   const list = await loadTins(env, helpers, request);
   if (method === 'GET') return helpers.json({ tins: list.map(publicTin), recent: (await recent(env, user.id, 'tins')).map(viewTinRun), serverNow: Date.now() });
