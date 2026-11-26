@@ -209,6 +209,8 @@ export function abilityOn(state, slot, defs) {
 export function warded(state, slot, { player, src }, defs) {
   if (!slot || !src || ownerOf(state, slot) === player) return false;
   const ability = abilityOn(state, slot, defs);
+  // An attack's effects (js/tcg/effects.js, src "attack"): an Ability that keeps them off, or a shield an earlier attack left.
+  if (src === "attack") return Boolean(ability?.noEffects) || Boolean(markOn(state, slot, "shield"));
   return src === "ability" ? Boolean(ability?.ward) : src === "trainer" ? Boolean(ability?.trainerWard) : false;
 }
 
@@ -435,13 +437,25 @@ function clearConditions(slot) {
      noAttack  can't attack            noUse     can't use the attack `name`
      less      takes n less damage     shield    takes no damage or effects from attacks
      guard     takes no damage from attacks (their other effects still happen)
-     noRetreat can't retreat           mustFlip  flips to attack; tails, nothing happens */
+     noRetreat can't retreat           mustFlip  flips to attack; tails, nothing happens
+     stronger  its attacks (or attack `name`) do n more, before Weakness and Resistance
+     weaker    its attacks do n less, before Weakness and Resistance
+     exposed   takes n more from attacks, after Weakness and Resistance
+     harden    takes no damage from an attack that would do n or less
+   A guard may say `from`: only attacks from "basic", "evolution" or "basicNonColorless" Pokémon. */
 
 /** A slot's mark of this kind that is in force this turn. */
 export const markOn = (state, slot, kind) => (slot?.marks || []).find((m) => m.kind === kind && m.turn === state.turn) || null;
 
 /** Marks in force now or waiting for their turn, for the screen. */
 export const marksOn = (state, slot) => (slot?.marks || []).filter((m) => m.turn >= state.turn);
+
+/** The n of a slot's marks of this kind in force this turn, added up; `name`: only those for every attack or for that one. */
+const markSum = (state, slot, kind, name = "") => (slot?.marks || []).filter((m) => m.kind === kind && m.turn === state.turn && (!m.name || m.name === name)).reduce((n, m) => n + (m.n || 0), 0);
+
+/** A guard mark that stops this attacker's damage: some guard only against Basic or Evolution Pokémon. */
+const GUARD_FROM = { basic: (d) => d.stage === "basic", evolution: (d) => d.stage === "evolution", basicNonColorless: (d) => d.stage === "basic" && !d.types.includes("Colorless") };
+const guardedFrom = (state, slot, attackerDef) => (slot?.marks || []).some((m) => m.kind === "guard" && m.turn === state.turn && (!m.from || GUARD_FROM[m.from](attackerDef)));
 
 export function addMark(state, slot, mark) {
   slot.marks = (slot.marks || []).filter((m) => m.turn >= state.turn && !(m.kind === mark.kind && m.turn === mark.turn && m.name === mark.name));
@@ -1214,7 +1228,7 @@ const HANDLERS = {
         return;
       }
     }
-    const ctx = { state, defs, events, player, slot, target, hit, shielded: false };
+    const ctx = { state, defs, events, player, slot, target, attack, hit, shielded: false };
     runAttackEffects("before", attack, ctx);
     // What an earlier attack left on the target: less damage, or none at all.
     const marked = Boolean(target && !hit.noEffects && markOn(state, target, "shield"));
@@ -1224,14 +1238,15 @@ const HANDLERS = {
       // Tools: the attacker's adds damage before Weakness, the target's can lift its Weakness or soak some.
       const mine = toolOf(state, slot, defs);
       const theirs = toolOf(state, target, defs);
-      const base = hit.damage > 0 ? Math.max(0, hit.damage + (mine.plus || 0) + heldSum(slot, "plus") + boostOf(state, player, slot, target, defs)) : hit.damage;
+      // Its own marks too, before Weakness: more from its last turn ("Echoed Voice does 50 more"), less from the other's ("Growl").
+      const base = hit.damage > 0 ? Math.max(0, hit.damage + (mine.plus || 0) + heldSum(slot, "plus") + boostOf(state, player, slot, target, defs) + markSum(state, slot, "stronger", attack.name) - markSum(state, slot, "weaker")) : hit.damage;
       // Old Gyms: Brock's Pokémon ignore Resistance; a Water attacker ignores Blaine's Pokémon's Weakness.
       const noWeakness = hit.noWeakness || Boolean(theirs.noWeakness) || (theirs.noWeaknessVs || []).some((t) => def.types.includes(t));
       const dealt = damageAfterTyping(base, def, defOf(state, target.uid, defs), { ...hit, noWeakness, noResistance: hit.noResistance || Boolean(theirs.noResistance) || Boolean(mine.pierce) });
       // Old PlusPower and Misty: more only when the attack does damage after Weakness and Resistance.
-      if (dealt.amount > 0) dealt.amount += heldSum(slot, "after") + boostOf(state, player, slot, target, defs, true);
+      if (dealt.amount > 0) dealt.amount += heldSum(slot, "after") + boostOf(state, player, slot, target, defs, true) + (hit.noEffects ? 0 : markSum(state, target, "exposed"));
       const less = (hit.noEffects ? 0 : markOn(state, target, "less")?.n || 0) + (theirs.less || 0) + (hit.noEffects ? 0 : heldSum(target, "less"));
-      let guarded = marked || (!hit.noEffects && markOn(state, target, "guard"));
+      let guarded = marked || (!hit.noEffects && guardedFrom(state, target, def));
       // The target's Ability: no damage from this kind of attacker, or a coin flip to take none.
       const power = hit.noEffects ? null : abilityOn(state, target, defs);
       if (!guarded && dealt.amount > 0 && power?.wall && walled(power.wall, def, state, slot, defs)) guarded = true;
@@ -1241,6 +1256,9 @@ const HANDLERS = {
         guarded = heads;
       }
       let amount = guarded ? 0 : Math.max(0, dealt.amount - less);
+      // "Prevent that attack's damage if that damage is 30 or less": judged on what would land.
+      const harden = !hit.noEffects && markOn(state, target, "harden");
+      if (harden && amount <= harden.n) amount = 0;
       // From full HP it hangs on instead of being Knocked Out.
       if (power?.sturdy && target.damage === 0 && amount >= maxHp(state, target, defs) && maxHp(state, target, defs) > power.sturdy) {
         amount = maxHp(state, target, defs) - power.sturdy;
@@ -1258,6 +1276,7 @@ const HANDLERS = {
       if (amount > 0) {
         target.damage += amount;
         target.hit = state.turn;
+        hit.dealt = amount;
         events.push({ t: "damage", p: foe, spot: ACTIVE, n: amount, weak: dealt.weak, resist: dealt.resist });
         // Koga: "If an attack from a Pokémon with Koga in its name does damage to a Defending Pokémon this turn, that Pokémon is then Poisoned."
         if ((state.boosts || []).some((b) => b.poison && b.p === player && b.turn === state.turn && fieldFits(b.who || {}, def)) && addCondition(state, target, "poisoned", defs)) events.push({ t: "condition", p: foe, kind: "poisoned" });
@@ -1304,7 +1323,8 @@ const HANDLERS = {
     } else {
       if (!waiting.spots.includes(spot)) fail("That Pokémon can't be chosen.");
       applyPick(state, waiting, spot, defs, events);
-      waiting.spots = waiting.spots.filter((x) => x !== spot);
+      // `again`: the same Pokémon may be picked more than once ("in any way you like").
+      if (!waiting.again) waiting.spots = waiting.spots.filter((x) => x !== spot);
       waiting.left -= 1;
     }
     if (spot == null || waiting.left <= 0 || !waiting.spots.length) {
@@ -1406,7 +1426,7 @@ const HANDLERS = {
         slot.energy.push(...picked);
         for (const uid of picked) events.push({ t: "attach", p: player, uid, spot: waiting.effect.spot, from: "deck" });
       } else if (picked.length && to === "spread") {
-        picked.forEach((uid, i) => askPick(state, { player, side: player, spots, left: 1, effect: { op: "attachHeld", uids: [uid] }, ...(i === picked.length - 1 && waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) }));
+        picked.forEach((uid, i) => askPick(state, { player, side: player, spots, left: 1, effect: { op: "attachHeld", uids: [uid], ...(waiting.zone !== "deck" ? { zone: waiting.zone } : {}) }, ...(i === picked.length - 1 && waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) }));
         waiting.then = null;
       } else if (picked.length) {
         askPick(state, { player, side: player, spots, left: 1, effect: { op: "attachHeld", uids: picked, ...(waiting.zone !== "deck" ? { zone: waiting.zone } : {}) }, ...(waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) });
@@ -1469,6 +1489,8 @@ const HANDLERS = {
         askPick(state, { player, side: owner, spots, left: 1, effect: { op: "moveEnergyCards", from: waiting.effect.from, uids: picked }, ...(waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) });
         waiting.then = null;
       }
+    } else if (op === "look") {
+      // "Look at your opponent's hand": the cards were seen, nothing moves.
     } else {
       side.hand.push(...picked);
       events.push({ t: "search", p: owner, uids: picked, from: waiting.zone, to: "hand" });
@@ -1613,13 +1635,14 @@ function applyPick(state, waiting, spot, defs, events) {
     events.push({ t: "attach", p, uid: effect.uid, spot, from: effect.zone });
   } else if (effect.op === "damage") {
     const slot = slotAt(state, p, spot);
-    if (effect.attack && benchSafe(state, slot, spot, defs)) return void events.push({ t: "blocked", p, spot });
+    // `pierce`: the attack ignores effects on that Pokémon; a Tera Pokémon's own rule still keeps it safe on the Bench.
+    if (effect.attack && (effect.pierce ? defOf(state, slot.uid, defs).tera && spot !== ACTIVE : benchSafe(state, slot, spot, defs))) return void events.push({ t: "blocked", p, spot });
     let n = effect.n;
     let weak = false;
     let resist = false;
-    // Weakness and Resistance count for the Active Pokémon only.
+    // Weakness and Resistance count for the Active Pokémon only (unless the attack skips them: effect.noWeakness, noResistance).
     if (spot === ACTIVE && effect.from) {
-      const dealt = damageAfterTyping(n, defOf(state, effect.from, defs), defOf(state, slot.uid, defs));
+      const dealt = damageAfterTyping(n, defOf(state, effect.from, defs), defOf(state, slot.uid, defs), effect);
       ({ amount: n, weak, resist } = dealt);
     }
     if (n <= 0) return;

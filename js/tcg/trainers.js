@@ -15,7 +15,8 @@
  * ctx: { state, defs, events, player }
  */
 
-import { ACTIVE, addCondition, askChoose, askPick, conditionsOn, damageAfterTyping, defOf, energyOf, evolveSpots, flip, heldOn, inPlay, mayEvolve, other, rand, shuffle, slotAt, switchActive, toolOf, warded } from "./engine.js";
+import { ACTIVE, addCondition, askChoose, askPick, conditionsOn, damageAfterTyping, defOf, energyOf, evolveSpots, flip, heldOn, hpLeft, inPlay, mayEvolve, other, rand, shuffle, slotAt, switchActive, toolOf, warded } from "./engine.js";
+import { runFx } from "./effects.js";
 
 const WORDS = { a: 1, an: 1, another: 1, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8 };
 const count = (word) => WORDS[String(word).toLowerCase()] || Number(word) || 0;
@@ -51,7 +52,7 @@ const hasDeck = (ctx) => mine(ctx).deck.length > 0;
 /** 1 while a Trainer is still in the hand (asked before it is played), 0 once it is played, or for an Ability or a Stadium. */
 const held = (ctx) => (ctx.src === "trainer" && !ctx.uid ? 1 : 0);
 const hurt = (ctx) => inPlay(ctx.state, ctx.player).filter(([slot]) => slot.damage > 0).map(([, spot]) => spot);
-const healSpots = (ctx, to, whoType = "") => hurt(ctx).filter((spot) => (!to || to === "all" || (to === "active" ? spot === ACTIVE : spot === ctx.spot)) && (!whoType || defOf(ctx.state, slotAt(ctx.state, ctx.player, spot).uid, ctx.defs).types.includes(whoType)));
+const healSpots = (ctx, to, whoType = "") => hurt(ctx).filter((spot) => (!to || to === "all" || (to === "active" ? spot === ACTIVE : to === "bench" ? spot !== ACTIVE : spot === ctx.spot)) && (!whoType || defOf(ctx.state, slotAt(ctx.state, ctx.player, spot).uid, ctx.defs).types.includes(whoType)));
 const energyFor = (ctx, { zone, type }) => mine(ctx)[zone].filter((uid) => {
   const def = defOf(ctx.state, uid, ctx.defs);
   return def.kind === "energy" && def.basic && (!type || def.provides.includes(type));
@@ -66,6 +67,8 @@ const open = (ctx) => inPlay(ctx.state, other(ctx.player)).filter(([slot]) => !w
 const counterSpots = (ctx, where) => open(ctx).map(([, spot]) => spot).filter((spot) => (where === "bench" ? spot !== ACTIVE : where === "active" ? spot === ACTIVE : true));
 const gustSpots = (ctx, stage = "") => open(ctx).filter(([slot, spot]) => spot !== ACTIVE && (!stage || defOf(ctx.state, slot.uid, ctx.defs).stage === stage)).map(([, spot]) => spot);
 const frontOpen = (ctx) => Boolean(theirs(ctx).active) && !warded(ctx.state, theirs(ctx).active, ctx, ctx.defs);
+/** After an attack's damage: their Active Pokémon it Knocked Out isn't switched about, it is gone once the attack is over. */
+const frontDown = (ctx) => ctx.src === "attack" && Boolean(theirs(ctx).active) && hpLeft(ctx.state, theirs(ctx).active, ctx.defs) <= 0;
 /** Where an Energy moved off `from` may go. */
 export const moveTargets = (ctx, { to = "any" }, from) =>
   inPlay(ctx.state, ctx.player)
@@ -321,7 +324,9 @@ export const T_OPS = {
   /** One of their Benched Pokémon is pulled into the Active Spot: you choose which. */
   gust: {
     ready: (ctx, { stage = "" } = {}) => Boolean(theirs(ctx).active) && gustSpots(ctx, stage).length > 0,
-    run: (ctx, { stage = "" } = {}) => askPick(ctx.state, { player: ctx.player, side: other(ctx.player), spots: gustSpots(ctx, stage), left: 1, effect: { op: "switch" } }),
+    run(ctx, { stage = "" } = {}) {
+      if (!frontDown(ctx) && gustSpots(ctx, stage).length) askPick(ctx.state, { player: ctx.player, side: other(ctx.player), spots: gustSpots(ctx, stage), left: 1, effect: { op: "switch" } });
+    },
   },
   /** Discard an Energy from one of their Pokémon. `special`: a Special Energy only; `each`: one from each of them, no choice. */
   hammer: {
@@ -361,7 +366,7 @@ export const T_OPS = {
     run(ctx, step) {
       const uids = fitting(ctx, mine(ctx)[step.zone], step.what);
       const spots = energySpots(ctx, step);
-      if (uids.length && spots.length) askChoose(ctx.state, { player: ctx.player, zone: step.zone, what: step.what, uids, min: step.upTo ? 0 : step.exact ? step.n : 1, max: step.n || 1, effect: { op: "attach", to: "one", spots, need: true } });
+      if (uids.length && spots.length) askChoose(ctx.state, { player: ctx.player, zone: step.zone, what: step.what, uids, min: step.upTo ? 0 : step.exact ? step.n : 1, max: step.n || 1, effect: { op: "attach", to: step.spread ? "spread" : "one", spots, need: true } });
     },
   },
   /** Evosoda, Wally: a card from the deck evolves one of your Pokémon (`where` "active": the Active one). */
@@ -430,7 +435,7 @@ export const T_OPS = {
     ready: (ctx) => frontOpen(ctx) && theirs(ctx).bench.length > 0,
     run(ctx) {
       // A card can carry on past this step ("... Then, switch your Active Pokémon"), so it checks again here.
-      if (frontOpen(ctx) && theirs(ctx).bench.length) askPick(ctx.state, { player: other(ctx.player), side: other(ctx.player), spots: benchSpots(theirs(ctx)), left: 1, effect: { op: "switch" } });
+      if (frontOpen(ctx) && !frontDown(ctx) && theirs(ctx).bench.length) askPick(ctx.state, { player: other(ctx.player), side: other(ctx.player), spots: benchSpots(theirs(ctx)), left: 1, effect: { op: "switch" } });
     },
   },
   /**
@@ -1040,6 +1045,11 @@ export const T_OPS = {
     run(ctx, { who }) {
       askPick(ctx.state, { player: ctx.player, side: ctx.player, spots: whoSpots(ctx, who), left: 1, optional: true, effect: { op: "shuffleIn" } });
     },
+  },
+  /** Attack steps (js/tcg/effects.js) that waited for a choice the attack asked for. */
+  fx: {
+    ready: () => true,
+    run: (ctx, step) => runFx(ctx, step),
   },
   /** Strange Cave: a Pokémon of one of these names from the hand onto the Bench, played as a Basic Pokémon. */
   benchAs: {

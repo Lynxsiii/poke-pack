@@ -48,7 +48,7 @@ const enIcon = (type) => (EN_FILE[type] ? `<img src="/assets/tcg/energy/${EN_FIL
 const COND_NAME = { asleep: "Asleep", burned: "Burned", confused: "Confused", paralyzed: "Paralyzed", poisoned: "Poisoned" };
 
 /** What a turn-long effect is called on a name plate. */
-const markLabel = (m) => ({ noAttack: "Can't attack", noUse: `No ${m.name}`, less: `-${m.n} damage`, shield: "Protected", guard: "No damage", noRetreat: "Can't retreat", mustFlip: "Flips to attack" })[m.kind] || "";
+const markLabel = (m) => ({ noAttack: "Can't attack", noUse: `No ${m.name}`, less: `-${m.n} damage`, shield: "Protected", guard: "No damage", noRetreat: "Can't retreat", mustFlip: "Flips to attack", stronger: `+${m.n} damage`, weaker: `Does -${m.n}`, exposed: `Takes +${m.n}`, harden: `Ignores ${m.n} or less` })[m.kind] || "";
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const plural = (n, word) => `${n} ${word}${n === 1 ? "" : "s"}`;
@@ -483,7 +483,7 @@ export function initTcg(deps) {
         <div><dt>Retreat</dt><dd>${def.retreat ? pips(Array(def.retreat).fill("Colorless")) : "Free"}</dd></div>
       </dl>
       ${def.ability ? `<p class="tg-look-text tg-ability-text"><b>${esc(def.ability.kind)}: ${esc(def.ability.name)}</b> ${esc(def.ability.text)}</p>` : ""}
-      ${def.attacks.length ? `<ul class="tg-look-attacks">${def.attacks.map((a) => `<li><span class="tg-pips">${a.cost.length ? pips(a.cost) : "Free"}</span><b>${esc(a.name)}</b><em>${a.damage || ""}</em>${a.text ? `<p>${esc(a.text)}</p>` : ""}</li>`).join("")}</ul>` : ""}
+      ${def.attacks.length ? `<ul class="tg-look-attacks">${def.attacks.map((a) => `<li><span class="tg-pips">${a.cost.length ? pips(a.cost) : "Free"}</span><b>${esc(a.name)}</b><em>${a.damage || ""}</em>${a.text ? `<p${a.plain ? ' class="off"' : ""}>${a.plain ? "<b>Text not live yet:</b> only the printed damage lands. " : ""}${esc(a.text)}</p>` : ""}</li>`).join("")}</ul>` : ""}
       ${def.prizes > 1 ? `<p class="tg-look-note">Gives up ${def.prizes} prize cards when Knocked Out.</p>` : ""}
       ${def.notes.map((n) => `<p class="tg-look-note">${esc(n)}.</p>`).join("")}`;
     return `<div class="tg-sheet-bg" data-close></div>
@@ -712,6 +712,7 @@ export function initTcg(deps) {
       }[op]?.();
       if (op === "gatherFrom") return { text: `Choose a Pokémon to move ${fx.type ? `a ${fx.type}` : "an"} Energy from, or finish.`, keys: `<button type="button" class="ghost sm" data-act="pick-skip">Done</button>` };
       if (moving) return { text: moving, keys: "" };
+      if (op === "damage" && fx.counters) return { text: fx.n === 10 && waiting.again ? `Choose one of their Pokémon for a damage counter (${waiting.left} to place).` : `Choose one of their Pokémon for ${fx.n / 10} damage counters${waiting.left > 1 ? ` (${waiting.left} to choose)` : ""}.`, keys: "" };
       if (op === "shuffleIn") return { text: "Choose the Pokémon to shuffle into your deck, or keep them.", keys: `<button type="button" class="ghost sm" data-act="pick-skip">Keep them</button>` };
       if (op === "switch" && waiting.side === ME && waiting.player === ME && state.current !== ME) return { text: "Your Active Pokémon is pushed out. Choose the Benched Pokémon that comes in.", keys: "" };
       const text = op === "attachFrom" ? `Choose the Pokémon that gets the ${d(waiting.effect.uid).name}.` : op === "switch" ? (waiting.side === ME ? "Choose the Benched Pokémon that comes in." : "Choose which of their Benched Pokémon to pull forward.") : op === "heal" ? (waiting.effect.n >= 999 ? "Choose one of your Pokémon to heal all its damage." : `Choose one of your Pokémon to heal ${waiting.effect.n}.`) : op === "discardEnergy" ? `Choose one of ${whose} Pokémon to lose an Energy.` : `Choose ${waiting.side === ME ? "one of your" : "one of their"} Pokémon for ${waiting.effect.n} damage${waiting.left > 1 ? ` (${waiting.left} to choose)` : ""}.`;
@@ -1032,7 +1033,8 @@ export function initTcg(deps) {
     const energyCard = /Energy$/.test(kind);
     const many = (n) => (kind === "card" ? plural(n, "card") : n === 1 ? `1 ${kind}${energyCard ? " card" : ""}` : `${n} ${kind}${energyCard ? " cards" : ""}`);
     const foreign = waiting.owner != null && waiting.owner !== ME;
-    const title = foreign ? `Choose ${min < max ? "up to " : ""}${many(max)} from their ${waiting.zone === "hand" ? "hand" : "deck"}`
+    const title = waiting.effect.op === "look" ? "Their hand"
+      : foreign ? `Choose ${min < max ? "up to " : ""}${many(max)} from their ${waiting.zone === "hand" ? "hand" : "deck"}`
       : waiting.effect.op === "order" ? "Tap the cards in the order you want them, the top one first"
       : waiting.effect.op === "deckTop" ? `Choose ${many(max)} for the top of your deck, the top one first`
       : waiting.effect.op === "keepOne" ? "Choose the card to keep; the rest is shuffled into your deck"
@@ -1060,7 +1062,7 @@ export function initTcg(deps) {
       <div class="tg-sheet tg-choose" role="dialog" aria-label="${esc(title)}" data-min="${min}" data-max="${max}">
         <header><h3>${esc(title)}</h3>${waiting.zone === "deck" ? `<p>Your deck is shuffled afterwards.</p>` : ""}</header>
         ${cards.length ? `<div class="tg-choose-grid">${cards.map((uid) => `<button type="button" class="tg-choose-card${match.choice.has(uid) ? " is-chosen" : ""}" data-choose="${uid}" aria-pressed="${match.choice.has(uid)}" aria-label="${esc(d(uid).name)}"><img src="${img(state.cards[uid])}" alt="" draggable="false" decoding="async" /></button>`).join("")}</div>` : `<p class="tg-choose-none">${esc(none)}</p>`}
-        <div class="tg-sheet-keys"><button type="button" class="solid rt-go" data-act="choose-done"${picked >= min ? "" : " disabled"}>${chooseLabel(picked, min)}</button></div>
+        <div class="tg-sheet-keys"><button type="button" class="solid rt-go" data-act="choose-done"${picked >= min ? "" : " disabled"}>${max === 0 ? "Done" : chooseLabel(picked, min)}</button></div>
       </div>`;
   }
   const chooseLabel = (picked, min) => (picked < min ? (picked ? `Choose ${min - picked} more` : `Choose ${min}`) : picked ? `Confirm ${picked}` : "Take none");
@@ -1168,6 +1170,10 @@ export function initTcg(deps) {
           guard: `${whose} Active Pokémon takes no damage next turn.`,
           noRetreat: `${whose} Active Pokémon can't retreat next turn.`,
           mustFlip: `${whose} Active Pokémon must flip to attack next turn.`,
+          stronger: `${whose} Active Pokémon's ${event.name || "attacks"} will do ${event.n} more damage next turn.`,
+          weaker: `${whose} Active Pokémon's attacks do ${event.n} less damage next turn.`,
+          exposed: `${whose} Active Pokémon will take ${event.n} more damage next turn.`,
+          harden: `${whose} Active Pokémon takes no damage of ${event.n} or less next turn.`,
         }[event.kind] || "";
       }
       case "discard-energy": return `${plural(event.uids.length, "Energy card")} discarded from ${event.p === ME ? "your" : "their"} Active Pokémon.`;

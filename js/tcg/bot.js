@@ -149,6 +149,7 @@ function tally(state, player, defs) {
     foeEnergy: energy(foe),
     hand: me.hand.length,
     foeCount: [foe.active, ...foe.bench].filter(Boolean).length,
+    myCount: [me.active, ...me.bench].filter(Boolean).length,
   };
 }
 
@@ -182,7 +183,7 @@ function attackValue(state, player, action, defs) {
     const prizes = before.taken - after.taken;
     total += prizes * 1000 + (prizes ? 0 : after.foeHurt - before.foeHurt) + after.foeCond - before.foeCond
       + (before.foeEnergy - after.foeEnergy) * 20 - (after.myHurt - before.myHurt) - (before.myEnergy - after.myEnergy) * 15
-      + Math.min(4, after.hand - before.hand) * 4 - (before.lost - after.lost) * 1000;
+      + Math.min(4, after.hand - before.hand) * 4 - (before.lost - after.lost) * 1000 + Math.max(0, after.myCount - before.myCount) * 15;
   }
   return total / SAMPLES;
 }
@@ -263,7 +264,17 @@ export function botAction(state, player, defs) {
   }
 
   // "Choose 1": the options come in the order printed, with the most cards to draw first; the first is the plain choice.
-  if (actions[0].type === "option") return actions[0];
+  if (actions[0].type === "option") {
+    const waiting = state.pending[0];
+    // "Choose 1 of the Defending Pokémon's attacks": the one that hits hardest is the one to lock.
+    if (waiting.why === "foeAttack" && foeDef) {
+      const hits = waiting.labels.map((name) => Math.max(0, ...foeDef.attacks.filter((a) => a.name === name).map((a) => a.damage)));
+      return actions[hits.indexOf(Math.max(...hits))];
+    }
+    // An attack's "you may": yes, except to take its own Pokémon out of play.
+    if (waiting.why === "may" && JSON.stringify(waiting.options[0]).includes('"selfAway"')) return actions[1];
+    return actions[0];
+  }
 
   if (actions[0].type === "pick") {
     const waiting = state.pending[0];
@@ -289,7 +300,8 @@ export function botAction(state, player, defs) {
     const rank = (a) => {
       const slot = slotOf(a.spot);
       const left = hpLeft(state, slot, defs);
-      if (waiting.effect.op === "damage") return (left <= waiting.effect.n ? 1000 : 0) - left;
+      // Damage counters one at a time may go on the same Pokémon again: not on one already Knocked Out.
+      if (waiting.effect.op === "damage") return left <= 0 ? -5000 : (left <= waiting.effect.n ? 1000 : 0) - left;
       if (waiting.effect.op === "attachFrom") {
         const after = plan(state, slot, defs, defOf(state, waiting.effect.uid, defs).provides);
         return (plan(state, slot, defs).short - after.short) * 100 + after.score + (a.spot === ACTIVE ? 30 : 0);
