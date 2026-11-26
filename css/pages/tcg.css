@@ -435,3 +435,30 @@ body.no-motion .tg-table *, body.no-motion .tg-fx *, body.no-motion .tg-sheet, b
 .tg-cond[data-cond="ability"] { background: var(--yel); color: var(--k0); font-style: normal; }
 .tg-cond[data-cond="ability"][data-off] { opacity: 0.5; text-decoration: line-through; }
 @media (prefers-reduced-motion: reduce) { .tg-abil-tag { animation: none; } }
+
+/* Play a friend (/play/friends): your deck, challenges, matches on, friends. Rows are the deck rows with a letter for the art. */
+.tg-friend-entry b { margin-bottom: 1px; }
+.tg-pvp-deck { display: grid; gap: 6px; margin-bottom: 4px; }
+.tg-pvp-deck > span { font: 700 13px var(--font-h); color: var(--k-2); }
+.tg-pvp-deck select { width: 100%; max-width: 420px; }
+.tg-pvp-deck p { margin: 0; color: var(--k-2); font-weight: 500; }
+.tg-pvp-row .tg-deck-keys { flex-direction: row; }
+.tg-pvp-mark {
+  display: grid; place-items: center; width: 52px; aspect-ratio: 1; border: var(--line-w) solid var(--k); border-radius: 6px;
+  background: var(--box-2); color: var(--k); font: italic 800 24px/1 var(--font-xc);
+}
+.tg-pvp-mark.on { box-shadow: inset 0 -6px 0 var(--hp); }
+.tg-pvp-recent ul { margin: 0; padding: 0; list-style: none; }
+.tg-pvp-recent li { display: flex; justify-content: space-between; gap: 12px; padding: 8px 2px; border-bottom: 1px solid var(--rule); font-size: 14px; }
+.tg-pvp-recent li b { font: 700 14px var(--font-h); }
+.tg-pvp-recent li span { color: var(--k-2); font-weight: 500; text-align: right; }
+@media (max-width: 520px) {
+  .tg-pvp-mark { width: 44px; font-size: 21px; }
+  .tg-pvp-row .tg-deck-keys { flex-direction: column; }
+}
+
+/* The move clock in a match against a friend: whose time is running, how much is left. */
+.tg-clock { min-width: 44px; padding: 2px 7px 3px; border-radius: 4px; background: rgb(var(--box-rgb) / 0.12); font: 700 14px var(--font-n); font-variant-numeric: tabular-nums; text-align: center; opacity: 0.75; }
+.tg-clock:empty { display: none; }
+.tg-clock.is-mine { background: var(--yel); color: var(--k0); opacity: 1; }
+.tg-clock.is-low { background: var(--bad); color: var(--w0); }
