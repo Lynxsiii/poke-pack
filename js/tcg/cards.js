@@ -1,0 +1,119 @@
+/**
+ * Card definitions for the rules engine.
+ *
+ * The site's card files (data/<set>.json) say what a card looks like and what
+ * it prints; data/tcg/rules.json (scripts/build_tcg_rules.mjs) adds weakness,
+ * resistance, retreat and prizes. defineCard() joins the two into what
+ * js/tcg/engine.js reads:
+ *
+ *   pokemon  { id, kind, name, stage: "basic" | "evolution", evolvesFrom, hp, types, attacks, weakness,
+ *              resistance, retreat, prizes, playable, why, notes }
+ *            attack: { name, cost, damage, text, fx (steps, js/tcg/effects.js), plain (true when text isn't read yet) }
+ *   energy   { id, kind, name, provides: [type], basic, playable }
+ *   trainer  { id, kind, name, playable: false }
+ *
+ * `playable` false keeps a card out of decks, with `why` to tell the player.
+ * `notes` are things a playable card does not do yet (an Ability, attack text).
+ */
+
+import { compileAttack } from "./effects.js";
+
+export const ENERGY_TYPES = ["Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Darkness", "Metal", "Fairy"];
+
+/** The basic Energy every player has as many of as they like, as catalog ids (js/catalog.js BASIC_ENERGY). */
+export const FREE_ENERGY = ENERGY_TYPES.map((type) => ({
+  id: type === "Fairy" ? "energy-fairy-xy" : `energy-${type.toLowerCase()}`,
+  type,
+}));
+const FREE_IDS = new Set(FREE_ENERGY.map((e) => e.id));
+export const isFreeEnergy = (id) => FREE_IDS.has(id);
+
+const EVOLVED = /^(Stage 1|Stage 2|VMAX|VSTAR|BREAK|Level-Up)$/;
+const NOT_YET = /^(LEGEND|V-UNION|Restored)$/;
+
+function side(text) {
+  const m = String(text || "").match(/^([A-Za-z]+)\s*([×x+\-−])\s*(\d+)$/);
+  if (!m) return null;
+  return { type: m[1], op: m[2] === "×" || m[2] === "x" ? "x" : m[2] === "+" ? "+" : "-", n: Number(m[3]) };
+}
+
+function attackOf(raw) {
+  const fx = compileAttack(raw.text);
+  return {
+    name: raw.name,
+    cost: (raw.cost || []).filter((c) => c !== "Free"),
+    damage: parseInt(raw.damage, 10) || 0,
+    text: raw.text || "",
+    fx: fx || [],
+    plain: fx === null,
+  };
+}
+
+/** `row` is the card's entry in data/tcg/rules.json, or undefined when it has none. */
+export function defineCard(card, row) {
+  const base = { id: card.id, name: card.name };
+  if (card.supertype === "Energy" || card.energy) {
+    const type = ENERGY_TYPES.find((t) => new RegExp(`^(Basic )?${t} Energy$`).test(card.name));
+    const basic = Boolean(type) && (card.subtypes || []).includes("Basic");
+    return { ...base, kind: "energy", provides: type ? [type] : [], basic, playable: basic, why: basic ? "" : "Special Energy isn't in yet." };
+  }
+  if (card.supertype !== "Pokémon") return { ...base, kind: "trainer", playable: false, why: "Trainer cards aren't in yet." };
+
+  const subs = card.subtypes || [];
+  const megaEvolved = subs.includes("MEGA") && subs.includes("EX");
+  let stage = "";
+  if (card.evolvesFrom && (subs.some((s) => EVOLVED.test(s)) || megaEvolved)) stage = "evolution";
+  else if (subs.includes("Basic") || subs.includes("Baby")) stage = "basic";
+  else if (card.evolvesFrom && !subs.some((s) => NOT_YET.test(s))) stage = "evolution";
+
+  const attacks = (card.attacks || []).map(attackOf);
+  const notes = [];
+  if ((card.abilities || []).length) notes.push(`${card.abilities[0].type || "Ability"} not live yet`);
+  if (attacks.some((a) => a.plain)) notes.push("Some attack text not live yet");
+
+  let why = "";
+  if (!stage) why = "This kind of Pokémon isn't in yet.";
+  else if (!row) why = "We don't have this card's play data yet.";
+  else if (!attacks.length) why = "It has no attack to use yet.";
+
+  return {
+    ...base,
+    kind: "pokemon",
+    stage,
+    evolvesFrom: stage === "evolution" ? card.evolvesFrom : "",
+    hp: Number(card.hp) || 0,
+    types: card.types || [],
+    attacks,
+    weakness: side(row?.[0]),
+    resistance: side(row?.[1]),
+    retreat: Number(row?.[2]) || 0,
+    prizes: Number(row?.[3]) || 1,
+    playable: !why && Number(card.hp) > 0,
+    why,
+    notes,
+  };
+}
+
+/** The set a rules row is filed under and its key there: "sv10-svp199" -> ["sv10", "svp199"]. */
+export function rulesKey(id) {
+  const at = String(id).indexOf("-");
+  return at < 0 ? [id, ""] : [id.slice(0, at), id.slice(at + 1)];
+}
+
+/**
+ * A lookup the engine can call: defs(id) -> definition.
+ * `findCard(id)` finds the site's card; `rules` is data/tcg/rules.json.
+ */
+export function createDefs(findCard, rules) {
+  const cache = new Map();
+  return function defs(id) {
+    let def = cache.get(id);
+    if (def) return def;
+    const card = findCard(id);
+    if (!card) return null;
+    const [set, key] = rulesKey(id);
+    def = defineCard(card, rules?.[set]?.[key]);
+    cache.set(id, def);
+    return def;
+  };
+}
