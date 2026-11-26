@@ -12,6 +12,7 @@
  * Shape (the same text is printed on many cards, so it is stored once):
  *   { texts: ["Heal 30 damage from 1 of your Pokémon.", ...],
  *     cards: { "<setId>": { "<card id after the dash>": index into texts } } }
+ * `lines` (Stage 1 names to what they evolve from) comes from scripts/build_tcg_lines.mjs.
  * The lines every Trainer of a kind shares ("You may play only 1 Supporter card
  * during your turn.") are left out: the engine knows those rules by the card's kind.
  */
@@ -94,6 +95,11 @@ for (const setId of readdirSync("data").filter((f) => f.endsWith(".json")).map((
   if (missing.length) report.push(`${setId}: ${missing.length} of ${trainers.length} Trainers without text: ${missing.slice(0, 5).join(", ")}`);
 }
 
-writeFileSync(OUT, JSON.stringify({ texts, cards }));
+// The evolution lines (scripts/build_tcg_lines.mjs) are kept as they are.
+let lines;
+try {
+  lines = JSON.parse(readFileSync(OUT, "utf8")).lines;
+} catch {}
+writeFileSync(OUT, JSON.stringify({ texts, cards, ...(lines ? { lines } : {}) }));
 console.log(`${total} Trainers and Special Energy, ${texts.length} different texts -> ${OUT}`);
 for (const line of report) console.log(line);
