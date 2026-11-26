@@ -93,6 +93,9 @@ const COUNTS = {
   // "for each of your Ultra Beasts in play" (`type` is the card's printed kind, cards.js TAGS).
   ownTag: (ctx, tag) => slotsOf(sideOf(ctx, true)).filter((s) => (defIn(ctx, s).tags || []).includes(tag)).length,
   // "for each different type of Pokémon on your Bench": a Pokémon of two types counts for both.
+  ownPrizesLeft: (ctx) => sideOf(ctx, true).prizes.length,
+  // "for each type of basic Energy card in your discard pile".
+  discardEnergyTypes: (ctx) => new Set(sideOf(ctx, true).discard.map((uid) => defOf(ctx.state, uid, ctx.defs)).filter((d) => d?.kind === "energy" && d.basic).flatMap((d) => d.provides || [])).size,
   benchTypes: (ctx) => new Set(sideOf(ctx, true).bench.flatMap((s) => defIn(ctx, s).types || [])).size,
   discardType: (ctx, type) => sideOf(ctx, true).discard.filter((uid) => defOf(ctx.state, uid, ctx.defs)?.kind === "pokemon" && defOf(ctx.state, uid, ctx.defs).types.includes(type)).length,
 };
@@ -740,6 +743,16 @@ export const OPS = {
     if (bench.length === 1) return askPick(state, { player, side: player, spots: bench, left: 1, effect: { op: "moveEnergyCards", from, uids: slot.energy.slice() } });
     for (const uid of slot.energy.slice()) askPick(state, { player, side: player, spots: bench, left: 1, effect: { op: "moveEnergyCards", from, uids: [uid] } });
   },
+  /** "Move any number of Energy from your Pokémon to your other Pokémon in any way you like": one at a time, until the player stops (engine.js rearrangeFrom). */
+  rearrangeEnergy(ctx, { type = "", basic = false }) {
+    const { state, player, defs } = ctx;
+    const mine = inPlay(state, player);
+    const spots = mine.filter(([slot]) => slot.energy.some((uid) => {
+      const def = defOf(state, uid, defs);
+      return (!type || (def.provides || []).includes(type)) && (!basic || def.basic);
+    })).map(([, spot]) => spot);
+    if (spots.length && mine.length > 1) askPick(state, { player, side: player, spots, left: 1, optional: true, effect: { op: "rearrangeFrom", type, basic } });
+  },
   /** "Count the cards in your opponent's hand. Put that many damage counters on the Defending Pokémon." (COUNTS) */
   countersPer(ctx, { per, type = "" }) {
     const n = COUNTS[per](ctx, type) * 10;
@@ -816,6 +829,8 @@ function countOf(phrase) {
   if (named) return { per: /discard/.test(named[1]) ? "discardAttack" : /Benched/.test(named[1]) ? "benchAttack" : "ownAttack", type: named[2] };
   if (/^(?:of )?your Ultra Beasts in play$/.test(p)) return { per: "ownTag", type: "Ultra Beast" };
   if (/^different type of Pokémon on your Bench$/.test(p)) return { per: "benchTypes", type: "" };
+  if (/^(?:of )?your remaining Prize cards$/.test(p)) return { per: "ownPrizesLeft", type: "" };
+  if (/^type of basic Energy card in your discard pile$/.test(p)) return { per: "discardEnergyTypes", type: "" };
   const discard = p.match(new RegExp(`^${TYPE} Pokémon in your discard pile$`));
   if (discard) return { per: "discardType", type: discard[1] };
   const per = [
@@ -985,6 +1000,7 @@ const PATTERNS = [
   [/^(?:This attack does|Does) \d+ damage plus (\d+) more damage (?:for each|times the (?:amount|number) of) (.+)\.$/, (m) => perCount("more", m[1], m[2])],
   [/^(?:This attack does|Does) (\d+) damage (?:for each|times the (?:amount|number) of) (.+)\.$/, (m) => perCount("times", m[1], m[2])],
   [/^(?:This attack does|Does) (\d+) less damage for each (.+)\.$/, (m) => perCount("less", m[1], m[2])],
+  [/^This attack does (\d+) more damage for each (.+?)\. You can't add more than (\d+) damage in this way\.$/, (m) => perCount("more", m[1], m[2], { cap: Number(m[3]) })],
   [/^(?:This attack does|Does) \d+ damage minus (\d+) damage for each (.+)\.$/, (m) => perCount("less", m[1], m[2])],
   [new RegExp(`^Does \\d+ damage plus (\\d+) more damage for each (?:${TYPE} )?Energy attached to this Pokémon but not used to pay for this attack's Energy cost\\. You can't add more than (\\d+) damage in this way\\.$`), (m) => [{ op: "bonusPer", when: "before", n: Number(m[1]), per: "spareEnergy", ...(m[2] ? { type: m[2] } : {}), cap: Number(m[3]) }]],
   [new RegExp(`^Does \\d+ damage plus (\\d+) more damage for each ${TYPE} Energy attached to this Pokémon but not used to pay for this attack's Energy cost\\. Extra ${TYPE} Energy after the (\\d+)(?:st|nd|rd|th) doesn't count\\.$`), (m) => m[2] === m[3] && [{ op: "bonusPer", when: "before", n: Number(m[1]), per: "spareEnergy", type: m[2], cap: Number(m[1]) * Number(m[4]) }]],
@@ -1204,6 +1220,9 @@ const PATTERNS = [
   [new RegExp(`^Discard ${N} Energy(?: cards?)? (?:from|attached to) your opponent's Pokémon\\.$`, "i"), (m) => [{ op: "discardFoeAny", when: "after", n: count(m[1]) }]],
   [/^Discard an Energy(?: card)? (?:from|attached to) each of your opponent's Pokémon\.$/, () => [{ op: "discardFoeAny", when: "after", each: true }]],
   [/^Move all Energy(?: cards)? (?:from|attached to) this Pokémon to your Benched Pokémon in any way you like\.$/, () => [{ op: "spreadOwnEnergy", when: "after" }]],
+  [new RegExp(`^Move (?:any number of|as many) (basic )?(?:${TYPE} )?Energy(?: cards)? (?:from|attached to) your Pokémon to your other Pokémon in any way you like\\.$`, "i"), (m) => [{ op: "rearrangeEnergy", when: "after", ...(m[1] ? { basic: true } : {}), ...(m[2] ? { type: m[2] } : {}) }]],
+  [new RegExp(`^Move any (?:number|amount) of (?:${TYPE} )?Energy(?: cards)? from your Benched Pokémon to this Pokémon\\.$`), (m) => fromDeck([{ op: "gather", ...(m[1] ? { type: m[1] } : {}) }])],
+  [/^Heal (\d+|all) damage from (\d+) of your Benched Pokémon\.$/, (m) => Number(m[2]) > 1 && fromDeck([{ op: "healOne", n: m[1] === "all" ? 9990 : Number(m[1]), where: "bench", count: Number(m[2]) }])],
   // Healing barred, damage counters later or by a count, swapped.
   [new RegExp(`^(?:${FOE} can't be healed during your opponent's next turn|During your opponent's next turn, ${FOE} can't be healed)\\.$`, "i"), () => [mark("noHeal", { on: "foe" })]],
   [new RegExp(`^At the end of your opponent's next turn, put (\\d+) damage counters? on ${FOE}\\.$`), (m) => [mark("doom", { on: "foe", n: Number(m[1]) * 10 })]],

@@ -1590,12 +1590,13 @@ const HANDLERS = {
       const spots = fx.spots ? fx.spots.filter((s) => slotAt(state, owner, s)) : inPlay(state, owner).map(([, s]) => s).filter((s) => s !== fx.from);
       if (picked.length && fx.spots && spots.length === 1) {
         for (const uid of picked) moveEnergy(state, owner, fx.from, spots[0], uid, events);
+        if (fx.again) offerAgain(state, waiting, owner, fx.again, defs);
         if (fx.gather) {
           const next = inPlay(state, owner).filter(([s, at]) => at !== fx.gather.to && energyIn({ state, defs }, s, fx.gather.type)).map(([, at]) => at);
           if (next.length) follow(state, waiting, { player, side: owner, spots: next, left: 1, optional: true, effect: fx.gather });
         }
       } else if (picked.length && spots.length) {
-        askPick(state, { player, side: owner, spots, left: 1, effect: { op: "moveEnergyCards", from: waiting.effect.from, uids: picked }, ...(waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) });
+        askPick(state, { player, side: owner, spots, left: 1, effect: { op: "moveEnergyCards", from: waiting.effect.from, uids: picked, ...(fx.again ? { again: fx.again } : {}) }, ...(waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) });
         waiting.then = null;
       }
     } else if (op === "payFor") {
@@ -1894,6 +1895,18 @@ function applyPick(state, waiting, spot, defs, events) {
     if (spots.length && uids.length) follow(state, waiting, { player: waiting.player, side: p, spots, left: 1, effect: { op: "moveEnergyCards", from: spot, uids } });
   } else if (effect.op === "moveEnergyCards") {
     for (const uid of effect.uids) moveEnergy(state, p, effect.from, spot, uid, events);
+    if (effect.again) offerAgain(state, waiting, p, effect.again, defs);
+  } else if (effect.op === "rearrangeFrom") {
+    // "Move any number of Energy from your Pokémon to your other Pokémon in any way you like": one card a time,
+    // from the Pokémon picked (which card, when they differ, is asked), to another; then again, until the player stops.
+    const slot = slotAt(state, p, spot);
+    const cards = energyCards({ state, defs }, slot, effect.type, effect.basic);
+    const spots = inPlay(state, p).map(([, s]) => s).filter((s) => s !== spot);
+    if (!cards.length || !spots.length) return;
+    if (!energyAlike(state, cards, defs)) return void ask(state, waiting, { player: waiting.player, owner: p, zone: "play", what: "energy", uids: cards, min: 1, max: 1, effect: { op: "carryEnergy", from: spot, spots, again: effect } });
+    if (spots.length > 1) return void follow(state, waiting, { player: waiting.player, side: p, spots, left: 1, effect: { op: "moveEnergyCards", from: spot, uids: [cards[cards.length - 1]], again: effect } });
+    moveEnergy(state, p, spot, spots[0], cards[cards.length - 1], events);
+    offerAgain(state, waiting, p, effect, defs);
   } else if (effect.op === "bounce") {
     // Back to the hand: its Pokémon cards (all of them, or only the Basic one), and what was attached when `keep` is "all".
     const slot = slotAt(state, p, spot);
@@ -2049,6 +2062,12 @@ function moveEnergy(state, p, from, to, uid, events) {
   source.energy.splice(source.energy.indexOf(uid), 1);
   slot.energy.push(uid);
   events.push({ t: "move-energy", p, uid, from, spot: to });
+}
+
+/** "In any way you like": the Pokémon to move the next Energy from, or stop (rearrangeFrom). */
+function offerAgain(state, waiting, p, again, defs) {
+  const spots = inPlay(state, p).filter(([slot]) => energyCards({ state, defs }, slot, again.type, again.basic).length).map(([, s]) => s);
+  if (spots.length && inPlay(state, p).length > 1) follow(state, waiting, { player: waiting.player, side: p, spots, left: 1, optional: true, effect: again });
 }
 
 /** A pick that leads to a choice of cards: the steps waiting on the pick ride on the choice. */

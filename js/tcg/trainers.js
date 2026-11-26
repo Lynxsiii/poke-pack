@@ -989,9 +989,10 @@ export const T_OPS = {
   /** Heal one of your hurt Pokémon, your pick (`where` "bench": a Benched one only, as Pokémon Center has it). */
   healOne: {
     ready: (ctx, { where = "" }) => hurt(ctx).some((spot) => where !== "bench" || spot !== ACTIVE),
-    run(ctx, { n, where = "" }) {
+    // `count`: that many different Pokémon ("Heal all damage from 2 of your Benched Pokémon").
+    run(ctx, { n, where = "", count = 1 }) {
       const spots = hurt(ctx).filter((spot) => where !== "bench" || spot !== ACTIVE);
-      if (spots.length) askPick(ctx.state, { player: ctx.player, side: ctx.player, spots, left: 1, effect: { op: "heal", n } });
+      if (spots.length) askPick(ctx.state, { player: ctx.player, side: ctx.player, spots, left: count, effect: { op: "heal", n } });
     },
   },
   /** Heal each of your Pokémon of these types (Rough Seas: Water and Lightning). */

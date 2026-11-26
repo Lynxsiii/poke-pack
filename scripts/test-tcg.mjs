@@ -4509,4 +4509,58 @@ test("the first turns: an attack the player going first may use on turn 1, one t
   throws(() => act(state, { type: "attack", player: q, index: 5 }), /go second/);
 });
 
+lab("lab-n4", [
+  ["Shuffle", 0, "Move any number of Energy from your Pokémon to your other Pokémon in any way you like."],
+  ["Gather", 0, "Move any number of Energy from your Benched Pokémon to this Pokémon."],
+  ["Absorb", 40, "This attack does 40 damage for each of your remaining Prize cards."],
+  ["Mend", 0, "Heal all damage from 2 of your Benched Pokémon."],
+  ["Shake", 20, "This attack does 20 more damage for each type of basic Energy card in your discard pile. You can't add more than 40 damage in this way."],
+]);
+
+test("Energy moved about one card at a time until the player stops; gathered from the Bench", () => {
+  let state = labgame("lab-n4", "lab-2");
+  const me = state.players[0];
+  me.discard.push(...me.active.energy.splice(0));
+  const w = attachNew(state, me.active, W);
+  const f = attachNew(state, me.active, F);
+  use(state, 0, "Shuffle");
+  assert.equal(state.pending[0].effect.op, "rearrangeFrom");
+  // The bot leaves its Energy where it is.
+  assert.equal(botAction(state, 0, defs).spot, null);
+  act(state, { type: "pick", player: 0, spot: ACTIVE });
+  act(state, { type: "choose", player: 0, uids: [f] });
+  // One Benched Pokémon: it goes there, and the next one is asked.
+  assert.deepEqual(me.bench[0].energy, [f]);
+  assert.equal(state.pending[0].effect.op, "rearrangeFrom");
+  act(state, { type: "pick", player: 0, spot: 0 });
+  assert.deepEqual(me.active.energy, [w, f]);
+  act(state, { type: "pick", player: 0, spot: null });
+  assert.equal(state.current, 1);
+  state = labgame("lab-n4", "lab-2");
+  const b = attachNew(state, state.players[0].bench[0], W);
+  use(state, 0, "Gather");
+  act(state, { type: "pick", player: 0, spot: 0 });
+  assert.ok(state.players[0].active.energy.includes(b));
+});
+
+test("remaining Prize cards counted, two Benched Pokémon healed, Energy types in the discard pile with a cap", () => {
+  let state = labgame("lab-n4", "lab-2");
+  use(state, 0, "Absorb");
+  assert.equal(state.players[1].active.damage, 40 * state.players[0].prizes.length);
+  state = labgame("lab-n4", "lab-2");
+  const me = state.players[0];
+  me.bench.push({ ...me.bench[0], uid: hold(state, 0, "base1-63"), energy: [], damage: 30 });
+  me.hand.pop();
+  me.bench[0].damage = 20;
+  use(state, 0, "Mend");
+  act(state, { type: "pick", player: 0, spot: 0 });
+  act(state, { type: "pick", player: 0, spot: 1 });
+  assert.deepEqual(me.bench.map((s) => s.damage), [0, 0]);
+  state = labgame("lab-n4", "lab-2");
+  state.players[0].discard = [W, F, G, W].map((id) => hold(state, 0, id));
+  state.players[0].hand.splice(-4);
+  use(state, 0, "Shake");
+  assert.equal(state.players[1].active.damage, 20 + 40);
+});
+
 console.log(`${passed} checks passed${process.exitCode ? ", some failed" : ""}`);

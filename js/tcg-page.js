@@ -711,6 +711,7 @@ export function initTcg(deps) {
         knockOut: () => "Choose one of their Pokémon to Knock Out.",
         heal: () => (fx.flips ? "Choose one of your Pokémon, then the coins are flipped." : null),
       }[op]?.();
+      if (op === "rearrangeFrom") return { text: `Choose a Pokémon to move ${fx.type ? `a ${fx.type}` : "an"} Energy from, or finish.`, keys: `<button type="button" class="ghost sm" data-act="pick-skip">Done</button>` };
       if (op === "gatherFrom") return { text: `Choose a Pokémon to move ${fx.type ? `a ${fx.type}` : "an"} Energy from, or finish.`, keys: `<button type="button" class="ghost sm" data-act="pick-skip">Done</button>` };
       if (moving) return { text: moving, keys: "" };
       if (op === "damage" && fx.counters) return { text: fx.n === 10 && waiting.again ? `Choose one of their Pokémon for a damage counter (${waiting.left} to place).` : `Choose one of their Pokémon for ${fx.n / 10} damage counters${waiting.left > 1 ? ` (${waiting.left} to choose)` : ""}.`, keys: "" };
