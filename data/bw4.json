@@ -3944,6 +3944,100 @@
     "market": 164.99
   },
   {
+    "id": "bw4-21-cracked-ice",
+    "name": "Reshiram",
+    "number": "21-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "130",
+    "artist": "5ban Graphics",
+    "flavorText": "This Pokémon appears in legends. It sends flames into the air from its tail, burning up everything around it.",
+    "image": "assets/cards/bw4/21.webp",
+    "imageSmall": "assets/cards/bw4/21-sm.webp",
+    "attacks": [
+      {
+        "name": "Outrage",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Does 10 more damage for each damage counter on this Pokémon."
+      },
+      {
+        "name": "Blue Flare",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Discard 2 Fire Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bw4-21/large",
+    "printedNumber": "21",
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Tinsel Holo (Explosive Edge Theme Deck)",
+    "tcgplayerId": 91398,
+    "market": 6.66
+  },
+  {
+    "id": "bw4-50-cracked-ice",
+    "name": "Zekrom",
+    "number": "50-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "130",
+    "artist": "5ban Graphics",
+    "flavorText": "This Pokémon appears in legends. In its tail, it has a giant generator that creates electricity.",
+    "image": "assets/cards/bw4/50.webp",
+    "imageSmall": "assets/cards/bw4/50-sm.webp",
+    "attacks": [
+      {
+        "name": "Outrage",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Does 10 more damage for each damage counter on this Pokémon."
+      },
+      {
+        "name": "Bolt Strike",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "This Pokémon does 40 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bw4-50/large",
+    "printedNumber": "50",
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Tinsel Holo (Voltage Vortex Theme Deck)",
+    "tcgplayerId": 91401,
+    "market": 21.8
+  },
+  {
     "id": "bw4-bwp033",
     "name": "Riolu",
     "number": "bwp033",
@@ -3979,13 +4073,13 @@
         "text": ""
       }
     ],
+    "market": 189.97,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW33/large",
     "printedNumber": "BW 033",
     "tcgplayerId": 88760,
     "era": "bw",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 141.64,
     "foilMap": "assets/foil/maps/bw4/bwp033.webp"
   },
   {
@@ -4026,13 +4120,13 @@
         "text": "This attack does 40 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
+    "market": 80.91,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW34/large",
     "printedNumber": "BW 034",
     "tcgplayerId": 96884,
     "era": "bw",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 80.91,
     "foilMap": "assets/foil/maps/bw4/bwp034.webp"
   },
   {
@@ -4043,7 +4137,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Fire"
@@ -4075,13 +4169,13 @@
         "text": "Flip a coin. If tails, this Pokémon does 50 damage to itself."
       }
     ],
+    "market": 14.37,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW36/large",
     "printedNumber": "BW 036",
     "tcgplayerId": 88714,
     "era": "bw",
     "promo": true,
     "foilAs": "Rare Holo EX",
-    "market": 10.9,
     "foilMap": "assets/foil/maps/bw4/bwp036.webp"
   },
   {
@@ -4092,7 +4186,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Water"
@@ -4124,13 +4218,13 @@
         "text": "This Pokémon can't use Hail Blizzard during your next turn."
       }
     ],
+    "market": 6.03,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW37/large",
     "printedNumber": "BW 037",
     "tcgplayerId": 86567,
     "era": "bw",
     "promo": true,
     "foilAs": "Rare Holo EX",
-    "market": 6.06,
     "foilMap": "assets/foil/maps/bw4/bwp037.webp"
   },
   {
@@ -4141,7 +4235,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Lightning"
@@ -4173,13 +4267,13 @@
         "text": "Discard 2 Energy attached to this Pokémon."
       }
     ],
+    "market": 12.97,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW38/large",
     "printedNumber": "BW 038",
     "tcgplayerId": 90741,
     "era": "bw",
     "promo": true,
     "foilAs": "Rare Holo EX",
-    "market": 8.94,
     "foilMap": "assets/foil/maps/bw4/bwp038.webp"
   },
   {
@@ -4194,13 +4288,13 @@
     "artist": "Hideaki Hakozaki",
     "image": "assets/cards/bw4/bwp039.webp",
     "imageSmall": "assets/cards/bw4/bwp039-sm.webp",
+    "market": 17.31,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW39/large",
     "printedNumber": "BW 039",
     "tcgplayerId": 83739,
     "era": "bw",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 18.0,
     "foilMap": "assets/foil/maps/bw4/bwp039.webp"
   },
   {
@@ -4240,13 +4334,13 @@
         "text": "Discard an Energy attached to this Pokémon."
       }
     ],
+    "market": 4.79,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW41/large",
     "printedNumber": "BW 041",
     "tcgplayerId": 89904,
     "era": "bw",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 5.14,
     "foilMap": "assets/foil/maps/bw4/bwp041.webp"
   },
   {
@@ -4286,13 +4380,13 @@
         "text": "Move a basic Energy from this Pokémon to 1 of your Benched Pokémon."
       }
     ],
+    "market": 10.11,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW42/large",
     "printedNumber": "BW 042",
     "tcgplayerId": 89975,
     "era": "bw",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 6.5,
     "foilMap": "assets/foil/maps/bw4/bwp042.webp"
   },
   {
@@ -4332,13 +4426,13 @@
         "text": "Does 10 damage to each Benched Pokémon (both yours and your opponent's). (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
+    "market": 41.79,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW43/large",
     "printedNumber": "BW 043",
     "tcgplayerId": 86592,
     "era": "bw",
     "promo": true,
     "foilAs": "Rare Ultra",
-    "market": 36.79,
     "foilMap": "assets/foil/maps/bw4/bwp043.webp",
     "etchMap": "assets/foil/maps/bw4/bwp043-etch.webp",
     "etchDrawn": true

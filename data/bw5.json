@@ -4131,6 +4131,100 @@
     "tcgplayerId": 88212
   },
   {
+    "id": "bw5-52-cracked-ice",
+    "name": "Cofagrigus",
+    "number": "52-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "100",
+    "artist": "kawayoo",
+    "flavorText": "It has been said that they swallow those who get too close and turn them into mummies. They like to eat gold nuggets.",
+    "evolvesFrom": "Yamask",
+    "image": "assets/cards/bw5/52.webp",
+    "imageSmall": "assets/cards/bw5/52-sm.webp",
+    "attacks": [
+      {
+        "name": "Chuck",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40×",
+        "text": "Discard as many Pokémon Tool cards as you like from your hand. This attack does 40 damage times the number of cards you discarded."
+      },
+      {
+        "name": "Lock Up",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "40",
+        "text": "The Defending Pokémon can't retreat during your opponent's next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bw5-52/large",
+    "printedNumber": "52",
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Raiders Theme Deck)",
+    "tcgplayerId": 210884,
+    "market": 4.24
+  },
+  {
+    "id": "bw5-71-cracked-ice",
+    "name": "Zoroark",
+    "number": "71-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "100",
+    "artist": "5ban Graphics",
+    "flavorText": "Bonds between these Pokémon are very strong. It protects the safety of its pack by tricking its opponents.",
+    "evolvesFrom": "Zorua",
+    "image": "assets/cards/bw5/71.webp",
+    "imageSmall": "assets/cards/bw5/71-sm.webp",
+    "attacks": [
+      {
+        "name": "Brutal Bash",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Does 20 damage times the number of Darkness Pokémon you have in play."
+      },
+      {
+        "name": "Dark Rush",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "20×",
+        "text": "Does 20 damage times the number of damage counters on this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bw5-71/large",
+    "printedNumber": "71",
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Shadows Theme Deck)",
+    "tcgplayerId": 191906,
+    "market": 22.81
+  },
+  {
     "id": "bw5-bwp035",
     "name": "Meowth",
     "number": "bwp035",
@@ -4166,14 +4260,14 @@
         "text": "Flip a coin. If heads, this attack does 10 more damage."
       }
     ],
-    "market": 56.28,
+    "market": 59.91,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW35/large",
     "printedNumber": "BW 035",
     "tcgplayerId": 87327,
     "era": "bw",
     "promo": true,
-    "foilMap": "assets/foil/maps/bw5/bwp035-a1.webp",
-    "foilAs": "Rare Holo"
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/bw5/bwp035-a1.webp"
   },
   {
     "id": "bw5-bwp044",
@@ -4213,7 +4307,7 @@
         "text": "This attack does 30 damage to each of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
-    "market": 8.84,
+    "market": 8.94,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW44/large",
     "printedNumber": "BW 044",
     "tcgplayerId": 86562,
