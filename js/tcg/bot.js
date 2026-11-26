@@ -301,6 +301,8 @@ export function botAction(state, player, defs) {
       const slot = slotOf(a.spot);
       const left = hpLeft(state, slot, defs);
       // Damage counters one at a time may go on the same Pokémon again: not on one already Knocked Out.
+      // Its own attack hurting its own Bench: on whatever it can best spare, never into a Knock Out it can avoid.
+      if (waiting.effect.op === "damage" && waiting.side === player) return (left <= waiting.effect.n ? -1000 : 0) + left;
       if (waiting.effect.op === "damage") return left <= 0 ? -5000 : (left <= waiting.effect.n ? 1000 : 0) - left;
       if (waiting.effect.op === "attachFrom") {
         const after = plan(state, slot, defs, defOf(state, waiting.effect.uid, defs).provides);
