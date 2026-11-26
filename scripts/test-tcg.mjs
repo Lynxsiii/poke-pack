@@ -3254,7 +3254,7 @@ test("damage wordings: the lab cards are read, and old cards' own names read as 
   assert.deepEqual(compileAttack("Does 50 damage minus 10 damage for each damage counter on this Pokémon.")[0], { op: "bonusPer", when: "before", how: "less", n: 10, per: "selfCounters" });
   assert.deepEqual(compileAttack("This attack's damage isn't affected by Weakness, Resistance, Poké-Powers, Poké-Bodies, or any other effects on the Defending Pokémon.")[0], { op: "typing", when: "before", noWeakness: true, noResistance: true, noEffects: true });
   assert.equal(compileAttack("This attack's damage isn't affected by Weakness or Poké-Bodies."), null, "Poké-Bodies only beside any other effects");
-  assert.equal(compileAttack("If this Pokémon was healed during this turn, this attack does 60 more damage."), null, "a test it doesn't know");
+  assert.equal(compileAttack("If this Pokémon used Agility during your last turn, this attack does 60 more damage."), null, "a test it doesn't know");
   assert.deepEqual(compileAttack("If the Defending Pokémon is Pokémon-ex, this attack does 40 damage plus 30 more damage.")[0], { op: "bonusIf", when: "before", n: 30, test: "foeBox", boxes: ["ex"] });
 });
 
@@ -3610,6 +3610,231 @@ test("the bot plays through decks of attacks that move cards and ask for choices
     const b = deckOf(["lab-c2", 6], ["lab-c1", 6], ["base1-46", 8], [F, 10]);
     playOut([a, b], "half", 900 + i);
   }
+});
+
+/* ---------- choices before the damage, and what happened earlier ---------- */
+
+lab("lab-p1", [
+  ["Push", 20, "You may do 30 more damage. If you do, this Pokémon does 20 damage to itself."],
+  ["Burst", 20, "You may discard all Energy from this Pokémon. If you do, this attack does 60 more damage."],
+  ["Fuel", 0, "Discard up to 2 Energy from your Pokémon. This attack does 50 damage for each card you discarded in this way."],
+  ["Toss", 10, "You may discard up to 2 Energy cards from your hand, and this attack does 40 more damage for each card you discarded in this way."],
+  ["Dig", 0, "Discard the top 3 cards of your deck. This attack does 30 damage for each Energy card you discarded in this way."],
+]);
+lab("lab-h1", [
+  ["Charge", 10, "If this Pokémon moved from your Bench to the Active Spot this turn, this attack does 90 more damage."],
+  ["Mend", 10, "If this Pokémon was healed during this turn, this attack does 60 more damage."],
+  ["Avenge", 10, "If any of your Pokémon were Knocked Out by damage from an opponent's attack during their last turn, this attack does 70 more damage."],
+  ["Grudge", 10, "If this Pokémon was damaged by an attack during your opponent's last turn, this attack does that much more damage."],
+  ["Swap", 30, "If the Defending Pokémon has any Energy cards attached to it, this attack's base damage is 80 instead of 30."],
+  ["Crowd", 10, "If all of your Benched Pokémon have at least 1 damage counter on them, this attack does 50 more damage."],
+]);
+/** A card of this id put straight into a player's hand (one the deck doesn't hold). */
+function handed(state, p, id) {
+  const uid = `x${Object.keys(state.cards).length + 1}`;
+  state.cards[uid] = id;
+  state.players[p].hand.push(uid);
+  return uid;
+}
+
+test("before the damage: the lab cards are read, and the wordings compile as printed", () => {
+  for (const id of ["lab-p1", "lab-h1"]) for (const a of defs(id).attacks) assert.ok(!a.plain, `${id} ${a.name}`);
+  assert.deepEqual(compileAttack("You may discard a Stadium in play. If you do, this attack does 140 more damage.").map((s) => s.op), ["ask", "bonusIf"]);
+  assert.deepEqual(compileAttack("You may do 30 damage plus 30 more damage. If you do, Arcanine is now Burned.", "Arcanine").at(-1).steps[0], { op: "condition", when: "after", kind: "burned", self: true });
+  assert.deepEqual(compileAttack("Discard any amount of Fire Energy from among your Pokémon, and this attack does 90 damage for each card you discarded in this way.")[0], { op: "pay", when: "before", from: "own", energy: { type: "Fire" }, n: 0 });
+  assert.deepEqual(compileAttack("You may discard up to 2 Energy from your Benched Pokémon. This attack does 80 more damage for each card you discarded in this way.")[0].from, "bench");
+  assert.deepEqual(compileAttack("If Kirlia and the Defending Pokémon have a different amount of Energy attached to them, this attack's base damage is 30 instead of 60.", "Kirlia"), [{ op: "baseIf", when: "before", n: 30, test: "energyDiffers" }]);
+  assert.deepEqual(compileAttack("During your next turn, Scyther's Slash attack's base damage is 60 instead of 30.", "Scyther")[0], { op: "mark", when: "after", kind: "base", mine: true, name: "Slash", n: 60 });
+  // A price whose "If you do" can't be judged is left unread, not guessed.
+  assert.equal(compileAttack("You may look at the top card of your deck. If you do, this attack does 30 more damage."), null);
+  // "If you do" with the other side of the coin, or a test that changes with the damage, is not read as one that holds all turn.
+  assert.equal(compileAttack("If the Defending Pokémon has any damage counters on it, the Defending Pokémon is now Paralyzed."), null);
+});
+
+test("you may do more damage: asked before the damage, the answer can come later, the recoil only on a yes", () => {
+  let state = labgame("lab-p1", "lab-2");
+  use(state, 0, "Push");
+  assert.equal(state.pending[0].type, "option");
+  assert.equal(state.pending[0].why, "before");
+  assert.equal(state.players[1].active.damage, 0, "no damage until the answer");
+  assert.equal(state.current, 0);
+  // The answer may arrive as its own action on a state that went through JSON (a match between two players).
+  state = JSON.parse(JSON.stringify(state));
+  act(state, { type: "option", player: 0, index: 0 });
+  assert.equal(state.players[1].active.damage, 50);
+  assert.equal(state.players[0].active.damage, 20);
+  assert.equal(state.current, 1);
+  assert.equal(state.strike, undefined, "the attack in progress is gone with the turn");
+  state = labgame("lab-p1", "lab-2");
+  use(state, 0, "Push");
+  act(state, { type: "option", player: 0, index: 1 });
+  assert.equal(state.players[1].active.damage, 20);
+  assert.equal(state.players[0].active.damage, 0);
+});
+
+test("you may discard for more damage: the cards go before the damage, and it isn't asked with nothing to discard", () => {
+  let state = labgame("lab-p1", "lab-2");
+  assert.ok(state.players[0].active.energy.length > 0);
+  use(state, 0, "Burst");
+  act(state, { type: "option", player: 0, index: 0 });
+  assert.equal(state.players[0].active.energy.length, 0);
+  assert.equal(state.players[1].active.damage, 80);
+  state = labgame("lab-p1", "lab-2");
+  state.players[0].discard.push(...state.players[0].active.energy.splice(0));
+  use(state, 0, "Burst");
+  assert.equal(state.pending.length, 0);
+  assert.equal(state.players[1].active.damage, 20);
+});
+
+test("for each card you discarded in this way: Energy from any of your Pokémon, cards from the hand, the top of the deck", () => {
+  let state = labgame("lab-p1", "lab-2");
+  const side = state.players[0];
+  side.bench[0].energy.push(give(state, 0, W), give(state, 0, W));
+  side.hand = side.hand.filter((u) => !side.bench[0].energy.includes(u));
+  use(state, 0, "Fuel");
+  const waiting = state.pending[0];
+  assert.equal(waiting.type, "choose");
+  assert.equal(waiting.min, 0);
+  assert.equal(waiting.max, 2);
+  assert.ok(waiting.uids.includes(side.bench[0].energy[0]) && waiting.uids.includes(side.active.energy[0]));
+  throws(() => act(state, { type: "choose", player: 0, uids: waiting.uids.slice(0, 3) }), /at most 2/);
+  const two = [side.active.energy[0], side.bench[0].energy[0]];
+  act(state, { type: "choose", player: 0, uids: two });
+  assert.equal(state.players[1].active.damage, 100);
+  assert.ok(two.every((uid) => side.discard.includes(uid)));
+  assert.equal(state.current, 1);
+  // None chosen: no damage.
+  state = labgame("lab-p1", "lab-2");
+  use(state, 0, "Fuel");
+  act(state, { type: "choose", player: 0, uids: [] });
+  assert.equal(state.players[1].active.damage, 0);
+  // From the hand.
+  state = labgame("lab-p1", "lab-2");
+  const cards = [give(state, 0, W), give(state, 0, W)];
+  use(state, 0, "Toss");
+  assert.equal(state.pending[0].zone, "hand");
+  act(state, { type: "choose", player: 0, uids: cards });
+  assert.equal(state.players[1].active.damage, 90);
+  assert.ok(cards.every((uid) => state.players[0].discard.includes(uid) && !state.players[0].hand.includes(uid)));
+  // The top of the deck: only the Energy cards among them count.
+  state = labgame("lab-p1", "lab-2");
+  const deck = state.players[0].deck;
+  const energy = deck.filter((uid) => state.cards[uid] === W).slice(0, 2);
+  const other = deck.find((uid) => defs(state.cards[uid]).kind !== "energy");
+  state.players[0].deck = [...energy, other, ...deck.filter((uid) => !energy.includes(uid) && uid !== other)];
+  use(state, 0, "Dig");
+  assert.equal(state.players[1].active.damage, 60);
+  assert.deepEqual(state.players[0].discard.slice(-3), [...energy, other]);
+});
+
+test("the bot answers a choice before the damage, and plays decks of them through", () => {
+  const state = labgame("lab-p1", "lab-2");
+  use(state, 0, "Push");
+  const answer = botAction(state, 0, defs);
+  assert.equal(answer.type, "option");
+  act(state, answer);
+  assert.equal(state.current, 1);
+  const fuel = labgame("lab-p1", "lab-2");
+  use(fuel, 0, "Fuel");
+  const pick = botAction(fuel, 0, defs);
+  assert.equal(pick.type, "choose");
+  act(fuel, pick);
+  for (let i = 0; i < 8; i += 1) {
+    const a = deckOf(["lab-p1", 8], ["lab-h1", 6], ["base1-63", 4], [W, 12]);
+    const b = deckOf(["lab-h1", 6], ["lab-p1", 6], ["base1-46", 8], [F, 10]);
+    playOut([a, b], "half", 1300 + i);
+  }
+});
+
+test("what happened earlier: moved up this turn, healed this turn, a Knock Out by an attack last turn, damage taken last turn", () => {
+  // Moved up from the Bench (a retreat here): this turn only.
+  let state = labgame("lab-h1", "lab-2");
+  state.cards[state.players[0].bench[0].uid] = "lab-h1";
+  state.cards[state.players[0].active.uid] = "base1-63";
+  act(state, { type: "retreat", player: 0, to: 0 });
+  use(state, 0, "Charge");
+  assert.equal(state.players[1].active.damage, 100);
+  act(state, { type: "end", player: 1 });
+  use(state, 0, "Charge");
+  assert.equal(state.players[1].active.damage, 110);
+  // Healed this turn (a Potion), kept through JSON.
+  state = labgame("lab-h1", "lab-2");
+  use(state, 0, "Mend");
+  assert.equal(state.players[1].active.damage, 10);
+  act(state, { type: "end", player: 1 });
+  state.players[0].active.damage = 30;
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "base1-94") });
+  if (state.pending.length) act(state, { type: "pick", player: 0, spot: ACTIVE });
+  assert.equal(state.players[0].active.damage, 10);
+  state = JSON.parse(JSON.stringify(state));
+  use(state, 0, "Mend");
+  assert.equal(state.players[1].active.damage, 80);
+  // Damage from an attack during their last turn, and that much more.
+  state = labgame("lab-h1", "lab-2");
+  use(state, 0, "Grudge");
+  assert.equal(state.players[1].active.damage, 10);
+  use(state, 1, "Pierce");
+  assert.equal(state.players[0].active.damage, 50);
+  use(state, 0, "Grudge");
+  assert.equal(state.players[1].active.damage, 70);
+  act(state, { type: "end", player: 1 });
+  use(state, 0, "Grudge");
+  assert.equal(state.players[1].active.damage, 80, "not damaged during their last turn");
+  // A Knock Out by damage from their attack during their last turn.
+  state = labgame("base1-63", "lab-2");
+  state.cards[state.players[0].bench[0].uid] = "lab-h1";
+  act(state, { type: "end", player: 0 });
+  state.players[0].active.damage = defs("base1-63").hp - 10;
+  use(state, 1, "Pierce");
+  act(state, { type: "promote", player: 0, spot: 0 });
+  use(state, 0, "Avenge");
+  assert.equal(state.players[1].active.damage, 80);
+  act(state, { type: "end", player: 1 });
+  use(state, 0, "Avenge");
+  assert.equal(state.players[1].active.damage, 90);
+  // Knocked Out by damage counters from an attack is not "by damage".
+  state = labgame("base1-63", "lab-2");
+  state.cards[state.players[0].bench[0].uid] = "lab-h1";
+  act(state, { type: "end", player: 0 });
+  state.players[0].active.damage = defs("base1-63").hp;
+  resolveKnockOuts(state, defs, []);
+  act(state, { type: "promote", player: 0, spot: 0 });
+  act(state, { type: "end", player: 1 });
+  use(state, 0, "Avenge");
+  assert.equal(state.players[1].active.damage, 10);
+});
+
+test("base damage instead, and all of your Benched Pokémon", () => {
+  let state = labgame("lab-h1", "lab-2");
+  use(state, 0, "Swap");
+  assert.equal(state.players[1].active.damage, 30);
+  act(state, { type: "end", player: 1 });
+  state.players[1].active.energy.push(give(state, 1, F));
+  state.players[1].hand.pop();
+  use(state, 0, "Swap");
+  assert.equal(state.players[1].active.damage, 110);
+  state = labgame("lab-h1", "lab-2");
+  use(state, 0, "Crowd");
+  assert.equal(state.players[1].active.damage, 10);
+  act(state, { type: "end", player: 1 });
+  state.players[0].bench[0].damage = 10;
+  use(state, 0, "Crowd");
+  assert.equal(state.players[1].active.damage, 70);
+  // An empty Bench has no Benched Pokémon with damage counters on them.
+  state = labgame("lab-h1", "lab-2");
+  state.players[0].discard.push(...state.players[0].bench.splice(0).map((s) => s.uid));
+  use(state, 0, "Crowd");
+  assert.equal(state.players[1].active.damage, 10);
+  // "During your next turn, this Pokémon's Slash attack's base damage is 60": that attack, that turn.
+  lab("lab-b1", [["Ready", 0, "During your next turn, this Pokémon's Slash attack's base damage is 60."], ["Slash", 30, ""]]);
+  state = labgame("lab-b1", "lab-2");
+  use(state, 0, "Ready");
+  act(state, { type: "end", player: 1 });
+  use(state, 0, "Slash");
+  assert.equal(state.players[1].active.damage, 60);
+  act(state, { type: "end", player: 1 });
+  use(state, 0, "Slash");
+  assert.equal(state.players[1].active.damage, 90);
 });
 
 console.log(`${passed} checks passed${process.exitCode ? ", some failed" : ""}`);

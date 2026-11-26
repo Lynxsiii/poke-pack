@@ -48,7 +48,7 @@ const enIcon = (type) => (EN_FILE[type] ? `<img src="/assets/tcg/energy/${EN_FIL
 const COND_NAME = { asleep: "Asleep", burned: "Burned", confused: "Confused", paralyzed: "Paralyzed", poisoned: "Poisoned" };
 
 /** What a turn-long effect is called on a name plate. */
-const markLabel = (m) => ({ noAttack: "Can't attack", noUse: `No ${m.name}`, less: `-${m.n} damage`, shield: "Protected", guard: "No damage", noRetreat: "Can't retreat", mustFlip: "Flips to attack", stronger: `+${m.n} damage`, weaker: `Does -${m.n}`, exposed: `Takes +${m.n}`, harden: `Ignores ${m.n} or less` })[m.kind] || "";
+const markLabel = (m) => ({ noAttack: "Can't attack", noUse: `No ${m.name}`, less: `-${m.n} damage`, shield: "Protected", guard: "No damage", noRetreat: "Can't retreat", mustFlip: "Flips to attack", stronger: `+${m.n} damage`, weaker: `Does -${m.n}`, exposed: `Takes +${m.n}`, harden: `Ignores ${m.n} or less`, base: `${m.name}: ${m.n}` })[m.kind] || "";
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const plural = (n, word) => `${n} ${word}${n === 1 ? "" : "s"}`;
@@ -1051,6 +1051,7 @@ export function initTcg(deps) {
       : waiting.effect.op === "dropInPlay" ? `Discard ${min < max ? "up to " : ""}${plural(max, "card")} in play`
       : waiting.effect.op === "toTop" ? `Put ${many(max)} from your hand on top of your deck`
       : waiting.effect.op === "share" || waiting.effect.op === "baton" ? `Move ${min < max ? "up to " : ""}${many(max)} from your Knocked Out Pokémon`
+      : waiting.effect.op === "payFor" ? `Discard up to ${many(max)}${waiting.zone === "hand" ? " from your hand" : ""} for this attack`
       : waiting.effect.op === "takeBack" ? `Return ${many(max)} to your hand`
       : waiting.effect.op === "toBottom" ? `${waiting.shuffle ? "Shuffle" : "Put"} ${many(max)} from your hand ${waiting.shuffle ? "into" : "on the bottom of"} your deck`
       : waiting.zone === "discard" ? `Take ${min < max ? "up to " : ""}${many(max)} from your discard pile`
@@ -1174,6 +1175,7 @@ export function initTcg(deps) {
           weaker: `${whose} Active Pokémon's attacks do ${event.n} less damage next turn.`,
           exposed: `${whose} Active Pokémon will take ${event.n} more damage next turn.`,
           harden: `${whose} Active Pokémon takes no damage of ${event.n} or less next turn.`,
+          base: `${whose} Active Pokémon's ${event.name} will do ${event.n} damage next turn.`,
         }[event.kind] || "";
       }
       case "discard-energy": return `${plural(event.uids.length, "Energy card")} discarded from ${event.p === ME ? "your" : "their"} Active Pokémon.`;

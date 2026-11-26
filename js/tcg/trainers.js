@@ -303,6 +303,7 @@ export const T_OPS = {
           const slot = slotAt(ctx.state, ctx.player, spot);
           const healed = Math.min(n, slot.damage);
           slot.damage -= healed;
+          if (healed) slot.healedOn = ctx.state.turn;
           ctx.events.push({ t: "heal", p: ctx.player, spot, n: healed });
           if (strip) stripEnergy(ctx, ctx.player, spot, strip === "hand");
         }
@@ -1005,6 +1006,7 @@ export const T_OPS = {
         const slot = slotAt(ctx.state, ctx.player, spot);
         const healed = Math.min(n, slot.damage);
         slot.damage -= healed;
+        if (healed) slot.healedOn = ctx.state.turn;
         ctx.events.push({ t: "heal", p: ctx.player, spot, n: healed });
       }
     },

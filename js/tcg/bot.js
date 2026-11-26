@@ -188,6 +188,17 @@ function attackValue(state, player, action, defs) {
   return total / SAMPLES;
 }
 
+/** The action of these that plays out best (attackValue), the first of them on a tie. */
+function best(state, player, actions, defs) {
+  let top = actions[0];
+  let most = -Infinity;
+  for (const action of actions) {
+    const v = attackValue(state, player, action, defs);
+    if (v > most) [top, most] = [action, v];
+  }
+  return top;
+}
+
 /** Whether an attack hurts its own side (discards its own Energy, damages itself). */
 const costly = (attack) => (attack.fx || []).some((f) => f.op === "discardEnergy" || f.op === "selfDamage");
 
@@ -240,6 +251,15 @@ export function botAction(state, player, defs) {
       if (def.kind === "energy") return side.hand.filter((u) => defOf(state, u, defs).kind === "energy").length > 1 && waiting.zone === "hand" ? 5 : 30;
       return 25;
     };
+    // Cards discarded for an attack's damage ("for each card you discarded in this way"): how many is played out on
+    // copies, the cards worth least going first (Energy off the Bench before the attacker's); on a copy, as many as it may.
+    if (waiting.effect.op === "payFor") {
+      const onBench = (uid) => (side.active?.energy.includes(uid) ? 1 : 0);
+      const order = waiting.uids.slice().sort((x, y) => onBench(x) - onBench(y) || worth(x) - worth(y));
+      const sizes = [...new Set([waiting.min, waiting.max, ...Array.from({ length: waiting.max - waiting.min + 1 }, (_, i) => waiting.min + i)])].slice(0, 8);
+      const offers = sizes.map((k) => ({ type: "choose", player, uids: order.slice(0, k) }));
+      return simulating ? offers[offers.length > 1 ? 1 : 0] : best(state, player, offers, defs);
+    }
     // Tools, Special Energy or the Stadium in play: only the other side's.
     if (waiting.effect.op === "dropInPlay") {
       const foeOwns = new Set(inPlay(state, other(player)).flatMap(([slot]) => [slot.tool, ...slot.energy].filter(Boolean)));
@@ -271,6 +291,9 @@ export function botAction(state, player, defs) {
       const hits = waiting.labels.map((name) => Math.max(0, ...foeDef.attacks.filter((a) => a.name === name).map((a) => a.damage)));
       return actions[hits.indexOf(Math.max(...hits))];
     }
+    // A "you may" before an attack's damage: each answer played out on copies, the better one taken
+    // (while already playing out the attack on a copy, yes).
+    if (waiting.why === "before") return simulating ? actions[0] : best(state, player, actions, defs);
     // An attack's "you may": yes, except to take its own Pokémon out of play.
     if (waiting.why === "may" && JSON.stringify(waiting.options[0]).includes('"selfAway"')) return actions[1];
     return actions[0];
