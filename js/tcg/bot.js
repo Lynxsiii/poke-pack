@@ -4,13 +4,20 @@
  *
  *   botAction(state, player, defs) -> one action, or null when it has nothing to do
  *
- * How it plays a turn: fill the Bench, evolve what it can, put its Energy
- * where it buys an attack soonest, step back when the Active Pokémon is stuck
- * and a Benched one is ready, then hit with whatever does the most.
+ * How it plays a turn, the way a careful person would:
+ *   - Bench: Basic Pokémon that evolve into something it holds first, one place
+ *     kept free for later unless the card's evolution is already in hand.
+ *   - Energy: onto whoever it is building toward, counting the Stage 2 it will
+ *     become, and onto the next attacker on the Bench once the Active Pokémon is
+ *     ready or about to be Knocked Out.
+ *   - Retreat or Switch: when the Active Pokémon is stuck, Weak to the other side,
+ *     or a Benched one could Knock Out what the Active Pokémon can't.
+ *   - Targets: gust out a Benched Pokémon it can Knock Out, hit for the Knock Out
+ *     first, and spend nothing (Potions, Full Heals, Energy Removal) for no reason.
  */
 
 import { trainerAim } from "./trainers.js";
-import { ACTIVE, damageAfterTyping, defOf, energyOf, hpLeft, inPlay, legalActions, other, unpaid, usableAttacks } from "./engine.js";
+import { ACTIVE, damageAfterTyping, defOf, energyOf, hpLeft, inPlay, legalActions, other, retreatCost, statusOf, unpaid, usableAttacks } from "./engine.js";
 
 /** How much an attack is worth against this defender, before any coin flip. */
 function attackWorth(attack, def, foeDef, foeHp) {
@@ -31,17 +38,107 @@ function plan(state, slot, defs, extra = []) {
   return best || { attack: null, short: 9, score: 0 };
 }
 
+/** The best Pokémon this one can still become, from what is in its owner's hand and deck. */
+function futureDef(state, player, slot, defs) {
+  const side = state.players[player];
+  const def = defOf(state, slot.uid, defs);
+  const pool = [...side.hand, ...side.deck].map((uid) => defOf(state, uid, defs)).filter((d) => d.kind === "pokemon" && d.playable);
+  let at = def;
+  for (let step = 0; step < 2; step += 1) {
+    const next = pool.filter((d) => d.evolvesFrom === at.name).sort((a, b) => b.hp - a.hp)[0];
+    if (!next) break;
+    at = next;
+  }
+  return at;
+}
+
+/** plan(), toward what the Pokémon will become: Energy on a Charmander counts for the Charizard. */
+function aimFor(state, player, slot, defs, extra = []) {
+  const now = plan(state, slot, defs, extra);
+  const later = futureDef(state, player, slot, defs);
+  if (later === defOf(state, slot.uid, defs)) return now;
+  const units = [...energyOf(state, slot, defs), ...extra];
+  let best = now;
+  for (const attack of later.attacks) {
+    const short = unpaid(attack.cost, units);
+    const score = attack.damage / (1 + short);
+    if (score > best.score) best = { attack, short, score };
+  }
+  return best;
+}
+
+/** The most the other side's Active Pokémon could do to this one next turn, with one more Energy. */
+function threat(state, player, slot, defs) {
+  const foe = state.players[other(player)].active;
+  if (!foe || !slot) return 0;
+  const foeDef = defOf(state, foe.uid, defs);
+  const def = defOf(state, slot.uid, defs);
+  const units = [...energyOf(state, foe, defs), foeDef.types[0] || "Colorless"];
+  let most = 0;
+  for (const attack of foeDef.attacks) if (unpaid(attack.cost, units) === 0) most = Math.max(most, damageAfterTyping(attack.damage, foeDef, def).amount);
+  return most;
+}
+
+/** What this Pokémon's best paid-for attack does to the other side's Active Pokémon, with `extra` Energy. */
+function hitNow(state, player, slot, defs, extra = []) {
+  const foe = state.players[other(player)].active;
+  if (!slot || !foe) return 0;
+  const def = defOf(state, slot.uid, defs);
+  const foeDef = defOf(state, foe.uid, defs);
+  const units = [...energyOf(state, slot, defs), ...extra];
+  let most = 0;
+  for (const attack of def.attacks) if (unpaid(attack.cost, units) === 0) most = Math.max(most, damageAfterTyping(attack.damage, def, foeDef).amount);
+  return most;
+}
+
+/** The Benched Pokémon worth bringing up instead of the Active one, or -1. */
+function betterOnBench(state, player, defs) {
+  const side = state.players[player];
+  const active = side.active;
+  if (!active || !side.bench.length) return -1;
+  const foe = state.players[other(player)].active;
+  const foeHp = foe ? hpLeft(state, foe, defs) : 0;
+  const mine = hitNow(state, player, active, defs);
+  const foeDef = foe ? defOf(state, foe.uid, defs) : null;
+  const weak = foeDef && foeDef.attacks.length && defOf(state, active.uid, defs).weakness && foeDef.types.includes(defOf(state, active.uid, defs).weakness.type);
+  const confused = statusOf(active).confused;
+  let best = -1;
+  let bestScore = 0;
+  side.bench.forEach((slot, spot) => {
+    const hit = hitNow(state, player, slot, defs);
+    if (!hit) return;
+    let score = 0;
+    // It can Knock Out what the Active Pokémon can't.
+    if (foeHp && hit >= foeHp && mine < foeHp) score = 300;
+    // The Active Pokémon can't hit at all, or only for much less.
+    else if (!mine && aimFor(state, player, active, defs).short > 1) score = 200;
+    else if (hit >= mine * 2 && hit - mine >= 40) score = 120;
+    else if (weak && hit >= mine) score = 100;
+    else if (confused && hit >= mine) score = 90;
+    if (score > bestScore) {
+      bestScore = score;
+      best = spot;
+    }
+  });
+  return best;
+}
+
+/** Whether an attack hurts its own side (discards its own Energy, damages itself). */
+const costly = (attack) => (attack.fx || []).some((f) => f.op === "discardEnergy" || f.op === "selfDamage");
+
 function placeAction(state, player, defs) {
   const side = state.players[player];
   const basics = side.hand.filter((uid) => {
     const def = defOf(state, uid, defs);
     return def.kind === "pokemon" && def.stage === "basic";
   });
-  // Lead with the sturdiest that can attack cheaply; keep the rest behind it.
+  // Lead with the sturdiest that can attack cheaply and won't evolve into the deck's attacker;
+  // the ones that evolve wait on the Bench, where they are safe until they do.
+  const evolves = (uid) => [...side.hand, ...side.deck].some((u) => defOf(state, u, defs).evolvesFrom === defOf(state, uid, defs).name);
   const rank = (uid) => {
     const def = defOf(state, uid, defs);
     const cheapest = Math.min(...def.attacks.map((a) => a.cost.length), 9);
-    return def.hp - cheapest * 15;
+    return def.hp - cheapest * 15 - (evolves(uid) ? 40 : 0) - (def.ability?.use ? 30 : 0);
   };
   basics.sort((a, b) => rank(b) - rank(a));
   return { type: "place", player, active: basics[0], bench: basics.slice(1, 1 + state.rules.bench) };
@@ -58,9 +155,11 @@ export function botAction(state, player, defs) {
 
   if (actions[0].type === "promote") {
     // Bring up whoever is closest to attacking, then whoever has the most HP left.
+    const foeHp = foe ? hpLeft(state, foe, defs) : 0;
     const rank = (a) => {
       const slot = side.bench[a.spot];
-      return -plan(state, slot, defs).short * 1000 + hpLeft(state, slot, defs);
+      const hit = hitNow(state, player, slot, defs);
+      return (foeHp && hit >= foeHp ? 5000 : 0) + hit * 2 - plan(state, slot, defs).short * 1000 + hpLeft(state, slot, defs);
     };
     return actions.slice().sort((a, b) => rank(b) - rank(a))[0];
   }
@@ -113,22 +212,48 @@ export function botAction(state, player, defs) {
       if (waiting.effect.op === "moveCountersTo") return waiting.side === player ? left : (left <= waiting.effect.n ? 1000 : 0) - left;
       if (waiting.effect.op === "heal") return Math.min(slot.damage, waiting.effect.n) + (a.spot === ACTIVE ? 5 : 0);
       if (waiting.effect.op === "discardEnergy") return slot.energy.length + (a.spot === ACTIVE ? 0.5 : 0);
-      // Pulling one of theirs forward: the one closest to a Knock Out. Bringing up one of its own: the readiest.
-      if (waiting.side !== player) return -left;
+      // Pulling one of theirs forward: one the Active Pokémon can Knock Out (more Prizes first), else the
+      // one with the most Energy on it, else the one closest to a Knock Out. Bringing up its own: the readiest.
+      if (waiting.side !== player) {
+        if (a.spot === ACTIVE) return -9999;
+        const def = defOf(state, slot.uid, defs);
+        const hit = side.active ? (() => {
+          const mine = defOf(state, side.active.uid, defs);
+          const units = energyOf(state, side.active, defs);
+          return Math.max(0, ...mine.attacks.filter((at) => unpaid(at.cost, units) === 0).map((at) => damageAfterTyping(at.damage, mine, def).amount));
+        })() : 0;
+        return (hit >= left ? 2000 + def.prizes * 500 : 0) + slot.energy.length * 40 - left;
+      }
       return -plan(state, slot, defs).short * 1000 + left;
     };
     return picks.slice().sort((a, b) => rank(b) - rank(a))[0];
   }
 
-  const bench = actions.find((a) => a.type === "bench");
-  if (bench) return bench;
+  // Bench: what evolves into something it holds first. One place stays free for later,
+  // unless the evolution is already in hand or the Bench is empty.
+  const benches = actions.filter((a) => a.type === "bench");
+  if (benches.length) {
+    const hand = side.hand.map((uid) => defOf(state, uid, defs));
+    const deck = side.deck.map((uid) => defOf(state, uid, defs));
+    const score = (a) => {
+      const def = defOf(state, a.uid, defs);
+      return (hand.some((d) => d.evolvesFrom === def.name) ? 100 : 0) + (deck.some((d) => d.evolvesFrom === def.name) ? 40 : 0) + (def.ability?.use ? 30 : 0) + def.hp / 10;
+    };
+    const pick = benches.slice().sort((a, b) => score(b) - score(a))[0];
+    if (side.bench.length < state.rules.bench - 1 || score(pick) >= 100 || !side.bench.length) return pick;
+  }
 
   // Trainers: card draw whenever it can, the rest only when it clearly helps.
   for (const action of actions.filter((a) => a.type === "play")) {
     const def = defOf(state, action.uid, defs);
     const aim = trainerAim(def.fx);
     const heal = def.fx.find((s) => s.op === "heal");
-    if (aim === "cure" || aim === "hammer") return action;
+    if (aim === "cure" && inPlay(state, player).some(([slot]) => Object.values(statusOf(slot)).some(Boolean))) return action;
+    if (aim === "hammer" && inPlay(state, other(player)).some(([slot]) => slot.energy.length)) return action;
+    if (aim === "cure" || aim === "hammer" || aim === "switch" || aim === "gust") continue;
+    // An empty Bench loses the game to one Knock Out: dig for a Basic Pokémon whatever the deck size.
+    const thin = !side.bench.length && !side.hand.some((uid) => defOf(state, uid, defs).stage === "basic");
+    if (thin && ["draw", "search", "refresh", "trade"].includes(aim) && side.deck.length > 1) return action;
     // Drawing is only good while there is a deck to draw from.
     if (aim === "draw" && side.deck.length > 8) return action;
     if (aim === "refresh" && side.hand.length <= 3 && side.deck.length > 8) return action;
@@ -175,29 +300,59 @@ export function botAction(state, player, defs) {
   const attaches = actions.filter((a) => a.type === "attach");
   if (attaches.length) {
     let best = null;
+    // The Active Pokémon first, unless it is already set or about to be Knocked Out: then the next attacker.
+    const doomed = side.active && threat(state, player, side.active, defs) >= hpLeft(state, side.active, defs);
     for (const action of attaches) {
       const slot = action.spot === ACTIVE ? side.active : side.bench[action.spot];
-      const before = plan(state, slot, defs);
-      const after = plan(state, slot, defs, defOf(state, action.uid, defs).provides);
-      // Worth it when it brings an attack closer; the Active Pokémon first.
-      const gain = (before.short - after.short) * 100 + after.score + (action.spot === ACTIVE ? 30 : 0) - (before.short === 0 ? 80 : 0);
+      const before = aimFor(state, player, slot, defs);
+      const after = aimFor(state, player, slot, defs, defOf(state, action.uid, defs).provides);
+      const front = action.spot === ACTIVE ? (doomed && before.short === 0 ? -40 : 30) : 0;
+      // Worth it when it brings an attack closer, toward what the Pokémon will become.
+      const gain = (before.short - after.short) * 100 + after.score + front - (before.short === 0 ? 80 : 0) + slot.energy.length * 5;
       if (!best || gain > best.gain) best = { action, gain };
     }
     if (best) return best.action;
   }
 
-  const attacks = actions.filter((a) => a.type === "attack");
-  if (!attacks.length && state.turn > 1) {
-    // Stuck in front: step back for a Benched Pokémon that can attack now.
-    const ready = actions
-      .filter((a) => a.type === "retreat")
-      .find((a) => plan(state, side.bench[a.to], defs).short === 0 && plan(state, side.bench[a.to], defs).attack?.damage > 0);
-    if (ready && plan(state, side.active, defs).short > 1) return ready;
+  // A better Pokémon for this turn waits on the Bench: a Switch card is free, a retreat costs Energy.
+  if (state.turn > 1 && !side.retreated) {
+    const spot = betterOnBench(state, player, defs);
+    if (spot >= 0) {
+      const sw = actions.find((a) => a.type === "play" && trainerAim(defOf(state, a.uid, defs).fx) === "switch");
+      if (sw) return sw;
+      const back = actions.find((a) => a.type === "retreat" && a.to === spot);
+      // Only when it can spare the Energy: what it pays must not leave it unable to come back and fight.
+      if (back && retreatCost(state, side.active, defs) <= 2) return back;
+    }
   }
+
+  // Gust: pull out a Benched Pokémon the Active Pokémon can Knock Out, when the Active one in front can't be.
+  const foeSide = state.players[other(player)];
+  if (side.active && foe && foeSide.bench.length) {
+    const mine = defOf(state, side.active.uid, defs);
+    const units = energyOf(state, side.active, defs);
+    const ready = mine.attacks.filter((at) => unpaid(at.cost, units) === 0);
+    const kos = (slot) => ready.some((at) => damageAfterTyping(at.damage, mine, defOf(state, slot.uid, defs)).amount >= hpLeft(state, slot, defs));
+    if (ready.length && !kos(foe) && foeSide.bench.some((slot) => kos(slot)) && usableAttacks(state, player, defs).length) {
+      const gust = actions.find((a) => {
+        if (a.type !== "play") return false;
+        const fx = defOf(state, a.uid, defs).fx;
+        return fx.some((st) => st.op === "gust") && trainerAim(fx) === "gust";
+      });
+      if (gust) return gust;
+    }
+  }
+
+  const attacks = actions.filter((a) => a.type === "attack");
   if (attacks.length) {
     const def = defOf(state, side.active.uid, defs);
     const foeHp = foe ? hpLeft(state, foe, defs) : 0;
-    const worth = (a) => attackWorth(def.attacks[a.index], def, foeDef, foeHp);
+    // The Knock Out first; between two that both do it, the one that costs its own side nothing.
+    const worth = (a) => {
+      const attack = def.attacks[a.index];
+      const base = attackWorth(attack, def, foeDef, foeHp);
+      return base - (costly(attack) ? (base >= 1000 ? 5 : 25) : 0);
+    };
     return attacks.slice().sort((a, b) => worth(b) - worth(a))[0];
   }
   return actions.find((a) => a.type === "end");

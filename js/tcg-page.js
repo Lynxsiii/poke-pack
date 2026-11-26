@@ -33,25 +33,11 @@ const ME = 0;
 const BOT = 1;
 const BOT_NAME = "House bot";
 /**
- * Energy type symbols, drawn for this site (24-unit grid, filled with the badge's ink colour;
- * strokes in var(--en) cut details back out in the badge colour).
+ * Energy symbols: the real printed symbols, self-hosted as transparent PNGs under
+ * assets/tcg/energy/ (source: pokewiki.de "<Type>Symbol_TCG.png" files). "A|B" units show as Any.
  */
-const CUT = 'fill="none" stroke="var(--en)" stroke-width="1.8" stroke-linecap="round"';
-const EN_ICON = {
-  Grass: `<path d="M18.5 3.5C9 4 4.5 9.5 5.5 18.5c9 1 14-4 13-15z"/><path ${CUT} d="M7 17 15 9"/>`,
-  Fire: `<path d="M12.5 2c.6 4.2 6 6.3 6 12.3a6.5 6.5 0 0 1-13 0c0-3.2 1.8-5.3 3.3-6.6.1 2 1 3.2 2.2 3.6-.6-3.4-.3-6.4 1.5-9.3z"/>`,
-  Water: `<path d="M12 2.5c3.4 5.2 6.5 8.5 6.5 12.6a6.5 6.5 0 0 1-13 0c0-4.1 3.1-7.4 6.5-12.6z"/><path ${CUT} d="M9 15.5a3 3 0 0 0 2.5 3"/>`,
-  Lightning: `<path d="M14 1.5 4.5 13.5h6.2L8.8 22.5l10.7-13h-6.4L14 1.5z"/>`,
-  Psychic: `<path d="M1.8 12C4.6 7.2 8.2 5 12 5s7.4 2.2 10.2 7c-2.8 4.8-6.4 7-10.2 7S4.6 16.8 1.8 12z"/><circle cx="12" cy="12" r="3.4" fill="var(--en)"/><circle cx="12" cy="12" r="1.5"/>`,
-  Fighting: `<path d="M6.5 8.5a2 2 0 0 1 2-2h8a3 3 0 0 1 3 3v6a5 5 0 0 1-5 5h-3.5a4.5 4.5 0 0 1-4.5-4.5z"/><path ${CUT} d="M10 7v3.5M13.5 7v3.5M17 7.5v3M6.5 13.5h6"/>`,
-  Darkness: `<path d="M15.5 2.5a9.5 9.5 0 1 0 6.3 14.2A7.6 7.6 0 0 1 15.5 2.5z"/>`,
-  Metal: `<path d="M12 1.8 20.8 7v10L12 22.2 3.2 17V7z"/><circle cx="12" cy="12" r="3.6" fill="var(--en)"/>`,
-  Fairy: `<path d="M12 1.5 14.6 9.4 22.5 12l-7.9 2.6L12 22.5l-2.6-7.9L1.5 12l7.9-2.6z"/>`,
-  Dragon: `<path d="M6 21c1-7 3.5-12.5 9.5-18.5-1.5 5.5-1 9.5 3 12.5-4.5 0-7.5 1.5-12.5 6z"/>`,
-  Colorless: `<path d="m12 1.8 2.4 6.3 6.7-.3-5.2 4.2 1.8 6.5L12 14.8l-5.7 3.7 1.8-6.5L2.9 7.8l6.7.3z"/>`,
-  Any: `<path d="M12 1.5 14.6 9.4 22.5 12l-7.9 2.6L12 22.5l-2.6-7.9L1.5 12l7.9-2.6z"/>`,
-};
-const enIcon = (type) => (EN_ICON[type] ? `<svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">${EN_ICON[type]}</svg>` : "?");
+const EN_FILE = { Grass: "grass", Fire: "fire", Water: "water", Lightning: "lightning", Psychic: "psychic", Fighting: "fighting", Darkness: "darkness", Metal: "metal", Fairy: "fairy", Dragon: "dragon", Colorless: "colorless", Any: "any" };
+const enIcon = (type) => (EN_FILE[type] ? `<img src="/assets/tcg/energy/${EN_FILE[type]}-v1.png" alt="" draggable="false">` : "?");
 
 const COND_NAME = { asleep: "Asleep", burned: "Burned", confused: "Confused", paralyzed: "Paralyzed", poisoned: "Poisoned" };
 
@@ -95,7 +81,7 @@ export function initTcg(deps) {
     }
   }
   const saveDecks = () => write("decks", decks);
-  const saveMatch = () => write("match", match && match.state.phase !== "over" ? { state: match.state, deckId: match.deckId, botSet: match.botSet, lesson: match.lesson ?? null } : null);
+  const saveMatch = () => write("match", match && match.state.phase !== "over" ? { state: match.state, deckId: match.deckId, botSet: match.botSet, botTheme: match.botTheme || "", lesson: match.lesson ?? null } : null);
 
   /* ---------- loading ---------- */
 
@@ -484,7 +470,7 @@ export function initTcg(deps) {
     if (!botDeck) return toast("Couldn't build the bot a deck from your sets. Try another deck.");
     const seed = (Math.random() * 0xffffffff) >>> 0;
     const state = createGame({ decks: [deckList(deck), deckList(botDeck)], names: [deps.playerName(), BOT_NAME], format: deck.format, seed }, defs);
-    match = { state, deckId, botSet, sel: null, sheet: "", busy: false, line: "", setup: { active: null, bench: [] }, opening: true, over: false };
+    match = { state, deckId, botSet, botTheme: botDeck.theme || "", sel: null, sheet: "", busy: false, line: "", setup: { active: null, bench: [] }, opening: true, over: false };
     // The bot sets up at once; its cards stay face down until both are ready.
     apply(state, botAction(state, BOT, defs), defs);
     saveMatch();
@@ -544,7 +530,7 @@ export function initTcg(deps) {
       write("match", null);
       return false;
     }
-    match = { state: saved.state, deckId: saved.deckId, botSet: saved.botSet, lesson: saved.lesson ?? null, sel: null, sheet: "", busy: false, line: "", setup: { active: null, bench: [] }, opening: false, over: false };
+    match = { state: saved.state, deckId: saved.deckId, botSet: saved.botSet, botTheme: saved.botTheme || "", lesson: saved.lesson ?? null, sel: null, sheet: "", busy: false, line: "", setup: { active: null, bench: [] }, opening: false, over: false };
     return true;
   }
 
@@ -690,7 +676,7 @@ export function initTcg(deps) {
     return `<div class="tg-table rt-dark rt-still${myTurn() ? " my-turn" : ""}${coach ? " has-coach" : ""}${pointHand ? " coach-hand" : ""}${pointActive ? " coach-active" : ""}${coach?.want?.({ type: "end" }) || coach?.want?.({ type: "place" }) ? " coach-key" : ""}" data-phase="${real.phase}">
       <div class="tg-bar tg-bar-foe">
         <button type="button" class="tg-leave" data-act="leave" aria-label="Leave the match">${match.leaving ? "Concede?" : "Leave"}</button>
-        <b class="tg-who">${esc(foe.name)}</b>
+        <b class="tg-who">${esc(foe.name)}${match.botTheme && !setup ? `<small>${esc(match.botTheme)} deck</small>` : ""}</b>
         ${prizesHtml(state, BOT)}
         <span class="tg-count" title="Cards in hand"><i class="tg-ic hand"></i>${foe.hand.length}</span>
         <span class="tg-count" title="Cards in deck"><i class="tg-ic deck"></i>${foe.deck.length}</span>
@@ -1123,6 +1109,39 @@ export function initTcg(deps) {
     el.animate(frames, { duration: ms, delay, easing: EASE, fill: "both" }).finished.catch(() => {}).then(() => el.remove());
   }
 
+  /**
+   * A played Trainer or Stadium, held large over the arena long enough to read.
+   * A tap anywhere puts it away early. Resolves once it has gone.
+   */
+  let showing = null;
+  function showCard(src, from, to, hold) {
+    if (!src || !from || !to || !fx || still() || !to.width) return null;
+    const w = to.width;
+    const h = w * 1.4;
+    const a = centre(from);
+    const b = centre(to);
+    const el = document.createElement("img");
+    el.className = "tg-ghost tg-shown";
+    el.alt = "";
+    el.src = src;
+    el.style.cssText = `left:${b.x - w / 2}px;top:${b.y - h / 2}px;width:${w}px;height:${h}px`;
+    fx.appendChild(el);
+    const from0 = `translate(${a.x - b.x}px, ${a.y - b.y}px) scale(${Math.max(0.16, Math.min(1.4, from.width / w)).toFixed(3)})`;
+    el.animate([{ transform: from0 }, { transform: "none" }], { duration: 300, easing: EASE, fill: "both" });
+    return new Promise((resolve) => {
+      let timer = 0;
+      const done = () => {
+        clearTimeout(timer);
+        document.removeEventListener("pointerdown", done, true);
+        el.animate([{ transform: "none", opacity: 1 }, { transform: "scale(1.05)", opacity: 0 }], { duration: 220, easing: EASE, fill: "both" })
+          .finished.catch(() => {}).then(() => (el.remove(), resolve()));
+      };
+      timer = setTimeout(done, 300 + hold);
+      // A press only counts once the card has landed, so the tap that played it doesn't close it.
+      setTimeout(() => document.addEventListener("pointerdown", done, true), 300);
+    });
+  }
+
   /** Something on the table arrives from elsewhere: its picture flies in, and it shows when the picture lands. */
   function flyIn(from, el, { ms = 340, delay = 0 } = {}) {
     const pic = el?.querySelector("img");
@@ -1208,8 +1227,8 @@ export function initTcg(deps) {
       if (!arena) return 0;
       const w = Math.min(arena.width * 0.5, arena.height * 0.62);
       const to = { left: arena.left + arena.width / 2 - w / 2, top: arena.top + arena.height / 2 - w * 0.7, width: w, height: w * 1.4 };
-      ghost(img(match.state.cards[event.uid]), src, to, { ms: event.p === ME ? 900 : 1300, width: w, show: true });
-      return event.p === ME ? 800 : 1200;
+      showing = showCard(img(match.state.cards[event.uid]), src, to, event.p === ME ? 1300 : 2600);
+      return 0;
     }
     if (event.t === "move-energy") {
       const at = rectOf(`${monSel(event.p, event.from)} img`);
@@ -1397,6 +1416,10 @@ export function initTcg(deps) {
       } else if (event.t === "heal") {
         popDamage(event.p, `+${event.n}`, "heal", event.spot);
         await wait(520);
+      } else if (showing) {
+        const shown = showing;
+        showing = null;
+        await shown;
       } else if (event.t === "search") {
         await wait(event.p === BOT ? 900 : Math.max(420, moving + 100));
       } else if (event.t === "shuffle-hand" || event.t === "discard-hand") {

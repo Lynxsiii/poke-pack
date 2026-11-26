@@ -32,7 +32,21 @@ the cards, sleeves, coins and playmats they have bought in-game.
   Energy is free. "Build it for me" makes a legal deck from your collection.
 - **Bot** (`js/tcg/bot.js`): plays by the same actions as a person. Its deck
   is built from the ordinary one-prize cards of the set most of your deck
-  comes from.
+  comes from, the way a person writes a list (`buildBotDeck` in decks.js): a
+  main attacker's whole line (4-3-3), a partner line on the same Energy, an
+  Ability Pokémon that draws or searches, Trainers by job (draw, search,
+  switch, gust, heal), about 13 Energy. The table names it ("Charizard deck").
+  Strategy: Benches what evolves first, powers up toward the Stage 2 it will
+  become, feeds the next attacker when the Active one is about to fall,
+  retreats or Switches when a Benched one hits much harder or can Knock Out,
+  gusts out a Benched Pokémon it can Knock Out, digs for a Basic when its Bench
+  is empty, and doesn't waste Potions, Full Heals or Energy Removal. In a
+  1,080-match duel it plays even with the old bot (49.8%), so these read as a
+  person's choices more than they win more; real gains need expected damage
+  from attack effects.
+- **Energy symbols**: the real printed symbols, transparent PNGs in
+  `assets/tcg/energy/<type>-v1.png`, from pokewiki.de's `<Type>Symbol_TCG.png`
+  files (cropped, 96 px).
 - **Table** (`js/tcg-page.js`, `css/pages/tcg.css`): phone first. Your sleeve
   is your card back, your coin makes the flips. A hand card can be tapped then
   placed, or dragged (touch or mouse) onto the field or a Pokémon. A match is kept on the device
