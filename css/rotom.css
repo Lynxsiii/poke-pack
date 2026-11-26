@@ -501,7 +501,9 @@ a.rt-row, button.rt-row { transition: transform 0.14s var(--ease-out); }
 .brand { gap: 8px; text-decoration: none; color: var(--k); }
 .brand-logo { border-radius: 8px; }
 .brand-name { font-family: var(--font-xc); font-style: italic; font-size: 19px; font-weight: 700; letter-spacing: -0.01em; }
-.brand-name span { color: inherit; }
+/* ".rip" stands on a slanted ink plate in the key's yellow: the wordmark's one mark. */
+.brand-name span { position: relative; z-index: 0; display: inline-block; margin-left: 4px; padding: 2px 6px 3px 5px; color: var(--yel-k); }
+.brand-name span::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 3px; background: var(--k); transform: skewX(var(--skew)); }
 /* The purse: coins on a slanted ink plate. */
 .balance {
   position: relative; isolation: isolate; min-height: 36px; padding: 0 17px 0 11px;
