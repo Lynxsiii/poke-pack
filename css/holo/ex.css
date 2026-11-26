@@ -30,9 +30,10 @@
 
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex {
   --ex-cosmos: url("/assets/foil/ex-cosmos-v2.webp");
-  /* the set stamp's hole in a reverse's pattern: a rounded box with a soft edge (the scans carry no logo, so a hard-edged hole read as a
-     dark rectangle on the art, rv-i1) */
-  --ex-stamp-hole: url("/assets/foil/ex-reverse/stamp-soft-v1.webp");
+  /* the set stamp's hole in a reverse's pattern: none. The scans carry no logo, so any hole (hard, then soft-edged) read as a dark patch
+     on the art (rv-i1; Noah 2026-11-26); the logo is now drawn on top by `.set-stamp` below, and the foil runs on round it as on the
+     real card. The variable stays so every mask list keeps its layer count. */
+  --ex-stamp-hole: linear-gradient(transparent, transparent);
   --st-x: 0; --st-y: 0; --st-w: 0; --st-h: 0; /* the set stamp's box on a reverse (exReverseExtras) */
   --seed-pos: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
   /* every shape of the real cosmos lights in one saturated colour: teal, cyan, green, lime, orange, magenta, yellow */
@@ -354,4 +355,21 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-none.era-ex .glare {
     hsla(0, 0%, 100%, 0.65) 20%,
     hsla(0, 0%, 0%, 0.3) 90%
   );
+}
+
+/* The set stamp of an EX reverse (ex7-ex16): the set's logo printed over the art box's lower right, foil-free ink over the foil
+   (photos: Holon Fossil, Kabuto and Kingdra ex13 reverses, 2026-11-26). The scans are the non-reverse print, so the site draws the
+   logo itself from its own set logo, fitted into the box exReverseExtras measured (`--st-*`). Not scoped to fx-holo: it is print,
+   so it shows with the holo off too. Above the foil and glare, so neither tints it. */
+.tcg.has-set-stamp > .set-stamp {
+  position: absolute;
+  left: calc(var(--st-x) * 100%);
+  top: calc(var(--st-y) * 100%);
+  width: calc(var(--st-w) * 100%);
+  height: calc(var(--st-h) * 100%);
+  background: var(--set-stamp) right 4% bottom 12% / contain no-repeat;
+  transform: scale(0.86);
+  transform-origin: 96% 88%;
+  pointer-events: none;
+  z-index: 5;
 }

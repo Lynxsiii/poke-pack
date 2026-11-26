@@ -2,7 +2,7 @@ import { createCardMotion } from "./card-motion.js?v=4";
 import {
   foilExtras, foilClass as finishClass, foilLayout as finishLayout, foilLook as finishLook, foilPattern as finishPattern,
   reverseKindOf as finishReverseKind, dataFinish,
-} from "./foil-maps.js?v=142";
+} from "./foil-maps.js?v=143";
 import { initFx } from "./fx.js";
 import { PROFILE_PAGE_LIMIT } from "./profile-pages.js";
 import * as profileView from "./profile-view.js"; // the public profile page: hero, sections, room
@@ -856,6 +856,7 @@ function tcgFace(card, { small = false, stamp = true, lazy = false } = {}) {
     <span class="foil" aria-hidden="true"></span>
     ${extra.cure ? `<span class="cure" aria-hidden="true"></span>` : ""}
     <span class="glare" aria-hidden="true"></span>
+    ${/\bhas-set-stamp\b/.test(extra.classes) ? `<span class="set-stamp" aria-hidden="true"></span>` : ""}
     ${/\bhas-etch-map\b/.test(extra.classes) ? `<span class="shine" aria-hidden="true"></span><span class="relief" aria-hidden="true"></span>` : ""}
     ${stamp ? rarityStamp(shown) : ""}
   </div>`;

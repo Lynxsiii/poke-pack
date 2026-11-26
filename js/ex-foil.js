@@ -335,9 +335,13 @@ export function exReverseExtras(card, url) {
   const stamp = box && !energy
     ? `;--st-x:${f(box[0], 600)};--st-y:${f(box[1], 838)};--st-w:${f(box[2] - box[0], 600)};--st-h:${f(box[3] - box[1], 838)}`
     : "";
+  // The set logo itself, printed over the art box (foil-free ink): the site's own logo of the set, fitted to the stamp's box
+  // (css/holo/ex.css `.set-stamp`; tcgFace adds the span for `has-set-stamp`). The scans are the non-reverse print and carry
+  // no logo, so without it the stamp's spot read as a dark patch (Noah, 2026-11-26).
+  const logo = stamp ? `;--set-stamp:url('${url(`assets/cards/sets/${set}-logo.webp`)}')` : "";
   return {
-    classes: `rev-mirror era-ex ex-rev ex-rev-${energy ? "mirror" : family}${EX_REVERSE[set] ? ` ex-rev-set-${set}` : ""}${energy ? " ex-rev-basic-energy" : ""}`,
-    style: (win ? `--ex-win:url('${url(win)}')` : "") + stamp,
+    classes: `rev-mirror era-ex ex-rev ex-rev-${energy ? "mirror" : family}${EX_REVERSE[set] ? ` ex-rev-set-${set}` : ""}${energy ? " ex-rev-basic-energy" : ""}${stamp ? " has-set-stamp" : ""}`,
+    style: (win ? `--ex-win:url('${url(win)}')` : "") + stamp + logo,
     cure: false,
   };
 }
