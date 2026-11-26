@@ -46,6 +46,24 @@
     "swshp029": {
       "foilAs": "Rare Holo",
       "notes": "cosmos/pixel-cosmos holo print (3-pack blister); Sea & Sky version is a separate print"
+    },
+    "139-cracked-ice": {
+      "like": "139",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Zacian Theme Deck)",
+      "tcgplayerId": 213238,
+      "tcgplayerGroup": 1840
+    },
+    "140-cracked-ice": {
+      "like": "140",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Zamazenta Theme Deck)",
+      "tcgplayerId": 213239,
+      "tcgplayerGroup": 1840
     }
   },
   "products": [
@@ -108,6 +126,32 @@
       "tcgplayerId": 210572,
       "packs": 9,
       "promos": []
+    },
+    {
+      "id": "theme-deck-zacian",
+      "name": "Theme Deck \"Zacian\"",
+      "kind": "deck",
+      "tcgplayerId": 210571,
+      "packs": 0,
+      "promos": [
+        "139-cracked-ice"
+      ],
+      "price": 7.03,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Zacian, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-zamazenta",
+      "name": "Theme Deck \"Zamazenta\"",
+      "kind": "deck",
+      "tcgplayerId": 210570,
+      "packs": 0,
+      "promos": [
+        "140-cracked-ice"
+      ],
+      "price": 6.77,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Zamazenta, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ]
 }

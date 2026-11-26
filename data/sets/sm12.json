@@ -91,6 +91,24 @@
       "foilAs": "Rare Ultra",
       "variant": "Small But Mighty Premium Collection",
       "notes": "Yellow A alternate art full art, not in boosters"
+    },
+    "113-cracked-ice": {
+      "like": "113",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Towering Heights Theme Deck)",
+      "tcgplayerId": 202333,
+      "tcgplayerGroup": 1840
+    },
+    "53-cracked-ice": {
+      "like": "53",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Unseen Depths Theme Deck)",
+      "tcgplayerId": 202331,
+      "tcgplayerGroup": 1840
     }
   },
   "products": [
@@ -216,6 +234,32 @@
       "tcgplayerId": 199261,
       "packs": 36,
       "promos": []
+    },
+    {
+      "id": "theme-deck-towering-heights",
+      "name": "Theme Deck \"Towering Heights\"",
+      "kind": "deck",
+      "tcgplayerId": 199306,
+      "packs": 0,
+      "promos": [
+        "113-cracked-ice"
+      ],
+      "price": 44.56,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Groudon, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-unseen-depths",
+      "name": "Theme Deck \"Unseen Depths\"",
+      "kind": "deck",
+      "tcgplayerId": 199305,
+      "packs": 0,
+      "promos": [
+        "53-cracked-ice"
+      ],
+      "price": 28.47,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Kyogre, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ],
   "printedTotal": 236

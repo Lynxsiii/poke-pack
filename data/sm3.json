@@ -7411,5 +7411,97 @@
     "promo": true,
     "foilAs": "Rare Holo GX",
     "foilMap": "assets/foil/maps/sm3/smp063.webp"
+  },
+  {
+    "id": "sm3-28-cracked-ice",
+    "name": "Alolan Ninetales",
+    "number": "28-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "110",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "It creates drops of ice in its coat and showers them over its enemies. Anyone who angers it will be frozen stiff in an instant.",
+    "evolvesFrom": "Alolan Vulpix",
+    "image": "assets/cards/sm3/28.webp",
+    "imageSmall": "assets/cards/sm3/28-sm.webp",
+    "attacks": [
+      {
+        "name": "Aurora Beam",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Luminous Barrier",
+        "text": "Prevent all effects of attacks, including damage, done to this Pokémon by your opponent's Pokémon-GX or Pokémon-EX.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm3-28/large",
+    "printedNumber": "28",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Luminous Frost Theme Deck)",
+    "tcgplayerId": 173088,
+    "market": 11.69
+  },
+  {
+    "id": "sm3-76-cracked-ice",
+    "name": "Lycanroc",
+    "number": "76-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "110",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "Its quick movements confuse its enemies. Well equipped with claws and fangs, it also uses the sharp rocks in its mane as weapons.",
+    "evolvesFrom": "Rockruff",
+    "image": "assets/cards/sm3/76.webp",
+    "imageSmall": "assets/cards/sm3/76-sm.webp",
+    "attacks": [
+      {
+        "name": "Rock Throw",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Accelerock",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm3-76/large",
+    "printedNumber": "76",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Rock Steady Theme Deck)",
+    "tcgplayerId": 178762,
+    "market": 1.97
   }
 ]

@@ -1,0 +1,3967 @@
+{
+  "_about": "Sun & Moon-era English theme decks, sm1 Sun & Moon through sm12 Cosmic Eclipse: 25 decks (3 for sm1, 2 for each of sm2-sm12), written 2026-11-26. Lists: Bulbapedia deck pages (MediaWiki API wikitext, 'Deck list' tables) and TCGsync (tcgosaurus.tcgsync.com product pages, 'Deck List:' / 'Decklist:'); all 25 agree card-for-card by name and count (only differences: some TCGsync pages show the Cracked Ice showcase as its own '(Cracked Ice Holo)' line, and Bulbapedia writes 'Nidoran♀' where the site spells 'Nidoran ♀'). Release dates from Bulbapedia's deck infobox (single source; they are the deck release dates, e.g. Forest Shadow/Roaring Heat/Bright Tide 2017-01-20, two weeks before the set). Card ids resolved by set + number in data/<set>.json; cards from other sets keep their own set ids (sm1/sm2/sm3/sm4/sm5/sm6/sm7/sm8/sm9/sm10/sm11/sm12/sm75 as listed). Basic Energy: no source names the print; energy print assumed from release date: Sun & Moon 2017 (energy-<type>-sm17) for sm1-sm8, Sun & Moon 2019 (energy-<type>-sm19) for sm9 Team Up (Feb 2019) onward, same split as the site's ETB data (sun-moon.json etb.print) and Bulbapedia's note that Team Up has its own Energy print. No deck holds Fairy Energy (Sun & Moon decks are Grass/Fire/Water/Lightning/Psychic/Fighting/Darkness/Metal only), so no id-null Fairy row was needed. TCGplayer: sealed deck in the set's own group (checked on tcgcsv); showcase Cracked Ice print in group 1840 'Deck Exclusives' (names are like 'Decidueye - 011/149 (Cracked Ice Holo)' or only '(SM Forbidden Light)' with foilOnly true for several; those are still the deck's Cracked Ice print). Extra field 'exclusivePrints' lists other deck-only non-holo prints found in group 1840 (from Bulbapedia trivia). marketPrice is TCGplayer market via tcgcsv, null where TCGplayer has none (9 decks). Left out: Shining Legends (sm35), Dragon Majesty (sm75), Hidden Fates (sm115) and Detective Pikachu (det1) had no theme decks (TCGplayer groups hold only ETBs, tins, collections, Case Files). Already on the site and skipped: smp Pikachu & Zekrom-GX League Battle Deck, Let's Play Eevee theme deck, Alolan Sandslash/Ninetales Trainer Kit. Also not covered: Battle Arena / Legendary Battle Decks (not theme decks).",
+  "decks": [
+    {
+      "set": "sm1",
+      "name": "Forest Shadow",
+      "showcase": "Decidueye",
+      "showcaseCard": "sm1-11",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Decidueye is exclusive to this deck'); not the pack print.",
+      "showcaseTcgplayerId": 131299,
+      "showcaseTcgplayerName": "Decidueye - 011/149 (Cracked Ice Holo)",
+      "tcgplayerId": 126172,
+      "tcgplayerName": "Sun & Moon Base Set Theme Deck - \"Forest Shadow\" [Decidueye]",
+      "marketPrice": 17.42,
+      "released": "2017-01-20",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: SUM Green Rowlet Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells it separately: 'Code Card - \"Forest Shadow\" Theme Deck'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "sm1-11",
+          "name": "Decidueye",
+          "n": 2
+        },
+        {
+          "id": "sm1-10",
+          "name": "Dartrix",
+          "n": 2
+        },
+        {
+          "id": "sm1-9",
+          "name": "Rowlet",
+          "n": 3
+        },
+        {
+          "id": "sm1-17",
+          "name": "Shiinotic",
+          "n": 1
+        },
+        {
+          "id": "sm1-16",
+          "name": "Morelull",
+          "n": 2
+        },
+        {
+          "id": "sm1-5",
+          "name": "Parasect",
+          "n": 1
+        },
+        {
+          "id": "sm1-4",
+          "name": "Paras",
+          "n": 2
+        },
+        {
+          "id": "sm1-7",
+          "name": "Surskit",
+          "n": 2
+        },
+        {
+          "id": "sm1-14",
+          "name": "Fomantis",
+          "n": 2
+        },
+        {
+          "id": "sm1-6",
+          "name": "Pinsir",
+          "n": 2
+        },
+        {
+          "id": "sm1-18",
+          "name": "Bounsweet",
+          "n": 2
+        },
+        {
+          "id": "sm1-107",
+          "name": "Trumbeak",
+          "n": 2
+        },
+        {
+          "id": "sm1-106",
+          "name": "Pikipek",
+          "n": 2
+        },
+        {
+          "id": "sm1-102",
+          "name": "Spinda",
+          "n": 2
+        },
+        {
+          "id": "sm1-99",
+          "name": "Kangaskhan",
+          "n": 1
+        },
+        {
+          "id": "sm1-114",
+          "name": "Big Malasada",
+          "n": 1
+        },
+        {
+          "id": "sm1-116",
+          "name": "Energy Retrieval",
+          "n": 1
+        },
+        {
+          "id": "sm1-120",
+          "name": "Hau",
+          "n": 2
+        },
+        {
+          "id": "sm1-122",
+          "name": "Lillie",
+          "n": 1
+        },
+        {
+          "id": "sm1-123",
+          "name": "Nest Ball",
+          "n": 2
+        },
+        {
+          "id": "sm1-127",
+          "name": "Potion",
+          "n": 1
+        },
+        {
+          "id": "sm1-128",
+          "name": "Professor Kukui",
+          "n": 1
+        },
+        {
+          "id": "sm1-134",
+          "name": "Timer Ball",
+          "n": 2
+        },
+        {
+          "id": "sm1-135",
+          "name": "Ultra Ball",
+          "n": 1
+        },
+        {
+          "id": "energy-grass-sm17",
+          "name": "Grass Energy",
+          "n": 20
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Forest_Shadow_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards; release January 20, 2017; pack contents line; trivia on Cracked Ice / non-holo exclusives"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/sun-moon-theme-deck-forest-shadow",
+          "quote": "TCGsync (tcgosaurus) product page 'Deck List': same cards and counts as Bulbapedia (Cracked Ice copy shown as a separate '(Cracked Ice Holo)' line on some pages)"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; energy print assumed from release date (2017-01-20): Sun & Moon 2017 print (ids energy-<type>-sm17) for sm1-sm8 decks, Sun & Moon 2019 print (sm19) from Team Up (Feb 2019) on, matching the site's ETB convention (scripts/box-research/sun-moon.json etb.print). Fairy Energy does not occur: Sun & Moon decks hold no Fairy. Decidueye is 2 copies per Bulbapedia: 1 Cracked Ice Holo (deck exclusive, Decidueye - 011/149 (Cracked Ice Holo), TCGplayer 131299 in Deck Exclusives group 1840) + 1 listed as plain 'Rare'; both are sm1-11. Other deck-only prints (group 1840): Shiinotic sm1-17 -> 131300 Shiinotic - 17/149 (SM Base Set); Kangaskhan sm1-99 -> 131301 Kangaskhan - 99/149 (SM Base Set). The site's own card for these ids may be holo where the deck copy is non-holo. Bulbapedia trivia: The Cracked Ice Holofoil version of Decidueye is exclusive to this deck. | The Non Holofoil versions of Shiinotic and Kangaskhan are exclusive to this deck.",
+      "exclusivePrints": [
+        {
+          "id": "sm1-17",
+          "name": "Shiinotic",
+          "tcgplayerId": 131300,
+          "tcgplayerName": "Shiinotic - 17/149 (SM Base Set)"
+        },
+        {
+          "id": "sm1-99",
+          "name": "Kangaskhan",
+          "tcgplayerId": 131301,
+          "tcgplayerName": "Kangaskhan - 99/149 (SM Base Set)"
+        }
+      ],
+      "product": "theme-deck-forest-shadow"
+    },
+    {
+      "set": "sm1",
+      "name": "Roaring Heat",
+      "showcase": "Incineroar",
+      "showcaseCard": "sm1-26",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Incineroar is exclusive to this deck'); not the pack print.",
+      "showcaseTcgplayerId": 131302,
+      "showcaseTcgplayerName": "Incineroar - 026/149 (Cracked Ice Holo)",
+      "tcgplayerId": 126173,
+      "tcgplayerName": "Sun & Moon Base Set Theme Deck - \"Roaring Heat\" [Incineroar]",
+      "marketPrice": 23.26,
+      "released": "2017-01-20",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: SUM Red Litten Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells it separately: 'Code Card - \"Roaring Heat\" Theme Deck'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "sm1-26",
+          "name": "Incineroar",
+          "n": 2
+        },
+        {
+          "id": "sm1-25",
+          "name": "Torracat",
+          "n": 3
+        },
+        {
+          "id": "sm1-24",
+          "name": "Litten",
+          "n": 4
+        },
+        {
+          "id": "sm1-23",
+          "name": "Torkoal",
+          "n": 2
+        },
+        {
+          "id": "sm1-75",
+          "name": "Palossand",
+          "n": 1
+        },
+        {
+          "id": "sm1-74",
+          "name": "Sandygast",
+          "n": 2
+        },
+        {
+          "id": "sm1-70",
+          "name": "Boldore",
+          "n": 2
+        },
+        {
+          "id": "sm1-69",
+          "name": "Roggenrola",
+          "n": 2
+        },
+        {
+          "id": "sm1-72",
+          "name": "Crabrawler",
+          "n": 2
+        },
+        {
+          "id": "sm1-73",
+          "name": "Passimian",
+          "n": 2
+        },
+        {
+          "id": "sm1-67",
+          "name": "Makuhita",
+          "n": 2
+        },
+        {
+          "id": "sm1-113",
+          "name": "Oranguru",
+          "n": 1
+        },
+        {
+          "id": "sm1-112",
+          "name": "Bewear",
+          "n": 1
+        },
+        {
+          "id": "sm1-111",
+          "name": "Stufful",
+          "n": 2
+        },
+        {
+          "id": "sm1-114",
+          "name": "Big Malasada",
+          "n": 1
+        },
+        {
+          "id": "sm1-116",
+          "name": "Energy Retrieval",
+          "n": 1
+        },
+        {
+          "id": "sm1-122",
+          "name": "Lillie",
+          "n": 1
+        },
+        {
+          "id": "sm1-123",
+          "name": "Nest Ball",
+          "n": 2
+        },
+        {
+          "id": "sm1-127",
+          "name": "Potion",
+          "n": 1
+        },
+        {
+          "id": "sm1-128",
+          "name": "Professor Kukui",
+          "n": 1
+        },
+        {
+          "id": "sm1-120",
+          "name": "Hau",
+          "n": 2
+        },
+        {
+          "id": "sm1-134",
+          "name": "Timer Ball",
+          "n": 2
+        },
+        {
+          "id": "sm1-135",
+          "name": "Ultra Ball",
+          "n": 1
+        },
+        {
+          "id": "energy-fire-sm17",
+          "name": "Fire Energy",
+          "n": 11
+        },
+        {
+          "id": "energy-fighting-sm17",
+          "name": "Fighting Energy",
+          "n": 9
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Roaring_Heat_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards; release January 20, 2017; pack contents line; trivia on Cracked Ice / non-holo exclusives"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/sun-moon-theme-deck-roaring-heat",
+          "quote": "TCGsync (tcgosaurus) product page 'Deck List': same cards and counts as Bulbapedia (Cracked Ice copy shown as a separate '(Cracked Ice Holo)' line on some pages)"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; energy print assumed from release date (2017-01-20): Sun & Moon 2017 print (ids energy-<type>-sm17) for sm1-sm8 decks, Sun & Moon 2019 print (sm19) from Team Up (Feb 2019) on, matching the site's ETB convention (scripts/box-research/sun-moon.json etb.print). Fairy Energy does not occur: Sun & Moon decks hold no Fairy. Incineroar is 2 copies per Bulbapedia: 1 Cracked Ice Holo (deck exclusive, Incineroar - 026/149 (Cracked Ice Holo), TCGplayer 131302 in Deck Exclusives group 1840) + 1 listed as plain 'Rare'; both are sm1-26. Other deck-only prints (group 1840): Oranguru sm1-113 -> 131303 Oranguru - 113/149 (SM Base Set). The site's own card for these ids may be holo where the deck copy is non-holo. Bulbapedia trivia: The Cracked Ice Holofoil version of Incineroar is exclusive to this deck. | The Non Holofoil version of Oranguru is exclusive to this deck.",
+      "exclusivePrints": [
+        {
+          "id": "sm1-113",
+          "name": "Oranguru",
+          "tcgplayerId": 131303,
+          "tcgplayerName": "Oranguru - 113/149 (SM Base Set)"
+        }
+      ],
+      "product": "theme-deck-roaring-heat"
+    },
+    {
+      "set": "sm1",
+      "name": "Bright Tide",
+      "showcase": "Primarina",
+      "showcaseCard": "sm1-41",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Primarina is exclusive to this deck'); not the pack print.",
+      "showcaseTcgplayerId": 131304,
+      "showcaseTcgplayerName": "Primarina - 041/149 (Cracked Ice Holo)",
+      "tcgplayerId": 126174,
+      "tcgplayerName": "Sun & Moon Base Set Theme Deck - \"Bright Tide\" [Primarina]",
+      "marketPrice": 22.95,
+      "released": "2017-01-20",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: SUM Blue Popplio Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells it separately: 'Code Card - \"Bright Tide\" Theme Deck'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "sm1-41",
+          "name": "Primarina",
+          "n": 2
+        },
+        {
+          "id": "sm1-40",
+          "name": "Brionne",
+          "n": 2
+        },
+        {
+          "id": "sm1-39",
+          "name": "Popplio",
+          "n": 3
+        },
+        {
+          "id": "sm1-29",
+          "name": "Golduck",
+          "n": 1
+        },
+        {
+          "id": "sm1-28",
+          "name": "Psyduck",
+          "n": 2
+        },
+        {
+          "id": "sm1-34",
+          "name": "Cloyster",
+          "n": 1
+        },
+        {
+          "id": "sm1-33",
+          "name": "Shellder",
+          "n": 2
+        },
+        {
+          "id": "sm1-37",
+          "name": "Wingull",
+          "n": 2
+        },
+        {
+          "id": "sm1-36",
+          "name": "Corsola",
+          "n": 2
+        },
+        {
+          "id": "sm1-50",
+          "name": "Lanturn",
+          "n": 1
+        },
+        {
+          "id": "sm1-49",
+          "name": "Chinchou",
+          "n": 2
+        },
+        {
+          "id": "sm1-53",
+          "name": "Togedemaru",
+          "n": 2
+        },
+        {
+          "id": "sm1-104",
+          "name": "Herdier",
+          "n": 2
+        },
+        {
+          "id": "sm1-103",
+          "name": "Lillipup",
+          "n": 2
+        },
+        {
+          "id": "sm1-97",
+          "name": "Spearow",
+          "n": 2
+        },
+        {
+          "id": "sm1-116",
+          "name": "Energy Retrieval",
+          "n": 1
+        },
+        {
+          "id": "sm1-120",
+          "name": "Hau",
+          "n": 2
+        },
+        {
+          "id": "sm1-122",
+          "name": "Lillie",
+          "n": 1
+        },
+        {
+          "id": "sm1-123",
+          "name": "Nest Ball",
+          "n": 2
+        },
+        {
+          "id": "sm1-127",
+          "name": "Potion",
+          "n": 2
+        },
+        {
+          "id": "sm1-128",
+          "name": "Professor Kukui",
+          "n": 1
+        },
+        {
+          "id": "sm1-134",
+          "name": "Timer Ball",
+          "n": 2
+        },
+        {
+          "id": "sm1-135",
+          "name": "Ultra Ball",
+          "n": 1
+        },
+        {
+          "id": "energy-water-sm17",
+          "name": "Water Energy",
+          "n": 12
+        },
+        {
+          "id": "energy-lightning-sm17",
+          "name": "Lightning Energy",
+          "n": 8
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Bright_Tide_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards; release January 20, 2017; pack contents line; trivia on Cracked Ice / non-holo exclusives"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/sun-moon-theme-deck-bright-tide",
+          "quote": "TCGsync (tcgosaurus) product page 'Deck List': same cards and counts as Bulbapedia (Cracked Ice copy shown as a separate '(Cracked Ice Holo)' line on some pages)"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; energy print assumed from release date (2017-01-20): Sun & Moon 2017 print (ids energy-<type>-sm17) for sm1-sm8 decks, Sun & Moon 2019 print (sm19) from Team Up (Feb 2019) on, matching the site's ETB convention (scripts/box-research/sun-moon.json etb.print). Fairy Energy does not occur: Sun & Moon decks hold no Fairy. Primarina is 2 copies per Bulbapedia: 1 Cracked Ice Holo (deck exclusive, Primarina - 041/149 (Cracked Ice Holo), TCGplayer 131304 in Deck Exclusives group 1840) + 1 listed as plain 'Rare'; both are sm1-41. Bulbapedia trivia: The Cracked Ice Holofoil version of Primarina is exclusive to this deck.",
+      "exclusivePrints": [],
+      "product": "theme-deck-bright-tide"
+    },
+    {
+      "set": "sm2",
+      "name": "Steel Sun",
+      "showcase": "Solgaleo",
+      "showcaseCard": "sm2-87",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Solgaleo is exclusive to this deck'); not the pack print.",
+      "showcaseTcgplayerId": 131295,
+      "showcaseTcgplayerName": "Solgaleo - 87/145 (SM Guardians Rising)",
+      "tcgplayerId": 129892,
+      "tcgplayerName": "Guardians Rising Theme Deck - \"Steel Sun\" [Solgaleo]",
+      "marketPrice": 23.02,
+      "released": "2017-05-05",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: GRI Orange Solgaleo Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells it separately: 'Code Card - Guardians Rising Theme Deck - \"Steel Sun\" [Solgaleo]'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "sm2-87",
+          "name": "Solgaleo",
+          "n": 2
+        },
+        {
+          "id": "sm1-65",
+          "name": "Cosmoem",
+          "n": 2
+        },
+        {
+          "id": "sm1-64",
+          "name": "Cosmog",
+          "n": 3
+        },
+        {
+          "id": "sm2-84",
+          "name": "Metang",
+          "n": 2
+        },
+        {
+          "id": "sm2-83",
+          "name": "Beldum",
+          "n": 2
+        },
+        {
+          "id": "sm2-49",
+          "name": "Slowbro",
+          "n": 1
+        },
+        {
+          "id": "sm2-48",
+          "name": "Slowpoke",
+          "n": 2
+        },
+        {
+          "id": "sm2-59",
+          "name": "Dhelmise",
+          "n": 1
+        },
+        {
+          "id": "sm2-55",
+          "name": "Oricorio",
+          "n": 1
+        },
+        {
+          "id": "sm2-113",
+          "name": "Bewear",
+          "n": 2
+        },
+        {
+          "id": "sm2-112",
+          "name": "Stufful",
+          "n": 2
+        },
+        {
+          "id": "sm2-104",
+          "name": "Swellow",
+          "n": 1
+        },
+        {
+          "id": "sm2-103",
+          "name": "Taillow",
+          "n": 2
+        },
+        {
+          "id": "sm2-105",
+          "name": "Castform",
+          "n": 1
+        },
+        {
+          "id": "sm2-118",
+          "name": "Altar of the Sunne",
+          "n": 2
+        },
+        {
+          "id": "sm1-114",
+          "name": "Big Malasada",
+          "n": 1
+        },
+        {
+          "id": "sm1-116",
+          "name": "Energy Retrieval",
+          "n": 1
+        },
+        {
+          "id": "sm1-120",
+          "name": "Hau",
+          "n": 3
+        },
+        {
+          "id": "sm1-123",
+          "name": "Nest Ball",
+          "n": 2
+        },
+        {
+          "id": "sm1-128",
+          "name": "Professor Kukui",
+          "n": 2
+        },
+        {
+          "id": "sm2-130",
+          "name": "Rescue Stretcher",
+          "n": 1
+        },
+        {
+          "id": "sm1-132",
+          "name": "Switch",
+          "n": 2
+        },
+        {
+          "id": "sm1-134",
+          "name": "Timer Ball",
+          "n": 2
+        },
+        {
+          "id": "energy-metal-sm17",
+          "name": "Metal Energy",
+          "n": 12
+        },
+        {
+          "id": "energy-psychic-sm17",
+          "name": "Psychic Energy",
+          "n": 8
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Steel_Sun_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards; release May 5, 2017; pack contents line; trivia on Cracked Ice / non-holo exclusives"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/sun-moon-guardians-rising-theme-deck-steel-sun",
+          "quote": "TCGsync (tcgosaurus) product page 'Deck List': same cards and counts as Bulbapedia (Cracked Ice copy shown as a separate '(Cracked Ice Holo)' line on some pages)"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; energy print assumed from release date (2017-05-05): Sun & Moon 2017 print (ids energy-<type>-sm17) for sm1-sm8 decks, Sun & Moon 2019 print (sm19) from Team Up (Feb 2019) on, matching the site's ETB convention (scripts/box-research/sun-moon.json etb.print). Fairy Energy does not occur: Sun & Moon decks hold no Fairy. Solgaleo is 2 copies per Bulbapedia: 1 Cracked Ice Holo (deck exclusive, Solgaleo - 87/145 (SM Guardians Rising), TCGplayer 131295 in Deck Exclusives group 1840) + 1 listed as plain 'Rare'; both are sm2-87. Other deck-only prints (group 1840): Dhelmise sm2-59 -> 131296 Dhelmise - 59/145 (SM Guardians Rising). The site's own card for these ids may be holo where the deck copy is non-holo. Bulbapedia trivia: The Cracked Ice Holofoil version of Solgaleo is exclusive to this deck. | The Non Holofoil version of Dhelmise is exclusive to this deck.",
+      "exclusivePrints": [
+        {
+          "id": "sm2-59",
+          "name": "Dhelmise",
+          "tcgplayerId": 131296,
+          "tcgplayerName": "Dhelmise - 59/145 (SM Guardians Rising)"
+        }
+      ],
+      "product": "theme-deck-steel-sun"
+    },
+    {
+      "set": "sm2",
+      "name": "Hidden Moon",
+      "showcase": "Lunala",
+      "showcaseCard": "sm2-61",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Lunala is exclusive to this deck'); not the pack print.",
+      "showcaseTcgplayerId": 131297,
+      "showcaseTcgplayerName": "Lunala - 61/145 (Cracked Ice Holo)",
+      "tcgplayerId": 129891,
+      "tcgplayerName": "Guardians Rising Theme Deck - \"Hidden Moon\" [Lunala]",
+      "marketPrice": 27.67,
+      "released": "2017-05-05",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: GRI Purple Lunala Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells it separately: 'Code Card - Lunala GX Challenge Box'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "sm2-61",
+          "name": "Lunala",
+          "n": 2
+        },
+        {
+          "id": "sm1-65",
+          "name": "Cosmoem",
+          "n": 2
+        },
+        {
+          "id": "sm1-64",
+          "name": "Cosmog",
+          "n": 3
+        },
+        {
+          "id": "sm2-53",
+          "name": "Gothorita",
+          "n": 2
+        },
+        {
+          "id": "sm2-52",
+          "name": "Gothita",
+          "n": 2
+        },
+        {
+          "id": "sm2-58",
+          "name": "Mimikyu",
+          "n": 1
+        },
+        {
+          "id": "sm2-56",
+          "name": "Oricorio",
+          "n": 1
+        },
+        {
+          "id": "sm2-16",
+          "name": "Salazzle",
+          "n": 1
+        },
+        {
+          "id": "sm2-15",
+          "name": "Salandit",
+          "n": 2
+        },
+        {
+          "id": "sm2-12",
+          "name": "Lampent",
+          "n": 1
+        },
+        {
+          "id": "sm2-11",
+          "name": "Litwick",
+          "n": 2
+        },
+        {
+          "id": "sm2-113",
+          "name": "Bewear",
+          "n": 2
+        },
+        {
+          "id": "sm2-112",
+          "name": "Stufful",
+          "n": 3
+        },
+        {
+          "id": "sm2-117",
+          "name": "Altar of the Moone",
+          "n": 1
+        },
+        {
+          "id": "sm2-122",
+          "name": "Energy Loto",
+          "n": 1
+        },
+        {
+          "id": "sm1-116",
+          "name": "Energy Retrieval",
+          "n": 1
+        },
+        {
+          "id": "sm1-120",
+          "name": "Hau",
+          "n": 3
+        },
+        {
+          "id": "sm1-123",
+          "name": "Nest Ball",
+          "n": 2
+        },
+        {
+          "id": "sm1-127",
+          "name": "Potion",
+          "n": 1
+        },
+        {
+          "id": "sm1-128",
+          "name": "Professor Kukui",
+          "n": 2
+        },
+        {
+          "id": "sm2-130",
+          "name": "Rescue Stretcher",
+          "n": 1
+        },
+        {
+          "id": "sm1-132",
+          "name": "Switch",
+          "n": 2
+        },
+        {
+          "id": "sm1-134",
+          "name": "Timer Ball",
+          "n": 2
+        },
+        {
+          "id": "energy-psychic-sm17",
+          "name": "Psychic Energy",
+          "n": 12
+        },
+        {
+          "id": "energy-fire-sm17",
+          "name": "Fire Energy",
+          "n": 8
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Hidden_Moon_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards; release May 5, 2017; pack contents line; trivia on Cracked Ice / non-holo exclusives"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/sun-moon-guardians-rising-theme-deck-hidden-moon",
+          "quote": "TCGsync (tcgosaurus) product page 'Deck List': same cards and counts as Bulbapedia (Cracked Ice copy shown as a separate '(Cracked Ice Holo)' line on some pages)"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; energy print assumed from release date (2017-05-05): Sun & Moon 2017 print (ids energy-<type>-sm17) for sm1-sm8 decks, Sun & Moon 2019 print (sm19) from Team Up (Feb 2019) on, matching the site's ETB convention (scripts/box-research/sun-moon.json etb.print). Fairy Energy does not occur: Sun & Moon decks hold no Fairy. Lunala is 2 copies per Bulbapedia: 1 Cracked Ice Holo (deck exclusive, Lunala - 61/145 (Cracked Ice Holo), TCGplayer 131297 in Deck Exclusives group 1840) + 1 listed as plain 'Rare'; both are sm2-61. Other deck-only prints (group 1840): Mimikyu sm2-58 -> 131298 Mimikyu - 58/145 (SM Guardians Rising). The site's own card for these ids may be holo where the deck copy is non-holo. Bulbapedia trivia: The Cracked Ice Holofoil version of Lunala is exclusive to this deck. | The Non Holofoil version of Mimikyu is exclusive to this deck.",
+      "exclusivePrints": [
+        {
+          "id": "sm2-58",
+          "name": "Mimikyu",
+          "tcgplayerId": 131298,
+          "tcgplayerName": "Mimikyu - 58/145 (SM Guardians Rising)"
+        }
+      ],
+      "product": "theme-deck-hidden-moon"
+    },
+    {
+      "set": "sm3",
+      "name": "Rock Steady",
+      "showcase": "Lycanroc",
+      "showcaseCard": "sm3-76",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Lycanroc is exclusive to this deck'); not the pack print.",
+      "showcaseTcgplayerId": 178762,
+      "showcaseTcgplayerName": "Lycanroc - 76/147 (Cracked Ice Holo)",
+      "tcgplayerId": 133777,
+      "tcgplayerName": "Burning Shadows Theme Deck - \"Rock Steady\" [Lycanroc]",
+      "marketPrice": 12.64,
+      "released": "2017-08-04",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: BSH Orange Lycanroc Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells it separately: 'Code Card - Burning Shadows Theme Deck - \"Rock Steady\" [Lycanroc]'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "sm3-76",
+          "name": "Lycanroc",
+          "n": 2
+        },
+        {
+          "id": "sm2-73",
+          "name": "Rockruff",
+          "n": 3
+        },
+        {
+          "id": "sm3-67",
+          "name": "Rhyperior",
+          "n": 1
+        },
+        {
+          "id": "sm3-66",
+          "name": "Rhydon",
+          "n": 3
+        },
+        {
+          "id": "sm3-65",
+          "name": "Rhyhorn",
+          "n": 3
+        },
+        {
+          "id": "sm3-71",
+          "name": "Lucario",
+          "n": 1
+        },
+        {
+          "id": "sm3-70",
+          "name": "Riolu",
+          "n": 2
+        },
+        {
+          "id": "sm3-69",
+          "name": "Solrock",
+          "n": 2
+        },
+        {
+          "id": "sm3-72",
+          "name": "Sawk",
+          "n": 1
+        },
+        {
+          "id": "sm3-60",
+          "name": "Meowstic",
+          "n": 2
+        },
+        {
+          "id": "sm3-59",
+          "name": "Espurr",
+          "n": 3
+        },
+        {
+          "id": "sm3-108",
+          "name": "Bouffalant",
+          "n": 1
+        },
+        {
+          "id": "sm3-112",
+          "name": "Acerola",
+          "n": 1
+        },
+        {
+          "id": "sm2-120",
+          "name": "Brooklet Hill",
+          "n": 1
+        },
+        {
+          "id": "sm1-116",
+          "name": "Energy Retrieval",
+          "n": 1
+        },
+        {
+          "id": "sm3-114",
+          "name": "Escape Rope",
+          "n": 1
+        },
+        {
+          "id": "sm1-120",
+          "name": "Hau",
+          "n": 3
+        },
+        {
+          "id": "sm1-123",
+          "name": "Nest Ball",
+          "n": 2
+        },
+        {
+          "id": "sm1-127",
+          "name": "Potion",
+          "n": 1
+        },
+        {
+          "id": "sm1-128",
+          "name": "Professor Kukui",
+          "n": 2
+        },
+        {
+          "id": "sm2-130",
+          "name": "Rescue Stretcher",
+          "n": 1
+        },
+        {
+          "id": "sm1-134",
+          "name": "Timer Ball",
+          "n": 2
+        },
+        {
+          "id": "sm3-128",
+          "name": "Wishful Baton",
+          "n": 1
+        },
+        {
+          "id": "energy-fighting-sm17",
+          "name": "Fighting Energy",
+          "n": 14
+        },
+        {
+          "id": "energy-psychic-sm17",
+          "name": "Psychic Energy",
+          "n": 6
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Rock_Steady_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards; release August 4, 2017; pack contents line; trivia on Cracked Ice / non-holo exclusives"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/sun-moon-burning-shadows-theme-deck-rock-steady",
+          "quote": "TCGsync (tcgosaurus) product page 'Deck List': same cards and counts as Bulbapedia (Cracked Ice copy shown as a separate '(Cracked Ice Holo)' line on some pages)"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; energy print assumed from release date (2017-08-04): Sun & Moon 2017 print (ids energy-<type>-sm17) for sm1-sm8 decks, Sun & Moon 2019 print (sm19) from Team Up (Feb 2019) on, matching the site's ETB convention (scripts/box-research/sun-moon.json etb.print). Fairy Energy does not occur: Sun & Moon decks hold no Fairy. Lycanroc is 2 copies per Bulbapedia: 1 Cracked Ice Holo (deck exclusive, Lycanroc - 76/147 (Cracked Ice Holo), TCGplayer 178762 in Deck Exclusives group 1840) + 1 listed as plain 'Rare'; both are sm3-76. Other deck-only prints (group 1840): Rhyperior sm3-67 -> 149302 Rhyperior - 67/147 (SM Burning Shadows); Lucario sm3-71 -> 169759 Lucario (SM - Burning Shadows). The site's own card for these ids may be holo where the deck copy is non-holo. Bulbapedia trivia: The Cracked Ice Holofoil version of Lycanroc is exclusive to this deck. | The Non Holofoil version of Rhyperior is exclusive to this deck and the Burning Shadows Prerelease Kits. | The Non Holofoil version of Lucario is exclusive to this deck.",
+      "exclusivePrints": [
+        {
+          "id": "sm3-67",
+          "name": "Rhyperior",
+          "tcgplayerId": 149302,
+          "tcgplayerName": "Rhyperior - 67/147 (SM Burning Shadows)"
+        },
+        {
+          "id": "sm3-71",
+          "name": "Lucario",
+          "tcgplayerId": 169759,
+          "tcgplayerName": "Lucario (SM - Burning Shadows)"
+        }
+      ],
+      "product": "theme-deck-rock-steady"
+    },
+    {
+      "set": "sm3",
+      "name": "Luminous Frost",
+      "showcase": "Alolan Ninetales",
+      "showcaseCard": "sm3-28",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Alolan Ninetales is exclusive to this deck'); not the pack print.",
+      "showcaseTcgplayerId": 173088,
+      "showcaseTcgplayerName": "Alolan Ninetales - 28/147 (Cracked Ice Holo)",
+      "tcgplayerId": 133778,
+      "tcgplayerName": "Burning Shadows Theme Deck - \"Luminous Frost\" [Alolan Ninetales]",
+      "marketPrice": 23.03,
+      "released": "2017-08-04",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: BSH Blue Alolan Ninetales Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells it separately: 'Code Card - Alolan Ninetales GX Challenge Box'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "sm3-28",
+          "name": "Alolan Ninetales",
+          "n": 2
+        },
+        {
+          "id": "sm3-27",
+          "name": "Alolan Vulpix",
+          "n": 3
+        },
+        {
+          "id": "sm2-20",
+          "name": "Alolan Sandslash",
+          "n": 2
+        },
+        {
+          "id": "sm2-19",
+          "name": "Alolan Sandshrew",
+          "n": 2
+        },
+        {
+          "id": "sm3-38",
+          "name": "Bruxish",
+          "n": 1
+        },
+        {
+          "id": "sm3-31",
+          "name": "Kingdra",
+          "n": 1
+        },
+        {
+          "id": "sm3-30",
+          "name": "Seadra",
+          "n": 2
+        },
+        {
+          "id": "sm3-29",
+          "name": "Horsea",
+          "n": 2
+        },
+        {
+          "id": "sm3-37",
+          "name": "Simipour",
+          "n": 2
+        },
+        {
+          "id": "sm3-36",
+          "name": "Panpour",
+          "n": 2
+        },
+        {
+          "id": "sm3-23",
+          "name": "Simisear",
+          "n": 1
+        },
+        {
+          "id": "sm3-22",
+          "name": "Pansear",
+          "n": 2
+        },
+        {
+          "id": "sm3-24",
+          "name": "Heatmor",
+          "n": 2
+        },
+        {
+          "id": "sm3-108",
+          "name": "Bouffalant",
+          "n": 1
+        },
+        {
+          "id": "sm1-114",
+          "name": "Big Malasada",
+          "n": 1
+        },
+        {
+          "id": "sm1-116",
+          "name": "Energy Retrieval",
+          "n": 1
+        },
+        {
+          "id": "sm3-114",
+          "name": "Escape Rope",
+          "n": 1
+        },
+        {
+          "id": "sm1-120",
+          "name": "Hau",
+          "n": 3
+        },
+        {
+          "id": "sm3-117",
+          "name": "Lana",
+          "n": 1
+        },
+        {
+          "id": "sm1-123",
+          "name": "Nest Ball",
+          "n": 2
+        },
+        {
+          "id": "sm1-128",
+          "name": "Professor Kukui",
+          "n": 2
+        },
+        {
+          "id": "sm2-130",
+          "name": "Rescue Stretcher",
+          "n": 1
+        },
+        {
+          "id": "sm1-134",
+          "name": "Timer Ball",
+          "n": 2
+        },
+        {
+          "id": "sm3-128",
+          "name": "Wishful Baton",
+          "n": 1
+        },
+        {
+          "id": "energy-water-sm17",
+          "name": "Water Energy",
+          "n": 14
+        },
+        {
+          "id": "energy-fire-sm17",
+          "name": "Fire Energy",
+          "n": 6
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Luminous_Frost_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards; release August 4, 2017; pack contents line; trivia on Cracked Ice / non-holo exclusives"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/sun-moon-burning-shadows-theme-deck-luminous-frost",
+          "quote": "TCGsync (tcgosaurus) product page 'Deck List': same cards and counts as Bulbapedia (Cracked Ice copy shown as a separate '(Cracked Ice Holo)' line on some pages)"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; energy print assumed from release date (2017-08-04): Sun & Moon 2017 print (ids energy-<type>-sm17) for sm1-sm8 decks, Sun & Moon 2019 print (sm19) from Team Up (Feb 2019) on, matching the site's ETB convention (scripts/box-research/sun-moon.json etb.print). Fairy Energy does not occur: Sun & Moon decks hold no Fairy. Alolan Ninetales is 2 copies per Bulbapedia: 1 Cracked Ice Holo (deck exclusive, Alolan Ninetales - 28/147 (Cracked Ice Holo), TCGplayer 173088 in Deck Exclusives group 1840) + 1 listed as plain 'Rare'; both are sm3-28. Other deck-only prints (group 1840): Kingdra sm3-31 -> 169761 Kingdra - 31/147 (SM Burning Shadows). The site's own card for these ids may be holo where the deck copy is non-holo. Bulbapedia trivia: The Cracked Ice Holofoil version of Alolan Ninetales is exclusive to this deck. | The Non Holofoil version of Kingdra is exclusive to this deck.",
+      "exclusivePrints": [
+        {
+          "id": "sm3-31",
+          "name": "Kingdra",
+          "tcgplayerId": 169761,
+          "tcgplayerName": "Kingdra - 31/147 (SM Burning Shadows)"
+        }
+      ],
+      "product": "theme-deck-luminous-frost"
+    },
+    {
+      "set": "sm4",
+      "name": "Destruction Fang",
+      "showcase": "Hydreigon",
+      "showcaseCard": "sm4-62",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Hydreigon is exclusive to this deck'); not the pack print.",
+      "showcaseTcgplayerId": 173089,
+      "showcaseTcgplayerName": "Hydreigon - 62/111 (Cracked Ice Holo)",
+      "tcgplayerId": 149380,
+      "tcgplayerName": "Crimson Invasion Theme Deck - \"Destruction Fang\" [Hydreigon]",
+      "marketPrice": 31.58,
+      "released": "2017-11-03",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: CIN Silver Hydreigon Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells it separately: 'Code Card - Crimson Invasion Theme Deck - \"Destruction Fang\" [Hydreigon]'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "sm4-62",
+          "name": "Hydreigon",
+          "n": 2
+        },
+        {
+          "id": "sm4-61",
+          "name": "Zweilous",
+          "n": 2
+        },
+        {
+          "id": "sm4-60",
+          "name": "Deino",
+          "n": 3
+        },
+        {
+          "id": "sm4-59",
+          "name": "Houndoom",
+          "n": 2
+        },
+        {
+          "id": "sm4-58",
+          "name": "Houndour",
+          "n": 3
+        },
+        {
+          "id": "sm2-113",
+          "name": "Bewear",
+          "n": 2
+        },
+        {
+          "id": "sm4-55",
+          "name": "Stufful",
+          "n": 3
+        },
+        {
+          "id": "sm4-47",
+          "name": "Salazzle",
+          "n": 1
+        },
+        {
+          "id": "sm4-46",
+          "name": "Salandit",
+          "n": 2
+        },
+        {
+          "id": "sm4-64",
+          "name": "Mawile",
+          "n": 2
+        },
+        {
+          "id": "sm1-113",
+          "name": "Oranguru",
+          "n": 1
+        },
+        {
+          "id": "sm1-116",
+          "name": "Energy Retrieval",
+          "n": 1
+        },
+        {
+          "id": "sm3-114",
+          "name": "Escape Rope",
+          "n": 1
+        },
+        {
+          "id": "sm1-118",
+          "name": "Exp. Share",
+          "n": 1
+        },
+        {
+          "id": "sm1-119",
+          "name": "Great Ball",
+          "n": 1
+        },
+        {
+          "id": "sm1-120",
+          "name": "Hau",
+          "n": 3
+        },
+        {
+          "id": "sm1-123",
+          "name": "Nest Ball",
+          "n": 2
+        },
+        {
+          "id": "sm1-128",
+          "name": "Professor Kukui",
+          "n": 2
+        },
+        {
+          "id": "sm2-130",
+          "name": "Rescue Stretcher",
+          "n": 1
+        },
+        {
+          "id": "sm3-123",
+          "name": "Sophocles",
+          "n": 1
+        },
+        {
+          "id": "sm1-132",
+          "name": "Switch",
+          "n": 1
+        },
+        {
+          "id": "sm1-134",
+          "name": "Timer Ball",
+          "n": 2
+        },
+        {
+          "id": "sm3-128",
+          "name": "Wishful Baton",
+          "n": 1
+        },
+        {
+          "id": "energy-darkness-sm17",
+          "name": "Darkness Energy",
+          "n": 12
+        },
+        {
+          "id": "energy-psychic-sm17",
+          "name": "Psychic Energy",
+          "n": 8
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Destruction_Fang_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards; release November 3, 2017; pack contents line; trivia on Cracked Ice / non-holo exclusives"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/sun-moon-crimson-invasion-theme-deck-destruction-fang",
+          "quote": "TCGsync (tcgosaurus) product page 'Deck List': same cards and counts as Bulbapedia (Cracked Ice copy shown as a separate '(Cracked Ice Holo)' line on some pages)"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; energy print assumed from release date (2017-11-03): Sun & Moon 2017 print (ids energy-<type>-sm17) for sm1-sm8 decks, Sun & Moon 2019 print (sm19) from Team Up (Feb 2019) on, matching the site's ETB convention (scripts/box-research/sun-moon.json etb.print). Fairy Energy does not occur: Sun & Moon decks hold no Fairy. Hydreigon is 2 copies per Bulbapedia: 1 Cracked Ice Holo (deck exclusive, Hydreigon - 62/111 (Cracked Ice Holo), TCGplayer 173089 in Deck Exclusives group 1840) + 1 listed as plain 'Rare'; both are sm4-62. Other deck-only prints (group 1840): Oranguru sm1-113 -> 131303 Oranguru - 113/149 (SM Base Set); Salazzle sm4-47 -> 178761 Salazzle - 47/111 (SM Crimson Invasion). The site's own card for these ids may be holo where the deck copy is non-holo. Bulbapedia trivia: The Cracked Ice Holofoil version of Hydreigon is exclusive to this deck. | The Non Holofoil versions of Oranguru and Salazzle are exclusive to this deck.",
+      "exclusivePrints": [
+        {
+          "id": "sm1-113",
+          "name": "Oranguru",
+          "tcgplayerId": 131303,
+          "tcgplayerName": "Oranguru - 113/149 (SM Base Set)"
+        },
+        {
+          "id": "sm4-47",
+          "name": "Salazzle",
+          "tcgplayerId": 178761,
+          "tcgplayerName": "Salazzle - 47/111 (SM Crimson Invasion)"
+        }
+      ],
+      "product": "theme-deck-destruction-fang"
+    },
+    {
+      "set": "sm4",
+      "name": "Clanging Thunder",
+      "showcase": "Kommo-o",
+      "showcaseCard": "sm4-77",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Kommo-o is exclusive to this deck'); not the pack print.",
+      "showcaseTcgplayerId": 229611,
+      "showcaseTcgplayerName": "Kommo-o - 77/111 (Cracked Ice Holo)",
+      "tcgplayerId": 149379,
+      "tcgplayerName": "Crimson Invasion Theme Deck - \"Clanging Thunder\" [Kommo-o]",
+      "marketPrice": null,
+      "released": "2017-11-03",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: CIN Gold Kommo-o Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells it separately: 'Code Card - Crimson Invasion Theme Deck - \"Clanging Thunder\" [Kommo-o]'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "sm4-77",
+          "name": "Kommo-o",
+          "n": 2
+        },
+        {
+          "id": "sm4-76",
+          "name": "Hakamo-o",
+          "n": 2
+        },
+        {
+          "id": "sm4-75",
+          "name": "Jangmo-o",
+          "n": 3
+        },
+        {
+          "id": "sm4-31",
+          "name": "Alolan Raichu",
+          "n": 2
+        },
+        {
+          "id": "sm4-30",
+          "name": "Pikachu",
+          "n": 3
+        },
+        {
+          "id": "sm4-54",
+          "name": "Gastrodon",
+          "n": 2
+        },
+        {
+          "id": "sm4-29",
+          "name": "Shellos",
+          "n": 3
+        },
+        {
+          "id": "sm4-35",
+          "name": "Emolga",
+          "n": 2
+        },
+        {
+          "id": "sm3-69",
+          "name": "Solrock",
+          "n": 2
+        },
+        {
+          "id": "sm4-89",
+          "name": "Type: Null",
+          "n": 1
+        },
+        {
+          "id": "sm1-114",
+          "name": "Big Malasada",
+          "n": 1
+        },
+        {
+          "id": "sm4-93",
+          "name": "Devoured Field",
+          "n": 1
+        },
+        {
+          "id": "sm1-116",
+          "name": "Energy Retrieval",
+          "n": 1
+        },
+        {
+          "id": "sm3-114",
+          "name": "Escape Rope",
+          "n": 1
+        },
+        {
+          "id": "sm1-118",
+          "name": "Exp. Share",
+          "n": 1
+        },
+        {
+          "id": "sm1-120",
+          "name": "Hau",
+          "n": 3
+        },
+        {
+          "id": "sm1-122",
+          "name": "Lillie",
+          "n": 1
+        },
+        {
+          "id": "sm1-123",
+          "name": "Nest Ball",
+          "n": 2
+        },
+        {
+          "id": "sm1-128",
+          "name": "Professor Kukui",
+          "n": 2
+        },
+        {
+          "id": "sm2-130",
+          "name": "Rescue Stretcher",
+          "n": 1
+        },
+        {
+          "id": "sm1-132",
+          "name": "Switch",
+          "n": 1
+        },
+        {
+          "id": "sm1-134",
+          "name": "Timer Ball",
+          "n": 2
+        },
+        {
+          "id": "sm1-135",
+          "name": "Ultra Ball",
+          "n": 1
+        },
+        {
+          "id": "energy-fighting-sm17",
+          "name": "Fighting Energy",
+          "n": 12
+        },
+        {
+          "id": "energy-lightning-sm17",
+          "name": "Lightning Energy",
+          "n": 8
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Clanging_Thunder_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards; release November 3, 2017; pack contents line; trivia on Cracked Ice / non-holo exclusives"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/sun-moon-crimson-invasion-theme-deck-clanging-thunder",
+          "quote": "TCGsync (tcgosaurus) product page 'Deck List': same cards and counts as Bulbapedia (Cracked Ice copy shown as a separate '(Cracked Ice Holo)' line on some pages)"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; energy print assumed from release date (2017-11-03): Sun & Moon 2017 print (ids energy-<type>-sm17) for sm1-sm8 decks, Sun & Moon 2019 print (sm19) from Team Up (Feb 2019) on, matching the site's ETB convention (scripts/box-research/sun-moon.json etb.print). Fairy Energy does not occur: Sun & Moon decks hold no Fairy. Kommo-o is 2 copies per Bulbapedia: 1 Cracked Ice Holo (deck exclusive, Kommo-o - 77/111 (Cracked Ice Holo), TCGplayer 229611 in Deck Exclusives group 1840) + 1 listed as plain 'Rare'; both are sm4-77. Other deck-only prints (group 1840): Alolan Raichu sm4-31 -> 158322 Alolan Raichu - 31/111 (SM Crimson Invasion); Type: Null sm4-89 -> 216798 Type: Null - 89/111 (SM Crimson Invasion). The site's own card for these ids may be holo where the deck copy is non-holo. Bulbapedia trivia: The Cracked Ice Holofoil version of Kommo-o is exclusive to this deck. | The Non Holofoil version of Alolan Raichu is exclusive to this deck and the Crimson Invasion Prerelease Kits. | The Non Holofoil version of Type: Null is exclusive to this deck. TCGsync's first-look page parse misses these three because the list sits under 'Decklist:' instead of 'Deck List:'; the list is there and matches Bulbapedia card-for-card. Retailer mirrors of the same TCGsync feed (smokeandmirrorshobby.com, sydequest.games) carry the same list.",
+      "exclusivePrints": [
+        {
+          "id": "sm4-31",
+          "name": "Alolan Raichu",
+          "tcgplayerId": 158322,
+          "tcgplayerName": "Alolan Raichu - 31/111 (SM Crimson Invasion)"
+        },
+        {
+          "id": "sm4-89",
+          "name": "Type: Null",
+          "tcgplayerId": 216798,
+          "tcgplayerName": "Type: Null - 89/111 (SM Crimson Invasion)"
+        }
+      ],
+      "product": "theme-deck-clanging-thunder"
+    },
+    {
+      "set": "sm5",
+      "name": "Mach Strike",
+      "showcase": "Garchomp",
+      "showcaseCard": "sm5-99",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Garchomp is exclusive to this deck'); not the pack print.",
+      "showcaseTcgplayerId": 169670,
+      "showcaseTcgplayerName": "Garchomp - 99/156 (Cracked Ice Holo)",
+      "tcgplayerId": 155665,
+      "tcgplayerName": "Ultra Prism Theme Deck - \"Mach Strike\" [Garchomp]",
+      "marketPrice": 43.34,
+      "released": "2018-02-02",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: UPR Yellow Gold Garchomp Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells it separately: 'Code Card - Ultra Prism Theme Deck - \"Mach Strike\" [Garchomp]'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "sm5-99",
+          "name": "Garchomp",
+          "n": 2
+        },
+        {
+          "id": "sm5-98",
+          "name": "Gabite",
+          "n": 2
+        },
+        {
+          "id": "sm5-96",
+          "name": "Gible",
+          "n": 3
+        },
+        {
+          "id": "sm5-67",
+          "name": "Lucario",
+          "n": 1
+        },
+        {
+          "id": "sm5-66",
+          "name": "Riolu",
+          "n": 3
+        },
+        {
+          "id": "sm5-69",
+          "name": "Hippowdon",
+          "n": 1
+        },
+        {
+          "id": "sm5-68",
+          "name": "Hippopotas",
+          "n": 2
+        },
+        {
+          "id": "sm5-113",
+          "name": "Gumshoos",
+          "n": 2
+        },
+        {
+          "id": "sm5-112",
+          "name": "Yungoos",
+          "n": 3
+        },
+        {
+          "id": "sm3-69",
+          "name": "Solrock",
+          "n": 2
+        },
+        {
+          "id": "sm5-53",
+          "name": "Spiritomb",
+          "n": 2
+        },
+        {
+          "id": "sm5-115",
+          "name": "Type: Null",
+          "n": 1
+        },
+        {
+          "id": "sm1-114",
+          "name": "Big Malasada",
+          "n": 1
+        },
+        {
+          "id": "sm5-119",
+          "name": "Cynthia",
+          "n": 2
+        },
+        {
+          "id": "sm5-122",
+          "name": "Escape Board",
+          "n": 1
+        },
+        {
+          "id": "sm3-114",
+          "name": "Escape Rope",
+          "n": 1
+        },
+        {
+          "id": "sm1-120",
+          "name": "Hau",
+          "n": 2
+        },
+        {
+          "id": "sm5-126",
+          "name": "Looker",
+          "n": 1
+        },
+        {
+          "id": "sm1-123",
+          "name": "Nest Ball",
+          "n": 2
+        },
+        {
+          "id": "sm5-132",
+          "name": "Pal Pad",
+          "n": 1
+        },
+        {
+          "id": "sm1-128",
+          "name": "Professor Kukui",
+          "n": 2
+        },
+        {
+          "id": "sm2-130",
+          "name": "Rescue Stretcher",
+          "n": 1
+        },
+        {
+          "id": "sm1-134",
+          "name": "Timer Ball",
+          "n": 2
+        },
+        {
+          "id": "energy-fighting-sm17",
+          "name": "Fighting Energy",
+          "n": 20
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Mach_Strike_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards; release February 2, 2018; pack contents line; trivia on Cracked Ice / non-holo exclusives"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/sun-moon-ultra-prism-theme-deck-mach-strike",
+          "quote": "TCGsync (tcgosaurus) product page 'Deck List': same cards and counts as Bulbapedia (Cracked Ice copy shown as a separate '(Cracked Ice Holo)' line on some pages)"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; energy print assumed from release date (2018-02-02): Sun & Moon 2017 print (ids energy-<type>-sm17) for sm1-sm8 decks, Sun & Moon 2019 print (sm19) from Team Up (Feb 2019) on, matching the site's ETB convention (scripts/box-research/sun-moon.json etb.print). Fairy Energy does not occur: Sun & Moon decks hold no Fairy. Garchomp is 2 copies per Bulbapedia: 1 Cracked Ice Holo (deck exclusive, Garchomp - 99/156 (Cracked Ice Holo), TCGplayer 169670 in Deck Exclusives group 1840) + 1 listed as plain 'Rare'; both are sm5-99. Other deck-only prints (group 1840): Lucario sm5-67 -> 181682 Lucario - 67/156 (SM Ultra Prism). The site's own card for these ids may be holo where the deck copy is non-holo. Bulbapedia trivia: The Cracked Ice Holofoil version of Garchomp is exclusive to this deck. | The Non Holofoil version of Lucario is exclusive to this deck.",
+      "exclusivePrints": [
+        {
+          "id": "sm5-67",
+          "name": "Lucario",
+          "tcgplayerId": 181682,
+          "tcgplayerName": "Lucario - 67/156 (SM Ultra Prism)"
+        }
+      ],
+      "product": "theme-deck-mach-strike"
+    },
+    {
+      "set": "sm5",
+      "name": "Imperial Command",
+      "showcase": "Empoleon",
+      "showcaseCard": "sm5-34",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Empoleon is exclusive to this deck'); not the pack print.",
+      "showcaseTcgplayerId": 175169,
+      "showcaseTcgplayerName": "Empoleon - 34/156 (Cracked Ice Holo)",
+      "tcgplayerId": 155666,
+      "tcgplayerName": "Ultra Prism Theme Deck - \"Imperial Command\" [Empoleon]",
+      "marketPrice": 36.33,
+      "released": "2018-02-02",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: UPR Blue Empoleon Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells it separately: 'Code Card - Ultra Prism Theme Deck - \"Imperial Command\" [Empoleon]'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "sm5-34",
+          "name": "Empoleon",
+          "n": 2
+        },
+        {
+          "id": "sm5-33",
+          "name": "Prinplup",
+          "n": 2
+        },
+        {
+          "id": "sm5-31",
+          "name": "Piplup",
+          "n": 3
+        },
+        {
+          "id": "sm5-38",
+          "name": "Abomasnow",
+          "n": 2
+        },
+        {
+          "id": "sm5-37",
+          "name": "Snover",
+          "n": 3
+        },
+        {
+          "id": "sm2-20",
+          "name": "Alolan Sandslash",
+          "n": 2
+        },
+        {
+          "id": "sm5-28",
+          "name": "Alolan Sandshrew",
+          "n": 2
+        },
+        {
+          "id": "sm5-36",
+          "name": "Floatzel",
+          "n": 2
+        },
+        {
+          "id": "sm5-35",
+          "name": "Buizel",
+          "n": 2
+        },
+        {
+          "id": "sm5-42",
+          "name": "Manaphy",
+          "n": 2
+        },
+        {
+          "id": "sm1-36",
+          "name": "Corsola",
+          "n": 2
+        },
+        {
+          "id": "sm2-119",
+          "name": "Aqua Patch",
+          "n": 1
+        },
+        {
+          "id": "sm5-122",
+          "name": "Escape Board",
+          "n": 1
+        },
+        {
+          "id": "sm3-114",
+          "name": "Escape Rope",
+          "n": 1
+        },
+        {
+          "id": "sm1-120",
+          "name": "Hau",
+          "n": 2
+        },
+        {
+          "id": "sm5-125",
+          "name": "Lillie",
+          "n": 1
+        },
+        {
+          "id": "sm5-133",
+          "name": "Pokémon Fan Club",
+          "n": 2
+        },
+        {
+          "id": "sm1-128",
+          "name": "Professor Kukui",
+          "n": 2
+        },
+        {
+          "id": "sm2-130",
+          "name": "Rescue Stretcher",
+          "n": 1
+        },
+        {
+          "id": "sm3-123",
+          "name": "Sophocles",
+          "n": 2
+        },
+        {
+          "id": "sm1-134",
+          "name": "Timer Ball",
+          "n": 2
+        },
+        {
+          "id": "sm1-135",
+          "name": "Ultra Ball",
+          "n": 1
+        },
+        {
+          "id": "energy-water-sm17",
+          "name": "Water Energy",
+          "n": 20
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Imperial_Command_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards; release February 2, 2018; pack contents line; trivia on Cracked Ice / non-holo exclusives"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/sun-moon-ultra-prism-theme-deck-imperial-command",
+          "quote": "TCGsync (tcgosaurus) product page 'Deck List': same cards and counts as Bulbapedia (Cracked Ice copy shown as a separate '(Cracked Ice Holo)' line on some pages)"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; energy print assumed from release date (2018-02-02): Sun & Moon 2017 print (ids energy-<type>-sm17) for sm1-sm8 decks, Sun & Moon 2019 print (sm19) from Team Up (Feb 2019) on, matching the site's ETB convention (scripts/box-research/sun-moon.json etb.print). Fairy Energy does not occur: Sun & Moon decks hold no Fairy. Empoleon is 2 copies per Bulbapedia: 1 Cracked Ice Holo (deck exclusive, Empoleon - 34/156 (Cracked Ice Holo), TCGplayer 175169 in Deck Exclusives group 1840) + 1 listed as plain 'Rare'; both are sm5-34. Bulbapedia trivia: The Cracked Ice Holofoil version of Empoleon is exclusive to this deck.",
+      "exclusivePrints": [],
+      "product": "theme-deck-imperial-command"
+    },
+    {
+      "set": "sm6",
+      "name": "Tropical Takedown",
+      "showcase": "Alolan Exeggutor",
+      "showcaseCard": "sm6-2",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Alolan Exeggutor is exclusive to this deck'); not the pack print.",
+      "showcaseTcgplayerId": 167793,
+      "showcaseTcgplayerName": "Alolan Exeggutor - 2/131 (SM Forbidden Light)",
+      "tcgplayerId": 164305,
+      "tcgplayerName": "Forbidden Light Theme Deck - \"Tropical Takedown\" [Alolan Exeggutor]",
+      "marketPrice": 25.54,
+      "released": "2018-05-04",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: FLI Light Gold Alolan Exeggutor Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells it separately: 'Code Card - Forbidden Light Theme Deck - \"Twilight Takedown\" [Alolan Exeggutor]'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "sm6-2",
+          "name": "Alolan Exeggutor",
+          "n": 2
+        },
+        {
+          "id": "sm6-1",
+          "name": "Exeggcute",
+          "n": 3
+        },
+        {
+          "id": "sm6-12",
+          "name": "Alolan Marowak",
+          "n": 1
+        },
+        {
+          "id": "sm6-57",
+          "name": "Cubone",
+          "n": 2
+        },
+        {
+          "id": "sm2-20",
+          "name": "Alolan Sandslash",
+          "n": 2
+        },
+        {
+          "id": "sm5-28",
+          "name": "Alolan Sandshrew",
+          "n": 2
+        },
+        {
+          "id": "sm3-82",
+          "name": "Alolan Raticate",
+          "n": 1
+        },
+        {
+          "id": "sm1-77",
+          "name": "Alolan Raticate",
+          "n": 1
+        },
+        {
+          "id": "sm1-76",
+          "name": "Alolan Rattata",
+          "n": 3
+        },
+        {
+          "id": "sm2-55",
+          "name": "Oricorio",
+          "n": 1
+        },
+        {
+          "id": "sm3-69",
+          "name": "Solrock",
+          "n": 1
+        },
+        {
+          "id": "sm6-99",
+          "name": "Furfrou",
+          "n": 1
+        },
+        {
+          "id": "sm2-122",
+          "name": "Energy Loto",
+          "n": 1
+        },
+        {
+          "id": "sm1-116",
+          "name": "Energy Retrieval",
+          "n": 1
+        },
+        {
+          "id": "sm5-122",
+          "name": "Escape Board",
+          "n": 1
+        },
+        {
+          "id": "sm3-114",
+          "name": "Escape Rope",
+          "n": 1
+        },
+        {
+          "id": "sm2-125",
+          "name": "Field Blower",
+          "n": 1
+        },
+        {
+          "id": "sm6-109",
+          "name": "Lady",
+          "n": 1
+        },
+        {
+          "id": "sm5-125",
+          "name": "Lillie",
+          "n": 1
+        },
+        {
+          "id": "sm1-120",
+          "name": "Hau",
+          "n": 2
+        },
+        {
+          "id": "sm1-123",
+          "name": "Nest Ball",
+          "n": 2
+        },
+        {
+          "id": "sm1-127",
+          "name": "Potion",
+          "n": 1
+        },
+        {
+          "id": "sm1-128",
+          "name": "Professor Kukui",
+          "n": 2
+        },
+        {
+          "id": "sm2-130",
+          "name": "Rescue Stretcher",
+          "n": 1
+        },
+        {
+          "id": "sm3-123",
+          "name": "Sophocles",
+          "n": 2
+        },
+        {
+          "id": "sm1-135",
+          "name": "Ultra Ball",
+          "n": 2
+        },
+        {
+          "id": "sm3-126",
+          "name": "Weakness Policy",
+          "n": 1
+        },
+        {
+          "id": "energy-grass-sm17",
+          "name": "Grass Energy",
+          "n": 8
+        },
+        {
+          "id": "energy-darkness-sm17",
+          "name": "Darkness Energy",
+          "n": 3
+        },
+        {
+          "id": "energy-fighting-sm17",
+          "name": "Fighting Energy",
+          "n": 3
+        },
+        {
+          "id": "energy-psychic-sm17",
+          "name": "Psychic Energy",
+          "n": 3
+        },
+        {
+          "id": "energy-water-sm17",
+          "name": "Water Energy",
+          "n": 3
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Tropical_Takedown_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards; release May 4, 2018; pack contents line; trivia on Cracked Ice / non-holo exclusives"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/sun-moon-forbidden-light-theme-deck-tropical-takedown",
+          "quote": "TCGsync (tcgosaurus) product page 'Deck List': same cards and counts as Bulbapedia (Cracked Ice copy shown as a separate '(Cracked Ice Holo)' line on some pages)"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; energy print assumed from release date (2018-05-04): Sun & Moon 2017 print (ids energy-<type>-sm17) for sm1-sm8 decks, Sun & Moon 2019 print (sm19) from Team Up (Feb 2019) on, matching the site's ETB convention (scripts/box-research/sun-moon.json etb.print). Fairy Energy does not occur: Sun & Moon decks hold no Fairy. Alolan Exeggutor is 2 copies per Bulbapedia: 1 Cracked Ice Holo (deck exclusive, Alolan Exeggutor - 2/131 (SM Forbidden Light), TCGplayer 167793 in Deck Exclusives group 1840) + 1 listed as plain 'Rare'; both are sm6-2. Bulbapedia trivia: The Cracked Ice Holofoil version of Alolan Exeggutor is exclusive to this deck. TCGplayer's code card is mis-named 'Twilight Takedown'. Two different Alolan Raticate (sm3-82 and sm1-77) are in this deck, as Bulbapedia lists.",
+      "exclusivePrints": [],
+      "product": "theme-deck-tropical-takedown"
+    },
+    {
+      "set": "sm6",
+      "name": "Twilight Rogue",
+      "showcase": "Lycanroc",
+      "showcaseCard": "sm6-76",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Lycanroc is exclusive to this deck'); not the pack print.",
+      "showcaseTcgplayerId": 167796,
+      "showcaseTcgplayerName": "Lycanroc - 76/131 (SM Forbidden Light)",
+      "tcgplayerId": 164306,
+      "tcgplayerName": "Forbidden Light Theme Deck - \"Twilight Rogue\" [Lycanroc]",
+      "marketPrice": 24.95,
+      "released": "2018-05-04",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: FLI Light Gold Lycanroc Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells it separately: 'Code Card - Forbidden Light Theme Deck - \"Twilight Rogue\" [Lycanroc]'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "sm6-76",
+          "name": "Lycanroc",
+          "n": 2
+        },
+        {
+          "id": "sm6-75",
+          "name": "Rockruff",
+          "n": 3
+        },
+        {
+          "id": "sm3-53",
+          "name": "Dusknoir",
+          "n": 2
+        },
+        {
+          "id": "sm3-52",
+          "name": "Dusclops",
+          "n": 2
+        },
+        {
+          "id": "sm3-51",
+          "name": "Duskull",
+          "n": 3
+        },
+        {
+          "id": "sm6-51",
+          "name": "Malamar",
+          "n": 1
+        },
+        {
+          "id": "sm6-50",
+          "name": "Inkay",
+          "n": 2
+        },
+        {
+          "id": "sm4-47",
+          "name": "Salazzle",
+          "n": 2
+        },
+        {
+          "id": "sm4-46",
+          "name": "Salandit",
+          "n": 2
+        },
+        {
+          "id": "sm3-69",
+          "name": "Solrock",
+          "n": 1
+        },
+        {
+          "id": "sm6-99",
+          "name": "Furfrou",
+          "n": 1
+        },
+        {
+          "id": "sm2-120",
+          "name": "Brooklet Hill",
+          "n": 1
+        },
+        {
+          "id": "sm5-119",
+          "name": "Cynthia",
+          "n": 1
+        },
+        {
+          "id": "sm5-122",
+          "name": "Escape Board",
+          "n": 1
+        },
+        {
+          "id": "sm3-114",
+          "name": "Escape Rope",
+          "n": 1
+        },
+        {
+          "id": "sm2-125",
+          "name": "Field Blower",
+          "n": 1
+        },
+        {
+          "id": "sm1-120",
+          "name": "Hau",
+          "n": 2
+        },
+        {
+          "id": "sm6-109",
+          "name": "Lady",
+          "n": 1
+        },
+        {
+          "id": "sm5-125",
+          "name": "Lillie",
+          "n": 1
+        },
+        {
+          "id": "sm1-123",
+          "name": "Nest Ball",
+          "n": 2
+        },
+        {
+          "id": "sm5-133",
+          "name": "Pokémon Fan Club",
+          "n": 1
+        },
+        {
+          "id": "sm1-128",
+          "name": "Professor Kukui",
+          "n": 2
+        },
+        {
+          "id": "sm2-130",
+          "name": "Rescue Stretcher",
+          "n": 1
+        },
+        {
+          "id": "sm1-132",
+          "name": "Switch",
+          "n": 1
+        },
+        {
+          "id": "sm1-134",
+          "name": "Timer Ball",
+          "n": 2
+        },
+        {
+          "id": "sm3-126",
+          "name": "Weakness Policy",
+          "n": 1
+        },
+        {
+          "id": "energy-fighting-sm17",
+          "name": "Fighting Energy",
+          "n": 10
+        },
+        {
+          "id": "energy-psychic-sm17",
+          "name": "Psychic Energy",
+          "n": 10
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Twilight_Rogue_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards; release May 4, 2018; pack contents line; trivia on Cracked Ice / non-holo exclusives"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/sun-moon-forbidden-light-theme-deck-twilight-rogue",
+          "quote": "TCGsync (tcgosaurus) product page 'Deck List': same cards and counts as Bulbapedia (Cracked Ice copy shown as a separate '(Cracked Ice Holo)' line on some pages)"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; energy print assumed from release date (2018-05-04): Sun & Moon 2017 print (ids energy-<type>-sm17) for sm1-sm8 decks, Sun & Moon 2019 print (sm19) from Team Up (Feb 2019) on, matching the site's ETB convention (scripts/box-research/sun-moon.json etb.print). Fairy Energy does not occur: Sun & Moon decks hold no Fairy. Lycanroc is 2 copies per Bulbapedia: 1 Cracked Ice Holo (deck exclusive, Lycanroc - 76/131 (SM Forbidden Light), TCGplayer 167796 in Deck Exclusives group 1840) + 1 listed as plain 'Rare'; both are sm6-76. Other deck-only prints (group 1840): Dusknoir sm3-53 -> 169797 Dusknoir - 53/147 (SM Burning Shadows); Salazzle sm4-47 -> 178761 Salazzle - 47/111 (SM Crimson Invasion). The site's own card for these ids may be holo where the deck copy is non-holo. Bulbapedia trivia: The Cracked Ice Holofoil version of Lycanroc is exclusive to this deck. | The Non Holofoil versions of Dusknoir and Salazzle are exclusive to this deck.",
+      "exclusivePrints": [
+        {
+          "id": "sm3-53",
+          "name": "Dusknoir",
+          "tcgplayerId": 169797,
+          "tcgplayerName": "Dusknoir - 53/147 (SM Burning Shadows)"
+        },
+        {
+          "id": "sm4-47",
+          "name": "Salazzle",
+          "tcgplayerId": 178761,
+          "tcgplayerName": "Salazzle - 47/111 (SM Crimson Invasion)"
+        }
+      ],
+      "product": "theme-deck-twilight-rogue"
+    },
+    {
+      "set": "sm7",
+      "name": "Leaf Charge",
+      "showcase": "Sceptile",
+      "showcaseCard": "sm7-10",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Sceptile is exclusive to this deck'); not the pack print.",
+      "showcaseTcgplayerId": 173065,
+      "showcaseTcgplayerName": "Sceptile - 10/168 (SM Celestial Storm)",
+      "tcgplayerId": 170278,
+      "tcgplayerName": "Celestial Storm Theme Deck - \"Leaf Charge\" [Sceptile]",
+      "marketPrice": 49.82,
+      "released": "2018-08-03",
+      "extras": "60-card deck, damage counters, custom coin, rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells it separately: 'Code Card - Celestial Storm Theme Deck - \"Leaf Charge\" [Sceptile]'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "sm7-10",
+          "name": "Sceptile",
+          "n": 2
+        },
+        {
+          "id": "sm7-9",
+          "name": "Grovyle",
+          "n": 2
+        },
+        {
+          "id": "sm7-8",
+          "name": "Treecko",
+          "n": 3
+        },
+        {
+          "id": "sm6-4",
+          "name": "Abomasnow",
+          "n": 2
+        },
+        {
+          "id": "sm6-3",
+          "name": "Snover",
+          "n": 2
+        },
+        {
+          "id": "sm7-52",
+          "name": "Manectric",
+          "n": 2
+        },
+        {
+          "id": "sm7-51",
+          "name": "Electrike",
+          "n": 3
+        },
+        {
+          "id": "sm7-50",
+          "name": "Lanturn",
+          "n": 2
+        },
+        {
+          "id": "sm7-49",
+          "name": "Chinchou",
+          "n": 2
+        },
+        {
+          "id": "sm7-110",
+          "name": "Dunsparce",
+          "n": 1
+        },
+        {
+          "id": "sm6-99",
+          "name": "Furfrou",
+          "n": 1
+        },
+        {
+          "id": "sm1-113",
+          "name": "Oranguru",
+          "n": 1
+        },
+        {
+          "id": "sm7-127",
+          "name": "Copycat",
+          "n": 2
+        },
+        {
+          "id": "sm1-118",
+          "name": "Exp. Share",
+          "n": 1
+        },
+        {
+          "id": "sm3-115",
+          "name": "Guzma",
+          "n": 1
+        },
+        {
+          "id": "sm7-132",
+          "name": "Hau",
+          "n": 2
+        },
+        {
+          "id": "sm6-109",
+          "name": "Lady",
+          "n": 1
+        },
+        {
+          "id": "sm5-125",
+          "name": "Lillie",
+          "n": 1
+        },
+        {
+          "id": "sm1-123",
+          "name": "Nest Ball",
+          "n": 2
+        },
+        {
+          "id": "sm1-128",
+          "name": "Professor Kukui",
+          "n": 2
+        },
+        {
+          "id": "sm2-130",
+          "name": "Rescue Stretcher",
+          "n": 1
+        },
+        {
+          "id": "sm7-147",
+          "name": "Switch",
+          "n": 1
+        },
+        {
+          "id": "sm7-148",
+          "name": "Tate & Liza",
+          "n": 1
+        },
+        {
+          "id": "sm1-134",
+          "name": "Timer Ball",
+          "n": 1
+        },
+        {
+          "id": "sm1-135",
+          "name": "Ultra Ball",
+          "n": 1
+        },
+        {
+          "id": "energy-grass-sm17",
+          "name": "Grass Energy",
+          "n": 11
+        },
+        {
+          "id": "energy-lightning-sm17",
+          "name": "Lightning Energy",
+          "n": 9
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Leaf_Charge_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards; release August 3, 2018; pack contents line; trivia on Cracked Ice / non-holo exclusives"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/sun-moon-celestial-storm-theme-deck-leaf-charge",
+          "quote": "TCGsync (tcgosaurus) product page 'Deck List': same cards and counts as Bulbapedia (Cracked Ice copy shown as a separate '(Cracked Ice Holo)' line on some pages)"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; energy print assumed from release date (2018-08-03): Sun & Moon 2017 print (ids energy-<type>-sm17) for sm1-sm8 decks, Sun & Moon 2019 print (sm19) from Team Up (Feb 2019) on, matching the site's ETB convention (scripts/box-research/sun-moon.json etb.print). Fairy Energy does not occur: Sun & Moon decks hold no Fairy. Sceptile is 2 copies per Bulbapedia: 1 Cracked Ice Holo (deck exclusive, Sceptile - 10/168 (SM Celestial Storm), TCGplayer 173065 in Deck Exclusives group 1840) + 1 listed as plain 'Rare'; both are sm7-10. Other deck-only prints (group 1840): Oranguru sm1-113 -> 131303 Oranguru - 113/149 (SM Base Set). The site's own card for these ids may be holo where the deck copy is non-holo. Bulbapedia trivia: The Cracked Ice Holofoil version of Sceptile is exclusive to this deck. | The Non Holofoil version of Oranguru is exclusive to this deck. TCGsync's first-look page parse misses these three because the list sits under 'Decklist:' instead of 'Deck List:'; the list is there and matches Bulbapedia card-for-card. Retailer mirrors of the same TCGsync feed (smokeandmirrorshobby.com, sydequest.games) carry the same list.",
+      "exclusivePrints": [
+        {
+          "id": "sm1-113",
+          "name": "Oranguru",
+          "tcgplayerId": 131303,
+          "tcgplayerName": "Oranguru - 113/149 (SM Base Set)"
+        }
+      ],
+      "product": "theme-deck-leaf-charge"
+    },
+    {
+      "set": "sm7",
+      "name": "Hydro Fury",
+      "showcase": "Swampert",
+      "showcaseCard": "sm7-35",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Swampert is exclusive to this deck'); not the pack print.",
+      "showcaseTcgplayerId": 173063,
+      "showcaseTcgplayerName": "Swampert - 35/168 (SM Celestial Storm)",
+      "tcgplayerId": 170279,
+      "tcgplayerName": "Celestial Storm Theme Deck - \"Hydro Fury\" [Swampert]",
+      "marketPrice": 54.17,
+      "released": "2018-08-03",
+      "extras": "60-card deck, damage counters, custom coin, rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells it separately: 'Code Card - Celestial Storm Theme Deck - \"Hydro Fury\" [Swampert]'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "sm7-35",
+          "name": "Swampert",
+          "n": 2
+        },
+        {
+          "id": "sm7-34",
+          "name": "Marshtomp",
+          "n": 2
+        },
+        {
+          "id": "sm7-33",
+          "name": "Mudkip",
+          "n": 3
+        },
+        {
+          "id": "sm5-38",
+          "name": "Abomasnow",
+          "n": 2
+        },
+        {
+          "id": "sm5-37",
+          "name": "Snover",
+          "n": 3
+        },
+        {
+          "id": "sm7-24",
+          "name": "Magcargo",
+          "n": 1
+        },
+        {
+          "id": "sm7-23",
+          "name": "Slugma",
+          "n": 2
+        },
+        {
+          "id": "sm7-121",
+          "name": "Delcatty",
+          "n": 2
+        },
+        {
+          "id": "sm7-120",
+          "name": "Skitty",
+          "n": 2
+        },
+        {
+          "id": "sm5-41",
+          "name": "Frost Rotom",
+          "n": 1
+        },
+        {
+          "id": "sm7-110",
+          "name": "Dunsparce",
+          "n": 1
+        },
+        {
+          "id": "sm6-99",
+          "name": "Furfrou",
+          "n": 1
+        },
+        {
+          "id": "sm7-124",
+          "name": "Apricorn Maker",
+          "n": 1
+        },
+        {
+          "id": "sm7-127",
+          "name": "Copycat",
+          "n": 1
+        },
+        {
+          "id": "sm3-114",
+          "name": "Escape Rope",
+          "n": 1
+        },
+        {
+          "id": "sm7-132",
+          "name": "Hau",
+          "n": 2
+        },
+        {
+          "id": "sm6-109",
+          "name": "Lady",
+          "n": 1
+        },
+        {
+          "id": "sm5-125",
+          "name": "Lillie",
+          "n": 1
+        },
+        {
+          "id": "sm7-138",
+          "name": "Lure Ball",
+          "n": 1
+        },
+        {
+          "id": "sm7-139",
+          "name": "The Masked Royal",
+          "n": 1
+        },
+        {
+          "id": "sm1-123",
+          "name": "Nest Ball",
+          "n": 2
+        },
+        {
+          "id": "sm1-128",
+          "name": "Professor Kukui",
+          "n": 2
+        },
+        {
+          "id": "sm2-130",
+          "name": "Rescue Stretcher",
+          "n": 1
+        },
+        {
+          "id": "sm7-147",
+          "name": "Switch",
+          "n": 1
+        },
+        {
+          "id": "sm7-148",
+          "name": "Tate & Liza",
+          "n": 1
+        },
+        {
+          "id": "sm1-134",
+          "name": "Timer Ball",
+          "n": 1
+        },
+        {
+          "id": "sm1-135",
+          "name": "Ultra Ball",
+          "n": 1
+        },
+        {
+          "id": "energy-water-sm17",
+          "name": "Water Energy",
+          "n": 16
+        },
+        {
+          "id": "energy-fire-sm17",
+          "name": "Fire Energy",
+          "n": 4
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Hydro_Fury_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards; release August 3, 2018; pack contents line; trivia on Cracked Ice / non-holo exclusives"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/sun-moon-celestial-storm-theme-deck-hydro-fury",
+          "quote": "TCGsync (tcgosaurus) product page 'Deck List': same cards and counts as Bulbapedia (Cracked Ice copy shown as a separate '(Cracked Ice Holo)' line on some pages)"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; energy print assumed from release date (2018-08-03): Sun & Moon 2017 print (ids energy-<type>-sm17) for sm1-sm8 decks, Sun & Moon 2019 print (sm19) from Team Up (Feb 2019) on, matching the site's ETB convention (scripts/box-research/sun-moon.json etb.print). Fairy Energy does not occur: Sun & Moon decks hold no Fairy. Swampert is 2 copies per Bulbapedia: 1 Cracked Ice Holo (deck exclusive, Swampert - 35/168 (SM Celestial Storm), TCGplayer 173063 in Deck Exclusives group 1840) + 1 listed as plain 'Rare'; both are sm7-35. Other deck-only prints (group 1840): Delcatty sm7-121 -> 173064 Delcatty - 121/168 (SM Celestial Storm). The site's own card for these ids may be holo where the deck copy is non-holo. Bulbapedia trivia: The Cracked Ice Holofoil version of Swampert is exclusive to this deck. | The Non Holofoil version of Delcatty is exclusive to this deck and the Celestial Storm Build & Battle Box. TCGsync's first-look page parse misses these three because the list sits under 'Decklist:' instead of 'Deck List:'; the list is there and matches Bulbapedia card-for-card. Retailer mirrors of the same TCGsync feed (smokeandmirrorshobby.com, sydequest.games) carry the same list.",
+      "exclusivePrints": [
+        {
+          "id": "sm7-121",
+          "name": "Delcatty",
+          "tcgplayerId": 173064,
+          "tcgplayerName": "Delcatty - 121/168 (SM Celestial Storm)"
+        }
+      ],
+      "product": "theme-deck-hydro-fury"
+    },
+    {
+      "set": "sm8",
+      "name": "Storm Caller",
+      "showcase": "Raikou",
+      "showcaseCard": "sm8-79",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Raikou is exclusive to this deck'); not the pack print.",
+      "showcaseTcgplayerId": 179438,
+      "showcaseTcgplayerName": "Raikou - 79/214 (SM Lost Thunder)",
+      "tcgplayerId": 177528,
+      "tcgplayerName": "Lost Thunder Theme Deck - \"Storm Caller\" [Raikou]",
+      "marketPrice": null,
+      "released": "2018-11-02",
+      "extras": "60-card deck, damage counters, custom coin, rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells it separately: 'Code Card - Lost Thunder Theme Deck - \"Storm Caller\" [Raikou]'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "sm8-79",
+          "name": "Raikou",
+          "n": 2
+        },
+        {
+          "id": "sm8-78",
+          "name": "Ampharos",
+          "n": 2
+        },
+        {
+          "id": "sm8-77",
+          "name": "Flaaffy",
+          "n": 2
+        },
+        {
+          "id": "sm8-76",
+          "name": "Mareep",
+          "n": 3
+        },
+        {
+          "id": "sm8-82",
+          "name": "Zebstrika",
+          "n": 1
+        },
+        {
+          "id": "sm8-81",
+          "name": "Blitzle",
+          "n": 3
+        },
+        {
+          "id": "sm8-108",
+          "name": "Naganadel",
+          "n": 2
+        },
+        {
+          "id": "sm8-107",
+          "name": "Poipole",
+          "n": 3
+        },
+        {
+          "id": "sm8-157",
+          "name": "Smeargle",
+          "n": 1
+        },
+        {
+          "id": "sm6-99",
+          "name": "Furfrou",
+          "n": 1
+        },
+        {
+          "id": "sm7-127",
+          "name": "Copycat",
+          "n": 1
+        },
+        {
+          "id": "sm7-129",
+          "name": "Energy Switch",
+          "n": 1
+        },
+        {
+          "id": "sm3-114",
+          "name": "Escape Rope",
+          "n": 1
+        },
+        {
+          "id": "sm7-132",
+          "name": "Hau",
+          "n": 2
+        },
+        {
+          "id": "sm8-179",
+          "name": "Kahili",
+          "n": 1
+        },
+        {
+          "id": "sm6-109",
+          "name": "Lady",
+          "n": 1
+        },
+        {
+          "id": "sm5-125",
+          "name": "Lillie",
+          "n": 1
+        },
+        {
+          "id": "sm1-123",
+          "name": "Nest Ball",
+          "n": 2
+        },
+        {
+          "id": "sm5-133",
+          "name": "Pokémon Fan Club",
+          "n": 1
+        },
+        {
+          "id": "sm1-128",
+          "name": "Professor Kukui",
+          "n": 2
+        },
+        {
+          "id": "sm2-130",
+          "name": "Rescue Stretcher",
+          "n": 2
+        },
+        {
+          "id": "sm7-147",
+          "name": "Switch",
+          "n": 1
+        },
+        {
+          "id": "sm7-148",
+          "name": "Tate & Liza",
+          "n": 1
+        },
+        {
+          "id": "sm1-134",
+          "name": "Timer Ball",
+          "n": 2
+        },
+        {
+          "id": "sm1-135",
+          "name": "Ultra Ball",
+          "n": 1
+        },
+        {
+          "id": "energy-lightning-sm17",
+          "name": "Lightning Energy",
+          "n": 20
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Storm_Caller_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards; release November 2, 2018; pack contents line; trivia on Cracked Ice / non-holo exclusives"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/sun-moon-lost-thunder-theme-deck-storm-caller",
+          "quote": "TCGsync (tcgosaurus) product page 'Deck List': same cards and counts as Bulbapedia (Cracked Ice copy shown as a separate '(Cracked Ice Holo)' line on some pages)"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; energy print assumed from release date (2018-11-02): Sun & Moon 2017 print (ids energy-<type>-sm17) for sm1-sm8 decks, Sun & Moon 2019 print (sm19) from Team Up (Feb 2019) on, matching the site's ETB convention (scripts/box-research/sun-moon.json etb.print). Fairy Energy does not occur: Sun & Moon decks hold no Fairy. Raikou is 2 copies per Bulbapedia: 1 Cracked Ice Holo (deck exclusive, Raikou - 79/214 (SM Lost Thunder), TCGplayer 179438 in Deck Exclusives group 1840) + 1 listed as plain 'Rare'; both are sm8-79. Other deck-only prints (group 1840): Ampharos sm8-78 -> 179440 Ampharos - 78/214 (SM Lost Thunder); Naganadel sm8-108 -> 179439 Naganadel - 108/214 (SM Lost Thunder). The site's own card for these ids may be holo where the deck copy is non-holo. Bulbapedia trivia: The Cracked Ice Holofoil version of Raikou is exclusive to this deck. | The Non Holofoil versions of Ampharos and Naganadel are exclusive to this deck and the Lost Thunder Build & Battle Box.",
+      "exclusivePrints": [
+        {
+          "id": "sm8-78",
+          "name": "Ampharos",
+          "tcgplayerId": 179440,
+          "tcgplayerName": "Ampharos - 78/214 (SM Lost Thunder)"
+        },
+        {
+          "id": "sm8-108",
+          "name": "Naganadel",
+          "tcgplayerId": 179439,
+          "tcgplayerName": "Naganadel - 108/214 (SM Lost Thunder)"
+        }
+      ],
+      "product": "theme-deck-storm-caller"
+    },
+    {
+      "set": "sm8",
+      "name": "Blazing Volcano",
+      "showcase": "Entei",
+      "showcaseCard": "sm8-47",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Entei is exclusive to this deck'); not the pack print.",
+      "showcaseTcgplayerId": 179436,
+      "showcaseTcgplayerName": "Entei - 47/214 (SM Lost Thunder)",
+      "tcgplayerId": 177527,
+      "tcgplayerName": "Lost Thunder Theme Deck - \"Blazing Volcano\" [Entei]",
+      "marketPrice": 38.22,
+      "released": "2018-11-02",
+      "extras": "60-card deck, damage counters, custom coin, rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells it separately: 'Code Card - Lost Thunder Theme Deck - \"Blazing Volcano\" [Entei]'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "sm8-47",
+          "name": "Entei",
+          "n": 2
+        },
+        {
+          "id": "sm75-6",
+          "name": "Blaziken",
+          "n": 2
+        },
+        {
+          "id": "sm75-5",
+          "name": "Combusken",
+          "n": 2
+        },
+        {
+          "id": "sm75-4",
+          "name": "Torchic",
+          "n": 3
+        },
+        {
+          "id": "sm8-46",
+          "name": "Houndoom",
+          "n": 2
+        },
+        {
+          "id": "sm8-45",
+          "name": "Houndour",
+          "n": 3
+        },
+        {
+          "id": "sm7-24",
+          "name": "Magcargo",
+          "n": 1
+        },
+        {
+          "id": "sm8-43",
+          "name": "Slugma",
+          "n": 2
+        },
+        {
+          "id": "sm8-16",
+          "name": "Shuckle",
+          "n": 1
+        },
+        {
+          "id": "sm8-18",
+          "name": "Heracross",
+          "n": 1
+        },
+        {
+          "id": "sm8-157",
+          "name": "Smeargle",
+          "n": 1
+        },
+        {
+          "id": "sm1-114",
+          "name": "Big Malasada",
+          "n": 1
+        },
+        {
+          "id": "sm7-127",
+          "name": "Copycat",
+          "n": 1
+        },
+        {
+          "id": "sm3-115",
+          "name": "Guzma",
+          "n": 1
+        },
+        {
+          "id": "sm8-179",
+          "name": "Kahili",
+          "n": 1
+        },
+        {
+          "id": "sm5-125",
+          "name": "Lillie",
+          "n": 1
+        },
+        {
+          "id": "sm2-127",
+          "name": "Mallow",
+          "n": 1
+        },
+        {
+          "id": "sm1-123",
+          "name": "Nest Ball",
+          "n": 2
+        },
+        {
+          "id": "sm5-133",
+          "name": "Pokémon Fan Club",
+          "n": 1
+        },
+        {
+          "id": "sm1-128",
+          "name": "Professor Kukui",
+          "n": 2
+        },
+        {
+          "id": "sm2-130",
+          "name": "Rescue Stretcher",
+          "n": 2
+        },
+        {
+          "id": "sm8-189",
+          "name": "Sightseer",
+          "n": 1
+        },
+        {
+          "id": "sm7-147",
+          "name": "Switch",
+          "n": 1
+        },
+        {
+          "id": "sm7-148",
+          "name": "Tate & Liza",
+          "n": 1
+        },
+        {
+          "id": "sm1-134",
+          "name": "Timer Ball",
+          "n": 2
+        },
+        {
+          "id": "sm7-149",
+          "name": "TV Reporter",
+          "n": 2
+        },
+        {
+          "id": "sm1-135",
+          "name": "Ultra Ball",
+          "n": 1
+        },
+        {
+          "id": "energy-fire-sm17",
+          "name": "Fire Energy",
+          "n": 14
+        },
+        {
+          "id": "energy-grass-sm17",
+          "name": "Grass Energy",
+          "n": 5
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Blazing_Volcano_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards; release November 2, 2018; pack contents line; trivia on Cracked Ice / non-holo exclusives"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/sun-moon-lost-thunder-theme-deck-blazing-volcano",
+          "quote": "TCGsync (tcgosaurus) product page 'Deck List': same cards and counts as Bulbapedia (Cracked Ice copy shown as a separate '(Cracked Ice Holo)' line on some pages)"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; energy print assumed from release date (2018-11-02): Sun & Moon 2017 print (ids energy-<type>-sm17) for sm1-sm8 decks, Sun & Moon 2019 print (sm19) from Team Up (Feb 2019) on, matching the site's ETB convention (scripts/box-research/sun-moon.json etb.print). Fairy Energy does not occur: Sun & Moon decks hold no Fairy. Entei is 2 copies per Bulbapedia: 1 Cracked Ice Holo (deck exclusive, Entei - 47/214 (SM Lost Thunder), TCGplayer 179436 in Deck Exclusives group 1840) + 1 listed as plain 'Rare'; both are sm8-47. Other deck-only prints (group 1840): Blaziken sm75-6 -> 179437 Blaziken - 6/70 (Non-Holo). The site's own card for these ids may be holo where the deck copy is non-holo. Bulbapedia trivia: The Cracked Ice Holofoil version of Entei is exclusive to this deck. | The Non Holofoil version of Blaziken is exclusive to this deck.",
+      "exclusivePrints": [
+        {
+          "id": "sm75-6",
+          "name": "Blaziken",
+          "tcgplayerId": 179437,
+          "tcgplayerName": "Blaziken - 6/70 (Non-Holo)"
+        }
+      ],
+      "product": "theme-deck-blazing-volcano"
+    },
+    {
+      "set": "sm9",
+      "name": "Relentless Flame",
+      "showcase": "Charizard",
+      "showcaseCard": "sm9-14",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Charizard is exclusive to this deck'); not the pack print.",
+      "showcaseTcgplayerId": 184217,
+      "showcaseTcgplayerName": "Charizard - 14/181 (SM Team Up)",
+      "tcgplayerId": 181705,
+      "tcgplayerName": "Team Up Theme Deck - \"Relentless Flame\" [Charizard]",
+      "marketPrice": null,
+      "released": "2019-02-01",
+      "extras": "60-card deck, damage counters, custom coin, rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells it separately: 'Code Card - Team Up Theme Deck - \"Relentless Flame\" [Charizard]'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "sm9-14",
+          "name": "Charizard",
+          "n": 2
+        },
+        {
+          "id": "sm9-13",
+          "name": "Charmeleon",
+          "n": 2
+        },
+        {
+          "id": "sm9-12",
+          "name": "Charmander",
+          "n": 3
+        },
+        {
+          "id": "sm9-18",
+          "name": "Rapidash",
+          "n": 2
+        },
+        {
+          "id": "sm9-17",
+          "name": "Ponyta",
+          "n": 3
+        },
+        {
+          "id": "sm9-56",
+          "name": "Nidoqueen",
+          "n": 2
+        },
+        {
+          "id": "sm9-55",
+          "name": "Nidorina",
+          "n": 2
+        },
+        {
+          "id": "sm9-54",
+          "name": "Nidoran ♀",
+          "n": 3
+        },
+        {
+          "id": "sm9-127",
+          "name": "Farfetch'd",
+          "n": 3
+        },
+        {
+          "id": "sm9-135",
+          "name": "Brock's Grit",
+          "n": 2
+        },
+        {
+          "id": "sm7-127",
+          "name": "Copycat",
+          "n": 2
+        },
+        {
+          "id": "sm5-119",
+          "name": "Cynthia",
+          "n": 2
+        },
+        {
+          "id": "sm7-132",
+          "name": "Hau",
+          "n": 2
+        },
+        {
+          "id": "sm1-123",
+          "name": "Nest Ball",
+          "n": 2
+        },
+        {
+          "id": "sm5-133",
+          "name": "Pokémon Fan Club",
+          "n": 2
+        },
+        {
+          "id": "sm1-128",
+          "name": "Professor Kukui",
+          "n": 2
+        },
+        {
+          "id": "sm7-147",
+          "name": "Switch",
+          "n": 2
+        },
+        {
+          "id": "sm1-134",
+          "name": "Timer Ball",
+          "n": 2
+        },
+        {
+          "id": "energy-fire-sm19",
+          "name": "Fire Energy",
+          "n": 20
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Relentless_Flame_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards; release February 1, 2019; pack contents line; trivia on Cracked Ice / non-holo exclusives"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/sun-moon-team-up-theme-deck-relentless-flame",
+          "quote": "TCGsync (tcgosaurus) product page 'Deck List': same cards and counts as Bulbapedia (Cracked Ice copy shown as a separate '(Cracked Ice Holo)' line on some pages)"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; energy print assumed from release date (2019-02-01): Sun & Moon 2017 print (ids energy-<type>-sm17) for sm1-sm8 decks, Sun & Moon 2019 print (sm19) from Team Up (Feb 2019) on, matching the site's ETB convention (scripts/box-research/sun-moon.json etb.print). Fairy Energy does not occur: Sun & Moon decks hold no Fairy. Charizard is 2 copies per Bulbapedia: 1 Cracked Ice Holo (deck exclusive, Charizard - 14/181 (SM Team Up), TCGplayer 184217 in Deck Exclusives group 1840) + 1 listed as plain 'Rare'; both are sm9-14. Bulbapedia trivia: The Cracked Ice Holofoil version of Charizard is exclusive to this deck.",
+      "exclusivePrints": [],
+      "product": "theme-deck-relentless-flame"
+    },
+    {
+      "set": "sm9",
+      "name": "Torrential Cannon",
+      "showcase": "Blastoise",
+      "showcaseCard": "sm9-25",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Blastoise is exclusive to this deck'); not the pack print.",
+      "showcaseTcgplayerId": 184218,
+      "showcaseTcgplayerName": "Blastoise - 25/181 (Cracked Ice Holo)",
+      "tcgplayerId": 181706,
+      "tcgplayerName": "Team Up Theme Deck - \"Torrential Cannon\" [Blastoise]",
+      "marketPrice": null,
+      "released": "2019-02-01",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: TEU Blue Blastoise Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells it separately: 'Code Card - Team Up Theme Deck - \"Torrential Cannon\" [Blastoise]'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "sm9-25",
+          "name": "Blastoise",
+          "n": 2
+        },
+        {
+          "id": "sm9-24",
+          "name": "Wartortle",
+          "n": 2
+        },
+        {
+          "id": "sm9-23",
+          "name": "Squirtle",
+          "n": 3
+        },
+        {
+          "id": "sm9-27",
+          "name": "Golduck",
+          "n": 2
+        },
+        {
+          "id": "sm9-26",
+          "name": "Psyduck",
+          "n": 3
+        },
+        {
+          "id": "sm9-124",
+          "name": "Pidgeot",
+          "n": 2
+        },
+        {
+          "id": "sm9-123",
+          "name": "Pidgeotto",
+          "n": 2
+        },
+        {
+          "id": "sm9-121",
+          "name": "Pidgey",
+          "n": 3
+        },
+        {
+          "id": "sm9-127",
+          "name": "Farfetch'd",
+          "n": 3
+        },
+        {
+          "id": "sm9-135",
+          "name": "Brock's Grit",
+          "n": 2
+        },
+        {
+          "id": "sm7-127",
+          "name": "Copycat",
+          "n": 2
+        },
+        {
+          "id": "sm5-119",
+          "name": "Cynthia",
+          "n": 2
+        },
+        {
+          "id": "sm7-132",
+          "name": "Hau",
+          "n": 2
+        },
+        {
+          "id": "sm1-123",
+          "name": "Nest Ball",
+          "n": 2
+        },
+        {
+          "id": "sm5-133",
+          "name": "Pokémon Fan Club",
+          "n": 2
+        },
+        {
+          "id": "sm1-128",
+          "name": "Professor Kukui",
+          "n": 2
+        },
+        {
+          "id": "sm7-147",
+          "name": "Switch",
+          "n": 2
+        },
+        {
+          "id": "sm1-134",
+          "name": "Timer Ball",
+          "n": 2
+        },
+        {
+          "id": "energy-water-sm19",
+          "name": "Water Energy",
+          "n": 20
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Torrential_Cannon_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards; release February 1, 2019; pack contents line; trivia on Cracked Ice / non-holo exclusives"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/sun-moon-team-up-theme-deck-torrential-cannon",
+          "quote": "TCGsync (tcgosaurus) product page 'Deck List': same cards and counts as Bulbapedia (Cracked Ice copy shown as a separate '(Cracked Ice Holo)' line on some pages)"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; energy print assumed from release date (2019-02-01): Sun & Moon 2017 print (ids energy-<type>-sm17) for sm1-sm8 decks, Sun & Moon 2019 print (sm19) from Team Up (Feb 2019) on, matching the site's ETB convention (scripts/box-research/sun-moon.json etb.print). Fairy Energy does not occur: Sun & Moon decks hold no Fairy. Blastoise is 2 copies per Bulbapedia: 1 Cracked Ice Holo (deck exclusive, Blastoise - 25/181 (Cracked Ice Holo), TCGplayer 184218 in Deck Exclusives group 1840) + 1 listed as plain 'Rare'; both are sm9-25. Bulbapedia trivia: The Cracked Ice Holofoil version of Blastoise is exclusive to this deck.",
+      "exclusivePrints": [],
+      "product": "theme-deck-torrential-cannon"
+    },
+    {
+      "set": "sm10",
+      "name": "Lightning Loop",
+      "showcase": "Zeraora",
+      "showcaseCard": "sm10-60",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Zeraora is exclusive to this deck'); not the pack print.",
+      "showcaseTcgplayerId": 190829,
+      "showcaseTcgplayerName": "Zeraora - 60/214 (SM Unbroken Bonds) (Cracked Ice Holo)",
+      "tcgplayerId": 188400,
+      "tcgplayerName": "Unbroken Bonds Lightning Loop Theme Deck - [Zeraora]",
+      "marketPrice": 25.71,
+      "released": "2019-05-03",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: UNB Light Gold Zeraora Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells it separately: 'Code Card - Unbroken Bonds Lightning Loop Theme Deck - [Zeraora]'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "sm10-60",
+          "name": "Zeraora",
+          "n": 2
+        },
+        {
+          "id": "sm6-36",
+          "name": "Magnezone",
+          "n": 2
+        },
+        {
+          "id": "sm6-35",
+          "name": "Magneton",
+          "n": 3
+        },
+        {
+          "id": "sm6-34",
+          "name": "Magnemite",
+          "n": 3
+        },
+        {
+          "id": "sm10-144",
+          "name": "Raticate",
+          "n": 2
+        },
+        {
+          "id": "sm10-143",
+          "name": "Rattata",
+          "n": 3
+        },
+        {
+          "id": "sm10-151",
+          "name": "Dodrio",
+          "n": 2
+        },
+        {
+          "id": "sm10-150",
+          "name": "Doduo",
+          "n": 3
+        },
+        {
+          "id": "sm10-56",
+          "name": "Stunfisk",
+          "n": 2
+        },
+        {
+          "id": "sm10-147",
+          "name": "Meowth",
+          "n": 2
+        },
+        {
+          "id": "sm5-119",
+          "name": "Cynthia",
+          "n": 2
+        },
+        {
+          "id": "sm7-130",
+          "name": "Fisherman",
+          "n": 2
+        },
+        {
+          "id": "sm7-132",
+          "name": "Hau",
+          "n": 4
+        },
+        {
+          "id": "sm5-125",
+          "name": "Lillie",
+          "n": 2
+        },
+        {
+          "id": "sm5-126",
+          "name": "Looker",
+          "n": 4
+        },
+        {
+          "id": "sm7-147",
+          "name": "Switch",
+          "n": 2
+        },
+        {
+          "id": "energy-lightning-sm19",
+          "name": "Lightning Energy",
+          "n": 20
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Lightning_Loop_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards; release May 3, 2019; pack contents line; trivia on Cracked Ice / non-holo exclusives"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/sun-moon-unbroken-bonds-theme-deck-lightning-loop",
+          "quote": "TCGsync (tcgosaurus) product page 'Deck List': same cards and counts as Bulbapedia (Cracked Ice copy shown as a separate '(Cracked Ice Holo)' line on some pages)"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; energy print assumed from release date (2019-05-03): Sun & Moon 2017 print (ids energy-<type>-sm17) for sm1-sm8 decks, Sun & Moon 2019 print (sm19) from Team Up (Feb 2019) on, matching the site's ETB convention (scripts/box-research/sun-moon.json etb.print). Fairy Energy does not occur: Sun & Moon decks hold no Fairy. Zeraora is 2 copies per Bulbapedia: 1 Cracked Ice Holo (deck exclusive, Zeraora - 60/214 (SM Unbroken Bonds) (Cracked Ice Holo), TCGplayer 190829 in Deck Exclusives group 1840) + 1 listed as plain 'Rare'; both are sm10-60. Other deck-only prints (group 1840): Magnezone sm6-36 -> 166498 Magnezone - 36/131 (Prerelease Kit Exclusive). The site's own card for these ids may be holo where the deck copy is non-holo. Bulbapedia trivia: The Cracked Ice Holofoil version of Zeraora is exclusive to this deck. | The Non Holofoil version of Magnezone is exclusive to this deck, but was available in the {{TCGMerch|Sun & Moon|Series|Forbidden Light Build & Battle Box}} as well.",
+      "exclusivePrints": [
+        {
+          "id": "sm6-36",
+          "name": "Magnezone",
+          "tcgplayerId": 166498,
+          "tcgplayerName": "Magnezone - 36/131 (Prerelease Kit Exclusive)"
+        }
+      ],
+      "product": "theme-deck-lightning-loop"
+    },
+    {
+      "set": "sm10",
+      "name": "Battle Mind",
+      "showcase": "Mewtwo",
+      "showcaseCard": "sm10-75",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Mewtwo is exclusive to this deck'); not the pack print.",
+      "showcaseTcgplayerId": 190828,
+      "showcaseTcgplayerName": "Mewtwo - 75/214 (SM Unbroken Bonds) (Cracked Ice Holo)",
+      "tcgplayerId": 188399,
+      "tcgplayerName": "Unbroken Bonds Battle Minds Theme Deck - [Mewtwo]",
+      "marketPrice": null,
+      "released": "2019-05-03",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: UNB Purple Mewtwo Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells it separately: 'Code Card - Unbroken Bonds Battle Minds Theme Deck - [Mewtwo]'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "sm10-75",
+          "name": "Mewtwo",
+          "n": 2
+        },
+        {
+          "id": "sm10-29",
+          "name": "Incineroar",
+          "n": 2
+        },
+        {
+          "id": "sm10-28",
+          "name": "Torracat",
+          "n": 3
+        },
+        {
+          "id": "sm10-27",
+          "name": "Litten",
+          "n": 3
+        },
+        {
+          "id": "sm10-31",
+          "name": "Salazzle",
+          "n": 2
+        },
+        {
+          "id": "sm10-30",
+          "name": "Salandit",
+          "n": 3
+        },
+        {
+          "id": "sm10-24",
+          "name": "Darmanitan",
+          "n": 2
+        },
+        {
+          "id": "sm10-23",
+          "name": "Darumaka",
+          "n": 3
+        },
+        {
+          "id": "sm75-50",
+          "name": "Turtonator",
+          "n": 2
+        },
+        {
+          "id": "sm10-147",
+          "name": "Meowth",
+          "n": 2
+        },
+        {
+          "id": "sm5-119",
+          "name": "Cynthia",
+          "n": 2
+        },
+        {
+          "id": "sm7-130",
+          "name": "Fisherman",
+          "n": 2
+        },
+        {
+          "id": "sm7-132",
+          "name": "Hau",
+          "n": 4
+        },
+        {
+          "id": "sm5-125",
+          "name": "Lillie",
+          "n": 2
+        },
+        {
+          "id": "sm5-126",
+          "name": "Looker",
+          "n": 2
+        },
+        {
+          "id": "sm7-147",
+          "name": "Switch",
+          "n": 2
+        },
+        {
+          "id": "sm10-189",
+          "name": "Welder",
+          "n": 2
+        },
+        {
+          "id": "energy-fire-sm19",
+          "name": "Fire Energy",
+          "n": 15
+        },
+        {
+          "id": "energy-psychic-sm19",
+          "name": "Psychic Energy",
+          "n": 5
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Battle_Mind_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards; release May 3, 2019; pack contents line; trivia on Cracked Ice / non-holo exclusives"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/sun-moon-unbroken-bonds-theme-deck-battle-mind",
+          "quote": "TCGsync (tcgosaurus) product page 'Deck List': same cards and counts as Bulbapedia (Cracked Ice copy shown as a separate '(Cracked Ice Holo)' line on some pages)"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; energy print assumed from release date (2019-05-03): Sun & Moon 2017 print (ids energy-<type>-sm17) for sm1-sm8 decks, Sun & Moon 2019 print (sm19) from Team Up (Feb 2019) on, matching the site's ETB convention (scripts/box-research/sun-moon.json etb.print). Fairy Energy does not occur: Sun & Moon decks hold no Fairy. Mewtwo is 2 copies per Bulbapedia: 1 Cracked Ice Holo (deck exclusive, Mewtwo - 75/214 (SM Unbroken Bonds) (Cracked Ice Holo), TCGplayer 190828 in Deck Exclusives group 1840) + 1 listed as plain 'Rare'; both are sm10-75. Bulbapedia trivia: The Cracked Ice Holofoil version of Mewtwo is exclusive to this deck. TCGplayer names this deck 'Unbroken Bonds Battle Minds Theme Deck - [Mewtwo]' (plural); Bulbapedia and the box say Battle Mind.",
+      "exclusivePrints": [],
+      "product": "theme-deck-battle-mind"
+    },
+    {
+      "set": "sm11",
+      "name": "Soaring Storm",
+      "showcase": "Dragonite",
+      "showcaseCard": "sm11-151",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Dragonite is exclusive to this deck'); not the pack print.",
+      "showcaseTcgplayerId": 196721,
+      "showcaseTcgplayerName": "Dragonite - 151/236 (Cracked Ice Holo)",
+      "tcgplayerId": 191888,
+      "tcgplayerName": "Unified Minds Theme Deck - \"Soaring Storm\" [Dragonite]",
+      "marketPrice": 87.91,
+      "released": "2019-08-02",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: UNM Gold Dragonite Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells it separately: 'Code Card - Unified Minds Theme Deck - \"Soaring Storm\" [Dragonite]'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "sm11-151",
+          "name": "Dragonite",
+          "n": 2
+        },
+        {
+          "id": "sm11-150",
+          "name": "Dragonair",
+          "n": 3
+        },
+        {
+          "id": "sm11-148",
+          "name": "Dratini",
+          "n": 3
+        },
+        {
+          "id": "sm7-50",
+          "name": "Lanturn",
+          "n": 2
+        },
+        {
+          "id": "sm7-49",
+          "name": "Chinchou",
+          "n": 2
+        },
+        {
+          "id": "sm9-124",
+          "name": "Pidgeot",
+          "n": 1
+        },
+        {
+          "id": "sm9-123",
+          "name": "Pidgeotto",
+          "n": 2
+        },
+        {
+          "id": "sm9-121",
+          "name": "Pidgey",
+          "n": 3
+        },
+        {
+          "id": "sm11-68",
+          "name": "Thundurus",
+          "n": 2
+        },
+        {
+          "id": "sm11-178",
+          "name": "Tornadus",
+          "n": 2
+        },
+        {
+          "id": "sm11-127",
+          "name": "Alolan Grimer",
+          "n": 2
+        },
+        {
+          "id": "sm11-189",
+          "name": "Bug Catcher",
+          "n": 2
+        },
+        {
+          "id": "sm5-119",
+          "name": "Cynthia",
+          "n": 2
+        },
+        {
+          "id": "sm7-128",
+          "name": "Energy Recycle System",
+          "n": 1
+        },
+        {
+          "id": "sm7-130",
+          "name": "Fisherman",
+          "n": 1
+        },
+        {
+          "id": "sm7-132",
+          "name": "Hau",
+          "n": 2
+        },
+        {
+          "id": "sm5-125",
+          "name": "Lillie",
+          "n": 2
+        },
+        {
+          "id": "sm9-152",
+          "name": "Pokémon Communication",
+          "n": 2
+        },
+        {
+          "id": "sm5-133",
+          "name": "Pokémon Fan Club",
+          "n": 2
+        },
+        {
+          "id": "sm7-147",
+          "name": "Switch",
+          "n": 1
+        },
+        {
+          "id": "sm7-148",
+          "name": "Tate & Liza",
+          "n": 1
+        },
+        {
+          "id": "energy-lightning-sm19",
+          "name": "Lightning Energy",
+          "n": 11
+        },
+        {
+          "id": "energy-water-sm19",
+          "name": "Water Energy",
+          "n": 9
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Soaring_Storm_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards; release August 2, 2019; pack contents line; trivia on Cracked Ice / non-holo exclusives"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/sun-moon-unified-minds-theme-deck-soaring-storm",
+          "quote": "TCGsync (tcgosaurus) product page 'Deck List': same cards and counts as Bulbapedia (Cracked Ice copy shown as a separate '(Cracked Ice Holo)' line on some pages)"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; energy print assumed from release date (2019-08-02): Sun & Moon 2017 print (ids energy-<type>-sm17) for sm1-sm8 decks, Sun & Moon 2019 print (sm19) from Team Up (Feb 2019) on, matching the site's ETB convention (scripts/box-research/sun-moon.json etb.print). Fairy Energy does not occur: Sun & Moon decks hold no Fairy. Dragonite is 2 copies per Bulbapedia: 1 Cracked Ice Holo (deck exclusive, Dragonite - 151/236 (Cracked Ice Holo), TCGplayer 196721 in Deck Exclusives group 1840) + 1 listed as plain 'Rare'; both are sm11-151. Bulbapedia trivia: The Cracked Ice Holofoil version of Dragonite is exclusive to this deck.",
+      "exclusivePrints": [],
+      "product": "theme-deck-soaring-storm"
+    },
+    {
+      "set": "sm11",
+      "name": "Laser Focus",
+      "showcase": "Necrozma",
+      "showcaseCard": "sm11-101",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Necrozma is exclusive to this deck'); not the pack print.",
+      "showcaseTcgplayerId": 196720,
+      "showcaseTcgplayerName": "Necrozma - 101/236 (Cracked Ice Holo)",
+      "tcgplayerId": 191889,
+      "tcgplayerName": "Unified Minds Theme Deck - \"Laser Focus\" [Necrozma]",
+      "marketPrice": null,
+      "released": "2019-08-02",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: UNM Gray Necrozma Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells it separately: 'Code Card - Unified Minds Theme Deck - \"Laser Focus\" [Necrozma]'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "sm11-101",
+          "name": "Necrozma",
+          "n": 2
+        },
+        {
+          "id": "sm6-51",
+          "name": "Malamar",
+          "n": 2
+        },
+        {
+          "id": "sm6-50",
+          "name": "Inkay",
+          "n": 2
+        },
+        {
+          "id": "sm11-181",
+          "name": "Gumshoos",
+          "n": 2
+        },
+        {
+          "id": "sm11-180",
+          "name": "Yungoos",
+          "n": 3
+        },
+        {
+          "id": "sm11-184",
+          "name": "Silvally",
+          "n": 2
+        },
+        {
+          "id": "sm11-183",
+          "name": "Type: Null",
+          "n": 3
+        },
+        {
+          "id": "sm11-177",
+          "name": "Audino",
+          "n": 2
+        },
+        {
+          "id": "sm11-84",
+          "name": "Mesprit",
+          "n": 2
+        },
+        {
+          "id": "sm11-145",
+          "name": "Dedenne",
+          "n": 2
+        },
+        {
+          "id": "sm11-164",
+          "name": "Tauros",
+          "n": 2
+        },
+        {
+          "id": "sm11-189",
+          "name": "Bug Catcher",
+          "n": 2
+        },
+        {
+          "id": "sm5-119",
+          "name": "Cynthia",
+          "n": 2
+        },
+        {
+          "id": "sm7-132",
+          "name": "Hau",
+          "n": 2
+        },
+        {
+          "id": "sm5-125",
+          "name": "Lillie",
+          "n": 2
+        },
+        {
+          "id": "sm6-113",
+          "name": "Mysterious Treasure",
+          "n": 2
+        },
+        {
+          "id": "sm5-133",
+          "name": "Pokémon Fan Club",
+          "n": 2
+        },
+        {
+          "id": "sm7-147",
+          "name": "Switch",
+          "n": 1
+        },
+        {
+          "id": "sm7-148",
+          "name": "Tate & Liza",
+          "n": 1
+        },
+        {
+          "id": "sm11-211",
+          "name": "U-Turn Board",
+          "n": 2
+        },
+        {
+          "id": "sm11-213",
+          "name": "Weakness Guard Energy",
+          "n": 2
+        },
+        {
+          "id": "energy-psychic-sm19",
+          "name": "Psychic Energy",
+          "n": 18
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Laser_Focus_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards; release August 2, 2019; pack contents line; trivia on Cracked Ice / non-holo exclusives"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/sun-moon-unified-minds-theme-deck-laser-focus",
+          "quote": "TCGsync (tcgosaurus) product page 'Deck List': same cards and counts as Bulbapedia (Cracked Ice copy shown as a separate '(Cracked Ice Holo)' line on some pages)"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; energy print assumed from release date (2019-08-02): Sun & Moon 2017 print (ids energy-<type>-sm17) for sm1-sm8 decks, Sun & Moon 2019 print (sm19) from Team Up (Feb 2019) on, matching the site's ETB convention (scripts/box-research/sun-moon.json etb.print). Fairy Energy does not occur: Sun & Moon decks hold no Fairy. Necrozma is 2 copies per Bulbapedia: 1 Cracked Ice Holo (deck exclusive, Necrozma - 101/236 (Cracked Ice Holo), TCGplayer 196720 in Deck Exclusives group 1840) + 1 listed as plain 'Rare'; both are sm11-101. Other deck-only prints (group 1840): Silvally sm11-184 -> 196722 Silvally - 184/236 (SM Unified Minds). The site's own card for these ids may be holo where the deck copy is non-holo. Bulbapedia trivia: The Cracked Ice Holofoil version of Necrozma is exclusive to this deck. | The Non Holofoil version of Silvally is exclusive to this deck. Includes 2 Weakness Guard Energy (sm11-213, a Special Energy) counted among the cards.",
+      "exclusivePrints": [
+        {
+          "id": "sm11-184",
+          "name": "Silvally",
+          "tcgplayerId": 196722,
+          "tcgplayerName": "Silvally - 184/236 (SM Unified Minds)"
+        }
+      ],
+      "product": "theme-deck-laser-focus"
+    },
+    {
+      "set": "sm12",
+      "name": "Towering Heights",
+      "showcase": "Groudon",
+      "showcaseCard": "sm12-113",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Groudon is exclusive to this deck'); not the pack print.",
+      "showcaseTcgplayerId": 202333,
+      "showcaseTcgplayerName": "Groudon - 113/236 (Cracked Ice Holo)",
+      "tcgplayerId": 199306,
+      "tcgplayerName": "Cosmic Eclipse Theme Deck [Groudon]",
+      "marketPrice": 54.58,
+      "released": "2019-11-01",
+      "extras": "60-card deck, damage counters, custom coin, rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells it separately: 'Code Card - Cosmic Eclipse Theme Deck [Groudon]'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "sm12-113",
+          "name": "Groudon",
+          "n": 2
+        },
+        {
+          "id": "sm11-114",
+          "name": "Garchomp",
+          "n": 2
+        },
+        {
+          "id": "sm11-113",
+          "name": "Gabite",
+          "n": 3
+        },
+        {
+          "id": "sm11-112",
+          "name": "Gible",
+          "n": 3
+        },
+        {
+          "id": "sm12-117",
+          "name": "Seismitoad",
+          "n": 2
+        },
+        {
+          "id": "sm12-116",
+          "name": "Palpitoad",
+          "n": 3
+        },
+        {
+          "id": "sm12-58",
+          "name": "Tympole",
+          "n": 3
+        },
+        {
+          "id": "sm12-125",
+          "name": "Passimian",
+          "n": 2
+        },
+        {
+          "id": "sm12-118",
+          "name": "Throh",
+          "n": 2
+        },
+        {
+          "id": "sm10-76",
+          "name": "Mew",
+          "n": 1
+        },
+        {
+          "id": "sm11-189",
+          "name": "Bug Catcher",
+          "n": 2
+        },
+        {
+          "id": "sm5-119",
+          "name": "Cynthia",
+          "n": 2
+        },
+        {
+          "id": "sm7-132",
+          "name": "Hau",
+          "n": 2
+        },
+        {
+          "id": "sm6-109",
+          "name": "Lady",
+          "n": 1
+        },
+        {
+          "id": "sm5-125",
+          "name": "Lillie",
+          "n": 2
+        },
+        {
+          "id": "sm9-152",
+          "name": "Pokémon Communication",
+          "n": 2
+        },
+        {
+          "id": "sm5-133",
+          "name": "Pokémon Fan Club",
+          "n": 2
+        },
+        {
+          "id": "sm7-147",
+          "name": "Switch",
+          "n": 2
+        },
+        {
+          "id": "sm7-148",
+          "name": "Tate & Liza",
+          "n": 2
+        },
+        {
+          "id": "sm12-209",
+          "name": "Draw Energy",
+          "n": 2
+        },
+        {
+          "id": "energy-fighting-sm19",
+          "name": "Fighting Energy",
+          "n": 18
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Towering_Heights_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards; release November 1, 2019; pack contents line; trivia on Cracked Ice / non-holo exclusives"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/sun-moon-cosmic-eclipse-theme-deck-towering-heights",
+          "quote": "TCGsync (tcgosaurus) product page 'Deck List': same cards and counts as Bulbapedia (Cracked Ice copy shown as a separate '(Cracked Ice Holo)' line on some pages)"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; energy print assumed from release date (2019-11-01): Sun & Moon 2017 print (ids energy-<type>-sm17) for sm1-sm8 decks, Sun & Moon 2019 print (sm19) from Team Up (Feb 2019) on, matching the site's ETB convention (scripts/box-research/sun-moon.json etb.print). Fairy Energy does not occur: Sun & Moon decks hold no Fairy. Groudon is 2 copies per Bulbapedia: 1 Cracked Ice Holo (deck exclusive, Groudon - 113/236 (Cracked Ice Holo), TCGplayer 202333 in Deck Exclusives group 1840) + 1 listed as plain 'Rare'; both are sm12-113. Other deck-only prints (group 1840): Garchomp sm11-114 -> 226264 Garchomp - 114/236 (SM Unified Minds); Mew sm10-76 -> 220743 Mew - 76/214. The site's own card for these ids may be holo where the deck copy is non-holo. Bulbapedia trivia: The Cracked Ice Holofoil version of Groudon is exclusive to this deck. | The Non Holofoil versions of Garchomp and Mew are exclusive to this deck. TCGplayer lists this deck as 'Cosmic Eclipse Theme Deck [Groudon]' without the deck name.",
+      "exclusivePrints": [
+        {
+          "id": "sm11-114",
+          "name": "Garchomp",
+          "tcgplayerId": 226264,
+          "tcgplayerName": "Garchomp - 114/236 (SM Unified Minds)"
+        },
+        {
+          "id": "sm10-76",
+          "name": "Mew",
+          "tcgplayerId": 220743,
+          "tcgplayerName": "Mew - 76/214"
+        }
+      ],
+      "product": "theme-deck-towering-heights"
+    },
+    {
+      "set": "sm12",
+      "name": "Unseen Depths",
+      "showcase": "Kyogre",
+      "showcaseCard": "sm12-53",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Kyogre is exclusive to this deck'); not the pack print.",
+      "showcaseTcgplayerId": 202331,
+      "showcaseTcgplayerName": "Kyogre - 53/236 (Cracked Ice Holo)",
+      "tcgplayerId": 199305,
+      "tcgplayerName": "Cosmic Eclipse Theme Deck [Kyogre]",
+      "marketPrice": null,
+      "released": "2019-11-01",
+      "extras": "60-card deck, damage counters, custom coin, rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells it separately: 'Code Card - Cosmic Eclilpse Theme Deck [Kyogre]'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "sm12-53",
+          "name": "Kyogre",
+          "n": 2
+        },
+        {
+          "id": "sm12-56",
+          "name": "Empoleon",
+          "n": 2
+        },
+        {
+          "id": "sm12-55",
+          "name": "Prinplup",
+          "n": 3
+        },
+        {
+          "id": "sm12-54",
+          "name": "Piplup",
+          "n": 3
+        },
+        {
+          "id": "sm12-41",
+          "name": "Golduck",
+          "n": 2
+        },
+        {
+          "id": "sm12-40",
+          "name": "Psyduck",
+          "n": 3
+        },
+        {
+          "id": "sm12-170",
+          "name": "Ambipom",
+          "n": 2
+        },
+        {
+          "id": "sm12-169",
+          "name": "Aipom",
+          "n": 3
+        },
+        {
+          "id": "sm10-53",
+          "name": "Pyukumuku",
+          "n": 2
+        },
+        {
+          "id": "sm12-57",
+          "name": "Phione",
+          "n": 1
+        },
+        {
+          "id": "sm5-119",
+          "name": "Cynthia",
+          "n": 2
+        },
+        {
+          "id": "sm7-132",
+          "name": "Hau",
+          "n": 2
+        },
+        {
+          "id": "sm5-125",
+          "name": "Lillie",
+          "n": 2
+        },
+        {
+          "id": "sm9-152",
+          "name": "Pokémon Communication",
+          "n": 2
+        },
+        {
+          "id": "sm5-133",
+          "name": "Pokémon Fan Club",
+          "n": 2
+        },
+        {
+          "id": "sm12-203",
+          "name": "Roller Skater",
+          "n": 2
+        },
+        {
+          "id": "sm7-147",
+          "name": "Switch",
+          "n": 2
+        },
+        {
+          "id": "sm7-148",
+          "name": "Tate & Liza",
+          "n": 2
+        },
+        {
+          "id": "sm9-156",
+          "name": "Viridian Forest",
+          "n": 1
+        },
+        {
+          "id": "sm12-209",
+          "name": "Draw Energy",
+          "n": 2
+        },
+        {
+          "id": "energy-water-sm19",
+          "name": "Water Energy",
+          "n": 18
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Unseen_Depths_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards; release November 1, 2019; pack contents line; trivia on Cracked Ice / non-holo exclusives"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/sun-moon-cosmic-eclipse-theme-deck-unseen-depths",
+          "quote": "TCGsync (tcgosaurus) product page 'Deck List': same cards and counts as Bulbapedia (Cracked Ice copy shown as a separate '(Cracked Ice Holo)' line on some pages)"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; energy print assumed from release date (2019-11-01): Sun & Moon 2017 print (ids energy-<type>-sm17) for sm1-sm8 decks, Sun & Moon 2019 print (sm19) from Team Up (Feb 2019) on, matching the site's ETB convention (scripts/box-research/sun-moon.json etb.print). Fairy Energy does not occur: Sun & Moon decks hold no Fairy. Kyogre is 2 copies per Bulbapedia: 1 Cracked Ice Holo (deck exclusive, Kyogre - 53/236 (Cracked Ice Holo), TCGplayer 202331 in Deck Exclusives group 1840) + 1 listed as plain 'Rare'; both are sm12-53. Bulbapedia trivia: The Cracked Ice Holofoil version of Kyogre is exclusive to this deck. TCGplayer lists this deck as 'Cosmic Eclipse Theme Deck [Kyogre]' without the deck name.",
+      "exclusivePrints": [],
+      "product": "theme-deck-unseen-depths"
+    }
+  ],
+  "gifts": []
+}

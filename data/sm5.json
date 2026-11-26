@@ -6475,5 +6475,99 @@
     "promo": true,
     "foilAs": "Rare Holo GX",
     "foilMap": "assets/foil/maps/sm5/smp121.webp"
+  },
+  {
+    "id": "sm5-34-cracked-ice",
+    "name": "Empoleon",
+    "number": "34-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "160",
+    "artist": "nagimiso",
+    "flavorText": "The three horns that extend from its beak attest to its power. The leader has the biggest horns.",
+    "evolvesFrom": "Prinplup",
+    "image": "assets/cards/sm5/34.webp",
+    "imageSmall": "assets/cards/sm5/34-sm.webp",
+    "attacks": [
+      {
+        "name": "Total Command",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "This attack does 20 damage for each Benched Pokémon (both yours and your opponent's)."
+      },
+      {
+        "name": "Whirlpool",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "Discard an Energy from your opponent's Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm5-34/large",
+    "printedNumber": "34",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Imperial Command Theme Deck)",
+    "tcgplayerId": 175169,
+    "market": 2.59
+  },
+  {
+    "id": "sm5-99-cracked-ice",
+    "name": "Garchomp",
+    "number": "99-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "150",
+    "artist": "Megumi Mizutani",
+    "flavorText": "The protuberances on its head serve as sensors. It can even detect distant prey.",
+    "evolvesFrom": "Gabite",
+    "image": "assets/cards/sm5/99.webp",
+    "imageSmall": "assets/cards/sm5/99-sm.webp",
+    "attacks": [
+      {
+        "name": "Quick Dive",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 50 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Royal Blades",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100+",
+        "text": "If you played Cynthia from your hand during this turn, this attack does 100 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm5-99/large",
+    "printedNumber": "99",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Mach Strike Theme Deck)",
+    "tcgplayerId": 169670,
+    "market": 15.85
   }
 ]

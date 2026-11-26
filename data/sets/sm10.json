@@ -63,6 +63,24 @@
     },
     "smp201": {
       "foilAs": "Rare Ultra"
+    },
+    "60-cracked-ice": {
+      "like": "60",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Lightning Loop Theme Deck)",
+      "tcgplayerId": 190829,
+      "tcgplayerGroup": 1840
+    },
+    "75-cracked-ice": {
+      "like": "75",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Battle Mind Theme Deck)",
+      "tcgplayerId": 190828,
+      "tcgplayerGroup": 1840
     }
   },
   "products": [
@@ -197,6 +215,32 @@
       "tcgplayerId": 185717,
       "packs": 36,
       "promos": []
+    },
+    {
+      "id": "theme-deck-lightning-loop",
+      "name": "Theme Deck \"Lightning Loop\"",
+      "kind": "deck",
+      "tcgplayerId": 188400,
+      "packs": 0,
+      "promos": [
+        "60-cracked-ice"
+      ],
+      "price": 16.86,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Zeraora, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-battle-mind",
+      "name": "Theme Deck \"Battle Mind\"",
+      "kind": "deck",
+      "tcgplayerId": 188399,
+      "packs": 0,
+      "promos": [
+        "75-cracked-ice"
+      ],
+      "price": 24.14,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Mewtwo, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ]
 }

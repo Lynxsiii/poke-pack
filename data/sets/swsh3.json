@@ -50,6 +50,24 @@
     "swshp042": {
       "foilAs": "Rare Holo",
       "notes": "cosmos holo"
+    },
+    "44-cracked-ice": {
+      "like": "44",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Galarian Darmanitan Theme Deck)",
+      "tcgplayerId": 220097,
+      "tcgplayerGroup": 1840
+    },
+    "98-cracked-ice": {
+      "like": "98",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Galarian Sirfetch'd Theme Deck)",
+      "tcgplayerId": 220096,
+      "tcgplayerGroup": 1840
     }
   },
   "products": [
@@ -122,6 +140,32 @@
       "tcgplayerId": 216856,
       "packs": 9,
       "promos": []
+    },
+    {
+      "id": "theme-deck-galarian-darmanitan",
+      "name": "Theme Deck \"Galarian Darmanitan\"",
+      "kind": "deck",
+      "tcgplayerId": 216865,
+      "packs": 0,
+      "promos": [
+        "44-cracked-ice"
+      ],
+      "price": 8.23,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Galarian Darmanitan, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-galarian-sirfetch-d",
+      "name": "Theme Deck \"Galarian Sirfetch'd\"",
+      "kind": "deck",
+      "tcgplayerId": 216866,
+      "packs": 0,
+      "promos": [
+        "98-cracked-ice"
+      ],
+      "price": 6.53,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Galarian Sirfetch'd, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ]
 }

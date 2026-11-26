@@ -6655,5 +6655,145 @@
     "promo": true,
     "foilAs": "Rare Holo",
     "foilMap": "assets/foil/maps/sm1/smp029.webp"
+  },
+  {
+    "id": "sm1-11-cracked-ice",
+    "name": "Decidueye",
+    "number": "11-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "140",
+    "artist": "Kouki Saitou",
+    "flavorText": "It fires arrow quills from its wings with such precision, they can pierce a pebble at distances over a hundred yards.",
+    "evolvesFrom": "Dartrix",
+    "image": "assets/cards/sm1/11.webp",
+    "imageSmall": "assets/cards/sm1/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Leaf Blade",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "30+",
+        "text": "Flip a coin. If heads, this attack does 30 more damage."
+      },
+      {
+        "name": "Brave Bird",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "This Pokémon does 20 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm1-11/large",
+    "printedNumber": "11",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Forest Shadow Theme Deck)",
+    "tcgplayerId": 131299,
+    "market": 1.19
+  },
+  {
+    "id": "sm1-26-cracked-ice",
+    "name": "Incineroar",
+    "number": "26-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "160",
+    "artist": "Hitoshi Ariga",
+    "flavorText": "This Pokémon has a violent, selfish disposition. If it's not in the mood to listen, it will ignore its Trainer's orders with complete nonchalance.",
+    "evolvesFrom": "Torracat",
+    "image": "assets/cards/sm1/26.webp",
+    "imageSmall": "assets/cards/sm1/26-sm.webp",
+    "attacks": [
+      {
+        "name": "Fire Fang",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Your opponent's Active Pokémon is now Burned."
+      },
+      {
+        "name": "Darkest Lariat",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "100×",
+        "text": "Flip 2 coins. This attack does 100 damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm1-26/large",
+    "printedNumber": "26",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Roaring Heat Theme Deck)",
+    "tcgplayerId": 131302,
+    "market": 1.79
+  },
+  {
+    "id": "sm1-41-cracked-ice",
+    "name": "Primarina",
+    "number": "41-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "150",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "It controls its water balloons with song. The melody is learning from others of its kind and is passed down from one generation to the next.",
+    "evolvesFrom": "Brionne",
+    "image": "assets/cards/sm1/41.webp",
+    "imageSmall": "assets/cards/sm1/41-sm.webp",
+    "attacks": [
+      {
+        "name": "Disarming Voice",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Your opponent's Active Pokémon is now Confused."
+      },
+      {
+        "name": "Sparkling Aria",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "Heal 30 damage from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm1-41/large",
+    "printedNumber": "41",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Bright Tide Theme Deck)",
+    "tcgplayerId": 131304,
+    "market": 2.29
   }
 ]

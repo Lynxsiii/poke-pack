@@ -98,6 +98,24 @@
       "like": "63a",
       "keepScan": true,
       "foilAs": "Rare Holo GX"
+    },
+    "62-cracked-ice": {
+      "like": "62",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Destruction Fang Theme Deck)",
+      "tcgplayerId": 173089,
+      "tcgplayerGroup": 1840
+    },
+    "77-cracked-ice": {
+      "like": "77",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Clanging Thunder Theme Deck)",
+      "tcgplayerId": 229611,
+      "tcgplayerGroup": 1840
     }
   },
   "products": [
@@ -259,6 +277,32 @@
       "tcgplayerId": 146995,
       "packs": 36,
       "promos": []
+    },
+    {
+      "id": "theme-deck-destruction-fang",
+      "name": "Theme Deck \"Destruction Fang\"",
+      "kind": "deck",
+      "tcgplayerId": 149380,
+      "packs": 0,
+      "promos": [
+        "62-cracked-ice"
+      ],
+      "price": 9.61,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Hydreigon, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-clanging-thunder",
+      "name": "Theme Deck \"Clanging Thunder\"",
+      "kind": "deck",
+      "tcgplayerId": 149379,
+      "packs": 0,
+      "promos": [
+        "77-cracked-ice"
+      ],
+      "price": 26.67,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Kommo-o, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ]
 }

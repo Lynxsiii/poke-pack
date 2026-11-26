@@ -51,6 +51,33 @@
     },
     "swshp032": {
       "foilAs": "Rare Holo"
+    },
+    "15-cracked-ice": {
+      "like": "15",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Rillaboom Theme Deck)",
+      "tcgplayerId": 206434,
+      "tcgplayerGroup": 1840
+    },
+    "36-cracked-ice": {
+      "like": "36",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Cinderace Theme Deck)",
+      "tcgplayerId": 206435,
+      "tcgplayerGroup": 1840
+    },
+    "59-cracked-ice": {
+      "like": "59",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Inteleon Theme Deck)",
+      "tcgplayerId": 206432,
+      "tcgplayerGroup": 1840
     }
   },
   "products": [
@@ -125,6 +152,45 @@
       "tcgplayerId": 206027,
       "packs": 36,
       "promos": []
+    },
+    {
+      "id": "theme-deck-rillaboom",
+      "name": "Theme Deck \"Rillaboom\"",
+      "kind": "deck",
+      "tcgplayerId": 206037,
+      "packs": 0,
+      "promos": [
+        "15-cracked-ice"
+      ],
+      "price": 8.49,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Rillaboom, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-cinderace",
+      "name": "Theme Deck \"Cinderace\"",
+      "kind": "deck",
+      "tcgplayerId": 206035,
+      "packs": 0,
+      "promos": [
+        "36-cracked-ice"
+      ],
+      "price": 8.11,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Cinderace, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-inteleon",
+      "name": "Theme Deck \"Inteleon\"",
+      "kind": "deck",
+      "tcgplayerId": 206036,
+      "packs": 0,
+      "promos": [
+        "59-cracked-ice"
+      ],
+      "price": 7.34,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Inteleon, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ]
 }

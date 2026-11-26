@@ -280,6 +280,32 @@
       "tcgplayerId": 129888,
       "packs": 36,
       "promos": []
+    },
+    {
+      "id": "theme-deck-steel-sun",
+      "name": "Theme Deck \"Steel Sun\"",
+      "kind": "deck",
+      "tcgplayerId": 129892,
+      "packs": 0,
+      "promos": [
+        "87-cracked-ice"
+      ],
+      "price": 9.47,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Solgaleo, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-hidden-moon",
+      "name": "Theme Deck \"Hidden Moon\"",
+      "kind": "deck",
+      "tcgplayerId": 129891,
+      "packs": 0,
+      "promos": [
+        "61-cracked-ice"
+      ],
+      "price": 19.48,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Lunala, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ],
   "promoCards": {
@@ -358,6 +384,24 @@
     "smp050": {
       "foilAs": "Rare Holo GX",
       "notes": "Tapu Koko-GX"
+    },
+    "87-cracked-ice": {
+      "like": "87",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Steel Sun Theme Deck)",
+      "tcgplayerId": 131295,
+      "tcgplayerGroup": 1840
+    },
+    "61-cracked-ice": {
+      "like": "61",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Hidden Moon Theme Deck)",
+      "tcgplayerId": 131297,
+      "tcgplayerGroup": 1840
     }
   }
 }

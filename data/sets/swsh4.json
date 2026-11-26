@@ -54,6 +54,24 @@
     },
     "swshp083": {
       "foilAs": "Rare Holo V"
+    },
+    "25-cracked-ice": {
+      "like": "25",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Charizard Theme Deck)",
+      "tcgplayerId": 227648,
+      "tcgplayerGroup": 1840
+    },
+    "39-cracked-ice": {
+      "like": "39",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Drednaw Theme Deck)",
+      "tcgplayerId": 227650,
+      "tcgplayerGroup": 1840
     }
   },
   "products": [
@@ -146,6 +164,32 @@
       "tcgplayerId": 221752,
       "packs": 9,
       "promos": []
+    },
+    {
+      "id": "theme-deck-charizard",
+      "name": "Theme Deck \"Charizard\"",
+      "kind": "deck",
+      "tcgplayerId": 221750,
+      "packs": 0,
+      "promos": [
+        "25-cracked-ice"
+      ],
+      "price": 13.66,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Charizard, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-drednaw",
+      "name": "Theme Deck \"Drednaw\"",
+      "kind": "deck",
+      "tcgplayerId": 221751,
+      "packs": 0,
+      "promos": [
+        "39-cracked-ice"
+      ],
+      "price": 6.31,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Drednaw, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ]
 }

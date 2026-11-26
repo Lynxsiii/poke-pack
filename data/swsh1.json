@@ -7876,5 +7876,145 @@
     "foilAs": "Rare Holo",
     "market": 32.74,
     "foilMap": "assets/foil/maps/swsh1/swshp032.webp"
+  },
+  {
+    "id": "swsh1-15-cracked-ice",
+    "name": "Rillaboom",
+    "number": "15-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "190",
+    "artist": "Shin Nagasawa",
+    "flavorText": "By drumming, it taps into the power of its special tree stump. The roots of the stump follow its direction in battle.",
+    "evolvesFrom": "Thwackey",
+    "image": "assets/cards/swsh1/15.webp",
+    "imageSmall": "assets/cards/swsh1/15-sm.webp",
+    "attacks": [
+      {
+        "name": "Drum Roll",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "This attack also does 10 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Drum Beating",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": "During your next turn, this Pokémon can't use Drum Beating."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh1-15/large",
+    "printedNumber": "15",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Rillaboom Theme Deck)",
+    "tcgplayerId": 206434,
+    "market": 1.09
+  },
+  {
+    "id": "swsh1-36-cracked-ice",
+    "name": "Cinderace",
+    "number": "36-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "170",
+    "artist": "Shin Nagasawa",
+    "flavorText": "It juggles a pebble with its feet, turning it into a burning soccer ball. Its shots strike opponents hard and leave them scorched.",
+    "evolvesFrom": "Raboot",
+    "image": "assets/cards/swsh1/36.webp",
+    "imageSmall": "assets/cards/swsh1/36-sm.webp",
+    "attacks": [
+      {
+        "name": "Flame Cloak",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "40",
+        "text": "Attach a Fire Energy card from your discard pile to this Pokémon."
+      },
+      {
+        "name": "Bright Flame",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": "Flip a coin. If tails, discard 2 Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh1-36/large",
+    "printedNumber": "36",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Cinderace Theme Deck)",
+    "tcgplayerId": 206435,
+    "market": 2.3
+  },
+  {
+    "id": "swsh1-59-cracked-ice",
+    "name": "Inteleon",
+    "number": "59-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "160",
+    "artist": "Akira Komayama",
+    "flavorText": "It has many hidden capabilities, such as fingertips that can shoot water and a membrane on its back that it can use to glide through the air.",
+    "evolvesFrom": "Drizzile",
+    "image": "assets/cards/swsh1/59.webp",
+    "imageSmall": "assets/cards/swsh1/59-sm.webp",
+    "attacks": [
+      {
+        "name": "Silent Shot",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Discard a random card from your opponent's hand."
+      },
+      {
+        "name": "Hydro Snipe",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "You may put an Energy attached to your opponent's Active Pokémon into their hand."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh1-59/large",
+    "printedNumber": "59",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Inteleon Theme Deck)",
+    "tcgplayerId": 206432,
+    "market": 1.39
   }
 ]

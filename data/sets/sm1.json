@@ -241,6 +241,45 @@
       "tcgplayerId": 126048,
       "packs": 36,
       "promos": []
+    },
+    {
+      "id": "theme-deck-forest-shadow",
+      "name": "Theme Deck \"Forest Shadow\"",
+      "kind": "deck",
+      "tcgplayerId": 126172,
+      "packs": 0,
+      "promos": [
+        "11-cracked-ice"
+      ],
+      "price": 7.1,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Decidueye, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-roaring-heat",
+      "name": "Theme Deck \"Roaring Heat\"",
+      "kind": "deck",
+      "tcgplayerId": 126173,
+      "packs": 0,
+      "promos": [
+        "26-cracked-ice"
+      ],
+      "price": 7.34,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Incineroar, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-bright-tide",
+      "name": "Theme Deck \"Bright Tide\"",
+      "kind": "deck",
+      "tcgplayerId": 126174,
+      "packs": 0,
+      "promos": [
+        "41-cracked-ice"
+      ],
+      "price": 9.12,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Primarina, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ],
   "promoCards": {
@@ -307,6 +346,33 @@
     "smp029": {
       "foilAs": "Rare Holo",
       "notes": "Mimikyu"
+    },
+    "11-cracked-ice": {
+      "like": "11",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Forest Shadow Theme Deck)",
+      "tcgplayerId": 131299,
+      "tcgplayerGroup": 1840
+    },
+    "26-cracked-ice": {
+      "like": "26",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Roaring Heat Theme Deck)",
+      "tcgplayerId": 131302,
+      "tcgplayerGroup": 1840
+    },
+    "41-cracked-ice": {
+      "like": "41",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Bright Tide Theme Deck)",
+      "tcgplayerId": 131304,
+      "tcgplayerGroup": 1840
     }
   }
 }
