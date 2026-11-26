@@ -128,24 +128,24 @@ import { THEMES, canUseTheme, resolveLook } from "./themes.js?v=1";
 import { equippedCoin, gearItem, normalizeGear } from "./gear.js?v=2";
 import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=16";
 import { initBattles } from "./battles.js?v=10";
-import { initCasino } from "./casino.js?v=30";
+import { initCasino } from "./casino.js?v=31";
 import { coinOf } from "./coin.js?v=6";
 // grading
-import { initGrading, GRADING_ROUTE, CERT_ROUTE } from "./grading-page.js?v=19";
+import { initGrading, GRADING_ROUTE, CERT_ROUTE } from "./grading-page.js?v=21";
 // trades
 import { initTrades, TRADES_ROUTE } from "./trades-page.js?v=6";
 import { coinTag } from "./battle-kit.js";
 import { coinText, coinAmount, COIN_I } from "./money.js?v=2";
 import { receiptHtml, pullRow } from "./receipt.js?v=2";
 // cart and sealed collection (CONTRACT: /mnt/project-files/cart-sealed/CONTRACT.md)
-import { cartStore, cartControlHtml, cartControlClick, cartControlChange, refreshCartControls, mountCartBar } from "./cart.js?v=5";
-import { initCart } from "./cart-page.js?v=9";
+import { cartStore, cartControlHtml, cartControlClick, cartControlChange, refreshCartControls, mountCartBar } from "./cart.js?v=6";
+import { initCart } from "./cart-page.js?v=10";
 import { startTour, maybeStartTour } from "./tour.js?v=3";
 import { initVault } from "./vault-page.js?v=9";
 import { initBatchOpen } from "./batch-open.js?v=6";
 import { cartEligible } from "./orders-rules.js?v=1";
-import { initSearch } from "./search.js?v=6";
-import { initWishlist } from "./wishlist.js?v=1";
+import { initSearch } from "./search.js?v=7";
+import { initWishlist } from "./wishlist.js?v=2";
 import { createShareSheet, pullUrl } from "./share-pull.js?v=3";
 // binder looks: the /binder cover, the customiser and the owner's look on a profile
 import { binderObjectHtml, applyBinderLook } from "./binder-object.js";
@@ -1581,7 +1581,13 @@ function paintWrapperChoice() {
   const rip = document.getElementById("shop-rip");
   if (rip) {
     // The key says what it does and carries the price, which rolls when the set changes.
-    const label = !signed ? "Sign in to rip" : !affordable ? "Need coins" : `Rip the ${wrap?.name || liveSet.name}${/(?:pack|pouch)$/i.test(wrap?.name || "") ? "" : " pack"}`;
+    // On a phone the key drops "the" and "pack" (css/pages/packs.css), so a long wrapper name stays on one line.
+    const name = wrap?.name || liveSet.name;
+    const label = !signed
+      ? "Sign in to rip"
+      : !affordable
+        ? "Need coins"
+        : `Rip <span class="rip-x">the </span>${esc(name)}${/(?:pack|pouch)$/i.test(wrap?.name || "") ? "" : `<span class="rip-x"> pack</span>`}`;
     let words = rip.querySelector(".rip-l");
     let fig = rip.querySelector(".rip-n");
     if (!words || !fig) {
@@ -1589,7 +1595,7 @@ function paintWrapperChoice() {
       words = rip.querySelector(".rip-l");
       fig = rip.querySelector(".rip-n");
     }
-    words.textContent = label;
+    words.innerHTML = label;
     const cost = Number(liveSet.cost) || 0;
     const was = rip.dataset.cost ? Number(rip.dataset.cost) : NaN;
     rip.dataset.cost = String(cost);
@@ -5085,7 +5091,7 @@ function renderLoungePane(pane) {
   if (!pane.querySelector("#social-chat-log")) {
     pane.innerHTML = `<div class="hub-lounge">
       <section class="lounge-panel hub-chat" aria-labelledby="social-chat-h">
-        <div class="lounge-head"><h3 id="social-chat-h">Global chat</h3><span>Everyone on the site sees this</span></div>
+        <div class="lounge-head"><h3 id="social-chat-h">Global chat</h3><span>Everyone can see this</span></div>
         <div class="chat-log" id="social-chat-log"></div>
         <form class="chat-form" id="social-chat-form">
           <input name="body" maxlength="180" placeholder="Say something to everyone" autocomplete="off" enterkeyhint="send" aria-label="Message the whole site" />

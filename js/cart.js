@@ -320,7 +320,7 @@ export function cartControlHtml(setId, productId, name) {
   return `<div class="cart-ctl in-cart" ${data}>
     <div class="cart-step" role="group" aria-label="${esc(name)} in your cart">
       <button type="button" data-cart="less" aria-label="One fewer ${esc(name)}">${MINUS}</button>
-      <label class="cart-step-n"><input type="number" inputmode="numeric" min="0" max="${ORDER_LIMITS.maxQtyPerLine}" value="${n}" data-cart="qty" aria-label="How many ${esc(name)} in your cart" /> in cart</label>
+      <label class="cart-step-n"><input type="number" inputmode="numeric" min="0" max="${ORDER_LIMITS.maxQtyPerLine}" value="${n}" data-cart="qty" aria-label="How many ${esc(name)} in your cart" /><span class="cart-step-w">in cart</span></label>
       <button type="button" data-cart="more" aria-label="One more ${esc(name)}">${PLUS}</button>
     </div>
   </div>`;

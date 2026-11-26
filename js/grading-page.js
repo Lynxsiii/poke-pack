@@ -66,7 +66,8 @@ const GRADES = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
 const SETS_LONGEST_FIRST = [...ALL_SETS].sort((a, b) => b.id.length - a.id.length);
 
 const setOfCard = (cardId) => SETS_LONGEST_FIRST.find((set) => String(cardId || "").startsWith(`${set.id}-`)) || null;
-const pct = (bp) => `${(bp / 100).toFixed(1)}%`;
+// A chance under 0.1% reads "<0.1%", not a flat 0.0% that says it can't happen.
+const pct = (bp) => (bp > 0 && bp < 5 ? "<0.1%" : `${(bp / 100).toFixed(1)}%`);
 /** A date on record, or "Unknown": a missing date never reads as today. */
 const dateWords = (ms) => {
   const n = Number(ms);
@@ -241,7 +242,15 @@ export function initGrading(deps) {
       const set = ALL_SETS.find((s) => s.live) || ALL_SETS[0];
       try {
         const list = await deps.loadSetData(set);
-        cardId = list?.find((c) => c.image)?.id || "";
+        // The set's priciest card, so the stand-in shows off what a slab can hold.
+        let top = 0;
+        for (const c of list || []) {
+          const v = c?.image ? sellValue(c) : 0;
+          if (v > top || (!cardId && c?.image)) {
+            top = Math.max(top, v);
+            cardId = c.id;
+          }
+        }
       } catch {
         return null;
       }
@@ -633,6 +642,12 @@ export function initGrading(deps) {
   async function paintLanding() {
     if (!signedIn()) {
       root.innerHTML = gate();
+      // Signed out, the stage shows the sample slab too, not an empty outline.
+      const sample = await sampleSlab();
+      if (!sample || signedIn() || !visible || route.kind !== "landing") return;
+      const stage = root.querySelector(".gd-gate .gd-stage");
+      if (!stage) return;
+      stage.outerHTML = stageHTML(`<span class="gd-stand rt-drop">${slabMarkup(sample, "inspect")}</span><span class="gd-stage-tag">Sample slab</span>`);
       return;
     }
     const slabs = sortedSlabs("newest");
@@ -1034,7 +1049,7 @@ export function initGrading(deps) {
     if (slab.grade === 10 && slab.blackLabel) {
       return `A ${BLACK_LABEL.word}: about 1 in ${Math.round((band.blackIn * 10000) / odds).toLocaleString("en-US")} cards from ${band.label} sets.`;
     }
-    return `About ${pct(odds)} of cards from ${band.label} sets come back ${article(slab.grade)} ${slab.grade}.`;
+    return `${odds > 0 && odds < 5 ? "Fewer than 0.1%" : `About ${pct(odds)}`} of cards from ${band.label} sets come back ${article(slab.grade)} ${slab.grade}.`;
   }
 
   /** The line under the numbers: what the slab is worth next to the raw card, and what to do about it. */

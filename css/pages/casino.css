@@ -876,6 +876,20 @@ body.cs-locked { overflow: hidden; }
   .cs-grid { padding: 14px 16px 16px; gap: 18px 12px; }
   .cs-sheet-foot { padding: 12px 20px calc(14px + env(safe-area-inset-bottom)); }
 }
+/* Small phones: the four filter words (with Graded showing) fit whole instead of "Duplica…". */
+@media (max-width: 400px) {
+  .cs-tools > .cs-seg { gap: 0; padding: 0; }
+  .cs-tools > .cs-seg button { flex: 1 1 auto; padding-inline: 5px; font-size: 13.5px; }
+}
+/* A short phone (an SE, or Safari with its bars showing) left the cards a strip a row tall.
+   There the whole sheet scrolls instead: the title and the key stay put, the amounts and
+   filters scroll away with the cards. */
+@media (max-width: 720px) and (max-height: 640px) {
+  .cs-sheet { overflow-y: auto; overscroll-behavior: contain; }
+  .cs-sheet-head { position: sticky; top: 0; z-index: 12; padding-bottom: 6px; background: var(--box); }
+  .cs-grid { flex: none; min-height: 60vh; overflow: visible; }
+  .cs-sheet-foot { position: sticky; bottom: 0; z-index: 12; margin-top: auto; }
+}
 
 /* ---- Jackpot --------------------------------------------------------------------
    The pot is the hero: its object on the cyan slab and the total huge beside it,

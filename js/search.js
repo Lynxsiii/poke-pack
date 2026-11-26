@@ -20,7 +20,7 @@
    Cart controls come from js/cart.js (the same ?v= as the app, or there are two stores). */
 import { SET_BY_ID, RARITY_LABEL } from "./catalog.js";
 import { homeSetId } from "./card-home.js";
-import { cartStore, cartControlHtml, cartControlClick, cartControlChange, refreshCartControls } from "./cart.js?v=5";
+import { cartStore, cartControlHtml, cartControlClick, cartControlChange, refreshCartControls } from "./cart.js?v=6";
 import { coinAmount } from "./money.js?v=2";
 import { buildCardList, buildSealedList, searchCards, searchSealed, parseQuery, asksForProduct } from "./search-rules.js?v=1";
 

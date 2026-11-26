@@ -816,6 +816,12 @@ body.no-motion dialog[open]::backdrop { animation: none !important; }
     max-height: calc(100dvh - 64px - var(--tabbar, 72px) - 36px - env(safe-area-inset-top));
     border-radius: 10px; transform-origin: 26px 0;
     animation: rt-menu-in 0.24s var(--ease-out);
+    /* On short phones the list scrolls: a soft shade on the bottom edge says there's more,
+       and a cover riding at the end of the list lifts it once you reach the bottom. */
+    background:
+      linear-gradient(transparent, var(--box) 60%) 0 100% / 100% 30px no-repeat local,
+      radial-gradient(farthest-side at 50% 100%, color-mix(in srgb, var(--k) 26%, transparent), transparent) 0 100% / 100% 14px no-repeat scroll,
+      var(--box);
   }
   .tabbar .nav-more-list .menu-me {
     grid-column: 1 / -1; display: flex; flex-direction: row; align-items: center; gap: 12px;

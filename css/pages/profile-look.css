@@ -259,6 +259,8 @@
   display: flex; flex-wrap: wrap; align-items: center; gap: 4px 18px; padding: 10px 14px;
   border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); box-shadow: var(--drop-sm);
 }
+/* Nothing to save: the bar stays where it sits instead of covering a short phone's screen. */
+.pl-bar:not(.is-dirty) { position: static; box-shadow: none; }
 .pl-bar .solid { min-width: 150px; }
 /* Nothing to save: the key steps back to the disabled plate (as css/rotom.css draws :disabled), not a faded yellow. */
 .pl-bar .solid[aria-disabled="true"] { color: var(--k-3); cursor: default; transform: none; }
@@ -294,7 +296,8 @@ body:has(#pl-layout) { overflow-x: clip; }
 .pl-mini-hero[data-hero="banner"] .pl-mini-id { margin-top: -26px; align-items: flex-start; }
 .pl-mini-hero[data-hero="banner"] .pl-mini-name { padding-top: 32px; }
 .pl-mini-hero[data-hero="plain"] .pl-mini-id { padding-top: 18px; align-items: center; }
-.pl-mini-face { flex: none; width: 54px; }
+/* Above the banner it overlaps (the banner is positioned, so a static picture slid under it). */
+.pl-mini-face { position: relative; z-index: 1; flex: none; width: 54px; }
 .pl-mini-hero[data-hero="plain"] .pl-mini-face { width: 76px; }
 .trainer-mark.pl-mini-face {
   --ring: var(--avatar, var(--k));
