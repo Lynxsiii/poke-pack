@@ -127,7 +127,7 @@ import {
 import { api, ApiError } from "./api.js";
 import { THEMES, canUseTheme, resolveLook } from "./themes.js?v=1";
 import { equippedCoin, gearItem, normalizeGear } from "./gear.js?v=2";
-import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=15";
+import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=16";
 import { initBattles } from "./battles.js?v=10";
 import { initCasino } from "./casino.js?v=26";
 import { coinOf } from "./coin.js?v=5";
@@ -861,13 +861,14 @@ function tcgFace(card, { small = false, stamp = true, lazy = false } = {}) {
   </div>`;
 }
 
-/** The face-down card: the equipped sleeve when there is one, else the set's printed back. */
+/** The face-down card out of a pack: always the set's own printed back. Sleeves are for the
+    card game only (Noah, 2026-11-26: "save the sleeves for the game"); it passes state.gear itself. */
 function backSrc(set = liveSet) {
-  return cardBackSrc(state.gear, set?.cardBack || liveSet.cardBack);
+  return cardBackSrc(null, set?.cardBack || liveSet.cardBack);
 }
 
 function cardBack(set = liveSet) {
-  return cardBackHtml(state.gear, set?.cardBack || liveSet.cardBack);
+  return cardBackHtml(null, set?.cardBack || liveSet.cardBack);
 }
 
 function setOwned() {
@@ -7456,7 +7457,8 @@ function resetTear() {
     "pack-exit",
     "spill",
     "tear-from-left",
-    "tear-from-right"
+    "tear-from-right",
+    "entered"
   );
 }
 
@@ -9805,7 +9807,8 @@ function beginTear(e) {
   if (packPhase !== "ready" || tearing) return false;
   if (!grabTop(e)) return false;
   tearing = true;
-  els.packBody.classList.add("tearing");
+  // "entered": the entrance is over for this pack, so letting go early can't replay its fade-in.
+  els.packBody.classList.add("tearing", "entered");
   tear.begin(e);
   try {
     els.packBody.setPointerCapture?.(e.pointerId);

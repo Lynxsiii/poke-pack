@@ -318,9 +318,12 @@ html[data-theme="dark"] #overlay.is-spread {
   margin: 0 auto 22px;
 }
 #overlay[data-phase="ready"] .booster { animation: opPackIn 0.5s var(--op-ease) both; }
+/* A grab ends the entrance at once. Pausing it instead froze a pack grabbed in its first
+   half second at the entrance's opening frame, opacity 0: the tear ran on an invisible pack. */
+#overlay .booster.entered,
 #overlay .booster.tearing,
 #overlay .booster.dragging,
-#overlay .booster.torn { animation-play-state: paused; }
+#overlay .booster.torn { animation: none; }
 @keyframes opPackIn {
   from { opacity: 0; translate: 24px 12px; rotate: 4deg; }
   to { opacity: 1; translate: 0 0; rotate: 0deg; }

@@ -1,5 +1,14 @@
 [
   {
+    "id": "2026-11-26-tear-and-backs",
+    "date": "2026-11-26",
+    "title": "Packs no longer vanish when you tear them",
+    "summary": "Grabbing a pack in the first half second after it landed froze it see-through, so the whole tear ran on an invisible pack. A grab now finishes the pack's entrance at once.",
+    "items": [
+      "Cards out of packs, boxes and battles show the real Pokémon card back again. Your sleeves are for the card game."
+    ]
+  },
+  {
     "id": "2026-11-26-hud-face",
     "date": "2026-11-26",
     "title": "Your picture sits in its level ring",
