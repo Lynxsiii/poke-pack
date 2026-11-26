@@ -287,7 +287,7 @@ export function initCasino(deps = {}) {
       </header>
       ${ageShut ? gateNoticeHTML(ageLock) : ""}
       <ul class="hub-games" aria-label="The games">${tiles.join("")}</ul>
-      <a class="rt-box hub-beta" href="/casino/beta" data-hub-link><span class="hub-beta-art" aria-hidden="true">${BETA_ART.rocket}</span><span class="hub-beta-copy"><b>Beta testing <span class="rt-tag">Beta</span></b><span>Five new games for invited testers: Tall Grass, Poké Ball Drop, Rocket, Higher or Lower and Mystery Tins.</span></span><i class="hub-game-go" aria-hidden="true"></i></a>
+      <a class="rt-box hub-beta" href="/casino/beta" data-hub-link><span class="hub-beta-art" aria-hidden="true">${BETA_ART.rocket}</span><span class="hub-beta-copy"><b>Beta testing <span class="rt-tag">Beta</span></b><span>New games for invited testers: Tall Grass, Rayquaza and Mystery Tins.</span></span><i class="hub-game-go" aria-hidden="true"></i></a>
       <div class="cs-cols hub-live">${live}</div>
       ${recordHTML}
     </div>`;
