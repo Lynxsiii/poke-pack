@@ -34,7 +34,9 @@
   background: var(--box); color: var(--k); font: 700 17px var(--font-h); font-variant-numeric: tabular-nums;
 }
 .bz-input:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 2px; }
-.bz-stake { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 8px; align-items: center; }
+.bz-stake { display: grid; grid-template-columns: minmax(84px, 1fr) auto auto; gap: 8px; align-items: center; }
+/* Half and 2x are small keys: the old base button's 128px floor (app.css) crushed the stake to a sliver on a computer. */
+.bz-stake .ghost { min-width: 0; padding-inline: 14px; }
 .bz-range { width: 100%; accent-color: var(--cy-2); height: 28px; }
 .bz-words { display: flex; flex-wrap: wrap; gap: 6px; }
 .bz-controls .solid { width: 100%; min-height: 50px; font-size: 17px; }
