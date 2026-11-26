@@ -1,5 +1,5 @@
 {
-  "_fetchedAt": "2026-10-01",
+  "_fetchedAt": "2026-11-26",
   "me6": [
     {
       "id": "eliteTrainerBox",
@@ -3008,7 +3008,7 @@
       "promos": [
         "me55-mep101"
       ],
-      "price": 110.75,
+      "price": 113.02,
       "tcgplayerId": 704143,
       "released": "2026-09-16",
       "image": "assets/products/me55/eliteTrainerBox.webp"
@@ -3022,7 +3022,7 @@
         "me55-mep101-pc",
         "me55-mep101"
       ],
-      "price": 253.24,
+      "price": 248.46,
       "tcgplayerId": 704144,
       "released": "2026-09-16",
       "image": "assets/products/me55/pc-etb.webp"
@@ -3039,7 +3039,7 @@
         "me55-mep107",
         "me55-mep108"
       ],
-      "price": 310.23,
+      "price": 297.08,
       "tcgplayerId": 704190,
       "released": "2026-11-06",
       "image": "assets/products/me55/upc-day.webp"
@@ -3056,7 +3056,7 @@
         "me55-mep109",
         "me55-mep110"
       ],
-      "price": 342.89,
+      "price": 332.3,
       "tcgplayerId": 704191,
       "released": "2026-11-06",
       "image": "assets/products/me55/upc-night.webp"
@@ -3069,7 +3069,7 @@
       "promos": [
         "me55-mep106"
       ],
-      "price": 82.17,
+      "price": 80.78,
       "tcgplayerId": 704189,
       "released": "2026-11-06",
       "image": "assets/products/me55/ditto-premium.webp"
@@ -3082,7 +3082,7 @@
       "promos": [
         "me55-mep105"
       ],
-      "price": 59.56,
+      "price": 63.51,
       "tcgplayerId": 704193,
       "released": "2026-11-06",
       "image": "assets/products/me55/figure-mew.webp"
@@ -3095,7 +3095,7 @@
       "promos": [
         "me55-mep104"
       ],
-      "price": 54.54,
+      "price": 64.05,
       "tcgplayerId": 704194,
       "released": "2026-11-06",
       "image": "assets/products/me55/figure-mewtwo.webp"
@@ -3108,7 +3108,7 @@
       "promos": [
         "me55-mep100"
       ],
-      "price": 52.89,
+      "price": 53.04,
       "tcgplayerId": 718674,
       "image": "assets/products/me55/tin-sylveon.webp"
     },
@@ -3120,7 +3120,7 @@
       "promos": [
         "me55-mep099"
       ],
-      "price": 59.26,
+      "price": 58.52,
       "tcgplayerId": 718673,
       "image": "assets/products/me55/tin-greninja.webp"
     },
@@ -3132,7 +3132,7 @@
       "promos": [
         "me55-mep100"
       ],
-      "price": 47.55,
+      "price": 49.02,
       "tcgplayerId": 704155,
       "released": "2026-09-16",
       "image": "assets/products/me55/box-sylveon.webp"
@@ -3145,7 +3145,7 @@
       "promos": [
         "me55-mep099"
       ],
-      "price": 43.99,
+      "price": 44.17,
       "tcgplayerId": 704168,
       "released": "2026-09-16",
       "image": "assets/products/me55/box-greninja.webp"
@@ -3160,7 +3160,7 @@
         "me55-mep097",
         "me55-mep098"
       ],
-      "price": 27.1,
+      "price": 29.32,
       "tcgplayerId": 704153,
       "released": "2026-09-16",
       "image": "assets/products/me55/poster.webp"
@@ -3173,7 +3173,7 @@
       "promos": [
         "me55-mep094"
       ],
-      "price": 32.91,
+      "price": 32.88,
       "tcgplayerId": 704145,
       "released": "2026-09-16",
       "image": "assets/products/me55/tech-exeggutor.webp"
@@ -3186,7 +3186,7 @@
       "promos": [
         "me55-mep095"
       ],
-      "price": 36.55,
+      "price": 36.24,
       "tcgplayerId": 704146,
       "released": "2026-09-16",
       "image": "assets/products/me55/tech-lucario.webp"
@@ -3199,7 +3199,7 @@
       "promos": [
         "me55-116-blister"
       ],
-      "price": 22.14,
+      "price": 21.25,
       "tcgplayerId": 704152,
       "image": "assets/products/me55/knock-out.webp"
     },
@@ -3211,7 +3211,7 @@
       "promos": [
         "me55-mep102"
       ],
-      "price": 24.26,
+      "price": 24.85,
       "tcgplayerId": 704187,
       "released": "2026-10-30",
       "image": "assets/products/me55/deck-espeon.webp"
@@ -3224,10 +3224,169 @@
       "promos": [
         "me55-mep103"
       ],
-      "price": 25.94,
+      "price": 24.88,
       "tcgplayerId": 704188,
       "released": "2026-10-30",
       "image": "assets/products/me55/deck-umbreon.webp"
+    },
+    {
+      "id": "mini-tin-espeon",
+      "name": "Mini Tin: Espeon",
+      "kind": "tin",
+      "packs": 2,
+      "note": "Two 30th Celebration packs. The real tin also holds a Espeon art card and a sticker sheet, which aren't playable cards (Pokemon.com and TCGplayer product text).",
+      "promos": [],
+      "price": 24.6,
+      "tcgplayerId": 704176,
+      "released": "2026-10-02",
+      "image": "assets/products/me55/mini-tin-espeon.webp"
+    },
+    {
+      "id": "mini-tin-day-pikachu",
+      "name": "Mini Tin: Day Pikachu",
+      "kind": "tin",
+      "packs": 2,
+      "note": "Two 30th Celebration packs. The real tin also holds a Day Pikachu art card and a sticker sheet, which aren't playable cards (Pokemon.com and TCGplayer product text).",
+      "promos": [],
+      "price": 23.8,
+      "tcgplayerId": 704177,
+      "released": "2026-10-02",
+      "image": "assets/products/me55/mini-tin-day-pikachu.webp"
+    },
+    {
+      "id": "mini-tin-mew",
+      "name": "Mini Tin: Mew",
+      "kind": "tin",
+      "packs": 2,
+      "note": "Two 30th Celebration packs. The real tin also holds a Mew art card and a sticker sheet, which aren't playable cards (Pokemon.com and TCGplayer product text).",
+      "promos": [],
+      "price": 22.1,
+      "tcgplayerId": 704178,
+      "released": "2026-10-02",
+      "image": "assets/products/me55/mini-tin-mew.webp"
+    },
+    {
+      "id": "mini-tin-lapras",
+      "name": "Mini Tin: Lapras",
+      "kind": "tin",
+      "packs": 2,
+      "note": "Two 30th Celebration packs. The real tin also holds a Lapras art card and a sticker sheet, which aren't playable cards (Pokemon.com and TCGplayer product text).",
+      "promos": [],
+      "price": 22.67,
+      "tcgplayerId": 704179,
+      "released": "2026-10-02",
+      "image": "assets/products/me55/mini-tin-lapras.webp"
+    },
+    {
+      "id": "mini-tin-moltres",
+      "name": "Mini Tin: Moltres",
+      "kind": "tin",
+      "packs": 2,
+      "note": "Two 30th Celebration packs. The real tin also holds a Moltres art card and a sticker sheet, which aren't playable cards (Pokemon.com and TCGplayer product text).",
+      "promos": [],
+      "price": 23.47,
+      "tcgplayerId": 704180,
+      "released": "2026-10-02",
+      "image": "assets/products/me55/mini-tin-moltres.webp"
+    },
+    {
+      "id": "mini-tin-zapdos",
+      "name": "Mini Tin: Zapdos",
+      "kind": "tin",
+      "packs": 2,
+      "note": "Two 30th Celebration packs. The real tin also holds a Zapdos art card and a sticker sheet, which aren't playable cards (Pokemon.com and TCGplayer product text).",
+      "promos": [],
+      "price": 22.83,
+      "tcgplayerId": 704181,
+      "released": "2026-10-02",
+      "image": "assets/products/me55/mini-tin-zapdos.webp"
+    },
+    {
+      "id": "mini-tin-umbreon",
+      "name": "Mini Tin: Umbreon",
+      "kind": "tin",
+      "packs": 2,
+      "note": "Two 30th Celebration packs. The real tin also holds a Umbreon art card and a sticker sheet, which aren't playable cards (Pokemon.com and TCGplayer product text).",
+      "promos": [],
+      "price": 24.23,
+      "tcgplayerId": 704182,
+      "released": "2026-10-02",
+      "image": "assets/products/me55/mini-tin-umbreon.webp"
+    },
+    {
+      "id": "mini-tin-mewtwo",
+      "name": "Mini Tin: Mewtwo",
+      "kind": "tin",
+      "packs": 2,
+      "note": "Two 30th Celebration packs. The real tin also holds a Mewtwo art card and a sticker sheet, which aren't playable cards (Pokemon.com and TCGplayer product text).",
+      "promos": [],
+      "price": 22.6,
+      "tcgplayerId": 704183,
+      "released": "2026-10-02",
+      "image": "assets/products/me55/mini-tin-mewtwo.webp"
+    },
+    {
+      "id": "mini-tin-night-pikachu",
+      "name": "Mini Tin: Night Pikachu",
+      "kind": "tin",
+      "packs": 2,
+      "note": "Two 30th Celebration packs. The real tin also holds a Night Pikachu art card and a sticker sheet, which aren't playable cards (Pokemon.com and TCGplayer product text).",
+      "promos": [],
+      "price": 23.14,
+      "tcgplayerId": 704184,
+      "released": "2026-10-02",
+      "image": "assets/products/me55/mini-tin-night-pikachu.webp"
+    },
+    {
+      "id": "mini-tin-greninja",
+      "name": "Mini Tin: Greninja",
+      "kind": "tin",
+      "packs": 2,
+      "note": "Two 30th Celebration packs. The real tin also holds a Greninja art card and a sticker sheet, which aren't playable cards (Pokemon.com and TCGplayer product text).",
+      "promos": [],
+      "price": 20.78,
+      "tcgplayerId": 704185,
+      "released": "2026-10-02",
+      "image": "assets/products/me55/mini-tin-greninja.webp"
+    },
+    {
+      "id": "binder-collection",
+      "name": "Binder Collection",
+      "kind": "collection",
+      "packs": 5,
+      "note": "Five 30th Celebration packs with a 9-pocket binder; no promo card (Pokemon.com and TCGplayer product text).",
+      "promos": [],
+      "price": 89.3,
+      "tcgplayerId": 704169,
+      "released": "2026-12-04",
+      "image": "assets/products/me55/binder-collection.webp"
+    },
+    {
+      "id": "two-pack-blister",
+      "name": "2-Pack Blister",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two 30th Celebration packs, a Pikachu coin and the foil Eevee 116 also found in the Knock Out Collection (TCGplayer product text; the card itself named by one retailer).",
+      "promos": [
+        "me55-116-blister"
+      ],
+      "price": 62.52,
+      "tcgplayerId": 704148,
+      "released": "2026-09-16",
+      "image": "assets/products/me55/two-pack-blister.webp"
+    },
+    {
+      "id": "costco-etb-bundle",
+      "name": "Costco Elite Trainer Box + Booster Bundle",
+      "kind": "bundle",
+      "packs": 15,
+      "note": "A Costco 2-pack: a standard Elite Trainer Box (9 packs, Nidorina MEP 101) and a Booster Bundle (6 packs). Source: TCGplayer's listing.",
+      "promos": [
+        "me55-mep101"
+      ],
+      "price": 174.83,
+      "tcgplayerId": 729930,
+      "image": "assets/products/me55/costco-etb-bundle.webp"
     },
     {
       "id": "gift-63-stamp",
@@ -3237,7 +3396,7 @@
       "promos": [
         "me55-63-stamp"
       ],
-      "price": 71.35,
+      "price": 69.91,
       "tcgplayerId": 704171,
       "released": "2026-10-02",
       "image": "assets/products/me55/gift-63-stamp.webp"
@@ -3248,7 +3407,7 @@
       "kind": "bundle",
       "packs": 6,
       "promos": [],
-      "price": 63.11,
+      "price": 61.29,
       "tcgplayerId": 704171,
       "released": "2026-10-02",
       "image": "assets/products/me55/boosterBundle.webp"
