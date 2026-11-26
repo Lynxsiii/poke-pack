@@ -1019,7 +1019,7 @@ const HANDLERS = {
       const dealt = damageAfterTyping(base, def, defOf(state, target.uid, defs), { ...hit, noWeakness: hit.noWeakness || Boolean(theirs.noWeakness), noResistance: hit.noResistance || Boolean(theirs.noResistance) });
       // Old PlusPower and Misty: more only when the attack does damage after Weakness and Resistance.
       if (dealt.amount > 0) dealt.amount += heldSum(slot, "after") + boostOf(state, player, slot, target, defs, true);
-      const less = (hit.noEffects ? 0 : markOn(state, target, "less")?.n || 0) + (theirs.less || 0) + heldSum(target, "less");
+      const less = (hit.noEffects ? 0 : markOn(state, target, "less")?.n || 0) + (theirs.less || 0) + (hit.noEffects ? 0 : heldSum(target, "less"));
       let guarded = marked || (!hit.noEffects && markOn(state, target, "guard"));
       // The target's Ability: no damage from this kind of attacker, or a coin flip to take none.
       const power = hit.noEffects ? null : abilityOn(state, target, defs);
