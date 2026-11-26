@@ -97,6 +97,33 @@ export const GRADING_COLUMNS = [
   ["locked", "ALTER TABLE graded_cards ADD COLUMN locked TEXT"],
   // worker/migrations/0029_grading_black_label.sql: a 10 whose four subgrades are all 10.
   ["black_label", "ALTER TABLE graded_cards ADD COLUMN black_label INTEGER NOT NULL DEFAULT 0 CHECK(black_label IN (0,1))"],
+  // worker/migrations/0038_graded_lineage.sql: the slab this one was regraded from (same copy, cracked and sent
+  // straight back in). A regrade is a new cert with a new date; the chain keeps when the copy was first graded.
+  ["regrade_of", "ALTER TABLE graded_cards ADD COLUMN regrade_of INTEGER"],
+];
+
+/** Fills regrade_of for slabs made before the column, from records only (worker/migrations/0038_graded_lineage.sql):
+    an auto-regrade try names its run and try number, so its parent is exact; a manual regrade is the Crack key and
+    then the submit, so its parent is the copy of the same card the same player cracked at most 30 seconds before.
+    A slab with no such record keeps NULL: its own date is the first one on record. */
+export const LINEAGE_BACKFILL = [
+  `UPDATE graded_cards SET regrade_of = (
+     SELECT CASE WHEN CAST(substr(graded_cards.request_id, instr(substr(graded_cards.request_id, 6), ':') + 6) AS INTEGER) = 1
+       THEN r.start_slab_id
+       ELSE (SELECT p.id FROM graded_cards p WHERE p.user_id = graded_cards.user_id AND p.request_id =
+         'auto:' || r.id || ':' || (CAST(substr(graded_cards.request_id, instr(substr(graded_cards.request_id, 6), ':') + 6) AS INTEGER) - 1)) END
+     FROM grade_runs r
+     WHERE r.user_id = graded_cards.user_id
+       AND r.id = substr(graded_cards.request_id, 6, instr(substr(graded_cards.request_id, 6), ':') - 1))
+   WHERE regrade_of IS NULL AND request_id LIKE 'auto:%:%'`,
+  `UPDATE graded_cards SET regrade_of = (
+     SELECT p.id FROM graded_cards p
+     WHERE p.user_id = graded_cards.user_id AND p.card_id = graded_cards.card_id AND p.reverse = graded_cards.reverse
+       AND p.status = 'cracked' AND p.id < graded_cards.id
+       AND p.closed_at BETWEEN graded_cards.created_at - 30000 AND graded_cards.created_at
+       AND NOT EXISTS (SELECT 1 FROM graded_cards s WHERE s.regrade_of = p.id)
+     ORDER BY p.closed_at DESC, p.id DESC LIMIT 1)
+   WHERE regrade_of IS NULL AND request_id NOT LIKE 'auto:%' AND request_id NOT LIKE 'casino:%' AND fee_cents > 0`,
 ];
 
 let schemaWork = null;
@@ -116,8 +143,16 @@ export async function ensureGradingSchema(env) {
           } catch (err) {
             // Another isolate got there first.
             if (!/duplicate column/i.test(String(err?.message || err))) throw err;
+            continue;
+          }
+          // Only the isolate that added the column fills it, once.
+          if (name === "regrade_of") {
+            await env.DB.exec("CREATE INDEX IF NOT EXISTS idx_graded_cards_regrade ON graded_cards(regrade_of);");
+            const runs = await env.DB.prepare("SELECT 1 AS ok FROM sqlite_master WHERE type = 'table' AND name = 'grade_runs'").first();
+            for (const fill of runs ? LINEAGE_BACKFILL : LINEAGE_BACKFILL.slice(1)) await env.DB.prepare(fill).run();
           }
         }
+        await env.DB.exec("CREATE INDEX IF NOT EXISTS idx_graded_cards_regrade ON graded_cards(regrade_of);");
         schemaReady = true;
       } catch (err) {
         console.error("ensureGradingSchema", err);
@@ -358,6 +393,8 @@ async function submit(env, request, helpers, user, body) {
   const cardId = String(body.cardId || "");
   if (!CARD_ID.test(cardId)) error("Pick a card.");
   const reverse = body.reverse === true || body.reverse === 1 || body.reverse === "1";
+  // A regrade (Crack, then straight back in) names the slab it came out of, so the cert page can show the copy's history.
+  const regradeOf = Number.isInteger(Number(body.regradeOf)) && Number(body.regradeOf) > 0 ? Number(body.regradeOf) : 0;
   const existing = await rowFor(env, user.id, requestId);
   if (existing) return existing; // a retry: the copy and the fee already moved, the grade stands
   const card = await helpers.findCatalogCard(env, request, cardId);
@@ -380,9 +417,12 @@ async function submit(env, request, helpers, user, body) {
       "UPDATE cards SET qty = qty - 1, reverse_qty = reverse_qty - ? WHERE user_id = ? AND card_id = ? AND changes() = 1"
     ).bind(reverse ? 1 : 0, user.id, cardId),
     env.DB.prepare(
-      `INSERT INTO graded_cards (user_id, card_id, reverse, grade, band, fee_cents, request_id, status, created_at, black_label)
-       SELECT ?, ?, ?, ?, ?, ?, ?, '${ACTIVE}', ?, ? WHERE changes() = 1`
-    ).bind(user.id, cardId, reverse ? 1 : 0, grade, band.id, feeCents, requestId, now, blackLabel ? 1 : 0),
+      `INSERT INTO graded_cards (user_id, card_id, reverse, grade, band, fee_cents, request_id, status, created_at, black_label, regrade_of)
+       SELECT ?1, ?2, ?3, ?4, ?5, ?6, ?7, '${ACTIVE}', ?8, ?9,
+         (SELECT p.id FROM graded_cards p WHERE p.id = ?10 AND p.user_id = ?1 AND p.card_id = ?2 AND p.reverse = ?3 AND p.status = 'cracked'
+            AND NOT EXISTS (SELECT 1 FROM graded_cards s WHERE s.regrade_of = p.id))
+       WHERE changes() = 1`
+    ).bind(user.id, cardId, reverse ? 1 : 0, grade, band.id, feeCents, requestId, now, blackLabel ? 1 : 0, regradeOf),
     env.DB.prepare("DELETE FROM cards WHERE user_id = ? AND card_id = ? AND qty = 0").bind(user.id, cardId),
   ];
   let results;
@@ -632,4 +672,85 @@ export async function handleGrading(path, method, request, env, helpers) {
     if (err.status) return json({ error: err.message }, err.status);
     throw err;
   }
+}
+
+// ---- Public cert lookup ----------------------------------------------------------
+/** "RIP-0000123", "rip0000123", "0000123" or "123" -> 123; 0 when it isn't a cert number. Mirrors certIdOf in js/grading-rules.js. */
+export function certId(raw) {
+  const m = String(raw || "").trim().match(/^(?:rip[-\s]?)?0*(\d{1,12})$/i);
+  const id = m ? Number(m[1]) : 0;
+  return Number.isSafeInteger(id) && id > 0 ? id : 0;
+}
+
+const HISTORY_SHOWN = 8;
+
+/** The copy's earlier certs (regrades), newest first, plus how many and when it was first graded. */
+async function lineageOf(env, row) {
+  const chain = `WITH RECURSIVE chain(id, regrade_of, grade, black_label, created_at, depth) AS (
+      SELECT id, regrade_of, grade, black_label, created_at, 0 FROM graded_cards WHERE id = ?1
+      UNION ALL
+      SELECT g.id, g.regrade_of, g.grade, g.black_label, g.created_at, c.depth + 1
+      FROM graded_cards g JOIN chain c ON g.id = c.regrade_of WHERE c.depth < 100000)`;
+  const sum = await env.DB.prepare(`${chain} SELECT MIN(created_at) AS first, MAX(depth) AS n FROM chain`).bind(row.id).first();
+  const earlier =
+    (await env.DB.prepare(`${chain} SELECT id, grade, black_label, created_at FROM chain WHERE depth BETWEEN 1 AND ?2 ORDER BY depth`).bind(row.id, HISTORY_SHOWN).all())
+      .results || [];
+  const next = await env.DB.prepare("SELECT id, grade, black_label, created_at FROM graded_cards WHERE regrade_of = ? ORDER BY id LIMIT 1").bind(row.id).first();
+  const step = (r) => ({ cert: certNumber(r.id), id: r.id, grade: r.grade, blackLabel: Boolean(r.black_label), gradedAt: r.created_at });
+  return {
+    firstGradedAt: Number(sum?.first) || row.created_at,
+    regrades: Number(sum?.n) || 0,
+    earlier: earlier.map(step),
+    regradedAs: next ? step(next) : null,
+  };
+}
+
+/** What happened to a cert that is no longer in a slab, in the words the page prints. */
+function endOf(row) {
+  if (row.status === ACTIVE) return row.locked ? "in-game" : "active";
+  if (row.status === "cracked") return "cracked";
+  return String(row.sell_request_id || "").startsWith("casino:") ? "lost" : "sold";
+}
+
+/** GET /api/cert/<cert>: anyone, signed in or not, can look up a cert. A slab still sealed names its owner. */
+export async function handleCert(path, method, request, env, helpers) {
+  const { json } = helpers;
+  const m = path.match(/^\/api\/cert\/([A-Za-z0-9 -]{1,20})$/);
+  if (!m || method !== "GET") return json({ error: "Not found." }, 404);
+  const id = certId(decodeURIComponent(m[1]));
+  if (!id) return json({ error: "That isn't a cert number. They look like RIP-0001234." }, 400);
+  await ensureGradingSchema(env);
+  const row = await env.DB.prepare("SELECT * FROM graded_cards WHERE id = ?").bind(id).first();
+  if (!row) return json({ error: `No slab has the cert ${certNumber(id)}.` }, 404);
+  let card = null;
+  try {
+    card = await helpers.findCatalogCard(env, request, row.card_id);
+  } catch {
+    /* the set's data is missing: the cert still answers with what the row knows */
+  }
+  const set = setForCard(row.card_id);
+  const status = endOf(row);
+  let owner = null;
+  if (status === "active" || status === "in-game") {
+    const user = await env.DB.prepare("SELECT * FROM users WHERE id = ?").bind(row.user_id).first();
+    if (user) {
+      const pub = helpers.publicUser(user);
+      owner = { name: pub.name, handle: pub.handle, color: pub.color, title: pub.title, avatar: pub.avatar, avatarStyle: pub.avatarStyle, frame: pub.frame };
+    }
+  }
+  const view = slabView(row, card);
+  const res = json({
+    cert: certNumber(row.id),
+    status,
+    closedAt: row.status === ACTIVE ? null : row.closed_at || null,
+    slab: { ...view, shown: undefined, fee: undefined, value: status === "active" || status === "in-game" ? view.value : null },
+    card: card
+      ? { id: card.id, name: card.name, rarity: card.rarity, number: card.number, printedNumber: card.printedNumber || null, image: card.image, imageSmall: card.imageSmall || card.image, set: card.set || null }
+      : { id: row.card_id },
+    set: set ? { id: set.id, name: set.name, released: set.released || null, printedTotal: set.printedTotal ?? null } : null,
+    owner,
+    ...(await lineageOf(env, row)),
+  });
+  res.headers.set("cache-control", "public, max-age=30");
+  return res;
 }

@@ -15,7 +15,7 @@
    and the figure is always the real total once you leave the field. */
 import { esc, coins, icon, plural } from "./casino-kit.js";
 import { matchWindow, COINFLIP_RULES, JACKPOT_RULES } from "./casino-rules.js";
-import { slabHTML, gradeWord } from "./slab.js?v=2";
+import { slabHTML, gradeWord } from "./slab.js?v=3";
 
 const PAGE = 60;
 const SLAB_PAGE = 30;

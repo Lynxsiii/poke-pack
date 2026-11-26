@@ -57,7 +57,7 @@ import { ensureGearSchema, gearSummary, prepareRewardGear, handleGear, loadGearC
 import { productGear, rollGear } from "../js/gear.js";
 import { handleCasino, maintainCoinflips } from "./casino.js";
 import { ensureBetaSchema } from "./beta.js";
-import { ensureGradingSchema, gradedCounts, gradedSlabs, gradedTotal, handleGrading, shownSlabs } from "./grading.js";
+import { ensureGradingSchema, gradedCounts, gradedSlabs, gradedTotal, handleCert, handleGrading, shownSlabs } from "./grading.js";
 import { handleBinderLook, lookColumns, resetEditionStmts, trainerLookFields } from "./binder-look.js";
 import { bestHistory, rollSealedProduct, tallyOpened } from "./sealed-roll.js";
 import { ensureOrdersSchema, handleOrders, vaultKept } from "./orders.js";
@@ -201,6 +201,11 @@ export async function handleApi(request, env, url) {
       json, requireUser, readJson, loadSave, loadSetCards, findCatalogCard, inventoryMap, reconcileBinder, ownedWithSlabs, parseJson, ensureSocialSchema, recordQuestEvent,
       loadSealed, loadProducts,
     });
+  }
+
+  // A cert lookup is public: anyone can see a graded card by its cert number (worker/grading.js handleCert).
+  if (path.startsWith('/api/cert/')) {
+    return handleCert(path, method, request, env, { json, findCatalogCard, publicUser });
   }
 
   if (path.startsWith('/api/grading')) {

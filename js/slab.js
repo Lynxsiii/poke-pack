@@ -67,6 +67,48 @@ function subgradesHTML() {
   return `<span class="slab-subs" aria-hidden="true">${BLACK_LABEL.subgrades.map((name) => `<i><em>${name.slice(0, 3)}</em>10</i>`).join("")}</span>`;
 }
 
+/** A barcode drawn from the cert's digits: each digit sets a bar's width and the gap after it, so every cert
+    prints its own pattern. Returned as a CSS gradient for an inline custom property (no image, no script). */
+export function certBars(cert) {
+  const digits = String(cert || "").replace(/\D/g, "").padStart(7, "0").split("").map(Number);
+  // Guard bars, then two bars per digit, then guard bars: widths in tenths of the strip.
+  const widths = [1, 1, 1, 1, ...digits.flatMap((d) => [1 + (d % 2), 1 + ((d >> 1) % 2), 1 + ((d >> 2) % 2), 1]), 1, 1, 1];
+  const total = widths.reduce((a, b) => a + b, 0);
+  let at = 0;
+  const stops = [];
+  widths.forEach((w, i) => {
+    const from = (at / total) * 100;
+    at += w;
+    const to = (at / total) * 100;
+    const ink = i % 2 === 0 ? "var(--slab-ink)" : "transparent";
+    stops.push(`${ink} ${from.toFixed(2)}% ${to.toFixed(2)}%`);
+  });
+  return `linear-gradient(90deg, ${stops.join(", ")})`;
+}
+
+/** The back of the slab, seen when it is turned over in the viewer (js/slab-viewer.js): the back label with the cert
+    large, its barcode and where to check it, and the card's own back in the well. */
+function backHTML({ cert, grade, word, name, setName, backSrc, size, tier, guard }) {
+  return `<div class="slab slab-${esc(size)} slab-back" data-tier="${tier}"${guard ? ` data-guard="${esc(guard)}"` : ""} aria-hidden="true">
+    ${guard ? `<span class="slab-guard"></span>` : ""}
+    <div class="slab-case slab-case-back">
+      <span class="slab-edge"></span>
+      <div class="slab-label slab-label-back">
+        <span class="slab-back-brand"><b>RIP</b><i>Grading</i></span>
+        <span class="slab-back-info">
+          <span class="slab-back-cert">${esc(cert)}</span>
+          <span class="slab-bars" style="--bars:${esc(certBars(cert))}"></span>
+          <span class="slab-back-url">poke-pack.rip/cert/${esc(cert)}</span>
+        </span>
+        <span class="slab-back-grade"><b>${grade}</b><i>${esc(word)}</i></span>
+      </div>
+      <div class="slab-well slab-well-back"><img class="slab-cardback" src="${esc(backSrc)}" alt="" width="63" height="88" decoding="async" loading="lazy" /></div>
+      <span class="slab-foot"><i>${esc(name)}</i><i>${esc(setName)}</i></span>
+      <span class="slab-glass"><i class="slab-spec"></i></span>
+    </div>
+  </div>`;
+}
+
 /**
  * @param {object} o
  * @param {string} o.face   HTML string of the `.tcg` from cardFace(card), inserted as is
@@ -75,8 +117,9 @@ function subgradesHTML() {
  * @param {object} o.set    catalog set (name, released, printedTotal)
  * @param {"grid"|"inspect"|"hero"} o.size
  * @param {string} o.cls    extra classes on the root
+ * @param {boolean} o.back  also draw the back face, as a second root after the slab (only js/slab-viewer.js shows it)
  */
-export function slabHTML({ face = "", card, slab = {}, set, size = "grid", cls = "" }) {
+export function slabHTML({ face = "", card, slab = {}, set, size = "grid", cls = "", back = false }) {
   const grade = Math.max(1, Math.min(10, Math.round(Number(slab.grade) || 0)));
   const guard = GUARD_IDS.has(slab.guard) ? slab.guard : "";
   const black = grade === 10 && Boolean(slab.blackLabel);
@@ -92,25 +135,28 @@ export function slabHTML({ face = "", card, slab = {}, set, size = "grid", cls =
   const meta = [variant, year].filter(Boolean).join(" · ");
   const setLine = `${esc(setName)}${setName && number ? `<span class="slab-no"> · ${esc(number)}</span>` : esc(number)}`;
   const alt = `${name} graded RIP ${grade} ${black ? `${BLACK_LABEL.grade} ${word}` : word}`.trim();
+  const backSrc = set?.cardBack || "assets/cards/shared/card-back.webp";
   return `<div class="slab slab-${esc(size)}${cls ? ` ${esc(cls)}` : ""}" data-grade="${grade}"${guard ? ` data-guard="${esc(guard)}"` : ""}${slab.id != null ? ` data-slab="${esc(slab.id)}"` : ""} data-tier="${tierOf(grade, black)}">
     ${guard ? `<span class="slab-guard" aria-hidden="true"></span>` : ""}
     <div class="slab-case">
       <span class="slab-edge" aria-hidden="true"></span>
       <div class="slab-label" role="img" aria-label="${esc(alt)}">
-        <span class="slab-brand"><b>RIP</b><i>Grading</i></span>
+        <span class="slab-strip" aria-hidden="true"></span>
+        <span class="slab-brand"><b>RIP</b><i>Grading</i><span class="slab-seal" aria-hidden="true"><i></i></span></span>
         <span class="slab-info">
           <span class="slab-set">${setLine}</span>
           <span class="slab-name">${esc(name)}</span>
           <span class="slab-var">${esc(meta)}</span>
-          <span class="slab-cert">${esc(cert)}</span>
+          <span class="slab-cert"><span class="slab-bars" style="--bars:${esc(certBars(cert))}" aria-hidden="true"></span>${esc(cert)}</span>
           ${black ? subgradesHTML() : ""}
         </span>
         <span class="slab-grade"><b class="slab-num">${grade}</b><span class="slab-word">${esc(word)}</span><i class="slab-glint" aria-hidden="true"></i></span>
       </div>
       <div class="slab-well">${face}</div>
-      <span class="slab-glass" aria-hidden="true"><i class="slab-sweep"></i></span>
+      <span class="slab-foot" aria-hidden="true"><i>Rest in plastic</i><i>${esc(cert)}</i></span>
+      <span class="slab-glass" aria-hidden="true"><i class="slab-spec"></i><i class="slab-sweep"></i></span>
     </div>
-  </div>`;
+  </div>${back ? backHTML({ cert, grade, word, name, setName, backSrc, size, tier: tierOf(grade, black), guard }) : ""}`;
 }
 
 const REVEAL_MS = { black: 3250, gem: 2650, mint: 2400, plain: 1950 };

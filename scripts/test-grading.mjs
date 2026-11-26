@@ -42,10 +42,10 @@ await check('a deliberately broken copy throws', () => {
   assert.throws(() => validateGradingRules(GRADE_BANDS, [...GUARDS, { ...GUARDS[0] }]), /repeats/);
   assert.throws(() => validateGradingRules(GRADE_BANDS, [{ id: 'x', name: 'X', price: 0 }]), /price/);
 });
-await check('guards: 42 styles on four shelves, every id styled in css/guards*.css and nothing else', () => {
-  assert.equal(GUARDS.length, 42);
-  assert.deepEqual(GUARD_TIERS.map((t) => t.id), ['solid', 'duo', 'metal', 'motion']);
-  for (const tier of GUARD_TIERS) assert.ok(guardsInTier(tier.id).length >= 6, tier.id);
+await check('guards: 78 styles on five shelves of 10 to 20, every id styled in css/guards*.css and nothing else', () => {
+  assert.equal(GUARDS.length, 78);
+  assert.deepEqual(GUARD_TIERS.map((t) => t.id), ['solid', 'duo', 'metal', 'crystal', 'motion']);
+  for (const tier of GUARD_TIERS) { const n = guardsInTier(tier.id).length; assert.ok(n >= 10 && n <= 20, `${tier.id}: ${n}`); }
   assert.throws(() => validateGradingRules(GRADE_BANDS, [...GUARDS, { id: 'x', name: 'X', price: 1, tier: 'nope' }]), /no tier/);
   const css = readFileSync(new URL('../css/guards.css', import.meta.url), 'utf8') + readFileSync(new URL('../css/guards-motion.css', import.meta.url), 'utf8');
   const styled = new Set([...css.matchAll(/\[data-guard="(guard-[a-z-]+)"\]/g)].map((m) => m[1]));
@@ -54,7 +54,7 @@ await check('guards: 42 styles on four shelves, every id styled in css/guards*.c
   const slab = readFileSync(new URL('../css/slab.css', import.meta.url), 'utf8');
   assert.ok(!/\.slab\[data-guard=/.test(slab), 'guard palettes moved out of slab.css');
   const prices = GUARD_TIERS.map((t) => guardsInTier(t.id).map((g) => g.price));
-  assert.ok(Math.max(...prices[0]) <= Math.min(...prices[1]) && Math.max(...prices[1]) <= Math.min(...prices[2]) && Math.max(...prices[2]) <= Math.min(...prices[3]), 'shelves get dearer');
+  for (let i = 1; i < prices.length; i++) assert.ok(Math.max(...prices[i - 1]) <= Math.min(...prices[i]), 'shelves get dearer');
 });
 await check('bandFor: me55 -> me, sv3pt5 -> sv, swsh1 -> swsh, base1 -> wotc', () => {
   assert.equal(releaseYear(SET_BY_ID.me55), 2026); assert.equal(bandFor(SET_BY_ID.me55).id, 'me');
@@ -518,6 +518,77 @@ await check('a Black Label slab: the save, sell and the casino stake carry the f
   const coins = coinsOf('ace');
   const r = await api('/api/grading/sell', 'POST', { slabId: blId, requestId: 'bl-sell-0001' }, 'ace');
   assert.equal(r.status, 200, JSON.stringify(r)); assert.equal(r.sold, bl.value); assert.equal(coinsOf('ace'), money(coins + bl.value));
+});
+
+const certApi = async (form) => {
+  const res = await worker.fetch(new Request(`https://poke-pack.rip/api/cert/${encodeURIComponent(form)}`), env);
+  return { http: res.status, ...(await res.json()) };
+};
+await check('cert lookup: public, any form of the number, owner only while sealed; a regrade links the copy and keeps the first date', async () => {
+  addUser('cert', 1000); give('cert', 'me5-2', 1);
+  const a = await submit('me5-2', false, 'cert-a-000001', 'cert');
+  assert.equal(a.status, 200, JSON.stringify(a));
+  const first = db.prepare('SELECT * FROM graded_cards WHERE id = ?').get(a.slab.id);
+  db.prepare('UPDATE graded_cards SET created_at = ? WHERE id = ?').run(first.created_at - 40 * 86400000, a.slab.id); // graded weeks ago
+  for (const form of [a.slab.cert, a.slab.cert.toLowerCase(), a.slab.cert.replace('RIP-', ''), String(a.slab.id)]) {
+    const r = await certApi(form);
+    assert.equal(r.http, 200, form); assert.equal(r.cert, a.slab.cert); assert.equal(r.owner.handle, 'cert'); assert.equal(r.status, 'active');
+  }
+  const open = await certApi(a.slab.cert);
+  assert.equal(open.http, 200); assert.equal(open.card.name, cardById.get('me5-2').name); assert.equal(open.regrades, 0);
+  assert.equal(open.slab.gradedAt, first.created_at - 40 * 86400000, 'the stored date, not today');
+  assert.equal(open.slab.fee, undefined, 'what was paid is private');
+  // Crack and straight back in, naming the slab it came out of.
+  assert.equal((await crack(a.slab.id, 'cert')).status, 200);
+  const b = await api('/api/grading/submit', 'POST', { cardId: 'me5-2', reverse: false, requestId: 'cert-b-000001', regradeOf: a.slab.id }, 'cert');
+  assert.equal(b.status, 200, JSON.stringify(b));
+  assert.equal(db.prepare('SELECT regrade_of FROM graded_cards WHERE id = ?').get(b.slab.id).regrade_of, a.slab.id);
+  const now2 = await certApi(b.slab.cert);
+  assert.equal(now2.regrades, 1); assert.equal(now2.firstGradedAt, first.created_at - 40 * 86400000);
+  assert.deepEqual(now2.earlier.map((e) => e.cert), [a.slab.cert]);
+  const was = await certApi(a.slab.cert);
+  assert.equal(was.status, 'cracked'); assert.equal(was.owner, null, 'a cracked cert names nobody'); assert.equal(was.regradedAs.cert, b.slab.cert); assert.equal(was.slab.value, null);
+  // Someone else's cracked slab, or a slab already followed, never links.
+  give('cert', 'me5-2', 1);
+  const c = await api('/api/grading/submit', 'POST', { cardId: 'me5-2', reverse: false, requestId: 'cert-c-000001', regradeOf: a.slab.id }, 'cert');
+  assert.equal(c.status, 200); assert.equal(db.prepare('SELECT regrade_of FROM graded_cards WHERE id = ?').get(c.slab.id).regrade_of, null);
+  assert.equal((await certApi('RIP-9999999')).http, 404);
+  assert.equal((await certApi('hello')).http, 400);
+});
+
+await check('lineage backfill: auto-regrade tries and manual regrades (crack then submit within 30 s) link; nothing else does', async () => {
+  const old = makeDb(migrationFiles.filter((f) => f < '0038'));
+  old.db.exec('PRAGMA foreign_keys = OFF');
+  const t = Date.now() - 50 * 86400000;
+  old.db.prepare('INSERT INTO users(id,name,handle,password_hash,color,created_at,last_played) VALUES(?,?,?,?,?,?,?)').run('u', 'u', 'uu1', 'x', 'gold', t, t);
+  const ins = old.db.prepare("INSERT INTO graded_cards(id,user_id,card_id,reverse,grade,band,fee_cents,request_id,status,created_at,closed_at) VALUES(?,?,?,0,?,'me',500,?,?,?,?)");
+  ins.run(1, 'u', 'me5-1', 6, 'm-00000001', 'cracked', t, t + 1000);          // first graded
+  ins.run(2, 'u', 'me5-1', 7, 'm-00000002', 'cracked', t + 5000, t + 9000);   // manual regrade of 1 (crack 4 s before)
+  ins.run(3, 'u', 'me5-1', 8, 'auto:1:1', 'cracked', t + 20000, t + 21000);   // auto run 1 from slab 2
+  ins.run(4, 'u', 'me5-1', 9, 'auto:1:2', 'slabbed', t + 21000, null);
+  ins.run(5, 'u', 'me5-3', 5, 'm-00000005', 'slabbed', t + 99000, null);     // unrelated
+  ins.run(6, 'u', 'me5-1', 4, 'm-00000006', 'slabbed', t + 900000, null);    // same card much later: no link
+  old.db.exec(`CREATE TABLE IF NOT EXISTS grade_runs (id INTEGER PRIMARY KEY, user_id TEXT, request_id TEXT, card_id TEXT, reverse INTEGER, start_slab_id INTEGER, start_grade INTEGER, start_black INTEGER, slab_id INTEGER, target INTEGER, max_spend_cents INTEGER, max_attempts INTEGER, attempts INTEGER, spent_cents INTEGER, status TEXT, reason TEXT, created_at INTEGER, updated_at INTEGER)`);
+  old.db.prepare("INSERT INTO grade_runs(id,user_id,request_id,card_id,reverse,start_slab_id,start_grade,start_black,slab_id,target,max_attempts,attempts,spent_cents,status,created_at,updated_at) VALUES(1,'u','r','me5-1',0,2,7,0,4,9,10,2,0,'hit',?,?)").run(t, t);
+  const fresh = makeDb(migrationFiles.filter((f) => f < '0038'));
+  fresh.db.exec('PRAGMA foreign_keys = OFF');
+  for (const [label, world, apply] of [['by the migration file', old, (w) => w.db.exec(migrationSql('0038_graded_lineage.sql'))]]) {
+    apply(world);
+    const links = Object.fromEntries(world.db.prepare('SELECT id, regrade_of FROM graded_cards ORDER BY id').all().map((r) => [r.id, r.regrade_of]));
+    assert.deepEqual(links, { 1: null, 2: 1, 3: 2, 4: 3, 5: null, 6: null }, label);
+  }
+  // The lazy path (the Worker adds the column itself) fills the same links.
+  const rows = old.db.prepare('SELECT * FROM graded_cards ORDER BY id').all();
+  fresh.db.exec(`CREATE TABLE IF NOT EXISTS grade_runs (id INTEGER PRIMARY KEY, user_id TEXT, request_id TEXT, card_id TEXT, reverse INTEGER, start_slab_id INTEGER, start_grade INTEGER, start_black INTEGER, slab_id INTEGER, target INTEGER, max_spend_cents INTEGER, max_attempts INTEGER, attempts INTEGER, spent_cents INTEGER, status TEXT, reason TEXT, created_at INTEGER, updated_at INTEGER)`);
+  fresh.db.prepare("INSERT INTO grade_runs(id,user_id,request_id,card_id,reverse,start_slab_id,start_grade,start_black,slab_id,target,max_attempts,attempts,spent_cents,status,created_at,updated_at) VALUES(1,'u','r','me5-1',0,2,7,0,4,9,10,2,0,'hit',?,?)").run(t, t);
+  fresh.db.prepare('INSERT INTO users(id,name,handle,password_hash,color,created_at,last_played) VALUES(?,?,?,?,?,?,?)').run('u', 'u', 'uu1', 'x', 'gold', t, t);
+  const cols = fresh.db.prepare('PRAGMA table_info(graded_cards)').all().map((c) => c.name).filter((c) => c !== 'regrade_of');
+  for (const r of rows) fresh.db.prepare(`INSERT INTO graded_cards(${cols.join(',')}) VALUES(${cols.map(() => '?').join(',')})`).run(...cols.map((c) => r[c]));
+  resetGradingSchemaCache();
+  await (await import('../worker/grading.js')).ensureGradingSchema({ DB: fresh.DB });
+  resetGradingSchemaCache();
+  const lazy = Object.fromEntries(fresh.db.prepare('SELECT id, regrade_of FROM graded_cards ORDER BY id').all().map((r) => [r.id, r.regrade_of]));
+  assert.deepEqual(lazy, { 1: null, 2: 1, 3: 2, 4: 3, 5: null, 6: null }, 'lazy');
 });
 
 console.log(results.join('\n'));

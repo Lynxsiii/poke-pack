@@ -1,5 +1,46 @@
 [
   {
+    "id": "2026-11-26-grading-overhaul",
+    "date": "2026-11-26",
+    "title": "Slabs you can turn over and look up",
+    "summary": "Every slab has a public cert page, slabs got a new case you can rotate, and there are 78 guards on five shelves.",
+    "groups": [
+      {
+        "title": "Cert lookup",
+        "items": [
+          "Every slab now has its own page at poke-pack.rip/cert/ followed by its cert number. Anyone can open it, signed in or not, and see the card, the grade, when it was graded and who holds it.",
+          "Type a cert number into the box on Grading to find the slab it belongs to. RIP-0001234, 1234 and rip1234 all work.",
+          "A slab that was cracked or sold still has a cert page. It shows that the cert is retired, and which slab it was regraded into.",
+          "The Share cert key on a slab's page copies its link."
+        ]
+      },
+      {
+        "title": "Graded dates",
+        "items": [
+          "A slab's page shows the day it was graded, plus the first day that copy of the card was graded if it has been regraded since. A regrade or an auto-regrade makes a new slab with a new date, which is why some slabs looked brand new.",
+          "Slabs from before this update are linked to the slab they were regraded from wherever our records show it. Where they don't, no date is guessed."
+        ]
+      },
+      {
+        "title": "The slabs themselves",
+        "items": [
+          "A new case: bevelled acrylic edges, a printed label with a hologram seal, a barcode made from the cert number, foil grades and a glare that follows your finger.",
+          "Drag a slab to turn it round and see its back, with the cert and the card's back through the plastic. Look closer opens it full screen. On a computer it leans as you move the mouse.",
+          "The guard wraps the sides of the case too, so it looks like a real bumper when you turn it."
+        ]
+      },
+      {
+        "title": "Guards",
+        "items": [
+          "36 new guards, 78 in all. Every shelf now has 12 to 20 styles.",
+          "A new Crystal shelf: tinted see-through acrylic in smoke, ruby, sapphire, emerald, amber and more, plus opal, glitter and gold leaf.",
+          "New animated guards: Tide, Storm, Magma, Glitch, Borealis, Comet and Starlight.",
+          "The guard shop has its own page now. Grading shows one tile for each shelf."
+        ]
+      }
+    ]
+  },
+  {
     "id": "2026-11-26-faster-site",
     "date": "2026-11-26",
     "title": "A faster site, most of all on phones",

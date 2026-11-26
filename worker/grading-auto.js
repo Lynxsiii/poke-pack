@@ -228,8 +228,8 @@ async function oneTry(env, run, card, band, feeCents) {
     env.DB.prepare("UPDATE profiles SET coins = coins - ? WHERE user_id = ? AND changes() = 1").bind(feeCents / 100, run.user_id),
     // 3. The new slab: same copy, new grade, the old one's guard and profile place.
     env.DB.prepare(
-      `INSERT INTO graded_cards (user_id, card_id, reverse, grade, band, fee_cents, request_id, status, created_at, black_label, guard, shown)
-       SELECT user_id, card_id, reverse, ?, ?, ?, ?, '${ACTIVE}', ?, ?, guard, shown FROM graded_cards
+      `INSERT INTO graded_cards (user_id, card_id, reverse, grade, band, fee_cents, request_id, status, created_at, black_label, guard, shown, regrade_of)
+       SELECT user_id, card_id, reverse, ?, ?, ?, ?, '${ACTIVE}', ?, ?, guard, shown, id FROM graded_cards
        WHERE id = ? AND user_id = ? AND changes() = 1`
     ).bind(grade, band.id, feeCents, rid, now, blackLabel ? 1 : 0, run.slab_id, run.user_id),
     // 4. The old slab is cracked, as the Crack key does it.

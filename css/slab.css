@@ -1,6 +1,7 @@
-/* RIP Grading slab (js/slab.js). A 63×88 card in an 81×136 clear case, label
-   window at the top, recessed well, sonic-weld seam, front-face reflections and
-   an optional bumper guard wrapping the outer edge.
+/* RIP Grading slab (js/slab.js), v2 (grading overhaul, 2026-11-26). A 63×88 card
+   in an 81×136 clear case: printed label at the top, a stepped well holding the
+   card, a frosted foot strip, a polished bevel all round and a front face that
+   catches the room light. Our own house look, not any real grader's.
 
    Geometry is in container-query widths (cqw) of the slab, so every size keeps
    the same proportions. The slab takes its width from its container and its
@@ -12,25 +13,30 @@
      --slab-guard-w     bumper lip width on the front face        (4cqw)
      --slab-guard-out   how far the bumper reaches past the case  (0 in grids, 2cqw inspect/hero)
      --slab-tint        the acrylic's colour                      (rgb 214 226 242)
-     --slab-plate       label plate colour                        (#f3eee3)
-     --slab-ink         label text colour                         (#15171a)
-     --slab-band        brand band colour                         (#ff6b4a)
-   Layer order (bottom to top): case shell, edge bevel, weld seam, label, well
-   and card, glass, guard. Everything except the well is pointer-events: none so
-   card-motion still finds the `.tcg`. */
+     --slab-plate       label paper                               (#f4f0e6)
+     --slab-ink         label print                               (#15171a)
+     --slab-band        the house colour on the label strip       (#ff5a3c)
+     --sv-x, --sv-y     tilt from js/slab-viewer.js, -1..1; move the
+                        reflections and the label seal (0 at rest)
+   Layer order (bottom to top): case shell, bevel and seam, label, well and
+   card, foot, glass, guard. Everything except the well is pointer-events:
+   none so card-motion still finds the `.tcg`. */
 
 .slab {
   --slab-radius: 4.5cqw;
   --slab-guard-w: 4cqw;
   --slab-guard-out: 0px;
   --slab-tint: 214 226 242;
-  --slab-plate: #f3eee3;
+  --slab-plate: #f4f0e6;
   --slab-ink: #15171a;
-  --slab-band: #ff6b4a;
-  --slab-gold: #e9b949;
-  --slab-gold-2: #f3cf72;
-  --slab-silver: #c9ccd2;
-  --slab-silver-2: #e6e8ec;
+  --slab-band: #ff5a3c;
+  --slab-gold: #e3b04b;
+  --slab-gold-2: #f7d77e;
+  --slab-gold-3: #9c7020;
+  --slab-silver: #c3c8d0;
+  --slab-silver-2: #eef0f3;
+  --slab-silver-3: #7d8591;
+  --slab-strip: var(--slab-band);
   position: relative;
   display: block;
   width: 100%;
@@ -49,6 +55,8 @@
 .slab-inspect { width: 100%; max-width: min(360px, 84vw); --slab-guard-out: 2cqw; }
 .slab-hero { width: 100%; max-width: min(420px, 84vw); --slab-guard-out: 2cqw; }
 .slab *, .slab *::before, .slab *::after { box-sizing: border-box; }
+.slab[data-tier="mint"] { --slab-strip: var(--slab-silver); }
+.slab[data-tier="gem"] { --slab-strip: var(--slab-gold); }
 
 /* ---- The case ------------------------------------------------------------ */
 .slab-case {
@@ -57,121 +65,167 @@
   z-index: 1;
   border-radius: var(--slab-radius);
   pointer-events: none;
-  /* Clear polycarbonate over a dark table: a cool cast that brightens toward
-     the top-left where the room light lands. */
+  /* Clear polycarbonate over whatever it sits on: a cool cast, brighter where
+     the room light lands (top left), a little deeper toward the far corner. */
   background:
-    /* the room reflected in the front face: brighter high up, a soft band low */
-    linear-gradient(180deg, rgb(255 255 255 / .06) 0%, rgb(255 255 255 / 0) 30%, rgb(255 255 255 / 0) 78%, rgb(255 255 255 / .04) 100%),
+    linear-gradient(180deg, rgb(255 255 255 / .07) 0%, rgb(255 255 255 / 0) 26%, rgb(255 255 255 / 0) 80%, rgb(255 255 255 / .05) 100%),
     linear-gradient(158deg,
-      rgb(var(--slab-tint) / .30) 0%,
-      rgb(var(--slab-tint) / .16) 26%,
-      rgb(var(--slab-tint) / .09) 52%,
-      rgb(var(--slab-tint) / .12) 80%,
-      rgb(var(--slab-tint) / .22) 100%);
+      rgb(var(--slab-tint) / .34) 0%,
+      rgb(var(--slab-tint) / .18) 24%,
+      rgb(var(--slab-tint) / .10) 52%,
+      rgb(var(--slab-tint) / .13) 80%,
+      rgb(var(--slab-tint) / .26) 100%);
   box-shadow:
-    /* polished rim catching light */
-    inset 0 0 0 1px rgb(255 255 255 / .55),
-    inset 1px 1px 0 1px rgb(255 255 255 / .25),
-    /* the far edge in shade */
-    inset -1px -1px 0 1px rgb(0 0 0 / .28),
-    /* the slab on the table: a hard offset shadow (DESIGN.md, no blur) */
+    inset 0 0 0 1px rgb(255 255 255 / .6),
+    inset 1px 1px 0 1px rgb(255 255 255 / .28),
+    inset -1px -1px 0 1px rgb(0 0 0 / .3),
     0 1px 0 rgb(255 255 255 / .10),
     4px 6px 0 rgb(0 40 50 / .2);
 }
-/* The bevelled edge band: 7 mm of thickness seen almost face-on reads as a
-   narrow bright strip along the top and left and a dark one along the bottom
-   and right, with a green-blue internal reflection in between. */
+/* The bevel: 7 mm of polished edge seen almost face-on. A bright facet along
+   the top and left, a dark one along the bottom and right, and the green-blue
+   cast thick acrylic gets in between. Two facets (outer and inner) give the
+   edge its chamfer. */
 .slab-edge {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  padding: 2.4cqw;
+  padding: 2.8cqw;
   background:
     linear-gradient(152deg,
-      rgb(255 255 255 / .42) 0%,
-      rgb(var(--slab-tint) / .26) 20%,
-      rgb(150 210 225 / .16) 48%,
-      rgb(120 170 190 / .08) 70%,
-      rgb(0 0 0 / .18) 88%,
-      rgb(0 0 0 / .34) 100%);
+      rgb(255 255 255 / .55) 0%,
+      rgb(var(--slab-tint) / .32) 16%,
+      rgb(160 215 228 / .2) 44%,
+      rgb(120 170 190 / .1) 66%,
+      rgb(0 0 0 / .2) 86%,
+      rgb(0 0 0 / .38) 100%);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   mask-composite: exclude;
 }
-/* The seam where the two shells were welded: a dark hairline with a bright
-   pair, plus two small frosted patches near the corners that a weld leaves. */
+/* The inner facet of the chamfer, lit the other way round. */
+.slab-edge::before {
+  content: "";
+  position: absolute;
+  inset: 1.2cqw;
+  border-radius: calc(var(--slab-radius) - 1.2cqw);
+  padding: 1.6cqw;
+  background: linear-gradient(332deg, rgb(255 255 255 / .34), rgb(255 255 255 / .04) 40%, rgb(0 0 0 / .12) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+/* The seam where the two shells were welded (a dark hairline with a bright
+   pair) and the four weld studs pressed into the corners. */
 .slab-edge::after {
   content: "";
   position: absolute;
-  inset: 1.15cqw;
-  border-radius: calc(var(--slab-radius) - 1.15cqw);
-  box-shadow: 0 0 0 1px rgb(0 0 0 / .34), 0 0 0 2px rgb(255 255 255 / .10), inset 0 0 0 1px rgb(255 255 255 / .16);
+  inset: 2.8cqw;
+  border-radius: calc(var(--slab-radius) - 2.8cqw);
+  box-shadow: 0 0 0 1px rgb(0 0 0 / .34), 0 0 0 2px rgb(255 255 255 / .12), inset 0 0 0 1px rgb(255 255 255 / .18);
   background:
-    radial-gradient(3.2cqw 1.6cqw at 7% 99%, rgb(255 255 255 / .28), rgb(255 255 255 / 0) 100%),
-    radial-gradient(2.6cqw 1.4cqw at 95% 1%, rgb(255 255 255 / .22), rgb(255 255 255 / 0) 100%);
+    radial-gradient(circle at 2.6cqw 2.6cqw, rgb(255 255 255 / .55) 0 .45cqw, rgb(0 0 0 / .22) .55cqw .95cqw, rgb(255 255 255 / 0) 1.05cqw),
+    radial-gradient(circle at calc(100% - 2.6cqw) 2.6cqw, rgb(255 255 255 / .55) 0 .45cqw, rgb(0 0 0 / .22) .55cqw .95cqw, rgb(255 255 255 / 0) 1.05cqw),
+    radial-gradient(circle at 2.6cqw calc(100% - 2.6cqw), rgb(255 255 255 / .45) 0 .45cqw, rgb(0 0 0 / .22) .55cqw .95cqw, rgb(255 255 255 / 0) 1.05cqw),
+    radial-gradient(circle at calc(100% - 2.6cqw) calc(100% - 2.6cqw), rgb(255 255 255 / .45) 0 .45cqw, rgb(0 0 0 / .22) .55cqw .95cqw, rgb(255 255 255 / 0) 1.05cqw);
 }
 
 /* ---- The label ------------------------------------------------------------ */
 .slab-label {
   position: absolute;
-  top: 4cqw;
+  top: 5cqw;
   left: 5.5cqw;
   right: 5.5cqw;
   height: 29cqw;
   z-index: 2;
   display: grid;
-  grid-template-columns: 15cqw minmax(0, 1fr) auto;
+  grid-template-columns: 15.5cqw minmax(0, 1fr) auto;
   align-items: stretch;
-  border-radius: 1.6cqw;
+  border-radius: 1.4cqw;
+  /* Security paper: a fine guilloche of rings from the top right and a faint
+     45 degree weave under the print. */
   background:
-    linear-gradient(180deg, rgb(255 255 255 / .35), rgb(255 255 255 / 0) 30%),
+    linear-gradient(180deg, rgb(255 255 255 / .38), rgb(255 255 255 / 0) 28%),
+    repeating-radial-gradient(circle at 112% -30%, rgb(0 0 0 / 0) 0 1.05cqw, color-mix(in oklab, var(--slab-ink) 7%, transparent) 1.05cqw 1.2cqw),
+    repeating-linear-gradient(45deg, rgb(0 0 0 / 0) 0 .9cqw, color-mix(in oklab, var(--slab-ink) 3%, transparent) .9cqw 1cqw),
     var(--slab-plate);
   color: var(--slab-ink);
   overflow: hidden;
-  /* Paper sitting under the front shell: a shadow line along the inside top. */
+  /* Paper under the front shell: a shadow line along the inside top. */
   box-shadow:
     inset 0 1px 0 rgb(255 255 255 / .6),
     inset 0 0 0 1px rgb(0 0 0 / .08),
-    0 0 0 1px rgb(0 0 0 / .25),
-    0 1px 2px rgb(0 0 0 / .25);
+    0 0 0 1px rgb(0 0 0 / .28),
+    0 .5cqw .8cqw rgb(0 0 0 / .18);
   line-height: 1.1;
   /* Fractional cqw sizes: without this Chromium on Linux rounds glyph advances
      to whole pixels and the small lines fall apart. */
   text-rendering: geometricPrecision;
   pointer-events: none;
 }
+/* The house strip across the top of the label: orange-red, silver on a 9, gold on a 10. */
+.slab-strip {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1.3cqw;
+  background: linear-gradient(90deg, color-mix(in oklab, var(--slab-strip) 80%, white), var(--slab-strip) 40%, color-mix(in oklab, var(--slab-strip) 78%, black));
+  z-index: 1;
+}
 .slab-brand {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: .4cqw;
-  padding: 0 0 0 2.6cqw;
-  background: linear-gradient(180deg, color-mix(in oklab, var(--slab-band) 88%, white), var(--slab-band) 60%, color-mix(in oklab, var(--slab-band) 84%, black));
-  color: #1c0904;
-  box-shadow: inset -1px 0 0 rgb(0 0 0 / .12);
+  gap: .3cqw;
+  padding: 1.3cqw 0 0 2.4cqw;
+  background: #16181c;
+  color: var(--slab-plate);
+  box-shadow: inset -1px 0 0 rgb(255 255 255 / .06);
 }
 .slab-brand b {
   font-weight: 800;
-  font-size: 6.6cqw;
+  font-size: 6.8cqw;
   letter-spacing: -.06em;
-  line-height: .9;
+  line-height: .86;
   font-variation-settings: "opsz" 96;
 }
 .slab-brand i {
   font-style: normal;
-  font-weight: 600;
-  font-size: 2.6cqw;
-  letter-spacing: -.01em;
-  opacity: .85;
+  font-weight: 700;
+  font-size: 1.9cqw;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  opacity: .78;
+}
+/* The house hologram seal: a small foil disc with engraved rings. Its colour
+   bands turn as the slab tilts (--sv-x), the way a real security foil shifts. */
+.slab-seal {
+  position: absolute;
+  right: 1.6cqw;
+  bottom: 1.6cqw;
+  width: 5.6cqw;
+  height: 5.6cqw;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / .5), inset 0 0 0 .35cqw rgb(255 255 255 / .35);
+}
+.slab-seal i {
+  position: absolute;
+  inset: -40%;
+  background:
+    repeating-radial-gradient(circle at 50% 50%, rgb(255 255 255 / 0) 0 .5cqw, rgb(255 255 255 / .35) .5cqw .65cqw),
+    conic-gradient(from 0deg, #ffd0e6, #c8f0ff, #d8ffd0, #fff4c0, #ffd0e6, #d6c8ff, #c8f0ff, #ffd0e6);
+  transform: rotate(calc(var(--sv-x, 0) * 140deg + var(--sv-y, 0) * 60deg));
 }
 .slab-info {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: .9cqw;
+  gap: .8cqw;
   min-width: 0;
-  padding: 2cqw 2.4cqw 2cqw 3cqw;
+  padding: 2.6cqw 2cqw 1.6cqw 2.8cqw;
 }
 .slab-info > span {
   display: block;
@@ -179,35 +233,60 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.slab-set { font-size: 3.1cqw; font-weight: 500; color: color-mix(in oklab, var(--slab-ink) 72%, var(--slab-plate)); }
-.slab-name { font-size: 4.6cqw; font-weight: 700; letter-spacing: -.025em; }
-.slab-var { font-size: 3.1cqw; font-weight: 500; color: color-mix(in oklab, var(--slab-ink) 72%, var(--slab-plate)); }
-.slab-cert { font-size: 2.6cqw; font-weight: 500; color: color-mix(in oklab, var(--slab-ink) 50%, var(--slab-plate)); margin-top: .3cqw; }
+.slab-set {
+  font-size: 2.3cqw;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--slab-ink) 70%, var(--slab-plate));
+}
+.slab-name { font-size: 4.9cqw; font-weight: 800; letter-spacing: -.03em; line-height: 1; }
+.slab-var { font-size: 2.7cqw; font-weight: 500; color: color-mix(in oklab, var(--slab-ink) 72%, var(--slab-plate)); }
+.slab-cert {
+  display: flex !important;
+  align-items: center;
+  gap: 1.2cqw;
+  margin-top: .4cqw;
+  font-size: 2.4cqw;
+  font-weight: 700;
+  letter-spacing: .06em;
+  color: color-mix(in oklab, var(--slab-ink) 62%, var(--slab-plate));
+}
+.slab-bars {
+  display: block;
+  flex: 0 0 auto;
+  width: 13cqw;
+  height: 2.4cqw;
+  background: var(--bars, none);
+  opacity: .85;
+}
 .slab-grade {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-width: 21cqw;
-  padding: 1.4cqw 2.4cqw 1.6cqw;
-  margin: 1.6cqw 1.6cqw 1.6cqw 0;
-  border-radius: 1.2cqw;
+  min-width: 20.5cqw;
+  padding: 1.2cqw 2.2cqw 1.4cqw;
+  margin: 3cqw 1.7cqw 1.7cqw 0;
+  border-radius: 1cqw;
   overflow: hidden;
   transform-origin: 50% 50%;
+  box-shadow: inset 0 0 0 .4cqw var(--slab-ink);
 }
 .slab-num {
   font-weight: 800;
-  font-size: 13.5cqw;
-  line-height: .86;
+  font-size: 13cqw;
+  line-height: .84;
   letter-spacing: -.06em;
   font-variation-settings: "opsz" 96;
 }
 .slab-word {
   margin-top: .9cqw;
-  font-size: 2.55cqw;
-  font-weight: 600;
-  letter-spacing: -.01em;
+  font-size: 2.05cqw;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
   white-space: nowrap;
 }
 .slab-glint {
@@ -218,52 +297,44 @@
   opacity: 0;
   pointer-events: none;
 }
-/* Tiers: a 10 gets a gold plate under the numeral, a 9 silver, the rest plain. */
+/* Tiers: a 10 is struck in gold foil, a 9 in silver, the rest printed in ink.
+   The foil carries a hairline brushing so it reads as metal, not paint. */
 .slab[data-tier="gem"] .slab-grade {
-  background: linear-gradient(160deg, var(--slab-gold-2), var(--slab-gold) 55%, color-mix(in oklab, var(--slab-gold) 82%, black));
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / .55), inset 0 -1px 0 rgb(0 0 0 / .18), 0 0 0 1px rgb(0 0 0 / .14);
-}
-.slab[data-tier="gem"] .slab-label {
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / .6),
-    inset 0 0 0 1px rgb(0 0 0 / .08),
-    inset 0 -2px 0 var(--slab-gold),
-    0 0 0 1px rgb(0 0 0 / .25),
-    0 1px 2px rgb(0 0 0 / .25);
+  background:
+    repeating-linear-gradient(90deg, rgb(255 255 255 / 0) 0 .35cqw, rgb(255 255 255 / .12) .35cqw .45cqw),
+    linear-gradient(160deg, var(--slab-gold-2), var(--slab-gold) 52%, var(--slab-gold-3));
+  color: #2a1c05;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .6), inset 0 -1px 0 rgb(0 0 0 / .2), 0 0 0 1px rgb(0 0 0 / .2);
 }
 .slab[data-tier="mint"] .slab-grade {
-  background: linear-gradient(160deg, var(--slab-silver-2), var(--slab-silver) 55%, color-mix(in oklab, var(--slab-silver) 80%, black));
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / .6), inset 0 -1px 0 rgb(0 0 0 / .14), 0 0 0 1px rgb(0 0 0 / .12);
-}
-.slab[data-tier="mint"] .slab-label {
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / .6),
-    inset 0 0 0 1px rgb(0 0 0 / .08),
-    inset 0 -2px 0 var(--slab-silver),
-    0 0 0 1px rgb(0 0 0 / .25),
-    0 1px 2px rgb(0 0 0 / .25);
+  background:
+    repeating-linear-gradient(90deg, rgb(255 255 255 / 0) 0 .35cqw, rgb(255 255 255 / .18) .35cqw .45cqw),
+    linear-gradient(160deg, var(--slab-silver-2), var(--slab-silver) 52%, var(--slab-silver-3));
+  color: #15181d;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .7), inset 0 -1px 0 rgb(0 0 0 / .16), 0 0 0 1px rgb(0 0 0 / .18);
 }
 
-/* A Black Label: a 10 whose four subgrades are all 10, printed the way Beckett prints it: a black label with gold lettering,
-   the four perfect subgrades under the details, and a slow gold sheen over the label (inspect and hero sizes only). */
+/* A Black Label: a 10 whose four subgrades are all 10. A black label with gold
+   print, the four perfect subgrades under the details, a gold house column and
+   a slow gold sheen over the label (inspect and hero sizes only). */
 .slab[data-tier="black"] {
   --slab-plate: #0b0b0d;
   --slab-ink: #f3e7c6;
+  --slab-strip: var(--slab-gold);
 }
 .slab[data-tier="black"] .slab-label {
   background:
     linear-gradient(180deg, rgb(255 255 255 / .1), rgb(255 255 255 / 0) 34%),
-    linear-gradient(90deg, rgb(255 255 255 / 0) 60%, rgb(233 185 73 / .07)),
+    repeating-radial-gradient(circle at 112% -30%, rgb(0 0 0 / 0) 0 1.05cqw, rgb(233 185 73 / .07) 1.05cqw 1.2cqw),
     var(--slab-plate);
   box-shadow:
     inset 0 1px 0 rgb(255 255 255 / .18),
     inset 0 0 0 1px rgb(233 185 73 / .34),
-    inset 0 -2px 0 var(--slab-gold),
     0 0 0 1px rgb(0 0 0 / .5),
-    0 1px 2px rgb(0 0 0 / .35);
+    0 .5cqw .8cqw rgb(0 0 0 / .3);
 }
 .slab[data-tier="black"] .slab-brand {
-  background: linear-gradient(180deg, var(--slab-gold-2), var(--slab-gold) 60%, color-mix(in oklab, var(--slab-gold) 80%, black));
+  background: linear-gradient(180deg, var(--slab-gold-2), var(--slab-gold) 60%, var(--slab-gold-3));
   color: #1c1304;
 }
 .slab[data-tier="black"] .slab-name { color: var(--slab-gold-2); }
@@ -272,12 +343,13 @@
   color: var(--slab-gold-2);
   box-shadow: inset 0 0 0 1px rgb(233 185 73 / .75), inset 0 1px 0 rgb(255 255 255 / .16), 0 0 0 1px rgb(0 0 0 / .4);
 }
-.slab[data-tier="black"] .slab-word { color: var(--slab-gold); letter-spacing: .02em; }
+.slab[data-tier="black"] .slab-word { color: var(--slab-gold); }
 .slab[data-tier="black"] .slab-spark { background: radial-gradient(closest-side, #fff 30%, rgb(245 205 110 / .95) 55%, rgb(233 185 73 / 0) 100%); }
+.slab[data-tier="black"] .slab-cert { display: none !important; }
 .slab-subs {
   display: flex !important;
   gap: 1cqw;
-  margin-top: .8cqw;
+  margin-top: .6cqw;
   overflow: visible !important;
 }
 .slab-subs i {
@@ -290,7 +362,7 @@
   box-shadow: inset 0 0 0 1px rgb(233 185 73 / .5);
   font-style: normal;
   font-weight: 800;
-  font-size: 3.1cqw;
+  font-size: 3cqw;
   line-height: 1;
   color: var(--slab-gold-2);
 }
@@ -322,22 +394,26 @@
 }
 
 /* ---- The well and the card ----------------------------------------------- */
+/* A pocket cut into the back shell, with a stepped rim: the outer step catches
+   the light along the bottom, the inner one throws a shadow onto the card's
+   border. */
 .slab-well {
   position: absolute;
-  top: 37.5cqw;
+  top: 38cqw;
   left: 9cqw;
   width: 82cqw;
   padding: 2cqw;
   z-index: 3;
   border-radius: 2.6cqw;
-  /* A pocket cut into the back shell: dark inside, a light lip at the bottom
-     where the cavity wall catches the room. */
-  background: linear-gradient(158deg, rgb(0 0 0 / .34), rgb(0 0 0 / .18) 50%, rgb(var(--slab-tint) / .06));
+  background: linear-gradient(158deg, rgb(0 0 0 / .36), rgb(0 0 0 / .2) 50%, rgb(var(--slab-tint) / .08));
   box-shadow:
-    inset 0 0 0 1px rgb(0 0 0 / .40),
+    inset 0 0 0 1px rgb(0 0 0 / .42),
+    inset 0 0 0 .9cqw rgb(var(--slab-tint) / .07),
+    inset 0 0 0 calc(.9cqw + 1px) rgb(0 0 0 / .22),
     inset 1.5px 2px 3px rgb(0 0 0 / .45),
-    inset -1px -1px 0 rgb(255 255 255 / .14),
-    0 0 0 1px rgb(255 255 255 / .06);
+    inset -1px -1px 0 rgb(255 255 255 / .16),
+    0 0 0 1px rgb(255 255 255 / .1),
+    0 0 0 1.4cqw rgb(255 255 255 / .03);
   pointer-events: auto;
 }
 .slab-well > .tcg {
@@ -357,6 +433,41 @@ body.fx-holo.fx-holo.fx-holo .slab .slab-well .tcg.settling {
 body.no-tilt .slab .slab-well .tcg.lit,
 body.no-tilt .slab .slab-well .tcg.settling { transform: none; }
 
+/* ---- The foot ---------------------------------------------------------------
+   A frosted strip moulded under the well, with the house line and the cert
+   pressed into it: lettering made of light, not ink. */
+.slab-foot {
+  position: absolute;
+  left: 9cqw;
+  right: 9cqw;
+  bottom: 5.4cqw;
+  height: 5.4cqw;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2.4cqw;
+  border-radius: 1.2cqw;
+  background:
+    repeating-linear-gradient(90deg, rgb(255 255 255 / .05) 0 .3cqw, rgb(255 255 255 / 0) .3cqw .7cqw),
+    rgb(255 255 255 / .1);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .22), inset 0 -1px 0 rgb(0 0 0 / .18), 0 0 0 1px rgb(0 0 0 / .1);
+  pointer-events: none;
+}
+.slab-foot i {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 2cqw;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / .55);
+  text-shadow: 0 -1px 0 rgb(0 0 0 / .25);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 48%;
+}
+
 /* ---- The glass ------------------------------------------------------------- */
 .slab-glass {
   position: absolute;
@@ -366,22 +477,31 @@ body.no-tilt .slab .slab-well .tcg.settling { transform: none; }
   overflow: hidden;
   pointer-events: none;
   background:
-    /* one long soft specular streak across the front */
-    linear-gradient(112deg,
-      rgb(255 255 255 / 0) 22%,
-      rgb(255 255 255 / .04) 32%,
-      rgb(255 255 255 / .19) 39.5%,
-      rgb(255 255 255 / .05) 46%,
-      rgb(255 255 255 / 0) 54%),
-    /* a thinner companion lower down */
-    linear-gradient(112deg,
-      rgb(255 255 255 / 0) 60%,
-      rgb(255 255 255 / .07) 64.5%,
-      rgb(255 255 255 / 0) 68%),
     /* the room light blooming in the top-left corner */
-    radial-gradient(120% 55% at 0% 0%, rgb(255 255 255 / .14), rgb(255 255 255 / 0) 60%),
+    radial-gradient(120% 55% at 0% 0%, rgb(255 255 255 / .15), rgb(255 255 255 / 0) 60%),
     /* the far corner going dark behind the thick edge */
-    radial-gradient(90% 45% at 100% 100%, rgb(0 0 0 / .16), rgb(0 0 0 / 0) 60%);
+    radial-gradient(90% 45% at 100% 100%, rgb(0 0 0 / .16), rgb(0 0 0 / 0) 60%),
+    /* a fresnel rim: the face brightens toward its edges */
+    radial-gradient(140% 100% at 50% 50%, rgb(255 255 255 / 0) 62%, rgb(255 255 255 / .1) 100%);
+}
+/* The sheen: one long specular band and a thin companion, on a layer twice the
+   slab's size so tilting (--sv-x/--sv-y) slides it across the face. */
+.slab-spec {
+  position: absolute;
+  inset: -50%;
+  background:
+    linear-gradient(112deg,
+      rgb(255 255 255 / 0) 36%,
+      rgb(255 255 255 / .05) 41%,
+      rgb(255 255 255 / .22) 44.5%,
+      rgb(255 255 255 / .06) 47.5%,
+      rgb(255 255 255 / 0) 52%),
+    linear-gradient(112deg,
+      rgb(255 255 255 / 0) 55%,
+      rgb(255 255 255 / .09) 57%,
+      rgb(255 255 255 / 0) 59%);
+  transform: translate3d(calc(var(--sv-x, 0) * -22%), calc(var(--sv-y, 0) * -10%), 0);
+  will-change: transform;
 }
 .slab-sweep {
   position: absolute;
@@ -390,6 +510,51 @@ body.no-tilt .slab .slab-well .tcg.settling { transform: none; }
   transform: translateX(-55%);
   opacity: 0;
 }
+
+/* ---- The back -----------------------------------------------------------------
+   Drawn only when slabHTML is asked for it (the viewer turns the slab over);
+   it stays hidden until a viewer puts it in 3D (css/slab-viewer.css). */
+.slab.slab-back { display: none; }
+.slab-label-back {
+  grid-template-columns: 15.5cqw minmax(0, 1fr) auto;
+}
+.slab-back-brand {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: .3cqw;
+  padding-left: 2.4cqw;
+  background: #16181c;
+  color: var(--slab-plate);
+}
+.slab-back-brand b { font-weight: 800; font-size: 6.8cqw; letter-spacing: -.06em; line-height: .86; }
+.slab-back-brand i { font-style: normal; font-weight: 700; font-size: 1.9cqw; letter-spacing: .16em; text-transform: uppercase; opacity: .78; }
+.slab-back-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.2cqw;
+  min-width: 0;
+  padding: 2cqw 2cqw 2cqw 2.8cqw;
+}
+.slab-back-cert { font-size: 4.6cqw; font-weight: 800; letter-spacing: .04em; }
+.slab-back-info .slab-bars { width: 100%; height: 6cqw; opacity: 1; }
+.slab-back-url { font-size: 2.1cqw; font-weight: 600; letter-spacing: .02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: color-mix(in oklab, var(--slab-ink) 62%, var(--slab-plate)); }
+.slab-back-grade {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 18cqw;
+  margin: 3cqw 1.7cqw 1.7cqw 0;
+  border-radius: 1cqw;
+  box-shadow: inset 0 0 0 .4cqw var(--slab-ink);
+}
+.slab-back-grade b { font-weight: 800; font-size: 10cqw; line-height: .9; letter-spacing: -.05em; }
+.slab-back-grade i { font-style: normal; font-weight: 800; font-size: 1.8cqw; letter-spacing: .12em; text-transform: uppercase; margin-top: .6cqw; }
+.slab-well-back { pointer-events: none; }
+.slab-cardback { display: block; width: 100%; height: auto; aspect-ratio: 63 / 88; border-radius: 4.5% / 3.2%; }
+.slab-case-back .slab-foot i:first-child { max-width: 58%; }
 
 /* ---- Guards ------------------------------------------------------------------
    A bumper that grips the outer edge: one masked ring paints the part that
@@ -437,22 +602,25 @@ body.no-tilt .slab .slab-well .tcg.settling { transform: none; }
 
 /* ---- Sizes ----------------------------------------------------------------- */
 /* Collection tile, 110–130px wide: the label keeps the brand, the set, the
-   name and the grade; the small lines go. */
+   name and the grade; the small lines, the seal and the foot lettering go. */
 .slab-grid .slab-var,
 .slab-grid .slab-cert,
 .slab-grid .slab-word,
 .slab-grid .slab-brand i,
 .slab-grid .slab-no,
+.slab-grid .slab-seal,
+.slab-grid .slab-foot i,
 .slab-grid .slab-subs { display: none !important; }
 .slab-grid .slab-label { grid-template-columns: 14cqw minmax(0, 1fr) auto; }
 .slab-grid .slab-brand { padding-left: 2cqw; }
 .slab-grid .slab-brand b { font-size: 7.4cqw; }
-.slab-grid .slab-info { padding: 1.5cqw 1.5cqw 1.5cqw 2.4cqw; gap: 1cqw; }
-.slab-grid .slab-set { font-size: 5cqw; }
+.slab-grid .slab-info { padding: 2.4cqw 1.5cqw 1.5cqw 2.4cqw; gap: 1cqw; }
+.slab-grid .slab-set { font-size: 4.2cqw; letter-spacing: .04em; }
 .slab-grid .slab-name { font-size: 6.4cqw; }
-.slab-grid .slab-grade { min-width: 18cqw; padding: 1.2cqw 1.8cqw 1.4cqw; margin: 1.5cqw 1.5cqw 1.5cqw 0; }
+.slab-grid .slab-grade { min-width: 18cqw; padding: 1.2cqw 1.8cqw 1.4cqw; margin: 3cqw 1.5cqw 1.5cqw 0; }
 .slab-grid .slab-num { font-size: 17cqw; }
 .slab-grid .slab-edge::after { background: none; }
+.slab-grid .slab-edge::before { display: none; }
 .slab-grid .slab-case { box-shadow:
     inset 0 0 0 1px rgb(255 255 255 / .42),
     inset -1px -1px 0 1px rgb(0 0 0 / .22),
