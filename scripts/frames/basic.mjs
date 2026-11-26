@@ -37,6 +37,9 @@ function conic(id, r1, r2, stops) {
   return { defs, body };
 }
 
+/** A lower-case beta as one stroked line: stem, upper bowl, lower bowl. */
+const BETA = "M-2.6 7.6L-2.6 -3.4C-2.6 -8.2 3.2 -8.6 3.6 -4.4C3.8 -1.6 1.6 -0.6 -0.2 -0.4C3 -0.4 5.2 1.4 5.2 3.8C5.2 7 2 8.4 -0.4 7.2C-1.4 6.7 -2 5.8 -2.6 4.6";
+const BETA_PAL = ["#05090b", "#1b2c33", "#7fa1ac"];
 const PAL = {
   graphite: ["#15161b", "#3b3e49", "#9ba0b0"],
   steel: ["#48505d", "#98a2b1", "#f3f6fa"],
@@ -145,11 +148,11 @@ export const frames = [
   {
     id: "s-dashes", name: "Dashes", group: "Shape", of: 0.16, c: ["#e9ecf2", "#6f7786"], fx: "spin", fxs: 50,
     base: (h) => { const r0 = h.ra - 1.5; return put(ring(r0 + 1.6, 4.4, INK, 0.6), ring(r0 + 1.6, 2.8, "#e9ecf2")); },
-    glow: (h) => { const r0 = h.ra - 1.5; return put(dash(r0 + 9.5, 2.4, "#e9ecf2", 28, 0.6, 0.85)); },
+    glow: (h) => { const r0 = h.ra - 1.5; return put(dash(r0 + 9.5, 3.8, INK, 28, 0.66, 0.55, 0), dash(r0 + 9.5, 2.4, "#e9ecf2", 28, 0.6, 1, 0)); },
   },
   {
     id: "s-orbit", name: "Orbit", group: "Shape", of: 0.2, c: ["#c6ccd8", "#59c2ff"], fx: "spin", fxs: 9, fx2: "spin", fxs2: 16,
-    base: (h) => { const r0 = h.ra - 1.5; return put({ defs: lin("g", [[0, "#ffffff"], [0.5, "#aab2c0"], [1, "#59606e"]], [30, 30, 170, 170]), body: ring(r0 + 1.4, 4.2, INK, 0.6) + ring(r0 + 1.4, 2.8, "url(#g)") + ring(r0 + 9.5, 0.6, "#fff", 0.28) + ring(r0 + 17, 0.6, "#fff", 0.18) }); },
+    base: (h) => { const r0 = h.ra - 1.5; return put({ defs: lin("g", [[0, "#ffffff"], [0.5, "#aab2c0"], [1, "#59606e"]], [30, 30, 170, 170]), body: ring(r0 + 1.4, 4.2, INK, 0.6) + ring(r0 + 1.4, 2.8, "url(#g)") + ring(r0 + 9.5, 0.7, "#8b92a0", 0.5) + ring(r0 + 17, 0.7, "#8b92a0", 0.35) }); },
     glow: (h) => { const [x, y] = pt(h.ra + 8, 0); return doc(`<circle cx="${f(x)}" cy="${f(y)}" r="5.4" fill="url(#b)" stroke="${INK}" stroke-opacity=".5" stroke-width=".8"/>`, bead("b", "#ffffff", "#59c2ff", "#1b5fae")); },
     glow2: (h) => { const [x, y] = pt(h.ra + 15.5, 200); return doc(`<circle cx="${f(x)}" cy="${f(y)}" r="3.6" fill="url(#b)" stroke="${INK}" stroke-opacity=".5" stroke-width=".7"/>`, bead("b", "#ffffff", "#ffc65c", "#b06a12")); },
   },
@@ -202,8 +205,8 @@ export const frames = [
   {
     id: "s-ripple", name: "Ripple", group: "Shape", of: 0.19, c: ["#8fe3f2", "#2a8fb0"], fx: "breathe", fxs: 4, fx2: "breathe", fxs2: 4, fxd2: -1.3,
     base: (h) => { const r0 = h.ra - 1.5; return put(ring(r0 + 1.7, 4.8, INK, 0.6), ring(r0 + 1.7, 3.2, "#8fe3f2")); },
-    glow: (h) => put(ring(h.ra + 7.5, 1.8, "#8fe3f2", 0.75)),
-    glow2: (h) => put(ring(h.ra + 13.5, 1.1, "#8fe3f2", 0.45)),
+    glow: (h) => put(ring(h.ra + 7.5, 2, "#2fb3d0", 0.9)),
+    glow2: (h) => put(ring(h.ra + 13.5, 1.3, "#2fb3d0", 0.6)),
   },
   {
     id: "s-sunburst", name: "Sunburst", group: "Shape", of: 0.2, c: ["#f2c14a", "#fff3b8"], fx: "spin", fxs: 90,
@@ -277,9 +280,9 @@ export const frames = [
     glow: (h) => { const r = h.ra + 4.5; return doc(fill(donut(r - 6, r + 6), "url(#g)") + ring(r, 1.2, "#ffd29a"), glowDef("g", r, 5.5, "#ff6a1a", 0.8)); },
   },
   {
-    id: "l-halo", name: "Halo", group: "Light", of: 0.17, c: ["#ffffff", "#cfe0ff"], fx: "breathe", fxs: 4.6,
-    base: (h) => { const r = h.ra + 3.5; return doc(fill(donut(r - 6, r + 6), "url(#g)") + ring(r, 2.2, "#ffffff"), glowDef("g", r, 5.5, "#cfe0ff", 0.55)); },
-    glow: (h) => { const r = h.ra + 3.5; return doc(fill(donut(r - 11, r + 11), "url(#g)"), glowDef("g", r, 10.5, "#e4eeff", 0.6)); },
+    id: "l-halo", name: "Halo", group: "Light", of: 0.17, c: ["#fff3c4", "#ffc94a"], fx: "breathe", fxs: 4.6,
+    base: (h) => { const r = h.ra + 3.5; return doc(fill(donut(r - 6, r + 6), "url(#g)") + ring(r, 4, INK, 0.5) + ring(r, 2.4, "#fff7d6"), glowDef("g", r, 5.5, "#ffc94a", 0.7)); },
+    glow: (h) => { const r = h.ra + 3.5; return doc(fill(donut(r - 11, r + 11), "url(#g)"), glowDef("g", r, 10.5, "#ffd76a", 0.6)); },
   },
   {
     id: "l-dusk", name: "Dusk", group: "Light", of: 0.15, c: ["#ff8a4c", "#7a3cff"],
@@ -294,7 +297,30 @@ export const frames = [
     glow: (h) => `${doc(`<circle cx="102.4" cy="100" r="${f(h.ra + 4.6)}" fill="none" stroke="#7fd6ff" stroke-opacity=".7" stroke-width="2"/>`)}`,
     glow2: (h) => `${doc(`<circle cx="97.4" cy="100" r="${f(h.ra + 4.9)}" fill="none" stroke="#e2f6ff" stroke-opacity=".5" stroke-width="1.1"/>`)}`,
   },
+  /* ---- Beta Tester (worker/beta.js perk; listed with the Extras) ---------- */
+  {
+    id: "gen-beta", name: "Beta Tester", group: "Extras", of: 0.2, c: ["#00b4c8", "#ffd21f"], fx: "spin", fxs: 44, fx2: "pulse", fxs2: 3,
+    base: (h) => {
+      const r0 = h.ra - 1.5, rc = r0 + 7.5, [mx, my] = pt(rc, 180);
+      const hex = (R) => poly(Array.from({ length: 6 }, (_, i) => [mx + R * Math.sin(((30 + i * 60) * Math.PI) / 180), my - R * Math.cos(((30 + i * 60) * Math.PI) / 180)]));
+      const plate = {
+        defs: lin("p", [[0, "#f1f6f8"], [0.5, "#93a4ab"], [1, "#3b484e"]], [mx - 10, my - 10, mx + 10, my + 10]),
+        body: `<path d="${hex(13.4)}" fill="${INK}" fill-opacity=".45" transform="translate(0 1)"/><path d="${hex(12.5)}" fill="url(#p)" stroke="${INK}" stroke-width="1.5" stroke-linejoin="round"/><path d="${hex(9.7)}" fill="#071216" stroke="#00b4c8" stroke-opacity=".7" stroke-width=".8" stroke-linejoin="round"/>` +
+          `<g transform="translate(${f(mx - 0.9)} ${f(my + 0.3)}) scale(.95)" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="${BETA}" stroke="#00b4c8" stroke-width="2.7"/><path d="${BETA}" stroke="#8ff0fa" stroke-opacity=".85" stroke-width=".8" transform="translate(-.5 -.5)"/></g>`,
+      };
+      return put(metal("m", r0, r0 + 15, BETA_PAL), ring(rc, 4.4, "#020405"), ring(rc, 1.4, "#00b4c8", 0.5), ring(rc + 2.7, 0.6, "#fff", 0.16), plate);
+    },
+    /* a measuring bezel that turns slowly outside the band: 72 marks, every twelfth long and yellow */
+    glow: (h) => { const r0 = h.ra - 1.5; return put(dash(r0 + 22.3, 2.6, "#5fd6e4", 72, 0.16, 0.8), dash(r0 + 23.1, 4.6, "#ffd21f", 6, 0.022)); },
+    /* the channel lights up, skipping the plate, and the letter with it */
+    glow2: (h) => {
+      const r0 = h.ra - 1.5, rc = r0 + 7.5, [mx, my] = pt(rc, 180);
+      const line = (w, o, c = "#00d8ee") => `<path d="${arc(rc, -167, 167)}" fill="none" stroke="${c}" stroke-opacity="${o}" stroke-width="${w}" stroke-linecap="round"/>`;
+      return doc(line(7, 0.14) + line(3.8, 0.3) + line(1.6, 1, "#9af4ff") + `<circle cx="${f(mx)}" cy="${f(my)}" r="10" fill="url(#g)"/><g transform="translate(${f(mx - 0.9)} ${f(my + 0.3)}) scale(.95)"><path d="${BETA}" fill="none" stroke="#c9fbff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></g>`, rg("g", [[0, "#00d8ee", 0.5], [1, "#00d8ee", 0]], [f(mx), f(my), 10]));
+    },
+  },
 ];
+
 
 /** Two bare metal rims, for bands that bring their own middle. */
 function enamelRims(r1, r2, pal, rim = 2.2) {

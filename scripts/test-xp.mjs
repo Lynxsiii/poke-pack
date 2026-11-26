@@ -380,8 +380,8 @@ let vetBefore;
   assert.equal(stored.original,100);
   assert.equal(stored.claimed_level,100,'the old columns are left as they were');
   // A frame from level 100 and the Original 100 title stay wearable.
-  db.prepare("UPDATE users SET frame='mon-umbreon' WHERE id='og'").run();
-  assert.equal((await meRes('sid-og')).user.frame,'mon-umbreon','a level 100 frame stays on');
+  db.prepare("UPDATE users SET frame='s-eclipse' WHERE id='og'").run();
+  assert.equal((await meRes('sid-og')).user.frame,'s-eclipse','a level 100 frame stays on');
   const titled=await request('/api/me','PATCH',{title:'Original 100'},'sid-og');
   assert.equal(titled.status,200,JSON.stringify(titled.body));
   assert.equal((await request('/api/me','PATCH',{title:'Legend'},'sid-og')).status,200,'the level 100 title stays open');

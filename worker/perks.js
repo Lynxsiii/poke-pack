@@ -63,7 +63,7 @@ export function frameChoice(raw, level, prestige = 0, current = null, beta = fal
   if (raw == null || raw === "") return { value: null };
   const info = typeof raw === "string" ? frameInfo(raw) : null;
   if (!info) return { status: 400, error: "That frame does not exist." };
-  if (!frameOpen(info, level, prestige, beta) && !(isExtraFrame(info.id) && info.id === current)) {
+  if (!frameOpen(info, level, prestige, beta) && !(isExtraFrame(info.id) && info.id === frameInfo(current)?.id)) {
     if (info.beta) return { status: 403, error: `The ${info.name} frame is for beta testers.` };
     return { status: 403, error: `Reach ${frameNeed(info).toLowerCase()} to wear the ${info.name} frame.`, ...(info.level ? { needLevel: info.level } : {}) };
   }

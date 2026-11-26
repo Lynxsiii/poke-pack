@@ -32,7 +32,7 @@ const check = (name, ok) => { assert.ok(ok, name); passed++; };
   }
   const top = levelPerks(100);
   check('the top of the ladder matches the hard caps', top.showcaseSlots === SHOWCASE_MAX && top.binderPages <= PROFILE_PAGE_LIMIT && top.shownSlabs <= GRADING_LIMITS.maxShown);
-  check('a veteran-level account has every level frame to 100 and every motion', top.frames.includes('mon-umbreon') && !top.frames.includes('card-shiny') && top.bannerMotions.length === Object.keys(BANNER_MOTION_LEVELS).length);
+  check('a veteran-level account has every level frame to 100 and every motion', top.frames.includes('s-eclipse') && !top.frames.includes('card-shiny') && top.bannerMotions.length === Object.keys(BANNER_MOTION_LEVELS).length);
   check('slot messages point at the next step', slotMessage('showcase', 1) === 'Reach level 5 for more slots.' && nextSlotLevel('pages', 35) === null);
   check('badge tiers: none below 5, bronze at 5, legend at 100', frameForLevel(4) === null && frameForLevel(5) === 'bronze' && frameForLevel(100) === 'legend');
 
@@ -334,23 +334,23 @@ const showcaseOf = (ids) => ids.map((id) => ({ id }));
 // ---- Cosmetics: frames, banner motions, titles ---------------------------------------------------------------------------
 {
   addUser('frame1', 2);
-  const early = await patch('frame1', { frame: 'mon-pikachu' });
+  const early = await patch('frame1', { frame: 'm-graphite' });
   check('frame: refused one level short with needLevel', early.status === 403 && early.needLevel === 3 && early.error.includes('level 3'));
   check('frame: an unknown frame is a 400', (await patch('frame1', { frame: 'rainbow' })).status === 400 && (await patch('frame1', { frame: 7 })).status === 400);
   check('frame: the retired bronze to legend frames are a 400', (await patch('frame1', { frame: 'bronze' })).status === 400);
   const noFrame = await api('/api/me', 'GET', undefined, 'frame1');
   check('frame: none until one is picked, and /api/me carries level and perks', noFrame.user.frame === null && noFrame.user.level === 2 && noFrame.user.perks.frames.length === 0);
   setLevel('frame1', 3);
-  const wear = await patch('frame1', { frame: 'mon-pikachu' });
-  check('frame: opens at its level', wear.status === 200 && wear.user.frame === 'mon-pikachu' && wear.user.level === 3);
+  const wear = await patch('frame1', { frame: 'm-graphite' });
+  check('frame: opens at its level', wear.status === 200 && wear.user.frame === 'm-graphite' && wear.user.level === 3);
   setLevel('frame1', 30);
-  check('frame: an equipped frame stays equipped as the level climbs', (await api('/api/me', 'GET', undefined, 'frame1')).user.frame === 'mon-pikachu');
-  check('frame: the public profile shows the equipped frame and the level', await api('/api/u/frame1', 'GET', undefined, null).then((p) => p.user.frame === 'mon-pikachu' && p.user.level === 30 && p.user.perks.showcaseSlots === levelPerks(30).showcaseSlots));
+  check('frame: an equipped frame stays equipped as the level climbs', (await api('/api/me', 'GET', undefined, 'frame1')).user.frame === 'm-graphite');
+  check('frame: the public profile shows the equipped frame and the level', await api('/api/u/frame1', 'GET', undefined, null).then((p) => p.user.frame === 'm-graphite' && p.user.level === 30 && p.user.perks.showcaseSlots === levelPerks(30).showcaseSlots));
   const none = await patch('frame1', { frame: '' });
   check('frame: "" takes the frame off', none.status === 200 && none.user.frame === null && db.prepare("SELECT frame FROM users WHERE id = 'frame1'").get().frame === null);
-  check('frame: null does the same', (await patch('frame1', { frame: 'mon-squirtle' })).status === 200 && (await patch('frame1', { frame: null })).user.frame === null);
+  check('frame: null does the same', (await patch('frame1', { frame: 'e-cobalt' })).status === 200 && (await patch('frame1', { frame: null })).user.frame === null);
   check('frame: a stored retired frame shows as none', (db.prepare("UPDATE users SET frame = 'legend' WHERE id = 'frame1'").run(), (await api('/api/me', 'GET', undefined, 'frame1')).user.frame === null));
-  check('frame: an unrelated PATCH keeps the choice', (await patch('frame1', { frame: 'mon-squirtle' })).status === 200 && (await patch('frame1', { bio: 'x' })).user.frame === 'mon-squirtle');
+  check('frame: an unrelated PATCH keeps the choice', (await patch('frame1', { frame: 'e-cobalt' })).status === 200 && (await patch('frame1', { bio: 'x' })).user.frame === 'e-cobalt');
 
   // Motions.
   addUser('m1', Math.min(...Object.values(BANNER_MOTION_LEVELS)) - 1);
@@ -400,12 +400,12 @@ const showcaseOf = (ids) => ids.map((id) => ({ id }));
 {
   addUser('vet', 100);
   const me = await api('/api/me', 'GET', undefined, 'vet');
-  check('veteran: /api/me carries the full perks', me.user.level === 100 && me.user.frame === null && me.user.perks.showcaseSlots === SHOWCASE_MAX && me.user.perks.frames.includes('mon-umbreon'));
+  check('veteran: /api/me carries the full perks', me.user.level === 100 && me.user.frame === null && me.user.perks.showcaseSlots === SHOWCASE_MAX && me.user.perks.frames.includes('s-eclipse'));
   check('veteran: six showcase cards, four pages, any motion, any frame, any title',
     (await patch('vet', { showcase: showcaseOf(CARDS.slice(0, SHOWCASE_MAX)) })).status === 200
     && (await patch('vet', { binderPages: [0, 1, 2, 3] })).status === 200
     && (await patch('vet', { banner: 'holo:gold+violet' })).status === 200
-    && (await patch('vet', { frame: 'mon-umbreon' })).status === 200
+    && (await patch('vet', { frame: 's-eclipse' })).status === 200
     && (await patch('vet', { title: 'Legend' })).status === 200);
   check('veteran: every gate is open', (await api('/api/casino/coinflips', 'POST', { requestId: rid(), cards: [{ id: 'me5-87', qty: 1 }] }, 'vet')).status === 200);
   // A player with no XP row yet who is signed in still gets a working /api/me.
