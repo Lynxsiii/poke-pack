@@ -12,6 +12,7 @@
 
 import { FORMATS } from "./engine.js";
 import { FREE_ENERGY, isFreeEnergy } from "./cards.js";
+import { trainerAim } from "./trainers.js";
 
 export const MAX_DECKS = 12;
 
@@ -153,18 +154,33 @@ export function buildDeck(pool, format = "standard", { prefer = "", rand = Math.
   }
   if (!Object.keys(cards).some((id) => mons.find((p) => p.def.id === id)?.def.stage === "basic")) return null;
 
+  // Trainers the pool holds and the game can read: about a seventh of the deck, card draw first.
+  const order = { draw: 0, refresh: 1, heal: 2, switch: 3, gust: 4, cure: 5, hammer: 6 };
+  const trainers = pool.filter((p) => p.def?.kind === "trainer" && p.def.playable && p.owned > 0).sort((a, b) => (order[trainerAim(a.def.fx)] ?? 9) - (order[trainerAim(b.def.fx)] ?? 9));
+  let room = Math.round(rules.deckSize * 0.14);
+  for (const { def, owned } of trainers) {
+    const take = Math.max(0, Math.min(owned, 2, rules.copies - (names[def.name] || 0), room));
+    if (!take) continue;
+    cards[def.id] = take;
+    names[def.name] = (names[def.name] || 0) + take;
+    count += take;
+    room -= take;
+  }
+
   // Energy: in proportion to the symbols the chosen attacks ask for.
   const asks = {};
   for (const [id, n] of Object.entries(cards)) {
-    for (const type of needsOf(mons.find((p) => p.def.id === id).def)) if (types.includes(type)) asks[type] = (asks[type] || 0) + n;
+    const mon = mons.find((p) => p.def.id === id);
+    if (!mon) continue;
+    for (const type of needsOf(mon.def)) if (types.includes(type)) asks[type] = (asks[type] || 0) + n;
   }
   if (!Object.keys(asks).length) asks[first] = 1;
   const energy = rules.deckSize - count;
   const total = Object.values(asks).reduce((a, b) => a + b, 0);
   let left = energy;
-  const order = Object.keys(asks).sort((a, b) => asks[b] - asks[a]);
-  order.forEach((type, i) => {
-    const n = i === order.length - 1 ? left : Math.round((energy * asks[type]) / total);
+  const byAsk = Object.keys(asks).sort((a, b) => asks[b] - asks[a]);
+  byAsk.forEach((type, i) => {
+    const n = i === byAsk.length - 1 ? left : Math.round((energy * asks[type]) / total);
     const id = FREE_ENERGY.find((e) => e.type === type).id;
     cards[id] = Math.min(left, n);
     left -= cards[id];
@@ -181,7 +197,13 @@ export function buildBotDeck(setDefs, format, rand = Math.random) {
   const seen = new Set();
   const pool = [];
   for (const def of setDefs) {
-    if (def?.kind !== "pokemon" || !def.playable || def.prizes > 1 || seen.has(def.name)) continue;
+    if (!def?.playable || seen.has(def.name)) continue;
+    if (def.kind === "trainer") {
+      seen.add(def.name);
+      pool.push({ def, owned: 2 });
+      continue;
+    }
+    if (def.kind !== "pokemon" || def.prizes > 1) continue;
     seen.add(def.name);
     pool.push({ def, owned: rules.copies });
   }

@@ -30,7 +30,8 @@ for (const file of readdirSync("data").filter((f) => f.endsWith(".json"))) {
   for (const card of list) byId.set(card.id, card);
 }
 for (const e of FREE_ENERGY) byId.set(e.id, { id: e.id, name: `${e.type} Energy`, supertype: "Energy", subtypes: ["Basic"], energy: true });
-const defs = createDefs((id) => byId.get(id), rules);
+const trainers = JSON.parse(readFileSync("data/tcg/trainers.json", "utf8"));
+const defs = createDefs((id) => byId.get(id), rules, trainers);
 
 let passed = 0;
 function test(name, fn) {
@@ -46,8 +47,15 @@ function test(name, fn) {
 if (process.argv.includes("--coverage")) {
   let mons = 0, playable = 0, attacks = 0, read = 0, noText = 0;
   const unread = new Map();
+  let trainerCards = 0, trainerRead = 0;
+  const unreadTrainers = new Map();
   for (const card of byId.values()) {
     const def = defs(card.id);
+    if (def.kind === "trainer") {
+      trainerCards += 1;
+      if (def.playable) trainerRead += 1;
+      else if (def.sub === "item" || def.sub === "supporter") unreadTrainers.set(def.text.replace(/\d+/g, "N"), (unreadTrainers.get(def.text.replace(/\d+/g, "N")) || 0) + 1);
+    }
     if (def.kind !== "pokemon") continue;
     mons += 1;
     if (def.playable) playable += 1;
@@ -65,6 +73,9 @@ if (process.argv.includes("--coverage")) {
   console.log(`${attacks} attacks: ${noText} plain damage, ${read} with text the engine reads, ${attacks - noText - read} with text it doesn't yet`);
   console.log("Commonest unread wordings:");
   for (const [shape, n] of [...unread].sort((a, b) => b[1] - a[1]).slice(0, 25)) console.log(`  ${String(n).padStart(4)}  ${shape}`);
+  console.log(`${trainerCards} Trainers: ${trainerRead} playable (Items and Supporters whose text is read)`);
+  console.log("Commonest unread Item and Supporter texts:");
+  for (const [shape, n] of [...unreadTrainers].sort((a, b) => b[1] - a[1]).slice(0, 15)) console.log(`  ${String(n).padStart(4)}  ${shape.slice(0, 150)}`);
   process.exit(0);
 }
 
@@ -686,6 +697,115 @@ test("switching: the attacker's own choice, a may, and the defender pushed out",
   act(state, botAction(state, 0, defs));
   assert.equal(state.pending.length, 0);
   assert.equal(state.current, 0);
+});
+
+/* ---------- Trainers ---------- */
+
+trainers.cards.lab = {};
+function labTrainer(key, sub, text) {
+  trainers.cards.lab[key] = trainers.texts.push(text) - 1;
+  byId.set(`lab-${key}`, { id: `lab-${key}`, name: `Lab ${key}`, supertype: "Trainer", subtypes: [sub] });
+  return `lab-${key}`;
+}
+const T = {
+  draw: labTrainer("draw", "Item", "Draw 3 cards."),
+  research: labTrainer("research", "Supporter", "Discard your hand and draw 7 cards."),
+  judge: labTrainer("judge", "Supporter", "Each player shuffles their hand into their deck and draws 4 cards."),
+  potion: labTrainer("potion", "Item", "Heal 30 damage from 1 of your Pokémon."),
+  swap: labTrainer("swap", "Item", "Switch your Active Pokémon with 1 of your Benched Pokémon."),
+  boss: labTrainer("boss", "Supporter", "Switch in 1 of your opponent's Benched Pokémon to the Active Spot."),
+  heal: labTrainer("fullheal", "Item", "Remove all Special Conditions from your Active Pokémon."),
+  odd: labTrainer("odd", "Item", "Search your deck for a card nobody has heard of."),
+  arena: labTrainer("arena", "Stadium", "Draw 3 cards."),
+};
+/** Put a Trainer straight into a player's hand (it need not be in the deck list). */
+function hold(state, p, id) {
+  const uid = `x${Object.keys(state.cards).length}`;
+  state.cards[uid] = id;
+  state.players[p].hand.push(uid);
+  return uid;
+}
+
+test("Trainer text: read, unread, and kinds that aren't in yet", () => {
+  assert.ok(defs(T.draw).playable && defs(T.draw).sub === "item");
+  assert.equal(defs(T.research).sub, "supporter");
+  assert.ok(!defs(T.odd).playable && /isn't live/.test(defs(T.odd).why));
+  assert.ok(!defs(T.arena).playable && /Stadium/.test(defs(T.arena).why));
+  // Real cards: Potion, Switch, Professor's Research, Boss's Orders by their current prints.
+  const named = (name) => [...byId.values()].filter((c) => c.name === name && c.supertype === "Trainer").map((c) => defs(c.id));
+  for (const name of ["Potion", "Switch", "Professor's Research", "Boss's Orders", "Judge", "Full Heal"]) assert.ok(named(name).some((d) => d.playable), name);
+});
+
+test("an Item draws; any number a turn; nothing to draw, no play", () => {
+  const state = midgame();
+  const hand = state.players[0].hand.length;
+  act(state, { type: "play", player: 0, uid: hold(state, 0, T.draw) });
+  act(state, { type: "play", player: 0, uid: hold(state, 0, T.draw) });
+  assert.equal(state.players[0].hand.length, hand + 6);
+  assert.equal(state.players[0].discard.filter((u) => state.cards[u] === T.draw).length, 2);
+  assert.equal(state.current, 0);
+  const last = hold(state, 0, T.draw);
+  state.players[0].discard.push(...state.players[0].deck.splice(0));
+  throws(() => act(state, { type: "play", player: 0, uid: last }), /would do nothing/);
+  assert.ok(!legalActions(state, 0, defs).some((a) => a.type === "play"));
+});
+
+test("one Supporter a turn, none on the first turn of the match", () => {
+  const state = midgame();
+  const a = hold(state, 0, T.research);
+  const b = hold(state, 0, T.judge);
+  act(state, { type: "play", player: 0, uid: a });
+  assert.equal(state.players[0].hand.length, 7);
+  throws(() => act(state, { type: "play", player: 0, uid: state.players[0].hand.find((u) => state.cards[u] === T.judge) || b }), /already played a Supporter|isn't in your hand/);
+  act(state, { type: "end", player: 0 });
+  act(state, { type: "end", player: 1 });
+  const again = hold(state, 0, T.judge);
+  act(state, { type: "play", player: 0, uid: again });
+  assert.equal(state.players[0].hand.length, 4);
+  assert.equal(state.players[1].hand.length, 4);
+
+  const fresh = started();
+  const first = fresh.current;
+  throws(() => act(fresh, { type: "play", player: first, uid: hold(fresh, first, T.research) }), /first turn/);
+});
+
+test("Potion, Switch and a pull from the Bench go through a choice and don't end the turn", () => {
+  const state = midgame();
+  const me = state.players[0];
+  throws(() => act(state, { type: "play", player: 0, uid: hold(state, 0, T.potion) }), /would do nothing/);
+  me.active.damage = 20;
+  me.bench[0].damage = 30;
+  act(state, { type: "play", player: 0, uid: me.hand.find((u) => state.cards[u] === T.potion) });
+  assert.deepEqual(legalActions(state, 0, defs).map((a) => a.spot), [ACTIVE, 0]);
+  act(state, { type: "pick", player: 0, spot: ACTIVE });
+  assert.equal(me.active.damage, 0);
+  assert.equal(state.current, 0);
+  assert.equal(state.ending, false);
+
+  const was = me.active.uid;
+  act(state, { type: "play", player: 0, uid: hold(state, 0, T.swap) });
+  act(state, { type: "pick", player: 0, spot: 0 });
+  assert.equal(me.bench[0].uid, was);
+  assert.equal(me.retreated, false);
+
+  const theirs = state.players[1];
+  const benched = theirs.bench[0].uid;
+  act(state, { type: "play", player: 0, uid: hold(state, 0, T.boss) });
+  assert.equal(state.pending[0].side, 1);
+  act(state, { type: "pick", player: 0, spot: 0 });
+  assert.equal(theirs.active.uid, benched);
+});
+
+test("Full Heal clears conditions; the bot plays what helps it", () => {
+  const state = midgame();
+  const me = state.players[0];
+  throws(() => act(state, { type: "play", player: 0, uid: hold(state, 0, T.heal) }), /would do nothing/);
+  addCondition(state, me.active, "poisoned");
+  addCondition(state, me.active, "asleep");
+  act(state, { type: "play", player: 0, uid: me.hand.find((u) => state.cards[u] === T.heal) });
+  assert.deepEqual(conditionsOn(me.active), []);
+  hold(state, 0, T.draw);
+  assert.equal(botAction(state, 0, defs).type === "play" || botAction(state, 0, defs).type === "bench", true);
 });
 
 /* ---------- bot against bot ---------- */

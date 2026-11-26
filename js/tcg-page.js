@@ -22,7 +22,7 @@
  *   coinFaces()         { heads, tails } art of the equipped coin, or null for the house coin
  */
 
-import { ACTIVE, FORMATS, RuleError, apply, canRetreat, conditionsOn, createGame, defOf, energyOf, hpLeft, legalActions, markOn, marksOn, other, usableAttacks } from "./tcg/engine.js";
+import { ACTIVE, FORMATS, RuleError, apply, canRetreat, conditionsOn, createGame, damageAfterTyping, defOf, energyOf, hpLeft, legalActions, markOn, marksOn, other, trainerBlock, usableAttacks } from "./tcg/engine.js";
 import { ENERGY_TYPES, FREE_ENERGY, createDefs, isFreeEnergy } from "./tcg/cards.js";
 import { botAction } from "./tcg/bot.js";
 import { MAX_DECKS, buildBotDeck, buildDeck, checkDeck, deckList, deckSize, roomFor } from "./tcg/decks.js";
@@ -82,15 +82,14 @@ export function initTcg(deps) {
 
   function load() {
     loading ||= (async () => {
-      const [table] = await Promise.all([
-        fetch("data/tcg/rules.json", { cache: "no-cache" }).then((r) => {
+      const json = (url) =>
+        fetch(url, { cache: "no-cache" }).then((r) => {
           if (!r.ok) throw new Error(r.status);
           return r.json();
-        }),
-        deps.loadOwnedSets(),
-      ]);
+        });
+      const [table, trainerText] = await Promise.all([json("data/tcg/rules.json"), json("data/tcg/trainers.json"), deps.loadOwnedSets()]);
       rules = table;
-      defs = createDefs(deps.findCard, rules);
+      defs = createDefs(deps.findCard, rules, trainerText);
       decks = read("decks", []).filter((d) => d && d.cards && FORMATS[d.format]);
       record = read("record", record);
     })().catch((err) => {
@@ -190,7 +189,8 @@ export function initTcg(deps) {
           <li>Basic Pokémon, evolution, Energy, attacks, Weakness and Resistance, Special Conditions, retreat, prizes.</li>
           <li>Your own cards only, as many copies as you own. Basic Energy is free.</li>
           <li>Your sleeve is your card back and your coin makes the flips.</li>
-          <li>Not yet: Trainers, Abilities, and some attack text (the printed damage still lands). Matches against other players come later.</li>
+          <li>Trainers: Items and Supporters that draw, heal, switch or pull a Pokémon forward. More with each update.</li>
+          <li>Not yet: Stadiums, Tools, Abilities, and some attack text (the printed damage still lands). Matches against other players come later.</li>
         </ul>
         ${read("learned", false) ? `<button type="button" class="tlink tg-relearn" data-lesson>Run the lesson again</button>` : ""}
       </section>
@@ -241,13 +241,13 @@ export function initTcg(deps) {
     const ids = new Set([...Object.keys(have).filter((id) => have[id] > 0), ...Object.keys(deck.cards)]);
     for (const id of ids) {
       const def = defs(id);
-      if (!def || def.kind !== "pokemon" || !def.playable) continue;
+      if (!def || (def.kind !== "pokemon" && def.kind !== "trainer") || !def.playable) continue;
       if (editor.tab === "deck" && !deck.cards[id]) continue;
-      if (editor.type && !def.types.includes(editor.type)) continue;
+      if (editor.type && !(def.types || []).includes(editor.type)) continue;
       if (q && !def.name.toLowerCase().includes(q)) continue;
       rows.push({ id, def, owned: have[id] || 0, inDeck: deck.cards[id] || 0 });
     }
-    const typeAt = (def) => ENERGY_TYPES.indexOf(def.types[0]) + 1 || 99;
+    const typeAt = (def) => (def.kind === "trainer" ? 100 : ENERGY_TYPES.indexOf(def.types[0]) + 1 || 99);
     rows.sort((a, b) => typeAt(a.def) - typeAt(b.def) || a.def.name.localeCompare(b.def.name) || a.id.localeCompare(b.id));
     return rows;
   }
@@ -269,7 +269,7 @@ export function initTcg(deps) {
         ${row.inDeck ? `<span class="tg-tile-n">${row.inDeck}</span>` : ""}
       </button>
       <b class="tg-tile-name">${esc(def.name)}</b>
-      <span class="tg-tile-meta">${def.stage === "basic" ? "Basic" : "Evolution"}, ${def.hp} HP</span>
+      <span class="tg-tile-meta">${def.kind === "trainer" ? (def.sub === "supporter" ? "Supporter" : "Item") : `${def.stage === "basic" ? "Basic" : "Evolution"}, ${def.hp} HP`}</span>
       ${stepHtml(id, row.inDeck, room, def.name, `of ${row.owned}`)}
     </div>`;
   }
@@ -291,10 +291,12 @@ export function initTcg(deps) {
   function summaryHtml(deck) {
     const check = checkDeck(deck, owned(), defs);
     const pct = Math.min(1, check.size / check.need);
-    const mons = Object.entries(deck.cards).reduce((n, [id, c]) => n + (defs(id)?.kind === "pokemon" ? c : 0), 0);
+    const tally = (kind) => Object.entries(deck.cards).reduce((n, [id, c]) => n + (defs(id)?.kind === kind ? c : 0), 0);
+    const mons = tally("pokemon");
+    const trainers = tally("trainer");
     return `<div class="tg-sum-top">
         <span class="tg-sum-count"><b>${check.size}</b> of ${check.need}</span>
-        <span class="tg-sum-split">${mons} Pokémon, ${check.size - mons} Energy</span>
+        <span class="tg-sum-split">${mons} Pokémon, ${trainers ? `${plural(trainers, "Trainer")}, ` : ""}${check.size - mons - trainers} Energy</span>
         <button type="button" class="solid sm" data-play="${esc(deck.id)}"${check.ok ? "" : " disabled"}>Play</button>
       </div>
       <span class="bar tg-sum-bar${check.size > check.need ? " over" : ""}"><i style="transform:scaleX(${pct.toFixed(3)})"></i></span>
@@ -403,6 +405,7 @@ export function initTcg(deps) {
         <div class="tg-look-side">
           <h3>${esc(def.name)}</h3>
           ${def.kind === "pokemon" ? `<p class="tg-look-meta">${stageName(def)}, ${def.hp} HP</p>` : ""}
+          ${def.kind === "trainer" ? `<p class="tg-look-meta">${{ item: "Item", supporter: "Supporter: one a turn", stadium: "Stadium", tool: "Pokémon Tool" }[def.sub]}</p>${def.text ? `<p class="tg-look-text">${esc(def.text)}</p>` : ""}${def.why ? `<p class="tg-look-note">${esc(def.why)}</p>` : ""}` : ""}
           ${extra}${body}
           <button type="button" class="ghost sm" data-close>Close</button>
         </div>
@@ -527,7 +530,7 @@ export function initTcg(deps) {
     return `<button type="button" class="tg-mon${big ? " big" : ""}${target ? " is-target" : ""}${chosen ? " is-chosen" : ""}" data-p="${p}" data-spot="${spot}" aria-label="${esc(label)}">
       <img src="${img(state.cards[slot.uid], big)}" alt="" draggable="false" decoding="async" />
       ${slot.damage ? `<span class="tg-dmg">${slot.damage}</span>` : ""}
-      ${big ? "" : `${hpBar(left, def.hp)}<span class="tg-pips">${pips(energyOf(state, slot, defs))}</span>`}
+      ${big ? (slot.energy.length ? `<span class="tg-pips tg-on">${pips(energyOf(state, slot, defs))}</span>` : "") : `${hpBar(left, def.hp)}<span class="tg-pips">${pips(energyOf(state, slot, defs))}</span>`}
     </button>`;
   }
 
@@ -537,11 +540,15 @@ export function initTcg(deps) {
     const def = defOf(state, slot.uid, defs);
     const left = hpLeft(state, slot, defs);
     const energy = energyOf(state, slot, defs);
+    // How the Pokémon facing it fares: its type against this one's Weakness and Resistance.
+    const facing = state.players[other(p)].active;
+    const typing = facing?.uid ? damageAfterTyping(100, defOf(state, facing.uid, defs), def) : null;
+    const edge = typing?.weak ? `<i class="tg-cond" data-cond="weak">Weak ${def.weakness.op === "x" ? "×" : "+"}${def.weakness.n}</i>` : typing?.resist ? `<i class="tg-cond" data-cond="resist">Resists -${def.resistance.n}</i>` : "";
     return `<div class="tg-hud" data-p="${p}">
       <b class="tg-hud-name">${esc(def.name)}</b>
       <span class="tg-pips">${energy.length ? pips(energy) : `<small>No Energy</small>`}</span>
       <span class="tg-hud-hp"><em>HP</em>${hpBar(left, def.hp)}<span class="num">${left}/${def.hp}</span></span>
-      ${conditionsOn(slot).length || marksOn(state, slot).length ? `<span class="tg-conds">${conditionsOn(slot).map((c) => `<i class="tg-cond" data-cond="${c}">${COND_NAME[c]}</i>`).join("")}${marksOn(state, slot).map((m) => `<i class="tg-cond" data-cond="mark" data-mark="${m.kind}">${esc(markLabel(m))}</i>`).join("")}</span>` : ""}
+      ${conditionsOn(slot).length || marksOn(state, slot).length || edge ? `<span class="tg-conds">${edge}${conditionsOn(slot).map((c) => `<i class="tg-cond" data-cond="${c}">${COND_NAME[c]}</i>`).join("")}${marksOn(state, slot).map((m) => `<i class="tg-cond" data-cond="mark" data-mark="${m.kind}">${esc(markLabel(m))}</i>`).join("")}</span>` : ""}
     </div>`;
   }
 
@@ -560,7 +567,9 @@ export function initTcg(deps) {
     }
     const waiting = state.pending[0];
     if (waiting?.player === ME && waiting.type === "pick") {
-      const text = waiting.effect.op === "switch" ? "Choose the Benched Pokémon that comes in." : `Choose ${waiting.side === ME ? "one of your" : "one of their"} Pokémon for ${waiting.effect.n} damage${waiting.left > 1 ? ` (${waiting.left} to choose)` : ""}.`;
+      const op = waiting.effect.op;
+      const whose = waiting.side === ME ? "your" : "their";
+      const text = op === "switch" ? (waiting.side === ME ? "Choose the Benched Pokémon that comes in." : "Choose which of their Benched Pokémon to pull forward.") : op === "heal" ? `Choose one of your Pokémon to heal ${waiting.effect.n}.` : op === "discardEnergy" ? `Choose one of ${whose} Pokémon to lose an Energy.` : `Choose ${waiting.side === ME ? "one of your" : "one of their"} Pokémon for ${waiting.effect.n} damage${waiting.left > 1 ? ` (${waiting.left} to choose)` : ""}.`;
       return { text, keys: waiting.optional ? `<button type="button" class="ghost sm" data-act="pick-skip">Stay in</button>` : "" };
     }
     if (waiting?.player === ME) return { text: "Choose your new Active Pokémon.", keys: "" };
@@ -574,6 +583,8 @@ export function initTcg(deps) {
       if (acts.some((a) => a.type === "bench")) text = `${def.name}: tap your Bench to play it.`;
       else if (acts.some((a) => a.type === "evolve")) text = `${def.name}: tap the Pokémon it evolves from.`;
       else if (acts.some((a) => a.type === "attach")) text = `${def.name}: tap a Pokémon to attach it.`;
+      else if (acts.some((a) => a.type === "play")) return { text: def.text || `Play ${def.name}?`, keys: `<button type="button" class="solid sm" data-act="play-card">Play</button><button type="button" class="ghost sm" data-act="look">View</button>` };
+      else if (def.kind === "trainer") text = trainerBlock(state, ME, def, defs) || `${def.name} can't be played right now.`;
       else if (def.kind === "energy") text = "One Energy a turn, and you've attached yours.";
       else if (def.kind === "pokemon" && def.stage === "basic") text = "Your Bench is full.";
       else if (def.kind === "pokemon") text = `${def.name} evolves from ${def.evolvesFrom}, a turn after it comes into play.`;
@@ -681,12 +692,36 @@ export function initTcg(deps) {
     const retreat = canRetreat(state, ME, defs) && myTurn();
     const held = conditionsOn(slot).find((c) => c === "asleep" || c === "paralyzed");
     const barred = (attack) => (slot.marks || []).some((m) => m.kind === "noUse" && m.turn === state.turn && m.name === attack.name);
+    // What each attack will really do to the Pokémon in front of it: Weakness, Resistance and what last turn left on it.
+    const foeSlot = state.players[BOT].active;
+    const foeDef = foeSlot?.uid ? defOf(state, foeSlot.uid, defs) : null;
+    const preview = (attack) => {
+      const base = parseInt(attack.damage, 10) || 0;
+      if (!foeDef || !base) return { html: esc(attack.damage || ""), note: "" };
+      const more = /[+×x]/i.test(String(attack.damage)) ? String(attack.damage).replace(/^\d+/, "") : "";
+      const typed = damageAfterTyping(base, def, foeDef);
+      const blocked = markOn(state, foeSlot, "shield") || markOn(state, foeSlot, "guard");
+      const less = markOn(state, foeSlot, "less")?.n || 0;
+      const real = blocked ? 0 : Math.max(0, typed.amount - less);
+      const notes = [];
+      if (typed.weak) notes.push(`Weakness ${foeDef.weakness.op === "x" ? "×" : "+"}${foeDef.weakness.n}`);
+      if (typed.resist) notes.push(`Resistance -${foeDef.resistance.n}`);
+      if (blocked) notes.push("Blocked this turn");
+      else if (less) notes.push(`${less} less this turn`);
+      if (!blocked && real >= hpLeft(state, foeSlot, defs)) notes.push(`Knocks out ${foeDef.name}`);
+      const tone = real > base ? "up" : real < base ? "down" : "";
+      return {
+        html: tone ? `<s>${base}</s><span class="${tone}">${real}${esc(more)}</span>` : esc(attack.damage),
+        note: notes.length ? `<span class="tg-atk-note ${tone || (notes.length ? "ko" : "")}">${esc(notes.join(" · "))}</span>` : "",
+      };
+    };
     const whyNot = (attack) => (state.turn === 1 ? "No attack on the first turn" : held ? `${COND_NAME[held]}: can't attack` : markOn(state, slot, "noAttack") ? "Can't attack this turn" : barred(attack) ? "Can't be used this turn" : "Not enough Energy");
     return `<div class="tg-sheet-bg" data-act="cancel"></div>
       <div class="tg-sheet tg-attacks" role="dialog" aria-label="${esc(def.name)}">
         <header><h3>${esc(def.name)}</h3><span class="tg-pips">${units.length ? pips(units) : "<small>No Energy attached</small>"}</span></header>
         ${def.attacks.map((attack, i) => `<button type="button" class="tg-atk" data-attack="${i}"${usable.has(i) && myTurn() ? "" : " disabled"}>
-          <span class="tg-atk-top"><span class="tg-pips">${attack.cost.length ? pips(attack.cost) : "<small>Free</small>"}</span><b>${esc(attack.name)}</b><em>${attack.damage || ""}</em></span>
+          <span class="tg-atk-top"><span class="tg-pips">${attack.cost.length ? pips(attack.cost) : "<small>Free</small>"}</span><b>${esc(attack.name)}</b><em>${preview(attack).html}</em></span>
+          ${preview(attack).note}
           ${attack.text ? `<span class="tg-atk-text${attack.plain ? " off" : ""}">${attack.plain ? "Text not live yet: " : ""}${esc(attack.text)}</span>` : ""}
           ${usable.has(i) || !myTurn() ? "" : `<span class="tg-atk-why">${whyNot(attack)}</span>`}
         </button>`).join("")}
@@ -797,6 +832,9 @@ export function initTcg(deps) {
       case "bench": return `${who(event.p)} benched ${name(event.uid)}.`;
       case "evolve": return `${who(event.p)} evolved into ${name(event.uid)}.`;
       case "attach": return `${who(event.p)} attached ${name(event.uid)}.`;
+      case "play": return `${who(event.p)} played ${name(event.uid)}.`;
+      case "shuffle-hand": return `${who(event.p)} shuffled ${event.p === ME ? "your" : "its"} hand into the deck.`;
+      case "discard-hand": return `${who(event.p)} discarded ${plural(event.uids.length, "card")} from hand.`;
       case "retreat": return `${who(event.p)} retreated.`;
       case "attack": return `${name(event.uid)} used ${event.name}.`;
       case "condition": return `${event.p === ME ? "Your" : "Their"} Active Pokémon is now ${COND_NAME[event.kind]}.`;
@@ -875,7 +913,7 @@ export function initTcg(deps) {
   }
 
   /** A card image travels from one rect to another. `absorb`: it sinks into what it lands on. */
-  function ghost(src, from, to, { ms = 340, width = 0, absorb = false, delay = 0 } = {}) {
+  function ghost(src, from, to, { ms = 340, width = 0, absorb = false, show = false, delay = 0 } = {}) {
     if (!src || !from || !to || !fx || still() || !to.width) return;
     const w = width || to.width;
     const h = w * 1.4;
@@ -888,7 +926,9 @@ export function initTcg(deps) {
     el.style.cssText = `left:${b.x - w / 2}px;top:${b.y - h / 2}px;width:${w}px;height:${h}px`;
     fx.appendChild(el);
     const from0 = `translate(${a.x - b.x}px, ${a.y - b.y}px) scale(${Math.max(0.16, Math.min(1.4, from.width / w)).toFixed(3)})`;
-    const frames = absorb
+    const frames = show
+      ? [{ transform: from0, opacity: 1 }, { transform: "none", opacity: 1, offset: 0.28 }, { transform: "none", opacity: 1, offset: 0.82 }, { transform: "scale(1.06)", opacity: 0 }]
+      : absorb
       ? [{ transform: from0, opacity: 1 }, { transform: "scale(0.9)", opacity: 1, offset: 0.7 }, { transform: "scale(0.4)", opacity: 0 }]
       : [{ transform: from0, opacity: 1 }, { transform: "none", opacity: 1 }];
     el.animate(frames, { duration: ms, delay, easing: EASE, fill: "both" }).finished.catch(() => {}).then(() => el.remove());
@@ -971,6 +1011,15 @@ export function initTcg(deps) {
       flyIn(src, el, { ms: 300 });
       setTimeout(() => cue(monSel(event.p, event.spot), "evolved", 560), 290);
       return 620;
+    }
+    if (event.t === "play") {
+      // The card is shown large over the arena for a beat, so both players read what was played.
+      const arena = rectOf(".tg-arena");
+      if (!arena) return 0;
+      const w = Math.min(arena.width * 0.5, arena.height * 0.62);
+      const to = { left: arena.left + arena.width / 2 - w / 2, top: arena.top + arena.height / 2 - w * 0.7, width: w, height: w * 1.4 };
+      ghost(img(match.state.cards[event.uid]), src, to, { ms: event.p === ME ? 900 : 1300, width: w, show: true });
+      return event.p === ME ? 800 : 1200;
     }
     if (event.t === "attach") {
       const to = rectOf(`${monSel(event.p, event.spot)} img`);
@@ -1112,6 +1161,13 @@ export function initTcg(deps) {
           popDamage(event.p, `-${event.n}`, event.why);
         }
         await wait(620);
+      } else if (event.t === "flip") {
+        await showFlips(event.results);
+      } else if (event.t === "heal") {
+        popDamage(event.p, `+${event.n}`, "heal", event.spot);
+        await wait(520);
+      } else if (event.t === "shuffle-hand" || event.t === "discard-hand") {
+        await wait(event.p === BOT ? 620 : 380);
       } else if (event.t === "damage") {
         // Damage from a choice made after the attack: the table already shows it.
         cue(monSel(event.p, event.spot >= 0 ? event.spot : ACTIVE), "hit", 420);
@@ -1353,7 +1409,7 @@ export function initTcg(deps) {
     const id = state.cards[uid];
     const acts = legal().filter((a) => a.uid && state.cards[a.uid] === id);
     const onto = target.spot != null && !target.empty ? acts.find((a) => (a.type === "evolve" || a.type === "attach") && a.spot === target.spot) : null;
-    const down = acts.find((a) => a.type === "bench");
+    const down = acts.find((a) => a.type === "bench" || a.type === "play");
     const play = onto || ((target.el || target.field) && down) || null;
     if (play) {
       dropFrom = rect;
@@ -1415,6 +1471,7 @@ export function initTcg(deps) {
       match.sheet = "";
       return paintTable();
     }
+    if (act === "play-card" && match.sel?.kind === "hand") return run({ type: "play", player: ME, uid: match.sel.uid });
     if (act === "pick-skip") return run({ type: "pick", player: ME, spot: null });
     if (act === "start") return run({ type: "place", player: ME, active: match.setup.active, bench: match.setup.bench });
     if (act === "end") return run({ type: "end", player: ME });

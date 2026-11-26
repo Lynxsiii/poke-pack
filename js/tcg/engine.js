@@ -49,6 +49,7 @@
  */
 
 import { runAttackEffects } from "./effects.js";
+import { runTrainer, trainerReady } from "./trainers.js";
 
 export const FORMATS = {
   standard: { id: "standard", name: "Full deck", deckSize: 60, prizes: 6, bench: 5, copies: 4 },
@@ -79,7 +80,7 @@ export function flip(state) {
   return rand(state) < 0.5;
 }
 
-function shuffle(state, list) {
+export function shuffle(state, list) {
   for (let i = list.length - 1; i > 0; i -= 1) {
     const j = Math.floor(rand(state) * (i + 1));
     [list[i], list[j]] = [list[j], list[i]];
@@ -310,6 +311,7 @@ export function createGame({ decks, names = ["You", "Opponent"], format = "stand
       mulligans: 0,
       energyUsed: false,
       retreated: false,
+      supporterUsed: false,
     });
   });
   const events = state.opening;
@@ -349,6 +351,7 @@ function startTurn(state, events) {
   const side = state.players[state.current];
   side.energyUsed = false;
   side.retreated = false;
+  side.supporterUsed = false;
   events.push({ t: "turn", p: state.current, n: state.turn });
   if (!side.deck.length) return win(state, other(state.current), "deck", events);
   draw(state, state.current, 1, events);
@@ -498,6 +501,21 @@ const HANDLERS = {
     events.push({ t: "evolve", p: player, uid, spot });
   },
 
+  /** Play a Trainer from the hand: it goes to the discard pile and does what it says. */
+  play(state, { player, uid }, defs, events) {
+    const side = state.players[player];
+    if (!side.hand.includes(uid)) fail("That card isn't in your hand.");
+    const def = defOf(state, uid, defs);
+    const why = trainerBlock(state, player, def, defs);
+    if (why) fail(why);
+    takeFromHand(state, player, uid);
+    side.discard.push(uid);
+    if (def.sub === "supporter") side.supporterUsed = true;
+    events.push({ t: "play", p: player, uid, sub: def.sub });
+    runTrainer(def.fx, { state, defs, events, player });
+    if (!state.pending.length) resolveKnockOuts(state, defs, events);
+  },
+
   attach(state, { player, uid, spot }, defs, events) {
     const side = state.players[player];
     if (!side.hand.includes(uid)) fail("That card isn't in your hand.");
@@ -634,6 +652,18 @@ const HANDLERS = {
   },
 };
 
+/** Why this Trainer can't be played right now, or "" when it can. */
+export function trainerBlock(state, player, def, defs) {
+  if (def?.kind !== "trainer" || !def.playable) return def?.why || "That card can't be played.";
+  const side = state.players[player];
+  if (def.sub === "supporter") {
+    if (side.supporterUsed) return "You've already played a Supporter this turn.";
+    if (state.turn === 1) return "No Supporter on the first turn of the match.";
+  }
+  if (!trainerReady(def.fx, { state, defs, events: [], player })) return `${def.name} would do nothing right now.`;
+  return "";
+}
+
 /** Carry out a choice on the Pokémon picked: damage to it, or it trades places with the Active. */
 function applyPick(state, waiting, spot, defs, events) {
   const p = waiting.side;
@@ -654,6 +684,16 @@ function applyPick(state, waiting, spot, defs, events) {
     events.push({ t: "damage", p, spot, n, weak, resist });
   } else if (effect.op === "switch") {
     switchActive(state, p, spot, events);
+  } else if (effect.op === "heal") {
+    const slot = slotAt(state, p, spot);
+    const healed = Math.min(effect.n, slot.damage);
+    slot.damage -= healed;
+    if (healed) events.push({ t: "heal", p, spot, n: healed });
+  } else if (effect.op === "discardEnergy") {
+    const slot = slotAt(state, p, spot);
+    const gone = slot.energy.splice(Math.max(0, slot.energy.length - effect.n), effect.n);
+    side.discard.push(...gone);
+    if (gone.length) events.push({ t: "discard-energy", p, spot, uids: gone });
   }
 }
 
@@ -733,6 +773,7 @@ export function legalActions(state, player, defs) {
     if (def.kind === "energy" && !side.energyUsed) {
       for (const [, spot] of spots) out.push({ type: "attach", player, uid, spot });
     }
+    if (def.kind === "trainer" && !trainerBlock(state, player, def, defs)) out.push({ type: "play", player, uid });
   }
   if (canRetreat(state, player, defs)) side.bench.forEach((_, to) => out.push({ type: "retreat", player, to }));
   for (const index of usableAttacks(state, player, defs)) out.push({ type: "attack", player, index });
