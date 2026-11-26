@@ -65,6 +65,9 @@ const fail = (message) => {
   throw new RuleError(message);
 };
 
+/** Whose card a pending choice belongs to and where it came from, carried onto the next one. */
+const carry = (waiting) => ({ ...(waiting.src ? { src: waiting.src } : {}), ...(waiting.by != null ? { by: waiting.by } : {}) });
+
 /* ---------- random ---------- */
 
 /** mulberry32 over the state's own counter: the same seed deals the same game. */
@@ -221,7 +224,7 @@ export function abilityBlock(state, player, spot, defs) {
   if (need.first && !firstTurnFor(state, player)) return `${ability.name} works only during your first turn.`;
   if (need.lost && !(side.lostOn || []).includes(state.turn - 1)) return "None of your Pokémon were Knocked Out during your opponent's last turn.";
   if (need.stadium && !state.stadium) return "It needs a Stadium in play.";
-  if (need.foePrizes != null && state.players[other(player)].prizes.length > need.foePrizes) return `Your opponent needs ${need.foePrizes} or fewer Prize cards left.`;
+  if (need.foePrizes != null && prizesLeft(state.players[other(player)]) > need.foePrizes) return `Your opponent needs ${need.foePrizes} or fewer Prize cards left.`;
   if (!trainerReady(use.steps, { state, defs, events: [], player, spot, src: "ability" })) return `${ability.name} would do nothing right now.`;
   return "";
 }
@@ -1056,10 +1059,10 @@ const HANDLERS = {
         slot.energy.push(...picked);
         for (const uid of picked) events.push({ t: "attach", p: player, uid, spot: waiting.effect.spot, from: "deck" });
       } else if (picked.length && to === "spread") {
-        picked.forEach((uid, i) => askPick(state, { player, side: player, spots, left: 1, effect: { op: "attachHeld", uids: [uid] }, ...(i === picked.length - 1 && waiting.then ? { then: waiting.then, from: waiting.from } : {}) }));
+        picked.forEach((uid, i) => askPick(state, { player, side: player, spots, left: 1, effect: { op: "attachHeld", uids: [uid] }, ...(i === picked.length - 1 && waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) }));
         waiting.then = null;
       } else if (picked.length) {
-        askPick(state, { player, side: player, spots, left: 1, effect: { op: "attachHeld", uids: picked }, ...(waiting.then ? { then: waiting.then, from: waiting.from } : {}) });
+        askPick(state, { player, side: player, spots, left: 1, effect: { op: "attachHeld", uids: picked }, ...(waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) });
         waiting.then = null;
       } else events.push({ t: "search", p: player, uids: [], from: waiting.zone, to: "hand" });
       // Cards looked at from the top and not taken go to the hand (the Ability says so), else the deck is shuffled.

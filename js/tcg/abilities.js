@@ -91,7 +91,7 @@ const KO_DOES = [
   [/^search your deck for (?:a card|up to (\d+) cards) and put (?:it|them) into your hand\. Then, shuffle your deck\.$/, (m) => ({ steps: [{ op: "search", what: "any", n: Number(m[1] || 1) }] })],
   [/^put it into your hand instead of the discard pile\. \(Discard all attached cards\.\)$/, () => ({ toHand: true })],
   [/^put (\d+) damage counters on the Attacking Pokémon\.$/, (m) => ({ counters: Number(m[1]) * 10 })],
-  [/^discard the top (\d+) cards of your opponent's deck\.$/, (m) => ({ steps: [{ op: "mill", n: Number(m[1]) }] })],
+  [/^discard the top (\d+) cards of your opponent's deck\.$/, (m) => ({ steps: [{ op: "foeMill", n: Number(m[1]) }] })],
   [/^discard (\d+) random cards? from your opponent's hand\.$/, (m) => ({ steps: [{ op: "foeDiscardRandom", n: Number(m[1]) }] })],
 ];
 
