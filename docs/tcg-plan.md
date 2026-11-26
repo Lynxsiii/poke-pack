@@ -30,6 +30,11 @@ the cards, sleeves, coins and playmats they have bought in-game.
 - **Table** (`js/tcg-page.js`, `css/pages/tcg.css`): phone first. Your sleeve
   is your card back, your coin makes the flips. A match is kept on the device
   and picks up where it stopped.
+- **Lesson** (`js/tcg/tutorial.js`): a practice match on borrowed Base Set
+  cards with both decks stacked, and a coach that waits for one action at a
+  time. The hub offers it until it has been finished once. The test suite
+  plays it through, so a bot or engine change that breaks the script fails
+  there.
 - **Tests**: `node scripts/test-tcg.mjs` (rule cases, then every set's bot
   deck played out bot against bot), `--coverage` for the numbers above.
 

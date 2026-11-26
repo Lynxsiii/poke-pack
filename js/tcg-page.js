@@ -26,6 +26,7 @@ import { ACTIVE, FORMATS, RuleError, apply, canRetreat, conditionsOn, createGame
 import { ENERGY_TYPES, FREE_ENERGY, createDefs, isFreeEnergy } from "./tcg/cards.js";
 import { botAction } from "./tcg/bot.js";
 import { MAX_DECKS, buildBotDeck, buildDeck, checkDeck, deckList, deckSize, roomFor } from "./tcg/decks.js";
+import { LESSON, LESSON_CARDS, LESSON_SET, createLesson } from "./tcg/tutorial.js";
 import { coinStageHTML, flipCoin } from "./coin.js?v=5";
 
 const ME = 0;
@@ -72,7 +73,7 @@ export function initTcg(deps) {
     }
   }
   const saveDecks = () => write("decks", decks);
-  const saveMatch = () => write("match", match && match.state.phase !== "over" ? { state: match.state, deckId: match.deckId, botSet: match.botSet } : null);
+  const saveMatch = () => write("match", match && match.state.phase !== "over" ? { state: match.state, deckId: match.deckId, botSet: match.botSet, lesson: match.lesson ?? null } : null);
 
   /* ---------- loading ---------- */
 
@@ -168,9 +169,13 @@ export function initTcg(deps) {
         <p class="tg-lede">Build a deck from the cards you own, then take it to the table against the house bot.${played ? ` You've won ${record.wins} of ${plural(played, "match")}.` : ""}</p>
       </header>
       ${resume?.state && resume.state.phase !== "over" ? `<div class="rt-box tg-resume">
-        <p><b>A match is waiting</b>Turn ${Math.max(1, resume.state.turn)} against the ${BOT_NAME}.</p>
+        <p><b>${resume.lesson != null ? "Your lesson is waiting" : "A match is waiting"}</b>Turn ${Math.max(1, resume.state.turn)} against the ${BOT_NAME}.</p>
         <button type="button" class="solid sm" data-go="/play/match">Back to the table</button>
       </div>` : ""}
+      ${read("learned", false) ? "" : `<div class="rt-box tg-learn">
+        <p><b>New to the card game?</b>A practice match on borrowed cards, with a coach for the first turns. About three minutes.</p>
+        <button type="button" class="solid sm" data-lesson>Start lesson</button>
+      </div>`}
       <section class="tg-block">
         <h2 class="tg-h2">Your decks</h2>
         ${decks.length ? decks.map(deckRowHtml).join("") : `<p class="rt-empty tg-none">No decks yet. ${playable ? `You own ${playable} Pokémon you can play.` : "Rip a few packs first: a deck needs Pokémon you own."}</p>`}
@@ -179,11 +184,12 @@ export function initTcg(deps) {
       <section class="tg-block tg-notes">
         <h2 class="tg-h2">What's in so far</h2>
         <ul>
-          <li>Basic Pokémon, evolution, Energy, attacks, Weakness and Resistance, retreat, prizes.</li>
+          <li>Basic Pokémon, evolution, Energy, attacks, Weakness and Resistance, Special Conditions, retreat, prizes.</li>
           <li>Your own cards only, as many copies as you own. Basic Energy is free.</li>
           <li>Your sleeve is your card back and your coin makes the flips.</li>
-          <li>Not yet: Trainers, Abilities, Special Conditions, and some attack text (the printed damage still lands). Matches against other players come later.</li>
+          <li>Not yet: Trainers, Abilities, and some attack text (the printed damage still lands). Matches against other players come later.</li>
         </ul>
+        ${read("learned", false) ? `<button type="button" class="tlink tg-relearn" data-lesson>Run the lesson again</button>` : ""}
       </section>
     </div>`;
   }
@@ -449,15 +455,60 @@ export function initTcg(deps) {
     deps.navigate("/play/match");
   }
 
+  /** The lesson: a stacked practice match on borrowed cards, with the coach (js/tcg/tutorial.js). */
+  async function startLesson() {
+    await deps.loadSet(LESSON_SET).catch(() => null);
+    if (!LESSON_CARDS.every((id) => defs(id))) return toast("Couldn't load the lesson. Check your connection and try again.");
+    const state = createLesson([deps.playerName(), BOT_NAME], defs);
+    match = { state, deckId: null, botSet: LESSON_SET, lesson: 0, sel: null, sheet: "", busy: false, line: "", setup: { active: null, bench: [] }, opening: false, over: false };
+    apply(state, botAction(state, BOT, defs), defs);
+    saveMatch();
+    if (route.name === "match") paint();
+    else deps.navigate("/play/match");
+  }
+
+  const inLesson = () => match?.lesson != null && match.lesson < LESSON.length;
+  const lessonStep = () => (inLesson() ? LESSON[match.lesson] : null);
+  /** The step on show: the coach keeps quiet while cards are moving or the bot is playing. */
+  function coachStep() {
+    const step = lessonStep();
+    if (!step || match.busy || match.over || match.state.phase === "over") return null;
+    return match.state.phase === "setup" || (myTurn() && !match.state.pending.length) ? step : null;
+  }
+  function lessonNext() {
+    match.lesson += 1;
+    saveMatch();
+  }
+  /** While the coach is waiting for one thing, only that thing goes through. */
+  function coachAllows(action) {
+    const step = lessonStep();
+    if (!step || step.free || action.type === "promote") return true;
+    if (step.want?.(action)) return true;
+    toast(step.want || step.pick ? step.nudge : "Tap Next when you've read it.");
+    return false;
+  }
+
+  function coachHtml() {
+    const step = coachStep();
+    if (!step) return "";
+    const talk = !step.want && !step.pick;
+    return `<div class="tg-coach" role="status">
+      <span class="tg-coach-bar" aria-hidden="true"><i style="transform:scaleX(${((match.lesson + 1) / LESSON.length).toFixed(3)})"></i></span>
+      <p>${esc(step.say)}</p>
+      ${talk ? `<button type="button" class="solid sm" data-act="coach-next">${step.free ? "Got it" : "Next"}</button>` : ""}
+    </div>`;
+  }
+
   async function resumeMatch() {
     const saved = read("match", null);
     if (!saved?.state || saved.state.phase === "over") return false;
     await ensureCards(Object.values(saved.state.cards));
+    if (saved.lesson != null) await deps.loadSet(LESSON_SET).catch(() => null);
     if (!Object.values(saved.state.cards).every((id) => defs(id))) {
       write("match", null);
       return false;
     }
-    match = { state: saved.state, deckId: saved.deckId, botSet: saved.botSet, sel: null, sheet: "", busy: false, line: "", setup: { active: null, bench: [] }, opening: false, over: false };
+    match = { state: saved.state, deckId: saved.deckId, botSet: saved.botSet, lesson: saved.lesson ?? null, sel: null, sheet: "", busy: false, line: "", setup: { active: null, bench: [] }, opening: false, over: false };
     return true;
   }
 
@@ -533,7 +584,9 @@ export function initTcg(deps) {
     const me = state.players[ME];
     const foe = state.players[BOT];
     const setup = real.phase === "setup";
-    const acts = legal();
+    const coach = coachStep();
+    // With the coach waiting on one action, only that action's cards and targets light up.
+    const acts = legal().filter((a) => !coach?.want || a.type === "promote" || coach.want(a));
     const sel = match.sel;
     const selId = sel?.kind === "hand" ? real.cards[sel.uid] : "";
     const targets = new Set();
@@ -551,12 +604,17 @@ export function initTcg(deps) {
     const prompt = promptOf();
     const playable = new Set();
     if (setup) {
-      for (const uid of hand) if (d(uid).kind === "pokemon" && d(uid).stage === "basic") playable.add(uid);
+      for (const uid of hand) if (d(uid).kind === "pokemon" && d(uid).stage === "basic" && (!inLesson() || lessonStep().pick?.(d(uid)))) playable.add(uid);
+    } else if (coach && !coach.want && !coach.free) {
+      /* the coach is talking: nothing to play yet */
     } else {
       for (const a of acts) if (a.uid) for (const uid of hand) if (real.cards[uid] === real.cards[a.uid]) playable.add(uid);
     }
 
-    return `<div class="tg-table rt-dark rt-still${myTurn() ? " my-turn" : ""}" data-phase="${real.phase}">
+    const point = coach && !sel && !match.sheet ? coach : null;
+    const pointHand = point && (point.pick || point.want?.({ type: "attach", spot: ACTIVE }) || point.want?.({ type: "attach", spot: 0 }) || point.want?.({ type: "evolve" }));
+    const pointActive = point?.want?.({ type: "attack" });
+    return `<div class="tg-table rt-dark rt-still${myTurn() ? " my-turn" : ""}${coach ? " has-coach" : ""}${pointHand ? " coach-hand" : ""}${pointActive ? " coach-active" : ""}${coach?.want?.({ type: "end" }) || coach?.want?.({ type: "place" }) ? " coach-key" : ""}" data-phase="${real.phase}">
       <div class="tg-bar tg-bar-foe">
         <button type="button" class="tg-leave" data-act="leave" aria-label="Leave the match">${match.leaving ? "Concede?" : "Leave"}</button>
         <b class="tg-who">${esc(foe.name)}</b>
@@ -596,6 +654,7 @@ export function initTcg(deps) {
         <p>${esc(prompt.text)}</p>
         <div class="tg-keys">${prompt.keys}</div>
       </div>
+      ${coachHtml()}
       ${sheetHtml()}
     </div>`;
   }
@@ -635,6 +694,17 @@ export function initTcg(deps) {
       concede: won ? `${BOT_NAME} gave up.` : "You conceded.",
       tie: "Both sides finished at once.",
     }[state.reason];
+    if (match.lesson != null) {
+      return `<div class="tg-sheet-bg"></div>
+      <div class="tg-sheet tg-over" role="dialog" aria-label="Lesson over">
+        <h2>${won ? "Lesson done" : "Lesson over"}</h2>
+        <p>${esc(why)} ${won ? "That's the whole loop: Energy, evolve, attack, prizes. Build a deck from your own cards and play it for real." : "Run it again, or build a deck from your own cards and learn as you go."}</p>
+        <div class="tg-sheet-keys">
+          <button type="button" class="solid rt-go" data-go="/play">Build a deck</button>
+          <button type="button" class="ghost" data-act="again">Run it again</button>
+        </div>
+      </div>`;
+    }
     return `<div class="tg-sheet-bg"></div>
       <div class="tg-sheet tg-over" role="dialog" aria-label="Match over">
         <h2>${tie ? "A tie" : won ? "You win" : "You lose"}</h2>
@@ -770,6 +840,7 @@ export function initTcg(deps) {
     const state = match.state;
     const fast = deps.reduceMotion();
     const wait = (ms) => sleep(fast ? Math.min(ms, 120) : ms);
+    if (action.player === ME && !coachAllows(action)) return false;
     const before = action.type === "attack" ? JSON.parse(JSON.stringify(state)) : null;
     let events;
     try {
@@ -779,6 +850,7 @@ export function initTcg(deps) {
       else throw err;
       return false;
     }
+    if (action.player === ME && lessonStep()?.want?.(action)) match.lesson += 1;
     match.busy = true;
     match.sel = null;
     match.sheet = "";
@@ -861,7 +933,8 @@ export function initTcg(deps) {
     if (match.over) return true;
     match.over = true;
     match.busy = false;
-    if (match.state.winner === ME) record.wins += 1;
+    if (match.lesson != null) write("learned", true);
+    else if (match.state.winner === ME) record.wins += 1;
     else if (match.state.winner === BOT) record.losses += 1;
     write("record", record);
     write("match", null);
@@ -898,6 +971,9 @@ export function initTcg(deps) {
     if (state.phase === "setup") {
       const def = d(uid);
       if (def.kind !== "pokemon" || def.stage !== "basic") return toast("Only Basic Pokémon can start in play.");
+      const step = lessonStep();
+      if (step && !step.pick?.(def)) return toast(step.pick || step.want ? step.nudge : "Tap Next when you've read it.");
+      if (step) lessonNext();
       if (!match.setup.active) match.setup.active = uid;
       else if (match.setup.bench.length < state.rules.bench) match.setup.bench.push(uid);
       else return toast("Your Bench is full.");
@@ -912,7 +988,7 @@ export function initTcg(deps) {
     const state = match.state;
     if (match.busy) return;
     if (state.phase === "setup") {
-      if (p !== ME) return;
+      if (p !== ME || inLesson()) return;
       // Tap a placed Pokémon to take it back.
       if (spot === ACTIVE) match.setup = { active: match.setup.bench.shift() || null, bench: match.setup.bench };
       else match.setup.bench.splice(spot, 1);
@@ -958,6 +1034,14 @@ export function initTcg(deps) {
     if (act === "opened") {
       match.opening = false;
       return paintTable();
+    }
+    if (act === "coach-next") {
+      if (lessonStep() && !lessonStep().want && !lessonStep().pick) lessonNext();
+      return paintTable();
+    }
+    if (act === "again" && match.lesson != null) {
+      match = null;
+      return startLesson();
     }
     if (act === "again") {
       const id = match.deckId;
@@ -1036,6 +1120,7 @@ export function initTcg(deps) {
       return;
     }
 
+    if (t.closest("[data-lesson]")) return startLesson();
     const play = t.closest("[data-play]");
     if (play) return startMatch(play.dataset.play);
     const edit = t.closest("[data-edit]");
