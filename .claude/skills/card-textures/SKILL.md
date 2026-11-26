@@ -229,6 +229,16 @@ cure"). The surface gloss throws a soft highlight.
   glitter: dark speckle and a pale wash on a card that is ridged, not glittered. Both were turned down (`.foil`
   brightness 0.62 to 0.40 and saturate 1.35 to 0.65; `--shine-glit: 0.2`). A saturated dodge repaints dark ink in
   the foil's colours; a real card keeps its ink under the sheen.
+- **A map belongs to one scan. Measure it against that scan.** Two classes of "the holo doesn't fit" (Noah,
+  2026-11-26), neither visible in a contact sheet at a glance. (1) A window mask measured on one print and used on
+  another: the Expedition holo scans' art windows run 6-10 px (of 600) wider than the non-holo prints the era mask
+  was measured on, so all 32 holo maps stopped short of the window's edge; `make_holo_maps.py` now finds each
+  scan's own window (`scan_window()`), and `make_rev_scans.py` uses it too. (2) A variant print (stamp, Pokémon
+  Center, prerelease, black star promo) whose scan is a product photo cropped 1-5 % differently from the base
+  print, wearing the base print's map: the lettering doubles under the light. `foil_align.py` fits every map's
+  edges to its scan's edges and fails on a confirmed offset over 0.8 % of the card's width; `--fix` re-fits the
+  map (new `-aN` file). Trust it only with its second opinion: a bare ECC fit near correlation 0.4 "found" 2-5 %
+  offsets on correct GX maps. Run it after adding any variant print or any map made from another card's scan.
 - **No filter on the scan, ever, and test a glitch on the real phone.** On iPhone Safari a `filter` on `.tcg img`
   (the lit card's drop shadow, there since the first holo engine) puts the scan on its own GPU layer; once the
   etch-shine span sat above it (2026-11-25), Safari stopped blending *every* foil layer into the card and painted
@@ -691,6 +701,7 @@ gold Hyper Rare), [reference/sv-reverse.md](reference/sv-reverse.md) and
 | `scripts/native_era_etch.py` | Ships TCG Live's etch for a Sword and Shield era set at its native size (`<n>-etch-v4.webp`, sigma 0.6, no grain); never soften a Live etch |
 | `scripts/soften_era_etch.py` | The older blurred and grained era etch (`-etch-v3`), kept for a card with no cached Live etch |
 | `scripts/etch_zones.py` | Scores the painted zone and the foil zone of each engraved family's most ink-heavy faces apart, in WebKit at phone size: fails an engraving that does not read over the painting or a foil that repaints it (`--family`, `--cards`, `--css` to try a change); exceptions with their reason in `etch_zones_allow.json` |
+| `scripts/foil_align.py` | Gate: every foil and etch map against its own scan (offset as % of card width); `--fix` re-fits the ones that are off |
 | `scripts/foil_coverage.mjs` | Finds every oversized repeating layer whose position lets its tile edge into the card (the moving vertical seam); prints nothing when clean; `BATCH=60` for every card of a set |
 | `scripts/rainbow_speed.py`, `scripts/rainbow_motion.py` | How many spectra slide past as the pointer crosses the card: the first reads the CSS (every layer over 1.5 exits 1), the second renders the card at 41 poses and counts them on the pixels |
 | `scripts/cosmos_window_maps.py` | Redraws the cosmos promos' drawn window-and-frame maps at TCG Live strength (window at alpha 130, frame full, owner badge cut, the plain print's Live window when it has one); `--all` or `--set <set> --cards <n>` |

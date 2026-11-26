@@ -132,18 +132,49 @@ def sparkle_gate(lh, lt, inner, raw, holo):
     return np.clip(guided(holo / 255.0, g.astype(np.float32), 10, 1e-2), 0, 1)
 
 
+def scan_window(holo):
+    """The art window of THIS scan: the non-yellow region the frame walls in, holes filled, kept within 16 px of the era's
+    window mask. The era mask (win-pokemon-v1) was measured on the non-holo prints; the holo scans' windows run 6-10 px wider
+    on every side, and the v1 maps, cut to the era mask and eroded, stopped that far short of the window's edge
+    (Noah, 2026-11-26, Mewtwo 20: "the holo didnt fit the card it was too small"). Falls back to the era mask when the
+    colour test fails (a window walled by yellow art)."""
+    era = twins.window_mask().astype(np.uint8)
+    h = cv2.cvtColor(holo.astype(np.uint8), cv2.COLOR_RGB2HSV).astype(np.float32)
+    hh, ss, vv = h[..., 0] * 2, h[..., 1] / 255, h[..., 2] / 255
+    yellow = ((hh > 35) & (hh < 65) & (ss > 0.45) & (vv > 0.6)).astype(np.uint8)
+    yellow = cv2.morphologyEx(yellow, cv2.MORPH_CLOSE, np.ones((3, 3), np.uint8))
+    near = cv2.dilate(era, np.ones((33, 33), np.uint8))
+    num, lab_ = cv2.connectedComponents((1 - yellow) * near, connectivity=4)
+    core = lab_[cv2.erode(era, np.ones((41, 41), np.uint8)) > 0]
+    ids, cnt = np.unique(core[core > 0], return_counts=True)
+    keep = ids[cnt > cnt.sum() * 0.05] if len(ids) else []
+    m = np.isin(lab_, keep).astype(np.uint8)
+    m = cv2.morphologyEx(m, cv2.MORPH_CLOSE, np.ones((9, 9), np.uint8))
+    ff = (m * 255).copy()
+    cv2.floodFill(ff, np.zeros((H + 2, W + 2), np.uint8), (0, 0), 255)
+    m = ((m * 255) | cv2.bitwise_not(ff)) > 0
+    m = (m | (era > 0)) & (near > 0)
+    if not 0.95 <= m.sum() / era.sum() <= 1.22:
+        return era
+    return m.astype(np.uint8)
+
+
 def build(n):
     holo = twins.scan(n)[..., :3].astype(np.float32)
     twin = twins.registered_twin(n)
     lh, lt = lab(holo), lab(twin)
-    win = twins.window_mask().astype(np.uint8)
-    inner = cv2.erode(win, np.ones((5, 5), np.uint8)).astype(np.float32)
+    win = scan_window(holo)
+    inner = win.astype(np.float32)
+    # beyond the era window the twin shows frame, not art: bare foil there (the holo print's window is wider)
+    beyond = (win > 0) & ~twins.window_mask()
 
     # window: where the holo print departs from the twin's art
     de = blur(np.linalg.norm(lh - lt, axis=-1), 2.0)
     raw = smoothstep(DE0, DE1, de) * inner
     zone = np.clip(guided(holo / 255.0, raw.astype(np.float32), GUIDE_R, GUIDE_EPS), 0, 1) * inner
     zone *= sparkle_gate(lh, lt, inner, raw, holo) * (1 - protect_mask(n))
+    edge = np.clip(blur(zone, 6.0) / np.maximum(blur((~beyond).astype(np.float32) * inner, 6.0), 1e-3), 0, 1)
+    zone = np.where(beyond, np.maximum(zone, edge), zone)
 
     # frame: ladder marks, slots, e logo (bare foil in the holo print: darker than the twin's yellow)
     de_sharp = np.linalg.norm(lh - lt, axis=-1)
@@ -170,7 +201,7 @@ def save(n):
     alpha, spark, zone, frame = build(n)
     g = np.clip(spark * 255 + 0.5, 0, 255).astype(np.uint8)
     a = np.clip(alpha * 255 + 0.5, 0, 255).astype(np.uint8)
-    path = os.path.join(OUT, f"holo-ecard1-{n}-v1.webp")
+    path = os.path.join(OUT, f"holo-ecard1-{n}-v2.webp")
     Image.fromarray(np.dstack([g, g, g, a]), "RGBA").save(path, quality=88, alpha_quality=100, method=6)
     w = twins.window_mask()
     print(f"ecard1-{n:<3} twin {twins.pair(n)['twin']:<3} {os.path.getsize(path):>6} bytes  window foil {zone[w].mean():.2f}"
