@@ -38,7 +38,7 @@ import { esc, coins, coinTag as defaultCoinTag } from "./battle-kit.js";
 import { ALL_SETS, sellValue } from "./catalog.js";
 import { COIN_I as COIN_IMG } from "./money.js?v=2";
 import { initAutoRegrade } from "./grading-auto.js?v=1";
-import { slabViewerHTML, attachSlabViewers, flipSlab, openSlabFullscreen } from "./slab-viewer.js?v=1";
+import { slabViewerHTML, attachSlabViewers, flipSlab, openSlabFullscreen } from "./slab-viewer.js?v=2";
 
 /** The paths this page answers. app.js uses it to route and to allow navigate(). */
 export const GRADING_ROUTE = /^\/grading(?:\/send(?:\/([a-zA-Z0-9-]{1,60}))?|\/graded|\/guards|\/(\d{1,12})(\/auto)?|\/auto\/(\d{1,12}))?$/;

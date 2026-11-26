@@ -3,9 +3,12 @@
  * users to rotate and look at slabs similar to a card".
  *
  * slabViewerHTML(slabMarkup) wraps a slab (drawn with slabHTML({ back: true }))
- * in a 3D stage: the case gets real thickness (a stack of edge rings behind the
- * front face) and the back face sits behind it. attachSlabViewers(root) wires
- * every stage in root:
+ * in a stage: the case gets thickness from a stack of plain edge rings (the only
+ * thing in a preserve-3d context), and the faces turn as one flat layer on top.
+ * The face towards you is shown by class, and when it is the back the face layer
+ * sits at the back of the case. Faces never sit inside preserve-3d: iPhone Safari
+ * dropped them there mid-turn (holo layers, blend modes, backface-visibility),
+ * leaving only the empty edge rings. attachSlabViewers(root) wires every stage:
  *
  *   - drag sideways to turn it; let go and it settles on the nearest face
  *   - drag up or down to tip it (full-screen viewer), or the finger's height
@@ -22,6 +25,8 @@
 const MAX_TIP = 32; // degrees around the horizontal axis
 const HOVER_LEAN = 14;
 const SLICES = 12;
+const STEP = 1 / 240; // the springs' longest time step, seconds
+const DEPTH = 0.07; // the case's thickness as a share of its width (--sv-depth: 7cqw)
 const CARD_PROPS = [
   "--pointer-x", "--pointer-y", "--pointer-from-left", "--pointer-from-top", "--pointer-from-center",
   "--card-opacity", "--card-scale", "--rotate-x", "--rotate-y", "--background-x", "--background-y",
@@ -36,10 +41,8 @@ const reduced = () =>
 export function slabViewerHTML(slabMarkup, { full = false, guard = "" } = {}) {
   const rings = Array.from({ length: SLICES }, (_, i) => `<i style="--i:${i + 1}"></i>`).join("");
   return `<div class="sv${full ? " sv-full-stage" : ""}" data-sv>
-    <div class="sv-rot"${guard ? ` data-guard="${guard}"` : ""}>
-      <span class="sv-side" aria-hidden="true">${rings}</span>
-      ${slabMarkup}
-    </div>
+    <div class="sv-rot"${guard ? ` data-guard="${guard}"` : ""} aria-hidden="true"><span class="sv-side">${rings}</span></div>
+    <div class="sv-face">${slabMarkup}</div>
   </div>`;
 }
 
@@ -62,8 +65,9 @@ function stepSpring(s, dt, k = 120, d = 18) {
 function bind(stage) {
   if (stage.__sv) return stage.__sv;
   const rot = stage.querySelector(".sv-rot");
-  const slab = stage.querySelector(".slab");
-  if (!rot || !slab) return null;
+  const faces = stage.querySelector(".sv-face");
+  const slab = faces?.querySelector(".slab");
+  if (!rot || !faces || !slab) return null;
   const full = stage.classList.contains("sv-full-stage");
   const ry = spring(0); // turn, degrees; 0 front, 180 back
   const rx = spring(0); // tip, degrees
@@ -77,17 +81,19 @@ function bind(stage) {
 
   let showingBack = false;
   function paint() {
-    rot.style.transform = `rotateX(${rx.value.toFixed(2)}deg) rotateY(${ry.value.toFixed(2)}deg)`;
+    const turn = `rotateX(${rx.value.toFixed(2)}deg) rotateY(${ry.value.toFixed(2)}deg)`;
     // How far off square it sits on its current side: drives the light.
     const side = ((ry.value % 360) + 540) % 360 - 180; // -180..180, 0 = front square on
     const fromFront = Math.abs(side) <= 90 ? side : side > 0 ? side - 180 : side + 180;
-    // Which face is towards you, as a class too: a browser that can't keep 3D
-    // (no compositing) would otherwise paint the back face over the front.
+    // Which face is towards you. The back face lives at the back of the case,
+    // so the face layer steps back by the case's depth while it shows.
     const back = Math.abs(side) > 90;
     if (back !== showingBack) {
       showingBack = back;
-      rot.classList.toggle("is-back", back);
+      faces.classList.toggle("is-back", back);
     }
+    rot.style.transform = turn;
+    faces.style.transform = back ? `${turn} translateZ(${(-stage.clientWidth * DEPTH).toFixed(1)}px)` : turn;
     const sx = clamp(fromFront / 40, -1, 1);
     const sy = clamp(rx.value / MAX_TIP, -1, 1);
     slab.style.setProperty("--sv-x", sx.toFixed(3));
@@ -140,8 +146,23 @@ function bind(stage) {
       rx.value = rx.target;
       ry.v = rx.v = 0;
     } else {
-      moving = stepSpring(ry, dt, drag ? 900 : 90, drag ? 60 : 15) || moving;
-      moving = stepSpring(rx, dt, drag ? 900 : 110, drag ? 60 : 16) || moving;
+      // Small fixed steps: one big step after a slow frame (an iPhone busy
+      // drawing the holo) made the stiff drag spring blow up and spin the slab
+      // to wild angles. At 1/240 s it stays stable at any frame rate.
+      const steps = Math.max(1, Math.ceil(dt / STEP));
+      const h = dt / steps;
+      let a = false;
+      let b = false;
+      for (let i = 0; i < steps; i++) {
+        a = stepSpring(ry, h, drag ? 900 : 90, drag ? 60 : 15);
+        b = stepSpring(rx, h, drag ? 900 : 110, drag ? 60 : 16);
+      }
+      moving = a || b;
+      if (!Number.isFinite(ry.value) || !Number.isFinite(rx.value)) {
+        ry.value = ry.target;
+        rx.value = rx.target;
+        ry.v = rx.v = 0;
+      }
     }
     paint();
     if (moving || drag) frame = requestAnimationFrame(tick);

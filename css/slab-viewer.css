@@ -1,7 +1,8 @@
-/* Turning a slab over (js/slab-viewer.js). The stage gives the case its
-   thickness: a stack of edge rings behind the front face, the back face behind
-   those. Only the stage's .sv-rot carries preserve-3d; nothing on it or on the
-   faces is filtered (a filter there makes WebKit draw the back face through).
+/* Turning a slab over (js/slab-viewer.js). The case's thickness is a stack of
+   plain edge rings in .sv-rot, the only preserve-3d box here. The faces turn as
+   one flat layer (.sv-face) drawn over the rings, with the same transform; the
+   face towards you is picked by class (.is-back), never by backface-visibility.
+   iPhone Safari dropped the faces mid-turn when they sat in the 3D context.
    The slab itself keeps its own size rules (slab-inspect, slab-hero). */
 
 .sv {
@@ -17,19 +18,14 @@
 .sv.is-dragging { cursor: grabbing; }
 .sv img { -webkit-user-drag: none; user-select: none; -webkit-user-select: none; }
 .sv-full-stage { touch-action: none; }
-/* No container-type here: containment flattens preserve-3d in WebKit, which
-   then paints the back face over the front. The edges size off .sv's width. */
 .sv-rot {
-  position: relative;
+  position: absolute;
+  inset: 0;
   transform-style: preserve-3d;
-  will-change: transform;
+  pointer-events: none;
 }
-.sv .slab {
-  max-width: none;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  transform: translateZ(0);
-}
+.sv-face { position: relative; }
+.sv .slab { max-width: none; }
 
 /* The edge: rings of clear acrylic stepping back to the depth of the case. A
    guard (data-guard copied onto .sv-rot) paints them in its own colour, so the
@@ -38,7 +34,6 @@
   position: absolute;
   inset: 0;
   transform-style: preserve-3d;
-  pointer-events: none;
 }
 .sv-side i {
   position: absolute;
@@ -54,19 +49,20 @@
   border: none;
   border-radius: 6.5cqw;
   background: var(--g-fill, #2a2c30);
-  filter: none;
 }
 .sv-rot[data-guard] .sv-side i:nth-child(even) { opacity: .92; }
 
-/* The back face (a second .slab after the front, .slab-back): turned round and
-   pushed to the back of the case. Its guard ring is its own .slab-guard. */
+/* The back face (a second .slab after the front, .slab-back) lies over the front,
+   mirrored so it reads the right way once the layer has turned round. */
 .sv .slab.slab-back {
   display: block;
   position: absolute;
   inset: 0;
-  transform: translateZ(calc(-1 * var(--sv-depth))) rotateY(180deg);
+  transform: rotateY(180deg);
   pointer-events: none;
 }
+.sv-face:not(.is-back) > .slab.slab-back,
+.sv-face.is-back > .slab:not(.slab-back) { visibility: hidden; }
 
 /* ---- Keys under a slab in a page ---------------------------------------------- */
 .sv-keys {
@@ -98,7 +94,6 @@ body.sv-open { overflow: hidden; }
   width: min(100%, 440px, calc((100dvh - 150px) * .6));
 }
 .sv-sheet .sv { width: 100%; }
-.sv-sheet .sv-rot { transform: rotateX(0deg); }
 .sv-sheet.is-in .sv { animation: svRise .34s var(--ease-out, ease-out) both; }
 @keyframes svRise {
   from { opacity: 0; transform: translateY(24px) scale(.96); }
@@ -124,8 +119,3 @@ body.sv-open { overflow: hidden; }
 }
 body.no-motion .sv-sheet { transition: none; }
 body.no-motion .sv-sheet.is-in .sv { animation: none; }
-
-/* The face away from you is hidden outright as well (js/slab-viewer.js sets
-   .is-back), so a browser that drops preserve-3d still shows the right side. */
-.sv-rot:not(.is-back) > .slab.slab-back,
-.sv-rot.is-back > .slab:not(.slab-back) { visibility: hidden; }
