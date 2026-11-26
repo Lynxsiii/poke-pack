@@ -38,6 +38,11 @@ export function copiesByName(deck, defs) {
   return names;
 }
 
+/** How many cards of a one-per-deck kind (a Radiant Pokémon, an ACE SPEC card) the deck holds. */
+function clubCount(deck, club, defs) {
+  return Object.entries(deck.cards || {}).reduce((n, [id, c]) => n + (defs(id)?.club === club ? c : 0), 0);
+}
+
 /** How many more copies of a card this deck can take: by the name limit, by what is owned, by room. */
 export function roomFor(deck, id, owned, defs) {
   const rules = FORMATS[deck.format] || FORMATS.standard;
@@ -46,8 +51,9 @@ export function roomFor(deck, id, owned, defs) {
   const have = deck.cards[id] || 0;
   const space = rules.deckSize - deckSize(deck);
   if (isBasicEnergy(def)) return isFreeEnergy(id) ? space : Math.min(space, (owned[id] || 0) - have);
-  const byName = rules.copies - (copiesByName(deck, defs)[def.name] || 0);
-  return Math.max(0, Math.min(space, byName, (owned[id] || 0) - have));
+  const byName = (def.cap || rules.copies) - (copiesByName(deck, defs)[def.name] || 0);
+  const club = def.club ? 1 - clubCount(deck, def.club, defs) : Infinity;
+  return Math.max(0, Math.min(space, byName, club, (owned[id] || 0) - have));
 }
 
 /** { ok, problems: [text], size, need }. `owned` is { catalogId: copies }. */
@@ -66,9 +72,18 @@ export function checkDeck(deck, owned, defs) {
     if (def.kind === "pokemon" && def.stage === "basic") basics += n;
     if (!isFreeEnergy(id) && (owned[id] || 0) < n) problems.push(`You own ${owned[id] || 0} of ${def.name}, the deck has ${n}.`);
   }
-  for (const [name, n] of Object.entries(copiesByName(deck, defs))) {
-    if (n > rules.copies) problems.push(`${n} copies of ${name}, the limit is ${rules.copies}.`);
+  const caps = {};
+  const clubs = {};
+  for (const [id, n] of Object.entries(deck.cards || {})) {
+    const def = defs(id);
+    if (def?.cap) caps[def.name] = def.cap;
+    if (def?.club) clubs[def.club] = (clubs[def.club] || 0) + n;
   }
+  for (const [name, n] of Object.entries(copiesByName(deck, defs))) {
+    const limit = caps[name] || rules.copies;
+    if (n > limit) problems.push(`${n} copies of ${name}, the limit is ${limit}.`);
+  }
+  for (const [club, n] of Object.entries(clubs)) if (n > 1) problems.push(`A deck can hold only 1 ${club}, this one has ${n}.`);
   if (size !== rules.deckSize) problems.unshift(size < rules.deckSize ? `${rules.deckSize - size} more card${rules.deckSize - size === 1 ? "" : "s"} to go.` : `${size - rules.deckSize} too many cards.`);
   if (!basics) problems.push("Add at least one Basic Pokémon.");
   return { ok: !problems.length, problems, size, need: rules.deckSize };
@@ -113,9 +128,14 @@ export function buildDeck(pool, format = "standard", { prefer = "", rand = Math.
   const cards = {};
   const names = {};
   let count = 0;
+  const defById = new Map(pool.map((p) => [p.def?.id, p.def]));
+  const clubs = new Set();
   const add = (id, name, n, owned) => {
-    const take = Math.max(0, Math.min(n, owned - (cards[id] || 0), rules.copies - (names[name] || 0), target - count));
+    const def = defById.get(id);
+    if (def?.club && clubs.has(def.club)) return 0;
+    const take = Math.max(0, Math.min(n, owned - (cards[id] || 0), (def?.cap || rules.copies) - (names[name] || 0), def?.club ? 1 : Infinity, target - count));
     if (!take) return 0;
+    if (def?.club) clubs.add(def.club);
     cards[id] = (cards[id] || 0) + take;
     names[name] = (names[name] || 0) + take;
     count += take;
@@ -159,8 +179,10 @@ export function buildDeck(pool, format = "standard", { prefer = "", rand = Math.
   const trainers = pool.filter((p) => p.def?.kind === "trainer" && p.def.playable && p.owned > 0).sort((a, b) => (order[trainerAim(a.def.fx)] ?? 9) - (order[trainerAim(b.def.fx)] ?? 9));
   let room = Math.round(rules.deckSize * 0.14);
   for (const { def, owned } of trainers) {
-    const take = Math.max(0, Math.min(owned, 2, rules.copies - (names[def.name] || 0), room));
+    if (def.club && clubs.has(def.club)) continue;
+    const take = Math.max(0, Math.min(owned, def.club ? 1 : 2, (def.cap || rules.copies) - (names[def.name] || 0), room));
     if (!take) continue;
+    if (def.club) clubs.add(def.club);
     cards[def.id] = take;
     names[def.name] = (names[def.name] || 0) + take;
     count += take;
