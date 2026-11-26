@@ -9,6 +9,7 @@
  * and a Benched one is ready, then hit with whatever does the most.
  */
 
+import { trainerAim } from "./trainers.js";
 import { ACTIVE, damageAfterTyping, defOf, energyOf, hpLeft, inPlay, legalActions, other, unpaid } from "./engine.js";
 
 /** How much an attack is worth against this defender, before any coin flip. */
@@ -75,6 +76,10 @@ export function botAction(state, player, defs) {
       const slot = slotOf(a.spot);
       const left = hpLeft(state, slot, defs);
       if (waiting.effect.op === "damage") return (left <= waiting.effect.n ? 1000 : 0) - left;
+      if (waiting.effect.op === "heal") return Math.min(slot.damage, waiting.effect.n) + (a.spot === ACTIVE ? 5 : 0);
+      if (waiting.effect.op === "discardEnergy") return slot.energy.length + (a.spot === ACTIVE ? 0.5 : 0);
+      // Pulling one of theirs forward: the one closest to a Knock Out. Bringing up one of its own: the readiest.
+      if (waiting.side !== player) return -left;
       return -plan(state, slot, defs).short * 1000 + left;
     };
     return picks.slice().sort((a, b) => rank(b) - rank(a))[0];
@@ -82,6 +87,18 @@ export function botAction(state, player, defs) {
 
   const bench = actions.find((a) => a.type === "bench");
   if (bench) return bench;
+
+  // Trainers: card draw whenever it can, the rest only when it clearly helps.
+  for (const action of actions.filter((a) => a.type === "play")) {
+    const def = defOf(state, action.uid, defs);
+    const aim = trainerAim(def.fx);
+    const heal = def.fx.find((s) => s.op === "heal");
+    if (aim === "cure" || aim === "hammer") return action;
+    // Drawing is only good while there is a deck to draw from.
+    if (aim === "draw" && side.deck.length > 8) return action;
+    if (aim === "refresh" && side.hand.length <= 3 && side.deck.length > 8) return action;
+    if (aim === "heal" && inPlay(state, player).some(([slot]) => slot.damage >= heal.n)) return action;
+  }
 
   const evolve = actions.filter((a) => a.type === "evolve").sort((a, b) => a.spot - b.spot)[0];
   if (evolve) return evolve;

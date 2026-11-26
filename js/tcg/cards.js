@@ -17,6 +17,7 @@
  */
 
 import { compileAttack } from "./effects.js";
+import { compileTrainer } from "./trainers.js";
 
 export const ENERGY_TYPES = ["Grass", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Darkness", "Metal", "Fairy"];
 
@@ -50,14 +51,20 @@ function attackOf(raw) {
 }
 
 /** `row` is the card's entry in data/tcg/rules.json, or undefined when it has none. */
-export function defineCard(card, row) {
+export function defineCard(card, row, text = "") {
   const base = { id: card.id, name: card.name };
   if (card.supertype === "Energy" || card.energy) {
     const type = ENERGY_TYPES.find((t) => new RegExp(`^(Basic )?${t} Energy$`).test(card.name));
     const basic = Boolean(type) && (card.subtypes || []).includes("Basic");
     return { ...base, kind: "energy", provides: type ? [type] : [], basic, playable: basic, why: basic ? "" : "Special Energy isn't in yet." };
   }
-  if (card.supertype !== "Pokémon") return { ...base, kind: "trainer", playable: false, why: "Trainer cards aren't in yet." };
+  if (card.supertype !== "Pokémon") {
+    const subs = card.subtypes || [];
+    const sub = subs.includes("Supporter") ? "supporter" : subs.includes("Stadium") ? "stadium" : subs.some((x) => /Tool|Technical Machine/.test(x)) ? "tool" : "item";
+    const fx = sub === "item" || sub === "supporter" ? compileTrainer(text) : null;
+    const why = sub === "stadium" ? "Stadiums aren't in yet." : sub === "tool" ? "Pokémon Tools aren't in yet." : fx ? "" : "This Trainer's text isn't live yet.";
+    return { ...base, kind: "trainer", sub, text: text || "", fx: fx || [], playable: !why, why };
+  }
 
   const subs = card.subtypes || [];
   const megaEvolved = subs.includes("MEGA") && subs.includes("EX");
@@ -102,9 +109,9 @@ export function rulesKey(id) {
 
 /**
  * A lookup the engine can call: defs(id) -> definition.
- * `findCard(id)` finds the site's card; `rules` is data/tcg/rules.json.
+ * `findCard(id)` finds the site's card; `rules` is data/tcg/rules.json, `trainers` data/tcg/trainers.json.
  */
-export function createDefs(findCard, rules) {
+export function createDefs(findCard, rules, trainers = null) {
   const cache = new Map();
   return function defs(id) {
     let def = cache.get(id);
@@ -112,7 +119,7 @@ export function createDefs(findCard, rules) {
     const card = findCard(id);
     if (!card) return null;
     const [set, key] = rulesKey(id);
-    def = defineCard(card, rules?.[set]?.[key]);
+    def = defineCard(card, rules?.[set]?.[key], trainers?.texts[trainers.cards?.[set]?.[key]] || "");
     cache.set(id, def);
     return def;
   };

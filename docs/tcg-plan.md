@@ -76,8 +76,13 @@ wordings the engine can't read. Work down that list:
    general choice (`pick`: one Pokémon per action, the turn waits on it).
    Still to come on the same door: searching the deck, discarding from hand,
    moving Energy, damage counters placed freely.
-4. **Trainers**: Items, Supporters (one a turn), Stadiums, Tools. Same
-   compile-to-steps route as attacks, same pending choices.
+4. **Trainers**. First batch done 2026-11-26: Items and Supporters (one a
+   turn, none on the first turn of the match) that draw, refresh the hand,
+   heal, switch, pull a Benched Pokémon forward, discard Energy or cure
+   (`js/tcg/trainers.js`; text from `data/tcg/trainers.json`, built by
+   `scripts/build_tcg_trainers.mjs`). 260 of 2,888 Trainers playable. A
+   Trainer whose text isn't read stays out of decks. Next: deck searches
+   (needs a card-list choice), Stadiums, Tools.
 5. **Abilities and Poké-Powers**: a hook per timing (on play, once a turn,
    always on).
 6. **Special Energy**, then the odd card types: V-UNION, LEGEND, Restored,
