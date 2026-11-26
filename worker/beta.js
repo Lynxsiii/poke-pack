@@ -8,7 +8,7 @@ import { gateResponse } from './gates.js';
 /* BETA TESTING (/api/casino/beta/...): invite codes, the tester flag, and five games against the house.
 
    Joining: Noah (BETA_ADMINS, or the Worker var BETA_ADMINS) makes codes; a player enters one once and becomes a beta tester
-   (users.beta = 1). Testers get the beta badge, the Beta Tester frame and the games below. Only testers and admins can play.
+   (users.beta = 1). Testers get the beta badge, the Beta Tester frame and the games below. Only code holders can play, the owner included (Noah, 2026-11-26: "games be locked to code holders").
 
    Every game is play coins only. The coins move in one D1 batch with the game row: the stake comes off only when the wallet
    has it, the row is written only when the stake came off, and a payout is credited only while the row is still open, then
@@ -70,7 +70,7 @@ export function isBetaAdmin(env, user) {
 }
 const isMember = (user) => Number(user?.beta) === 1;
 async function mayPlay(env, helpers, user) {
-  if (!isMember(user) && !isBetaAdmin(env, user)) return helpers.json({ error: 'Beta games are for beta testers. Enter an invite code first.', needBeta: true }, 403);
+  if (!isMember(user)) return helpers.json({ error: 'Beta games are for beta testers. Enter an invite code first.', needBeta: true }, 403);
   return gateResponse(env, helpers.json, user.id, 'upgrader');
 }
 
@@ -524,7 +524,7 @@ export async function handleBeta(path, method, request, env, helpers) {
     }
     const game = GAMES[part];
     if (!game) error('Not found.', 404);
-    if (!isMember(user) && !admin) return helpers.json({ error: 'Beta games are for beta testers. Enter an invite code first.', needBeta: true }, 403);
+    if (!isMember(user)) return helpers.json({ error: 'Beta games are for beta testers. Enter an invite code first.', needBeta: true }, 403);
     return await game(env, helpers, user, action || '', body, method, request);
   } catch (err) {
     if (err?.status) return helpers.json({ error: err.message }, err.status);

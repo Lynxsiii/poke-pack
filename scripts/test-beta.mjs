@@ -99,6 +99,11 @@ assert.match(used.body.error, /used up/);
 await call('/api/casino/beta/codes/revoke', 'POST', { code: code2 }, owner.sid);
 assert.equal((await call('/api/casino/beta/join', 'POST', { code: code2 }, misty.sid)).status, 400, 'a revoked code');
 assert.equal((await call('/api/casino/beta', 'GET', null, owner.sid)).body.codes.length, 2);
+// Locked to code holders, the owner included.
+const ownerTry = await call('/api/casino/beta/drop/play', 'POST', { risk: 'low', stake: 5, requestId: rid() }, owner.sid);
+assert.equal(ownerTry.status, 403);
+assert.equal(ownerTry.body.needBeta, true);
+assert.equal((await call('/api/casino/beta/tins', 'GET', null, misty.sid)).status, 403, 'a game list is locked too');
 
 // The Beta Tester frame: testers only.
 assert.equal(frameChoice('gen-beta', 50, 0, null, false).status, 403);
