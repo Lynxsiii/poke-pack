@@ -120,8 +120,9 @@ export function frameForLevel(level) {
 }
 
 /** Whether a frame is open to a player at this level and prestige. */
-export function frameOpen(frame, level, prestige = 0) {
+export function frameOpen(frame, level, prestige = 0, beta = false) {
   if (!frame) return false;
+  if (frame.beta) return Boolean(beta);
   if (frame.prestige) return clampPrestige(prestige) >= frame.prestige;
   return clampLevel(level) >= (frame.level || 1);
 }
@@ -129,6 +130,7 @@ export function frameOpen(frame, level, prestige = 0) {
 /** What a locked frame asks for, e.g. "Level 30" or "Prestige 2". */
 export function frameNeed(frame) {
   if (!frame) return "";
+  if (frame.beta) return "Beta testers";
   return frame.prestige ? `Prestige ${frame.prestige}` : `Level ${frame.level}`;
 }
 
@@ -164,6 +166,8 @@ const EXTRA_FRAME_UNLOCKS = {
   "gen-starry": { level: 0, prestige: 1 },
   "gen-laurel": { level: 0, prestige: 3 },
   "gen-crown": { level: 0, prestige: 5 },
+  // The beta testing perk (worker/beta.js): open to beta testers only, at any level.
+  "gen-beta": { level: 0, beta: true },
 };
 
 /** The extra frames with how each is earned: { id, name, group, level, prestige?, fx, c }. */

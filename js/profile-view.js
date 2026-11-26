@@ -300,7 +300,8 @@ function nameHtml(user, { esc, levelBadge }) {
   const words = String(user.name || "").trim().split(/\s+/);
   const last = words.pop() || "";
   const lead = words.length ? `${esc(words.join(" "))} ` : "";
-  const badge = levelBadge(user.level, { size: "xl", prestige: user.prestige });
+  // Beta testers (worker/beta.js) wear a Beta tag beside the level stamp.
+  const badge = levelBadge(user.level, { size: "xl", prestige: user.prestige }) + (user.beta ? `<span class="rt-tag pv-beta" title="Beta tester">Beta</span>` : "");
   // A very long last word may still need to break, so only a word that fits a phone line is held together.
   return last.length <= 14 ? `${lead}<span class="profile-name-end">${esc(last)}${badge}</span>` : `${lead}${esc(last)}${badge}`;
 }

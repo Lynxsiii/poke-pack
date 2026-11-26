@@ -124,3 +124,6 @@ body.no-motion .lf-fx { animation: none !important; opacity: 0.85; }
 .lvl-frame[data-frame="gen-starry"] > .lf-ring { background-image: url("../../assets/frames/gen-starry-v2.svg"); }
 .lvl-frame[data-frame="gen-starry"] > .lf-fx2 { background-image: url("../../assets/frames/gen-starry-fx2-v2.svg"); }
 .lvl-frame[data-frame="gen-starry"] > .lf-fx { background-image: url("../../assets/frames/gen-starry-fx-v2.svg"); }
+.lvl-frame[data-frame="gen-beta"] { --fo: 0.14; --c1: #00b4c8; --c2: #ffd21f; --fxs: 2.6s; }
+.lvl-frame[data-frame="gen-beta"] > .lf-ring { background-image: url("../../assets/frames/gen-beta-v2.svg"); }
+.lvl-frame[data-frame="gen-beta"] > .lf-fx { background-image: url("../../assets/frames/gen-beta-fx-v2.svg"); }
