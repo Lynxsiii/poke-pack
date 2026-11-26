@@ -87,8 +87,14 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-sir.fam-sv-sir.fam-sv-sir.foil-sir.has-
   background-blend-mode: normal;
   mix-blend-mode: normal;
   filter: none;
-  -webkit-mask-image: var(--etch-map);
-  mask-image: var(--etch-map);
+  /* The etch three times over (cubed): the ridges keep their peak and the slopes between them fall away, so the
+     sheen draws the engraved lines instead of washing the painting. Once over, it added twice the brightness of the
+     typical SIR on the palest cards (Chi-Yu ex, Wo-Chien ex) and almost no line detail (etch_zones.py, 2026-11-25:
+     cubed takes about 40% off the wash and the texture score does not move). */
+  -webkit-mask-image: var(--etch-map), var(--etch-map), var(--etch-map);
+  mask-image: var(--etch-map), var(--etch-map), var(--etch-map);
+  -webkit-mask-composite: source-in, source-in, source-over;
+  mask-composite: intersect, intersect, add;
   -webkit-mask-size: 100% 100%;
   mask-size: 100% 100%;
   -webkit-mask-position: center;

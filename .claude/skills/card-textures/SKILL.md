@@ -215,6 +215,25 @@ cure"). The surface gloss throws a soft highlight.
 
 ## Pitfalls
 
+- **A sheen masked once by the etch is a wash, not a texture.** The SIR `.foil::after` etch sheen (white pool plus
+  spectrum, in the colour-dodge group) was masked by the etch map once. The etch is grey nearly everywhere, so the
+  sheen lit the whole face: on the palest SIRs it carried 25 of 35 levels of whole-card gain and none of the texture
+  ("the holo effect looks a little too much", Noah 2026-11-25). Cubing the etch in the mask (the map three times,
+  intersected) keeps the light on the lines: over all 233 SIRs gain fell from a median 18 to 11 (max 35 to 20) while
+  foil-zone texture held (10.6 to 10.9). Measure with `etch_zones.py --family <fam> --every` before and after: gain
+  should fall, foilTex and inkTex should not. Try the same on any family whose gain is over ~20.
+- **No filter on the scan, ever, and test a glitch on the real phone.** On iPhone Safari a `filter` on `.tcg img`
+  (the lit card's drop shadow, there since the first holo engine) puts the scan on its own GPU layer; once the
+  etch-shine span sat above it (2026-11-25), Safari stopped blending *every* foil layer into the card and painted
+  them as normal blend: grey over the text and name, a heavy rainbow frame, dark grain, snapping to the clean card
+  whenever the card came to rest (Noah's recordings of Mega Rayquaza ex and Mega Clefable ex; "glitches out and
+  quickly flashes and resets", "the holo effect looks a little too much"). Linux WebKit draws it correctly, tilt or
+  no tilt, so no gate here can catch it. `/js/holo-check` (js/holo-check.html) draws one lit card a dozen ways for
+  one phone screenshot; the clean cells named the cause in a minute (no shadow filter: clean; no `.shine`: clean;
+  no tilt, no will-change, isolation, a wrapper tilt: all still broken). Anything drawn round the card (shadow,
+  gold rim) is a box-shadow on a `.tcg` pseudo-element behind the scan with the card's corner radius
+  (`css/holo/realism.css` "The card as an object"). When a phone shows what the renders here do not, add a variant
+  to that page and ask for a screenshot before theorising.
 - **The foil map says where the foil is, not where the engraving is.** TCG Live's foil map is near zero wherever
   the ink is heavy, so on a full art whose Pokémon fills the card (Mega Rayquaza ex me6-138, half the face) every
   layer masked by the map leaves the painting bare and the engraving only shows on the frame (Noah, 2026-11-25:
