@@ -166,8 +166,9 @@ a.gd-stand:focus-visible { outline: 3px solid var(--k); outline-offset: 8px; }
 .gd-tile-hit:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 4px; }
 .gd-tile-copy { display: grid; gap: 6px; min-width: 0; }
 .gd-tile-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 600 15.5px/1.15 var(--font-h); }
-.gd-tile-row { display: flex; align-items: center; justify-content: space-between; gap: 6px; min-width: 0; padding-left: 4px; }
-.gd-tile-row .gd-plate { min-width: 0; }
+.gd-tile-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px; min-width: 0; padding-left: 4px; }
+/* A narrow tile puts the value under the grade rather than cutting the grade's word. */
+.gd-tile-row .gd-plate { flex: none; min-width: 0; max-width: 100%; }
 .gd-tile-row .gd-plate span { overflow: hidden; text-overflow: ellipsis; }
 .gd-tile-val { display: inline-flex; align-items: center; gap: 3px; flex: none; font: 700 16px var(--font-h); font-variant-numeric: tabular-nums; }
 .gd-tile-shown { color: var(--cy-2); font: italic 700 12.5px var(--font-h); }
@@ -289,6 +290,11 @@ a.gd-stand:focus-visible { outline: 3px solid var(--k); outline-offset: 8px; }
 .gd-rate-row dt span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .gd-rate-row dd { display: flex; align-items: center; gap: 8px; margin: 0; }
 .gd-rate-bar { flex: 1; height: 8px; border-radius: 4px; background: var(--rule); overflow: hidden; }
+@media (max-width: 400px) {
+  /* Small phones: a shorter bar, so "Very Good-Excellent" fits whole. */
+  .gd-rate-row { grid-template-columns: minmax(0, 1fr) auto; }
+  .gd-rate-bar { flex: none; width: 48px; }
+}
 .gd-rate-bar i { display: block; height: 100%; border-radius: 4px; background: var(--k); transform-origin: 0 50%; }
 .gd-rate-row.is-ten dt b { background: var(--yel); color: var(--k0); box-shadow: inset 0 0 0 1.5px var(--k); }
 .gd-rate-row.is-ten .gd-rate-bar i { background: var(--yel-2); box-shadow: inset 0 0 0 1.5px var(--k); }
