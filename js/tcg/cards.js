@@ -41,8 +41,11 @@ function side(text) {
 }
 
 function attackOf(raw) {
-  const fx = compileAttack(raw.text);
+  // GX attacks and VSTAR Power attacks are once a game (rulebook): the reminder is a rule, not an effect.
+  const once = /\(You can't use more than 1 GX attack in a game\.\)/.test(raw.text || "") ? "gx" : /\(You can't use more than 1 VSTAR Power in a game\.\)/.test(raw.text || "") ? "vstar" : "";
+  const fx = compileAttack(String(raw.text || "").replace(/\s*\(You can't use more than 1 (?:GX attack|VSTAR Power) in a game\.\)/, "").trim());
   return {
+    ...(once ? { once } : {}),
     name: raw.name,
     cost: (raw.cost || []).filter((c) => c !== "Free"),
     damage: parseInt(raw.damage, 10) || 0,
@@ -61,7 +64,10 @@ function limitsOf(card) {
   const rarity = String(card.rarity || "");
   if (subs.includes("Radiant") || /^Radiant /.test(card.name || "")) return { club: "Radiant Pokémon" };
   if (subs.includes("ACE SPEC") || /ACE SPEC/i.test(rarity)) return { club: "ACE SPEC card" };
-  if (subs.includes("Prism Star") || /◇/.test(card.name || "")) return { cap: 1 };
+  // Prism Star cards also go to the Lost Zone instead of the discard pile (engine.js toLostZone).
+  if (subs.includes("Prism Star") || /◇/.test(card.name || "")) return { cap: 1, prism: true };
+  // "You can't have more than 1 Pokémon ★ in your deck."
+  if (subs.includes("Star") || /★/.test(card.name || "")) return { club: "Pokémon ★" };
   return {};
 }
 
@@ -120,7 +126,8 @@ export function defineCard(card, row, text = "", lines = null) {
   }
 
   const subs = card.subtypes || [];
-  const megaEvolved = subs.includes("MEGA") && subs.includes("EX");
+  // The XY era's Mega Evolution Pokémon-EX ("M Charizard-EX", subtypes "MEGA"/"Mega" in the data) and Primal Reversion.
+  const megaEvolved = (subs.includes("MEGA") && subs.includes("EX")) || /^(M|Primal) .+-EX$/.test(card.name || "");
   let stage = "";
   if (card.evolvesFrom && (subs.some((s) => EVOLVED.test(s)) || megaEvolved)) stage = "evolution";
   else if (subs.includes("Basic") || subs.includes("Baby")) stage = "basic";
@@ -136,6 +143,8 @@ export function defineCard(card, row, text = "", lines = null) {
 
   let why = "";
   if (!stage) why = "This kind of Pokémon isn't in yet.";
+  // A BREAK keeps the Weakness, Resistance, Retreat Cost and attacks of what it evolved from; until the table reads those through, it waits.
+  else if (subs.includes("BREAK")) why = "BREAK Evolution isn't in yet.";
   else if (!row) why = "We don't have this card's play data yet.";
   else if (!attacks.length) why = "It has no attack to use yet.";
 
@@ -159,6 +168,9 @@ export function defineCard(card, row, text = "", lines = null) {
     // "A Pokémon that doesn't have a Rule Box" (Pokémon ex, V, GX, Radiant, Prism Star ...).
     rule: Boolean(boxOf(card)) || subs.some((s) => /^(Radiant|Prism Star|BREAK|LEGEND|V-UNION|Level-Up|Star|TAG TEAM|MEGA)$/.test(s)),
     ...(ability ? { ability } : {}),
+    // Old Mega Evolution Pokémon-EX (and Primal Reversion) end the turn they come into play by evolving; the new Mega ex don't.
+    ...(megaEvolved ? { megaEnds: true } : {}),
+    ...(subs.includes("Tera") ? { tera: true } : {}),
     playable: !why && Number(card.hp) > 0,
     why,
     notes,

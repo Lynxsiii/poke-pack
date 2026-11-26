@@ -865,7 +865,7 @@ function playOut(decks, format, seed) {
     if (steps % 25 === 0) {
       const seen = [];
       for (const side of state.players) {
-        seen.push(...side.deck, ...side.hand, ...side.discard, ...side.prizes);
+        seen.push(...side.deck, ...side.hand, ...side.discard, ...side.prizes, ...(side.lost || []));
         for (const slot of [side.active, ...side.bench]) if (slot) seen.push(slot.uid, ...slot.under, ...slot.energy, ...(slot.tool ? [slot.tool] : []));
       }
       if (state.stadium) seen.push(state.stadium.uid);
@@ -1142,6 +1142,58 @@ test("the flip winner chooses who goes first, only during setup", () => {
   assert.equal(state.current, 1 - w);
   assert.equal(state.turn, 1);
   assert.throws(() => apply(state, { type: "order", player: w, first: true }, defs), RuleError);
+});
+
+test("the flip comes before the deal: the winner chooses with no hand to look at", () => {
+  const state = createGame({ decks: [fire, water], format: "half", seed: 3, chooseFirst: true }, defs);
+  const w = state.flipWinner;
+  assert.equal(state.dealt, false);
+  assert.ok(state.players.every((s) => s.hand.length === 0));
+  assert.deepEqual(legalActions(state, 1 - w, defs), []);
+  assert.deepEqual(legalActions(state, w, defs).map((a) => a.type), ["order", "order"]);
+  throws(() => act(state, { type: "place", player: w, active: "a1", bench: [] }), /chosen who goes first/);
+  act(state, { type: "order", player: w, first: false });
+  assert.equal(state.first, 1 - w);
+  assert.ok(state.players.every((s) => s.hand.length === 7));
+  throws(() => act(state, { type: "order", player: w, first: true }), /already chosen/);
+});
+
+test("GX attacks and VSTAR Powers are once a game", () => {
+  const tauros = defs("sm1-100");
+  assert.equal(tauros.attacks[2].once, "gx");
+  const state = midgame();
+  const me = state.players[0];
+  state.cards[me.active.uid] = "sm1-100";
+  me.active.energy.push(give(state, 0, W), give(state, 0, W));
+  assert.ok(usableAttacks(state, 0, defs).includes(2));
+  me.gxUsed = true;
+  assert.ok(!usableAttacks(state, 0, defs).includes(2));
+  throws(() => act(state, { type: "attack", player: 0, index: 2 }), /GX attack/);
+  me.gxUsed = false;
+  act(state, { type: "attack", player: 0, index: 2 });
+  assert.equal(me.gxUsed, true);
+});
+
+test("Tera Pokémon ex are safe on the Bench; Prism Star cards go to the Lost Zone; one Pokémon ★ a deck", () => {
+  const state = midgame();
+  const me = state.players[0];
+  state.cards[me.bench[0].uid] = "sv7-32";
+  assert.ok(defs("sv7-32").tera);
+  assert.ok(benchSafe(state, me.bench[0], 0, defs));
+  const jirachi = hold(state, 0, "sm7-97");
+  me.hand.splice(me.hand.indexOf(jirachi), 1);
+  me.discard.push(jirachi);
+  act(state, { type: "end", player: 0 });
+  assert.ok(!me.discard.includes(jirachi));
+  assert.ok(me.lost.includes(jirachi));
+  assert.equal(defs("ex13-102").club, "Pokémon ★");
+});
+
+test("an old Mega Evolution Pokémon-EX ends the turn; BREAK waits", () => {
+  assert.ok(defs("xy2-13").megaEnds);
+  assert.equal(defs("xy2-13").prizes, 2);
+  const breakCard = [...byId.values()].find((c) => (c.subtypes || []).includes("BREAK"));
+  assert.equal(defs(breakCard.id).playable, false);
 });
 
 test("mulligans both players took cancel out; only the difference is drawn", () => {

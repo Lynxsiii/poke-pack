@@ -212,6 +212,8 @@ export function botAction(state, player, defs) {
   const actions = legalActions(state, player, defs);
   if (!actions.length) return null;
   if (actions[0].type === "place") return placeAction(state, player, defs);
+  // Going first means a card more on the board a turn sooner; the bot always takes it.
+  if (actions[0].type === "order") return { type: "order", player, first: true };
 
   const side = state.players[player];
   const foe = state.players[other(player)].active;

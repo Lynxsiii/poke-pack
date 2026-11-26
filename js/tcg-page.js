@@ -522,10 +522,12 @@ export function initTcg(deps) {
     if (!botDeck) return toast("Couldn't build the bot a deck from your sets. Try another deck.");
     const seed = (Math.random() * 0xffffffff) >>> 0;
     botSeats();
-    const state = createGame({ decks: [deckList(deck), deckList(botDeck)], names: [deps.playerName(), BOT_NAME], format: deck.format, seed }, defs);
+    // The flip comes before the deal: its winner chooses who goes first without seeing a hand.
+    const state = createGame({ decks: [deckList(deck), deckList(botDeck)], names: [deps.playerName(), BOT_NAME], format: deck.format, seed, chooseFirst: true }, defs);
     match = { state, deckId, botSet, botTheme: botDeck.theme || "", sel: null, sheet: "", busy: false, line: "", setup: { active: null, bench: [] }, opening: true, over: false };
-    // The bot sets up at once; its cards stay face down until both are ready.
-    apply(state, botAction(state, BOT, defs), defs);
+    if (state.flipWinner === BOT) apply(state, botAction(state, BOT, defs), defs);
+    // The bot sets up as soon as there are hands; its cards stay face down until both are ready.
+    if (state.dealt !== false) apply(state, botAction(state, BOT, defs), defs);
     saveMatch();
     deps.navigate("/play/match");
   }
@@ -591,7 +593,7 @@ export function initTcg(deps) {
       return false;
     }
     botSeats();
-    match = { state: saved.state, deckId: saved.deckId, botSet: saved.botSet, botTheme: saved.botTheme || "", lesson: saved.lesson ?? null, sel: null, sheet: "", busy: false, line: "", setup: { active: null, bench: [] }, opening: false, over: false };
+    match = { state: saved.state, deckId: saved.deckId, botSet: saved.botSet, botTheme: saved.botTheme || "", lesson: saved.lesson ?? null, sel: null, sheet: "", busy: false, line: "", setup: { active: null, bench: [] }, opening: saved.state.dealt === false, over: false };
     return true;
   }
 
@@ -938,14 +940,19 @@ export function initTcg(deps) {
       </div>`;
   }
 
-  function openingHtml() {
-    const state = match.state;
-    const faces = deps.coinFaces();
-    const mull = state.players.map((s, p) => {
+  /** What the opening mulligans were, for the flip sheet or the line once hands are dealt. */
+  function mulliganLines(state) {
+    return state.players.map((s, p) => {
       if (!s.mulligans) return "";
       const extra = s.mulligans - state.players[other(p)].mulligans;
       return `${p === ME ? "You" : foeName()} had no Basic Pokémon ${s.mulligans === 1 ? "once" : `${s.mulligans} times`} and drew a new hand${extra > 0 ? `, so ${p === ME ? foeName() : "you"} will draw ${plural(extra, "extra card")}` : ""}.`;
     }).filter(Boolean);
+  }
+
+  function openingHtml() {
+    const state = match.state;
+    const faces = deps.coinFaces();
+    const mull = mulliganLines(state);
     return `<div class="tg-sheet-bg"></div>
       <div class="tg-sheet tg-opening" role="dialog" aria-label="Coin flip">
         <p class="tg-opening-lab">Flip for the first turn</p>
@@ -1066,10 +1073,12 @@ export function initTcg(deps) {
   function openingLanded() {
     const mine = (match.state.flipWinner ?? match.state.first) === ME;
     const text = root.querySelector("#tg-first");
-    if (text) text.textContent = mine ? "You won the flip" : `${foeName()} won the flip and goes first`;
+    const waiting = match.state.dealt === false;
+    if (text) text.textContent = mine ? "You won the flip" : waiting ? `${foeName()} won the flip and is choosing who goes first` : `${foeName()} won the flip and ${match.state.first === ME ? "lets you go first" : "goes first"}`;
     const lab = root.querySelector(".tg-opening-lab");
     if (lab) lab.textContent = mine ? "Heads" : "Tails";
     root.querySelector(".tg-opening-note")?.removeAttribute("hidden");
+    if (!mine && waiting) return;
     root.querySelectorAll(".tg-opening .tg-sheet-keys button").forEach((key) => key.removeAttribute("disabled"));
   }
 
@@ -2144,8 +2153,9 @@ export function initTcg(deps) {
     }
     if (act === "go-first" || act === "go-second") {
       apply(state, { type: "order", player: ME, first: act === "go-first" }, defs);
+      if (!state.players[BOT].placed) apply(state, botAction(state, BOT, defs), defs);
       saveMatch();
-      match.line = act === "go-first" ? "You go first." : `${foeName()} goes first.`;
+      match.line = [act === "go-first" ? "You go first." : `${foeName()} goes first.`, ...mulliganLines(state)].join(" ");
       match.opening = false;
       return paintTable();
     }
