@@ -40,7 +40,7 @@ import {
   setCategory,
   SET_CATEGORIES,
 } from "./catalog.js";
-import { dexIds, foldCopies, homeSetId, isBoxPromoId, promoHomeOf } from "./card-home.js";
+import { dexId, dexIds, foldCopies, homeSetId, isBoxPromoId, promoHomeOf } from "./card-home.js";
 import { createCardPicker } from "./card-picker.js?v=3";
 import { HIT_RARITIES, canPullReverse, isHit, tallyRarity } from "./engine.js";
 import { initRadio } from "./radio.js?v=5";
@@ -104,7 +104,6 @@ import {
   saveState,
   setPersistProgress,
   cloneSave,
-  ownedCount,
   msUntilDaily,
   logWorth,
   BINDER_PAGE,
@@ -271,9 +270,9 @@ function wipeProgressMemory() {
   seenSecrets.clear();
 }
 
-async function refreshSession() {
+async function refreshSession(early = null) {
   try {
-    const me = await api("/api/me");
+    const me = await (early || api("/api/me"));
     cloudUser = me.user;
     pendingClaim = null;
     localStorage.setItem(CLOUD_SEEN_KEY, "1");
@@ -873,7 +872,7 @@ function cardBack(set = liveSet) {
 }
 
 function setOwned() {
-  return ownedCount({ collection: ownedMapNow() }, setCards);
+  return setCards.filter((card) => ownedNow(card.id) > 0).length;
 }
 
 function numberLine(card) {
@@ -2193,10 +2192,7 @@ async function activateSet(id, force = false, quiet = false) {
     // Mega Evolution sets whose boxes carry them (dataSetsOf).
     for (const source of dataSetsOf(next)) {
       if (!setCache[source.id]) {
-        setCache[source.id] = await fetch(source.dataFile, { cache: "no-cache" }).then((r) => {
-          if (!r.ok) throw new Error(r.status);
-          return r.json();
-        });
+        setCache[source.id] = await fetchSetFile(source.dataFile);
       }
       applyCachedPrices(setCache[source.id], source.id);
     }
@@ -2274,6 +2270,17 @@ function heldId(cardId) {
 /** Raw copies plus graded ones: what "owned" means everywhere but sell and stake. */
 function ownedQty(cardId) {
   return rawQty(cardId) + slabsOf(cardId).length;
+}
+/** One entry of ownedMapNow() without copying the whole collection: raw plus graded copies, folded onto the dex id. */
+function ownedNow(cardId) {
+  const id = String(cardId || "");
+  if (!id || dexId(id) !== id) return 0;
+  let n = 0;
+  for (const each of dexIds(id)) {
+    const v = (state.collection?.[each] || 0) + gradedSlabs(each).length;
+    if (v > 0) n += v;
+  }
+  return n;
 }
 function ownedMapNow() {
   const map = { ...(state.collection || {}) };
@@ -2392,10 +2399,12 @@ function windowFaces(key, holders, faces, render, root = null) {
   // not blink empty for a frame while the observer catches up.
   const box = root ? root.getBoundingClientRect() : { top: 0, bottom: window.innerHeight };
   const reach = (box.bottom - box.top) * FACE_REACH;
-  for (const holder of holders) {
+  // Read every rect before drawing any face: a draw between two reads forces a fresh layout per holder.
+  const nearNow = Array.prototype.filter.call(holders, (holder) => {
     const rect = holder.getBoundingClientRect();
-    if (rect.height && rect.bottom > box.top - reach && rect.top < box.bottom + reach) draw(holder, true);
-  }
+    return rect.height && rect.bottom > box.top - reach && rect.top < box.bottom + reach;
+  });
+  nearNow.forEach((holder) => draw(holder, true));
   const observer = new IntersectionObserver(
     (entries) => entries.forEach((entry) => draw(entry.target, entry.isIntersecting)),
     { root, rootMargin: `${FACE_REACH * 100}% 0px` }
@@ -3173,22 +3182,37 @@ function completion() {
   return { owned, total, pct: total ? Math.round((owned / total) * 100) : 0 };
 }
 
-/** Per-set id index, built once per loaded list, so an owned-card lookup is a map hit and not a scan. */
-const cardIndexes = new WeakMap();
+/**
+ * One id -> card index over every loaded set's list. A collection lookup used to walk every list in setCache
+ * (180+ once every set is loaded), so adding up a big collection was cards x sets. Lists are indexed once when
+ * they first show up; a hit is checked against its list so a replaced list can never hand back a stale card.
+ */
+const cardIndex = new Map(); // id -> { card, key, list }
+const indexedLists = new Map(); // setCache key -> [list, length]
+
+function syncCardIndex() {
+  let stale = false;
+  for (const [key, [list, length]] of indexedLists) {
+    if (setCache[key] !== list || list.length !== length) stale = true;
+  }
+  if (stale) {
+    cardIndex.clear();
+    indexedLists.clear();
+  }
+  for (const [key, list] of Object.entries(setCache)) {
+    if (!Array.isArray(list) || indexedLists.has(key)) continue;
+    for (const card of list) if (card?.id && !cardIndex.has(card.id)) cardIndex.set(card.id, { card, key, list });
+    indexedLists.set(key, [list, list.length]);
+  }
+}
 
 function findCard(id) {
   if (byId[id]) return byId[id];
-  for (const list of Object.values(setCache)) {
-    if (!list) continue;
-    let index = cardIndexes.get(list);
-    if (!index || index.size !== list.length) {
-      index = new Map(list.map((c) => [c.id, c]));
-      cardIndexes.set(list, index);
-    }
-    const hit = index.get(id);
-    if (hit) return hit;
-  }
-  return null;
+  let hit = cardIndex.get(id);
+  if (hit && setCache[hit.key] === hit.list) return hit.card;
+  syncCardIndex();
+  hit = cardIndex.get(id);
+  return hit ? hit.card : null;
 }
 
 function ownedReverse(id) {
@@ -3370,13 +3394,20 @@ function topByValue(limit = 5) {
     .slice(0, limit);
 }
 
+/** Longest set id first, so "sv3pt5-1" finds sv3pt5 before sv3. Sorted once, not on every call. */
+let setsLongestFirst = null;
+const setForCardMemo = new Map();
+
 function setForCardId(id) {
   if (!id) return null;
-  return (
-    PLAYABLE_SETS.slice()
-      .sort((a, b) => b.id.length - a.id.length)
-      .find((set) => id === set.id || id.startsWith(`${set.id}-`)) || null
-  );
+  if (!setsLongestFirst || setsLongestFirst.length !== PLAYABLE_SETS.length) {
+    setsLongestFirst = PLAYABLE_SETS.slice().sort((a, b) => b.id.length - a.id.length);
+    setForCardMemo.clear();
+  }
+  if (setForCardMemo.has(id)) return setForCardMemo.get(id);
+  const set = setsLongestFirst.find((s) => id === s.id || id.startsWith(`${s.id}-`)) || null;
+  setForCardMemo.set(id, set);
+  return set;
 }
 
 function allCatalogCards() {
@@ -7541,13 +7572,37 @@ function wrapperFor(id, set = liveSet) {
   return special?.wrapper || set.wrappers.find((w) => w.id === id) || set.wrappers[0];
 }
 
-/** A set's cards, fetched once, for a box that holds another set's packs. */
-async function loadSetData(set) {
-  if (setCache[set.id]) return setCache[set.id];
-  const list = await fetch(set.dataFile, { cache: "no-cache" }).then((r) => {
+/** Set files boot asked for early (prefetchSetFiles), handed to the first caller that wants each one. */
+const setFilePrefetch = new Map();
+
+function fetchSetFile(url) {
+  const early = setFilePrefetch.get(url);
+  if (early) {
+    setFilePrefetch.delete(url);
+    return early;
+  }
+  return fetch(url, { cache: "no-cache" }).then((r) => {
     if (!r.ok) throw new Error(r.status);
     return r.json();
   });
+}
+
+/** Start the files of the set this page will most likely open while the shop files and session load. */
+function prefetchSetFiles(setId) {
+  const set = PLAYABLE_SETS.find((s) => s.id === setId);
+  if (!set) return;
+  for (const source of dataSetsOf(set)) {
+    if (!source.dataFile || setCache[source.id] || setFilePrefetch.has(source.dataFile)) continue;
+    const early = fetchSetFile(source.dataFile);
+    early.catch(() => {}); // the caller that takes it sees the failure
+    setFilePrefetch.set(source.dataFile, early);
+  }
+}
+
+/** A set's cards, fetched once, for a box that holds another set's packs. */
+async function loadSetData(set) {
+  if (setCache[set.id]) return setCache[set.id];
+  const list = await fetchSetFile(set.dataFile);
   setCache[set.id] = list;
   applyCachedPrices(list, set.id);
   return list;
@@ -10228,38 +10283,42 @@ document.addEventListener("keydown", (e) => {
  * price of that booster pack; if the file is missing or a set isn't in it, the
  * cost baked into catalog.js stands.
  */
+let sealedLoadedAt = 0;
 async function loadSealedPrices() {
-  try {
-    productList = await fetch("data/products.json", { cache: "no-cache" }).then((r) => {
-      if (!r.ok) throw new Error(r.status);
-      return r.json();
-    });
-  } catch {
-    productList = {};
+  // These files only change with a deploy. The price ticker calls this again a moment after boot (and every
+  // few minutes) to lay the Worker's newest prices over them, which needs no second download and parse of
+  // products.json and box-contents.json (over 700 KB): lay them over what is already loaded.
+  if (sealedLoadedAt && Date.now() - sealedLoadedAt < 30 * 60 * 1000 && Object.keys(productList).length) {
+    applyLatestSealed(sealedPrices, productList, PLAYABLE_SETS);
+    return;
   }
-  try {
-    boxContents = await fetch("data/box-contents.json", { cache: "no-cache" }).then((r) => {
+  // The three files are asked for together: one after the other was three round trips before the page could draw.
+  const grab = (url) =>
+    fetch(url, { cache: "no-cache" }).then((r) => {
       if (!r.ok) throw new Error(r.status);
       return r.json();
     });
-  } catch {
-    boxContents = {};
-  }
-  try {
-    const prices = await fetch("data/sealed.json", { cache: "no-cache" }).then((r) => {
-      if (!r.ok) throw new Error(r.status);
-      return r.json();
-    });
-    sealedPrices = prices;
-    PLAYABLE_SETS.forEach((set) => {
-      const pack = prices[set.id]?.boosterPack;
-      if (typeof pack === "number" && pack > 0) set.cost = money(pack);
-    });
-  } catch {
-    /* keep the costs from catalog.js */
+  const [products, contents, prices] = await Promise.allSettled([
+    grab("data/products.json"),
+    grab("data/box-contents.json"),
+    grab("data/sealed.json"),
+  ]);
+  productList = products.status === "fulfilled" ? products.value : {};
+  boxContents = contents.status === "fulfilled" ? contents.value : {};
+  if (prices.status === "fulfilled") {
+    try {
+      sealedPrices = prices.value;
+      PLAYABLE_SETS.forEach((set) => {
+        const pack = prices.value[set.id]?.boosterPack;
+        if (typeof pack === "number" && pack > 0) set.cost = money(pack);
+      });
+    } catch {
+      /* keep the costs from catalog.js */
+    }
   }
   // The Worker's newest TCGplayer prices, once they have arrived (js/liveprices.js), sit over the baked files.
   applyLatestSealed(sealedPrices, productList, PLAYABLE_SETS);
+  if (Object.keys(productList).length) sealedLoadedAt = Date.now();
 }
 
 let allSetsLoaded = false;
@@ -10399,7 +10458,7 @@ let tcgLoading = null;
 function showTcg() {
   if (tcgPage) return tcgPage.show(tcgPath);
   els.viewTcg.innerHTML = `<div class="tg-page"><div class="rt-skel tg-loading">Loading</div></div>`;
-  tcgLoading ||= import("./tcg-page.js?v=19")
+  tcgLoading ||= import("./tcg-page.js?v=20")
     .then(({ initTcg }) => {
       tcgPage = initTcg({
         root: els.viewTcg,
@@ -10916,7 +10975,7 @@ async function searchSealedItems() {
 /** Open the share sheet for a card: a picture of it and its /pull/ link. */
 function sharePull(card, { pulled = false } = {}) {
   const trainer = activeTrainer();
-  const owns = pulled || Number(ownedMapNow()[card.id] || 0) > 0;
+  const owns = pulled || ownedNow(card.id) > 0;
   const by = trainer && owns ? trainer.handle : "";
   const rarity = rarityLine(card);
   const no = numberLine(card);
@@ -11013,8 +11072,17 @@ const vaultPage = initVault({
 
 async function boot() {
   try {
+    // The session is asked for alongside the shop files, not after them (one round trip less before first paint);
+    // it is still applied after them, as before.
+    const me = api("/api/me");
+    me.catch(() => {}); // refreshSession reads the failure
+    try {
+      prefetchSetFiles(setIdFromPath(location.pathname) || state.activeSetId || DEFAULT_SET_ID);
+    } catch {
+      /* only a head start */
+    }
     await Promise.all([loadSealedPrices(), loadPatchNotes(), loadGearCatalog()]);
-    await refreshSession();
+    await refreshSession(me);
     // Friends and requests load now rather than on the next 5s poll, so the
     // Social page and the Friends badge are right on first paint.
     if (cloudUser) notifySignedIn();
