@@ -236,6 +236,8 @@ body.tg-playing { overflow: hidden; }
 .tg-info-foe .tg-conds { position: absolute; top: 100%; right: 8px; margin-top: -8px; flex-wrap: nowrap; justify-content: flex-end; }
 .tg-info-foe .tg-cond { box-shadow: 0 0 0 1.5px var(--k0); }
 .tg-cond[data-cond="mark"] { background: var(--box-2); color: var(--on-k); box-shadow: 0 0 0 1.5px var(--rule-2); }
+.tg-cond[data-cond="tool"] { background: var(--w0); color: var(--k0); box-shadow: 0 0 0 1.5px var(--k0); font-style: normal; }
+.tg-toolpip { --en: var(--w0); border-radius: 4px; }
 .tg-cond[data-cond="weak"] { background: var(--yel); color: var(--k0); } .tg-cond[data-cond="resist"] { background: var(--box-2); color: var(--on-k); box-shadow: 0 0 0 1.5px var(--rule-2); }
 .tg-cond[data-cond="asleep"] { background: #5a63d8; } .tg-cond[data-cond="confused"] { background: var(--yel); color: var(--k0); }
 .tg-cond[data-cond="paralyzed"] { background: var(--hp-mid); color: var(--k0); } .tg-cond[data-cond="poisoned"] { background: #8a56d8; }
