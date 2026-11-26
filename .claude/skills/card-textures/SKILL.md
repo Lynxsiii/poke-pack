@@ -215,6 +215,13 @@ cure"). The surface gloss throws a soft highlight.
 
 ## Pitfalls
 
+- **A sheen masked once by the etch is a wash, not a texture.** The SIR `.foil::after` etch sheen (white pool plus
+  spectrum, in the colour-dodge group) was masked by the etch map once. The etch is grey nearly everywhere, so the
+  sheen lit the whole face: on the palest SIRs it carried 25 of 35 levels of whole-card gain and none of the texture
+  ("the holo effect looks a little too much", Noah 2026-11-25). Cubing the etch in the mask (the map three times,
+  intersected) keeps the light on the lines: over all 233 SIRs gain fell from a median 18 to 11 (max 35 to 20) while
+  foil-zone texture held (10.6 to 10.9). Measure with `etch_zones.py --family <fam> --every` before and after: gain
+  should fall, foilTex and inkTex should not. Try the same on any family whose gain is over ~20.
 - **No filter on the scan, ever, and test a glitch on the real phone.** On iPhone Safari a `filter` on `.tcg img`
   (the lit card's drop shadow, there since the first holo engine) puts the scan on its own GPU layer; once the
   etch-shine span sat above it (2026-11-25), Safari stopped blending *every* foil layer into the card and painted
