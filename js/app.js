@@ -5781,7 +5781,7 @@ function viewFromPath(pathname) {
     tradesPath = path.toLowerCase();
     return "trades";
   }
-  // The card game (js/tcg-page.js): /play, /play/deck/<id>, /play/match. Not in any menu yet.
+  // The card game (js/tcg-page.js): /play, /play/deck/<id>, /play/match, /play/friends, /play/online/<id>. Not in any menu yet.
   if (TCG_ROUTE.test(path)) {
     tcgPath = path;
     return "tcg";
@@ -10452,14 +10452,14 @@ async function routeFromLocation() {
  * The card game (/play). Its code loads the first time the page is opened, so
  * nobody who never plays pays for it. Rules: js/tcg/; screen: js/tcg-page.js.
  */
-const TCG_ROUTE = /^\/play(?:\/match|\/deck\/[a-z0-9]+)?$/;
+const TCG_ROUTE = /^\/play(?:\/match|\/friends|\/online\/[a-f0-9]{20}|\/deck\/[a-z0-9]+)?$/;
 let tcgPath = "/play";
 let tcgPage = null;
 let tcgLoading = null;
 function showTcg() {
   if (tcgPage) return tcgPage.show(tcgPath);
   els.viewTcg.innerHTML = `<div class="tg-page"><div class="rt-skel tg-loading">Loading</div></div>`;
-  tcgLoading ||= import("./tcg-page.js?v=22")
+  tcgLoading ||= import("./tcg-page.js?v=23")
     .then(({ initTcg }) => {
       tcgPage = initTcg({
         root: els.viewTcg,
@@ -10477,6 +10477,7 @@ function showTcg() {
           tcgPage.show(path);
         },
         playerName: () => (cloudUser?.handle ? `@${cloudUser.handle}` : "You"),
+        signedIn: () => Boolean(cloudUser),
         storeKey: () => cloudUser?.id || cloudUser?.handle || "guest",
         owned: () => ownedMapNow(),
         findCard,
