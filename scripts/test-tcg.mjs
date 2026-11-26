@@ -1182,4 +1182,156 @@ test("one Radiant Pokémon and one ACE SPEC card a deck; one of each Prism Star"
   assert.ok(prism, "Prism Star cards are recognised");
 });
 
+/* ---------- Abilities ---------- */
+
+const power = (key, text, more = {}) => {
+  const id = `lab-ab-${key}`;
+  byId.set(id, { id, name: `Lab ${key}`, supertype: "Pokémon", subtypes: ["Basic"], types: ["Colorless"], hp: "100", attacks: [{ name: "Tap", cost: [], damage: "10", text: "" }], abilities: [{ name: `Power ${key}`, type: "Ability", text }], ...more });
+  return id;
+};
+const AB = {
+  tough: power("tough", "This Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance)."),
+  runway: power("runway", "Your Basic Pokémon in play have no Retreat Cost."),
+  thorns: power("thorns", "If this Pokémon is in the Active Spot and is damaged by an attack from your opponent's Pokémon (even if this Pokémon is Knocked Out), put 2 damage counters on the Attacking Pokémon."),
+  dodge: power("dodge", "If any damage is done to this Pokémon by attacks, flip a coin. If heads, prevent that damage."),
+  wall: power("wall", "Prevent all damage done to this Pokémon by attacks from your opponent's Basic Pokémon."),
+  sturdy: power("sturdy", "If this Pokémon has full HP and would be Knocked Out by damage from an attack, it is not Knocked Out, and its remaining HP becomes 10."),
+  draw: power("draw", "Once during your turn, you may draw a card."),
+  front: power("front", "Once during your turn, if this Pokémon is in the Active Spot, you may draw 2 cards."),
+  pay: power("pay", "You must discard a card from your hand in order to use this Ability. Once during your turn, you may draw 2 cards."),
+  rain: power("rain", "As often as you like during your turn (before your attack), you may attach a Water Energy card from your hand to 1 of your Water Pokémon. (This doesn't use up your 1 Energy card attachment for the turn.) This power can't be used if Lab rain is Asleep, Confused, or Paralyzed.", { abilities: [{ name: "Rain", type: "Pokémon Power", text: "As often as you like during your turn (before your attack), you may attach a Water Energy card from your hand to 1 of your Water Pokémon. (This doesn't use up your 1 Energy card attachment for the turn.) This power can't be used if Lab rain is Asleep, Confused, or Paralyzed." }] }),
+  hop: power("hop", "Once during your turn, if this Pokémon is on your Bench, you may switch it with your Active Pokémon."),
+  call: power("call", "When you play this Pokémon from your hand onto your Bench during your turn, you may draw cards until you have 6 cards in your hand."),
+  odd: power("odd", "This Pokémon hums a tune nobody knows."),
+};
+const benchSlot = (state, p, id) => {
+  const uid = hold(state, p, id);
+  state.players[p].hand.pop();
+  const slot = { uid, under: [], energy: [], damage: 0, since: 0 };
+  state.players[p].bench.push(slot);
+  return slot;
+};
+
+test("Ability text: read, unread, and the printed kind", () => {
+  assert.equal(defs(AB.tough).ability.mod.less, 30);
+  assert.ok(defs(AB.draw).ability.use && !defs(AB.draw).ability.use.often);
+  assert.ok(defs(AB.rain).ability.use.often && defs(AB.rain).ability.kind === "Pokémon Power");
+  assert.equal(defs(AB.call).ability.enter.how, "bench");
+  assert.ok(!defs(AB.odd).ability && defs(AB.odd).notes.some((n) => /not live yet/.test(n)));
+  assert.ok(!defs(AB.tough).notes.length);
+  // Real cards: Blastoise's Rain Dance, and a modern wall against ex and V.
+  assert.ok(defs("base1-2").ability.use.often);
+  assert.deepEqual(defs("sv2-97").ability.wall.boxes, ["ex", "V", "VMAX", "VSTAR"]);
+});
+
+test("standing Abilities change damage taken and Retreat Costs", () => {
+  const state = labgame("lab-2", AB.tough);
+  const [me, foe] = state.players;
+  let events = use(state, 0, "Sting");
+  assert.equal(events.find((e) => e.t === "damage" && e.p === 1).n, 20, "50 less 30");
+  // The owner's Basic Pokémon retreat for free while the Pokémon with the Ability is in play.
+  const mine = labgame();
+  const cost = retreatCost(mine, mine.players[0].bench[0], defs);
+  assert.ok(cost > 0, "Squirtle pays to retreat");
+  benchSlot(mine, 0, AB.runway);
+  assert.equal(retreatCost(mine, mine.players[0].bench[0], defs), 0);
+  assert.equal(retreatCost(mine, mine.players[1].active, defs), retreatCost(labgame(), labgame().players[1].active, defs), "not the other player's");
+});
+
+test("Abilities that answer an attack: hit back, dodge, wall, hang on", () => {
+  let state = labgame("lab-2", AB.thorns);
+  let events = use(state, 0, "Sting");
+  assert.equal(state.players[0].active.damage, 20);
+  assert.ok(events.some((e) => e.t === "ability" && e.p === 1));
+
+  state = labgame("lab-1", AB.dodge);
+  rigFlips(state, [true]);
+  events = use(state, 0, "Tire");
+  assert.equal(state.players[1].active.damage, 0);
+  assert.ok(events.some((e) => e.t === "blocked"));
+  state = labgame("lab-2", AB.dodge);
+  events = use(state, 0, "Pierce");
+  assert.equal(state.players[1].active.damage, 50, "an attack that ignores effects on the target isn't dodged");
+
+  state = labgame("lab-1", AB.wall);
+  use(state, 0, "Tire");
+  assert.equal(state.players[1].active.damage, 0, "Lab is a Basic Pokémon");
+
+  state = labgame("lab-2", AB.sturdy);
+  byId.get("lab-2").attacks.push({ name: "Crush", cost: [], damage: "300", text: "" });
+  defs("lab-2").attacks.push({ name: "Crush", cost: [], damage: 300, steps: [], text: "" });
+  events = use(state, 0, "Crush");
+  assert.equal(state.players[1].active.damage, 90);
+  assert.ok(!events.some((e) => e.t === "ko"));
+});
+
+test("an Ability you use: once a turn, where it says, at its price", () => {
+  const state = labgame(AB.draw);
+  const [me] = state.players;
+  const hand = me.hand.length;
+  assert.ok(legalActions(state, 0, defs).some((a) => a.type === "ability" && a.spot === ACTIVE));
+  const events = act(state, { type: "ability", player: 0, spot: ACTIVE });
+  assert.equal(me.hand.length, hand + 1);
+  assert.ok(events.some((e) => e.t === "ability"));
+  throws(() => act(state, { type: "ability", player: 0, spot: ACTIVE }), /used this turn/);
+  // Each Pokémon has its own once a turn.
+  benchSlot(state, 0, AB.draw);
+  act(state, { type: "ability", player: 0, spot: me.bench.length - 1 });
+  assert.equal(me.hand.length, hand + 2);
+  // Only in the Active Spot.
+  benchSlot(state, 0, AB.front);
+  throws(() => act(state, { type: "ability", player: 0, spot: me.bench.length - 1 }), /Active Spot/);
+  // A price: a card from the hand first.
+  benchSlot(state, 0, AB.pay);
+  const before = me.hand.length;
+  act(state, { type: "ability", player: 0, spot: me.bench.length - 1 });
+  assert.equal(state.pending[0].type, "choose");
+  act(state, { type: "choose", player: 0, uids: [me.hand[0]] });
+  assert.equal(me.hand.length, before - 1 + 2);
+  // The next turn it is ready again.
+  act(state, { type: "end", player: 0 });
+  act(state, { type: "end", player: 1 });
+  assert.ok(legalActions(state, 0, defs).some((a) => a.type === "ability" && a.spot === ACTIVE));
+});
+
+test("Rain Dance: Energy from the hand as often as you like, and off while Asleep", () => {
+  const state = labgame(AB.rain);
+  const [me] = state.players;
+  me.energyUsed = true;
+  for (let i = 0; i < 2; i += 1) give(state, 0, W);
+  const target = me.bench[0];
+  const had = target.energy.length;
+  for (let i = 0; i < 2; i += 1) {
+    act(state, { type: "ability", player: 0, spot: ACTIVE });
+    assert.deepEqual(state.pending[0].spots, [0], "only the Water Pokémon");
+    act(state, { type: "pick", player: 0, spot: 0 });
+  }
+  assert.equal(target.energy.length, had + 2);
+  give(state, 0, W);
+  addCondition(state, me.active, "asleep");
+  assert.ok(!legalActions(state, 0, defs).some((a) => a.type === "ability"));
+});
+
+test("a Benched Pokémon's Ability can bring it up; one played from the hand asks first", () => {
+  const state = labgame();
+  const [me] = state.players;
+  const slot = benchSlot(state, 0, AB.hop);
+  act(state, { type: "ability", player: 0, spot: me.bench.length - 1 });
+  assert.equal(me.active, slot);
+
+  me.hand.length = 2;
+  const uid = hold(state, 0, AB.call);
+  act(state, { type: "bench", player: 0, uid });
+  assert.equal(state.pending[0].effect.op, "ability");
+  assert.ok(state.pending[0].optional);
+  act(state, { type: "pick", player: 0, spot: me.bench.length - 1 });
+  assert.equal(me.hand.length, 6);
+  // Saying no leaves the hand as it was.
+  me.hand.length = 2;
+  act(state, { type: "bench", player: 0, uid: hold(state, 0, AB.call) });
+  act(state, { type: "pick", player: 0, spot: null });
+  assert.equal(me.hand.length, 2);
+  assert.equal(state.pending.length, 0);
+});
+
 console.log(`${passed} checks passed${process.exitCode ? ", some failed" : ""}`);

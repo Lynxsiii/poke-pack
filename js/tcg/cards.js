@@ -16,6 +16,7 @@
  * `notes` are things a playable card does not do yet (an Ability, attack text).
  */
 
+import { compileAbility } from "./abilities.js";
 import { compileAttack } from "./effects.js";
 import { compileStadium, compileTool, compileTrainer } from "./trainers.js";
 
@@ -78,6 +79,19 @@ function prizesFor(card, row) {
   return Math.max(n, Number(row?.[3]) || 1);
 }
 
+/** The rule box a Pokémon carries ("ex", "EX", "GX", "V", "VMAX", "VSTAR"), which some Abilities ask about. */
+function boxOf(card) {
+  const name = card.name || "";
+  const subs = card.subtypes || [];
+  if (subs.includes("VMAX") || / VMAX$/.test(name)) return "VMAX";
+  if (subs.includes("VSTAR") || / VSTAR$/.test(name)) return "VSTAR";
+  if (subs.includes("V") || / V$/.test(name)) return "V";
+  if (subs.includes("GX") || /-GX$/.test(name)) return "GX";
+  if (subs.includes("ex") || / ex$/.test(name)) return "ex";
+  if (subs.includes("EX") || /-EX$/.test(name)) return "EX";
+  return "";
+}
+
 /** `row` is the card's entry in data/tcg/rules.json, or undefined when it has none. */
 export function defineCard(card, row, text = "") {
   const base = { id: card.id, name: card.name, ...limitsOf(card) };
@@ -106,7 +120,10 @@ export function defineCard(card, row, text = "") {
 
   const attacks = (card.attacks || []).map(attackOf);
   const notes = [];
-  if ((card.abilities || []).length) notes.push(`${card.abilities[0].type || "Ability"} not live yet`);
+  // One Ability a card, as nearly every card has it; a second one waits with the unread ones.
+  const printed = card.abilities || [];
+  const ability = printed.length === 1 ? compileAbility(printed[0], card.name) : null;
+  if (printed.length && !ability) notes.push(`${printed[0].type || "Ability"} not live yet`);
   if (attacks.some((a) => a.plain)) notes.push("Some attack text not live yet");
 
   let why = "";
@@ -126,6 +143,8 @@ export function defineCard(card, row, text = "") {
     resistance: side(row?.[1]),
     retreat: Number(row?.[2]) || 0,
     prizes: prizesFor(card, row),
+    box: boxOf(card),
+    ...(ability ? { ability } : {}),
     playable: !why && Number(card.hp) > 0,
     why,
     notes,

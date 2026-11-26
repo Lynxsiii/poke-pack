@@ -409,3 +409,19 @@ body.no-motion .tg-table *, body.no-motion .tg-fx *, body.no-motion .tg-sheet, b
 @media (prefers-reduced-motion: reduce) {
   .tg-table *, .tg-fx *, .tg-sheet, .tg-sheet-bg { animation: none !important; transition: none !important; }
 }
+
+/* Abilities: a row in the attack sheet, a tag on a Pokémon whose Ability is ready, a chip on the HUD. */
+.tg-abil { display: grid; gap: 4px; padding: 10px 12px; border: 2px solid var(--k0); border-radius: 10px; background: var(--w0); color: var(--k0); text-align: left; }
+.tg-abil.off { opacity: 0.6; }
+.tg-abil-top { display: flex; align-items: center; gap: 8px; }
+.tg-abil-top em { font-style: normal; font-size: 11px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; padding: 2px 6px; border-radius: 4px; background: var(--yel); color: var(--k0); }
+.tg-abil-top b { flex: 1; min-width: 0; font-size: 15px; }
+.tg-abil .tg-atk-why.on { color: inherit; opacity: 0.7; }
+.tg-abil-sheet .tg-abil { padding: 8px 10px; }
+.tg-ability-text b { display: block; }
+.tg-abil-tag { position: absolute; left: 50%; top: -7px; transform: translateX(-50%); padding: 1px 6px; border-radius: 4px; background: var(--yel); color: var(--k0); box-shadow: 0 0 0 1.5px var(--k0); font-size: 9px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap; pointer-events: none; animation: tg-abil-pulse 1.4s var(--ease-out) infinite alternate; }
+.tg-mon.big .tg-abil-tag { display: none; }
+@keyframes tg-abil-pulse { from { opacity: 0.7; } to { opacity: 1; } }
+.tg-cond[data-cond="ability"] { background: var(--yel); color: var(--k0); font-style: normal; }
+.tg-cond[data-cond="ability"][data-off] { opacity: 0.5; text-decoration: line-through; }
+@media (prefers-reduced-motion: reduce) { .tg-abil-tag { animation: none; } }

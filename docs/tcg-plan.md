@@ -124,6 +124,17 @@ wordings the engine can't read. Work down that list:
    Rare Candy, damage boosts for a turn.
 5. **Abilities and Poké-Powers**: a hook per timing (on play, once a turn,
    always on).
+   First batch live (2026-11-26, `js/tcg/abilities.js`, `compileAbility`):
+   standing ones fold into `toolOf` (less damage, Retreat Cost, HP, auras
+   for the owner's Pokémon); ones that answer an attack (hit back, coin
+   flip to block, no damage from ex/V/Basic attackers, safe on the Bench,
+   hang on from full HP); ones you use (action `ability { spot }`, once a
+   turn unless "as often as you like", `slot.used`), read through
+   `compileTrainer` plus `energize`, `switchSelf`, `counters`; and "when
+   you play this Pokémon" ones, asked as an optional pick (`effect.op:
+   "ability"`). 682 of 4,214 Pokémon with an Ability have it live. Next:
+   move Energy, attach from deck, form changes, "your turn ends", locks.
+
 6. **Special Energy**, then the odd card types: V-UNION, LEGEND, Restored,
    BREAK keeping its earlier attacks, Lv.X.
 
