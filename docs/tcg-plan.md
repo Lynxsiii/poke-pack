@@ -29,7 +29,9 @@ the cards, sleeves, coins and playmats they have bought in-game.
   comes from.
 - **Table** (`js/tcg-page.js`, `css/pages/tcg.css`): phone first. Your sleeve
   is your card back, your coin makes the flips. A match is kept on the device
-  and picks up where it stopped.
+  and picks up where it stopped. Motion: the table is repainted whole, so
+  cards in flight, the turn banner and impacts live in a layer beside it
+  (`.tg-fx`); transform, opacity and filter only.
 - **Lesson** (`js/tcg/tutorial.js`): a practice match on borrowed Base Set
   cards with both decks stacked, and a coach that waits for one action at a
   time. The hub offers it until it has been finished once. The test suite
@@ -121,7 +123,7 @@ ships:
   Sleeve and coin per deck. Use the Energy prints a player owns.
 - **Bot**: difficulty steps, themed decks by era.
 - **Table**: a desktop layout, a match log, the discard pile to look through,
-  card movement instead of snaps, sound.
+  sound.
 - **Progress**: quests and XP only after the economy review; a ladder.
 
 ## Legal

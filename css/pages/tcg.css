@@ -303,6 +303,32 @@ body.tg-playing { overflow: hidden; }
 }
 .tg-pop.weak { background: var(--yel); color: var(--k0); }
 .tg-pop.heal { background: var(--hp); color: var(--k0); }
+.tg-pop.poisoned { background: #8a56d8; }
+.tg-pop.burned { background: var(--hp-low); }
+.tg-mon.evolved { animation: tg-evolved 0.56s var(--ease-out); }
+.tg-mon.charged { animation: tg-charged 0.46s var(--ease-out); }
+.tg-arena.shake { animation: tg-shake 0.4s linear; }
+.tg-count.bump, .tg-prizes.bump, .tg-cond.bump { animation: tg-bump 0.4s var(--ease-pop); }
+
+/* What outlives a repaint: cards in flight, the turn banner, impacts. */
+.tg-fx { position: fixed; inset: 0; z-index: 59; overflow: hidden; pointer-events: none; }
+.tg-ghost { position: absolute; border-radius: 4.5%/3.2%; object-fit: cover; filter: drop-shadow(0 6px 10px rgb(0 0 0 / 0.45)); will-change: transform, opacity; }
+.tg-banner { position: absolute; left: 0; right: 0; display: grid; place-items: center; height: 0; animation: tg-banner 0.95s var(--ease-out) both; }
+.tg-banner b {
+  padding: 5px 30px 8px; border: var(--line-w) solid var(--k0); border-bottom-width: 6px; border-radius: 6px; background: var(--yel); color: var(--k0);
+  font: italic 800 26px/1.1 var(--font-xc); letter-spacing: -0.02em; white-space: nowrap; transform: skewX(-8deg);
+}
+.tg-banner.foe b { background: var(--box); color: var(--on-k); border-color: var(--on-k); }
+.tg-burst { position: absolute; width: 0; height: 0; padding: 0; border: 0; background: none; }
+.tg-burst i { position: absolute; left: calc(var(--s) / -2); top: calc(var(--s) / -2); width: var(--s); height: var(--s); }
+.tg-burst i:first-child { border-radius: 50%; background: radial-gradient(circle, var(--w0) 0 18%, var(--en, var(--w0)) 19% 46%, transparent 47%); animation: tg-burst-core 0.42s var(--ease-out) both; }
+.tg-burst i:last-child {
+  background: var(--en, var(--w0));
+  clip-path: polygon(50% 0, 56% 38%, 85% 15%, 62% 44%, 100% 50%, 62% 56%, 85% 85%, 56% 62%, 50% 100%, 44% 62%, 15% 85%, 38% 56%, 0 50%, 38% 44%, 15% 15%, 44% 38%);
+  animation: tg-burst-star 0.5s var(--ease-out) both;
+}
+.tg-burst.big i:last-child { animation-duration: 0.6s; }
+.tg-burst[data-en="Colorless"] { --en: var(--w0); }
 .tg-table.turn-me .tg-bar-me .tg-who, .tg-table.turn-foe .tg-bar-foe .tg-who { animation: tg-turn 0.8s var(--ease-pop); }
 .tg-table.my-turn .tg-bar-me .tg-who { color: var(--yel); }
 
@@ -316,6 +342,13 @@ body.tg-playing { overflow: hidden; }
 @keyframes tg-hit { 20% { transform: translateX(-5%); filter: brightness(1.7); } 45% { transform: translateX(4%); } 70% { transform: translateX(-2%); } }
 @keyframes tg-ko { 30% { transform: rotate(-4deg); filter: grayscale(1) brightness(0.8); } to { opacity: 0; transform: translateY(26%) rotate(-10deg); filter: grayscale(1); } }
 @keyframes tg-number { from { opacity: 0; transform: translate(-50%, 30%) skewX(var(--skew)) scale(0.7); } 22% { opacity: 1; transform: translate(-50%, 0) skewX(var(--skew)) scale(1.08); } 80% { opacity: 1; transform: translate(-50%, -40%) skewX(var(--skew)); } to { opacity: 0; transform: translate(-50%, -70%) skewX(var(--skew)); } }
+@keyframes tg-evolved { 30% { transform: scale(1.12); filter: brightness(2.2) saturate(0.4); } 60% { transform: scale(0.98); filter: brightness(1.2); } }
+@keyframes tg-charged { 40% { transform: scale(1.05); filter: brightness(1.45); } }
+@keyframes tg-shake { 15% { transform: translate(-5px, 2px); } 35% { transform: translate(5px, -2px); } 55% { transform: translate(-3px, 1px); } 75% { transform: translate(2px, 0); } }
+@keyframes tg-bump { 40% { transform: scale(1.3); } }
+@keyframes tg-banner { from { opacity: 0; transform: translateX(-46%); } 22%, 72% { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(46%); } }
+@keyframes tg-burst-core { from { opacity: 1; transform: scale(0.2); } to { opacity: 0; transform: scale(1.15); } }
+@keyframes tg-burst-star { from { opacity: 1; transform: scale(0.25) rotate(-18deg); } 60% { opacity: 1; } to { opacity: 0; transform: scale(1.1) rotate(14deg); } }
 @keyframes tg-turn { from { transform: translateX(-14px) skewX(var(--skew)); opacity: 0.2; } }
 
 @media (max-width: 520px) {
@@ -325,7 +358,7 @@ body.tg-playing { overflow: hidden; }
   .tg-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
-body.no-motion .tg-table *, body.no-motion .tg-sheet, body.no-motion .tg-sheet-bg { animation: none !important; transition: none !important; }
+body.no-motion .tg-table *, body.no-motion .tg-fx *, body.no-motion .tg-sheet, body.no-motion .tg-sheet-bg { animation: none !important; transition: none !important; }
 @media (prefers-reduced-motion: reduce) {
-  .tg-table *, .tg-sheet, .tg-sheet-bg { animation: none !important; transition: none !important; }
+  .tg-table *, .tg-fx *, .tg-sheet, .tg-sheet-bg { animation: none !important; transition: none !important; }
 }

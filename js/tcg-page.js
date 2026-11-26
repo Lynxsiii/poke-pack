@@ -598,7 +598,8 @@ export function initTcg(deps) {
     // During setup your picks show where they will stand; theirs stay face down.
     const myActive = setup ? (match.setup.active ? { uid: match.setup.active, under: [], energy: [], damage: 0 } : null) : me.active;
     const myBench = setup ? match.setup.bench.map((uid) => ({ uid, under: [], energy: [], damage: 0 })) : me.bench;
-    const hand = setup ? me.hand.filter((uid) => uid !== match.setup.active && !match.setup.bench.includes(uid)) : me.hand;
+    // Cards about to be drawn stay out of the hand until their draw is played.
+    const hand = setup ? me.hand.filter((uid) => uid !== match.setup.active && !match.setup.bench.includes(uid)) : match.unseen?.size ? me.hand.filter((uid) => !match.unseen.has(uid)) : me.hand;
     const back = deps.backHtml();
     const foeBack = `<span class="tg-back"><img src="assets/cards/shared/card-back-sm.webp" alt="" /></span>`;
     const prompt = promptOf();
@@ -749,6 +750,7 @@ export function initTcg(deps) {
   function paintTable() {
     if (!shown || route.name !== "match") return;
     const scroll = root.querySelector(".tg-hand")?.scrollLeft || 0;
+    fxLayer(true);
     root.innerHTML = tableHtml();
     const hand = root.querySelector(".tg-hand");
     if (hand) hand.scrollLeft = scroll;
@@ -819,6 +821,152 @@ export function initTcg(deps) {
     setTimeout(() => el.remove(), 900);
   }
 
+  /* ---------- motion ----------
+     The table is repainted whole, so anything that has to outlive a repaint (a card in
+     flight, the turn banner, an impact) lives in a layer of its own beside it. Transform,
+     opacity and filter only. */
+
+  let fx = null;
+  const EASE = "cubic-bezier(0.2, 0.8, 0.2, 1)";
+  const still = () => deps.reduceMotion();
+  const rectOf = (selector) => root.querySelector(selector)?.getBoundingClientRect() || null;
+  const monSel = (p, spot) => (spot === ACTIVE ? `.tg-spot[data-p="${p}"] .tg-mon` : `.tg-bench .tg-mon[data-p="${p}"][data-spot="${spot}"]`);
+  const centre = (r) => ({ x: r.left + r.width / 2, y: r.top + r.height / 2 });
+
+  function fxLayer(on) {
+    if (on && !fx) {
+      fx = document.createElement("div");
+      fx.className = "tg-fx rt-dark";
+      fx.setAttribute("aria-hidden", "true");
+      document.body.appendChild(fx);
+    } else if (!on && fx) {
+      fx.remove();
+      fx = null;
+    }
+  }
+
+  /** A card image travels from one rect to another. `absorb`: it sinks into what it lands on. */
+  function ghost(src, from, to, { ms = 340, width = 0, absorb = false, delay = 0 } = {}) {
+    if (!src || !from || !to || !fx || still() || !to.width) return;
+    const w = width || to.width;
+    const h = w * 1.4;
+    const a = centre(from);
+    const b = centre(to);
+    const el = document.createElement("img");
+    el.className = "tg-ghost";
+    el.alt = "";
+    el.src = src;
+    el.style.cssText = `left:${b.x - w / 2}px;top:${b.y - h / 2}px;width:${w}px;height:${h}px`;
+    fx.appendChild(el);
+    const from0 = `translate(${a.x - b.x}px, ${a.y - b.y}px) scale(${Math.max(0.16, Math.min(1.4, from.width / w)).toFixed(3)})`;
+    const frames = absorb
+      ? [{ transform: from0, opacity: 1 }, { transform: "scale(0.9)", opacity: 1, offset: 0.7 }, { transform: "scale(0.4)", opacity: 0 }]
+      : [{ transform: from0, opacity: 1 }, { transform: "none", opacity: 1 }];
+    el.animate(frames, { duration: ms, delay, easing: EASE, fill: "both" }).finished.catch(() => {}).then(() => el.remove());
+  }
+
+  /** Something on the table arrives from elsewhere: its picture flies in, and it shows when the picture lands. */
+  function flyIn(from, el, { ms = 340, delay = 0 } = {}) {
+    const pic = el?.querySelector("img");
+    if (!pic || !from || still()) return;
+    ghost(pic.currentSrc || pic.src, from, pic.getBoundingClientRect(), { ms, delay });
+    el.animate([{ opacity: 0 }, { opacity: 0 }], { duration: ms + delay });
+  }
+
+  function banner(text, tone) {
+    if (!fx || still()) return;
+    fx.querySelector(".tg-banner")?.remove();
+    const el = document.createElement("div");
+    el.className = `tg-banner ${tone}`;
+    el.innerHTML = `<b>${esc(text)}</b>`;
+    const arena = rectOf(".tg-arena");
+    if (arena) el.style.top = `${arena.top + arena.height / 2}px`;
+    fx.appendChild(el);
+    setTimeout(() => el.remove(), 1000);
+  }
+
+  /** The flash where an attack lands, in the attacker's colour. */
+  function burst(p, type, big) {
+    const at = rectOf(`.tg-spot[data-p="${p}"]`);
+    if (!at || !fx || still()) return;
+    const el = document.createElement("span");
+    el.className = `tg-burst tg-en${big ? " big" : ""}`;
+    el.dataset.en = type || "Colorless";
+    const c = centre(at);
+    el.style.cssText = `left:${c.x}px;top:${c.y}px;--s:${Math.round(at.width * 1.25)}px`;
+    el.innerHTML = "<i></i><i></i>";
+    fx.appendChild(el);
+    setTimeout(() => el.remove(), 620);
+  }
+
+  /** The HP bar on a name plate runs down (or up) from where it stood. */
+  function slideHp(p, before, after, max) {
+    const bar = root.querySelector(`.tg-hud[data-p="${p}"] .tg-hp i`);
+    if (!bar || !max || still()) return;
+    bar.animate([{ transform: `scaleX(${(before / max).toFixed(3)})` }, { transform: `scaleX(${(after / max).toFixed(3)})` }], { duration: 460, easing: EASE });
+  }
+
+  const handSpot = (p) => (p === ME ? rectOf(".tg-hand") : rectOf(".tg-bar-foe .tg-count"));
+  const deckSpot = (p) => (p === ME ? rectOf(".tg-bar-me .tg-mini") : rectOf(".tg-bar-foe .tg-ic.deck"));
+  /** A rect the size of a Bench card in the middle of a Bench: where a Pokémon walks in from. */
+  function benchSpot(p) {
+    const r = rectOf(p === ME ? ".tg-bench-me" : ".tg-bench-foe");
+    if (!r) return null;
+    const w = r.height / 1.6;
+    return { left: r.left + r.width / 2 - w / 2, top: r.top, width: w, height: r.height };
+  }
+
+  /** How one event moves, once the table shows what it led to. Returns how long to let it play. */
+  function animate(event, from) {
+    if (still()) return 0;
+    if (event.t === "turn") {
+      banner(event.p === ME ? "Your turn" : `${BOT_NAME}'s turn`, event.p === ME ? "me" : "foe");
+      return 0;
+    }
+    if (event.t === "draw") {
+      if (event.p === BOT) {
+        cue(".tg-bar-foe .tg-count", "bump", 400);
+        return 0;
+      }
+      const cards = [...root.querySelectorAll(".tg-hand .tg-card")].slice(-event.uids.length);
+      cards.forEach((card, i) => flyIn(deckSpot(ME), card, { ms: 320, delay: i * 90 }));
+      return 320 + (cards.length - 1) * 90;
+    }
+    const src = from || handSpot(event.p);
+    if (event.t === "bench") {
+      flyIn(src, root.querySelector(monSel(event.p, event.spot)), { ms: 300 });
+      return 300;
+    }
+    if (event.t === "evolve") {
+      const el = root.querySelector(monSel(event.p, event.spot));
+      flyIn(src, el, { ms: 300 });
+      setTimeout(() => cue(monSel(event.p, event.spot), "evolved", 560), 290);
+      return 620;
+    }
+    if (event.t === "attach") {
+      const to = rectOf(`${monSel(event.p, event.spot)} img`);
+      if (to) ghost(img(match.state.cards[event.uid]), src, to, { ms: 320, width: to.width * 0.62, absorb: true });
+      setTimeout(() => cue(monSel(event.p, event.spot), "charged", 460), 230);
+      return 420;
+    }
+    if (event.t === "promote" || event.t === "retreat") {
+      flyIn(benchSpot(event.p), root.querySelector(monSel(event.p, ACTIVE)), { ms: 320 });
+      return 320;
+    }
+    if (event.t === "prize") {
+      const to = handSpot(event.p);
+      const at = rectOf(`.tg-bar-${event.p === ME ? "me" : "foe"} .tg-prizes`);
+      if (to && at) {
+        const width = event.p === ME ? to.height / 1.6 : 26;
+        event.uids.forEach((_, i) => ghost("assets/cards/shared/card-back-sm.webp", at, to, { ms: 420, width, absorb: true, delay: i * 110 }));
+      }
+      cue(`.tg-bar-${event.p === ME ? "me" : "foe"} .tg-prizes`, "bump", 420);
+      return 300;
+    }
+    if (event.t === "condition") cue(`.tg-hud[data-p="${event.p}"] .tg-cond[data-cond="${event.kind}"]`, "bump", 420);
+    return 0;
+  }
+
   async function showFlips(results) {
     for (const heads of results.slice(0, 4)) {
       match.sheet = "flip";
@@ -842,6 +990,8 @@ export function initTcg(deps) {
     const wait = (ms) => sleep(fast ? Math.min(ms, 120) : ms);
     if (action.player === ME && !coachAllows(action)) return false;
     const before = action.type === "attack" ? JSON.parse(JSON.stringify(state)) : null;
+    // Where the card being played sits in the hand, before the hand is redrawn without it.
+    const played = action.player === ME && action.uid ? rectOf(`.tg-hand [data-hand="${action.uid}"]`) : null;
     let events;
     try {
       events = apply(state, action, defs);
@@ -876,12 +1026,18 @@ export function initTcg(deps) {
         if (event.why === "poisoned" || event.why === "burned") continue; // the checkup, told after the attack
         if (event.t === "damage" || event.t === "heal") {
           const slot = before.players[event.p].active;
+          const max = slot ? defOf(before, slot.uid, defs).hp : 0;
+          const was = slot ? Math.max(0, max - slot.damage) : 0;
           if (slot) slot.damage = Math.max(0, slot.damage + (event.t === "heal" ? -event.n : event.n));
           say(event);
           paintTable();
+          if (slot) slideHp(event.p, was, Math.max(0, max - slot.damage), max);
           popDamage(event.p, event.t === "heal" ? `+${event.n}` : `-${event.n}`, event.t === "heal" ? "heal" : event.weak ? "weak" : "");
           if (event.t === "damage") {
+            const heavy = event.weak || (max && event.n * 2 >= max);
+            if (!event.self && !event.why) burst(event.p, defOf(before, before.players[p].active.uid, defs).types?.[0], heavy);
             cue(`.tg-spot[data-p="${event.p}"] .tg-mon`, "hit", 420);
+            if (heavy) cue(".tg-arena", "shake", 420);
             deps.buzz?.(event.weak ? [18, 30, 18] : 14);
           }
           await wait(620);
@@ -897,31 +1053,38 @@ export function initTcg(deps) {
         } else if (event.t === "prize") {
           say(event);
           paintTable();
-          await wait(420);
+          animate(event);
+          await wait(460);
         }
       }
       match.shownState = null;
     }
 
+    match.unseen = new Set(events.filter((e) => e.t === "draw" && e.p === ME).flatMap((e) => e.uids));
     for (const event of events) {
       if (before && ["attack", "flip", "damage", "heal", "miss", "ko", "prize"].includes(event.t) && !["poisoned", "burned"].includes(event.why)) continue;
       if (event.t === "over") continue;
+      if (event.t === "draw" && event.p === ME) event.uids.forEach((uid) => match.unseen.delete(uid));
       say(event);
       paintTable();
+      const moving = animate(event, event.p === ME ? played : null);
       if (event.t === "turn") {
         cue(".tg-table", event.p === ME ? "turn-me" : "turn-foe", 900);
-        await wait(520);
+        await wait(still() ? 520 : 760);
       } else if (event.why === "poisoned" || event.why === "burned" || event.t === "cure" || event.t === "condition") {
-        if (event.t === "damage") cue(`.tg-spot[data-p="${event.p}"] .tg-mon`, "hit", 420);
+        if (event.t === "damage") {
+          cue(`.tg-spot[data-p="${event.p}"] .tg-mon`, "hit", 420);
+          popDamage(event.p, `-${event.n}`, event.why);
+        }
         await wait(620);
       } else if (event.p === BOT || event.t === "promote") {
-        await wait(480);
-      } else if (event.t === "draw" && event.p === ME) {
-        cue(".tg-hand .tg-card:last-child", "drawn", 500);
-        await wait(260);
+        await wait(Math.max(480, moving + 120));
+      } else if (moving) {
+        await wait(moving);
       }
     }
 
+    match.unseen = null;
     match.busy = false;
     if (state.phase === "over") return finish();
     paintTable();
@@ -1089,6 +1252,7 @@ export function initTcg(deps) {
     if (!shown) return;
     document.body.classList.toggle("tg-playing", route.name === "match" && Boolean(match));
     if (route.name === "match" && match) return paintTable();
+    fxLayer(false);
     if (route.name === "deck") {
       const deck = deckById(route.id);
       if (deck) {
@@ -1233,6 +1397,7 @@ export function initTcg(deps) {
   function hide() {
     shown = false;
     closeLook();
+    fxLayer(false);
     document.body.classList.remove("tg-playing");
   }
 
