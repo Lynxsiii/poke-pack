@@ -18,7 +18,7 @@
 
 import { compileAbility } from "./abilities.js";
 import { compileAttack } from "./effects.js";
-import { compileStadium, compileTool, compileTrainer } from "./trainers.js";
+import { compileCard, compileStadium, compileTool } from "./trainers.js";
 import { compileSpecialEnergy } from "./energy.js";
 import { deckName, legalityOf } from "./formats.js";
 
@@ -32,6 +32,7 @@ export const FREE_ENERGY = ENERGY_TYPES.map((type) => ({
 const FREE_IDS = new Set(FREE_ENERGY.map((e) => e.id));
 export const isFreeEnergy = (id) => FREE_IDS.has(id);
 
+const TAGS = ["Team Plasma", "SP", "Level-Up", "Baby"];
 const EVOLVED = /^(Stage 1|Stage 2|VMAX|VSTAR|BREAK|Level-Up)$/;
 const NOT_YET = /^(LEGEND|V-UNION|Restored)$/;
 
@@ -123,6 +124,8 @@ export function defineCard(card, row, text = "", lines = null, print = null) {
  * (js/tcg/formats.js). Without it a card has no regulation mark.
  */
 function defineRules(card, row, text, lines, print) {
+  // Kinds some Trainers ask for by name: "a Team Plasma card", "Pokémon SP", "(excluding Pokémon LV.X)", "Baby Pokémon".
+  const tags = (card.subtypes || []).filter((s) => TAGS.includes(s));
   const base = {
     id: card.id,
     name: card.name,
@@ -131,6 +134,7 @@ function defineRules(card, row, text, lines, print) {
     mark: print?.mark || "",
     ...(isClassic(card) ? { classic: true } : {}),
     ...limitsOf(card),
+    ...(tags.length ? { tags } : {}),
   };
   if (card.supertype === "Energy" || card.energy) {
     const type = ENERGY_TYPES.find((t) => new RegExp(`^(Basic )?${t} Energy$`).test(card.name));
@@ -144,7 +148,7 @@ function defineRules(card, row, text, lines, print) {
   if (card.supertype !== "Pokémon") {
     const subs = card.subtypes || [];
     const sub = subs.includes("Supporter") ? "supporter" : subs.includes("Stadium") ? "stadium" : subs.some((x) => /Tool|Technical Machine/.test(x)) ? "tool" : "item";
-    const fx = sub === "item" || sub === "supporter" ? compileTrainer(text) : null;
+    const fx = sub === "item" || sub === "supporter" ? compileCard(text) : null;
     // A Tool is not played and discarded: it is attached, and its numbers ride on the Pokémon.
     const tool = sub === "tool" && subs.includes("Pokémon Tool") ? compileTool(text) : null;
     const stadium = sub === "stadium" ? compileStadium(text) : null;

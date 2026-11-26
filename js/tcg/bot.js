@@ -17,7 +17,7 @@
  */
 
 import { trainerAim } from "./trainers.js";
-import { ACTIVE, apply, damageAfterTyping, defOf, energyOf, hpLeft, inPlay, legalActions, other, retreatCost, statusOf, unpaid, usableAttacks } from "./engine.js";
+import { ACTIVE, apply, chooseBlock, damageAfterTyping, defOf, energyOf, hpLeft, inPlay, legalActions, other, retreatCost, statusOf, unpaid, usableAttacks } from "./engine.js";
 
 /** How much an attack is worth against this defender, before any coin flip. */
 function attackWorth(attack, def, foeDef, foeHp) {
@@ -248,11 +248,22 @@ export function botAction(state, player, defs) {
       return { type: "choose", player, uids: [...theirs.slice(0, waiting.max), ...mine.slice(0, Math.max(0, waiting.min - theirs.length))] };
     }
     const ranked = waiting.uids.slice().sort((x, y) => worth(y) - worth(x));
-    // A price is paid with the cards worth least; anything else takes the best on offer.
-    const away = ["discard", "toTop", "toBottom"].includes(waiting.effect.op);
-    const uids = away ? ranked.reverse().slice(0, waiting.min) : ranked.slice(0, waiting.max);
+    // A price is paid with the cards worth least; anything else takes the best on offer. Choosing among the
+    // other player's cards (their hand, cards for their hand) it is the other way round.
+    const foreign = waiting.owner != null && waiting.owner !== player;
+    const away = ["discard", "toTop", "toBottom"].includes(waiting.effect.op) !== foreign;
+    // Cards that pay for draws (Milo, Caitlin): a couple of the least useful, when it may choose how many.
+    const many = waiting.pass && !foreign ? Math.max(waiting.min, Math.min(waiting.max, 2)) : away ? waiting.min : waiting.max;
+    const order = away ? ranked.reverse() : ranked;
+    // Cards that must go together by a rule (one kind only, one of each): the best that still fit, in turn.
+    const uids = [];
+    for (const uid of order) if (uids.length < many && !chooseBlock(state, waiting, [...uids, uid], defs)) uids.push(uid);
+    for (const uid of order) if (uids.length < waiting.min && !uids.includes(uid)) uids.push(uid);
     return { type: "choose", player, uids };
   }
+
+  // "Choose 1": the options come in the order printed, with the most cards to draw first; the first is the plain choice.
+  if (actions[0].type === "option") return actions[0];
 
   if (actions[0].type === "pick") {
     const waiting = state.pending[0];
