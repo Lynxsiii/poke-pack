@@ -26,8 +26,6 @@
  *             (the turn an attack last damaged it, and by how much)
  *   side      lostOn: the turns one of their Pokémon was Knocked Out on the opponent's turn; downed: [{ turn, uid }] the
  *             ones Knocked Out by damage from the opponent's attack
- *   strike    { p, uid, index, turn, hit }   the attack being made this turn: its damage waits here while a choice
- *             before the damage is answered (effects.js OPS.ask, OPS.pay)
  *   phase     "setup" | "main" | "over"
  *   current   whose turn (0 | 1), first: who went first, turn: 1, 2, 3...
  *   pending   [{ type: "promote", player }]   answers the game waits for before anything else
@@ -54,7 +52,7 @@
  * printed damage only. Not in yet: Trainers, Abilities.
  */
 
-import { runAttack, runAttackEffects } from "./effects.js";
+import { runAttackEffects } from "./effects.js";
 import { T_OPS, boostOf, energyIn, fieldFits, fits, moveTargets, prizesLeft, runTrainer, stripEnergy, toolFits, trainerReady } from "./trainers.js";
 
 /**
@@ -413,13 +411,20 @@ export function conditionsOn(slot) {
 }
 
 /** Asleep, Confused and Paralyzed replace each other; Burned and Poisoned sit beside them. */
-export function addCondition(state, slot, kind, defs = null) {
+export function addCondition(state, slot, kind, defs = null, { counters = 0 } = {}) {
   if (!slot || !CONDITIONS.includes(kind)) return false;
   // An Ability can keep some or all of them off.
   const immune = defs ? toolOf(state, slot, defs).immune || [] : [];
   if (immune.includes("all") || immune.includes(kind)) return false;
   const st = (slot.status ||= { ...NO_STATUS });
-  if (kind === "poisoned" || kind === "burned") {
+  if (kind === "poisoned") {
+    // "Put 2 damage counters instead of 1 on that Pokémon between turns": the newest Poison is the one that counts.
+    const was = st.poisoned && (st.poisonN || 10);
+    st.poisoned = true;
+    if (counters) st.poisonN = counters;
+    else delete st.poisonN;
+    return was !== (st.poisonN || 10);
+  } else if (kind === "burned") {
     if (st[kind]) return false;
     st[kind] = true;
   } else {
@@ -448,6 +453,8 @@ function clearConditions(slot) {
      weaker    its attacks do n less, before Weakness and Resistance
      exposed   takes n more from attacks, after Weakness and Resistance
      harden    takes no damage from an attack that would do n or less
+     noWeakness has no Weakness     spite     n damage counters on whatever attack damages it
+     bounty    n more Prize cards if this turn's attack damage Knocks it Out
    A guard may say `from`: only attacks from "basic", "evolution" or "basicNonColorless" Pokémon. */
 
 /** A slot's mark of this kind that is in force this turn. */
@@ -493,8 +500,8 @@ function checkup(state, defs, events) {
     const st = slot?.status;
     if (!st) continue;
     if (st.poisoned) {
-      slot.damage += 10;
-      events.push({ t: "damage", p, spot: ACTIVE, n: 10, why: "poisoned" });
+      slot.damage += st.poisonN || 10;
+      events.push({ t: "damage", p, spot: ACTIVE, n: st.poisonN || 10, why: "poisoned" });
     }
     if (st.burned) {
       slot.damage += 20;
@@ -766,7 +773,6 @@ function startTurn(state, events) {
   side.stadiumPlayed = false;
   side.stadiumUsed = false;
   side.abilitiesUsed = [];
-  delete state.strike;
   events.push({ t: "turn", p: state.current, n: state.turn });
   if (!side.deck.length) return win(state, other(state.current), "deck", events);
   draw(state, state.current, 1, events);
@@ -878,7 +884,8 @@ export function resolveKnockOuts(state, defs, events, { between = false } = {}) 
       if (spot === ACTIVE) side.active = null;
       else side.bench[spot] = null;
       // Expert Belt: one more Prize card.
-      took[other(p)] += (def.prizes || 1) + (tool?.prize || 0);
+      // "If your opponent's Pokémon is Knocked Out by damage from this attack, take 1 more Prize card."
+      took[other(p)] += (def.prizes || 1) + (tool?.prize || 0) + (byAttack(slot, p) ? markOn(state, slot, "bounty")?.n || 0 : 0);
       // Remembered by turn for "if any of your Pokémon were Knocked Out during your opponent's last turn"
       // (the checkup between turns is no one's turn).
       if (state.current === other(p) && !between) side.lostOn = [...new Set([...(side.lostOn || []).filter((t) => t >= state.turn - 1), state.turn])];
@@ -970,6 +977,104 @@ function benched(state, player, slot, defs, events, fromHand = false) {
   slot.damage += hurt.n;
   events.push({ t: "damage", p: player, spot: state.players[player].bench.indexOf(slot), n: hurt.n, why: "stadium" });
   return true;
+}
+
+/**
+ * An attack's damage to the other Active Pokémon (the one there now: a step before it may have switched it),
+ * then the steps after it. ctx is the attack's (js/tcg/effects.js): { state, defs, events, player, slot, attack, hit }.
+ */
+export function strike(ctx) {
+  const { state, defs, events, player, slot, attack, hit } = ctx;
+  const def = defOf(state, slot.uid, defs);
+  const foe = other(player);
+  const target = state.players[foe].active;
+  ctx.target = target;
+  // What an earlier attack left on the target: less damage, or none at all.
+  const marked = Boolean(target && !hit.noEffects && markOn(state, target, "shield"));
+  // An Ability that keeps off every effect of attacks except damage counts as a shield for the effects.
+  ctx.shielded = marked || Boolean(target && !hit.noEffects && abilityOn(state, target, defs)?.noEffects);
+  if (!hit.cancelled && target) {
+    // Tools: the attacker's adds damage before Weakness, the target's can lift its Weakness or soak some.
+    const mine = toolOf(state, slot, defs);
+    const theirs = toolOf(state, target, defs);
+    // Its own marks too, before Weakness: more from its last turn ("Echoed Voice does 50 more"), less from the other's ("Growl").
+    const base = hit.damage > 0 ? Math.max(0, hit.damage + (mine.plus || 0) + heldSum(slot, "plus") + boostOf(state, player, slot, target, defs) + markSum(state, slot, "stronger", attack.name) - markSum(state, slot, "weaker")) : hit.damage;
+    // Old Gyms: Brock's Pokémon ignore Resistance; a Water attacker ignores Blaine's Pokémon's Weakness.
+    const noWeakness = hit.noWeakness || Boolean(theirs.noWeakness) || (theirs.noWeaknessVs || []).some((t) => def.types.includes(t)) || (!hit.noEffects && Boolean(markOn(state, target, "noWeakness")));
+    const dealt = damageAfterTyping(base, def, defOf(state, target.uid, defs), { ...hit, noWeakness, noResistance: hit.noResistance || Boolean(theirs.noResistance) || Boolean(mine.pierce) });
+    // Old PlusPower and Misty: more only when the attack does damage after Weakness and Resistance.
+    if (dealt.amount > 0) dealt.amount += heldSum(slot, "after") + boostOf(state, player, slot, target, defs, true) + (hit.noEffects ? 0 : markSum(state, target, "exposed"));
+    const less = (hit.noEffects ? 0 : markOn(state, target, "less")?.n || 0) + (theirs.less || 0) + (hit.noEffects ? 0 : heldSum(target, "less"));
+    let guarded = marked || (!hit.noEffects && guardedFrom(state, target, def));
+    // The target's Ability: no damage from this kind of attacker, or a coin flip to take none.
+    const power = hit.noEffects ? null : abilityOn(state, target, defs);
+    if (!guarded && dealt.amount > 0 && power?.wall && walled(power.wall, def, state, slot, defs)) guarded = true;
+    if (!guarded && dealt.amount - less > 0 && power?.dodge) {
+      const heads = flip(state);
+      events.push({ t: "flip", p: foe, results: [heads], why: "ability", name: power.name });
+      guarded = heads;
+    }
+    let amount = guarded ? 0 : Math.max(0, dealt.amount - less);
+    // "Prevent that attack's damage if that damage is 30 or less": judged on what would land.
+    const harden = !hit.noEffects && markOn(state, target, "harden");
+    if (harden && amount <= harden.n) amount = 0;
+    // From full HP it hangs on instead of being Knocked Out.
+    if (power?.sturdy && target.damage === 0 && amount >= maxHp(state, target, defs) && maxHp(state, target, defs) > power.sturdy) {
+      amount = maxHp(state, target, defs) - power.sturdy;
+      events.push({ t: "ability", p: foe, spot: ACTIVE, uid: target.uid, name: power.name });
+    }
+    // Or a coin flip decides it, from any HP.
+    if (power?.hangOn && amount > 0 && amount >= hpLeft(state, target, defs) && hpLeft(state, target, defs) > power.hangOn) {
+      const heads = flip(state);
+      events.push({ t: "flip", p: foe, results: [heads], why: "ability", name: power.name });
+      if (heads) {
+        amount = hpLeft(state, target, defs) - power.hangOn;
+        events.push({ t: "ability", p: foe, spot: ACTIVE, uid: target.uid, name: power.name });
+      }
+    }
+    if (amount > 0) {
+      target.damage += amount;
+      struck(state, target, amount);
+      hit.dealt = amount;
+      events.push({ t: "damage", p: foe, spot: ACTIVE, n: amount, weak: dealt.weak, resist: dealt.resist });
+      // Koga: "If an attack from a Pokémon with Koga in its name does damage to a Defending Pokémon this turn, that Pokémon is then Poisoned."
+      if ((state.boosts || []).some((b) => b.poison && b.p === player && b.turn === state.turn && fieldFits(b.who || {}, def)) && addCondition(state, target, "poisoned", defs)) events.push({ t: "condition", p: foe, kind: "poisoned" });
+      // "If this Pokémon is damaged by an attack (even if it is Knocked Out), put 3 damage counters on the Attacking Pokémon."
+      const spite = markOn(state, target, "spite");
+      if (spite) {
+        slot.damage += spite.n;
+        events.push({ t: "damage", p: player, spot: ACTIVE, n: spite.n, self: true, why: "mark" });
+      }
+      // Damaged in the Active Spot, it hits back, even when this Knocks it Out.
+      const thorns = abilityOn(state, target, defs)?.thorns;
+      if (thorns) {
+        events.push({ t: "ability", p: foe, spot: ACTIVE, uid: target.uid, name: defOf(state, target.uid, defs).ability.name });
+        if (thorns.n) {
+          slot.damage += thorns.n;
+          events.push({ t: "damage", p: player, spot: ACTIVE, n: thorns.n, self: true, why: "ability" });
+        } else if (addCondition(state, slot, thorns.status, defs)) events.push({ t: "condition", p: player, kind: thorns.status });
+      }
+      // Its Tool too: Rocky Helmet's damage counters, Lucky Helmet's cards, Counterattack Claws' coin flip.
+      const spikes = toolOn(state, target, defs)?.thorns;
+      if (spikes) {
+        events.push({ t: "tool-effect", p: foe, spot: ACTIVE, uid: target.tool });
+        const heads = spikes.flip ? flip(state) : true;
+        if (spikes.flip) events.push({ t: "flip", p: foe, results: [heads], why: "tool" });
+        if (spikes.n && heads) {
+          slot.damage += spikes.n;
+          events.push({ t: "damage", p: player, spot: ACTIVE, n: spikes.n, self: true, why: "tool" });
+        }
+        if (spikes.draw) draw(state, foe, spikes.draw, events);
+        if (spikes.spent) dropTool(state, foe, ACTIVE, target, defs, events);
+      }
+    } else if (dealt.amount > 0) {
+      events.push({ t: "blocked", p: foe });
+    }
+  }
+  if (!hit.cancelled) runAttackEffects("after", attack, ctx);
+  state.ending = true;
+  // An effect that needs a choice (which Benched Pokémon?) waits for it; Knock Outs are judged after.
+  if (!state.pending.length) resolveKnockOuts(state, defs, events);
 }
 
 const HANDLERS = {
@@ -1070,6 +1175,7 @@ const HANDLERS = {
     if (energy.kind !== "energy") fail("That isn't an Energy card.");
     if (!energy.playable) fail(energy.why || "That Energy can't be played yet.");
     if (side.energyUsed) fail("You've already attached an Energy this turn.");
+    if (handLock(state, player, energy)) fail(handLock(state, player, energy));
     const slot = slotAt(state, player, spot);
     if (!slot) fail("There's no Pokémon there.");
     if (!energyFits(energy, defOf(state, slot.uid, defs))) fail(`${energy.name} can only be attached to ${onlyFor(energy.special.only)} Pokémon.`);
@@ -1152,6 +1258,7 @@ const HANDLERS = {
     const def = defOf(state, uid, defs);
     if (def.kind !== "trainer" || def.sub !== "tool" || !def.playable) fail(def.why || "That isn't a Pokémon Tool.");
     if (side.noTrainers === state.turn) fail("You can't play any more Trainer cards this turn.");
+    if (handLock(state, player, def)) fail(handLock(state, player, def));
     const slot = slotAt(state, player, spot);
     if (!slot) fail("There's no Pokémon there.");
     if (slot.tool) fail("That Pokémon already has a Tool.");
@@ -1257,14 +1364,9 @@ const HANDLERS = {
         return;
       }
     }
-    // The attack in progress, kept in the state: a choice its text asks before the damage (js/tcg/effects.js
-    // OPS.ask, OPS.pay) holds the damage back until it is answered, and the answer may come in another action.
-    state.strike = { p: player, uid: slot.uid, index, turn: state.turn, hit };
-    const ctx = { state, defs, events, player, slot, target, attack, hit, shielded: false };
-    runAttack(ctx);
-    state.ending = true;
-    // An effect that needs a choice (which Benched Pokémon?) waits for it; Knock Outs are judged after.
-    if (!state.pending.length) resolveKnockOuts(state, defs, events);
+    // The steps before the damage, then the damage itself (strike, below). A choice among the steps (which
+    // Pokémon to switch in, which attack to copy) holds the damage back until it is made.
+    runAttackEffects("before", attack, { state, defs, events, player, slot, target, attack, hit, shielded: false, atk: [def.id, index] }, true);
   },
 
   /**
@@ -1318,13 +1420,13 @@ const HANDLERS = {
       pile.push(...present);
       if (present.length) state.pending.splice(1, 0, { type: "pick", optional: false, player, side: player, spots: side.bench.map((_, i) => i), left: 1, effect: { op: "attachHeld", uids: present, zone: "discard", left: true } });
     } else if (op === "takeBack") {
-      // Saffron City Gym: a basic Energy off one of your Pokémon, back to your hand.
+      // Saffron City Gym: a basic Energy off one of your Pokémon, back to your hand (`owner`: theirs, to their hand).
       for (const uid of picked) {
-        const hit = inPlay(state, player).find(([slot]) => slot.energy.includes(uid));
+        const hit = inPlay(state, owner).find(([slot]) => slot.energy.includes(uid));
         if (!hit) continue;
         hit[0].energy.splice(hit[0].energy.indexOf(uid), 1);
         side.hand.push(uid);
-        events.push({ t: "energy-to-hand", p: player, spot: hit[1], uids: [uid] });
+        events.push({ t: "energy-to-hand", p: owner, spot: hit[1], uids: [uid] });
       }
     } else if (op === "dropInPlay") {
       // Tools or Energy off any Pokémon in play, the Stadium: each to its owner's discard pile.
@@ -1463,7 +1565,9 @@ const HANDLERS = {
         events.push({ t: "discard-energy", p: player, spot: at[1], uids: [uid] });
       }
       if (waiting.zone === "hand" && picked.length) events.push({ t: "discard-hand", p: player, uids: picked });
-      if (state.strike) state.strike.hit.paid = [...(state.strike.hit.paid || []), ...picked];
+      // The damage so far rides on the steps waiting for this choice (effects.js runSteps): what went is added to it.
+      const fx = (waiting.then || []).find((step) => step.op === "fx" && step.hit);
+      if (fx) fx.hit = { ...fx.hit, paid: [...(fx.hit.paid || []), ...picked] };
     } else if (op === "look") {
       // "Look at your opponent's hand": the cards were seen, nothing moves.
     } else {
@@ -1511,93 +1615,20 @@ const HANDLERS = {
 };
 
 /**
- * The attack's damage to the other Active Pokémon, then its effects after the damage: run by the attack's
- * steps (effects.js OPS.strike) once whatever its text does first is done.
+ * Cards an attack keeps in the hand this turn ("During your opponent's next turn, they can't play any Item
+ * cards from their hand"): side.locks { item, supporter, stadium, special, trainer } hold the turn they bar.
  */
-export function strike(ctx) {
-  const { state, defs, events, player, slot, attack, hit } = ctx;
-  const def = defOf(state, slot.uid, defs);
-  const foe = other(player);
-  const target = state.players[foe].active;
-  ctx.target = target;
-  // What an earlier attack left on the target: less damage, or none at all.
-  const marked = Boolean(target && !hit.noEffects && markOn(state, target, "shield"));
-  // An Ability that keeps off every effect of attacks except damage counts as a shield for the effects.
-  ctx.shielded = marked || Boolean(target && !hit.noEffects && abilityOn(state, target, defs)?.noEffects);
-  if (!hit.cancelled && target) {
-    // Tools: the attacker's adds damage before Weakness, the target's can lift its Weakness or soak some.
-    const mine = toolOf(state, slot, defs);
-    const theirs = toolOf(state, target, defs);
-    // Its own marks too, before Weakness: more from its last turn ("Echoed Voice does 50 more"), less from the other's ("Growl").
-    const base = hit.damage > 0 ? Math.max(0, hit.damage + (mine.plus || 0) + heldSum(slot, "plus") + boostOf(state, player, slot, target, defs) + markSum(state, slot, "stronger", attack.name) - markSum(state, slot, "weaker")) : hit.damage;
-    // Old Gyms: Brock's Pokémon ignore Resistance; a Water attacker ignores Blaine's Pokémon's Weakness.
-    const noWeakness = hit.noWeakness || Boolean(theirs.noWeakness) || (theirs.noWeaknessVs || []).some((t) => def.types.includes(t));
-    const dealt = damageAfterTyping(base, def, defOf(state, target.uid, defs), { ...hit, noWeakness, noResistance: hit.noResistance || Boolean(theirs.noResistance) || Boolean(mine.pierce) });
-    // Old PlusPower and Misty: more only when the attack does damage after Weakness and Resistance.
-    if (dealt.amount > 0) dealt.amount += heldSum(slot, "after") + boostOf(state, player, slot, target, defs, true) + (hit.noEffects ? 0 : markSum(state, target, "exposed"));
-    const less = (hit.noEffects ? 0 : markOn(state, target, "less")?.n || 0) + (theirs.less || 0) + (hit.noEffects ? 0 : heldSum(target, "less"));
-    let guarded = marked || (!hit.noEffects && guardedFrom(state, target, def));
-    // The target's Ability: no damage from this kind of attacker, or a coin flip to take none.
-    const power = hit.noEffects ? null : abilityOn(state, target, defs);
-    if (!guarded && dealt.amount > 0 && power?.wall && walled(power.wall, def, state, slot, defs)) guarded = true;
-    if (!guarded && dealt.amount - less > 0 && power?.dodge) {
-      const heads = flip(state);
-      events.push({ t: "flip", p: foe, results: [heads], why: "ability", name: power.name });
-      guarded = heads;
-    }
-    let amount = guarded ? 0 : Math.max(0, dealt.amount - less);
-    // "Prevent that attack's damage if that damage is 30 or less": judged on what would land.
-    const harden = !hit.noEffects && markOn(state, target, "harden");
-    if (harden && amount <= harden.n) amount = 0;
-    // From full HP it hangs on instead of being Knocked Out.
-    if (power?.sturdy && target.damage === 0 && amount >= maxHp(state, target, defs) && maxHp(state, target, defs) > power.sturdy) {
-      amount = maxHp(state, target, defs) - power.sturdy;
-      events.push({ t: "ability", p: foe, spot: ACTIVE, uid: target.uid, name: power.name });
-    }
-    // Or a coin flip decides it, from any HP.
-    if (power?.hangOn && amount > 0 && amount >= hpLeft(state, target, defs) && hpLeft(state, target, defs) > power.hangOn) {
-      const heads = flip(state);
-      events.push({ t: "flip", p: foe, results: [heads], why: "ability", name: power.name });
-      if (heads) {
-        amount = hpLeft(state, target, defs) - power.hangOn;
-        events.push({ t: "ability", p: foe, spot: ACTIVE, uid: target.uid, name: power.name });
-      }
-    }
-    if (amount > 0) {
-      target.damage += amount;
-      struck(state, target, amount);
-      hit.dealt = amount;
-      events.push({ t: "damage", p: foe, spot: ACTIVE, n: amount, weak: dealt.weak, resist: dealt.resist });
-      // Koga: "If an attack from a Pokémon with Koga in its name does damage to a Defending Pokémon this turn, that Pokémon is then Poisoned."
-      if ((state.boosts || []).some((b) => b.poison && b.p === player && b.turn === state.turn && fieldFits(b.who || {}, def)) && addCondition(state, target, "poisoned", defs)) events.push({ t: "condition", p: foe, kind: "poisoned" });
-      // Damaged in the Active Spot, it hits back, even when this Knocks it Out.
-      const thorns = abilityOn(state, target, defs)?.thorns;
-      if (thorns) {
-        events.push({ t: "ability", p: foe, spot: ACTIVE, uid: target.uid, name: defOf(state, target.uid, defs).ability.name });
-        if (thorns.n) {
-          slot.damage += thorns.n;
-          events.push({ t: "damage", p: player, spot: ACTIVE, n: thorns.n, self: true, why: "ability" });
-        } else if (addCondition(state, slot, thorns.status, defs)) events.push({ t: "condition", p: player, kind: thorns.status });
-      }
-      // Its Tool too: Rocky Helmet's damage counters, Lucky Helmet's cards, Counterattack Claws' coin flip.
-      const spikes = toolOn(state, target, defs)?.thorns;
-      if (spikes) {
-        events.push({ t: "tool-effect", p: foe, spot: ACTIVE, uid: target.tool });
-        const heads = spikes.flip ? flip(state) : true;
-        if (spikes.flip) events.push({ t: "flip", p: foe, results: [heads], why: "tool" });
-        if (spikes.n && heads) {
-          slot.damage += spikes.n;
-          events.push({ t: "damage", p: player, spot: ACTIVE, n: spikes.n, self: true, why: "tool" });
-        }
-        if (spikes.draw) draw(state, foe, spikes.draw, events);
-        if (spikes.spent) dropTool(state, foe, ACTIVE, target, defs, events);
-      }
-    } else if (dealt.amount > 0) {
-      events.push({ t: "blocked", p: foe });
-    }
+export function handLock(state, player, def) {
+  const locks = state.players[player].locks || {};
+  const barred = (kind) => locks[kind] === state.turn;
+  if (def?.kind === "trainer") {
+    // Pokémon Tools are Item cards.
+    const kind = def.sub === "tool" ? "item" : def.sub;
+    if (barred("trainer")) return "You can't play Trainer cards this turn.";
+    if (barred(kind)) return `You can't play ${{ supporter: "Supporter", stadium: "Stadium" }[kind] || "Item"} cards this turn.`;
   }
-  if (!hit.cancelled) runAttackEffects("after", attack, ctx);
-  state.ending = true;
+  if (def?.kind === "energy" && !def.basic && barred("special")) return "You can't play Special Energy cards this turn.";
+  return "";
 }
 
 /** Why this Trainer can't be played right now, or "" when it can. */
@@ -1605,6 +1636,8 @@ export function trainerBlock(state, player, def, defs) {
   if (def?.kind !== "trainer" || !def.playable) return def?.why || "That card can't be played.";
   const side = state.players[player];
   if (side.noTrainers === state.turn) return "You can't play any more Trainer cards this turn.";
+  const locked = handLock(state, player, def);
+  if (locked) return locked;
   if (def.sub === "supporter") {
     if (side.supporterUsed) return "You've already played a Supporter this turn.";
     if (state.turn === 1 && !def.fx.some((step) => step.op === "early")) return "No Supporter on the first turn of the match.";
@@ -1628,12 +1661,31 @@ export function stadiumBlock(state, player, defs) {
   return "";
 }
 
-/** Does an Ability keep this Benched Pokémon safe from attack damage? */
-export function benchSafe(state, slot, spot, defs) {
+/**
+ * The top Evolution card of a Pokémon back to its owner's hand (Hyper Devolution Spray, an attack that devolves):
+ * what is left can't evolve again this turn, and Special Conditions and effects on it go, as when it evolved.
+ */
+export function devolveSlot(state, p, spot, events) {
+  const slot = slotAt(state, p, spot);
+  if (!slot?.under.length) return false;
+  state.players[p].hand.push(slot.uid);
+  events.push({ t: "devolve", p, spot, uid: slot.uid });
+  slot.uid = slot.under.shift();
+  slot.since = state.turn;
+  clearConditions(slot);
+  return true;
+}
+
+/**
+ * Does an Ability keep this Benched Pokémon safe from attack damage? `own`: the damage is from its own
+ * player's attack, which a wall against the opponent's attacks doesn't stop.
+ */
+export function benchSafe(state, slot, spot, defs, own = false) {
   if (spot === ACTIVE) return false;
   // Tera Pokémon ex take no damage from attacks while on the Bench (rulebook).
   if (defOf(state, slot.uid, defs)?.tera) return true;
   if (abilityOn(state, slot, defs)?.benchSafe) return true;
+  if (own) return false;
   const owner = ownerOf(state, slot);
   return owner >= 0 && inPlay(state, owner).some(([mate]) => abilityOn(state, mate, defs)?.benchWall);
 }
@@ -1702,7 +1754,7 @@ function applyPick(state, waiting, spot, defs, events) {
   } else if (effect.op === "damage") {
     const slot = slotAt(state, p, spot);
     // `pierce`: the attack ignores effects on that Pokémon; a Tera Pokémon's own rule still keeps it safe on the Bench.
-    if (effect.attack && (effect.pierce ? defOf(state, slot.uid, defs).tera && spot !== ACTIVE : benchSafe(state, slot, spot, defs))) return void events.push({ t: "blocked", p, spot });
+    if (effect.attack && (effect.pierce ? defOf(state, slot.uid, defs).tera && spot !== ACTIVE : benchSafe(state, slot, spot, defs, p === waiting.player))) return void events.push({ t: "blocked", p, spot });
     let n = effect.n;
     let weak = false;
     let resist = false;
@@ -1758,14 +1810,7 @@ function applyPick(state, waiting, spot, defs, events) {
     slotAt(state, p, spot).lift = state.turn;
     events.push({ t: "lift", p, spot });
   } else if (effect.op === "devolve") {
-    // Hyper Devolution Spray: the top Evolution card back to the hand; what is left can't evolve again this turn.
-    const slot = slotAt(state, p, spot);
-    if (!slot.under.length) return;
-    side.hand.push(slot.uid);
-    events.push({ t: "devolve", p, spot, uid: slot.uid });
-    slot.uid = slot.under.shift();
-    slot.since = state.turn;
-    clearConditions(slot);
+    devolveSlot(state, p, spot, events);
   } else if (effect.op === "swapFrom") {
     // Ninja Boy: a Basic Pokémon from the deck takes this one's place, with all it had.
     const uids = side.deck.filter((uid) => isBasic(state, uid, defs));
@@ -2028,11 +2073,11 @@ export function legalActions(state, player, defs) {
     if (def.kind === "pokemon" && def.evolvesFrom) {
       for (const [slot, spot] of spots) if (canEvolveOnto(state, slot, def, defs)) out.push({ type: "evolve", player, uid, spot });
     }
-    if (def.kind === "energy" && def.playable && !side.energyUsed) {
+    if (def.kind === "energy" && def.playable && !side.energyUsed && !handLock(state, player, def)) {
       for (const [slot, spot] of spots) if (energyFits(def, defOf(state, slot.uid, defs))) out.push({ type: "attach", player, uid, spot });
     }
     if (def.kind === "trainer" && def.sub === "tool") {
-      if (def.playable && side.noTrainers !== state.turn) for (const [slot, spot] of spots) if (!slot.tool && toolFits(def.tool, playedAs(state, slot, defs))) out.push({ type: "tool", player, uid, spot });
+      if (def.playable && side.noTrainers !== state.turn && !handLock(state, player, def)) for (const [slot, spot] of spots) if (!slot.tool && toolFits(def.tool, playedAs(state, slot, defs))) out.push({ type: "tool", player, uid, spot });
       continue;
     }
     if (def.kind === "trainer" && !trainerBlock(state, player, def, defs)) out.push({ type: "play", player, uid });

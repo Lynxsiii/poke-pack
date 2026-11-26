@@ -294,6 +294,16 @@ export function botAction(state, player, defs) {
     // A "you may" before an attack's damage: each answer played out on copies, the better one taken
     // (while already playing out the attack on a copy, yes).
     if (waiting.why === "before") return simulating ? actions[0] : best(state, player, actions, defs);
+    // "Choose 1 of your opponent's Active Pokémon's attacks and use it as this attack": the one that hits hardest.
+    if (waiting.why === "copy") {
+      const hits = waiting.options.map((steps) => {
+        const use = steps[0].steps[0];
+        return defs(use.card).attacks[use.index].damage;
+      });
+      return actions[hits.indexOf(Math.max(...hits))];
+    }
+    // A Special Condition of its choosing: Paralyzed, which stops their next attack and retreat.
+    if (waiting.why === "condition") return actions[waiting.labels.indexOf("Paralyzed")] || actions[0];
     // An attack's "you may": yes, except to take its own Pokémon out of play.
     if (waiting.why === "may" && JSON.stringify(waiting.options[0]).includes('"selfAway"')) return actions[1];
     return actions[0];
@@ -324,6 +334,8 @@ export function botAction(state, player, defs) {
       const slot = slotOf(a.spot);
       const left = hpLeft(state, slot, defs);
       // Damage counters one at a time may go on the same Pokémon again: not on one already Knocked Out.
+      // Its own attack hurting its own Bench: on whatever it can best spare, never into a Knock Out it can avoid.
+      if (waiting.effect.op === "damage" && waiting.side === player) return (left <= waiting.effect.n ? -1000 : 0) + left;
       if (waiting.effect.op === "damage") return left <= 0 ? -5000 : (left <= waiting.effect.n ? 1000 : 0) - left;
       if (waiting.effect.op === "attachFrom") {
         const after = plan(state, slot, defs, defOf(state, waiting.effect.uid, defs).provides);
