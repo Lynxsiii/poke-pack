@@ -105,9 +105,13 @@ wordings the engine can't read. Work down that list:
    turn, none on the first turn of the match) that draw, refresh the hand,
    heal, switch, pull a Benched Pokémon forward, discard Energy or cure
    (`js/tcg/trainers.js`; text from `data/tcg/trainers.json`, built by
-   `scripts/build_tcg_trainers.mjs`). 260 of 2,888 Trainers playable. A
-   Trainer whose text isn't read stays out of decks. Next: deck searches
-   (needs a card-list choice), Stadiums, Tools.
+   `scripts/build_tcg_trainers.mjs`). A Trainer whose text isn't read stays
+   out of decks. Second batch the same day: choices of cards (pending
+   `choose`, action `choose` with the uids): deck searches to the hand or
+   the Bench, cards back from the discard pile, a price paid from the hand
+   first, a coin flip in front. Steps after a choice ride on it (`then`).
+   407 of 2,888 Trainers playable. Next: Stadiums, Tools, moving Energy,
+   Rare Candy, damage boosts for a turn.
 5. **Abilities and Poké-Powers**: a hook per timing (on play, once a turn,
    always on).
 6. **Special Energy**, then the odd card types: V-UNION, LEGEND, Restored,
