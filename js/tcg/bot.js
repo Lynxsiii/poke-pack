@@ -64,6 +64,22 @@ export function botAction(state, player, defs) {
     return actions.slice().sort((a, b) => rank(b) - rank(a))[0];
   }
 
+  if (actions[0].type === "pick") {
+    const waiting = state.pending[0];
+    const picks = actions.filter((a) => a.spot != null);
+    if (!picks.length || waiting.optional) return actions.find((a) => a.spot == null) || picks[0];
+    const theirs = state.players[waiting.side];
+    const slotOf = (spot) => (spot === ACTIVE ? theirs.active : theirs.bench[spot]);
+    // Damage goes where it Knocks Out, else on whatever has the least HP left; a switch brings up the readiest.
+    const rank = (a) => {
+      const slot = slotOf(a.spot);
+      const left = hpLeft(state, slot, defs);
+      if (waiting.effect.op === "damage") return (left <= waiting.effect.n ? 1000 : 0) - left;
+      return -plan(state, slot, defs).short * 1000 + left;
+    };
+    return picks.slice().sort((a, b) => rank(b) - rank(a))[0];
+  }
+
   const bench = actions.find((a) => a.type === "bench");
   if (bench) return bench;
 

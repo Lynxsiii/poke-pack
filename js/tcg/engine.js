@@ -597,7 +597,26 @@ const HANDLERS = {
     }
     if (!hit.cancelled) runAttackEffects("after", attack, ctx);
     state.ending = true;
-    resolveKnockOuts(state, defs, events);
+    // An effect that needs a choice (which Benched Pokémon?) waits for it; Knock Outs are judged after.
+    if (!state.pending.length) resolveKnockOuts(state, defs, events);
+  },
+
+  /**
+   * Answer a choice an attack left open: one Pokémon per action, `spot: null` to pass
+   * on one that is optional. pending: { type: "pick", player, side, spots, left, effect, optional }.
+   */
+  pick(state, { player, spot = null }, defs, events) {
+    const waiting = state.pending[0];
+    if (spot == null) {
+      if (!waiting.optional) fail("Choose a Pokémon.");
+    } else {
+      if (!waiting.spots.includes(spot)) fail("That Pokémon can't be chosen.");
+      applyPick(state, waiting, spot, defs, events);
+      waiting.spots = waiting.spots.filter((x) => x !== spot);
+      waiting.left -= 1;
+    }
+    if (spot == null || waiting.left <= 0 || !waiting.spots.length) state.pending.shift();
+    if (!state.pending.length) resolveKnockOuts(state, defs, events);
   },
 
   end(state) {
@@ -614,6 +633,45 @@ const HANDLERS = {
     events.push({ t: "promote", p: player, spot });
   },
 };
+
+/** Carry out a choice on the Pokémon picked: damage to it, or it trades places with the Active. */
+function applyPick(state, waiting, spot, defs, events) {
+  const p = waiting.side;
+  const side = state.players[p];
+  const { effect } = waiting;
+  if (effect.op === "damage") {
+    const slot = slotAt(state, p, spot);
+    let n = effect.n;
+    let weak = false;
+    let resist = false;
+    // Weakness and Resistance count for the Active Pokémon only.
+    if (spot === ACTIVE && effect.from) {
+      const dealt = damageAfterTyping(n, defOf(state, effect.from, defs), defOf(state, slot.uid, defs));
+      ({ amount: n, weak, resist } = dealt);
+    }
+    if (n <= 0) return;
+    slot.damage += n;
+    events.push({ t: "damage", p, spot, n, weak, resist });
+  } else if (effect.op === "switch") {
+    switchActive(state, p, spot, events);
+  }
+}
+
+/** The Active Pokémon and a Benched one trade places (an effect, not a retreat: nothing is paid). */
+export function switchActive(state, p, spot, events) {
+  const side = state.players[p];
+  const next = side.bench[spot];
+  if (!next || !side.active) return;
+  clearConditions(side.active);
+  side.bench[spot] = side.active;
+  side.active = next;
+  events.push({ t: "switch", p, spot });
+}
+
+/** Leave a choice for a player; the turn waits on it. */
+export function askPick(state, pick) {
+  state.pending.push({ type: "pick", optional: false, ...pick });
+}
 
 /** Apply one action. Changes `state`, returns what happened, throws RuleError when it isn't allowed. */
 export function apply(state, action, defs) {
@@ -634,9 +692,9 @@ export function apply(state, action, defs) {
   if (state.phase !== "main") fail("Place your Pokémon first.");
   const waiting = state.pending[0];
   if (waiting) {
-    if (waiting.type !== type || waiting.player !== player) fail("Waiting for a new Active Pokémon.");
+    if (waiting.type !== type || waiting.player !== player) fail(waiting.type === "pick" ? "Waiting for a Pokémon to be chosen." : "Waiting for a new Active Pokémon.");
   } else {
-    if (type === "promote") fail("Nothing to promote.");
+    if (type === "promote" || type === "pick") fail("Nothing to choose.");
     if (state.current !== player) fail("It isn't your turn.");
     if (state.ending) fail("Your turn is over.");
   }
@@ -656,6 +714,7 @@ export function legalActions(state, player, defs) {
   const waiting = state.pending[0];
   if (waiting) {
     if (waiting.player !== player) return [];
+    if (waiting.type === "pick") return [...waiting.spots.map((spot) => ({ type: "pick", player, spot })), ...(waiting.optional ? [{ type: "pick", player, spot: null }] : [])];
     return side.bench.map((_, spot) => ({ type: "promote", player, spot }));
   }
   if (state.current !== player || state.ending) return [];
