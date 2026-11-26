@@ -7,7 +7,7 @@
  * for the addresses worth sharing:
  *
  *   /packs/<set>   that set's name, blurb and its own 1200x630 image
- *                  (assets/og/sets/<set>-v1.jpg, scripts/make_og_sets.mjs)
+ *                  (assets/og/sets/<set>-v2.jpg, scripts/make_og_sets.mjs)
  *   /pull/<card>   a pull someone shares: the card's scan, its rarity, set and
  *                  value, and "@handle pulled ..." when the link carries ?by=
  *   /u/<handle>    a trainer's profile, with their first showcase card
@@ -27,7 +27,7 @@ const DEFAULT_IMAGE_ALT = "Five Pokémon TCG chase cards fanned out under the po
 const HOME_TITLE = "poke-pack.rip | rip packs, fill the binder";
 const HOME_DESCRIPTION =
   "Open Pokémon TCG booster packs with printed pull rates, real card scans, and market-based values. Free, fan-made, no real money.";
-export const SET_IMAGE_VERSION = 1;
+export const SET_IMAGE_VERSION = 2;
 
 /** Pages that only make sense signed in: kept out of search results. */
 const PRIVATE_PAGES = /^\/(account|settings|cart|signin|login|signup|auth|social(\/.*)?|bulk(\/sealed)?|sealed|collection(\/sealed)?|binder)$/;
