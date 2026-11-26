@@ -9,7 +9,7 @@
  *
  *   GET  /api/wishlist                 -> { wishlist: [cardId, ...] }
  *   POST /api/wishlist {cardId, on}    -> { wishlist }   (on: true adds, false removes)
- *   POST /api/wishlist {cardIds}       -> { wishlist }   (adds several; a guest's hearts after signing in)
+ *   POST /api/wishlist {cardIds}       -> { wishlist }   (adds up to 100; a guest's hearts after signing in)
  */
 
 export const WISHLIST_MAX = 500;
