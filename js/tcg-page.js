@@ -1023,6 +1023,7 @@ export function initTcg(deps) {
       case "damage":
         if (event.why === "poisoned" || event.why === "burned") return `${COND_NAME[event.why]}: ${event.n} damage to ${event.p === ME ? "your" : "their"} Active Pokémon.`;
         if (event.why === "confused") return "Confused: it hurt itself for 30.";
+        if (event.why === "energy") return `The Energy put ${event.n / 10 === 1 ? "a damage counter" : `${event.n / 10} damage counters`} on it.`;
         return `${event.n} damage${event.weak ? ", it's weak to that" : ""}${event.resist ? ", resisted" : ""}${event.self ? " to itself" : ""}.`;
       case "heal": return event.why === "move" ? "" : event.why === "ability" ? `${event.p === ME ? "Your" : "Their"} Pokémon healed ${event.n} between turns.` : `Healed ${event.n}.`;
       case "move-energy": return `${who(event.p)} moved ${name(event.uid)}.`;
