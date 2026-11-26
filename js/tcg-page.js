@@ -1100,6 +1100,18 @@ export function initTcg(deps) {
     if (event.t === "prize") {
       const to = handSpot(event.p);
       const at = rectOf(`.tg-bar-${event.p === ME ? "me" : "foe"} .tg-prizes`);
+      const arena = rectOf(".tg-arena");
+      if (event.p === ME && at && arena) {
+        // Your prize cards turn up face up over the arena for a beat before they join your hand.
+        const n = event.uids.length;
+        const w = Math.min(arena.width * (n > 1 ? 0.3 : 0.4), arena.height * 0.5);
+        event.uids.forEach((uid, i) => {
+          const left = arena.left + arena.width / 2 + (i - (n - 1) / 2) * (w + 8) - w / 2;
+          ghost(img(match.state.cards[uid]), at, { left, top: arena.top + arena.height / 2 - w * 0.7, width: w, height: w * 1.4 }, { ms: 950, width: w, show: true, delay: i * 90 });
+        });
+        cue(".tg-bar-me .tg-prizes", "bump", 420);
+        return 900 + (n - 1) * 90;
+      }
       if (to && at) {
         const width = event.p === ME ? to.height / 1.6 : 26;
         event.uids.forEach((_, i) => ghost("assets/cards/shared/card-back-sm.webp", at, to, { ms: 420, width, absorb: true, delay: i * 110 }));
@@ -1206,23 +1218,28 @@ export function initTcg(deps) {
           say(event);
           paintTable();
           cue(event.spot === ACTIVE ? `.tg-spot[data-p="${event.p}"] .tg-mon` : `.tg-bench .tg-mon[data-p="${event.p}"][data-spot="${event.spot}"]`, "ko", 700);
-          await wait(640);
+          banner("Knocked Out", event.p === ME ? "foe" : "me");
+          deps.buzz?.([24, 40, 24]);
+          await wait(680);
+          // It leaves the table as it stood, so the beats that follow don't bring it back.
+          if (event.spot === ACTIVE) before.players[event.p].active = null;
+          else before.players[event.p].bench[event.spot] = null;
         } else if (event.t === "prize") {
+          for (const side of before.players) side.bench = side.bench.filter(Boolean);
           say(event);
           paintTable();
-          animate(event);
-          await wait(460);
+          await wait(Math.max(460, animate(event)));
         }
       }
       match.shownState = null;
     }
 
-    const toHand = (e) => (e.t === "draw" || (e.t === "search" && e.to === "hand")) && e.p === ME;
+    const toHand = (e) => (e.t === "draw" || e.t === "prize" || (e.t === "search" && e.to === "hand")) && e.p === ME;
     match.unseen = new Set(events.filter(toHand).flatMap((e) => e.uids));
     for (const event of events) {
+      if (toHand(event)) event.uids.forEach((uid) => match.unseen.delete(uid));
       if (before && ["attack", "flip", "damage", "heal", "miss", "blocked", "ko", "prize"].includes(event.t) && !["poisoned", "burned"].includes(event.why)) continue;
       if (event.t === "over") continue;
-      if (toHand(event)) event.uids.forEach((uid) => match.unseen.delete(uid));
       say(event);
       paintTable();
       const moving = animate(event, event.p === ME ? played : null);
