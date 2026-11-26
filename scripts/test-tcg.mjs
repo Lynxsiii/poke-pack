@@ -3837,10 +3837,78 @@ test("an attack of theirs used as this attack: its damage and its effects", () =
   assert.equal(state.current, 1);
 });
 
+lab("lab-t5", [
+  ["Sift", 0, "Your opponent reveals their hand. This attack does 20 damage for each Trainer card you find there."],
+  ["Dig", 10, "Discard the top 3 cards of your deck. If any of those cards are Energy cards, attach them to this Pokémon."],
+  ["Trade", 10, "Discard an Energy from this Pokémon. If you do, discard an Energy from your opponent's Active Pokémon."],
+  ["Hex", 0, "Choose 1 Special Condition. The Defending Pokémon is now affected by that Special Condition."],
+  ["Scry", 0, "Look at the top 3 cards of either player's deck and put them back in any order."],
+  ["Jolt", 0, "Flip a coin. If heads, the Defending Pokémon is now Paralyzed and discard an Energy card attached to the Defending Pokémon."],
+  ["Prick", 0, "Put 1 damage counter on each of your opponent's Pokémon that has any damage counters on it."],
+]);
+
+test("their Trainers counted, Energy off the top attached, an Energy for an Energy, a condition chosen, their deck put in order", () => {
+  let state = labgame("lab-t5", "lab-2");
+  hold(state, 1, T.potion);
+  hold(state, 1, T.research);
+  use(state, 0, "Sift");
+  act(state, { type: "choose", player: 0, uids: [] });
+  assert.equal(state.players[1].active.damage, 40);
+  state = labgame("lab-t5", "lab-2");
+  const me = state.players[0];
+  const top = me.deck.slice(0, 3);
+  const energies = top.filter((uid) => defs(state.cards[uid]).kind === "energy");
+  const had = me.active.energy.length;
+  use(state, 0, "Dig");
+  assert.equal(me.active.energy.length, had + energies.length);
+  assert.ok(top.filter((uid) => !energies.includes(uid)).every((uid) => me.discard.includes(uid)));
+  // Nothing to discard, nothing of theirs goes.
+  state = labgame("lab-t5", "lab-2");
+  const fire = give(state, 1, F);
+  state.players[1].hand.splice(state.players[1].hand.indexOf(fire), 1);
+  state.players[1].active.energy.push(fire);
+  state.players[0].discard.push(...state.players[0].active.energy.splice(0));
+  use(state, 0, "Trade");
+  assert.deepEqual(state.players[1].active.energy, [fire]);
+  state.players[0].active.energy.push(give(state, 0, W));
+  state.players[0].hand.pop();
+  act(state, { type: "end", player: 1 });
+  use(state, 0, "Trade");
+  assert.deepEqual(state.players[1].active.energy, []);
+  // A condition of the attacker's choosing; the bot takes Paralyzed.
+  state = labgame("lab-t5", "lab-2");
+  use(state, 0, "Hex");
+  assert.equal(state.pending[0].why, "condition");
+  act(state, botAction(state, 0, defs));
+  assert.deepEqual(conditionsOn(state.players[1].active), ["paralyzed"]);
+  // Their deck, in the order chosen.
+  state = labgame("lab-t5", "lab-2");
+  use(state, 0, "Scry");
+  act(state, { type: "option", player: 0, index: 1 });
+  const three = state.players[1].deck.slice(0, 3);
+  assert.equal(state.pending[0].owner, 1);
+  act(state, { type: "choose", player: 0, uids: three.slice().reverse() });
+  assert.deepEqual(state.players[1].hand.slice(-1), [three[2]]); // drawn for their turn
+  // Two effects on heads; counters only where there are some.
+  state = labgame("lab-t5", "lab-2");
+  const zap = give(state, 1, F);
+  state.players[1].hand.splice(state.players[1].hand.indexOf(zap), 1);
+  state.players[1].active.energy.push(zap);
+  rigFlips(state, [true]);
+  use(state, 0, "Jolt");
+  assert.deepEqual(conditionsOn(state.players[1].active), ["paralyzed"]);
+  assert.deepEqual(state.players[1].active.energy, []);
+  state = labgame("lab-t5", "lab-2");
+  state.players[1].bench[0].damage = 10;
+  use(state, 0, "Prick");
+  assert.equal(state.players[1].bench[0].damage, 20);
+  assert.equal(state.players[1].active.damage, 0);
+});
+
 test("the bot plays through decks of the long-tail attacks", () => {
   for (let i = 0; i < 8; i += 1) {
     const a = deckOf(["lab-t1", 6], ["lab-t4", 6], ["base1-63", 6], [W, 12]);
-    const b = deckOf(["lab-t3", 6], ["lab-t2", 4], ["base1-46", 8], [F, 12]);
+    const b = deckOf(["lab-t3", 6], ["lab-t5", 4], ["base1-46", 8], [F, 12]);
     playOut([a, b], "half", 1300 + i);
   }
 });

@@ -279,6 +279,8 @@ export function botAction(state, player, defs) {
       });
       return actions[hits.indexOf(Math.max(...hits))];
     }
+    // A Special Condition of its choosing: Paralyzed, which stops their next attack and retreat.
+    if (waiting.why === "condition") return actions[waiting.labels.indexOf("Paralyzed")] || actions[0];
     // An attack's "you may": yes, except to take its own Pokémon out of play.
     if (waiting.why === "may" && JSON.stringify(waiting.options[0]).includes('"selfAway"')) return actions[1];
     return actions[0];
