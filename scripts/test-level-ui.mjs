@@ -122,7 +122,7 @@ assert.equal(up.to, 7);
 // ---- Unlocks ----------------------------------------------------------------------------
 const opened = unlocksBetween(4, 10);
 assert.ok(opened.every((row) => row.level > 4 && row.level <= 10 && row.kind !== "coins"));
-assert.ok(opened.some((row) => row.kind === "frame" && row.id === "mon-bulbasaur"));
+assert.ok(opened.some((row) => row.kind === "frame" && row.id === "m-steel"));
 assert.ok(!MILESTONES.some((row) => row.kind === "frame" && /^(bronze|silver|gold|platinum|prismatic|legend|type-|ball-)/.test(row.id)), "the road shows only the new frames");
 assert.ok(opened.some((row) => row.kind === "banner" && row.id === "foil"));
 assert.deepEqual(unlocksBetween(10, 10), []);

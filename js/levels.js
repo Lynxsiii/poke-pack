@@ -142,33 +142,58 @@ export function frameNeed(frame) {
 }
 
 /**
- * How the extra Pokémon frames (js/frame-catalog.js, generated) are earned:
+ * How the extra frames (js/frame-catalog.js, generated) are earned:
  * along the level road from level 3 to 200, the last three with prestige stars.
  * The Types and Poké Ball frames are retired (Noah, 2026-10-02): they are no
  * reward and never offered, whatever the catalog still holds.
  */
 const RETIRED_FRAME = /^(type|ball)-/;
 const EXTRA_FRAME_UNLOCKS = {
-  "mon-pikachu": { level: 3 },
-  "mon-bulbasaur": { level: 8 },
-  "mon-squirtle": { level: 12 },
+  "m-graphite": { level: 3 },
+  "e-ink": { level: 5 },
+  "m-steel": { level: 8 },
+  "s-stripes": { level: 10 },
+  "e-cobalt": { level: 12 },
+  "s-checker": { level: 14 },
   "card-yellow-border": { level: 16 },
+  "s-stitched": { level: 18 },
   "gen-pixel": { level: 20 },
-  "mon-eevee": { level: 25 },
-  "mon-jigglypuff": { level: 32 },
+  "s-dashes": { level: 22 },
+  "m-copper": { level: 25 },
+  "s-segments": { level: 28 },
+  "m-silver": { level: 30 },
+  "m-rose": { level: 32 },
+  "s-studs": { level: 36 },
   "card-reverse-holo": { level: 40 },
-  "mon-togepi": { level: 48 },
-  "mon-magikarp": { level: 55 },
-  "mon-snorlax": { level: 62 },
+  "s-pearls": { level: 44 },
+  "e-ivory": { level: 48 },
+  "s-hexagon": { level: 52 },
+  "e-crimson": { level: 55 },
+  "s-bezel": { level: 58 },
+  "e-jade": { level: 62 },
+  "s-ripple": { level: 66 },
   "card-holo-foil": { level: 70 },
-  "mon-gengar": { level: 80 },
+  "m-gold": { level: 75 },
+  "e-amethyst": { level: 80 },
+  "s-viewfinder": { level: 85 },
   "gen-sakura": { level: 90 },
-  "mon-umbreon": { level: 100 },
+  "l-dusk": { level: 95 },
+  "s-eclipse": { level: 100 },
+  "s-facet": { level: 105 },
+  "s-compass": { level: 110 },
   "card-shiny": { level: 115 },
+  "s-orbit": { level: 120 },
+  "s-seal": { level: 125 },
   "card-gold-star": { level: 130 },
-  "mon-charizard": { level: 145 },
+  "m-onyx": { level: 135 },
+  "l-tide": { level: 140 },
+  "l-ember": { level: 145 },
+  "l-halo": { level: 150 },
   "gen-neon": { level: 160 },
-  "mon-mew": { level: 180 },
+  "s-sunburst": { level: 165 },
+  "l-comet": { level: 170 },
+  "l-aurora": { level: 180 },
+  "m-platinum": { level: 190 },
   "card-black-label": { level: 200 },
   "gen-starry": { level: 0, prestige: 1 },
   "gen-laurel": { level: 0, prestige: 3 },
@@ -177,21 +202,43 @@ const EXTRA_FRAME_UNLOCKS = {
   "gen-beta": { level: 0, beta: true },
 };
 
+/**
+ * The twelve Pokémon frames were swapped for plain ones on 2026-11-26 (Noah).
+ * Each old id stands for the frame that took its level, so a player wearing
+ * one, or a row that still stores one, gets the new frame and loses nothing.
+ */
+const FRAME_ALIASES = {
+  "mon-pikachu": "m-graphite",
+  "mon-bulbasaur": "m-steel",
+  "mon-squirtle": "e-cobalt",
+  "mon-eevee": "m-copper",
+  "mon-jigglypuff": "m-rose",
+  "mon-togepi": "e-ivory",
+  "mon-magikarp": "e-crimson",
+  "mon-snorlax": "e-jade",
+  "mon-gengar": "e-amethyst",
+  "mon-umbreon": "s-eclipse",
+  "mon-charizard": "l-ember",
+  "mon-mew": "l-aurora",
+};
+
 /** The extra frames with how each is earned: { id, name, group, level, prestige?, fx, c }. */
 export const EXTRA_FRAMES = FRAME_CATALOG.filter((frame) => !RETIRED_FRAME.test(frame.id)).map((frame) => ({ ...frame, ...(EXTRA_FRAME_UNLOCKS[frame.id] || {}) }));
 const EXTRA_BY_ID = new Map(EXTRA_FRAMES.map((frame) => [frame.id, frame]));
 
 /** Whether `id` is one of the extra Pokémon frames (not bronze to legend). */
 export function isExtraFrame(id) {
-  return typeof id === "string" && EXTRA_BY_ID.has(id);
+  return Boolean(frameInfo(id));
 }
 
 /**
  * An avatar frame by id, with its unlock (EXTRA_FRAMES). null for anything
- * else, the retired bronze to legend frames included.
+ * else, the retired bronze to legend frames included. A swapped-out id
+ * (FRAME_ALIASES) gives the frame that replaced it, under the new id.
  */
 export function frameInfo(id) {
-  return (typeof id === "string" && EXTRA_BY_ID.get(id)) || null;
+  if (typeof id !== "string") return null;
+  return EXTRA_BY_ID.get(id) || (Object.hasOwn(FRAME_ALIASES, id) && EXTRA_BY_ID.get(FRAME_ALIASES[id])) || null;
 }
 
 /** The highest level title the level has earned, or null below level 5. */

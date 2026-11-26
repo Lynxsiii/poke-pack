@@ -42,7 +42,7 @@ function wholeLevel(level) {
  */
 export function userFrame(user) {
   if (!user) return null;
-  return frameInfo(user.frame) ? user.frame : null;
+  return frameInfo(user.frame)?.id || null;
 }
 
 /**
@@ -54,10 +54,12 @@ export function userFrame(user) {
  */
 export function frameHtml(avatarHtml, frameId, { size = "md", online = false, color = "" } = {}) {
   const avatar = String(avatarHtml ?? "");
-  if (!frameInfo(frameId)) return avatar;
+  const known = frameInfo(frameId);
+  if (!known) return avatar;
+  frameId = known.id; // a swapped-out id draws the frame that replaced it
   const step = sizeStep(size);
   const extra = frameCatalogInfo(frameId);
-  // The Pokémon frames (css/pages/frames-art.css): still art, plus a moving layer on some.
+  // The extra frames (css/pages/frames-art.css): still art, plus a moving layer on some.
   return `<span class="lvl-frame lf-art" data-frame="${frameId}" data-s="${step}">${avatar}<i class="lf-ring" aria-hidden="true"></i>${
     extra.fx ? `<i class="lf-fx" data-fx="${extra.fx}" aria-hidden="true"></i>` : ""
   }${extra.fx2 ? `<i class="lf-fx lf-fx2" data-fx="${extra.fx2}" aria-hidden="true"></i>` : ""}${online ? `<i class="lf-on" aria-hidden="true"></i>` : ""}</span>`;
@@ -87,12 +89,12 @@ export function levelBadgeHtml(level, { size = "md", prestige = 0 } = {}) {
  * The frame chooser in the Look tab: a flat tile per frame wearing the
  * player's own avatar, locked ones dimmed with the level they open at, and
  * No frame first. `frame` is the equipped id, or empty for none. `avatar` is the finished avatar markup, drawn at the same
- * size in every tile. Under it come the Pokémon frames, grouped
- * (Pokémon, Cards, Extras), each dimmed with what it needs while locked.
+ * size in every tile. Under it come the extra frames, grouped
+ * (Metal, Enamel, Shape, Light, Cards, Extras), each dimmed with what it needs while locked.
  */
 export function framePicksHtml({ level, prestige = 0, frame, avatar, color = "", beta = false }) {
   const lv = wholeLevel(level) || 1;
-  const equipped = frameInfo(frame) ? frame : "";
+  const equipped = frameInfo(frame)?.id || "";
   const art = (id) => `<span class="frame-pick-art">${id ? frameHtml(avatar, id, { size: "md", color }) : avatar}</span>`;
   const none = `<button type="button" class="frame-pick${equipped ? "" : " on"}" data-set-frame="" aria-pressed="${!equipped}">${art(null)}<b>No frame</b></button>`;
   const tile = (f) => {

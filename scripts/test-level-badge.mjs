@@ -22,14 +22,14 @@ for (const frame of FRAMES) {
 }
 
 // unknown or missing frame ids leave the avatar exactly as it was
-for (const bad of ["", null, undefined, "diamond", "MON-PIKACHU", "mon-pikachu ", '"><script>alert(1)</script>', "__proto__", "constructor", 5, {}, []]) {
+for (const bad of ["", null, undefined, "diamond", "MON-PIKACHU", "m-graphite ", '"><script>alert(1)</script>', "__proto__", "constructor", 5, {}, []]) {
   eq(frameHtml(AVATAR, bad), AVATAR, `unknown frame ${JSON.stringify(bad)} returns the avatar`);
 }
-eq(frameHtml(undefined, "mon-pikachu").includes("undefined"), false, "a missing avatar is an empty string, not 'undefined'");
+eq(frameHtml(undefined, "m-graphite").includes("undefined"), false, "a missing avatar is an empty string, not 'undefined'");
 eq(frameHtml(null, "nope"), "", "a missing avatar with no frame is empty");
 
 // size steps
-const step = (size) => /data-s="(\w+)"/.exec(frameHtml(AVATAR, "mon-pikachu", { size }))[1];
+const step = (size) => /data-s="(\w+)"/.exec(frameHtml(AVATAR, "m-graphite", { size }))[1];
 eq(step(22), "xs", "22px");
 eq(step(28), "xs", "28px");
 eq(step(36), "sm", "36px");
@@ -42,11 +42,11 @@ eq(step("huge"), "md", "unknown name falls back to md");
 eq(step('"><b>'), "md", "hostile size falls back to md and cannot reach the markup");
 eq(step(-4), "md", "negative size");
 eq(step(undefined), "md", "no size");
-ok(!frameHtml(AVATAR, "mon-pikachu", { size: '"><img src=x onerror=alert(1)>' }).includes("onerror"), "size is never echoed");
+ok(!frameHtml(AVATAR, "m-graphite", { size: '"><img src=x onerror=alert(1)>' }).includes("onerror"), "size is never echoed");
 
 // online mark
-ok(frameHtml(AVATAR, "mon-eevee", { online: true }).includes("lf-on"), "online adds the live mark");
-ok(!frameHtml(AVATAR, "mon-eevee").includes("lf-on"), "offline does not");
+ok(frameHtml(AVATAR, "m-copper", { online: true }).includes("lf-on"), "online adds the live mark");
+ok(!frameHtml(AVATAR, "m-copper").includes("lf-on"), "offline does not");
 
 // ---- levelBadgeHtml ----------------------------------------------------
 const badge = (level, opts) => levelBadgeHtml(level, opts);
@@ -72,7 +72,7 @@ eq(badge(12, { size: "nope" }).includes('data-s="md"'), true, "unknown size fall
 ok(!/<(div|p|button|a)\b/.test(badge(30)), "a badge is inline markup, safe inside a heading or a bold name");
 
 // ---- userFrame ---------------------------------------------------------
-eq(userFrame({ frame: "mon-pikachu", level: 5 }), "mon-pikachu", "the server's frame wins");
+eq(userFrame({ frame: "m-graphite", level: 5 }), "m-graphite", "the server's frame wins");
 eq(userFrame({ level: 60 }), null, "no automatic frame from the level");
 eq(userFrame({ frame: null, level: 100 }), null, "null frame means none");
 eq(userFrame({ frame: "legend", level: 100 }), null, "a retired frame is dropped");
@@ -86,8 +86,8 @@ const level12 = picks({ level: 12, frame: "" });
 ok(level12.includes('data-set-frame=""') && level12.includes(">No frame</b>"), "No frame comes first");
 ok(/frame-pick on[^>]*data-set-frame=""/.test(level12), "No frame is on when nothing is equipped");
 ok(FRAMES.every((f) => !level12.includes(`"${f.id}"`)), "the retired frames are not offered");
-const equipped = picks({ level: 60, frame: "mon-togepi" });
-ok(/frame-pick on[^>]*data-set-frame="mon-togepi"/.test(equipped), "the equipped frame is on");
+const equipped = picks({ level: 60, frame: "e-ivory" });
+ok(/frame-pick on[^>]*data-set-frame="e-ivory"/.test(equipped), "the equipped frame is on");
 ok(!/frame-pick on[^>]*data-set-frame=""/.test(equipped), "No frame is off then");
 ok(/frame-pick on[^>]*data-set-frame=""/.test(picks({ level: 100, frame: "legend" })), "a retired frame reads as none");
 ok(!picks({ level: 100, frame: "x\"><script>" }).includes("script"), "a hostile equipped value is not echoed");
@@ -100,9 +100,9 @@ for (const f of FRAME_CATALOG.filter((f) => !/^(type|ball)-/.test(f.id))) {
   ok(/^[a-z0-9-]+$/.test(f.id) && FRAME_GROUPS.includes(f.group), `${f.id}: safe id and a known group`);
   ok(!FRAMES.some((l) => l.id === f.id), `${f.id}: does not shadow a badge tier`);
   eq(frameInfo(f.id)?.id, f.id, `${f.id}: frameInfo finds it`);
-  ok(fs.existsSync(new URL(`../assets/frames/${f.id}-v2.svg`, import.meta.url)), `${f.id}: art file exists`);
-  if (f.fx) ok(fs.existsSync(new URL(`../assets/frames/${f.id}-fx-v2.svg`, import.meta.url)), `${f.id}: moving layer exists`);
-  if (f.fx2) ok(fs.existsSync(new URL(`../assets/frames/${f.id}-fx2-v2.svg`, import.meta.url)), `${f.id}: second moving layer exists`);
+  ok(fs.existsSync(new URL(`../assets/frames/${f.id}-v3.svg`, import.meta.url)), `${f.id}: art file exists`);
+  if (f.fx) ok(fs.existsSync(new URL(`../assets/frames/${f.id}-fx-v3.svg`, import.meta.url)), `${f.id}: moving layer exists`);
+  if (f.fx2) ok(fs.existsSync(new URL(`../assets/frames/${f.id}-fx2-v3.svg`, import.meta.url)), `${f.id}: second moving layer exists`);
   const html = frameHtml(AVATAR, f.id, { size: 56, online: true });
   ok(html.startsWith('<span class="lvl-frame lf-art"') && html.includes(`data-frame="${f.id}"`) && html.includes(AVATAR), `${f.id}: one wrapper round the avatar`);
   ok(html.indexOf(AVATAR) < html.indexOf("lf-ring") && html.includes("lf-on"), `${f.id}: ring after the avatar, online mark kept`);
@@ -128,9 +128,17 @@ ok(EXTRA_FRAMES.every((f) => (f.level || 0) <= LEVEL_CAP && (f.prestige || 0) <=
 const all = picks({ level: LEVEL_CAP, prestige: PRESTIGE_CAP, frame: "", beta: true });
 ok(EXTRA_FRAMES.every((f) => all.includes(`data-set-frame="${f.id}"`)), "every extra frame is pickable at the cap with every star (and the beta flag)");
 ok(picks({ level: LEVEL_CAP, prestige: PRESTIGE_CAP, frame: "" }).includes('data-frame-locked="gen-beta"'), "the Beta Tester frame stays locked for players who are not testers");
-ok(picks({ level: 1, frame: "" }).includes('data-frame-locked="mon-pikachu"') && picks({ level: 1, frame: "" }).includes("<small>Level 3</small>"), "a locked extra frame says its level");
-ok(picks({ level: 1, frame: "mon-mew" }).includes('data-set-frame="mon-mew"'), "a worn extra frame is never locked under the player");
+ok(picks({ level: 1, frame: "" }).includes('data-frame-locked="m-graphite"') && picks({ level: 1, frame: "" }).includes("<small>Level 3</small>"), "a locked extra frame says its level");
+ok(picks({ level: 1, frame: "l-aurora" }).includes('data-set-frame="l-aurora"'), "a worn extra frame is never locked under the player");
 ok(FRAME_GROUPS.every((g) => !EXTRA_FRAMES.some((f) => f.group === g) === !open.includes(`<h3>${g}</h3>`)), "tiles sit under their group names, retired groups gone");
-ok(/frame-pick on[^>]*data-set-frame="mon-mew"/.test(picks({ level: 1, frame: "mon-mew" })), "an equipped extra frame is on");
+ok(/frame-pick on[^>]*data-set-frame="l-aurora"/.test(picks({ level: 1, frame: "l-aurora" })), "an equipped extra frame is on");
 
 console.log(`level badge: ${checks} checks passed`);
+
+// The Pokémon frames were swapped for plain ones (2026-11-26): an old id is the frame that took its level.
+eq(frameInfo("mon-pikachu")?.id, "m-graphite", "a swapped-out id gives its replacement");
+eq(frameInfo("mon-pikachu")?.level, 3, "at the same level");
+eq(userFrame({ frame: "mon-mew", level: 1 }), "l-aurora", "a stored old id shows the new frame");
+ok(frameHtml(AVATAR, "mon-umbreon").includes('data-frame="s-eclipse"'), "an old id draws the new art");
+ok(/frame-pick on[^>]*data-set-frame="l-ember"/.test(picks({ level: 1, frame: "mon-charizard" })), "a worn old frame is on as its replacement");
+eq(frameInfo("toString"), null, "an inherited name is not an alias");
