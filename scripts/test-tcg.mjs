@@ -32,7 +32,8 @@ for (const file of readdirSync("data").filter((f) => f.endsWith(".json"))) {
 }
 for (const e of FREE_ENERGY) byId.set(e.id, { id: e.id, name: `${e.type} Energy`, supertype: "Energy", subtypes: ["Basic"], energy: true });
 const trainers = JSON.parse(readFileSync("data/tcg/trainers.json", "utf8"));
-const defs = createDefs((id) => byId.get(id), rules, trainers);
+const legal = JSON.parse(readFileSync("data/tcg/legal.json", "utf8"));
+const defs = createDefs((id) => byId.get(id), rules, trainers, legal);
 
 let passed = 0;
 function test(name, fn) {
@@ -314,21 +315,136 @@ test("the other player's hidden cards stay hidden", () => {
 });
 
 test("deck rules: size, copies, ownership, playable", () => {
-  const owned = { "base1-46": 3, "base1-24": 1, "me1-113": 2 };
-  const check = (cards, own = owned, format = "half") => checkDeck({ format, cards }, own, defs);
-  assert.deepEqual(check({ "base1-46": 2, [F]: 28 }).problems, []);
-  assert.match(check({ "base1-46": 2, [F]: 27 }).problems[0], /1 more card to go/);
-  assert.match(check({ "base1-46": 3, [F]: 27 }).problems.join(" "), /3 copies of Charmander, the limit is 2/);
-  assert.match(check({ "base1-46": 2, [F]: 28 }, {}).problems.join(" "), /You own 0 of Charmander/);
-  assert.match(check({ "base1-46": 2, [F]: 28 }, { "base1-46": 1 }).problems.join(" "), /You own 1/);
-  assert.match(check({ "me1-113": 1, "base1-46": 2, [F]: 27 }).problems.join(" "), /can't be played yet/);
-  assert.match(check({ [F]: 30 }).problems.join(" "), /Basic Pokémon/);
-  assert.deepEqual(check({ "base1-46": 3, [F]: 57 }, owned, "standard").problems, []);
-  assert.equal(roomFor({ format: "half", cards: { "base1-46": 2 } }, "base1-46", owned, defs), 0);
-  assert.equal(roomFor({ format: "half", cards: { "base1-46": 1 } }, "base1-46", owned, defs), 1);
-  assert.equal(roomFor({ format: "standard", cards: { "base1-46": 1 } }, "base1-46", owned, defs), 2); // owns three
-  assert.equal(roomFor({ format: "half", cards: {} }, "me1-113", owned, defs), 0);
-  assert.equal(roomFor({ format: "half", cards: { "base1-46": 2 } }, F, owned, defs), 28);
+  const owned = { "base1-46": 5, "base1-24": 1, "me1-113": 2 };
+  const check = (cards, own = owned, format = "unlimited") => checkDeck({ format, cards }, own, defs);
+  assert.deepEqual(check({ "base1-46": 4, [F]: 56 }).problems, []);
+  assert.match(check({ "base1-46": 4, [F]: 55 }).problems[0], /1 more card to go/);
+  assert.match(check({ "base1-46": 4, [F]: 57 }).problems[0], /1 too many cards/);
+  assert.match(check({ "base1-46": 5, [F]: 55 }).problems.join(" "), /5 copies of Charmander, the limit is 4/);
+  assert.match(check({ "base1-46": 4, [F]: 56 }, {}).problems.join(" "), /You own 0 of Charmander/);
+  assert.match(check({ "base1-46": 4, [F]: 56 }, { "base1-46": 1 }).problems.join(" "), /You own 1/);
+  assert.match(check({ "me1-113": 1, "base1-46": 4, [F]: 55 }).problems.join(" "), /can't be played yet/);
+  assert.match(check({ [F]: 60 }).problems.join(" "), /Basic Pokémon/);
+  assert.deepEqual(check({ "base1-46": 1, [F]: 59 }).problems, [], "basic Energy has no copy limit");
+  assert.equal(roomFor({ format: "unlimited", cards: { "base1-46": 4 } }, "base1-46", owned, defs), 0);
+  assert.equal(roomFor({ format: "unlimited", cards: { "base1-46": 3 } }, "base1-46", owned, defs), 1);
+  assert.equal(roomFor({ format: "unlimited", cards: { "base1-46": 1 } }, "base1-46", { "base1-46": 3 }, defs), 2); // owns three
+  assert.equal(roomFor({ format: "unlimited", cards: {} }, "me1-113", owned, defs), 0);
+  assert.equal(roomFor({ format: "unlimited", cards: { "base1-46": 2 } }, F, owned, defs), 58);
+});
+
+/* ---------- formats: the official deck rules (js/tcg/formats.js) ---------- */
+
+test("formats: Standard, Expanded and Unlimited are 60 cards and 6 prizes; Half is not a choice", () => {
+  for (const f of ["standard", "expanded", "unlimited"]) {
+    assert.equal(FORMATS[f].deckSize, 60);
+    assert.equal(FORMATS[f].prizes, 6);
+    assert.equal(FORMATS[f].copies, 4);
+    assert.ok(FORMATS[f].pick);
+  }
+  assert.equal(FORMATS.half.pick, false);
+  const old = checkDeck({ format: "half", cards: { "base1-46": 2, [F]: 28 } }, { "base1-46": 2 }, defs);
+  assert.equal(old.ok, false);
+  assert.match(old.problems[0], /Half deck isn't a tournament format: switch the deck to Standard, Expanded or Unlimited/);
+  assert.equal(old.need, 60, "an old Half deck is measured against 60 cards");
+});
+
+test("formats: Standard is regulation marks H, I and J", () => {
+  assert.equal(defs("sv5-1").mark, "H");
+  assert.equal(defs("sv5-1").legal.standard, "");
+  assert.equal(defs("sv10-1").legal.standard, "", "Destined Rivals, I");
+  assert.equal(defs("me6-1").legal.standard, "", "Delta Reign, J");
+  assert.match(defs("sv1-1").legal.standard, /Regulation mark G rotated out of Standard/);
+  assert.match(defs("swsh10-46").legal.standard, /Regulation mark F rotated/);
+  assert.match(defs("base1-46").legal.standard, /before regulation marks/);
+  assert.equal(defs(F).legal.standard, "", "basic Energy is always legal");
+  assert.match(defs("energy-fairy-xy").legal.standard, /Fairy/);
+  // A print can carry an older mark than its set: Temporal Forces' Scovillain ex is G (both sources agree).
+  assert.match(defs("sv5-22").legal.standard, /mark G/);
+  const owned = { "sv1-1": 4, "sv5-1": 4 };
+  const deck = (cards) => checkDeck({ format: "standard", cards }, owned, defs).problems.join(" ");
+  assert.match(deck({ "sv1-1": 2, [F]: 58 }), /Pineco isn't legal in Standard: regulation mark G rotated out of Standard/);
+  assert.equal(roomFor({ format: "standard", cards: {} }, "sv1-1", owned, defs), 0, "the editor won't add a rotated card");
+  assert.ok(roomFor({ format: "standard", cards: {} }, "sv5-1", owned, defs) > 0);
+});
+
+test("formats: a Trainer's older print is Standard legal when a legal print reads the same (Handbook 4.1.3)", () => {
+  // Ultra Ball: Mega Evolution prints it with I; the Sun & Moon and Black & White prints are the same card.
+  assert.equal(defs("me1-131").mark, "I");
+  assert.equal(defs("me1-131").legal.standard, "");
+  assert.equal(defs("sv1-196").legal.standard, "", "the G print, reprinted with I");
+  assert.equal(defs("sm1-135").legal.standard, "", "worded differently, does the same");
+  assert.equal(defs("bw5-102").legal.standard, "");
+  // Base Set Potion heals 20, the newer Potion 30: not the same card, so not legal.
+  assert.match(defs("base1-94").legal.standard, /before regulation marks/);
+  // A Pokémon counts only by its own print.
+  const pikachus = [...byId.values()].filter((c) => c.name === "Pikachu" && c.supertype === "Pokémon").map((c) => defs(c.id));
+  assert.ok(pikachus.some((d) => !d.legal.standard) && pikachus.some((d) => d.legal.standard));
+});
+
+test("formats: Expanded is Black & White onward, minus the ban list", () => {
+  assert.equal(defs("bw1-1").legal.expanded, "");
+  assert.equal(defs("xy1-1").legal.expanded, "");
+  assert.equal(defs("sm1-1").legal.expanded, "");
+  assert.equal(defs("sv1-1").legal.expanded, "", "G is still Expanded");
+  assert.equal(defs("swsh10-46").legal.expanded, "");
+  assert.match(defs("base1-46").legal.expanded, /before Black & White/);
+  assert.match(defs("pl4-AR1").legal.expanded, /before Black & White/);
+  // Banned: Pokémon by print, Trainers by name.
+  for (const id of ["xy6-77", "bw3-67", "bw5-62", "sm8-90", "swsh7-83", "swsh45-SV013", "swsh10-TG02", "xy1-124", "g1-71"]) assert.match(defs(id).legal.expanded, /Banned in Expanded/, id);
+  assert.equal(defs("xy6-77").legal.unlimited, "", "nothing is banned in Unlimited");
+  const otherArcheops = [...byId.values()].find((c) => c.name === "Archeops" && /^(bw|xy|sm|sw|sv|me)/.test(c.id) && !["bw3-67", "bw5-110"].includes(c.id));
+  if (otherArcheops) assert.doesNotMatch(defs(otherArcheops.id).legal.expanded, /Banned/, "only the banned prints of a Pokémon");
+  const deck = checkDeck({ format: "expanded", cards: { "xy6-77": 1, [F]: 59 } }, { "xy6-77": 1 }, defs);
+  assert.ok(deck.problems.some((p) => /Shaymin-EX isn't legal in Expanded: banned in Expanded/.test(p)));
+  // Classic Collection prints are Unlimited only (the safer reading).
+  assert.match(defs("cel25-cc4").legal.expanded, /Classic Collection/);
+  assert.equal(defs("cel25-cc4").legal.unlimited, "");
+});
+
+test("formats: the copy limit is by English name, across reprints, LV.X and δ", () => {
+  const unl = (cards, owned) => checkDeck({ format: "unlimited", cards }, owned, defs).problems.join(" ");
+  // Ultra Ball from two sets: 3 + 2 is five Ultra Balls.
+  const balls = { "me1-131": 3, "sv1-196": 2, "base1-46": 1, [F]: 54 };
+  assert.match(unl(balls, { ...balls }), /5 copies of Ultra Ball, the limit is 4/);
+  assert.equal(roomFor({ format: "unlimited", cards: { "me1-131": 3, "sv1-196": 1 } }, "sv1-196", { "me1-131": 4, "sv1-196": 4 }, defs), 0);
+  // Gengar and Gengar LV.X, Pikachu and Pikachu δ share a name; Professor's Research by any professor is one card.
+  assert.equal(defs("dp5-97").deckName, "Garchomp");
+  const chomps = { "dp5-97": 2, "dp2-9": 3, "base1-46": 1, [F]: 54 };
+  assert.match(unl(chomps, chomps), /5 copies of Garchomp/);
+  const pikas = { "ex12-93": 2, "base1-58": 3, [F]: 55 };
+  assert.match(unl(pikas, pikas), /5 copies of Pikachu, the limit is 4/);
+  const profs = { "sv1-189": 2, "sv1-190": 2, "swsh1-178": 1, "base1-46": 1, [F]: 54 };
+  assert.match(unl(profs, profs), /5 copies of Professor's Research/);
+  // ex and EX are different names, and so is Radiant: 4 of each is fine.
+  assert.notEqual(defs("swsh10-46").deckName, "Greninja");
+});
+
+test("formats: one ACE SPEC, one Radiant Pokémon, one Pokémon ★, one of each Prism Star by name", () => {
+  const std = (cards) => checkDeck({ format: "standard", cards }, cards, defs).problems.join(" ");
+  assert.match(std({ "sv5-153": 1, "sv5-157": 1, "sv5-1": 4, [F]: 54 }), /only 1 ACE SPEC card, this one has 2/);
+  assert.match(std({ "sv5-153": 2, "sv5-1": 4, [F]: 54 }), /only 1 ACE SPEC card, this one has 2/);
+  assert.equal(roomFor({ format: "standard", cards: { "sv5-153": 1 } }, "sv5-157", { "sv5-157": 1 }, defs), 0);
+  const exp = (cards) => checkDeck({ format: "expanded", cards }, cards, defs).problems.join(" ");
+  assert.match(exp({ "swsh10-46": 1, "swsh10-27": 1, [F]: 58 }), /only 1 Radiant Pokémon, this one has 2/);
+  assert.match(exp({ "sm5-58": 2, [F]: 58 }), /2 copies of Giratina ◇, the limit is 1/);
+  assert.doesNotMatch(exp({ "sm5-58": 1, "sm5-62": 1, [F]: 58 }), /limit|only 1/, "two different Prism Star cards are fine");
+  const unl = (cards) => checkDeck({ format: "unlimited", cards }, cards, defs).problems.join(" ");
+  assert.match(unl({ "ex7-107": 1, "ex7-108": 1, [F]: 58 }), /only 1 Pokémon ★, this one has 2/);
+  assert.equal(defs("neo3-65").cap, 1, "a Neo Shining Pokémon is one by name");
+});
+
+test("formats: Arceus cards that say you may have as many as you like", () => {
+  assert.ok(defs("pl4-AR1").any && defs("pl4-94").any && defs("pl4-dpp50").any);
+  const arceus = { "pl4-AR1": 6, "pl4-AR2": 3, [F]: 51 };
+  assert.doesNotMatch(checkDeck({ format: "unlimited", cards: arceus }, arceus, defs).problems.join(" "), /copies/);
+  assert.equal(roomFor({ format: "unlimited", cards: { "pl4-AR1": 6 } }, "pl4-AR1", { "pl4-AR1": 10 }, defs), 4);
+  // An Arceus without the rule still counts to 4 on its own.
+  const plain = [...byId.values()].find((c) => c.name === "Arceus" && !defs(c.id).any && defs(c.id).playable);
+  if (plain) {
+    const deck = { [plain.id]: 5, "pl4-AR1": 4, [F]: 51 };
+    assert.match(checkDeck({ format: "unlimited", cards: deck }, deck, defs).problems.join(" "), /5 copies of Arceus/);
+  }
 });
 
 test("an attack that knocks out both Active Pokémon is judged at once", () => {
@@ -879,15 +995,20 @@ function playOut(decks, format, seed) {
 test("bot against bot: every set's deck finishes its matches", () => {
   const rand = mulberry(11);
   const built = [];
+  // Every set in Unlimited, and the sets legal there in Standard and Expanded: each deck must pass the deck rules.
   for (const [setId, list] of Object.entries(sets)) {
-    for (const format of ["half", "standard"]) {
+    for (const format of ["unlimited", "standard", "expanded"]) {
       const deck = buildBotDeck(list.map((c) => defs(c.id)), format, rand);
       if (!deck) continue;
       const size = Object.values(deck.cards).reduce((a, b) => a + b, 0);
       assert.equal(size, FORMATS[format].deckSize, `${setId} ${format} deck has ${size} cards`);
+      assert.deepEqual(checkDeck({ format, cards: deck.cards }, deck.cards, defs).problems, [], `${setId} ${format} bot deck follows the rules`);
+      if (format !== "unlimited" && rand() < 0.6) continue; // the matches: every Unlimited deck, a share of the others
       built.push({ setId, format, list: deckList({ cards: deck.cards }) });
     }
   }
+  assert.equal(buildBotDeck(sets.base1.map((c) => defs(c.id)), "standard"), null, "no Standard deck out of Base Set");
+  assert.ok(buildBotDeck(sets.sv8.map((c) => defs(c.id)), "standard"), "a Standard deck out of Surging Sparks");
   assert.ok(built.length > 200, `only ${built.length} bot decks built`);
   const reasons = {};
   let turns = 0, games = 0;
@@ -906,12 +1027,14 @@ test("bot against bot: every set's deck finishes its matches", () => {
 test("a deck built from a small collection is legal", () => {
   const owned = { "base1-46": 3, "base1-24": 2, "base1-4": 1, "base1-63": 2, "base1-44": 1, "base1-30": 1, "base1-58": 2 };
   const pool = Object.entries(owned).map(([id, n]) => ({ def: defs(id), owned: n }));
-  for (const format of ["half", "standard"]) {
-    const built = buildDeck(pool, format);
-    const check = checkDeck({ format, cards: built.cards }, owned, defs);
-    assert.deepEqual(check.problems, []);
-  }
-  assert.equal(buildDeck([], "half"), null);
+  const built = buildDeck(pool, "unlimited");
+  assert.deepEqual(checkDeck({ format: "unlimited", cards: built.cards }, owned, defs).problems, []);
+  assert.equal(buildDeck(pool, "standard"), null, "Base Set has nothing for Standard");
+  assert.equal(buildDeck(pool, "expanded"), null);
+  assert.equal(buildDeck([], "unlimited"), null);
+  const modern = { "sv5-1": 2, "sv8-1": 3, "me1-131": 2, "sv1-196": 2 };
+  const fresh = buildDeck(Object.entries(modern).map(([id, n]) => ({ def: defs(id), owned: n })), "standard");
+  assert.deepEqual(checkDeck({ format: "standard", cards: fresh.cards }, modern, defs).problems, []);
 });
 
 /* ---------- Trainers that choose cards ---------- */
@@ -1254,7 +1377,7 @@ test("one Radiant Pokémon and one ACE SPEC card a deck; one of each Prism Star"
   const radiant = [...byId.values()].filter((c) => defs(c.id).club === "Radiant Pokémon" && defs(c.id).playable).slice(0, 2);
   assert.equal(radiant.length, 2, "two playable Radiant Pokémon to test with");
   const owned = { [radiant[0].id]: 2, [radiant[1].id]: 1 };
-  const deck = { format: "standard", cards: { [radiant[0].id]: 1 } };
+  const deck = { format: "expanded", cards: { [radiant[0].id]: 1 } };
   assert.equal(roomFor(deck, radiant[0].id, owned, defs), 0);
   assert.equal(roomFor(deck, radiant[1].id, owned, defs), 0);
   deck.cards[radiant[1].id] = 1;

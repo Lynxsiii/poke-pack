@@ -51,9 +51,17 @@
 import { runAttackEffects } from "./effects.js";
 import { T_OPS, boostOf, energyIn, fieldFits, moveTargets, prizesLeft, runTrainer, stripEnergy, trainerReady } from "./trainers.js";
 
+/**
+ * The official Constructed formats (Play! Pokémon Tournament Handbook, section 4): 60 cards,
+ * 6 Prize cards, 4 of a card by name. Which cards each allows is js/tcg/formats.js.
+ * `half` is not a format a deck can be built for (`pick` false): only the lesson's stacked
+ * practice match (js/tcg/tutorial.js) and the rules tests deal it.
+ */
 export const FORMATS = {
-  standard: { id: "standard", name: "Full deck", deckSize: 60, prizes: 6, bench: 5, copies: 4 },
-  half: { id: "half", name: "Half deck", deckSize: 30, prizes: 3, bench: 5, copies: 2 },
+  standard: { id: "standard", name: "Standard", deckSize: 60, prizes: 6, bench: 5, copies: 4, pick: true },
+  expanded: { id: "expanded", name: "Expanded", deckSize: 60, prizes: 6, bench: 5, copies: 4, pick: true },
+  unlimited: { id: "unlimited", name: "Unlimited", deckSize: 60, prizes: 6, bench: 5, copies: 4, pick: true },
+  half: { id: "half", name: "Half deck", deckSize: 30, prizes: 3, bench: 5, copies: 2, pick: false },
 };
 
 export const ACTIVE = -1;

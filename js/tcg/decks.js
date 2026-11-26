@@ -3,7 +3,7 @@
  * Pure rules, shared with the Worker later (a wager match must check both decks
  * against what each player owns, docs/tcg-plan.md).
  *
- *   deck  { id, name, format: "standard" | "half", cards: { catalogId: copies } }
+ *   deck  { id, name, format: "standard" | "expanded" | "unlimited" (an old "half" deck is shown as not legal), cards: { catalogId: copies } }
  *
  * A player may only use cards they own, as many copies as they own. Basic
  * Energy is the one thing nobody has to own (js/tcg/cards.js FREE_ENERGY), the
@@ -27,13 +27,24 @@ export function deckList(deck) {
 
 const isBasicEnergy = (def) => def?.kind === "energy" && def.basic;
 
-/** How many copies of this name the deck already holds (the limit is by name, not by print). */
+/** The format's rules; a deck of a format no one can build for any more (the old Half deck) is held to Unlimited's. */
+export const rulesOf = (format) => (FORMATS[format]?.pick ? FORMATS[format] : FORMATS.unlimited);
+
+/** Why this card can't go in a deck of this format, or "" (js/tcg/formats.js, on the card as `legal`). */
+export const notLegal = (def, format) => (FORMATS[format]?.pick ? def?.legal?.[format] ?? "" : "");
+
+/**
+ * How many copies of each name the deck already holds. The limit is by name, not by print:
+ * reprints count together, and so do "Gengar" and "Gengar LV.X" (`deckName`). A card that
+ * says you may have as many of it as you like (`any`) is left out.
+ */
 export function copiesByName(deck, defs) {
   const names = {};
   for (const [id, n] of Object.entries(deck.cards || {})) {
     const def = defs(id);
-    if (!def || isBasicEnergy(def)) continue;
-    names[def.name] = (names[def.name] || 0) + n;
+    if (!def || isBasicEnergy(def) || def.any) continue;
+    const name = def.deckName || def.name;
+    names[name] = (names[name] || 0) + n;
   }
   return names;
 }
@@ -45,23 +56,31 @@ function clubCount(deck, club, defs) {
 
 /** How many more copies of a card this deck can take: by the name limit, by what is owned, by room. */
 export function roomFor(deck, id, owned, defs) {
-  const rules = FORMATS[deck.format] || FORMATS.standard;
+  const rules = rulesOf(deck.format);
   const def = defs(id);
-  if (!def?.playable) return 0;
+  if (!def?.playable || notLegal(def, deck.format)) return 0;
   const have = deck.cards[id] || 0;
   const space = rules.deckSize - deckSize(deck);
   if (isBasicEnergy(def)) return isFreeEnergy(id) ? space : Math.min(space, (owned[id] || 0) - have);
-  const byName = (def.cap || rules.copies) - (copiesByName(deck, defs)[def.name] || 0);
+  const name = def.deckName || def.name;
+  const byName = def.any ? Infinity : (def.cap || rules.copies) - (copiesByName(deck, defs)[name] || 0);
   const club = def.club ? 1 - clubCount(deck, def.club, defs) : Infinity;
   return Math.max(0, Math.min(space, byName, club, (owned[id] || 0) - have));
 }
 
-/** { ok, problems: [text], size, need }. `owned` is { catalogId: copies }. */
+/**
+ * { ok, problems: [text], size, need }. `owned` is { catalogId: copies }. The deck rules of every
+ * Constructed format (Tournament Handbook 4; js/tcg/formats.js): exactly 60 cards, at most 4 of a
+ * name except basic Energy (and the cards that say you may have as many as you like), 1 of each
+ * Prism Star card, 1 ACE SPEC, 1 Radiant Pokémon, 1 Pokémon ★, at least one Basic Pokémon, and
+ * every card legal in the format.
+ */
 export function checkDeck(deck, owned, defs) {
-  const rules = FORMATS[deck.format] || FORMATS.standard;
+  const rules = rulesOf(deck.format);
   const problems = [];
   const size = deckSize(deck);
   let basics = 0;
+  const illegal = new Map();
   for (const [id, n] of Object.entries(deck.cards || {})) {
     const def = defs(id);
     if (!def) {
@@ -69,14 +88,17 @@ export function checkDeck(deck, owned, defs) {
       continue;
     }
     if (!def.playable) problems.push(`${def.name} can't be played yet.`);
+    const why = notLegal(def, deck.format);
+    if (why && !illegal.has(`${def.name} ${why}`)) illegal.set(`${def.name} ${why}`, `${def.name} isn't legal in ${rules.name}: ${why.charAt(0).toLowerCase()}${why.slice(1)}`);
     if (def.kind === "pokemon" && def.stage === "basic") basics += n;
     if (!isFreeEnergy(id) && (owned[id] || 0) < n) problems.push(`You own ${owned[id] || 0} of ${def.name}, the deck has ${n}.`);
   }
+  problems.push(...illegal.values());
   const caps = {};
   const clubs = {};
   for (const [id, n] of Object.entries(deck.cards || {})) {
     const def = defs(id);
-    if (def?.cap) caps[def.name] = def.cap;
+    if (def?.cap) caps[def.deckName || def.name] = def.cap;
     if (def?.club) clubs[def.club] = (clubs[def.club] || 0) + n;
   }
   for (const [name, n] of Object.entries(copiesByName(deck, defs))) {
@@ -86,6 +108,7 @@ export function checkDeck(deck, owned, defs) {
   for (const [club, n] of Object.entries(clubs)) if (n > 1) problems.push(`A deck can hold only 1 ${club}, this one has ${n}.`);
   if (size !== rules.deckSize) problems.unshift(size < rules.deckSize ? `${rules.deckSize - size} more card${rules.deckSize - size === 1 ? "" : "s"} to go.` : `${size - rules.deckSize} too many cards.`);
   if (!basics) problems.push("Add at least one Basic Pokémon.");
+  if (!FORMATS[deck.format]?.pick) problems.unshift(`${FORMATS[deck.format]?.name || "This kind of deck"} isn't a tournament format: switch the deck to Standard, Expanded or Unlimited, 60 cards.`);
   return { ok: !problems.length, problems, size, need: rules.deckSize };
 }
 
@@ -107,7 +130,8 @@ function worth(def) {
  * `prefer` forces the first type (the bot's themed decks).
  */
 export function buildDeck(pool, format = "standard", { prefer = "", rand = Math.random } = {}) {
-  const rules = FORMATS[format] || FORMATS.standard;
+  const rules = rulesOf(format);
+  pool = pool.filter((p) => p.def && !notLegal(p.def, format));
   const mons = pool.filter((p) => p.def?.kind === "pokemon" && p.def.playable && p.owned > 0);
   const basics = mons.filter((p) => p.def.stage === "basic");
   if (!basics.length) return null;
@@ -130,8 +154,9 @@ export function buildDeck(pool, format = "standard", { prefer = "", rand = Math.
   let count = 0;
   const defById = new Map(pool.map((p) => [p.def?.id, p.def]));
   const clubs = new Set();
-  const add = (id, name, n, owned) => {
+  const add = (id, printed, n, owned) => {
     const def = defById.get(id);
+    const name = def?.deckName || printed;
     if (def?.club && clubs.has(def.club)) return 0;
     const take = Math.max(0, Math.min(n, owned - (cards[id] || 0), (def?.cap || rules.copies) - (names[name] || 0), def?.club ? 1 : Infinity, target - count));
     if (!take) return 0;
@@ -150,7 +175,7 @@ export function buildDeck(pool, format = "standard", { prefer = "", rand = Math.
       if (count >= target) break;
       const base = add(lead.def.id, lead.def.name, lead.owned, lead.owned);
       // One fewer of each stage up the line, as far as the player owns them.
-      let below = names[lead.def.name] || base;
+      let below = names[lead.def.deckName || lead.def.name] || base;
       let from = lead.def.name;
       for (let step = 0; step < 2 && below > 0; step += 1) {
         const next = evolutionsOf(from, types)[0];
@@ -181,11 +206,12 @@ export function buildDeck(pool, format = "standard", { prefer = "", rand = Math.
   let room = Math.round(rules.deckSize * 0.14);
   for (const { def, owned } of trainers) {
     if (def.club && clubs.has(def.club)) continue;
-    const take = Math.max(0, Math.min(owned, def.club ? 1 : 2, (def.cap || rules.copies) - (names[def.name] || 0), room));
+    const name = def.deckName || def.name;
+    const take = Math.max(0, Math.min(owned, def.club ? 1 : 2, (def.cap || rules.copies) - (names[name] || 0), room));
     if (!take) continue;
     if (def.club) clubs.add(def.club);
     cards[def.id] = take;
-    names[def.name] = (names[def.name] || 0) + take;
+    names[name] = (names[name] || 0) + take;
     count += take;
     room -= take;
   }
@@ -220,23 +246,25 @@ export function buildDeck(pool, format = "standard", { prefer = "", rand = Math.
  * is the main attacker's name ("Charizard"), for the table to show.
  */
 export function buildBotDeck(setDefs, format, rand = Math.random) {
-  const rules = FORMATS[format] || FORMATS.standard;
+  const rules = rulesOf(format);
   const scale = rules.deckSize / 60;
   const n = (x) => Math.max(1, Math.min(rules.copies, Math.round(x * scale)));
   const total = (x) => Math.round(x * scale);
-  // The strongest print of each name.
+  // The strongest print of each name, of the cards legal in the format. No one-per-deck
+  // Pokémon (Radiant, ★, Prism Star) and no LV.X, which shares its name with what it levels up from.
   const best = new Map();
   const trainers = [];
   const specials = [];
+  const nameOf = (def) => def.deckName || def.name;
   for (const def of setDefs) {
-    if (!def?.playable) continue;
+    if (!def?.playable || notLegal(def, format)) continue;
     if (def.kind === "trainer") {
-      if (!trainers.some((t) => t.name === def.name)) trainers.push(def);
+      if (!trainers.some((t) => nameOf(t) === nameOf(def))) trainers.push(def);
     } else if (def.kind === "energy") {
-      if (!def.basic && !specials.some((t) => t.name === def.name)) specials.push(def);
-    } else if (def.kind === "pokemon" && def.prizes === 1) {
-      const had = best.get(def.name);
-      if (!had || worth(def) > worth(had)) best.set(def.name, def);
+      if (!def.basic && !specials.some((t) => nameOf(t) === nameOf(def))) specials.push(def);
+    } else if (def.kind === "pokemon" && def.prizes === 1 && !def.club && !def.cap && !/ LV\.X$/.test(def.name)) {
+      const had = best.get(nameOf(def));
+      if (!had || worth(def) > worth(had)) best.set(nameOf(def), def);
     }
   }
   const mons = [...best.values()];
@@ -274,10 +302,10 @@ export function buildBotDeck(setDefs, format, rand = Math.random) {
   const cards = {};
   let count = 0;
   const put = (def, k) => {
-    if (!def || used.has(def.name) && !cards[def.id]) return 0;
+    if (!def || used.has(nameOf(def)) && !cards[def.id]) return 0;
     const take = Math.min(k, rules.copies - (cards[def.id] || 0));
     if (take <= 0) return 0;
-    used.add(def.name);
+    used.add(nameOf(def));
     cards[def.id] = (cards[def.id] || 0) + take;
     count += take;
     return take;
@@ -285,7 +313,7 @@ export function buildBotDeck(setDefs, format, rand = Math.random) {
   const putLine = (line, counts) => line.forEach((def, i) => put(def, n(counts[i])));
   const SIZES = { main: [[4], [4, 3], [4, 3, 3]], partner: [[4], [4, 3], [4, 2, 2]], support: [[2], [2, 2], [2, 1, 1]] };
   putLine(lead, SIZES.main[lead.length - 1]);
-  const free = (line) => !line.some((d) => used.has(d.name));
+  const free = (line) => !line.some((d) => used.has(nameOf(d)));
   const partner = ranked.find((l) => free(l) && [...needsOf(l[l.length - 1])].every((t) => t === type));
   if (partner) putLine(partner, SIZES.partner[partner.length - 1]);
   const support = lines
@@ -295,7 +323,7 @@ export function buildBotDeck(setDefs, format, rand = Math.random) {
   // A deck needs enough Basic Pokémon to start with: top up with the sturdiest that fit.
   const monCount = () => Object.entries(cards).reduce((a, [id, k]) => a + (mons.some((d) => d.id === id) ? k : 0), 0);
   const basicCount = () => Object.entries(cards).reduce((a, [id, k]) => a + (mons.find((d) => d.id === id)?.stage === "basic" ? k : 0), 0);
-  const extras = basics.filter((d) => !used.has(d.name) && fits(d, [type])).sort((a, b) => worth(b) - worth(a));
+  const extras = basics.filter((d) => !used.has(nameOf(d)) && fits(d, [type])).sort((a, b) => worth(b) - worth(a));
   for (const def of extras) {
     if (basicCount() >= total(16) && monCount() >= total(16)) break;
     put(def, n(2));
@@ -303,7 +331,7 @@ export function buildBotDeck(setDefs, format, rand = Math.random) {
 
   // A small set leaves few to choose from: more copies of what is in, then any Basic that hits for Colorless.
   for (const def of mons.filter((d) => cards[d.id] && d.stage === "basic")) if (basicCount() < total(12)) put(def, rules.copies);
-  for (const def of basics.filter((d) => !used.has(d.name) && needsOf(d).size === 0)) if (basicCount() < total(12)) put(def, n(3));
+  for (const def of basics.filter((d) => !used.has(nameOf(d)) && needsOf(d).size === 0)) if (basicCount() < total(12)) put(def, n(3));
   for (const def of mons.filter((d) => cards[d.id])) if (monCount() < total(14)) put(def, rules.copies);
 
   // Trainers by job, the way a list is written: cards first, then search, switching, gusting.
@@ -348,7 +376,7 @@ export function buildBotDeck(setDefs, format, rand = Math.random) {
   const spare = () => rules.deckSize - count - total(18);
   const lineSize = (line) => SIZES.partner[line.length - 1].reduce((a, k) => a + n(k), 0);
   for (const line of more) if (spare() >= lineSize(line) && free(line)) putLine(line, SIZES.partner[line.length - 1]);
-  for (const def of basics.filter((d) => !used.has(d.name) && needsOf(d).size === 0)) if (spare() > 0) put(def, Math.min(n(3), spare()));
+  for (const def of basics.filter((d) => !used.has(nameOf(d)) && needsOf(d).size === 0)) if (spare() > 0) put(def, Math.min(n(3), spare()));
   for (const def of basics.filter((d) => cards[d.id])) if (spare() > 0) put(def, Math.min(rules.copies, spare()));
   room = spare();
   for (const def of trainers.filter((t) => cards[t.id])) putTrainer(def, room);

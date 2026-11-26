@@ -99,8 +99,8 @@ async function loadRules(env, request) {
       if (!res.ok) throw new Error(`Missing ${path}`);
       return res.json();
     };
-    const [rules, trainers] = await Promise.all([get("/data/tcg/rules.json"), get("/data/tcg/trainers.json")]);
-    defs = createDefs((id) => cardMap.get(id) || null, rules, trainers);
+    const [rules, trainers, legal] = await Promise.all([get("/data/tcg/rules.json"), get("/data/tcg/trainers.json"), get("/data/tcg/legal.json")]);
+    defs = createDefs((id) => cardMap.get(id) || null, rules, trainers, legal);
   })().catch((err) => {
     rulesWork = null;
     throw err;
@@ -124,7 +124,8 @@ async function defsFor(env, request, ids, h) {
 function readDeck(raw) {
   if (!raw || typeof raw !== "object" || !raw.cards || typeof raw.cards !== "object") fail("Choose a deck.");
   const format = String(raw.format || "");
-  if (!FORMATS[format]) fail("Choose a Full deck or a Half deck.");
+  // Only the tournament formats (js/tcg/engine.js FORMATS `pick`); an old Half deck is refused here, and checkDeck says why.
+  if (!FORMATS[format]?.pick) fail("Choose a Standard, Expanded or Unlimited deck (60 cards).");
   const entries = Object.entries(raw.cards);
   if (entries.length > 80) fail("That deck has too many different cards.");
   const cards = {};
