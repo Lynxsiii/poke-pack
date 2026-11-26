@@ -22,7 +22,7 @@ import { masteryGear } from "../js/achievement-sets.js";
 import { nameHas, isTagTeamName, SM_FINISHES } from "../js/achievement-kit.js";
 import { FINISH_PRINTERS, RARITIES_IN_PRINT, isPrinted } from "../js/achievement-eras.js";
 import { halfCoins, masteryCoins } from "../js/achievement-sets.js";
-import { eraTotal as setsEraTotal, CROWN_ERAS, CROWN_MIN_SETS, eraSlug, setsInEra } from "../js/achievement-eras.js";
+import { eraTotal as setsEraTotal, CROWN_ERAS, CROWN_MIN_SETS, eraSlug, setsInEra, boosterSetsInEra } from "../js/achievement-eras.js";
 import { KIT_COPIES, dexId } from "../js/card-home.js";
 
 // A set's card ids, one per card in its dex. A Trainer Kit lists every copy once
@@ -318,7 +318,7 @@ for (const row of ACHIEVEMENTS) {
   assert.deepEqual(crowns.map((row) => row.id), CROWN_ERAS.map((era) => `era-${eraSlug(era)}-crown`), "one crown per crowned era, generated from set data");
   assert.ok(crowns.length >= 3, "the big eras have crowns");
   for (const row of crowns) {
-    const sets = setsInEra(row.era);
+    const sets = boosterSetsInEra(row.era);
     assert.equal(row.goal, sets.length, `${row.id} asks for every set of the era`);
     assert.equal(row.tier, 4);
     assert.equal(row.cat, "sets");
@@ -352,7 +352,7 @@ for (const row of ACHIEVEMENTS) {
     assert.equal(isAchievementDone(row, achievementContext({}, {})), false);
   }
   assert.equal(achievementContext({}, {}).eraSetsDone("Nope"), 0);
-  assert.equal(CROWN_ERAS.every((era) => setsInEra(era).length >= CROWN_MIN_SETS), true);
+  assert.equal(CROWN_ERAS.every((era) => boosterSetsInEra(era).length >= CROWN_MIN_SETS), true);
 }
 
 // ---- secrets ---------------------------------------------------------------

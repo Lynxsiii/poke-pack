@@ -71,7 +71,7 @@ const card=(id,number,extra={})=>({id,name:'x',number,rarity:'Common',...extra})
   assert.deepEqual(homeCards({id:'pl2'},[dpLists[1]]).map(c=>c.id),['pl2-2']);
   assert.deepEqual(homeCards({id:'bwp'},[[card('bw5-bwp003','bwp003'),card('dp1-dpp03','dpp03')]]).map(c=>c.id),['bw5-bwp003'],'the BW promo set ignores DP promos');
   assert.deepEqual(homeCards({id:'hsp'},[[card('hgss2-hsp10','hsp10'),card('dp1-dpp03','dpp03'),card('hgss2-1','1')]]).map(c=>c.id),['hgss2-hsp10'],'the HGSS promo set keeps only HGSS promos');
-  assert.deepEqual(homeCards({id:'sm5'},[[card('sm5-smp101','smp101'),card('sm5-1','1')]]).map(c=>c.id),['sm5-smp101','sm5-1'],'older eras are untouched');
+  assert.deepEqual(homeCards({id:'sm5'},[[card('sm5-smp101','smp101'),card('sm5-1','1')]]).map(c=>c.id),['sm5-1'],'an SM black star promo is the SM binder\'s card, never a set\'s');
   const hgLists=[
     [card('hgss2-hsp10','hsp10',{rarity:'Promo',promo:true}),card('hgss2-1','1')],
     [card('col1-hsp24','hsp24',{rarity:'Promo',promo:true}),card('col1-SL1','SL1',{rarity:'Rare Shiny Legendary'})],

@@ -30,8 +30,12 @@ import {
   hasCardData,
   dataSetsOf,
   homeCards,
+  boxPromoCards,
+  isBoosterSet,
+  setCategory,
+  SET_CATEGORIES,
 } from "./catalog.js";
-import { dexIds, foldCopies, homeSetId, promoHomeOf } from "./card-home.js";
+import { dexIds, foldCopies, homeSetId, isBoxPromoId, promoHomeOf } from "./card-home.js";
 import { createCardPicker } from "./card-picker.js?v=3";
 import { HIT_RARITIES, canPullReverse, isHit, tallyRarity } from "./engine.js";
 import { initRadio } from "./radio.js?v=5";
@@ -60,6 +64,7 @@ import { slabHTML, gradeWord } from "./slab.js?v=2";
 import { GRADING_LIMITS, gradedValue } from "./grading-rules.js";
 import {
   ACHIEVEMENTS,
+  achievementsFor,
   ACH_CATEGORIES,
   achievementById,
   achievementContext,
@@ -76,7 +81,7 @@ import * as questRules from "./quests.js";
 import { masteryEmblemHtml as masteryEmblem, masterySetIds, masteryBannerId } from "./mastery.js";
 import { bannerBlockHtml } from "./mastery-banner.js";
 import { masteryShelfProfileHtml } from "./mastery-shelf.js";
-import * as questArea from "./quest-area.js?v=9";
+import * as questArea from "./quest-area.js?v=10";
 import * as levelUi from "./level-ui.js";
 import { rollFigures, growBars, flyCoins, markPicks, landPreview } from "./acct-motion.js";
 import { createXpFeed } from "./level-feed.js";
@@ -332,6 +337,8 @@ let productList = {};
 let boxContents = {};
 let cards = [];
 let setCards = [];
+/** The live set's box promos (stamped and cosmos prints from its blisters and boxes): on its collection page under their own word, never in its dex or its count. */
+let boxCards = [];
 let byId = {};
 let view = "home";
 let viewFadeGen = 0;
@@ -839,10 +846,12 @@ const RARITY_GROUPS = [
   ["uncommon", "Uncommon"],
   ["rare", "Rare"],
   ["hits", "Hits"],
+  ["box", "Box promos"],
 ];
-const GROUP_ALL_WORD = { common: "All commons", uncommon: "All uncommons", rare: "All rares", hits: "All hits" };
+const GROUP_ALL_WORD = { common: "All commons", uncommon: "All uncommons", rare: "All rares", hits: "All hits", box: "All box promos" };
 
 function rarityGroupOf(card) {
+  if (isBoxPromoId(card.id)) return "box";
   if (card.rarity === "Common" || card.rarity === "Energy") return "common";
   if (card.rarity === "Uncommon") return "uncommon";
   // A WotC holo Rare is a hit; a later holo Rare is the rare slot's usual card.
@@ -858,6 +867,11 @@ function groupCounts() {
       counts[key].total += 1;
       counts[key].have += have;
     }
+  }
+  // Box promos are counted under their own word only: "All" is the set's pack cards.
+  for (const card of boxCards) {
+    counts.box.total += 1;
+    counts.box.have += ownedQty(card.id) > 0 ? 1 : 0;
   }
   return counts;
 }
@@ -997,7 +1011,7 @@ function paintHud(trainer) {
     face.classList.toggle("pixel", Boolean(trainer) && avatarStyle(trainer.avatarStyle) === "pixel");
     face.innerHTML = trainer
       ? `<img src="${esc(avatarSrc(trainer.avatar, trainer.avatarStyle))}" alt="" />`
-      : `<img src="assets/mark.png?v=35" alt="" />`;
+      : `<img src="assets/mark-v2.png" alt="" />`;
     if (trainer) face.style.setProperty("--avatar", avatarColor(trainer.color).hex);
   }
   if (lv) {
@@ -1058,7 +1072,7 @@ function paintMeMenus(trainer) {
   const xp = trainer && state.xp ? levelUi.xpOf(state) : null;
   const face = trainer
     ? `<img src="${esc(avatarSrc(trainer.avatar, trainer.avatarStyle))}" alt="" />`
-    : `<img src="assets/mark.png?v=35" alt="" />`;
+    : `<img src="assets/mark-v2.png" alt="" />`;
   const pixel = Boolean(trainer) && avatarStyle(trainer.avatarStyle) === "pixel";
   const set = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; };
   for (const id of ["me-face", "menu-me-face"]) {
@@ -2045,6 +2059,7 @@ async function activateSet(id, force = false, quiet = false) {
   // under ME Black Star Promos, not under the set that sells them).
   const fileCards = dataSetsOf(next).flatMap((source) => setCache[source.id]);
   setCards = homeCards(next, dataSetsOf(next).map((source) => setCache[source.id]));
+  boxCards = boxPromoCards(next, dataSetsOf(next).map((source) => setCache[source.id]));
   cards = [...setCards, ...BASIC_ENERGY];
   byId = Object.fromEntries([...fileCards, ...BASIC_ENERGY].map((c) => [c.id, c]));
   activeWrapper = liveSet.wrappers[0];
@@ -2356,6 +2371,15 @@ function renderCollection({ refreshSets = true } = {}) {
     if (countEl && signed) {
       if (!countEl.firstElementChild) countEl.innerHTML = `<b class="num"></b> cards`;
       rollCollFigure(countEl.firstElementChild, `${num(owned)}/${num(total)}`);
+      // An extra (a promo binder, a Happy Meal year, a kit) has no mastery: a full one is stamped Complete instead.
+      const complete = !isBoosterSet(liveSet) && total > 0 && owned >= total;
+      let stamp = countEl.querySelector(".coll-stamp");
+      if (complete && !stamp) {
+        stamp = document.createElement("span");
+        stamp.className = "coll-stamp";
+        stamp.textContent = "Complete";
+        countEl.append(" ", stamp);
+      } else if (!complete && stamp) stamp.remove();
     }
     const figure = document.getElementById("coll-worth-v");
     if (figure) {
@@ -2375,7 +2399,7 @@ function renderCollection({ refreshSets = true } = {}) {
 
   const ofSet = new Set(setCards);
   // Everything but the show filter, so the show words can say how many each would show.
-  const base = cards.filter((card) => {
+  const base = (rarityGroup === "box" ? boxCards : cards).filter((card) => {
     const count = ownedQty(card.id);
     if (rarityGroup !== "all" && rarityGroupOf(card) !== rarityGroup) return false;
     if (rarityMode !== "all" && card.rarity !== rarityMode) return false;
@@ -2428,7 +2452,11 @@ function renderCollection({ refreshSets = true } = {}) {
   if (els.binderNote) {
     const shown = list.length;
     const filtered = ownedMode !== "all" || rarityGroup !== "all" || rarityMode !== "all" || q;
-    els.binderNote.textContent = `${num(shown)} card${shown === 1 ? "" : "s"}${filtered ? `, filtered from ${num(total)} in the set` : ""}`;
+    // Box promos are not part of the set's count, so their note says where they come from instead.
+    els.binderNote.textContent =
+      rarityGroup === "box"
+        ? `${num(shown)} box promo${shown === 1 ? "" : "s"}. They come in ${liveSet.name} boxes and blisters, and don't count toward the set.`
+        : `${num(shown)} card${shown === 1 ? "" : "s"}${filtered ? `, filtered from ${num(total)} in the set` : ""}`;
   }
 
   // A set change cross-fades the grid; a set or filter change lifts the first screen of slots.
@@ -2860,7 +2888,7 @@ function renderCatalog() {
   const ownedBy = activeTrainer() ? new Map() : null;
   if (ownedBy) {
     for (const [id, count] of Object.entries(ownedMapNow())) {
-      if (count > 0) {
+      if (count > 0 && !isBoxPromoId(id)) {
         const home = homeSetId(id);
         ownedBy.set(home, (ownedBy.get(home) || 0) + 1);
       }
@@ -2977,7 +3005,7 @@ function miniCardRow(cards, emptyNote, rowClass = "") {
 
 function ownedInSet(set) {
   return Object.entries(ownedMapNow()).reduce(
-    (n, [id, count]) => n + (count > 0 && homeSetId(id) === set.id ? 1 : 0),
+    (n, [id, count]) => n + (count > 0 && homeSetId(id) === set.id && !isBoxPromoId(id) ? 1 : 0),
     0
   );
 }
@@ -3577,9 +3605,15 @@ function guestHasProgress() {
   return save.packsOpened > 0 || owned || save.coins !== STARTING_COINS || Boolean(save.lastDaily);
 }
 
+/** Booster sets, then any extra whose mastery was claimed while it existed (it keeps its seal, title and banner). */
+function masterySets() {
+  const claimed = claimedIds();
+  return PLAYABLE_SETS.filter((set) => isBoosterSet(set) || claimed.has(`set-${set.id}-master`));
+}
+
 function setCompletionRows() {
   const perSet = ownedPerSet(ownedMapNow());
-  return PLAYABLE_SETS.map((set) => {
+  return masterySets().map((set) => {
     const owned = perSet.get(set.id) || 0;
     const total = set.totalCount || 1;
     return { set, owned, total, pct: Math.round((owned / total) * 100) };
@@ -3614,8 +3648,11 @@ function achievementStats() {
   const ctx = achieveCtx();
   const claimed = claimedIds();
   const ready = readyToClaim(ctx, claimed);
-  const done = ACHIEVEMENTS.filter((row) => claimed.has(row.id) || isAchievementDone(row, ctx)).length;
-  const banked = ACHIEVEMENTS.reduce((n, row) => n + (claimed.has(row.id) ? row.coins : 0), 0);
+  // The live rows, plus any retired row this player claimed while it could still be earned (an extra's old mastery).
+  const rows = achievementsFor(claimed);
+  const done = rows.filter((row) => claimed.has(row.id) || isAchievementDone(row, ctx)).length;
+  const banked = rows.reduce((n, row) => n + (claimed.has(row.id) ? row.coins : 0), 0);
+  const claimedShown = rows.reduce((n, row) => n + (claimed.has(row.id) ? 1 : 0), 0);
   return {
     ctx,
     claimed,
@@ -3623,8 +3660,8 @@ function achievementStats() {
     done,
     banked,
     waiting: claimTotal(ready),
-    total: ACHIEVEMENTS.length,
-    pct: Math.round((claimed.size / ACHIEVEMENTS.length) * 100),
+    total: rows.length,
+    pct: Math.round((claimedShown / rows.length) * 100),
     setRows: setCompletionRows(),
   };
 }
@@ -3643,9 +3680,14 @@ const areaDeps = {
   num,
   setIdentity,
   eraTitle,
-  sets: PLAYABLE_SETS,
+  // The sets with a mastery: every booster set, plus an extra whose mastery this player claimed before it was retired.
+  get sets() {
+    return masterySets();
+  },
   setById: (id) => SET_BY_ID.get(id) || null,
-  rows: ACHIEVEMENTS,
+  get rows() {
+    return achievementsFor(claimedIds());
+  },
   categories: ACH_CATEGORIES,
   achievementProgress,
   achievementFace,
@@ -3750,7 +3792,7 @@ async function hydrateAfterAccountChange() {
 /** The sign-in screen's hero: the set on show, its wrappers fanned on the cyan slab (decoration only). */
 function authHeroHtml() {
   const wraps = (liveSet?.wrappers || []).slice(0, 3);
-  if (!wraps.length) return `<div class="au-hero is-mark" aria-hidden="true"><span class="au-slab"></span><img class="au-pack" src="assets/mark.png?v=35" alt="" /></div>`;
+  if (!wraps.length) return `<div class="au-hero is-mark" aria-hidden="true"><span class="au-slab"></span><img class="au-pack" src="assets/mark-v2.png" alt="" /></div>`;
   const order = wraps.length === 3 ? [wraps[1], wraps[2], wraps[0]] : wraps.length === 2 ? [wraps[1], wraps[0]] : wraps;
   return `<div class="au-hero n${wraps.length}" aria-hidden="true"><span class="au-slab"></span>${order
     .map((w, i) => `<span class="au-pack p${order.length - i}">${packPicture(w, " ", liveSet).replace(/ alt="[^"]*"/, ' alt=""')}</span>`)
@@ -3897,7 +3939,7 @@ function renderAuth() {
     <div class="auth-page ${recover ? "is-recover" : signin ? "is-signin" : "is-signup"}">
       ${authHeroHtml()}
       <div class="auth-copy">
-        <p class="au-kicker"><img class="auth-mark" src="assets/mark.png?v=35" width="256" height="256" alt="" /><span class="au-plate">${recover ? "Recovery" : signin ? "Continue" : "New game"}</span></p>
+        <p class="au-kicker"><img class="auth-mark" src="assets/mark-v2.png" width="256" height="256" alt="" /><span class="au-plate">${recover ? "Recovery" : signin ? "Continue" : "New game"}</span></p>
         <h1>${recover ? "Reset your password" : signin ? "Welcome back" : "Make a trainer"}</h1>
         <p class="lede">${
           recover
@@ -4070,7 +4112,7 @@ function signedOutAccount() {
     <header class="tcard signed-out">
       <div class="tcard-band"></div>
       <div class="tcard-id">
-        <img class="brand-logo lg" src="assets/mark.png?v=35" width="256" height="256" alt="" />
+        <img class="brand-logo lg" src="assets/mark-v2.png" width="256" height="256" alt="" />
         <div class="tcard-who">
           <h1 class="tcard-name">Make a trainer</h1>
           <p class="tcard-idno"><span><small>ID No.</small> <b>Not issued yet</b></span></p>
@@ -5548,7 +5590,10 @@ function paintNav(current) {
     current === "auth" || current === "profile" ? "account" : current === "battles" ? "casino" : current === "vault" || current === "binder" ? "collection"
       : current === "social" && socialTab === "rankings" ? "rankings" : current;
   document.querySelectorAll(".nav-btn").forEach((btn) => {
-    const on = btn.dataset.view === navView || (current === "social" && btn.dataset.view === "social" && !btn.closest(".nav-more-list"));
+    let on = btn.dataset.view === navView || (current === "social" && btn.dataset.view === "social" && !btn.closest(".nav-more-list"));
+    // A game's own menu entry lights only on that game; the Casino entry stays lit for the whole area.
+    if (btn.dataset.casino) on = current === "casino" && casinoPath.startsWith(btn.dataset.casino);
+    else if (btn.dataset.view === "battles") on = current === "battles";
     btn.classList.toggle("active", on);
     if (on) btn.setAttribute("aria-current", "page");
     else btn.removeAttribute("aria-current");
@@ -7978,7 +8023,7 @@ document.querySelectorAll(".nav-btn").forEach((btn) => {
       return;
     }
     if (btn.dataset.view === "battles") battlePath = "/battles";
-    if (btn.dataset.view === "casino") casinoPath = "/casino";
+    if (btn.dataset.view === "casino") casinoPath = btn.dataset.casino || "/casino";
     if (btn.dataset.view === "grading") gradingPath = "/grading"; // grading
     if (btn.dataset.view === "trades") tradesPath = "/trades"; // trades
     setView(btn.dataset.view);
@@ -10554,7 +10599,7 @@ function sharePull(card, { pulled = false } = {}) {
     id: card.id,
     image: `/${String(card.image || card.imageSmall || "").replace(/^\//, "")}`,
     coin: "/assets/coins/pp-coin-v1.svg",
-    mark: "/assets/mark.png",
+    mark: "/assets/mark-v2.png",
     name: card.name,
     line: [rarity, no === "Energy" ? "" : no].filter(Boolean).join(", "),
     rarity,

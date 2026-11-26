@@ -53,7 +53,7 @@ const lists=[
 const own=homeCards(bwp,lists);
 assert.deepEqual(own.map(c=>c.id),['bw5-bwp003','bwp-bwp005','bw5-bwp030','bw1-bwp067a','bwp-bwp100'],'promo-number order, "67a" after 67, Energy left out');
 assert.deepEqual(homeCards({id:'bw5'},[lists[0]]).map(c=>c.id),['bw5-1','bw5-60a'],'a main set keeps its own cards, box-only reprints stay, black star promos go');
-assert.deepEqual(homeCards({id:'sm5'},[[card('sm5-smp101','smp101'),card('sm5-1','1')]]).map(c=>c.id),['sm5-smp101','sm5-1'],'older eras are untouched');
+assert.deepEqual(homeCards({id:'sm5'},[[card('sm5-smp101','smp101'),card('sm5-1','1')]]).map(c=>c.id),['sm5-1'],'an SM black star promo is the SM binder\'s card, never a set\'s');
 assert.deepEqual(homeCards({id:'mep'},[[card('me5-mep055','mep055'),card('me5-1','1'),card('bw5-bwp003','bwp003')]]).map(c=>c.id),['me5-mep055'],'the ME promo set keeps only ME promos');
 
 // ---- Fixture: two Black & White sets and the promo set, played through the Worker ----------------------------------------

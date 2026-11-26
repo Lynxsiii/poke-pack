@@ -11,7 +11,7 @@ assert.equal(set.id, "sv3");
 assert.ok(PLAYABLE_SETS.includes(set), "Obsidian Flames can be opened");
 const data = read(set.dataFile);
 const cards = [...data, ...BASIC_ENERGY];
-assert.equal(data.length, set.totalCount);
+assert.equal(data.filter((c) => !c.promo).length, set.totalCount, "totalCount is the pack cards: promos are counted on their own");
 assert.equal(new Set(cards.map((c) => c.id)).size, cards.length, "card ids are unique");
 
 // The checklist TCG Live and TCGplayer agree on: 230 cards plus 10 promos.

@@ -67,7 +67,7 @@ img { max-width: 100%; display: block; }
   width: 76px;
   height: 76px;
   border-radius: 16px;
-  background: #14171b url("../assets/mark.png?v=35") center / cover no-repeat;
+  background: #14171b url("../assets/mark-v2.png") center / cover no-repeat;
   box-shadow: 0 0 0 2.5px var(--k, #14171b), var(--drop, 6px 8px 0 rgb(0 40 50 / 0.2));
   animation: boot-mark 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
@@ -135,7 +135,7 @@ body.is-ready .boot-veil::after { animation-play-state: paused; }
   text-decoration: none;
   color: inherit;
 }
-/* The mark is assets/mark.png — the card fan on its own, no wordmark. The
+/* The mark is assets/mark-v2.png (scripts/make_logo.mjs), no wordmark. The
    header already says the name in type next to it, and a full lockup shrunk to
    44px is unreadable mush that says it twice. Fixed square rather than
    height + auto width, so no amount of flex pressure can squash it. */

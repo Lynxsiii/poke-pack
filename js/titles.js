@@ -1,6 +1,6 @@
-import { PLAYABLE_SETS } from "./catalog.js";
+import { isBoosterSet, PLAYABLE_SETS } from "./catalog.js";
 import { HIT_RARITIES, HIT_TALLY, tallyRarity } from "./engine.js";
-import { dexId, foldCopies, homeSetId } from "./card-home.js";
+import { dexId, foldCopies, homeSetId, isBoxPromoId } from "./card-home.js";
 import { CROWN_ERAS, eraSlug } from "./achievement-eras.js";
 import { ORIGINAL_TITLE, levelTitleRows } from "./level-data.js";
 
@@ -115,12 +115,15 @@ for (const era of CROWN_ERAS) {
 
 // One title per set, earned by claiming that set's mastery achievement
 // (`set-<id>-master` in js/achievement-sets.js).
+// Only a booster set has a mastery to claim. The extras' titles (a Trainer Kit, a Happy Meal year, a promo binder)
+// could be earned before 2026-11-26: `legacy` keeps them for whoever claimed one and out of everyone else's list.
 for (const set of PLAYABLE_SETS) {
   AWARD_TITLES.push({
     id: `master-${set.id}`,
     name: masteryTitle(set.name),
     ach: `set-${set.id}-master`,
-    note: `Complete every card in ${set.name}.`,
+    note: isBoosterSet(set) ? `Complete every card in ${set.name}.` : `Earned by completing ${set.name} before its mastery was retired.`,
+    ...(isBoosterSet(set) ? {} : { legacy: true }),
   });
 }
 
@@ -207,20 +210,38 @@ export function setPercents(collection) {
   });
 }
 
-/** How many different cards of each set are in a collection, by set id (a Trainer Kit copy counts as the card it copies). */
+/**
+ * How many different cards of each set are in a collection, by set id (a Trainer Kit copy counts as the card it
+ * copies). A booster set's count is its pack cards: its box promos (stamped and cosmos prints from its blisters and
+ * boxes) are counted by ownedBoxPromos, never here, so they can't hold a set's completion or mastery back.
+ */
 export function ownedPerSet(collection) {
   const owned = new Map();
   for (const [id, n] of Object.entries(foldCopies(collection))) {
     if (!(n > 0)) continue;
     if (id.indexOf("-") <= 0) continue;
+    if (isBoxPromoId(id)) continue;
     const setId = homeSetId(id);
     owned.set(setId, (owned.get(setId) || 0) + 1);
   }
   return owned;
 }
 
+/** How many different box promos of each booster set are in a collection, by set id. */
+export function ownedBoxPromos(collection) {
+  const owned = new Map();
+  for (const [id, n] of Object.entries(collection || {})) {
+    if (!(n > 0) || !isBoxPromoId(id)) continue;
+    const setId = homeSetId(id);
+    owned.set(setId, (owned.get(setId) || 0) + 1);
+  }
+  return owned;
+}
+
+/** The best completion among the booster sets: a kit or a Happy Meal year filled by one box is not "a set". */
 function bestSetPct(collection) {
-  return setPercents(collection).reduce((best, pct) => Math.max(best, pct), 0);
+  const pcts = setPercents(collection);
+  return PLAYABLE_SETS.reduce((best, set, i) => (isBoosterSet(set) ? Math.max(best, pcts[i]) : best), 0);
 }
 
 export function unlockedTitles(ctx) {
