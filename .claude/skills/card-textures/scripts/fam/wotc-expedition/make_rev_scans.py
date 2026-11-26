@@ -37,7 +37,11 @@ SMALL = (320, 447)
 def compose(n):
     holo = twins.scan(n).astype(np.float32)
     twin = twins.registered_twin(n)
-    w = cv2.GaussianBlur(twins.window_mask().astype(np.float32), (0, 0), 0.75)[..., None]
+    # v2 (2026-11-26): the HOLO scan's own window, not the era's. The holo print's window runs 6-10 px wider than the
+    # non-holo's, so pasting the twin through the era window left a ring of the holo's starfield round the art.
+    from make_holo_maps import scan_window
+    hw = cv2.dilate(scan_window(holo[..., :3]).astype(np.uint8), np.ones((3, 3), np.uint8))
+    w = cv2.GaussianBlur(hw.astype(np.float32), (0, 0), 0.75)[..., None]
     rgb = holo[..., :3] * (1 - w) + twin * w
     out = np.dstack([np.clip(rgb + 0.5, 0, 255), holo[..., 3]]).astype(np.uint8)
     return out
@@ -46,9 +50,9 @@ def compose(n):
 def save(n):
     os.makedirs(OUT, exist_ok=True)
     face = compose(n)
-    big = os.path.join(OUT, f"rev-scan-ecard1-{n}-v1.webp")
+    big = os.path.join(OUT, f"rev-scan-ecard1-{n}-v2.webp")
     Image.fromarray(face, "RGBA").save(big, quality=88, method=6)
-    small = os.path.join(OUT, f"rev-scan-ecard1-{n}-sm-v1.webp")
+    small = os.path.join(OUT, f"rev-scan-ecard1-{n}-sm-v2.webp")
     Image.fromarray(face, "RGBA").resize(SMALL, Image.LANCZOS).save(small, quality=88, method=6)
     print(f"ecard1-{n} twin {twins.pair(n)['twin']}: {os.path.getsize(big)} + {os.path.getsize(small)} bytes")
     return face
