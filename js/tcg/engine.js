@@ -1280,7 +1280,9 @@ const HANDLERS = {
       } else pile.push(...present);
     } else if (op === "baton") {
       // Then which Benched Pokémon takes them: asked next, ahead of anything already waiting (a new Active Pokémon).
-      if (present.length) state.pending.splice(1, 0, { type: "pick", optional: false, player, side: player, spots: side.bench.map((_, i) => i), left: 1, effect: { op: "attachHeld", uids: present, zone: "discard" } });
+      // They stay in the discard pile until then.
+      pile.push(...present);
+      if (present.length) state.pending.splice(1, 0, { type: "pick", optional: false, player, side: player, spots: side.bench.map((_, i) => i), left: 1, effect: { op: "attachHeld", uids: present, zone: "discard", left: true } });
     } else if (op === "takeBack") {
       // Saffron City Gym: a basic Energy off one of your Pokémon, back to your hand.
       for (const uid of picked) {
@@ -1573,6 +1575,11 @@ function applyPick(state, waiting, spot, defs, events) {
     // Energy already taken from the deck (it rides on the choice) goes onto the Pokémon picked.
     const slot = slotAt(state, p, spot);
     for (const uid of effect.uids) {
+      // `left`: they were left where they were until now (Wishful Baton's, in the discard pile).
+      if (effect.left) {
+        if (!side[effect.zone].includes(uid)) continue;
+        side[effect.zone].splice(side[effect.zone].indexOf(uid), 1);
+      }
       slot.energy.push(uid);
       events.push({ t: "attach", p, uid, spot, from: effect.zone || "deck" });
     }

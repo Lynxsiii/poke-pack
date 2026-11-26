@@ -678,6 +678,7 @@ export function initTcg(deps) {
       }[op]?.();
       if (op === "gatherFrom") return { text: `Choose a Pokémon to move ${fx.type ? `a ${fx.type}` : "an"} Energy from, or finish.`, keys: `<button type="button" class="ghost sm" data-act="pick-skip">Done</button>` };
       if (moving) return { text: moving, keys: "" };
+      if (op === "shuffleIn") return { text: "Choose the Pokémon to shuffle into your deck, or keep them.", keys: `<button type="button" class="ghost sm" data-act="pick-skip">Keep them</button>` };
       if (op === "switch" && waiting.side === ME && waiting.player === ME && state.current !== ME) return { text: "Your Active Pokémon is pushed out. Choose the Benched Pokémon that comes in.", keys: "" };
       const text = op === "attachFrom" ? `Choose the Pokémon that gets the ${d(waiting.effect.uid).name}.` : op === "switch" ? (waiting.side === ME ? "Choose the Benched Pokémon that comes in." : "Choose which of their Benched Pokémon to pull forward.") : op === "heal" ? (waiting.effect.n >= 999 ? "Choose one of your Pokémon to heal all its damage." : `Choose one of your Pokémon to heal ${waiting.effect.n}.`) : op === "discardEnergy" ? `Choose one of ${whose} Pokémon to lose an Energy.` : `Choose ${waiting.side === ME ? "one of your" : "one of their"} Pokémon for ${waiting.effect.n} damage${waiting.left > 1 ? ` (${waiting.left} to choose)` : ""}.`;
       return { text, keys: waiting.optional ? `<button type="button" class="ghost sm" data-act="pick-skip">Stay in</button>` : "" };
@@ -1000,6 +1001,8 @@ export function initTcg(deps) {
       : waiting.effect.op === "evolveFrom" ? `Choose the card to evolve with from your ${waiting.zone === "deck" ? "deck" : "hand"}`
       : waiting.effect.op === "dropInPlay" ? `Discard ${min < max ? "up to " : ""}${plural(max, "card")} in play`
       : waiting.effect.op === "toTop" ? `Put ${many(max)} from your hand on top of your deck`
+      : waiting.effect.op === "share" || waiting.effect.op === "baton" ? `Move ${min < max ? "up to " : ""}${many(max)} from your Knocked Out Pokémon`
+      : waiting.effect.op === "takeBack" ? `Return ${many(max)} to your hand`
       : waiting.effect.op === "toBottom" ? `${waiting.shuffle ? "Shuffle" : "Put"} ${many(max)} from your hand ${waiting.shuffle ? "into" : "on the bottom of"} your deck`
       : waiting.zone === "discard" ? `Take ${min < max ? "up to " : ""}${many(max)} from your discard pile`
       : `Take ${max > 1 ? `up to ${many(max)}` : many(1)} from your deck`;
