@@ -499,7 +499,7 @@ export function compileAttack(text, name = "") {
   // "Search your deck for up to 2 Nidoran♀ and put them onto your Bench": cards of its own name.
   const kin = plain.match(new RegExp(`^Search your deck for (?:(?:up to )?${N} )?${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")} and put (?:it|them) onto your Bench\\. ${SHUFFLED}$`, "i"));
   if (kin) return fromDeck([{ op: "search", what: `name=${name}`, n: kin[1] ? count(kin[1]) : 1, to: "bench" }]);
-  return compileText(plain.split(name).join("this Pokémon").replace(/(^|\. |\()this Pokémon/g, "$1This Pokémon"));
+  return compileText(plain.replace(new RegExp(`(?<![\\p{L}\\d])${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?![\\p{L}\\d])`, "gu"), "this Pokémon").replace(/(^|\. |\()this Pokémon/g, "$1This Pokémon"));
 }
 
 function compileText(clean) {
