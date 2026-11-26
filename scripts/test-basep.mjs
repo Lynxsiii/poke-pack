@@ -75,7 +75,7 @@ const card=(id,number,extra={})=>({id,name:'x',number,rarity:'Common',...extra})
   assert.deepEqual(homeCards({id:'bwp'},[[card('bw5-bwp003','bwp003'),card('base2-basep03','basep03')]]).map(c=>c.id),['bw5-bwp003'],'the BW promo set ignores Wizards promos');
   assert.deepEqual(homeCards({id:'dpp'},[[card('dp1-dpp03','dpp03'),card('base2-basep03','basep03')]]).map(c=>c.id),['dp1-dpp03'],'the DP promo set ignores Wizards promos');
   assert.deepEqual(homeCards(BASEP_PROMOS,[[card('dp1-dpp03','dpp03'),card('bw5-bwp003','bwp003')]]).map(c=>c.id),[],'basep keeps only Wizards promos');
-  assert.deepEqual(homeCards({id:'sm5'},[[card('sm5-smp101','smp101'),card('sm5-1','1')]]).map(c=>c.id),['sm5-smp101','sm5-1'],'older eras are untouched');
+  assert.deepEqual(homeCards({id:'sm5'},[[card('sm5-smp101','smp101'),card('sm5-1','1')]]).map(c=>c.id),['sm5-1'],'an SM black star promo is the SM binder\'s card, never a set\'s');
   assert.deepEqual(homeCards(BP_PROMOS,[[card('bp-bp03','bp03',{rarity:'Promo',promo:true}),card('bp-bp01','bp01',{rarity:'Promo',promo:true}),card('basep-basep01','basep01')]]).map(c=>c.id),['bp-bp01','bp-bp03'],'Best of Game: its own file, in order');
 }
 

@@ -10,7 +10,7 @@ assert.equal(set.id, "sv7");
 assert.ok(PLAYABLE_SETS.includes(set), "Stellar Crown is playable");
 assert.ok(ROADMAP.every((block) => block.sets.every((s) => s.id !== "sv7")), "and not queued on the roadmap too");
 const cards = [...JSON.parse(fs.readFileSync(new URL(set.dataFile, root))), ...BASIC_ENERGY];
-assert.equal(cards.length - BASIC_ENERGY.length, set.totalCount);
+assert.equal(cards.filter((c) => !c.promo).length - BASIC_ENERGY.length, set.totalCount, "totalCount is the pack cards: promos are counted on their own");
 assert.equal(new Set(cards.map((c) => c.id)).size, cards.length, "card ids are unique");
 assert.equal(cards.filter((c) => !c.promo && !c.energy).length, 175, "142 numbered cards plus 33 secret rares");
 

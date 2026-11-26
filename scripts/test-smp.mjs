@@ -4,7 +4,8 @@ import assert from 'node:assert/strict';
 import {DatabaseSync} from 'node:sqlite';
 import {existsSync,readFileSync,readdirSync} from 'node:fs';
 import worker from '../worker/index.js';
-import {BASIC_ENERGY,PLAYABLE_SETS,findOffer,getSet,offerPackSets,promoOffers} from '../js/catalog.js';
+import {BASIC_ENERGY,PLAYABLE_SETS,findOffer,getSet,offerPackSets,promoOffers,dataSetsOf,homeCards} from '../js/catalog.js';
+import {homeSetId} from '../js/card-home.js';
 
 const root=new URL('../',import.meta.url);
 const read=path=>JSON.parse(readFileSync(new URL(path,root),'utf8'));
@@ -15,7 +16,11 @@ assert.ok(set.promoSet&&!set.wrappers.length&&!set.slots.length,'it sells no boo
 
 // Cards: every SM promo no set's own boxes carry, each once, with its scan and price.
 const cards=read(set.dataFile);
-assert.equal(cards.length,set.totalCount);
+// The binder also holds the promos filed in the sets' own files (js/card-home.js PROMO_HOMES): its total is every one of them.
+const binder=homeCards(set,dataSetsOf(set).map(source=>read(source.dataFile)));
+assert.equal(binder.length,set.totalCount,'totalCount is every promo counted under the binder');
+assert.ok(binder.length>cards.length&&cards.every(c=>binder.some(b=>b.id===c.id)),'its own file is part of it');
+for(const c of binder) assert.equal(homeSetId(c.id),set.id,`${c.id} is counted under ${set.id}`);
 assert.equal(new Set(cards.map(c=>c.id)).size,cards.length,'card ids are unique');
 for(const c of cards){
   assert.ok(c.promo&&c.rarity==='Promo',`${c.id} is a promo`);

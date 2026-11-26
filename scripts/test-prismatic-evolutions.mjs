@@ -17,7 +17,7 @@ assert.ok(!ROADMAP.some((block) => block.sets.some((s) => s.id === "sv8pt5")), "
 const data = read(set.dataFile);
 const cards = [...data, ...BASIC_ENERGY];
 const byId = Object.fromEntries(data.map((c) => [c.id, c]));
-assert.equal(data.length, set.totalCount, "totalCount counts the pattern prints and promos");
+assert.equal(data.filter((c) => !c.promo).length, set.totalCount, "totalCount counts the pattern prints; promos are counted on their own");
 assert.equal(new Set(data.map((c) => c.id)).size, data.length, "card ids are unique");
 const base = data.filter((c) => !c.pattern && !c.promo);
 const pokeball = data.filter((c) => c.pattern === "pokeball");

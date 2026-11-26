@@ -10,7 +10,7 @@ assert.equal(set.id, "sv4pt5");
 assert.ok(PLAYABLE_SETS.includes(set), "Paldean Fates is playable");
 assert.ok(ROADMAP.every((block) => block.sets.every((s) => s.id !== "sv4pt5")), "and not queued on the roadmap too");
 const cards = [...JSON.parse(fs.readFileSync(new URL(set.dataFile, root))), ...BASIC_ENERGY];
-assert.equal(cards.length - BASIC_ENERGY.length, set.totalCount);
+assert.equal(cards.filter((c) => !c.promo).length - BASIC_ENERGY.length, set.totalCount, "totalCount is the pack cards: promos are counted on their own");
 assert.equal(new Set(cards.map((c) => c.id)).size, cards.length, "card ids are unique");
 assert.equal(cards.filter((c) => !c.promo && !c.energy).length, 245, "91 numbered cards plus 154 secret rares");
 

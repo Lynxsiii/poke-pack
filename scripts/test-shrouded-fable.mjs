@@ -10,7 +10,7 @@ assert.equal(set.id, "sv6pt5");
 assert.ok(PLAYABLE_SETS.includes(set), "Shrouded Fable is playable");
 const own = JSON.parse(fs.readFileSync(new URL(set.dataFile, root)));
 const cards = [...own, ...BASIC_ENERGY];
-assert.equal(own.length, set.totalCount, "99 cards, 6 promos and 8 reverse Energy");
+assert.equal(own.filter((c) => !c.promo).length, set.totalCount, "99 cards and 8 reverse Energy; the 6 promos are counted on their own");
 assert.equal(new Set(cards.map((c) => c.id)).size, cards.length, "card ids are unique");
 
 // The reverse holo Energy are this set's own cards, always reverse, always chain.
