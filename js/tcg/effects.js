@@ -14,10 +14,11 @@
  * A step is { op, when, ...args }. `when` is "before" (it can change or cancel
  * the damage) or "after" (it runs once the damage has landed).
  *
- * ctx: { state, defs, events, player, slot (the attacker), target (the other Active), hit: { damage, cancelled } }
+ * ctx: { state, defs, events, player, slot (the attacker), target (the other Active), hit: { damage, cancelled },
+ *        shielded (the target takes no effects this turn) }
  */
 
-import { addCondition, flip, other } from "./engine.js";
+import { addCondition, addMark, flip, other } from "./engine.js";
 
 const WORDS = { a: 1, an: 1, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6 };
 const count = (word) => WORDS[String(word).toLowerCase()] || Number(word) || 0;
@@ -50,10 +51,59 @@ export const OPS = {
     ctx.slot.damage -= healed;
     ctx.events.push({ t: "heal", p: ctx.player, spot: -1, n: healed });
   },
-  /** The damage skips Weakness, Resistance, or both. */
-  typing(ctx, { noWeakness = false, noResistance = false }) {
+  /** Flip some coins: more damage for each heads. */
+  flipBonusEach(ctx, { coins, n }) {
+    ctx.hit.damage += flips(ctx, coins).filter(Boolean).length * n;
+  },
+  /** Flip until tails: damage for each heads. */
+  flipUntilTails(ctx, { n }) {
+    const results = [];
+    do results.push(flip(ctx.state));
+    while (results[results.length - 1] && results.length < 60);
+    ctx.events.push({ t: "flip", p: ctx.player, results });
+    ctx.hit.damage = results.filter(Boolean).length * n;
+  },
+  /** More damage for each of something on the table. */
+  bonusPer(ctx, { n, per }) {
+    const foe = ctx.target;
+    const times = per === "selfCounters" ? ctx.slot.damage / 10 : per === "foeEnergy" ? foe?.energy.length || 0 : 0;
+    ctx.hit.damage += times * n;
+  },
+  /** More damage when something is true. */
+  bonusIf(ctx, { n, test }) {
+    if (test === "foeDamaged" && ctx.target?.damage > 0) ctx.hit.damage += n;
+  },
+  /** The damage skips Weakness, Resistance, or what earlier attacks left on the target. */
+  typing(ctx, { noWeakness = false, noResistance = false, noEffects = false }) {
     if (noWeakness) ctx.hit.noWeakness = true;
     if (noResistance) ctx.hit.noResistance = true;
+    if (noEffects) ctx.hit.noEffects = true;
+  },
+  /** An effect that lasts a turn (engine.js, "effects that last a turn"). `mine`: it holds on the attacker's own next turn. */
+  mark(ctx, { kind, on = "self", mine = false, n = 0, name = "" }) {
+    const p = on === "self" ? ctx.player : other(ctx.player);
+    const slot = on === "self" ? ctx.slot : ctx.state.players[p].active;
+    if (!slot || (on !== "self" && ctx.shielded)) return;
+    addMark(ctx.state, slot, { kind, turn: ctx.state.turn + (mine ? 2 : 1), ...(n ? { n } : {}), ...(name ? { name } : {}) });
+    ctx.events.push({ t: "mark", p, kind, ...(n ? { n } : {}), ...(name ? { name } : {}) });
+  },
+  /** Discard Energy from the other Active Pokémon. */
+  discardFoeEnergy(ctx, { n }) {
+    const foe = other(ctx.player);
+    const slot = ctx.state.players[foe].active;
+    if (!slot || ctx.shielded) return;
+    const gone = slot.energy.splice(Math.max(0, slot.energy.length - n), n);
+    if (!gone.length) return;
+    ctx.state.players[foe].discard.push(...gone);
+    ctx.events.push({ t: "discard-energy", p: foe, spot: -1, uids: gone });
+  },
+  /** Discard cards from the top of the other player's deck. */
+  mill(ctx, { n }) {
+    const foe = other(ctx.player);
+    const gone = ctx.state.players[foe].deck.splice(0, n);
+    if (!gone.length) return;
+    ctx.state.players[foe].discard.push(...gone);
+    ctx.events.push({ t: "mill", p: foe, uids: gone });
   },
   /** Flip a coin and run one list of steps or the other. */
   flip(ctx, { heads = [], tails = [] }) {
@@ -63,6 +113,7 @@ export const OPS = {
   condition(ctx, { kind, self = false }) {
     const slot = self ? ctx.slot : ctx.state.players[other(ctx.player)].active;
     const p = self ? ctx.player : other(ctx.player);
+    if (!slot || (!self && ctx.shielded)) return;
     if (addCondition(ctx.state, slot, kind)) ctx.events.push({ t: "condition", p, kind });
   },
   /** The attacker hurts itself. No Weakness or Resistance: it is not an attack on it. */
@@ -97,6 +148,7 @@ const TYPE = "(Grass|Fire|Water|Lightning|Psychic|Fighting|Darkness|Metal|Fairy)
 
 const COND = "(Asleep|Burned|Confused|Paralyzed|Poisoned)";
 const FOE = "(?:the Defending Pokémon|your opponent's Active Pokémon)";
+const mark = (kind, more = {}) => ({ op: "mark", when: "after", kind, ...more });
 const cond = (kind, self = false) => ({ op: "condition", when: "after", kind: kind.toLowerCase(), ...(self ? { self } : {}) });
 
 /** [wording, steps]. A text compiles only when its sentences are all read. */
@@ -111,6 +163,32 @@ const PATTERNS = [
   [/^This attack's damage isn't affected by Weakness or Resistance\.$/, () => [{ op: "typing", when: "before", noWeakness: true, noResistance: true }]],
   [/^Don't apply (Weakness|Resistance|Weakness and Resistance)(?: for this attack)?\.$/, (m) => [{ op: "typing", when: "before", noWeakness: /Weak/.test(m[1]), noResistance: /Resist/.test(m[1]) }]],
   [new RegExp(`^This Pokémon is now ${COND}\\.$`), (m) => [cond(m[1], true)]],
+  // Effects that last a turn.
+  [/^During your next turn, this Pokémon can't attack\.$/, () => [mark("noAttack", { mine: true })]],
+  [/^(?:(?!\. ).)+ can't attack during your next turn\.$/, () => [mark("noAttack", { mine: true })]],
+  [/^During your next turn, this Pokémon can't use (.+)\.$/, (m) => [mark("noUse", { mine: true, name: m[1] })]],
+  [/^(?:(?!\. ).)+ can't use (.+) during your next turn\.$/, (m) => [mark("noUse", { mine: true, name: m[1] })]],
+  [/^During your opponent's next turn, this Pokémon takes (\d+) less damage from attacks(?: \(after applying Weakness and Resistance\))?\.$/, (m) => [mark("less", { n: Number(m[1]) })]],
+  [/^During your opponent's next turn, any damage done to this Pokémon by attacks is reduced by (\d+)(?: \(after applying Weakness and Resistance\))?\.$/, (m) => [mark("less", { n: Number(m[1]) })]],
+  [/^The Defending Pokémon can't retreat during your opponent's next turn\.$/, () => [mark("noRetreat", { on: "foe" })]],
+  [/^During your opponent's next turn, the Defending Pokémon can't retreat\.$/, () => [mark("noRetreat", { on: "foe" })]],
+  [/^If the Defending Pokémon tries to attack during your opponent's next turn, your opponent flips a coin\. If tails, that attack does(?: nothing|n't happen)\.$/, () => [mark("mustFlip", { on: "foe" })]],
+  [/^Flip a coin\. If heads, during your opponent's next turn, prevent all damage from and effects of attacks done to this Pokémon\.$/, () => [{ op: "flip", when: "after", heads: [mark("shield")] }]],
+  [/^Flip a coin\. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent's next turn\.$/, () => [{ op: "flip", when: "after", heads: [mark("shield")] }]],
+  [/^Flip a coin\. If heads, during your opponent's next turn, prevent all damage done to this Pokémon by attacks\.$/, () => [{ op: "flip", when: "after", heads: [mark("guard")] }]],
+  [/^Flip a coin\. If heads, prevent all damage done to (?:(?!\. ).)+ during your opponent's next turn\.(?: \(Any other effects of attacks still happen\.\))?$/, () => [{ op: "flip", when: "after", heads: [mark("guard")] }]],
+  [/^This attack's damage isn't affected by any effects on your opponent's Active Pokémon\.$/, () => [{ op: "typing", when: "before", noEffects: true }]],
+  [/^This attack's damage isn't affected by Weakness or Resistance, or by any effects on your opponent's Active Pokémon\.$/, () => [{ op: "typing", when: "before", noWeakness: true, noResistance: true, noEffects: true }]],
+  // Damage that counts something.
+  [new RegExp(`^Flip ${N} coins?\\. This attack does (\\d+) more damage for each heads\\.$`, "i"), (m) => [{ op: "flipBonusEach", when: "before", coins: count(m[1]), n: Number(m[2]) }]],
+  [/^Flip a coin until you get tails\. This attack does (\d+) damage (?:times the number of heads|for each heads)\.$/, (m) => [{ op: "flipUntilTails", when: "before", n: Number(m[1]) }]],
+  [/^This attack does (\d+) more damage for each damage counter on this Pokémon\.$/, (m) => [{ op: "bonusPer", when: "before", per: "selfCounters", n: Number(m[1]) }]],
+  [/^This attack does (\d+) more damage for each Energy attached to your opponent's Active Pokémon\.$/, (m) => [{ op: "bonusPer", when: "before", per: "foeEnergy", n: Number(m[1]) }]],
+  [/^If your opponent's Active Pokémon already has any damage counters on it, this attack does (\d+) more damage\.$/, (m) => [{ op: "bonusIf", when: "before", test: "foeDamaged", n: Number(m[1]) }]],
+  [/^Discard all Energy (?:from|attached to) this Pokémon\.$/, () => [{ op: "discardEnergy", when: "after", n: 99, type: "" }]],
+  [/^Flip a coin\. If heads, discard an Energy (?:card )?(?:from|attached to) (?:your opponent's Active Pokémon|the Defending Pokémon)\.$/, () => [{ op: "flip", when: "after", heads: [{ op: "discardFoeEnergy", n: 1 }] }]],
+  [/^Discard an Energy (?:card )?(?:from|attached to) (?:your opponent's Active Pokémon|the Defending Pokémon)\.$/, () => [{ op: "discardFoeEnergy", when: "after", n: 1 }]],
+  [new RegExp(`^Discard the top ${N}? ?cards? of your opponent's deck\\.$`, "i"), (m) => [{ op: "mill", when: "after", n: m[1] ? count(m[1]) : 1 }]],
   [new RegExp(`^Flip a coin\\. If heads, this attack does (\\d+) more damage\\.$`), (m) => [{ op: "flipBonus", when: "before", n: Number(m[1]) }]],
   [new RegExp(`^Flip a coin\\. If heads, this attack does \\d+ damage plus (\\d+) more damage(?:; if tails, this attack does \\d+ damage)?\\.$`), (m) => [{ op: "flipBonus", when: "before", n: Number(m[1]) }]],
   [new RegExp(`^Flip a coin\\. If tails, this attack does nothing\\.$`), () => [{ op: "flipOrNothing", when: "before" }]],

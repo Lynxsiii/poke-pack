@@ -22,7 +22,7 @@
  *   coinFaces()         { heads, tails } art of the equipped coin, or null for the house coin
  */
 
-import { ACTIVE, FORMATS, RuleError, apply, canRetreat, conditionsOn, createGame, defOf, energyOf, hpLeft, legalActions, other, usableAttacks } from "./tcg/engine.js";
+import { ACTIVE, FORMATS, RuleError, apply, canRetreat, conditionsOn, createGame, defOf, energyOf, hpLeft, legalActions, markOn, marksOn, other, usableAttacks } from "./tcg/engine.js";
 import { ENERGY_TYPES, FREE_ENERGY, createDefs, isFreeEnergy } from "./tcg/cards.js";
 import { botAction } from "./tcg/bot.js";
 import { MAX_DECKS, buildBotDeck, buildDeck, checkDeck, deckList, deckSize, roomFor } from "./tcg/decks.js";
@@ -35,6 +35,9 @@ const BOT_NAME = "House bot";
 const EN_CODE = { Grass: "G", Fire: "R", Water: "W", Lightning: "L", Psychic: "P", Fighting: "F", Darkness: "D", Metal: "M", Fairy: "Y", Dragon: "N", Colorless: "C" };
 
 const COND_NAME = { asleep: "Asleep", burned: "Burned", confused: "Confused", paralyzed: "Paralyzed", poisoned: "Poisoned" };
+
+/** What a turn-long effect is called on a name plate. */
+const markLabel = (m) => ({ noAttack: "Can't attack", noUse: `No ${m.name}`, less: `-${m.n} damage`, shield: "Protected", guard: "No damage", noRetreat: "Can't retreat", mustFlip: "Flips to attack" })[m.kind] || "";
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const plural = (n, word) => `${n} ${word}${n === 1 ? "" : "s"}`;
@@ -538,7 +541,7 @@ export function initTcg(deps) {
       <b class="tg-hud-name">${esc(def.name)}</b>
       <span class="tg-pips">${energy.length ? pips(energy) : `<small>No Energy</small>`}</span>
       <span class="tg-hud-hp"><em>HP</em>${hpBar(left, def.hp)}<span class="num">${left}/${def.hp}</span></span>
-      ${conditionsOn(slot).length ? `<span class="tg-conds">${conditionsOn(slot).map((c) => `<i class="tg-cond" data-cond="${c}">${COND_NAME[c]}</i>`).join("")}</span>` : ""}
+      ${conditionsOn(slot).length || marksOn(state, slot).length ? `<span class="tg-conds">${conditionsOn(slot).map((c) => `<i class="tg-cond" data-cond="${c}">${COND_NAME[c]}</i>`).join("")}${marksOn(state, slot).map((m) => `<i class="tg-cond" data-cond="mark" data-mark="${m.kind}">${esc(markLabel(m))}</i>`).join("")}</span>` : ""}
     </div>`;
   }
 
@@ -668,17 +671,18 @@ export function initTcg(deps) {
     const units = energyOf(state, slot, defs);
     const retreat = canRetreat(state, ME, defs) && myTurn();
     const held = conditionsOn(slot).find((c) => c === "asleep" || c === "paralyzed");
-    const why = state.turn === 1 ? "No attack on the first turn" : held ? `${COND_NAME[held]}: can't attack` : "Not enough Energy";
+    const barred = (attack) => (slot.marks || []).some((m) => m.kind === "noUse" && m.turn === state.turn && m.name === attack.name);
+    const whyNot = (attack) => (state.turn === 1 ? "No attack on the first turn" : held ? `${COND_NAME[held]}: can't attack` : markOn(state, slot, "noAttack") ? "Can't attack this turn" : barred(attack) ? "Can't be used this turn" : "Not enough Energy");
     return `<div class="tg-sheet-bg" data-act="cancel"></div>
       <div class="tg-sheet tg-attacks" role="dialog" aria-label="${esc(def.name)}">
         <header><h3>${esc(def.name)}</h3><span class="tg-pips">${units.length ? pips(units) : "<small>No Energy attached</small>"}</span></header>
         ${def.attacks.map((attack, i) => `<button type="button" class="tg-atk" data-attack="${i}"${usable.has(i) && myTurn() ? "" : " disabled"}>
           <span class="tg-atk-top"><span class="tg-pips">${attack.cost.length ? pips(attack.cost) : "<small>Free</small>"}</span><b>${esc(attack.name)}</b><em>${attack.damage || ""}</em></span>
           ${attack.text ? `<span class="tg-atk-text${attack.plain ? " off" : ""}">${attack.plain ? "Text not live yet: " : ""}${esc(attack.text)}</span>` : ""}
-          ${usable.has(i) || !myTurn() ? "" : `<span class="tg-atk-why">${why}</span>`}
+          ${usable.has(i) || !myTurn() ? "" : `<span class="tg-atk-why">${whyNot(attack)}</span>`}
         </button>`).join("")}
         <div class="tg-sheet-keys">
-          <button type="button" class="ghost sm" data-act="retreat"${retreat ? "" : " disabled"}>Retreat ${def.retreat ? pips(Array(def.retreat).fill("Colorless")) : "(free)"}</button>
+          <button type="button" class="ghost sm" data-act="retreat"${retreat ? "" : " disabled"}>${markOn(state, slot, "noRetreat") ? "Can't retreat" : `Retreat ${def.retreat ? pips(Array(def.retreat).fill("Colorless")) : "(free)"}`}</button>
           <button type="button" class="ghost sm" data-act="look-active">View card</button>
         </div>
       </div>`;
@@ -790,6 +794,21 @@ export function initTcg(deps) {
       case "cure": return `${event.p === ME ? "Your" : "Their"} Active Pokémon is no longer ${COND_NAME[event.kind]}.`;
       case "flip": return event.results.length === 1 ? (event.results[0] ? "Heads." : "Tails.") : `${event.results.filter(Boolean).length} heads of ${event.results.length}.`;
       case "miss": return "The attack did nothing.";
+      case "blocked": return "No damage got through.";
+      case "mark": {
+        const whose = event.p === ME ? "Your" : "Their";
+        return {
+          noAttack: `${whose} Active Pokémon can't attack next turn.`,
+          noUse: `${whose} Active Pokémon can't use ${event.name} next turn.`,
+          less: `${whose} Active Pokémon takes ${event.n} less damage next turn.`,
+          shield: `${whose} Active Pokémon is protected next turn.`,
+          guard: `${whose} Active Pokémon takes no damage next turn.`,
+          noRetreat: `${whose} Active Pokémon can't retreat next turn.`,
+          mustFlip: `${whose} Active Pokémon must flip to attack next turn.`,
+        }[event.kind] || "";
+      }
+      case "discard-energy": return `${plural(event.uids.length, "Energy card")} discarded from ${event.p === ME ? "your" : "their"} Active Pokémon.`;
+      case "mill": return `${plural(event.uids.length, "card")} discarded from ${event.p === ME ? "your" : "their"} deck.`;
       case "damage":
         if (event.why === "poisoned" || event.why === "burned") return `${COND_NAME[event.why]}: ${event.n} damage to ${event.p === ME ? "your" : "their"} Active Pokémon.`;
         if (event.why === "confused") return "Confused: it hurt itself for 30.";
@@ -964,6 +983,7 @@ export function initTcg(deps) {
       return 300;
     }
     if (event.t === "condition") cue(`.tg-hud[data-p="${event.p}"] .tg-cond[data-cond="${event.kind}"]`, "bump", 420);
+    if (event.t === "mark") cue(`.tg-hud[data-p="${event.p}"] .tg-cond[data-mark="${event.kind}"]`, "bump", 420);
     return 0;
   }
 
@@ -1041,7 +1061,7 @@ export function initTcg(deps) {
             deps.buzz?.(event.weak ? [18, 30, 18] : 14);
           }
           await wait(620);
-        } else if (event.t === "miss") {
+        } else if (event.t === "miss" || event.t === "blocked") {
           say(event);
           paintTable();
           await wait(520);
@@ -1062,7 +1082,7 @@ export function initTcg(deps) {
 
     match.unseen = new Set(events.filter((e) => e.t === "draw" && e.p === ME).flatMap((e) => e.uids));
     for (const event of events) {
-      if (before && ["attack", "flip", "damage", "heal", "miss", "ko", "prize"].includes(event.t) && !["poisoned", "burned"].includes(event.why)) continue;
+      if (before && ["attack", "flip", "damage", "heal", "miss", "blocked", "ko", "prize"].includes(event.t) && !["poisoned", "burned"].includes(event.why)) continue;
       if (event.t === "over") continue;
       if (event.t === "draw" && event.p === ME) event.uids.forEach((uid) => match.unseen.delete(uid));
       say(event);
@@ -1071,7 +1091,7 @@ export function initTcg(deps) {
       if (event.t === "turn") {
         cue(".tg-table", event.p === ME ? "turn-me" : "turn-foe", 900);
         await wait(still() ? 520 : 760);
-      } else if (event.why === "poisoned" || event.why === "burned" || event.t === "cure" || event.t === "condition") {
+      } else if (event.why === "poisoned" || event.why === "burned" || event.t === "cure" || event.t === "condition" || event.t === "mark" || event.t === "discard-energy" || event.t === "mill") {
         if (event.t === "damage") {
           cue(`.tg-spot[data-p="${event.p}"] .tg-mon`, "hit", 420);
           popDamage(event.p, `-${event.n}`, event.why);

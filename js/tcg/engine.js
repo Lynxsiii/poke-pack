@@ -167,9 +167,31 @@ export function addCondition(state, slot, kind) {
   return true;
 }
 
-/** Leaving the Active spot or evolving clears every condition. */
+/** Leaving the Active spot or evolving clears every condition, and every effect an attack left. */
 function clearConditions(slot) {
-  if (slot) delete slot.status;
+  if (!slot) return;
+  delete slot.status;
+  delete slot.marks;
+}
+
+/* ---------- effects that last a turn ----------
+   "During your next turn, this Pokémon can't attack", "takes 30 less damage during your
+   opponent's next turn": a mark on the slot, { kind, turn, n?, name? }, in force for the
+   one turn it names.
+     noAttack  can't attack            noUse     can't use the attack `name`
+     less      takes n less damage     shield    takes no damage or effects from attacks
+     guard     takes no damage from attacks (their other effects still happen)
+     noRetreat can't retreat           mustFlip  flips to attack; tails, nothing happens */
+
+/** A slot's mark of this kind that is in force this turn. */
+export const markOn = (state, slot, kind) => (slot?.marks || []).find((m) => m.kind === kind && m.turn === state.turn) || null;
+
+/** Marks in force now or waiting for their turn, for the screen. */
+export const marksOn = (state, slot) => (slot?.marks || []).filter((m) => m.turn >= state.turn);
+
+export function addMark(state, slot, mark) {
+  slot.marks = (slot.marks || []).filter((m) => m.turn >= state.turn && !(m.kind === mark.kind && m.turn === mark.turn && m.name === mark.name));
+  slot.marks.push(mark);
 }
 
 const stuck = (slot) => ["asleep", "paralyzed"].includes(statusOf(slot).main);
@@ -218,14 +240,15 @@ function canEvolveOnto(state, slot, def, defs) {
 export function usableAttacks(state, player, defs) {
   const slot = state.players[player].active;
   if (!slot || state.phase !== "main" || state.current !== player || state.pending.length) return [];
-  if (state.turn === 1 || stuck(slot)) return [];
+  if (state.turn === 1 || stuck(slot) || markOn(state, slot, "noAttack")) return [];
   const def = defOf(state, slot.uid, defs);
-  return def.attacks.map((attack, index) => (canPay(state, slot, attack.cost, defs) ? index : -1)).filter((i) => i >= 0);
+  const barred = (slot.marks || []).filter((m) => m.kind === "noUse" && m.turn === state.turn).map((m) => m.name);
+  return def.attacks.map((attack, index) => (canPay(state, slot, attack.cost, defs) && !barred.includes(attack.name) ? index : -1)).filter((i) => i >= 0);
 }
 
 export function canRetreat(state, player, defs) {
   const side = state.players[player];
-  if (!side.active || side.retreated || !side.bench.length || stuck(side.active)) return false;
+  if (!side.active || side.retreated || !side.bench.length || stuck(side.active) || markOn(state, side.active, "noRetreat")) return false;
   const def = defOf(state, side.active.uid, defs);
   return energyOf(state, side.active, defs).length >= def.retreat;
 }
@@ -495,6 +518,7 @@ const HANDLERS = {
     if (!next) fail("Choose a Benched Pokémon to bring up.");
     const slot = side.active;
     if (stuck(slot)) fail(statusOf(slot).main === "asleep" ? "An Asleep Pokémon can't retreat." : "A Paralyzed Pokémon can't retreat.");
+    if (markOn(state, slot, "noRetreat")) fail("That Pokémon can't retreat this turn.");
     const cost = defOf(state, slot.uid, defs).retreat;
     if (energyOf(state, slot, defs).length < cost) fail("Not enough Energy to retreat.");
     // Pay with the chosen cards, or the first ones attached when none are named.
@@ -527,6 +551,8 @@ const HANDLERS = {
     if (!attack) fail("That Pokémon has no such attack.");
     if (!canPay(state, slot, attack.cost, defs)) fail("Not enough Energy for that attack.");
     if (stuck(slot)) fail(`${def.name} is ${statusOf(slot).main === "asleep" ? "Asleep" : "Paralyzed"} and can't attack.`);
+    if (markOn(state, slot, "noAttack")) fail(`${def.name} can't attack this turn.`);
+    if ((slot.marks || []).some((m) => m.kind === "noUse" && m.turn === state.turn && m.name === attack.name)) fail(`${def.name} can't use ${attack.name} this turn.`);
     const foe = other(player);
     const target = state.players[foe].active;
     events.push({ t: "attack", p: player, index, name: attack.name, uid: slot.uid });
@@ -543,15 +569,33 @@ const HANDLERS = {
         return;
       }
     }
-    runAttackEffects("before", attack, { state, defs, events, player, slot, target, hit });
-    if (!hit.cancelled && target) {
-      const dealt = damageAfterTyping(hit.damage, def, defOf(state, target.uid, defs), hit);
-      if (dealt.amount > 0) {
-        target.damage += dealt.amount;
-        events.push({ t: "damage", p: foe, spot: ACTIVE, n: dealt.amount, weak: dealt.weak, resist: dealt.resist });
+    if (markOn(state, slot, "mustFlip")) {
+      const heads = flip(state);
+      events.push({ t: "flip", p: player, results: [heads], why: "mustFlip" });
+      if (!heads) {
+        events.push({ t: "miss", p: player });
+        state.ending = true;
+        resolveKnockOuts(state, defs, events);
+        return;
       }
     }
-    if (!hit.cancelled) runAttackEffects("after", attack, { state, defs, events, player, slot, target, hit });
+    const ctx = { state, defs, events, player, slot, target, hit, shielded: false };
+    runAttackEffects("before", attack, ctx);
+    // What an earlier attack left on the target: less damage, or none at all.
+    ctx.shielded = Boolean(target && !hit.noEffects && markOn(state, target, "shield"));
+    if (!hit.cancelled && target) {
+      const dealt = damageAfterTyping(hit.damage, def, defOf(state, target.uid, defs), hit);
+      const less = hit.noEffects ? 0 : markOn(state, target, "less")?.n || 0;
+      const guarded = ctx.shielded || (!hit.noEffects && markOn(state, target, "guard"));
+      const amount = guarded ? 0 : Math.max(0, dealt.amount - less);
+      if (amount > 0) {
+        target.damage += amount;
+        events.push({ t: "damage", p: foe, spot: ACTIVE, n: amount, weak: dealt.weak, resist: dealt.resist });
+      } else if (dealt.amount > 0) {
+        events.push({ t: "blocked", p: foe });
+      }
+    }
+    if (!hit.cancelled) runAttackEffects("after", attack, ctx);
     state.ending = true;
     resolveKnockOuts(state, defs, events);
   },
