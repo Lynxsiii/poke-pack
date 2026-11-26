@@ -1,0 +1,325 @@
+{
+ "_about": "Verification of bw4-bw10 theme decks in bw.json, 2026-11-26. Second sources: cmd-sg.blogspot.com decklist posts and PokeBeach (via r.jina.ai); Bulbapedia (first source) re-read only for DragonSpeed. Compared by card name and count (energy by type). TCGplayer data from tcgcsv; searched all 222 Pokemon groups for the deck names. Findings: 13 of 14 lists agree; DragonSpeed disagrees (Energy Search 3, no Giant Cape in two sources); Plasma Shadow second source has a 59-card typo. Sealed prices: no marketPrice exists for any of the 7 listed decks (tcgcsv has no price row), so marketPrice is null everywhere. Sealed decks absent from TCGplayer: Raiders, Shadows, DragonSnarl, DragonSpeed, Plasma Shadow, Plasma Claw, Mind Wipe, Solar Strike. Showcase holos all live in group 1840 Deck Exclusives; showcaseCard is the pack (non-holo) print id.",
+ "decks": [
+  {
+   "set": "bw4",
+   "name": "Explosive Edge",
+   "secondSource": {
+    "url": "https://cmd-sg.blogspot.com/2011/12/pokemon-bw3-next-destinies-theme-decks.html",
+    "quote": "Explosive Edge - Theme Deck (Fire/Water) ... 1x Reshiram (Holographic Rare) 1x Reshiram (Rare) 4x Litwick 2x Lampent 1x Chandelure ... 2x Heavy Ball 2x Energy Retrieval 2x Energy Search ... 1x Skyarrow Bridge 12x Fire Energy 6x Water Energy"
+   },
+   "extraSources": [],
+   "agrees": true,
+   "differences": [],
+   "tcgplayerId": 98633,
+   "tcgplayerName": "Next Destinies Theme Deck - \"Explosive Edge\" [Reshiram]",
+   "marketPrice": null,
+   "showcase": "Reshiram",
+   "showcaseCard": "bw4-21",
+   "showcaseTcgplayerId": 91398,
+   "showcaseTcgplayerName": "Reshiram - 21/99 (Tinsel Holo)",
+   "showcaseGroup": 1840,
+   "notes": "Name/count match for all 60 cards. cmd-sg compares by card name and count only (no print numbers), so print choices (Cheren bw2-91, Energy bw1/bw7 prints etc.) rest on Bulbapedia. TCGplayer lists the sealed deck but has no price row in tcgcsv (marketPrice null). Code card product 280550 also exists. Deck holo is shatter foil, exclusive to the deck; TCGplayer calls it Tinsel Holo ($6.66 market). Pack print bw4-21 is non-holo (site tcgplayerId 88707). Chandelure non-holo is also deck-exclusive per cmd-sg.",
+   "confidence": "verified"
+  },
+  {
+   "set": "bw4",
+   "name": "Voltage Vortex",
+   "secondSource": {
+    "url": "https://cmd-sg.blogspot.com/2011/12/pokemon-bw3-next-destinies-theme-decks.html",
+    "quote": "Voltage Vortex - Theme Deck (Lightning/Darkness) ... 1x Zekrom (Holographic Rare) 1x Zekrom (Rare) 2x Pikachu 2x Raichu 4x Shinx ... 4x Seedot ... 12x Lightning Energy 6x Darkness Energy"
+   },
+   "extraSources": [],
+   "agrees": true,
+   "differences": [],
+   "tcgplayerId": 98634,
+   "tcgplayerName": "Next Destinies Theme Deck - \"Voltage Vortex\" [Zekrom]",
+   "marketPrice": null,
+   "showcase": "Zekrom",
+   "showcaseCard": "bw4-50",
+   "showcaseTcgplayerId": 91401,
+   "showcaseTcgplayerName": "Zekrom - 50/99 (Tinsel Holo)",
+   "showcaseGroup": 1840,
+   "notes": "Name/count match for all 60 cards. cmd-sg compares by card name and count only (no print numbers), so print choices (Cheren bw2-91, Energy bw1/bw7 prints etc.) rest on Bulbapedia. No price row for the sealed deck. Code card 280551. Zekrom deck holo (Tinsel Holo, $19.83). Luxray and Scrafty non-holo are deck-exclusive per cmd-sg.",
+   "confidence": "verified"
+  },
+  {
+   "set": "bw5",
+   "name": "Raiders",
+   "secondSource": {
+    "url": "https://cmd-sg.blogspot.com/2012/05/pokemon-bw5-dark-explorers-theme-decks.html",
+    "quote": "Raiders deck list: 1x Cofagrigus (Rare), 1x Cofagrigus (Holographic Rare), ... 12x Darkness Energy, 6x Psychic Energy (60 cards, all names and counts match)"
+   },
+   "extraSources": [],
+   "agrees": true,
+   "differences": [],
+   "tcgplayerId": null,
+   "tcgplayerName": null,
+   "marketPrice": null,
+   "showcase": "Cofagrigus",
+   "showcaseCard": "bw5-52",
+   "showcaseTcgplayerId": 210884,
+   "showcaseTcgplayerName": "Cofagrigus - 52/108 (Cracked Ice Holo)",
+   "showcaseGroup": 1840,
+   "notes": "Name/count match. cmd-sg compares by card name and count only (no print numbers), so print choices (Cheren bw2-91, Energy bw1/bw7 prints etc.) rest on Bulbapedia. Sealed deck is NOT on TCGplayer: searched all 222 tcgcsv Pokemon groups (incl. 1386 Dark Explorers, 1840, 2289, 2374) for Raiders/Cofagrigus/Theme Deck - nothing. Showcase product 210884 is rarity Rare in TCGplayer data, price $4.24.",
+   "confidence": "verified"
+  },
+  {
+   "set": "bw5",
+   "name": "Shadows",
+   "secondSource": {
+    "url": "https://cmd-sg.blogspot.com/2012/05/pokemon-bw5-dark-explorers-theme-decks.html",
+    "quote": "Shadows deck list: 1x Zoroark (Rare), 1x Zoroark (Holographic Rare), 4x Zorua, ... Empoleon exclusive non-holo (match on all 60; cmd-sg typo \"Lillipip\" for Lillipup)"
+   },
+   "extraSources": [],
+   "agrees": true,
+   "differences": [
+    "cmd-sg typo only: \"Lillipip\" = Lillipup"
+   ],
+   "tcgplayerId": null,
+   "tcgplayerName": null,
+   "marketPrice": null,
+   "showcase": "Zoroark",
+   "showcaseCard": "bw5-71",
+   "showcaseTcgplayerId": 191906,
+   "showcaseTcgplayerName": "Zoroark - 71/108 (Cracked Ice Holo)",
+   "showcaseGroup": 1840,
+   "notes": "Name/count match. cmd-sg compares by card name and count only (no print numbers), so print choices (Cheren bw2-91, Energy bw1/bw7 prints etc.) rest on Bulbapedia. Sealed deck NOT on TCGplayer (all-group search). Zoroark Cracked Ice Holo $22.15.",
+   "confidence": "verified"
+  },
+  {
+   "set": "bw6",
+   "name": "DragonSnarl",
+   "secondSource": {
+    "url": "https://www.pokebeach.com/2012/07/dragons-exalted-dragonspeed-dragonsnarl-theme-decks",
+    "quote": "DragonSnarl: 2x Hydreigon (1 special holo, 1 non-holo) 3x Zweilous 4x Deino ... 2x Cheren (emerging-powers/91) 1x Cilan (next-destinies/86) 2x Energy Retrieval 2x Energy Search 1x Giant Cape 2x Pokemon Communication 1x Rescue Scarf 1x Blend Energy GRPD 9x Psychic 8x Darkness"
+   },
+   "extraSources": [
+    {
+     "url": "https://cmd-sg.blogspot.com/2012/07/pokemon-bw6-dragons-exalted-theme-decks.html",
+     "quote": "same list, DRE98 Hydreigon"
+    }
+   ],
+   "agrees": true,
+   "differences": [],
+   "tcgplayerId": null,
+   "tcgplayerName": null,
+   "marketPrice": null,
+   "showcase": "Hydreigon",
+   "showcaseCard": "bw6-98",
+   "showcaseTcgplayerId": 91392,
+   "showcaseTcgplayerName": "Hydreigon - 98/124 (Cracked Ice Holo)",
+   "showcaseGroup": 1840,
+   "notes": "Two independent sources agree on all 60 cards, and PokeBeach scan paths confirm the prints (Cheren EP 91 = bw2-91, Cilan ND 86 = bw4-86, Energy bw1 prints). Deck has a green Rayquaza coin. Sealed deck NOT on TCGplayer. Hydreigon Cracked Ice Holo $10.52. Golurk non-holo is deck-exclusive.",
+   "confidence": "verified"
+  },
+  {
+   "set": "bw6",
+   "name": "DragonSpeed",
+   "secondSource": {
+    "url": "https://www.pokebeach.com/2012/07/dragons-exalted-dragonspeed-dragonsnarl-theme-decks",
+    "quote": "DragonSpeed: ... 1x Cheren 2x Energy Retrieval 3x Energy Search 1x Energy Switch 1x Pokemon Communication 2x Potion 1x Rescue Scarf 1x Blend Energy WLFM 11x Water Energy 6x Fighting Energy (no Giant Cape)"
+   },
+   "extraSources": [
+    {
+     "url": "https://cmd-sg.blogspot.com/2012/07/pokemon-bw6-dragons-exalted-theme-decks.html",
+     "quote": "same list: 3x Energy Search [C] ... 1x Rescue Scarf [U] 1x Blend Energy WLFM [U] (no Giant Cape)"
+    }
+   ],
+   "agrees": false,
+   "differences": [
+    "bw.json has Energy Search x2 and Giant Cape (bw6-114) x1; PokeBeach and CMD-SG both have Energy Search x3 and NO Giant Cape. Bulbapedia (wikitext) has ES x2 + Giant Cape x1. Both lists total 60. Two sources vs one: use 3 Energy Search, drop Giant Cape."
+   ],
+   "tcgplayerId": null,
+   "tcgplayerName": null,
+   "marketPrice": null,
+   "showcase": "Garchomp",
+   "showcaseCard": "bw6-91",
+   "showcaseTcgplayerId": 91391,
+   "showcaseTcgplayerName": "Garchomp - 91/124 (Cracked Ice Holo)",
+   "showcaseGroup": 1840,
+   "notes": "All other 58 cards agree. CMD-SG labels Garchomp DRE90 but TCGplayer and PokeBeach scan path say #91 (the Naoki Saito art Rare, bw6-91); bw6-90 is the pack Rare Holo with different art. PokeBeach noted pre-release images wrongly used the other Garchomp. Sealed deck NOT on TCGplayer. Garchomp Cracked Ice Holo $17.67. Milotic non-holo is deck-exclusive. Green Rayquaza coin.",
+   "confidence": "verified-with-correction"
+  },
+  {
+   "set": "bw7",
+   "name": "Ice Shock",
+   "secondSource": {
+    "url": "https://www.pokebeach.com/2012/10/boundaries-crossed-iceshock-theme-deck-list",
+    "quote": "2x Black Kyurem 1x Blastoise 2x Wartortle 3x Squirtle 2x Golduck 3x Psyduck 1x Jellicent ... 2x Switch 2x Energy Search 2x Cheren 2x Energy Retrieval 2x Great Ball 1x Pokemon Communication 1x Skyla 11x Water 7x Lightning"
+   },
+   "extraSources": [
+    {
+     "url": "https://cmd-sg.blogspot.com/2012/09/pokemon-bw7-boundaries-crossed-theme.html",
+     "quote": "same list (typo Energy Retrival on Cold Fire)"
+    }
+   ],
+   "agrees": true,
+   "differences": [],
+   "tcgplayerId": 208573,
+   "tcgplayerName": "Boundaries Crossed Theme Deck - \"Ice Shock\" [Black Kyurem]",
+   "marketPrice": null,
+   "showcase": "Black Kyurem",
+   "showcaseCard": "bw7-100",
+   "showcaseTcgplayerId": 123459,
+   "showcaseTcgplayerName": "Black Kyurem - 100/149 (BW Boundaries Crossed)",
+   "showcaseGroup": 1840,
+   "notes": "Two sources agree on all 60. Sealed price row absent. Code card 280556 is oddly labelled [White Kyurem] on TCGplayer. Showcase product is a Holo Rare in group 1840 (deck-exclusive holo; pack print is non-holo Rare, site tcgplayerId 83851), $2.32. Note TCGplayer names it \"(BW Boundaries Crossed)\" not Cracked Ice. Blastoise line non-holo is deck-exclusive.",
+   "confidence": "verified"
+  },
+  {
+   "set": "bw7",
+   "name": "Cold Fire",
+   "secondSource": {
+    "url": "https://www.pokebeach.com/2012/10/boundaries-crossed-coldfire-theme-deck-list",
+    "quote": "2x White Kyurem 1x Samurott 2x Dewott 3x Oshawott 2x Cryogonal 1x Keldeo 2x Delibird 2x Darmanitan 2x Darumaka 1x Camerupt 2x Numel 2x Snorlax 2x Delcatty 2x Skitty 2x Lillipup 2x Dunsparce ... 11x Water Energy 7x Fire Energy"
+   },
+   "extraSources": [
+    {
+     "url": "https://cmd-sg.blogspot.com/2012/09/pokemon-bw7-boundaries-crossed-theme.html",
+     "quote": "same list"
+    }
+   ],
+   "agrees": true,
+   "differences": [],
+   "tcgplayerId": 208574,
+   "tcgplayerName": "Boundaries Crossed Theme Deck - \"Cold Fire\" [White Kyurem]",
+   "marketPrice": null,
+   "showcase": "White Kyurem",
+   "showcaseCard": "bw7-102",
+   "showcaseTcgplayerId": 123460,
+   "showcaseTcgplayerName": "White Kyurem - 102/149 (BW Boundaries Crossed)",
+   "showcaseGroup": 1840,
+   "notes": "Two sources agree on all 60 (Energy Retrieval spelled \"Retrival\" in both sources). No price row. Code card 280557 labelled [Black Kyurem]. Holo showcase $2.17.",
+   "confidence": "verified"
+  },
+  {
+   "set": "bw8",
+   "name": "Plasma Shadow",
+   "secondSource": {
+    "url": "https://cmd-sg.blogspot.com/2012/12/blog-post.html",
+    "quote": "PlasmaShadow Cardlist: 2x Giratina (1 Holographic Rare / 1 Rare) 1x Garbodor 2x Trubbish 1x Weezing 2x Koffing 2x Golbat 3x Zubat ... 2x Grotle 2x Turtwig ... 2x Team Plasma Grunt 1x Hypnotoxic Laser 12x Psychic Energy 6x Grass Energy; Coin: Team Plasma Coin"
+   },
+   "extraSources": [],
+   "agrees": false,
+   "differences": [
+    "CMD-SG lists Turtwig x2 so its list totals 59 cards; bw.json (from Bulbapedia) has Turtwig x3 = 60. Likely a CMD typo; kept bw.json 3. Every other card matches."
+   ],
+   "tcgplayerId": null,
+   "tcgplayerName": null,
+   "marketPrice": null,
+   "showcase": "Giratina",
+   "showcaseCard": "bw8-62",
+   "showcaseTcgplayerId": 91388,
+   "showcaseTcgplayerName": "Giratina - 62/135 (BW Plasma Storm)",
+   "showcaseGroup": 1840,
+   "notes": "Only one independent full list found (CMD-SG, 59 cards); PokeBeach article has no list. Sealed deck NOT on TCGplayer. Giratina deck holo (Holo Rare, $15.17); pack print bw8-62 is non-holo (site tcgplayerId 85738). Weezing non-holo deck-exclusive.",
+   "confidence": "verified-with-correction"
+  },
+  {
+   "set": "bw8",
+   "name": "Plasma Claw",
+   "secondSource": {
+    "url": "https://cmd-sg.blogspot.com/2012/12/blog-post.html",
+    "quote": "PlasmaClaw Cardlist: 2x Druddigon (1 Holographic Rare / 1 Rare) 1x Infernape 2x Monferno 3x Chimchar 1x Sharpedo 2x Carvanha 1x Jellicent 2x Frillish 2x Vanillish 2x Vanillite 2x Simisear 3x Pansear 2x Lampent 2x Litwick 2x Lotad 2x Cubchoo 2x Energy Search 2x Colress 1x Hypnotoxic Laser 2x Pokemon Communication 2x Potion 2x Team Plasma Grunt 9x Water 9x Fire"
+   },
+   "extraSources": [],
+   "agrees": true,
+   "differences": [],
+   "tcgplayerId": null,
+   "tcgplayerName": null,
+   "marketPrice": null,
+   "showcase": "Druddigon",
+   "showcaseCard": "bw8-94",
+   "showcaseTcgplayerId": 131334,
+   "showcaseTcgplayerName": "Druddigon - 94/135 (BW Plasma Storm)",
+   "showcaseGroup": 1840,
+   "notes": "All 60 match. Single independent full list (CMD-SG). Sealed deck NOT on TCGplayer. Druddigon deck holo $5.37; pack print bw8-94 non-holo (site tcgplayerId 84982).",
+   "confidence": "two-sources, no print check"
+  },
+  {
+   "set": "bw9",
+   "name": "Frost Ray",
+   "secondSource": {
+    "url": "https://cmd-sg.blogspot.com/2013/05/pokemon-bw9-plasma-freeze-theme-decks.html",
+    "quote": "Decklist: 1x Glaceon (Holographic Rare) 1x Glaceon (R) 2x Vaporeon 2x Jolteon 4x Eevee - 89/116 1x Vanilluxe ... 1x Superior Energy Retrieval 9x Water Energy 9x Lightning Energy Coin: Deoxys"
+   },
+   "extraSources": [],
+   "agrees": true,
+   "differences": [],
+   "tcgplayerId": 486243,
+   "tcgplayerName": "Plasma Freeze Theme Deck - \"Frost Ray\" [Glaceon]",
+   "marketPrice": null,
+   "showcase": "Glaceon",
+   "showcaseCard": "bw9-23",
+   "showcaseTcgplayerId": 91385,
+   "showcaseTcgplayerName": "Glaceon - 23/116 (BW Plasma Freeze)",
+   "showcaseGroup": 1840,
+   "notes": "All 60 match, Eevee 89/116 confirms bw9-89. Sealed deck listed on TCGplayer (id 486243) but no price row. Glaceon deck holo (Holo Rare, $26.68); pack print non-holo (site tcgplayerId 85749). Electrode non-holo deck-exclusive. Deoxys coin.",
+   "confidence": "verified"
+  },
+  {
+   "set": "bw9",
+   "name": "Psy Crusher",
+   "secondSource": {
+    "url": "https://cmd-sg.blogspot.com/2013/05/pokemon-bw9-plasma-freeze-theme-decks.html",
+    "quote": "Decklist: 1x Leafeon (Holographic Rare) 1x Leafeon (R) 2x Espeon 4x Eevee - 90/116 1x Cofagrigus (R) - 57/116 ... 10x Psychic Energy 8x Grass Energy"
+   },
+   "extraSources": [],
+   "agrees": true,
+   "differences": [],
+   "tcgplayerId": 486245,
+   "tcgplayerName": "Plasma Freeze Theme Deck - \"Psy Crusher\" [Leafeon]",
+   "marketPrice": null,
+   "showcase": "Leafeon",
+   "showcaseCard": "bw9-11",
+   "showcaseTcgplayerId": 91386,
+   "showcaseTcgplayerName": "Leafeon - 11/116 (BW Plasma Freeze)",
+   "showcaseGroup": 1840,
+   "notes": "All 60 match, Eevee 90/116 and Cofagrigus 57/116 confirm prints. Sealed listed (id 486245), no price row. Leafeon deck holo $23.79; pack print non-holo (site tcgplayerId 86683). Deoxys coin.",
+   "confidence": "verified"
+  },
+  {
+   "set": "bw10",
+   "name": "Mind Wipe",
+   "secondSource": {
+    "url": "https://www.pokebeach.com/?p=30970 (https://www.pokebeach.com/2013/07/plasma-blast)",
+    "quote": "Mind Wipe Theme Deck List: Genesect x2 Solosis x3 Duosion x2 Reuniclus x1 Drifloon x2 Drifblim x1 Munna x2 Musharna x2 Golett x2 Golurk x1 Tropius x2 Karrablast x2 Porygon x2 Porygon 2 x2 Kangaskhan x2 Surskit x2; Caitlin x2 Cheren x2 Energy Retrieval x2 Energy Search x2 Potion x2 Switch x2; Psychic x11 Grass x7"
+   },
+   "extraSources": [],
+   "agrees": true,
+   "differences": [],
+   "tcgplayerId": null,
+   "tcgplayerName": null,
+   "marketPrice": null,
+   "showcase": "Genesect",
+   "showcaseCard": "bw10-10",
+   "showcaseTcgplayerId": 91258,
+   "showcaseTcgplayerName": "Genesect - 10/101 (BW Plasma Blast)",
+   "showcaseGroup": 1840,
+   "notes": "All 60 match by name/count. Single independent source (PokeBeach, no prints). Sealed deck NOT on TCGplayer. Genesect deck holo $1.36; pack print bw10-10 non-holo (site tcgplayerId 85661).",
+   "confidence": "two-sources, no print check"
+  },
+  {
+   "set": "bw10",
+   "name": "Solar Strike",
+   "secondSource": {
+    "url": "https://www.pokebeach.com/2013/07/plasma-blast",
+    "quote": "Solar Strike Theme Deck List: Larvesta x3 Volcarona x2 (special holo) Snorunt x3 Glalie x2 Froslass x1 Lapras x2 Squirtle x3 Wartortle x2 Blastoise x1 Teddiursa x2 Ursaring x2 Ducklett x2 Suicune x1 Remoraid x2 Octillery x2; Professor Juniper x2 Cheren x2 Reversal Trigger x2 Pokemon Catcher x1 Energy Search x2 Energy Retrieval x2 Ultra Ball x1; 12 Water 6 Fire"
+   },
+   "extraSources": [],
+   "agrees": true,
+   "differences": [],
+   "tcgplayerId": null,
+   "tcgplayerName": null,
+   "marketPrice": null,
+   "showcase": "Volcarona",
+   "showcaseCard": "bw10-13",
+   "showcaseTcgplayerId": 91370,
+   "showcaseTcgplayerName": "Volcarona - 13/101 (BW Plasma Blast)",
+   "showcaseGroup": 1840,
+   "notes": "All 60 match by name/count. Single independent source (PokeBeach, no prints). Sealed deck NOT on TCGplayer. Volcarona deck holo $1.44; pack print bw10-13 non-holo (site tcgplayerId 90405).",
+   "confidence": "two-sources, no print check"
+  }
+ ]
+}

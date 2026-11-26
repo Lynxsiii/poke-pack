@@ -139,6 +139,32 @@
       "packs": 3,
       "promos": [],
       "note": "Pack mix approximate: the real box held 2 Flashfire and 1 XY pack, opened here as Flashfire packs. The real blister held a Mega Lucario pin."
+    },
+    {
+      "id": "theme-deck-brilliant-thunder",
+      "name": "Theme Deck \"Brilliant Thunder\"",
+      "kind": "deck",
+      "tcgplayerId": 91596,
+      "packs": 0,
+      "promos": [
+        "37-cracked-ice"
+      ],
+      "price": 21.03,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Heliolisk, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-mystic-typhoon",
+      "name": "Theme Deck \"Mystic Typhoon\"",
+      "kind": "deck",
+      "tcgplayerId": 91597,
+      "packs": 0,
+      "promos": [
+        "43-cracked-ice"
+      ],
+      "price": 20.64,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Meowstic, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ],
   "promoCards": {
@@ -165,6 +191,24 @@
     },
     "xyp026": {
       "foilAs": "Rare Holo EX"
+    },
+    "37-cracked-ice": {
+      "like": "37",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Brilliant Thunder Theme Deck)",
+      "tcgplayerId": 91369,
+      "tcgplayerGroup": 1840
+    },
+    "43-cracked-ice": {
+      "like": "43",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Mystic Typhoon Theme Deck)",
+      "tcgplayerId": 91368,
+      "tcgplayerGroup": 1840
     }
   }
 }

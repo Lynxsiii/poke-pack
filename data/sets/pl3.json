@@ -103,6 +103,31 @@
         "dpp47"
       ],
       "note": "As the Charizard G tin (medium confidence). TCGplayer files it in the Platinum group."
+    },
+    {
+      "id": "theme-deck-ignition",
+      "name": "Theme Deck \"Ignition\"",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "15"
+      ],
+      "price": 118.75,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Arcanine G, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-overflow",
+      "name": "Theme Deck \"Overflow\"",
+      "kind": "deck",
+      "tcgplayerId": 645310,
+      "packs": 0,
+      "promos": [
+        "35"
+      ],
+      "price": 81.38,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Milotic C, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ]
 }

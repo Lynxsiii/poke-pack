@@ -53,6 +53,31 @@
         "np034"
       ],
       "note": "Three packs from Team Magma vs Team Aqua, Hidden Legends and Team Rocket Returns and the holo Typhlosion (NP34), September 2006 (pkmn.gg NP34 'Value Pack II'; TCGplayer product 90104 'Typhlosion - 034 (Epic Collection Value Boxes)'). The split between the sets is not documented (Bulbapedia excerpt only), so it opens here as three Team Magma vs Team Aqua packs. TCGplayer has no listing: priced from its packs."
+    },
+    {
+      "id": "deck-team-magma",
+      "name": "Theme Deck \"Team Magma\"",
+      "kind": "deck",
+      "tcgplayerId": 488301,
+      "packs": 0,
+      "promos": [
+        "9"
+      ],
+      "price": 358.77,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Team Magma's Groudon, no booster pack (Bulbapedia and Serebii deck lists)."
+    },
+    {
+      "id": "deck-team-aqua",
+      "name": "Theme Deck \"Team Aqua\"",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "3"
+      ],
+      "price": 677.39,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Team Aqua's Kyogre, no booster pack (Bulbapedia and Serebii deck lists)."
     }
   ]
 }

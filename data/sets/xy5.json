@@ -41,6 +41,24 @@
     },
     "xyp061": {
       "foilAs": "Rare Holo EX"
+    },
+    "53-cracked-ice": {
+      "like": "53",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Ocean's Core Theme Deck)",
+      "tcgplayerId": 131320,
+      "tcgplayerGroup": 1840
+    },
+    "84-cracked-ice": {
+      "like": "84",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Earth's Pulse Theme Deck)",
+      "tcgplayerId": 131321,
+      "tcgplayerGroup": 1840
     }
   },
   "products": [
@@ -179,6 +197,32 @@
       "tcgplayerId": 97750,
       "packs": 36,
       "promos": []
+    },
+    {
+      "id": "theme-deck-ocean-s-core",
+      "name": "Theme Deck \"Ocean's Core\"",
+      "kind": "deck",
+      "tcgplayerId": 97752,
+      "packs": 0,
+      "promos": [
+        "53-cracked-ice"
+      ],
+      "price": 23.67,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Kyogre, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-earth-s-pulse",
+      "name": "Theme Deck \"Earth's Pulse\"",
+      "kind": "deck",
+      "tcgplayerId": 97753,
+      "packs": 0,
+      "promos": [
+        "84-cracked-ice"
+      ],
+      "price": 16.14,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Groudon, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ]
 }

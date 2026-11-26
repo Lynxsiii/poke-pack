@@ -77,6 +77,30 @@
         "dpp15"
       ],
       "note": "A learn-to-play set with two Diamond & Pearl-series packs and a cosmos holofoil Shinx promo (the inverse-back print is not a separate card). Collector's Cache and Bulbapedia name the Value Pack and the Trainer's Challenge Set as its homes; the pack count is from the Trainer's Challenge listing only: medium-low confidence."
+    },
+    {
+      "id": "theme-deck-lavaflow",
+      "name": "Theme Deck \"Lavaflow\"",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "31"
+      ],
+      "price": 101.77,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Magmortar, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-powerhouse",
+      "name": "Theme Deck \"Powerhouse\"",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "25"
+      ],
+      "price": 62.11,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Electivire, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ]
 }

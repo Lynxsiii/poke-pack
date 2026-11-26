@@ -3971,6 +3971,100 @@
     "etchDrawn": true
   },
   {
+    "id": "xy2-37-cracked-ice",
+    "name": "Heliolisk",
+    "number": "37-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "90",
+    "artist": "5ban Graphics",
+    "flavorText": "They flare their frills and generate energy. A single Heliolisk can generate sufficient electricity to power a skyscraper.",
+    "evolvesFrom": "Helioptile",
+    "image": "assets/cards/xy2/37.webp",
+    "imageSmall": "assets/cards/xy2/37-sm.webp",
+    "attacks": [
+      {
+        "name": "Parabolic Charge",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Energy cards, reveal them, and put them into your hand. Shuffle your deck afterward."
+      },
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "Flip a coin. If heads, this attack does 30 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy2-37/large",
+    "printedNumber": "37",
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Brilliant Thunder Theme Deck)",
+    "tcgplayerId": 91369,
+    "market": 1.32
+  },
+  {
+    "id": "xy2-43-cracked-ice",
+    "name": "Meowstic",
+    "number": "43-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "90",
+    "artist": "5ban Graphics",
+    "flavorText": "When in danger, it raises its ears and releases enough psychic power to grind a 10-ton truck into dust.",
+    "evolvesFrom": "Espurr",
+    "image": "assets/cards/xy2/43.webp",
+    "imageSmall": "assets/cards/xy2/43-sm.webp",
+    "attacks": [
+      {
+        "name": "Ear Influence",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Move as many damage counters on your opponent's Pokémon as you like to any of your opponent's other Pokémon in any way you like."
+      },
+      {
+        "name": "Psychic",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "60+",
+        "text": "Does 10 more damage for each Energy attached to your opponent's Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy2-43/large",
+    "printedNumber": "43",
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Mystic Typhoon Theme Deck)",
+    "tcgplayerId": 91368,
+    "market": 2.71
+  },
+  {
     "id": "xy2-xyp011",
     "name": "Skiddo",
     "number": "xyp011",
@@ -3998,13 +4092,13 @@
         "text": "This Pokémon does 10 damage to itself."
       }
     ],
+    "market": 3.91,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY11/large",
     "printedNumber": "XY 011",
     "tcgplayerId": 96372,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 3.25
+    "foilAs": "Rare Holo"
   },
   {
     "id": "xy2-xyp012",
@@ -4042,13 +4136,13 @@
         "text": ""
       }
     ],
+    "market": 3.45,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY12/large",
     "printedNumber": "XY 012",
     "tcgplayerId": 96373,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 3.32
+    "foilAs": "Rare Holo"
   },
   {
     "id": "xy2-xyp017",
@@ -4089,7 +4183,7 @@
         "text": "This Pokémon does 30 damage to itself."
       }
     ],
-    "market": 31.68,
+    "market": 37.82,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY17/large",
     "printedNumber": "XY 017",
     "tcgplayerId": 96379,
@@ -4106,7 +4200,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Grass"
@@ -4138,13 +4232,13 @@
         "text": "This Pokémon does 20 damage to itself."
       }
     ],
+    "market": 15.81,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY18/large",
     "printedNumber": "XY 018",
     "tcgplayerId": 96380,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo EX",
-    "market": 7.53
+    "foilAs": "Rare Holo EX"
   },
   {
     "id": "xy2-xyp019",
@@ -4154,7 +4248,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Fire"
@@ -4184,13 +4278,13 @@
         "text": "Your opponent reveals his or her hand. This attack does 40 more damage for each Energy card in your opponent's hand."
       }
     ],
+    "market": 9.6,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY19/large",
     "printedNumber": "XY 019",
     "tcgplayerId": 96381,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo EX",
-    "market": 8.86
+    "foilAs": "Rare Holo EX"
   },
   {
     "id": "xy2-xyp020",
@@ -4200,7 +4294,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Water"
@@ -4229,13 +4323,13 @@
         "text": "Discard 1 Water Energy attached to this Pokémon."
       }
     ],
+    "market": 32.38,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY20/large",
     "printedNumber": "XY 020",
     "tcgplayerId": 96382,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo EX",
-    "market": 30.0
+    "foilAs": "Rare Holo EX"
   },
   {
     "id": "xy2-xyp025",
@@ -4245,7 +4339,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Darkness"
@@ -4277,13 +4371,13 @@
         "text": "Discard a card from your hand. If you can't discard a card, this attack does nothing."
       }
     ],
+    "market": 8.48,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY25/large",
     "printedNumber": "XY 025",
     "tcgplayerId": 96388,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo EX",
-    "market": 11.38
+    "foilAs": "Rare Holo EX"
   },
   {
     "id": "xy2-xyp026",
@@ -4325,12 +4419,12 @@
         "text": "Discard 2 Energy attached to this Pokémon."
       }
     ],
+    "market": 1.74,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY26/large",
     "printedNumber": "XY 026",
     "tcgplayerId": 96389,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 1.15
+    "foilAs": "Rare Holo EX"
   }
 ]

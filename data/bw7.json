@@ -5637,6 +5637,102 @@
     "etchMap": "assets/foil/maps/bw7/153-etch.webp"
   },
   {
+    "id": "bw7-100-cracked-ice",
+    "name": "Black Kyurem",
+    "number": "100-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "130",
+    "artist": "5ban Graphics",
+    "flavorText": "This legendary ice Pokémon waits for a hero to fill in the missing parts of its body with truth or ideals.",
+    "image": "assets/cards/bw7/100.webp",
+    "imageSmall": "assets/cards/bw7/100-sm.webp",
+    "attacks": [
+      {
+        "name": "Dual Claw",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip 2 coins. This attack does 20 damage times the number of heads."
+      },
+      {
+        "name": "Flash Freeze",
+        "cost": [
+          "Water",
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "Discard an Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bw7-100/large",
+    "printedNumber": "100",
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Ice Shock Theme Deck)",
+    "tcgplayerId": 123459,
+    "market": 2.32
+  },
+  {
+    "id": "bw7-102-cracked-ice",
+    "name": "White Kyurem",
+    "number": "102-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "130",
+    "artist": "5ban Graphics",
+    "flavorText": "This legendary ice Pokémon waits for a hero to fill in the missing parts of its body with truth or ideals.",
+    "image": "assets/cards/bw7/102.webp",
+    "imageSmall": "assets/cards/bw7/102-sm.webp",
+    "attacks": [
+      {
+        "name": "Damage Rush",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip a coin until you get tails. This attack does 20 damage times the number of heads."
+      },
+      {
+        "name": "Cold Fire",
+        "cost": [
+          "Fire",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80+",
+        "text": "Flip a coin. If heads, this attack does 40 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bw7-102/large",
+    "printedNumber": "102",
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Cold Fire Theme Deck)",
+    "tcgplayerId": 123460,
+    "market": 2.17
+  },
+  {
     "id": "bw7-bwp054",
     "name": "Pikachu",
     "number": "bwp054",
@@ -5673,12 +5769,12 @@
         "text": ""
       }
     ],
+    "market": 99.99,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW54/large",
     "printedNumber": "BW 054",
     "tcgplayerId": 202379,
     "era": "bw",
-    "promo": true,
-    "market": 99.99
+    "promo": true
   },
   {
     "id": "bw7-bwp055",
@@ -5715,12 +5811,12 @@
         "type": "Ability"
       }
     ],
+    "market": 13.96,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW55/large",
     "printedNumber": "BW 055",
     "tcgplayerId": 85178,
     "era": "bw",
-    "promo": true,
-    "market": 13.97
+    "promo": true
   },
   {
     "id": "bw7-bwp056",
@@ -5760,13 +5856,13 @@
         "text": "You may discard an Energy attached to this Pokémon. If you do, discard an Energy attached to the Defending Pokémon."
       }
     ],
+    "market": 10.85,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW56/large",
     "printedNumber": "BW 056",
     "tcgplayerId": 85202,
     "era": "bw",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 9.27,
     "foilMap": "assets/foil/maps/bw7/bwp056.webp"
   },
   {
@@ -5808,13 +5904,13 @@
         "text": "Flip 2 coins. This attack does 90 damage times the number of heads."
       }
     ],
+    "market": 16.61,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW57/large",
     "printedNumber": "BW 057",
     "tcgplayerId": 86035,
     "era": "bw",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 16.18,
     "foilMap": "assets/foil/maps/bw7/bwp057.webp"
   },
   {
@@ -5854,13 +5950,13 @@
         "text": ""
       }
     ],
+    "market": 7.68,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW60/large",
     "printedNumber": "BW 060",
     "tcgplayerId": 86435,
     "era": "bw",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 7.54,
     "foilMap": "assets/foil/maps/bw7/bwp060.webp"
   }
 ]

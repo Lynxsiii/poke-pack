@@ -1,0 +1,3836 @@
+{
+  "_about": "XY-era English theme decks, xy1 XY through xy12 Evolutions: 24 decks (2 per set), written 2026-11-26. Lists: Bulbapedia deck pages (MediaWiki API wikitext) and TCGsync (tcgosaurus.tcgsync.com product pages' Deck List, copied from the box); all 24 agree card-for-card by name and count (only a TCGsync typo 'Yvelta'; a Bulbapedia Evolutions Energy numbering oddity, see notes). Card ids resolved by set + number in data/<set>.json (xy0 Tierno 39 and g1/base1/bw5 cards used by some decks are kept under their own set ids). Basic Energy: no source names the print; XY 2013 print assumed (ids energy-<type>-xy incl. energy-fairy-xy). TCGplayer: sealed deck in the set's own group; the showcase's Cracked Ice print is in group 1840 'Deck Exclusives' (names like 'Yveltal - 78/146 (Cracked Ice Holo)'; several are named only '(XY <set>)' there but are the deck's cracked-ice print). marketPrice is TCGplayer market (tcgcsv) or null when TCGplayer has no price. Left out: Generations (g1) and Double Crisis (dc1) had no theme decks; xy0 Kalos starter decks and Battle Arena decks skipped as already on the site; Japanese half decks not covered. Not modelled: nothing extra (decks hold exactly 60 cards). The 'Green Tornado Theme Deck Exclusive' product in group 1840 is a Black & White deck, not this era.",
+  "decks": [
+    {
+      "set": "xy1",
+      "name": "Resilient Life",
+      "showcase": "Xerneas",
+      "showcaseCard": "xy1-96",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Xerneas is exclusive to this deck'); the set's own pack print differs. Printed 1 copy as the cracked-ice holo, other copy (if any) regular.",
+      "showcaseTcgplayerId": 123478,
+      "showcaseTcgplayerName": "Xerneas - 96/146 (Cracked Ice Holo)",
+      "tcgplayerId": 91603,
+      "tcgplayerName": "XY Base Set Theme Deck - \"Resilient Life\" [Xerneas]",
+      "marketPrice": null,
+      "released": "2014-02-05",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: XY Silver Xerneas Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells the code card separately as 'Code Card - ...'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "xy1-96",
+          "name": "Xerneas",
+          "n": 2
+        },
+        {
+          "id": "xy1-93",
+          "name": "Aromatisse",
+          "n": 1
+        },
+        {
+          "id": "xy1-92",
+          "name": "Spritzee",
+          "n": 2
+        },
+        {
+          "id": "xy1-95",
+          "name": "Slurpuff",
+          "n": 1
+        },
+        {
+          "id": "xy1-94",
+          "name": "Swirlix",
+          "n": 2
+        },
+        {
+          "id": "xy1-91",
+          "name": "Mr. Mime",
+          "n": 2
+        },
+        {
+          "id": "xy1-88",
+          "name": "Jigglypuff",
+          "n": 2
+        },
+        {
+          "id": "xy1-53",
+          "name": "Scolipede",
+          "n": 1
+        },
+        {
+          "id": "xy1-52",
+          "name": "Whirlipede",
+          "n": 2
+        },
+        {
+          "id": "xy1-51",
+          "name": "Venipede",
+          "n": 3
+        },
+        {
+          "id": "xy1-54",
+          "name": "Phantump",
+          "n": 2
+        },
+        {
+          "id": "xy1-56",
+          "name": "Pumpkaboo",
+          "n": 2
+        },
+        {
+          "id": "xy1-47",
+          "name": "Ekans",
+          "n": 2
+        },
+        {
+          "id": "xy1-49",
+          "name": "Spoink",
+          "n": 2
+        },
+        {
+          "id": "xy1-99",
+          "name": "Dodrio",
+          "n": 2
+        },
+        {
+          "id": "xy1-98",
+          "name": "Doduo",
+          "n": 2
+        },
+        {
+          "id": "xy1-116",
+          "name": "Evosoda",
+          "n": 1
+        },
+        {
+          "id": "xy1-117",
+          "name": "Fairy Garden",
+          "n": 1
+        },
+        {
+          "id": "xy1-118",
+          "name": "Great Ball",
+          "n": 2
+        },
+        {
+          "id": "xy1-120",
+          "name": "Max Revive",
+          "n": 1
+        },
+        {
+          "id": "xy0-39",
+          "name": "Tierno",
+          "n": 2
+        },
+        {
+          "id": "xy1-123",
+          "name": "Professor's Letter",
+          "n": 2
+        },
+        {
+          "id": "xy1-122",
+          "name": "Professor Sycamore",
+          "n": 1
+        },
+        {
+          "id": "xy1-125",
+          "name": "Roller Skates",
+          "n": 1
+        },
+        {
+          "id": "xy1-128",
+          "name": "Super Potion",
+          "n": 1
+        },
+        {
+          "id": "energy-fairy-xy",
+          "name": "Fairy Energy",
+          "n": 11
+        },
+        {
+          "id": "energy-psychic-xy",
+          "name": "Psychic Energy",
+          "n": 7
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Resilient_Life_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards (28-ish entries); release date and Cracked Ice exclusive trivia"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/xy-theme-deck-resilient-life",
+          "quote": "TCGsync product page 'Deck List:' (Pokemon / Trainer / Energy counts) matches Bulbapedia card-for-card"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; the XY era's only basic Energy print on the site up to Nov 2016 is the XY 2013 print, so energy print assumed (ids energy-<type>-xy, shared XY 2013 print from ENERGY_PRINTS `xy`, scans assets/cards/shared/energy-<type>-xy.webp). Xerneas is 2 copies: 1 Cracked Ice Holo (deck exclusive) + 1 regular Rare, both xy1-96. The deck's Aromatisse/Slurpuff are the non-holo deck-exclusive prints (the site's xy1-93/95 may be holo). Includes cards of other sets as listed: xy0-39 Tierno. Other deck-only non-holo prints (TCGplayer, Deck Exclusives group 1840): Aromatisse xy1-93 -> 131327 Aromatisse - 93/146 (XY Base Set); Slurpuff xy1-95 -> 131328 Slurpuff - 95/146 (XY Base Set). Showcase TCGplayer product is in the 'Deck Exclusives' group 1840.",
+      "product": "theme-deck-resilient-life"
+    },
+    {
+      "set": "xy1",
+      "name": "Destruction Rush",
+      "showcase": "Yveltal",
+      "showcaseCard": "xy1-78",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Yveltal is exclusive to this deck'); the set's own pack print differs. Printed 1 copy as the cracked-ice holo, other copy (if any) regular.",
+      "showcaseTcgplayerId": 91252,
+      "showcaseTcgplayerName": "Yveltal - 78/146 (Cracked Ice Holo)",
+      "tcgplayerId": 91604,
+      "tcgplayerName": "XY Base Set Theme Deck - \"Destruction Rush\" [Yveltal]",
+      "marketPrice": null,
+      "released": "2014-02-05",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: XY Silver Yveltal Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells the code card separately as 'Code Card - ...'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "xy1-78",
+          "name": "Yveltal",
+          "n": 2
+        },
+        {
+          "id": "xy1-71",
+          "name": "Krookodile",
+          "n": 1
+        },
+        {
+          "id": "xy1-70",
+          "name": "Krokorok",
+          "n": 2
+        },
+        {
+          "id": "xy1-69",
+          "name": "Sandile",
+          "n": 3
+        },
+        {
+          "id": "xy1-77",
+          "name": "Malamar",
+          "n": 1
+        },
+        {
+          "id": "xy1-75",
+          "name": "Inkay",
+          "n": 2
+        },
+        {
+          "id": "xy1-72",
+          "name": "Zorua",
+          "n": 2
+        },
+        {
+          "id": "xy1-59",
+          "name": "Dugtrio",
+          "n": 1
+        },
+        {
+          "id": "xy1-58",
+          "name": "Diglett",
+          "n": 2
+        },
+        {
+          "id": "xy1-66",
+          "name": "Gurdurr",
+          "n": 2
+        },
+        {
+          "id": "xy1-65",
+          "name": "Timburr",
+          "n": 2
+        },
+        {
+          "id": "xy1-60",
+          "name": "Rhyhorn",
+          "n": 2
+        },
+        {
+          "id": "xy1-109",
+          "name": "Herdier",
+          "n": 2
+        },
+        {
+          "id": "xy1-108",
+          "name": "Lillipup",
+          "n": 2
+        },
+        {
+          "id": "xy1-102",
+          "name": "Taillow",
+          "n": 2
+        },
+        {
+          "id": "xy1-101",
+          "name": "Dunsparce",
+          "n": 2
+        },
+        {
+          "id": "xy0-39",
+          "name": "Tierno",
+          "n": 2
+        },
+        {
+          "id": "xy1-116",
+          "name": "Evosoda",
+          "n": 1
+        },
+        {
+          "id": "xy0-35",
+          "name": "Poké Ball",
+          "n": 1
+        },
+        {
+          "id": "xy0-37",
+          "name": "Potion",
+          "n": 2
+        },
+        {
+          "id": "xy1-120",
+          "name": "Max Revive",
+          "n": 1
+        },
+        {
+          "id": "xy1-123",
+          "name": "Professor's Letter",
+          "n": 2
+        },
+        {
+          "id": "xy1-125",
+          "name": "Roller Skates",
+          "n": 1
+        },
+        {
+          "id": "xy1-126",
+          "name": "Shadow Circle",
+          "n": 1
+        },
+        {
+          "id": "xy1-127",
+          "name": "Shauna",
+          "n": 1
+        },
+        {
+          "id": "energy-darkness-xy",
+          "name": "Darkness Energy",
+          "n": 12
+        },
+        {
+          "id": "energy-fighting-xy",
+          "name": "Fighting Energy",
+          "n": 6
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Destruction_Rush_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards (28-ish entries); release date and Cracked Ice exclusive trivia"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/xy-theme-deck-destruction-rush",
+          "quote": "TCGsync product page 'Deck List:' (Pokemon / Trainer / Energy counts) matches Bulbapedia card-for-card"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; the XY era's only basic Energy print on the site up to Nov 2016 is the XY 2013 print, so energy print assumed (ids energy-<type>-xy, shared XY 2013 print from ENERGY_PRINTS `xy`, scans assets/cards/shared/energy-<type>-xy.webp). TCGsync misspells Yveltal as 'Yvelta'; not a disagreement. Includes cards of other sets as listed: xy0-39 Tierno, xy0-35 Poké Ball, xy0-37 Potion. Showcase TCGplayer product is in the 'Deck Exclusives' group 1840.",
+      "product": "theme-deck-destruction-rush"
+    },
+    {
+      "set": "xy2",
+      "name": "Brilliant Thunder",
+      "showcase": "Heliolisk",
+      "showcaseCard": "xy2-37",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Heliolisk is exclusive to this deck'); the set's own pack print differs. Printed 1 copy as the cracked-ice holo, other copy (if any) regular.",
+      "showcaseTcgplayerId": 91369,
+      "showcaseTcgplayerName": "Heliolisk - 37/106 (XY Flashfire)",
+      "tcgplayerId": 91596,
+      "tcgplayerName": "Flashfire Theme Deck - \"Brilliant Thunder\" [Heliolisk]",
+      "marketPrice": 41.5,
+      "released": "2014-05-07",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: FLF Orange Charizard Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells the code card separately as 'Code Card - ...'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "xy2-37",
+          "name": "Heliolisk",
+          "n": 2
+        },
+        {
+          "id": "xy2-36",
+          "name": "Helioptile",
+          "n": 3
+        },
+        {
+          "id": "xy2-33",
+          "name": "Luxio",
+          "n": 2
+        },
+        {
+          "id": "xy2-32",
+          "name": "Shinx",
+          "n": 2
+        },
+        {
+          "id": "xy2-17",
+          "name": "Fletchinder",
+          "n": 2
+        },
+        {
+          "id": "xy2-86",
+          "name": "Fletchling",
+          "n": 2
+        },
+        {
+          "id": "xy2-16",
+          "name": "Torkoal",
+          "n": 2
+        },
+        {
+          "id": "xy2-15",
+          "name": "Rapidash",
+          "n": 2
+        },
+        {
+          "id": "xy2-14",
+          "name": "Ponyta",
+          "n": 2
+        },
+        {
+          "id": "xy2-77",
+          "name": "Pidgeot",
+          "n": 1
+        },
+        {
+          "id": "xy2-76",
+          "name": "Pidgeotto",
+          "n": 2
+        },
+        {
+          "id": "xy2-75",
+          "name": "Pidgey",
+          "n": 4
+        },
+        {
+          "id": "xy2-85",
+          "name": "Lopunny",
+          "n": 1
+        },
+        {
+          "id": "xy2-84",
+          "name": "Buneary",
+          "n": 2
+        },
+        {
+          "id": "xy2-80",
+          "name": "Snorlax",
+          "n": 1
+        },
+        {
+          "id": "xy1-116",
+          "name": "Evosoda",
+          "n": 1
+        },
+        {
+          "id": "xy2-89",
+          "name": "Fiery Torch",
+          "n": 2
+        },
+        {
+          "id": "xy2-93",
+          "name": "Pokémon Center Lady",
+          "n": 2
+        },
+        {
+          "id": "xy2-94",
+          "name": "Pokémon Fan Club",
+          "n": 2
+        },
+        {
+          "id": "xy1-123",
+          "name": "Professor's Letter",
+          "n": 2
+        },
+        {
+          "id": "xy2-88",
+          "name": "Blacksmith",
+          "n": 1
+        },
+        {
+          "id": "xy1-125",
+          "name": "Roller Skates",
+          "n": 1
+        },
+        {
+          "id": "xy2-97",
+          "name": "Startling Megaphone",
+          "n": 1
+        },
+        {
+          "id": "energy-lightning-xy",
+          "name": "Lightning Energy",
+          "n": 9
+        },
+        {
+          "id": "energy-fire-xy",
+          "name": "Fire Energy",
+          "n": 9
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Brilliant_Thunder_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards (28-ish entries); release date and Cracked Ice exclusive trivia"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/xy-flashfire-theme-deck-brilliant-thunder",
+          "quote": "TCGsync product page 'Deck List:' (Pokemon / Trainer / Energy counts) matches Bulbapedia card-for-card"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; the XY era's only basic Energy print on the site up to Nov 2016 is the XY 2013 print, so energy print assumed (ids energy-<type>-xy, shared XY 2013 print from ENERGY_PRINTS `xy`, scans assets/cards/shared/energy-<type>-xy.webp). Showcase TCGplayer product is in the 'Deck Exclusives' group 1840.",
+      "product": "theme-deck-brilliant-thunder"
+    },
+    {
+      "set": "xy2",
+      "name": "Mystic Typhoon",
+      "showcase": "Meowstic",
+      "showcaseCard": "xy2-43",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Meowstic is exclusive to this deck'); the set's own pack print differs. Printed 1 copy as the cracked-ice holo, other copy (if any) regular.",
+      "showcaseTcgplayerId": 91368,
+      "showcaseTcgplayerName": "Meowstic - 43/106 (XY Flashfire)",
+      "tcgplayerId": 91597,
+      "tcgplayerName": "Flashfire Theme Deck - \"Mystic Typhoon\" [Meowstic]",
+      "marketPrice": 79.95,
+      "released": "2014-05-07",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: FLF Silver Charizard Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells the code card separately as 'Code Card - ...'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "xy2-43",
+          "name": "Meowstic",
+          "n": 2
+        },
+        {
+          "id": "xy2-42",
+          "name": "Espurr",
+          "n": 3
+        },
+        {
+          "id": "xy2-39",
+          "name": "Dusclops",
+          "n": 2
+        },
+        {
+          "id": "xy2-38",
+          "name": "Duskull",
+          "n": 2
+        },
+        {
+          "id": "xy2-23",
+          "name": "Milotic",
+          "n": 1
+        },
+        {
+          "id": "xy2-22",
+          "name": "Feebas",
+          "n": 2
+        },
+        {
+          "id": "xy2-26",
+          "name": "Walrein",
+          "n": 1
+        },
+        {
+          "id": "xy2-25",
+          "name": "Sealeo",
+          "n": 2
+        },
+        {
+          "id": "xy2-24",
+          "name": "Spheal",
+          "n": 4
+        },
+        {
+          "id": "xy2-28",
+          "name": "Buizel",
+          "n": 2
+        },
+        {
+          "id": "xy2-82",
+          "name": "Furret",
+          "n": 1
+        },
+        {
+          "id": "xy2-81",
+          "name": "Sentret",
+          "n": 2
+        },
+        {
+          "id": "xy2-83",
+          "name": "Miltank",
+          "n": 2
+        },
+        {
+          "id": "xy2-87",
+          "name": "Furfrou",
+          "n": 2
+        },
+        {
+          "id": "xy2-44",
+          "name": "Skrelp",
+          "n": 2
+        },
+        {
+          "id": "xy0-35",
+          "name": "Poké Ball",
+          "n": 1
+        },
+        {
+          "id": "xy1-116",
+          "name": "Evosoda",
+          "n": 1
+        },
+        {
+          "id": "xy1-121",
+          "name": "Muscle Band",
+          "n": 1
+        },
+        {
+          "id": "xy2-93",
+          "name": "Pokémon Center Lady",
+          "n": 2
+        },
+        {
+          "id": "xy2-94",
+          "name": "Pokémon Fan Club",
+          "n": 2
+        },
+        {
+          "id": "xy1-123",
+          "name": "Professor's Letter",
+          "n": 2
+        },
+        {
+          "id": "xy1-122",
+          "name": "Professor Sycamore",
+          "n": 1
+        },
+        {
+          "id": "xy1-125",
+          "name": "Roller Skates",
+          "n": 2
+        },
+        {
+          "id": "energy-water-xy",
+          "name": "Water Energy",
+          "n": 9
+        },
+        {
+          "id": "energy-psychic-xy",
+          "name": "Psychic Energy",
+          "n": 9
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Mystic_Typhoon_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards (28-ish entries); release date and Cracked Ice exclusive trivia"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/xy-flashfire-theme-deck-mystic-typhoon",
+          "quote": "TCGsync product page 'Deck List:' (Pokemon / Trainer / Energy counts) matches Bulbapedia card-for-card"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; the XY era's only basic Energy print on the site up to Nov 2016 is the XY 2013 print, so energy print assumed (ids energy-<type>-xy, shared XY 2013 print from ENERGY_PRINTS `xy`, scans assets/cards/shared/energy-<type>-xy.webp). Includes cards of other sets as listed: xy0-35 Poké Ball. Other deck-only non-holo prints (TCGplayer, Deck Exclusives group 1840): Milotic xy2-23 -> 131326 Milotic - 23/106 (XY Flashfire). Showcase TCGplayer product is in the 'Deck Exclusives' group 1840.",
+      "product": "theme-deck-mystic-typhoon"
+    },
+    {
+      "set": "xy3",
+      "name": "Dark Hammer",
+      "showcase": "Pangoro",
+      "showcaseCard": "xy3-68",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Pangoro is exclusive to this deck'); the set's own pack print differs. Printed 1 copy as the cracked-ice holo, other copy (if any) regular.",
+      "showcaseTcgplayerId": 92246,
+      "showcaseTcgplayerName": "Pangoro - 68/111 (Cracked Ice Holo)",
+      "tcgplayerId": 92217,
+      "tcgplayerName": "Furious Fists Theme Deck - \"Dark Hammer\" [Pangoro]",
+      "marketPrice": 44.98,
+      "released": "2014-08-13",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: FFI Blue Mega Lucario Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells the code card separately as 'Code Card - ...'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "xy3-68",
+          "name": "Pangoro",
+          "n": 2
+        },
+        {
+          "id": "xy3-59",
+          "name": "Pancham",
+          "n": 4
+        },
+        {
+          "id": "xy3-67",
+          "name": "Scrafty",
+          "n": 2
+        },
+        {
+          "id": "xy3-66",
+          "name": "Scraggy",
+          "n": 2
+        },
+        {
+          "id": "xy3-46",
+          "name": "Machamp",
+          "n": 1
+        },
+        {
+          "id": "xy3-45",
+          "name": "Machoke",
+          "n": 2
+        },
+        {
+          "id": "xy3-44",
+          "name": "Machop",
+          "n": 3
+        },
+        {
+          "id": "xy3-52",
+          "name": "Hariyama",
+          "n": 1
+        },
+        {
+          "id": "xy3-51",
+          "name": "Makuhita",
+          "n": 2
+        },
+        {
+          "id": "xy3-58",
+          "name": "Landorus",
+          "n": 1
+        },
+        {
+          "id": "xy3-57",
+          "name": "Mienshao",
+          "n": 2
+        },
+        {
+          "id": "xy3-56",
+          "name": "Mienfoo",
+          "n": 2
+        },
+        {
+          "id": "xy3-47",
+          "name": "Hitmonlee",
+          "n": 2
+        },
+        {
+          "id": "xy3-79",
+          "name": "Lickilicky",
+          "n": 2
+        },
+        {
+          "id": "xy3-78",
+          "name": "Lickitung",
+          "n": 2
+        },
+        {
+          "id": "xy3-95",
+          "name": "Korrina",
+          "n": 2
+        },
+        {
+          "id": "xy3-89",
+          "name": "Energy Switch",
+          "n": 2
+        },
+        {
+          "id": "xy1-116",
+          "name": "Evosoda",
+          "n": 1
+        },
+        {
+          "id": "xy2-93",
+          "name": "Pokémon Center Lady",
+          "n": 1
+        },
+        {
+          "id": "xy1-123",
+          "name": "Professor's Letter",
+          "n": 2
+        },
+        {
+          "id": "xy1-122",
+          "name": "Professor Sycamore",
+          "n": 2
+        },
+        {
+          "id": "xy1-125",
+          "name": "Roller Skates",
+          "n": 2
+        },
+        {
+          "id": "energy-fighting-xy",
+          "name": "Fighting Energy",
+          "n": 12
+        },
+        {
+          "id": "energy-darkness-xy",
+          "name": "Darkness Energy",
+          "n": 6
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Dark_Hammer_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards (28-ish entries); release date and Cracked Ice exclusive trivia"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/xy-furious-fists-theme-deck-dark-hammer",
+          "quote": "TCGsync product page 'Deck List:' (Pokemon / Trainer / Energy counts) matches Bulbapedia card-for-card"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; the XY era's only basic Energy print on the site up to Nov 2016 is the XY 2013 print, so energy print assumed (ids energy-<type>-xy, shared XY 2013 print from ENERGY_PRINTS `xy`, scans assets/cards/shared/energy-<type>-xy.webp). Other deck-only non-holo prints (TCGplayer, Deck Exclusives group 1840): Machamp xy3-46 -> 131324 Machamp - 46/111 (XY Furious Fists); Landorus xy3-58 -> 233375 Landorus - 58/111. Showcase TCGplayer product is in the 'Deck Exclusives' group 1840.",
+      "product": "theme-deck-dark-hammer"
+    },
+    {
+      "set": "xy3",
+      "name": "Enchanted Echo",
+      "showcase": "Sylveon",
+      "showcaseCard": "xy3-72",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Sylveon is exclusive to this deck'); the set's own pack print differs. Printed 1 copy as the cracked-ice holo, other copy (if any) regular.",
+      "showcaseTcgplayerId": 92251,
+      "showcaseTcgplayerName": "Sylveon - 72/111 (Cracked Ice Holo)",
+      "tcgplayerId": 92218,
+      "tcgplayerName": "Furious Fists Theme Deck - \"Enchanted Echo\" [Sylveon]",
+      "marketPrice": null,
+      "released": "2014-08-13",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: FFI Silver Mega Lucario Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells the code card separately as 'Code Card - ...'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "xy3-72",
+          "name": "Sylveon",
+          "n": 2
+        },
+        {
+          "id": "xy3-7",
+          "name": "Leafeon",
+          "n": 1
+        },
+        {
+          "id": "xy3-80",
+          "name": "Eevee",
+          "n": 4
+        },
+        {
+          "id": "xy3-71",
+          "name": "Clefable",
+          "n": 2
+        },
+        {
+          "id": "xy3-69",
+          "name": "Clefairy",
+          "n": 2
+        },
+        {
+          "id": "xy3-3",
+          "name": "Victreebel",
+          "n": 1
+        },
+        {
+          "id": "xy3-2",
+          "name": "Weepinbell",
+          "n": 2
+        },
+        {
+          "id": "xy3-1",
+          "name": "Bellsprout",
+          "n": 3
+        },
+        {
+          "id": "xy3-6",
+          "name": "Shroomish",
+          "n": 2
+        },
+        {
+          "id": "xy3-9",
+          "name": "Accelgor",
+          "n": 2
+        },
+        {
+          "id": "xy3-8",
+          "name": "Shelmet",
+          "n": 2
+        },
+        {
+          "id": "xy3-86",
+          "name": "Tornadus",
+          "n": 1
+        },
+        {
+          "id": "xy3-82",
+          "name": "Vigoroth",
+          "n": 2
+        },
+        {
+          "id": "xy3-81",
+          "name": "Slakoth",
+          "n": 2
+        },
+        {
+          "id": "xy3-87",
+          "name": "Noibat",
+          "n": 2
+        },
+        {
+          "id": "xy3-88",
+          "name": "Battle Reporter",
+          "n": 2
+        },
+        {
+          "id": "xy0-37",
+          "name": "Potion",
+          "n": 2
+        },
+        {
+          "id": "xy3-89",
+          "name": "Energy Switch",
+          "n": 2
+        },
+        {
+          "id": "xy3-96",
+          "name": "Maintenance",
+          "n": 2
+        },
+        {
+          "id": "xy1-123",
+          "name": "Professor's Letter",
+          "n": 2
+        },
+        {
+          "id": "xy1-125",
+          "name": "Roller Skates",
+          "n": 2
+        },
+        {
+          "id": "energy-grass-xy",
+          "name": "Grass Energy",
+          "n": 10
+        },
+        {
+          "id": "energy-fairy-xy",
+          "name": "Fairy Energy",
+          "n": 8
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Enchanted_Echo_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards (28-ish entries); release date and Cracked Ice exclusive trivia"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/xy-furious-fists-theme-deck-enchanted-echo",
+          "quote": "TCGsync product page 'Deck List:' (Pokemon / Trainer / Energy counts) matches Bulbapedia card-for-card"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; the XY era's only basic Energy print on the site up to Nov 2016 is the XY 2013 print, so energy print assumed (ids energy-<type>-xy, shared XY 2013 print from ENERGY_PRINTS `xy`, scans assets/cards/shared/energy-<type>-xy.webp). Includes cards of other sets as listed: xy0-37 Potion. Other deck-only non-holo prints (TCGplayer, Deck Exclusives group 1840): Victreebel xy3-3 -> 131325 Victreebel - 3/111 (XY Furious Fists). Showcase TCGplayer product is in the 'Deck Exclusives' group 1840.",
+      "product": "theme-deck-enchanted-echo"
+    },
+    {
+      "set": "xy4",
+      "name": "Burning Winds",
+      "showcase": "Talonflame",
+      "showcaseCard": "xy4-10",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Talonflame is exclusive to this deck'); the set's own pack print differs. Printed 1 copy as the cracked-ice holo, other copy (if any) regular.",
+      "showcaseTcgplayerId": 94751,
+      "showcaseTcgplayerName": "Talonflame - 10/119 (XY Phantom Forces)",
+      "tcgplayerId": 94624,
+      "tcgplayerName": "Phantom Forces Theme Deck - \"Burning Winds\" [Talonflame]",
+      "marketPrice": 27.7,
+      "released": "2014-11-05",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: PHF Silver Mega Gengar Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells the code card separately as 'Code Card - ...'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "xy4-10",
+          "name": "Talonflame",
+          "n": 2
+        },
+        {
+          "id": "xy4-9",
+          "name": "Fletchinder",
+          "n": 2
+        },
+        {
+          "id": "xy4-89",
+          "name": "Fletchling",
+          "n": 4
+        },
+        {
+          "id": "xy4-12",
+          "name": "Pyroar",
+          "n": 1
+        },
+        {
+          "id": "xy4-11",
+          "name": "Litleo",
+          "n": 2
+        },
+        {
+          "id": "xy4-4",
+          "name": "Yanmega",
+          "n": 1
+        },
+        {
+          "id": "xy4-3",
+          "name": "Yanma",
+          "n": 2
+        },
+        {
+          "id": "xy4-6",
+          "name": "Swadloon",
+          "n": 2
+        },
+        {
+          "id": "xy4-5",
+          "name": "Sewaddle",
+          "n": 3
+        },
+        {
+          "id": "xy4-2",
+          "name": "Venomoth",
+          "n": 1
+        },
+        {
+          "id": "xy4-1",
+          "name": "Venonat",
+          "n": 2
+        },
+        {
+          "id": "xy4-8",
+          "name": "Karrablast",
+          "n": 2
+        },
+        {
+          "id": "xy4-84",
+          "name": "Loudred",
+          "n": 2
+        },
+        {
+          "id": "xy4-83",
+          "name": "Whismur",
+          "n": 2
+        },
+        {
+          "id": "xy4-80",
+          "name": "Chansey",
+          "n": 2
+        },
+        {
+          "id": "xy1-116",
+          "name": "Evosoda",
+          "n": 1
+        },
+        {
+          "id": "xy0-37",
+          "name": "Potion",
+          "n": 1
+        },
+        {
+          "id": "xy2-93",
+          "name": "Pokémon Center Lady",
+          "n": 1
+        },
+        {
+          "id": "xy2-94",
+          "name": "Pokémon Fan Club",
+          "n": 1
+        },
+        {
+          "id": "xy1-123",
+          "name": "Professor's Letter",
+          "n": 2
+        },
+        {
+          "id": "xy4-101",
+          "name": "Professor Sycamore",
+          "n": 1
+        },
+        {
+          "id": "xy4-103",
+          "name": "Roller Skates",
+          "n": 1
+        },
+        {
+          "id": "xy4-104",
+          "name": "Shauna",
+          "n": 1
+        },
+        {
+          "id": "xy4-107",
+          "name": "Tierno",
+          "n": 1
+        },
+        {
+          "id": "xy4-108",
+          "name": "Trick Coin",
+          "n": 1
+        },
+        {
+          "id": "xy2-99",
+          "name": "Ultra Ball",
+          "n": 1
+        },
+        {
+          "id": "energy-fire-xy",
+          "name": "Fire Energy",
+          "n": 10
+        },
+        {
+          "id": "energy-grass-xy",
+          "name": "Grass Energy",
+          "n": 8
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Burning_Winds_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards (28-ish entries); release date and Cracked Ice exclusive trivia"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/xy-phantom-forces-theme-deck-burning-winds",
+          "quote": "TCGsync product page 'Deck List:' (Pokemon / Trainer / Energy counts) matches Bulbapedia card-for-card"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; the XY era's only basic Energy print on the site up to Nov 2016 is the XY 2013 print, so energy print assumed (ids energy-<type>-xy, shared XY 2013 print from ENERGY_PRINTS `xy`, scans assets/cards/shared/energy-<type>-xy.webp). Includes cards of other sets as listed: xy0-37 Potion. Other deck-only non-holo prints (TCGplayer, Deck Exclusives group 1840): Pyroar xy4-12 -> 94750 Pyroar - 12/119 (XY Phantom Forces). Showcase TCGplayer product is in the 'Deck Exclusives' group 1840.",
+      "product": "theme-deck-burning-winds"
+    },
+    {
+      "set": "xy4",
+      "name": "Bolt Twister",
+      "showcase": "Galvantula",
+      "showcaseCard": "xy4-27",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Galvantula is exclusive to this deck'); the set's own pack print differs. Printed 1 copy as the cracked-ice holo, other copy (if any) regular.",
+      "showcaseTcgplayerId": 131323,
+      "showcaseTcgplayerName": "Galvantula - 27/119 (XY Phantom Forces)",
+      "tcgplayerId": 94625,
+      "tcgplayerName": "Phantom Forces Theme Deck - \"Bolt Twister\" [Galvantula]",
+      "marketPrice": 32.89,
+      "released": "2014-11-05",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: PHF Purple Mega Gengar Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells the code card separately as 'Code Card - ...'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "xy4-27",
+          "name": "Galvantula",
+          "n": 2
+        },
+        {
+          "id": "xy4-26",
+          "name": "Joltik",
+          "n": 4
+        },
+        {
+          "id": "xy4-30",
+          "name": "Heliolisk",
+          "n": 1
+        },
+        {
+          "id": "xy4-28",
+          "name": "Helioptile",
+          "n": 2
+        },
+        {
+          "id": "xy4-17",
+          "name": "Feraligatr",
+          "n": 1
+        },
+        {
+          "id": "xy4-16",
+          "name": "Croconaw",
+          "n": 2
+        },
+        {
+          "id": "xy4-15",
+          "name": "Totodile",
+          "n": 3
+        },
+        {
+          "id": "xy4-14",
+          "name": "Kingler",
+          "n": 2
+        },
+        {
+          "id": "xy4-13",
+          "name": "Krabby",
+          "n": 2
+        },
+        {
+          "id": "xy4-21",
+          "name": "Jellicent",
+          "n": 1
+        },
+        {
+          "id": "xy4-20",
+          "name": "Frillish",
+          "n": 2
+        },
+        {
+          "id": "xy4-18",
+          "name": "Finneon",
+          "n": 2
+        },
+        {
+          "id": "xy4-79",
+          "name": "Fearow",
+          "n": 2
+        },
+        {
+          "id": "xy4-78",
+          "name": "Spearow",
+          "n": 2
+        },
+        {
+          "id": "xy4-87",
+          "name": "Bunnelby",
+          "n": 2
+        },
+        {
+          "id": "xy1-116",
+          "name": "Evosoda",
+          "n": 1
+        },
+        {
+          "id": "xy0-37",
+          "name": "Potion",
+          "n": 1
+        },
+        {
+          "id": "xy2-93",
+          "name": "Pokémon Center Lady",
+          "n": 1
+        },
+        {
+          "id": "xy2-94",
+          "name": "Pokémon Fan Club",
+          "n": 1
+        },
+        {
+          "id": "xy1-123",
+          "name": "Professor's Letter",
+          "n": 2
+        },
+        {
+          "id": "xy4-101",
+          "name": "Professor Sycamore",
+          "n": 1
+        },
+        {
+          "id": "xy4-103",
+          "name": "Roller Skates",
+          "n": 1
+        },
+        {
+          "id": "xy4-104",
+          "name": "Shauna",
+          "n": 1
+        },
+        {
+          "id": "xy4-107",
+          "name": "Tierno",
+          "n": 1
+        },
+        {
+          "id": "xy4-108",
+          "name": "Trick Coin",
+          "n": 1
+        },
+        {
+          "id": "xy2-99",
+          "name": "Ultra Ball",
+          "n": 1
+        },
+        {
+          "id": "energy-lightning-xy",
+          "name": "Lightning Energy",
+          "n": 7
+        },
+        {
+          "id": "energy-water-xy",
+          "name": "Water Energy",
+          "n": 11
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Bolt_Twister_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards (28-ish entries); release date and Cracked Ice exclusive trivia"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/xy-phantom-forces-theme-deck-bolt-twister",
+          "quote": "TCGsync product page 'Deck List:' (Pokemon / Trainer / Energy counts) matches Bulbapedia card-for-card"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; the XY era's only basic Energy print on the site up to Nov 2016 is the XY 2013 print, so energy print assumed (ids energy-<type>-xy, shared XY 2013 print from ENERGY_PRINTS `xy`, scans assets/cards/shared/energy-<type>-xy.webp). Includes cards of other sets as listed: xy0-37 Potion. Other deck-only non-holo prints (TCGplayer, Deck Exclusives group 1840): Heliolisk xy4-30 -> 94749 Heliolisk - 30/119 (XY Phantom Forces); Feraligatr xy4-17 -> 94747 Feraligatr - 17/119 (XY Phantom Forces). Showcase TCGplayer product is in the 'Deck Exclusives' group 1840.",
+      "product": "theme-deck-bolt-twister"
+    },
+    {
+      "set": "xy5",
+      "name": "Ocean's Core",
+      "showcase": "Kyogre",
+      "showcaseCard": "xy5-53",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Kyogre is exclusive to this deck'); the set's own pack print differs. Printed 1 copy as the cracked-ice holo, other copy (if any) regular.",
+      "showcaseTcgplayerId": 131320,
+      "showcaseTcgplayerName": "Kyogre - 53/160 (Cracked Ice Holo)",
+      "tcgplayerId": 97752,
+      "tcgplayerName": "Primal Clash Theme Deck - \"Ocean's Core\" [Kyogre]",
+      "marketPrice": null,
+      "released": "2015-02-04",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: PRC Blue Primal Kyogre Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells the code card separately as 'Code Card - ...'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "xy5-53",
+          "name": "Kyogre",
+          "n": 2
+        },
+        {
+          "id": "xy5-48",
+          "name": "Walrein",
+          "n": 1
+        },
+        {
+          "id": "xy5-47",
+          "name": "Sealeo",
+          "n": 2
+        },
+        {
+          "id": "xy5-46",
+          "name": "Spheal",
+          "n": 4
+        },
+        {
+          "id": "xy5-41",
+          "name": "Whiscash",
+          "n": 1
+        },
+        {
+          "id": "xy5-39",
+          "name": "Barboach",
+          "n": 2
+        },
+        {
+          "id": "xy5-34",
+          "name": "Marshtomp",
+          "n": 2
+        },
+        {
+          "id": "xy5-33",
+          "name": "Mudkip",
+          "n": 2
+        },
+        {
+          "id": "xy5-44",
+          "name": "Milotic",
+          "n": 1
+        },
+        {
+          "id": "xy5-43",
+          "name": "Feebas",
+          "n": 2
+        },
+        {
+          "id": "xy5-31",
+          "name": "Seadra",
+          "n": 2
+        },
+        {
+          "id": "xy5-30",
+          "name": "Horsea",
+          "n": 2
+        },
+        {
+          "id": "xy5-27",
+          "name": "Combusken",
+          "n": 2
+        },
+        {
+          "id": "xy5-25",
+          "name": "Torchic",
+          "n": 2
+        },
+        {
+          "id": "xy5-20",
+          "name": "Vulpix",
+          "n": 3
+        },
+        {
+          "id": "xy5-122",
+          "name": "Acro Bike",
+          "n": 2
+        },
+        {
+          "id": "xy1-116",
+          "name": "Evosoda",
+          "n": 1
+        },
+        {
+          "id": "xy5-129",
+          "name": "Fresh Water Set",
+          "n": 1
+        },
+        {
+          "id": "xy1-123",
+          "name": "Professor's Letter",
+          "n": 2
+        },
+        {
+          "id": "xy5-134",
+          "name": "Professor Birch's Observations",
+          "n": 1
+        },
+        {
+          "id": "xy5-137",
+          "name": "Rough Seas",
+          "n": 1
+        },
+        {
+          "id": "xy0-38",
+          "name": "Switch",
+          "n": 1
+        },
+        {
+          "id": "xy5-141",
+          "name": "Teammates",
+          "n": 1
+        },
+        {
+          "id": "xy4-107",
+          "name": "Tierno",
+          "n": 2
+        },
+        {
+          "id": "energy-fire-xy",
+          "name": "Fire Energy",
+          "n": 6
+        },
+        {
+          "id": "energy-water-xy",
+          "name": "Water Energy",
+          "n": 12
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Ocean's_Core_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards (28-ish entries); release date and Cracked Ice exclusive trivia"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/xy-primal-clash-theme-deck-oceans-core",
+          "quote": "TCGsync product page 'Deck List:' (Pokemon / Trainer / Energy counts) matches Bulbapedia card-for-card"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; the XY era's only basic Energy print on the site up to Nov 2016 is the XY 2013 print, so energy print assumed (ids energy-<type>-xy, shared XY 2013 print from ENERGY_PRINTS `xy`, scans assets/cards/shared/energy-<type>-xy.webp). Includes cards of other sets as listed: xy0-38 Switch. Other deck-only non-holo prints (TCGplayer, Deck Exclusives group 1840): Milotic xy5-44 -> 123626 Milotic - 44/160 (XY Primal Clash). Showcase TCGplayer product is in the 'Deck Exclusives' group 1840.",
+      "product": "theme-deck-ocean-s-core"
+    },
+    {
+      "set": "xy5",
+      "name": "Earth's Pulse",
+      "showcase": "Groudon",
+      "showcaseCard": "xy5-84",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Groudon is exclusive to this deck'); the set's own pack print differs. Printed 1 copy as the cracked-ice holo, other copy (if any) regular.",
+      "showcaseTcgplayerId": 131321,
+      "showcaseTcgplayerName": "Groudon - 84/160 (XY Primal Clash)",
+      "tcgplayerId": 97753,
+      "tcgplayerName": "Primal Clash Theme Deck - \"Earth's Pulse\" [Groudon]",
+      "marketPrice": null,
+      "released": "2015-02-04",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: PRC Red Primal Groudon Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells the code card separately as 'Code Card - ...'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "xy5-84",
+          "name": "Groudon",
+          "n": 2
+        },
+        {
+          "id": "xy5-76",
+          "name": "Rhyperior",
+          "n": 1
+        },
+        {
+          "id": "xy5-75",
+          "name": "Rhydon",
+          "n": 2
+        },
+        {
+          "id": "xy5-74",
+          "name": "Rhyhorn",
+          "n": 4
+        },
+        {
+          "id": "xy5-81",
+          "name": "Medicham",
+          "n": 1
+        },
+        {
+          "id": "xy5-79",
+          "name": "Meditite",
+          "n": 2
+        },
+        {
+          "id": "xy5-82",
+          "name": "Trapinch",
+          "n": 3
+        },
+        {
+          "id": "xy5-61",
+          "name": "Manectric",
+          "n": 1
+        },
+        {
+          "id": "xy5-59",
+          "name": "Electrike",
+          "n": 2
+        },
+        {
+          "id": "xy5-63",
+          "name": "Eelektrik",
+          "n": 2
+        },
+        {
+          "id": "xy5-62",
+          "name": "Tynamo",
+          "n": 2
+        },
+        {
+          "id": "xy5-118",
+          "name": "Bibarel",
+          "n": 2
+        },
+        {
+          "id": "xy5-116",
+          "name": "Bidoof",
+          "n": 2
+        },
+        {
+          "id": "xy5-111",
+          "name": "Zigzagoon",
+          "n": 2
+        },
+        {
+          "id": "xy5-112",
+          "name": "Linoone",
+          "n": 2
+        },
+        {
+          "id": "xy5-122",
+          "name": "Acro Bike",
+          "n": 1
+        },
+        {
+          "id": "xy1-116",
+          "name": "Evosoda",
+          "n": 1
+        },
+        {
+          "id": "xy5-129",
+          "name": "Fresh Water Set",
+          "n": 1
+        },
+        {
+          "id": "xy2-93",
+          "name": "Pokémon Center Lady",
+          "n": 1
+        },
+        {
+          "id": "xy2-94",
+          "name": "Pokémon Fan Club",
+          "n": 1
+        },
+        {
+          "id": "xy1-123",
+          "name": "Professor's Letter",
+          "n": 2
+        },
+        {
+          "id": "xy5-134",
+          "name": "Professor Birch's Observations",
+          "n": 1
+        },
+        {
+          "id": "xy5-138",
+          "name": "Scorched Earth",
+          "n": 1
+        },
+        {
+          "id": "xy5-141",
+          "name": "Teammates",
+          "n": 1
+        },
+        {
+          "id": "xy4-107",
+          "name": "Tierno",
+          "n": 2
+        },
+        {
+          "id": "energy-fighting-xy",
+          "name": "Fighting Energy",
+          "n": 12
+        },
+        {
+          "id": "energy-lightning-xy",
+          "name": "Lightning Energy",
+          "n": 6
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Earth's_Pulse_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards (28-ish entries); release date and Cracked Ice exclusive trivia"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/xy-primal-clash-theme-deck-earths-pulse",
+          "quote": "TCGsync product page 'Deck List:' (Pokemon / Trainer / Energy counts) matches Bulbapedia card-for-card"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; the XY era's only basic Energy print on the site up to Nov 2016 is the XY 2013 print, so energy print assumed (ids energy-<type>-xy, shared XY 2013 print from ENERGY_PRINTS `xy`, scans assets/cards/shared/energy-<type>-xy.webp). Other deck-only non-holo prints (TCGplayer, Deck Exclusives group 1840): Manectric xy5-61 -> 131322 Manectric - 61/160 (XY Primal Clash). Showcase TCGplayer product is in the 'Deck Exclusives' group 1840.",
+      "product": "theme-deck-earth-s-pulse"
+    },
+    {
+      "set": "xy6",
+      "name": "Aurora Blast",
+      "showcase": "Articuno",
+      "showcaseCard": "xy6-16",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Articuno is exclusive to this deck'); the set's own pack print differs. Printed 1 copy as the cracked-ice holo, other copy (if any) regular.",
+      "showcaseTcgplayerId": 131315,
+      "showcaseTcgplayerName": "Articuno - 16/108 (XY Roaring Skies)",
+      "tcgplayerId": 98029,
+      "tcgplayerName": "Roaring Skies Theme Deck - \"Aurora Blast\" [Articuno]",
+      "marketPrice": null,
+      "released": "2015-05-06",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: ROS Green Mega Rayquaza Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells the code card separately as 'Code Card - ...'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "xy6-16",
+          "name": "Articuno",
+          "n": 2
+        },
+        {
+          "id": "xy6-19",
+          "name": "Pelipper",
+          "n": 2
+        },
+        {
+          "id": "xy6-18",
+          "name": "Wingull",
+          "n": 2
+        },
+        {
+          "id": "xy6-13",
+          "name": "Victini",
+          "n": 1
+        },
+        {
+          "id": "xy6-57",
+          "name": "Salamence",
+          "n": 1
+        },
+        {
+          "id": "xy6-56",
+          "name": "Shelgon",
+          "n": 2
+        },
+        {
+          "id": "xy6-54",
+          "name": "Bagon",
+          "n": 3
+        },
+        {
+          "id": "xy6-72",
+          "name": "Swellow",
+          "n": 1
+        },
+        {
+          "id": "xy6-70",
+          "name": "Taillow",
+          "n": 2
+        },
+        {
+          "id": "xy6-66",
+          "name": "Fearow",
+          "n": 2
+        },
+        {
+          "id": "xy6-65",
+          "name": "Spearow",
+          "n": 2
+        },
+        {
+          "id": "xy6-79",
+          "name": "Tranquill",
+          "n": 2
+        },
+        {
+          "id": "xy6-78",
+          "name": "Pidove",
+          "n": 2
+        },
+        {
+          "id": "xy6-82",
+          "name": "Fletchling",
+          "n": 2
+        },
+        {
+          "id": "xy6-73",
+          "name": "Swablu",
+          "n": 2
+        },
+        {
+          "id": "xy6-68",
+          "name": "Dunsparce",
+          "n": 2
+        },
+        {
+          "id": "xy1-123",
+          "name": "Professor's Letter",
+          "n": 2
+        },
+        {
+          "id": "xy6-88",
+          "name": "Revive",
+          "n": 1
+        },
+        {
+          "id": "xy2-94",
+          "name": "Pokémon Fan Club",
+          "n": 1
+        },
+        {
+          "id": "xy6-90",
+          "name": "Steven",
+          "n": 1
+        },
+        {
+          "id": "xy6-91",
+          "name": "Switch",
+          "n": 1
+        },
+        {
+          "id": "xy4-107",
+          "name": "Tierno",
+          "n": 2
+        },
+        {
+          "id": "xy2-93",
+          "name": "Pokémon Center Lady",
+          "n": 1
+        },
+        {
+          "id": "xy6-93",
+          "name": "Ultra Ball",
+          "n": 1
+        },
+        {
+          "id": "xy6-94",
+          "name": "Wally",
+          "n": 1
+        },
+        {
+          "id": "xy6-96",
+          "name": "Winona",
+          "n": 1
+        },
+        {
+          "id": "xy6-97",
+          "name": "Double Dragon Energy",
+          "n": 1
+        },
+        {
+          "id": "energy-water-xy",
+          "name": "Water Energy",
+          "n": 10
+        },
+        {
+          "id": "energy-fire-xy",
+          "name": "Fire Energy",
+          "n": 7
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Aurora_Blast_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards (28-ish entries); release date and Cracked Ice exclusive trivia"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/xy-roaring-skies-theme-deck-aurora-blast",
+          "quote": "TCGsync product page 'Deck List:' (Pokemon / Trainer / Energy counts) matches Bulbapedia card-for-card"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; the XY era's only basic Energy print on the site up to Nov 2016 is the XY 2013 print, so energy print assumed (ids energy-<type>-xy, shared XY 2013 print from ENERGY_PRINTS `xy`, scans assets/cards/shared/energy-<type>-xy.webp). Other deck-only non-holo prints (TCGplayer, Deck Exclusives group 1840): Salamence xy6-57 -> 131316 Salamence - 57/108; Swellow xy6-72 -> 131317 Swellow - 72/108 (XY Roaring Skies). Showcase TCGplayer product is in the 'Deck Exclusives' group 1840.",
+      "product": "theme-deck-aurora-blast"
+    },
+    {
+      "set": "xy6",
+      "name": "Storm Rider",
+      "showcase": "Zapdos",
+      "showcaseCard": "xy6-23",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Zapdos is exclusive to this deck'); the set's own pack print differs. Printed 1 copy as the cracked-ice holo, other copy (if any) regular.",
+      "showcaseTcgplayerId": 131318,
+      "showcaseTcgplayerName": "Zapdos - 23/108 (XY Roaring Skies)",
+      "tcgplayerId": 98030,
+      "tcgplayerName": "Roaring Skies Theme Deck - \"Storm Rider\" [Zapdos]",
+      "marketPrice": null,
+      "released": "2015-05-06",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: ROS Gold Mega Rayquaza Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells the code card separately as 'Code Card - ...'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "xy6-23",
+          "name": "Zapdos",
+          "n": 2
+        },
+        {
+          "id": "xy6-22",
+          "name": "Electrode",
+          "n": 2
+        },
+        {
+          "id": "xy6-21",
+          "name": "Voltorb",
+          "n": 2
+        },
+        {
+          "id": "xy6-20",
+          "name": "Pikachu",
+          "n": 2
+        },
+        {
+          "id": "xy6-25",
+          "name": "Manectric",
+          "n": 2
+        },
+        {
+          "id": "xy6-24",
+          "name": "Electrike",
+          "n": 2
+        },
+        {
+          "id": "xy6-11",
+          "name": "Shedinja",
+          "n": 1
+        },
+        {
+          "id": "xy6-9",
+          "name": "Nincada",
+          "n": 2
+        },
+        {
+          "id": "xy6-2",
+          "name": "Exeggutor",
+          "n": 2
+        },
+        {
+          "id": "xy6-1",
+          "name": "Exeggcute",
+          "n": 2
+        },
+        {
+          "id": "xy6-6",
+          "name": "Cascoon",
+          "n": 2
+        },
+        {
+          "id": "xy6-3",
+          "name": "Wurmple",
+          "n": 2
+        },
+        {
+          "id": "xy6-69",
+          "name": "Skarmory",
+          "n": 1
+        },
+        {
+          "id": "xy6-52",
+          "name": "Dragonite",
+          "n": 1
+        },
+        {
+          "id": "xy6-50",
+          "name": "Dragonair",
+          "n": 2
+        },
+        {
+          "id": "xy6-49",
+          "name": "Dratini",
+          "n": 3
+        },
+        {
+          "id": "xy2-93",
+          "name": "Pokémon Center Lady",
+          "n": 1
+        },
+        {
+          "id": "xy1-123",
+          "name": "Professor's Letter",
+          "n": 2
+        },
+        {
+          "id": "base1-89",
+          "name": "Revive",
+          "n": 1
+        },
+        {
+          "id": "xy6-90",
+          "name": "Steven",
+          "n": 1
+        },
+        {
+          "id": "base1-95",
+          "name": "Switch",
+          "n": 2
+        },
+        {
+          "id": "xy0-39",
+          "name": "Tierno",
+          "n": 2
+        },
+        {
+          "id": "xy6-92",
+          "name": "Trainers' Mail",
+          "n": 1
+        },
+        {
+          "id": "bw5-102",
+          "name": "Ultra Ball",
+          "n": 1
+        },
+        {
+          "id": "xy6-94",
+          "name": "Wally",
+          "n": 1
+        },
+        {
+          "id": "xy6-97",
+          "name": "Double Dragon Energy",
+          "n": 1
+        },
+        {
+          "id": "energy-lightning-xy",
+          "name": "Lightning Energy",
+          "n": 9
+        },
+        {
+          "id": "energy-grass-xy",
+          "name": "Grass Energy",
+          "n": 8
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Storm_Rider_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards (28-ish entries); release date and Cracked Ice exclusive trivia"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/xy-roaring-skies-theme-deck-storm-rider",
+          "quote": "TCGsync product page 'Deck List:' (Pokemon / Trainer / Energy counts) matches Bulbapedia card-for-card"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; the XY era's only basic Energy print on the site up to Nov 2016 is the XY 2013 print, so energy print assumed (ids energy-<type>-xy, shared XY 2013 print from ENERGY_PRINTS `xy`, scans assets/cards/shared/energy-<type>-xy.webp). Includes cards of other sets as listed: base1-89 Revive, base1-95 Switch, xy0-39 Tierno, bw5-102 Ultra Ball. Other deck-only non-holo prints (TCGplayer, Deck Exclusives group 1840): Dragonite xy6-52 -> 131319 Dragonite - 52/108 (XY Roaring Skies). Showcase TCGplayer product is in the 'Deck Exclusives' group 1840.",
+      "product": "theme-deck-storm-rider"
+    },
+    {
+      "set": "xy7",
+      "name": "Iron Tide",
+      "showcase": "Metagross",
+      "showcaseCard": "xy7-49",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Metagross is exclusive to this deck'); the set's own pack print differs. Printed 1 copy as the cracked-ice holo, other copy (if any) regular.",
+      "showcaseTcgplayerId": 131313,
+      "showcaseTcgplayerName": "Metagross - 49/98 (XY Ancient Origins)",
+      "tcgplayerId": 100491,
+      "tcgplayerName": "Ancient Origins Theme Deck - \"Iron Tide\" [Metagross]",
+      "marketPrice": null,
+      "released": "2015-08-12",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: AOR Silver Primal Kyogre Coin.png, AOR Silver Primal Groudon Coin.png, AOR Silver Mega Rayquaza Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells the code card separately as 'Code Card - ...'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "xy7-49",
+          "name": "Metagross",
+          "n": 2
+        },
+        {
+          "id": "xy7-48",
+          "name": "Metang",
+          "n": 2
+        },
+        {
+          "id": "xy7-47",
+          "name": "Beldum",
+          "n": 4
+        },
+        {
+          "id": "xy7-51",
+          "name": "Registeel",
+          "n": 1
+        },
+        {
+          "id": "xy7-22",
+          "name": "Vaporeon",
+          "n": 2
+        },
+        {
+          "id": "xy7-63",
+          "name": "Eevee",
+          "n": 3
+        },
+        {
+          "id": "xy7-21",
+          "name": "Gyarados",
+          "n": 1
+        },
+        {
+          "id": "xy7-19",
+          "name": "Magikarp",
+          "n": 2
+        },
+        {
+          "id": "xy7-24",
+          "name": "Regice",
+          "n": 1
+        },
+        {
+          "id": "xy7-23",
+          "name": "Relicanth",
+          "n": 2
+        },
+        {
+          "id": "xy7-62",
+          "name": "Persian",
+          "n": 2
+        },
+        {
+          "id": "xy7-61",
+          "name": "Meowth",
+          "n": 4
+        },
+        {
+          "id": "xy7-69",
+          "name": "Ace Trainer",
+          "n": 1
+        },
+        {
+          "id": "xy5-127",
+          "name": "Escape Rope",
+          "n": 1
+        },
+        {
+          "id": "xy6-84",
+          "name": "Healing Scarf",
+          "n": 2
+        },
+        {
+          "id": "xy7-76",
+          "name": "Level Ball",
+          "n": 1
+        },
+        {
+          "id": "xy7-77",
+          "name": "Lucky Helmet",
+          "n": 1
+        },
+        {
+          "id": "xy2-93",
+          "name": "Pokémon Center Lady",
+          "n": 1
+        },
+        {
+          "id": "xy1-123",
+          "name": "Professor's Letter",
+          "n": 2
+        },
+        {
+          "id": "xy6-91",
+          "name": "Switch",
+          "n": 1
+        },
+        {
+          "id": "xy4-107",
+          "name": "Tierno",
+          "n": 2
+        },
+        {
+          "id": "xy6-94",
+          "name": "Wally",
+          "n": 1
+        },
+        {
+          "id": "energy-metal-xy",
+          "name": "Metal Energy",
+          "n": 13
+        },
+        {
+          "id": "energy-water-xy",
+          "name": "Water Energy",
+          "n": 8
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Iron_Tide_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards (28-ish entries); release date and Cracked Ice exclusive trivia"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/xy-ancient-origins-theme-deck-iron-tide",
+          "quote": "TCGsync product page 'Deck List:' (Pokemon / Trainer / Energy counts) matches Bulbapedia card-for-card"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; the XY era's only basic Energy print on the site up to Nov 2016 is the XY 2013 print, so energy print assumed (ids energy-<type>-xy, shared XY 2013 print from ENERGY_PRINTS `xy`, scans assets/cards/shared/energy-<type>-xy.webp). Other deck-only non-holo prints (TCGplayer, Deck Exclusives group 1840): Gyarados xy7-21 -> 131314 Gyarados 21/98. Showcase TCGplayer product is in the 'Deck Exclusives' group 1840.",
+      "product": "theme-deck-iron-tide"
+    },
+    {
+      "set": "xy7",
+      "name": "Stone Heart",
+      "showcase": "Regirock",
+      "showcaseCard": "xy7-40",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Regirock is exclusive to this deck'); the set's own pack print differs. Printed 1 copy as the cracked-ice holo, other copy (if any) regular.",
+      "showcaseTcgplayerId": 131311,
+      "showcaseTcgplayerName": "Regirock - 40/98 (XY Ancient Origins)",
+      "tcgplayerId": 100492,
+      "tcgplayerName": "Ancient Origins Theme Deck - \"Stone Heart\" [Regirock]",
+      "marketPrice": 39.48,
+      "released": "2015-08-12",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: AOR Silver Primal Kyogre Coin.png, AOR Silver Primal Groudon Coin.png, AOR Silver Mega Rayquaza Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells the code card separately as 'Code Card - ...'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "xy7-40",
+          "name": "Regirock",
+          "n": 2
+        },
+        {
+          "id": "xy7-12",
+          "name": "Virizion",
+          "n": 1
+        },
+        {
+          "id": "xy7-3",
+          "name": "Vileplume",
+          "n": 1
+        },
+        {
+          "id": "xy7-2",
+          "name": "Gloom",
+          "n": 3
+        },
+        {
+          "id": "xy7-1",
+          "name": "Oddish",
+          "n": 4
+        },
+        {
+          "id": "xy7-11",
+          "name": "Vespiquen",
+          "n": 1
+        },
+        {
+          "id": "xy7-9",
+          "name": "Combee",
+          "n": 3
+        },
+        {
+          "id": "xy7-6",
+          "name": "Ariados",
+          "n": 2
+        },
+        {
+          "id": "xy7-5",
+          "name": "Spinarak",
+          "n": 3
+        },
+        {
+          "id": "xy7-65",
+          "name": "Porygon2",
+          "n": 2
+        },
+        {
+          "id": "xy7-64",
+          "name": "Porygon",
+          "n": 4
+        },
+        {
+          "id": "xy7-69",
+          "name": "Ace Trainer",
+          "n": 1
+        },
+        {
+          "id": "xy6-84",
+          "name": "Healing Scarf",
+          "n": 1
+        },
+        {
+          "id": "xy7-76",
+          "name": "Level Ball",
+          "n": 1
+        },
+        {
+          "id": "xy7-77",
+          "name": "Lucky Helmet",
+          "n": 1
+        },
+        {
+          "id": "xy2-93",
+          "name": "Pokémon Center Lady",
+          "n": 1
+        },
+        {
+          "id": "xy2-94",
+          "name": "Pokémon Fan Club",
+          "n": 1
+        },
+        {
+          "id": "xy0-37",
+          "name": "Potion",
+          "n": 1
+        },
+        {
+          "id": "xy1-123",
+          "name": "Professor's Letter",
+          "n": 2
+        },
+        {
+          "id": "xy6-91",
+          "name": "Switch",
+          "n": 1
+        },
+        {
+          "id": "xy4-107",
+          "name": "Tierno",
+          "n": 2
+        },
+        {
+          "id": "xy6-94",
+          "name": "Wally",
+          "n": 1
+        },
+        {
+          "id": "energy-grass-xy",
+          "name": "Grass Energy",
+          "n": 14
+        },
+        {
+          "id": "energy-fighting-xy",
+          "name": "Fighting Energy",
+          "n": 7
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Stone_Heart_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards (28-ish entries); release date and Cracked Ice exclusive trivia"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/xy-ancient-origins-theme-deck-stone-heart",
+          "quote": "TCGsync product page 'Deck List:' (Pokemon / Trainer / Energy counts) matches Bulbapedia card-for-card"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; the XY era's only basic Energy print on the site up to Nov 2016 is the XY 2013 print, so energy print assumed (ids energy-<type>-xy, shared XY 2013 print from ENERGY_PRINTS `xy`, scans assets/cards/shared/energy-<type>-xy.webp). Includes cards of other sets as listed: xy0-37 Potion. Other deck-only non-holo prints (TCGplayer, Deck Exclusives group 1840): Virizion xy7-12 -> 131312 Virizion - 12/98. Showcase TCGplayer product is in the 'Deck Exclusives' group 1840.",
+      "product": "theme-deck-stone-heart"
+    },
+    {
+      "set": "xy8",
+      "name": "Burning Spark",
+      "showcase": "Raichu",
+      "showcaseCard": "xy8-49",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Raichu is exclusive to this deck'); the set's own pack print differs. Printed 1 copy as the cracked-ice holo, other copy (if any) regular.",
+      "showcaseTcgplayerId": 123471,
+      "showcaseTcgplayerName": "Raichu - 49/162 (XY BREAKthrough) (Cracked Ice Holo)",
+      "tcgplayerId": 107102,
+      "tcgplayerName": "BREAKthrough Theme Deck - \"Burning Spark\" [Raichu]",
+      "marketPrice": null,
+      "released": "2015-11-04",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: BKT Pink Mega Mewtwo Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells the code card separately as 'Code Card - ...'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "xy8-49",
+          "name": "Raichu",
+          "n": 2
+        },
+        {
+          "id": "xy8-48",
+          "name": "Pikachu",
+          "n": 3
+        },
+        {
+          "id": "xy8-54",
+          "name": "Magnezone",
+          "n": 1
+        },
+        {
+          "id": "xy8-53",
+          "name": "Magneton",
+          "n": 2
+        },
+        {
+          "id": "xy8-52",
+          "name": "Magnemite",
+          "n": 3
+        },
+        {
+          "id": "xy8-57",
+          "name": "Dedenne",
+          "n": 2
+        },
+        {
+          "id": "xy8-56",
+          "name": "Stunfisk",
+          "n": 2
+        },
+        {
+          "id": "xy8-26",
+          "name": "Braixen",
+          "n": 2
+        },
+        {
+          "id": "xy8-25",
+          "name": "Fennekin",
+          "n": 3
+        },
+        {
+          "id": "xy8-19",
+          "name": "Quilava",
+          "n": 2
+        },
+        {
+          "id": "xy8-18",
+          "name": "Cyndaquil",
+          "n": 2
+        },
+        {
+          "id": "xy8-23",
+          "name": "Pansear",
+          "n": 2
+        },
+        {
+          "id": "xy8-117",
+          "name": "Dodrio",
+          "n": 1
+        },
+        {
+          "id": "xy8-116",
+          "name": "Doduo",
+          "n": 2
+        },
+        {
+          "id": "xy8-123",
+          "name": "Smeargle",
+          "n": 1
+        },
+        {
+          "id": "xy8-136",
+          "name": "Fisherman",
+          "n": 1
+        },
+        {
+          "id": "xy8-138",
+          "name": "Giovanni's Scheme",
+          "n": 1
+        },
+        {
+          "id": "xy2-93",
+          "name": "Pokémon Center Lady",
+          "n": 1
+        },
+        {
+          "id": "xy2-94",
+          "name": "Pokémon Fan Club",
+          "n": 1
+        },
+        {
+          "id": "xy8-146",
+          "name": "Professor's Letter",
+          "n": 2
+        },
+        {
+          "id": "xy8-147",
+          "name": "Reserved Ticket",
+          "n": 1
+        },
+        {
+          "id": "xy8-148",
+          "name": "Skyla",
+          "n": 1
+        },
+        {
+          "id": "xy8-149",
+          "name": "Super Rod",
+          "n": 1
+        },
+        {
+          "id": "xy6-91",
+          "name": "Switch",
+          "n": 1
+        },
+        {
+          "id": "xy4-107",
+          "name": "Tierno",
+          "n": 1
+        },
+        {
+          "id": "xy6-94",
+          "name": "Wally",
+          "n": 1
+        },
+        {
+          "id": "energy-lightning-xy",
+          "name": "Lightning Energy",
+          "n": 10
+        },
+        {
+          "id": "energy-fire-xy",
+          "name": "Fire Energy",
+          "n": 8
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Burning_Spark_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards (28-ish entries); release date and Cracked Ice exclusive trivia"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/xy-breakthrough-theme-deck-burning-spark",
+          "quote": "TCGsync product page 'Deck List:' (Pokemon / Trainer / Energy counts) matches Bulbapedia card-for-card"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; the XY era's only basic Energy print on the site up to Nov 2016 is the XY 2013 print, so energy print assumed (ids energy-<type>-xy, shared XY 2013 print from ENERGY_PRINTS `xy`, scans assets/cards/shared/energy-<type>-xy.webp). Other deck-only non-holo prints (TCGplayer, Deck Exclusives group 1840): Magnezone xy8-54 -> 123472 Magnezone - 54/162 (XY BREAKthrough). Showcase TCGplayer product is in the 'Deck Exclusives' group 1840.",
+      "product": "theme-deck-burning-spark"
+    },
+    {
+      "set": "xy8",
+      "name": "Night Striker",
+      "showcase": "Noivern",
+      "showcaseCard": "xy8-112",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Noivern is exclusive to this deck'); the set's own pack print differs. Printed 1 copy as the cracked-ice holo, other copy (if any) regular.",
+      "showcaseTcgplayerId": 123473,
+      "showcaseTcgplayerName": "Noivern - 112/162 (XY BREAKthrough)",
+      "tcgplayerId": 107103,
+      "tcgplayerName": "BREAKthrough Theme Deck - \"Night Striker\" [Noivern]",
+      "marketPrice": null,
+      "released": "2015-11-04",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: BKT Blue Mega Mewtwo Coin.png, BKT Pixel Mega Mewtwo Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells the code card separately as 'Code Card - ...'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "xy8-112",
+          "name": "Noivern",
+          "n": 2
+        },
+        {
+          "id": "xy8-131",
+          "name": "Noibat",
+          "n": 4
+        },
+        {
+          "id": "xy8-60",
+          "name": "Gengar",
+          "n": 1
+        },
+        {
+          "id": "xy8-59",
+          "name": "Haunter",
+          "n": 2
+        },
+        {
+          "id": "xy8-58",
+          "name": "Gastly",
+          "n": 3
+        },
+        {
+          "id": "xy8-69",
+          "name": "Kirlia",
+          "n": 2
+        },
+        {
+          "id": "xy8-68",
+          "name": "Ralts",
+          "n": 2
+        },
+        {
+          "id": "xy8-70",
+          "name": "Cresselia",
+          "n": 1
+        },
+        {
+          "id": "xy8-65",
+          "name": "Misdreavus",
+          "n": 2
+        },
+        {
+          "id": "xy8-67",
+          "name": "Wobbuffet",
+          "n": 2
+        },
+        {
+          "id": "xy8-91",
+          "name": "Zoroark",
+          "n": 1
+        },
+        {
+          "id": "xy8-90",
+          "name": "Zorua",
+          "n": 2
+        },
+        {
+          "id": "xy8-93",
+          "name": "Inkay",
+          "n": 2
+        },
+        {
+          "id": "xy8-122",
+          "name": "Ursaring",
+          "n": 2
+        },
+        {
+          "id": "xy8-121",
+          "name": "Teddiursa",
+          "n": 2
+        },
+        {
+          "id": "xy8-136",
+          "name": "Fisherman",
+          "n": 1
+        },
+        {
+          "id": "xy8-138",
+          "name": "Giovanni's Scheme",
+          "n": 1
+        },
+        {
+          "id": "xy2-93",
+          "name": "Pokémon Center Lady",
+          "n": 1
+        },
+        {
+          "id": "xy2-94",
+          "name": "Pokémon Fan Club",
+          "n": 1
+        },
+        {
+          "id": "xy8-146",
+          "name": "Professor's Letter",
+          "n": 2
+        },
+        {
+          "id": "xy8-147",
+          "name": "Reserved Ticket",
+          "n": 1
+        },
+        {
+          "id": "xy8-148",
+          "name": "Skyla",
+          "n": 1
+        },
+        {
+          "id": "xy6-91",
+          "name": "Switch",
+          "n": 1
+        },
+        {
+          "id": "xy4-107",
+          "name": "Tierno",
+          "n": 2
+        },
+        {
+          "id": "xy6-94",
+          "name": "Wally",
+          "n": 1
+        },
+        {
+          "id": "energy-psychic-xy",
+          "name": "Psychic Energy",
+          "n": 11
+        },
+        {
+          "id": "energy-darkness-xy",
+          "name": "Darkness Energy",
+          "n": 7
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Night_Striker_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards (28-ish entries); release date and Cracked Ice exclusive trivia"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/xy-breakthrough-theme-deck-night-striker",
+          "quote": "TCGsync product page 'Deck List:' (Pokemon / Trainer / Energy counts) matches Bulbapedia card-for-card"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; the XY era's only basic Energy print on the site up to Nov 2016 is the XY 2013 print, so energy print assumed (ids energy-<type>-xy, shared XY 2013 print from ENERGY_PRINTS `xy`, scans assets/cards/shared/energy-<type>-xy.webp). Other deck-only non-holo prints (TCGplayer, Deck Exclusives group 1840): Gengar xy8-60 -> 123474 Gengar - 60/162 (XY BREAKthrough); Zoroark xy8-91 -> 123475 Zoroark - 91/162 (XY BREAKthrough). Showcase TCGplayer product is in the 'Deck Exclusives' group 1840.",
+      "product": "theme-deck-night-striker"
+    },
+    {
+      "set": "xy9",
+      "name": "Wave Slasher",
+      "showcase": "Greninja",
+      "showcaseCard": "xy9-40",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Greninja is exclusive to this deck'); the set's own pack print differs. Printed 1 copy as the cracked-ice holo, other copy (if any) regular.",
+      "showcaseTcgplayerId": 123469,
+      "showcaseTcgplayerName": "Greninja - 40/122 (XY BREAKpoint)",
+      "tcgplayerId": 113530,
+      "tcgplayerName": "BREAKpoint Theme Deck - \"Wave Slasher\" [Greninja]",
+      "marketPrice": null,
+      "released": "2016-02-03",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: BKP Red Mega Gyarados Coin.png, BKP Confetti Mega Gyarados Coin.png, BKP Red Cracked Ice Mega Gyarados Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells the code card separately as 'Code Card - ...'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "xy9-40",
+          "name": "Greninja",
+          "n": 2
+        },
+        {
+          "id": "xy9-39",
+          "name": "Frogadier",
+          "n": 2
+        },
+        {
+          "id": "xy9-38",
+          "name": "Froakie",
+          "n": 3
+        },
+        {
+          "id": "xy9-17",
+          "name": "Golduck",
+          "n": 1
+        },
+        {
+          "id": "xy9-16",
+          "name": "Psyduck",
+          "n": 2
+        },
+        {
+          "id": "xy9-21",
+          "name": "Slowking",
+          "n": 1
+        },
+        {
+          "id": "xy9-19",
+          "name": "Slowpoke",
+          "n": 2
+        },
+        {
+          "id": "xy9-24",
+          "name": "Cloyster",
+          "n": 2
+        },
+        {
+          "id": "xy9-23",
+          "name": "Shellder",
+          "n": 2
+        },
+        {
+          "id": "xy9-29",
+          "name": "Corsola",
+          "n": 2
+        },
+        {
+          "id": "xy9-2",
+          "name": "Bayleef",
+          "n": 2
+        },
+        {
+          "id": "xy9-1",
+          "name": "Chikorita",
+          "n": 2
+        },
+        {
+          "id": "xy9-6",
+          "name": "Kricketune",
+          "n": 2
+        },
+        {
+          "id": "xy9-5",
+          "name": "Kricketot",
+          "n": 2
+        },
+        {
+          "id": "xy9-8",
+          "name": "Lilligant",
+          "n": 1
+        },
+        {
+          "id": "xy9-7",
+          "name": "Petilil",
+          "n": 2
+        },
+        {
+          "id": "xy9-99",
+          "name": "Fighting Fury Belt",
+          "n": 1
+        },
+        {
+          "id": "xy9-100",
+          "name": "Great Ball",
+          "n": 1
+        },
+        {
+          "id": "xy9-102",
+          "name": "Max Elixir",
+          "n": 1
+        },
+        {
+          "id": "xy9-104",
+          "name": "Misty's Determination",
+          "n": 1
+        },
+        {
+          "id": "xy9-106",
+          "name": "Potion",
+          "n": 2
+        },
+        {
+          "id": "xy1-123",
+          "name": "Professor's Letter",
+          "n": 2
+        },
+        {
+          "id": "xy4-104",
+          "name": "Shauna",
+          "n": 1
+        },
+        {
+          "id": "xy9-112",
+          "name": "Tierno",
+          "n": 2
+        },
+        {
+          "id": "xy6-94",
+          "name": "Wally",
+          "n": 1
+        },
+        {
+          "id": "energy-water-xy",
+          "name": "Water Energy",
+          "n": 9
+        },
+        {
+          "id": "energy-grass-xy",
+          "name": "Grass Energy",
+          "n": 9
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Wave_Slasher_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards (28-ish entries); release date and Cracked Ice exclusive trivia"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/xy-breakpoint-theme-deck-wave-slasher",
+          "quote": "TCGsync product page 'Deck List:' (Pokemon / Trainer / Energy counts) matches Bulbapedia card-for-card"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; the XY era's only basic Energy print on the site up to Nov 2016 is the XY 2013 print, so energy print assumed (ids energy-<type>-xy, shared XY 2013 print from ENERGY_PRINTS `xy`, scans assets/cards/shared/energy-<type>-xy.webp). Other deck-only non-holo prints (TCGplayer, Deck Exclusives group 1840): Slowking xy9-21 -> 123470 Slowking - 21/122 (XY BREAKpoint). Showcase TCGplayer product is in the 'Deck Exclusives' group 1840.",
+      "product": "theme-deck-wave-slasher"
+    },
+    {
+      "set": "xy9",
+      "name": "Electric Eye",
+      "showcase": "Luxray",
+      "showcaseCard": "xy9-46",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Luxray is exclusive to this deck'); the set's own pack print differs. Printed 1 copy as the cracked-ice holo, other copy (if any) regular.",
+      "showcaseTcgplayerId": 123468,
+      "showcaseTcgplayerName": "Luxray - 46/122 (Cracked Ice Holo)",
+      "tcgplayerId": 113531,
+      "tcgplayerName": "BREAKpoint Theme Deck - \"Electric Eye\" [Luxray]",
+      "marketPrice": null,
+      "released": "2016-02-03",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: BKP Silver Mega Gyarados Coin.png, BKP Cracked Ice Mega Gyarados Coin.png, BKP Pixel Mega Gyarados Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells the code card separately as 'Code Card - ...'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "xy9-46",
+          "name": "Luxray",
+          "n": 2
+        },
+        {
+          "id": "xy9-45",
+          "name": "Luxio",
+          "n": 2
+        },
+        {
+          "id": "xy9-44",
+          "name": "Shinx",
+          "n": 3
+        },
+        {
+          "id": "xy9-43",
+          "name": "Electivire",
+          "n": 2
+        },
+        {
+          "id": "xy9-42",
+          "name": "Electabuzz",
+          "n": 2
+        },
+        {
+          "id": "xy9-49",
+          "name": "Zebstrika",
+          "n": 1
+        },
+        {
+          "id": "xy9-48",
+          "name": "Blitzle",
+          "n": 2
+        },
+        {
+          "id": "xy9-61",
+          "name": "Doublade",
+          "n": 2
+        },
+        {
+          "id": "xy9-60",
+          "name": "Honedge",
+          "n": 2
+        },
+        {
+          "id": "xy9-51",
+          "name": "Hypno",
+          "n": 1
+        },
+        {
+          "id": "xy9-50",
+          "name": "Drowzee",
+          "n": 2
+        },
+        {
+          "id": "xy9-58",
+          "name": "Espurr",
+          "n": 2
+        },
+        {
+          "id": "xy9-59",
+          "name": "Meowstic",
+          "n": 1
+        },
+        {
+          "id": "xy9-53",
+          "name": "Skorupi",
+          "n": 2
+        },
+        {
+          "id": "xy9-94",
+          "name": "Purugly",
+          "n": 2
+        },
+        {
+          "id": "xy9-93",
+          "name": "Glameow",
+          "n": 2
+        },
+        {
+          "id": "xy9-99",
+          "name": "Fighting Fury Belt",
+          "n": 1
+        },
+        {
+          "id": "xy9-100",
+          "name": "Great Ball",
+          "n": 1
+        },
+        {
+          "id": "xy9-102",
+          "name": "Max Elixir",
+          "n": 1
+        },
+        {
+          "id": "xy9-104",
+          "name": "Misty's Determination",
+          "n": 1
+        },
+        {
+          "id": "xy9-106",
+          "name": "Potion",
+          "n": 2
+        },
+        {
+          "id": "xy1-123",
+          "name": "Professor's Letter",
+          "n": 2
+        },
+        {
+          "id": "xy4-104",
+          "name": "Shauna",
+          "n": 1
+        },
+        {
+          "id": "xy9-112",
+          "name": "Tierno",
+          "n": 2
+        },
+        {
+          "id": "xy6-94",
+          "name": "Wally",
+          "n": 1
+        },
+        {
+          "id": "energy-lightning-xy",
+          "name": "Lightning Energy",
+          "n": 9
+        },
+        {
+          "id": "energy-psychic-xy",
+          "name": "Psychic Energy",
+          "n": 9
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Electric_Eye_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards (28-ish entries); release date and Cracked Ice exclusive trivia"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/xy-breakpoint-theme-deck-electric-eye",
+          "quote": "TCGsync product page 'Deck List:' (Pokemon / Trainer / Energy counts) matches Bulbapedia card-for-card"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; the XY era's only basic Energy print on the site up to Nov 2016 is the XY 2013 print, so energy print assumed (ids energy-<type>-xy, shared XY 2013 print from ENERGY_PRINTS `xy`, scans assets/cards/shared/energy-<type>-xy.webp). Showcase TCGplayer product is in the 'Deck Exclusives' group 1840.",
+      "product": "theme-deck-electric-eye"
+    },
+    {
+      "set": "xy10",
+      "name": "Sky Guardian",
+      "showcase": "Lugia",
+      "showcaseCard": "xy10-78",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Lugia is exclusive to this deck'); the set's own pack print differs. Printed 1 copy as the cracked-ice holo, other copy (if any) regular.",
+      "showcaseTcgplayerId": 123466,
+      "showcaseTcgplayerName": "Lugia - 78/124 (XY Fates Collide)",
+      "tcgplayerId": 117479,
+      "tcgplayerName": "Fates Collide Theme Deck - \"Sky Guardian\" [Lugia]",
+      "marketPrice": 209.94,
+      "released": "2016-05-02",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: FCO Blue Lugia Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells the code card separately as 'Code Card - ...'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "xy10-78",
+          "name": "Lugia",
+          "n": 2
+        },
+        {
+          "id": "xy10-77",
+          "name": "Snorlax",
+          "n": 1
+        },
+        {
+          "id": "xy10-74",
+          "name": "Meowth",
+          "n": 3
+        },
+        {
+          "id": "xy10-75",
+          "name": "Kangaskhan",
+          "n": 2
+        },
+        {
+          "id": "xy10-81",
+          "name": "Loudred",
+          "n": 2
+        },
+        {
+          "id": "xy10-80",
+          "name": "Whismur",
+          "n": 3
+        },
+        {
+          "id": "xy10-13",
+          "name": "Delphox",
+          "n": 1
+        },
+        {
+          "id": "xy10-12",
+          "name": "Braixen",
+          "n": 2
+        },
+        {
+          "id": "xy10-10",
+          "name": "Fennekin",
+          "n": 3
+        },
+        {
+          "id": "xy10-9",
+          "name": "Moltres",
+          "n": 1
+        },
+        {
+          "id": "xy10-71",
+          "name": "Whimsicott",
+          "n": 2
+        },
+        {
+          "id": "xy10-70",
+          "name": "Cottonee",
+          "n": 2
+        },
+        {
+          "id": "xy10-66",
+          "name": "Wigglytuff",
+          "n": 2
+        },
+        {
+          "id": "xy10-65",
+          "name": "Jigglypuff",
+          "n": 2
+        },
+        {
+          "id": "xy10-68",
+          "name": "Snubbull",
+          "n": 2
+        },
+        {
+          "id": "xy10-97",
+          "name": "Energy Pouch",
+          "n": 1
+        },
+        {
+          "id": "xy10-99",
+          "name": "Fairy Drop",
+          "n": 1
+        },
+        {
+          "id": "xy2-93",
+          "name": "Pokémon Center Lady",
+          "n": 1
+        },
+        {
+          "id": "xy10-107",
+          "name": "Pokémon Fan Club",
+          "n": 1
+        },
+        {
+          "id": "xy8-146",
+          "name": "Professor's Letter",
+          "n": 2
+        },
+        {
+          "id": "xy10-111",
+          "name": "Shauna",
+          "n": 2
+        },
+        {
+          "id": "xy9-112",
+          "name": "Tierno",
+          "n": 2
+        },
+        {
+          "id": "xy10-113",
+          "name": "Ultra Ball",
+          "n": 1
+        },
+        {
+          "id": "xy6-94",
+          "name": "Wally",
+          "n": 1
+        },
+        {
+          "id": "energy-fire-xy",
+          "name": "Fire Energy",
+          "n": 10
+        },
+        {
+          "id": "energy-fairy-xy",
+          "name": "Fairy Energy",
+          "n": 8
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Sky_Guardian_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards (28-ish entries); release date and Cracked Ice exclusive trivia"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/xy-fates-collide-theme-deck-sky-guardian",
+          "quote": "TCGsync product page 'Deck List:' (Pokemon / Trainer / Energy counts) matches Bulbapedia card-for-card"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; the XY era's only basic Energy print on the site up to Nov 2016 is the XY 2013 print, so energy print assumed (ids energy-<type>-xy, shared XY 2013 print from ENERGY_PRINTS `xy`, scans assets/cards/shared/energy-<type>-xy.webp). Showcase is listed twice (one cracked-ice holo, one regular rare) on Bulbapedia; TCGsync lists 'Lugia (foil)' / 'Lugia' (same for Zygarde): both count in the 60 and share id xy10-78. Other deck-only non-holo prints (TCGplayer, Deck Exclusives group 1840): Delphox xy10-13 -> 123465 Delphox - 13/124 (XY Fates Collide). Showcase TCGplayer product is in the 'Deck Exclusives' group 1840.",
+      "product": "theme-deck-sky-guardian"
+    },
+    {
+      "set": "xy10",
+      "name": "Battle Ruler",
+      "showcase": "Zygarde",
+      "showcaseCard": "xy10-53",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Zygarde is exclusive to this deck'); the set's own pack print differs. Printed 1 copy as the cracked-ice holo, other copy (if any) regular.",
+      "showcaseTcgplayerId": 123467,
+      "showcaseTcgplayerName": "Zygarde - 53/124 (XY Fates Collide)",
+      "tcgplayerId": 117480,
+      "tcgplayerName": "Fates Collide Theme Deck - \"Battle Ruler\" [Zygarde]",
+      "marketPrice": 26.69,
+      "released": "2016-05-02",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: FCO Green Zygarde Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells the code card separately as 'Code Card - ...'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "xy10-53",
+          "name": "Zygarde",
+          "n": 2
+        },
+        {
+          "id": "xy10-42",
+          "name": "Pupitar",
+          "n": 2
+        },
+        {
+          "id": "xy10-41",
+          "name": "Larvitar",
+          "n": 2
+        },
+        {
+          "id": "xy10-47",
+          "name": "Lucario",
+          "n": 1
+        },
+        {
+          "id": "xy10-46",
+          "name": "Riolu",
+          "n": 2
+        },
+        {
+          "id": "xy10-49",
+          "name": "Carbink",
+          "n": 1
+        },
+        {
+          "id": "xy10-48",
+          "name": "Hawlucha",
+          "n": 2
+        },
+        {
+          "id": "xy10-7",
+          "name": "Serperior",
+          "n": 1
+        },
+        {
+          "id": "xy10-6",
+          "name": "Servine",
+          "n": 2
+        },
+        {
+          "id": "xy10-5",
+          "name": "Snivy",
+          "n": 3
+        },
+        {
+          "id": "xy10-3",
+          "name": "Wormadam",
+          "n": 2
+        },
+        {
+          "id": "xy10-2",
+          "name": "Burmy",
+          "n": 2
+        },
+        {
+          "id": "xy10-8",
+          "name": "Deerling",
+          "n": 2
+        },
+        {
+          "id": "xy10-1",
+          "name": "Shuckle",
+          "n": 2
+        },
+        {
+          "id": "xy10-87",
+          "name": "Minccino",
+          "n": 2
+        },
+        {
+          "id": "xy10-89",
+          "name": "Cinccino",
+          "n": 2
+        },
+        {
+          "id": "xy10-97",
+          "name": "Energy Pouch",
+          "n": 1
+        },
+        {
+          "id": "xy10-107",
+          "name": "Pokémon Fan Club",
+          "n": 1
+        },
+        {
+          "id": "xy9-106",
+          "name": "Potion",
+          "n": 1
+        },
+        {
+          "id": "xy8-146",
+          "name": "Professor's Letter",
+          "n": 2
+        },
+        {
+          "id": "xy10-111",
+          "name": "Shauna",
+          "n": 2
+        },
+        {
+          "id": "xy6-91",
+          "name": "Switch",
+          "n": 2
+        },
+        {
+          "id": "xy9-112",
+          "name": "Tierno",
+          "n": 2
+        },
+        {
+          "id": "xy6-94",
+          "name": "Wally",
+          "n": 1
+        },
+        {
+          "id": "energy-fighting-xy",
+          "name": "Fighting Energy",
+          "n": 10
+        },
+        {
+          "id": "energy-grass-xy",
+          "name": "Grass Energy",
+          "n": 8
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Battle_Ruler_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards (28-ish entries); release date and Cracked Ice exclusive trivia"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/xy-fates-collide-theme-deck-battle-ruler",
+          "quote": "TCGsync product page 'Deck List:' (Pokemon / Trainer / Energy counts) matches Bulbapedia card-for-card"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; the XY era's only basic Energy print on the site up to Nov 2016 is the XY 2013 print, so energy print assumed (ids energy-<type>-xy, shared XY 2013 print from ENERGY_PRINTS `xy`, scans assets/cards/shared/energy-<type>-xy.webp). Showcase is listed twice (one cracked-ice holo, one regular rare) on Bulbapedia; TCGsync lists 'Lugia (foil)' / 'Lugia' (same for Zygarde): both count in the 60 and share id xy10-53. Showcase TCGplayer product is in the 'Deck Exclusives' group 1840.",
+      "product": "theme-deck-battle-ruler"
+    },
+    {
+      "set": "xy11",
+      "name": "Gears of Fire",
+      "showcase": "Volcanion",
+      "showcaseCard": "xy11-25",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Volcanion is exclusive to this deck'); the set's own pack print differs. Printed 1 copy as the cracked-ice holo, other copy (if any) regular.",
+      "showcaseTcgplayerId": 123462,
+      "showcaseTcgplayerName": "Volcanion - 25/114 (Cracked Ice Holo)",
+      "tcgplayerId": 120698,
+      "tcgplayerName": "Steam Siege Theme Deck - \"Gears of Fire\" [Volcanion]",
+      "marketPrice": 21.1,
+      "released": "2016-08-03",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: STS Red Volcanion Coin.png, STS Cracked Ice Volcanion Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells the code card separately as 'Code Card - ...'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "xy11-25",
+          "name": "Volcanion",
+          "n": 2
+        },
+        {
+          "id": "xy11-19",
+          "name": "Monferno",
+          "n": 2
+        },
+        {
+          "id": "xy11-18",
+          "name": "Chimchar",
+          "n": 3
+        },
+        {
+          "id": "xy11-23",
+          "name": "Pyroar",
+          "n": 1
+        },
+        {
+          "id": "xy11-22",
+          "name": "Litleo",
+          "n": 3
+        },
+        {
+          "id": "xy11-17",
+          "name": "Rapidash",
+          "n": 2
+        },
+        {
+          "id": "xy11-16",
+          "name": "Ponyta",
+          "n": 3
+        },
+        {
+          "id": "xy11-73",
+          "name": "Klinklang",
+          "n": 2
+        },
+        {
+          "id": "xy11-72",
+          "name": "Klang",
+          "n": 3
+        },
+        {
+          "id": "xy11-71",
+          "name": "Klink",
+          "n": 3
+        },
+        {
+          "id": "xy11-89",
+          "name": "Persian",
+          "n": 3
+        },
+        {
+          "id": "xy11-88",
+          "name": "Meowth",
+          "n": 3
+        },
+        {
+          "id": "xy5-126",
+          "name": "Energy Retrieval",
+          "n": 2
+        },
+        {
+          "id": "xy1-116",
+          "name": "Evosoda",
+          "n": 1
+        },
+        {
+          "id": "xy11-103",
+          "name": "Ninja Boy",
+          "n": 2
+        },
+        {
+          "id": "xy2-93",
+          "name": "Pokémon Center Lady",
+          "n": 1
+        },
+        {
+          "id": "xy8-146",
+          "name": "Professor's Letter",
+          "n": 2
+        },
+        {
+          "id": "xy10-111",
+          "name": "Shauna",
+          "n": 1
+        },
+        {
+          "id": "xy9-112",
+          "name": "Tierno",
+          "n": 2
+        },
+        {
+          "id": "xy10-113",
+          "name": "Ultra Ball",
+          "n": 1
+        },
+        {
+          "id": "energy-fire-xy",
+          "name": "Fire Energy",
+          "n": 11
+        },
+        {
+          "id": "energy-metal-xy",
+          "name": "Metal Energy",
+          "n": 7
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Gears_of_Fire_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards (28-ish entries); release date and Cracked Ice exclusive trivia"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/xy-steam-siege-theme-deck-gears-of-fire",
+          "quote": "TCGsync product page 'Deck List:' (Pokemon / Trainer / Energy counts) matches Bulbapedia card-for-card"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; the XY era's only basic Energy print on the site up to Nov 2016 is the XY 2013 print, so energy print assumed (ids energy-<type>-xy, shared XY 2013 print from ENERGY_PRINTS `xy`, scans assets/cards/shared/energy-<type>-xy.webp). Other deck-only non-holo prints (TCGplayer, Deck Exclusives group 1840): Klinklang xy11-73 -> 123461 Klinklang - 73/114 (XY Steam Siege). Showcase TCGplayer product is in the 'Deck Exclusives' group 1840.",
+      "product": "theme-deck-gears-of-fire"
+    },
+    {
+      "set": "xy11",
+      "name": "Ring of Lightning",
+      "showcase": "Hoopa",
+      "showcaseCard": "xy11-51",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Hoopa is exclusive to this deck'); the set's own pack print differs. Printed 1 copy as the cracked-ice holo, other copy (if any) regular.",
+      "showcaseTcgplayerId": 123464,
+      "showcaseTcgplayerName": "Hoopa - 51/114 (XY Steam Siege)",
+      "tcgplayerId": 120699,
+      "tcgplayerName": "Steam Siege Theme Deck - \"Ring of Lightning\" [Hoopa]",
+      "marketPrice": 22.91,
+      "released": "2016-08-03",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: STS Gold Hoopa Coin.png, STS Cracked Ice Hoopa Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells the code card separately as 'Code Card - ...'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "xy11-51",
+          "name": "Hoopa",
+          "n": 2
+        },
+        {
+          "id": "xy11-47",
+          "name": "Drifblim",
+          "n": 2
+        },
+        {
+          "id": "xy11-46",
+          "name": "Drifloon",
+          "n": 3
+        },
+        {
+          "id": "xy11-49",
+          "name": "Lampent",
+          "n": 2
+        },
+        {
+          "id": "xy11-48",
+          "name": "Litwick",
+          "n": 3
+        },
+        {
+          "id": "xy11-42",
+          "name": "Galvantula",
+          "n": 1
+        },
+        {
+          "id": "xy11-41",
+          "name": "Joltik",
+          "n": 3
+        },
+        {
+          "id": "xy11-40",
+          "name": "Ampharos",
+          "n": 2
+        },
+        {
+          "id": "xy11-39",
+          "name": "Flaaffy",
+          "n": 2
+        },
+        {
+          "id": "xy11-38",
+          "name": "Mareep",
+          "n": 3
+        },
+        {
+          "id": "xy11-91",
+          "name": "Ambipom",
+          "n": 2
+        },
+        {
+          "id": "xy11-90",
+          "name": "Aipom",
+          "n": 3
+        },
+        {
+          "id": "xy11-97",
+          "name": "Hawlucha",
+          "n": 2
+        },
+        {
+          "id": "xy5-126",
+          "name": "Energy Retrieval",
+          "n": 2
+        },
+        {
+          "id": "xy1-116",
+          "name": "Evosoda",
+          "n": 1
+        },
+        {
+          "id": "xy11-103",
+          "name": "Ninja Boy",
+          "n": 2
+        },
+        {
+          "id": "xy9-106",
+          "name": "Potion",
+          "n": 1
+        },
+        {
+          "id": "xy8-146",
+          "name": "Professor's Letter",
+          "n": 2
+        },
+        {
+          "id": "xy10-111",
+          "name": "Shauna",
+          "n": 1
+        },
+        {
+          "id": "xy9-112",
+          "name": "Tierno",
+          "n": 2
+        },
+        {
+          "id": "xy10-113",
+          "name": "Ultra Ball",
+          "n": 1
+        },
+        {
+          "id": "energy-psychic-xy",
+          "name": "Psychic Energy",
+          "n": 10
+        },
+        {
+          "id": "energy-lightning-xy",
+          "name": "Lightning Energy",
+          "n": 8
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Ring_of_Lightning_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards (28-ish entries); release date and Cracked Ice exclusive trivia"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/xy-steam-siege-theme-deck-ring-of-lightning",
+          "quote": "TCGsync product page 'Deck List:' (Pokemon / Trainer / Energy counts) matches Bulbapedia card-for-card"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; the XY era's only basic Energy print on the site up to Nov 2016 is the XY 2013 print, so energy print assumed (ids energy-<type>-xy, shared XY 2013 print from ENERGY_PRINTS `xy`, scans assets/cards/shared/energy-<type>-xy.webp). Other deck-only non-holo prints (TCGplayer, Deck Exclusives group 1840): Ampharos xy11-40 -> 123463 Ampharos - 40/114 (XY Steam Siege). Showcase TCGplayer product is in the 'Deck Exclusives' group 1840.",
+      "product": "theme-deck-ring-of-lightning"
+    },
+    {
+      "set": "xy12",
+      "name": "Pikachu Power",
+      "showcase": "Pikachu",
+      "showcaseCard": "xy12-35",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Pikachu is exclusive to this deck'); the set's own pack print differs. Printed 1 copy as the cracked-ice holo, other copy (if any) regular.",
+      "showcaseTcgplayerId": 131308,
+      "showcaseTcgplayerName": "Pikachu - 35/108 (Cracked Ice Holo)",
+      "tcgplayerId": 123449,
+      "tcgplayerName": "Evolutions Theme Deck - \"Pikachu Power\" [Pikachu]",
+      "marketPrice": 70.13,
+      "released": "2016-11-02",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: EVO Silver Chansey Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells the code card separately as 'Code Card - ...'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "xy12-35",
+          "name": "Pikachu",
+          "n": 3
+        },
+        {
+          "id": "xy12-36",
+          "name": "Raichu",
+          "n": 2
+        },
+        {
+          "id": "xy12-38",
+          "name": "Magneton",
+          "n": 1
+        },
+        {
+          "id": "xy12-37",
+          "name": "Magnemite",
+          "n": 3
+        },
+        {
+          "id": "xy12-41",
+          "name": "Electabuzz",
+          "n": 2
+        },
+        {
+          "id": "xy12-39",
+          "name": "Voltorb",
+          "n": 2
+        },
+        {
+          "id": "xy12-7",
+          "name": "Beedrill",
+          "n": 2
+        },
+        {
+          "id": "xy12-6",
+          "name": "Kakuna",
+          "n": 3
+        },
+        {
+          "id": "xy12-5",
+          "name": "Weedle",
+          "n": 3
+        },
+        {
+          "id": "xy12-4",
+          "name": "Metapod",
+          "n": 2
+        },
+        {
+          "id": "xy12-3",
+          "name": "Caterpie",
+          "n": 3
+        },
+        {
+          "id": "xy12-8",
+          "name": "Tangela",
+          "n": 2
+        },
+        {
+          "id": "xy12-69",
+          "name": "Doduo",
+          "n": 2
+        },
+        {
+          "id": "xy12-77",
+          "name": "Energy Retrieval",
+          "n": 1
+        },
+        {
+          "id": "g1-62",
+          "name": "Evosoda",
+          "n": 1
+        },
+        {
+          "id": "g1-67",
+          "name": "Poké Ball",
+          "n": 1
+        },
+        {
+          "id": "g1-68",
+          "name": "Pokémon Center Lady",
+          "n": 1
+        },
+        {
+          "id": "xy10-107",
+          "name": "Pokémon Fan Club",
+          "n": 1
+        },
+        {
+          "id": "xy12-84",
+          "name": "Professor Oak's Hint",
+          "n": 1
+        },
+        {
+          "id": "xy8-146",
+          "name": "Professor's Letter",
+          "n": 2
+        },
+        {
+          "id": "xy12-85",
+          "name": "Revive",
+          "n": 1
+        },
+        {
+          "id": "xy12-88",
+          "name": "Switch",
+          "n": 1
+        },
+        {
+          "id": "xy9-112",
+          "name": "Tierno",
+          "n": 2
+        },
+        {
+          "id": "energy-grass-xy",
+          "name": "Grass Energy",
+          "n": 9
+        },
+        {
+          "id": "energy-lightning-xy",
+          "name": "Lightning Energy",
+          "n": 9
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Pikachu_Power_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards (28-ish entries); release date and Cracked Ice exclusive trivia"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/xy-evolutions-theme-deck-pikachu-power",
+          "quote": "TCGsync product page 'Deck List:' (Pokemon / Trainer / Energy counts) matches Bulbapedia card-for-card"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; the XY era's only basic Energy print on the site up to Nov 2016 is the XY 2013 print, so energy print assumed (ids energy-<type>-xy, shared XY 2013 print from ENERGY_PRINTS `xy`, scans assets/cards/shared/energy-<type>-xy.webp). Bulbapedia lists the Energy as 'Evolutions 91/94/95/96' (Evolutions has no numbered Energy: the set has 108 cards); mapped to the XY 2013 print. Includes cards of other sets as listed: g1-62 Evosoda, g1-67 Poké Ball, g1-68 Pokémon Center Lady. Other deck-only non-holo prints (TCGplayer, Deck Exclusives group 1840): Raichu xy12-36 -> 131309 Raichu - 36/108 (XY Evolutions); Magneton xy12-38 -> 131310 Magneton - 38/108 (XY Evolutions). Showcase TCGplayer product is in the 'Deck Exclusives' group 1840.",
+      "product": "theme-deck-pikachu-power"
+    },
+    {
+      "set": "xy12",
+      "name": "Mewtwo Mayhem",
+      "showcase": "Mewtwo",
+      "showcaseCard": "xy12-51",
+      "showcasePrint": "Cracked Ice holofoil print, exclusive to this theme deck (Bulbapedia: 'The Cracked Ice Holofoil version of Mewtwo is exclusive to this deck'); the set's own pack print differs. Printed 1 copy as the cracked-ice holo, other copy (if any) regular.",
+      "showcaseTcgplayerId": 131305,
+      "showcaseTcgplayerName": "Mewtwo - 51/108 (Cracked Ice Holo)",
+      "tcgplayerId": 123450,
+      "tcgplayerName": "Evolutions Theme Deck - \"Mewtwo Mayhem\" [Mewtwo]",
+      "marketPrice": 78.81,
+      "released": "2016-11-02",
+      "extras": "60-card deck, damage counters, custom coin (Bulbapedia coin art: EVO Pink Chansey Coin.png), rulesheet, card list, deckbox, two-player mat, TCG Online code card (TCGplayer sells the code card separately as 'Code Card - ...'). No booster pack.",
+      "total": 60,
+      "cards": [
+        {
+          "id": "xy12-51",
+          "name": "Mewtwo",
+          "n": 2
+        },
+        {
+          "id": "xy12-45",
+          "name": "Nidoking",
+          "n": 1
+        },
+        {
+          "id": "xy12-44",
+          "name": "Nidorino",
+          "n": 2
+        },
+        {
+          "id": "xy12-43",
+          "name": "Nidoran ♂",
+          "n": 4
+        },
+        {
+          "id": "xy12-48",
+          "name": "Haunter",
+          "n": 2
+        },
+        {
+          "id": "xy12-47",
+          "name": "Gastly",
+          "n": 3
+        },
+        {
+          "id": "xy12-50",
+          "name": "Koffing",
+          "n": 2
+        },
+        {
+          "id": "xy12-49",
+          "name": "Drowzee",
+          "n": 2
+        },
+        {
+          "id": "xy12-58",
+          "name": "Machoke",
+          "n": 2
+        },
+        {
+          "id": "xy12-57",
+          "name": "Machop",
+          "n": 2
+        },
+        {
+          "id": "xy12-56",
+          "name": "Dugtrio",
+          "n": 1
+        },
+        {
+          "id": "xy12-55",
+          "name": "Diglett",
+          "n": 2
+        },
+        {
+          "id": "xy12-61",
+          "name": "Onix",
+          "n": 2
+        },
+        {
+          "id": "xy12-54",
+          "name": "Sandshrew",
+          "n": 2
+        },
+        {
+          "id": "xy12-62",
+          "name": "Hitmonchan",
+          "n": 1
+        },
+        {
+          "id": "xy12-77",
+          "name": "Energy Retrieval",
+          "n": 1
+        },
+        {
+          "id": "xy9-100",
+          "name": "Great Ball",
+          "n": 1
+        },
+        {
+          "id": "g1-67",
+          "name": "Poké Ball",
+          "n": 1
+        },
+        {
+          "id": "xy10-107",
+          "name": "Pokémon Fan Club",
+          "n": 1
+        },
+        {
+          "id": "xy12-83",
+          "name": "Potion",
+          "n": 1
+        },
+        {
+          "id": "xy12-84",
+          "name": "Professor Oak's Hint",
+          "n": 1
+        },
+        {
+          "id": "xy8-146",
+          "name": "Professor's Letter",
+          "n": 2
+        },
+        {
+          "id": "xy12-88",
+          "name": "Switch",
+          "n": 2
+        },
+        {
+          "id": "xy9-112",
+          "name": "Tierno",
+          "n": 2
+        },
+        {
+          "id": "energy-psychic-xy",
+          "name": "Psychic Energy",
+          "n": 9
+        },
+        {
+          "id": "energy-fighting-xy",
+          "name": "Fighting Energy",
+          "n": 9
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Mewtwo_Mayhem_(TCG)",
+          "quote": "Bulbapedia deck list, 60 cards (28-ish entries); release date and Cracked Ice exclusive trivia"
+        },
+        {
+          "url": "https://tcgosaurus.tcgsync.com/products/xy-evolutions-theme-deck-mewtwo-mayhem",
+          "quote": "TCGsync product page 'Deck List:' (Pokemon / Trainer / Energy counts) matches Bulbapedia card-for-card"
+        }
+      ],
+      "notes": "Basic Energy: no source names the print; the XY era's only basic Energy print on the site up to Nov 2016 is the XY 2013 print, so energy print assumed (ids energy-<type>-xy, shared XY 2013 print from ENERGY_PRINTS `xy`, scans assets/cards/shared/energy-<type>-xy.webp). Bulbapedia lists the Energy as 'Evolutions 91/94/95/96' (Evolutions has no numbered Energy: the set has 108 cards); mapped to the XY 2013 print. Includes cards of other sets as listed: g1-67 Poké Ball. Other deck-only non-holo prints (TCGplayer, Deck Exclusives group 1840): Nidoking xy12-45 -> 131306 Nidoking - 45/108 (XY Evolutions); Hitmonchan xy12-62 -> 131307 Hitmonchan - 62/108 (XY Evolutions). Showcase TCGplayer product is in the 'Deck Exclusives' group 1840.",
+      "product": "theme-deck-mewtwo-mayhem"
+    }
+  ],
+  "gifts": []
+}

@@ -57,6 +57,24 @@
     },
     "bwp072": {
       "foilAs": "Rare Holo"
+    },
+    "62-cracked-ice": {
+      "like": "62",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Plasma Shadow Theme Deck)",
+      "tcgplayerId": 91388,
+      "tcgplayerGroup": 1840
+    },
+    "94-cracked-ice": {
+      "like": "94",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Plasma Claw Theme Deck)",
+      "tcgplayerId": 131334,
+      "tcgplayerGroup": 1840
     }
   },
   "products": [
@@ -195,6 +213,30 @@
         "bwp059"
       ],
       "note": "A White Kyurem figure and a Cosmos Holo White Kyurem (BW59). Four packs, the same mix as the Black Kyurem Box (Bulbapedia gives one mix for both)."
+    },
+    {
+      "id": "theme-deck-plasma-shadow",
+      "name": "Theme Deck \"Plasma Shadow\"",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "62-cracked-ice"
+      ],
+      "price": 40.63,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Giratina, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-plasma-claw",
+      "name": "Theme Deck \"Plasma Claw\"",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "94-cracked-ice"
+      ],
+      "price": 33.13,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Druddigon, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ]
 }

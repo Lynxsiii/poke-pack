@@ -61,6 +61,32 @@
       "packs": 36,
       "promos": [],
       "note": "36 packs, no code card (Potomac Distribution box page and TCGplayer's pack text). TCGplayer lists the box without a market price, so it is priced at 36 packs. The Rocket's Persian ex secret rare that Elite Fourum's rarity guide puts on top of a box is not simulated (it is in no pack)."
+    },
+    {
+      "id": "deck-golden-sky",
+      "name": "Theme Deck \"Golden Sky\"",
+      "kind": "deck",
+      "tcgplayerId": 232865,
+      "packs": 0,
+      "promos": [
+        "27"
+      ],
+      "price": 168.37,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Ho-Oh, no booster pack (Bulbapedia and Serebii deck lists)."
+    },
+    {
+      "id": "deck-silvery-ocean",
+      "name": "Theme Deck \"Silvery Ocean\"",
+      "kind": "deck",
+      "tcgplayerId": 232866,
+      "packs": 0,
+      "promos": [
+        "29"
+      ],
+      "price": 96.89,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Lugia, no booster pack (Bulbapedia and Serebii deck lists)."
     }
   ]
 }

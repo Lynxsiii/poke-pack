@@ -34,6 +34,24 @@
     },
     "bwp060": {
       "foilAs": "Rare Holo"
+    },
+    "100-cracked-ice": {
+      "like": "100",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Ice Shock Theme Deck)",
+      "tcgplayerId": 123459,
+      "tcgplayerGroup": 1840
+    },
+    "102-cracked-ice": {
+      "like": "102",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Cold Fire Theme Deck)",
+      "tcgplayerId": 123460,
+      "tcgplayerGroup": 1840
     }
   },
   "products": [
@@ -91,6 +109,32 @@
         "bwp055"
       ],
       "note": "One pack and an Elgyem (BW55); the real blister also held a Cosmos Holo Beheeyem from Next Destinies and a Sampling Pack, which are not simulated."
+    },
+    {
+      "id": "theme-deck-ice-shock",
+      "name": "Theme Deck \"Ice Shock\"",
+      "kind": "deck",
+      "tcgplayerId": 208573,
+      "packs": 0,
+      "promos": [
+        "100-cracked-ice"
+      ],
+      "price": 84.54,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Black Kyurem, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-cold-fire",
+      "name": "Theme Deck \"Cold Fire\"",
+      "kind": "deck",
+      "tcgplayerId": 208574,
+      "packs": 0,
+      "promos": [
+        "102-cracked-ice"
+      ],
+      "price": 38.46,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring White Kyurem, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ]
 }

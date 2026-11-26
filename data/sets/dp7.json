@@ -137,6 +137,30 @@
         "dpp30"
       ],
       "note": "Three Diamond & Pearl-series packs in the real tin (Diamond & Pearl, Secret Wonders and Majestic Dawn, plus an EX Dragon Frontiers pack; the mix is unresolved between two notes), opened here as Stormfront packs. Tin not simulated."
+    },
+    {
+      "id": "theme-deck-dark-rampage",
+      "name": "Theme Deck \"Dark Rampage\"",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "30"
+      ],
+      "price": 58.63,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Tyranitar, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-raging-sea",
+      "name": "Theme Deck \"Raging Sea\"",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "19"
+      ],
+      "price": 150.01,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Gyarados, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ]
 }

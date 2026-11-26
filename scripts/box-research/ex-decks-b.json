@@ -1,0 +1,2080 @@
+{
+  "_about": "EX-era theme decks of ex9 Emerald through ex16 Power Keepers, 17 decks (Emerald 2, Unseen Forces 2, Delta Species 2, Legend Maker 2, Holon Phantoms 2, Crystal Guardians 3 incl. Green Cyclone/Storm Surge/Earth Shower, Dragon Frontiers 2, Power Keepers 2). Written 2026-11-26. Lists: Bulbapedia deck pages (MediaWiki API) compared card by card with Serebii's theme-deck pages (serebii.net/card/themedeck); the two agree on all but a handful of cards (see each deck's notes, Bulbapedia used on conflict). Set ids resolve to data/<set>.json incl. earlier-set reprints (ex1 Energy Search/Potion/Switch, ex6, ex10, ex11, ex12, ex14 Energy Search/Potion, ex13 Metal Energy). Basic Energy is the ex1-104..109 Ruby & Sapphire print for every deck except Mind Game (ex16-107/108): Bulbapedia names RS Energy only for Hydrobloom and Wildfire, Serebii for the rest (single-source print). Real deck holos: Bulbapedia's rarity column shows each deck's featured card as a Cosmos holofoil where the pack print is non-holo (Ho-Oh, Lugia, Latias, Latios, Venusaur, Blastoise, Swampert, Mightyena, Dusclops); the site has no separate print for these, so showcaseTcgplayerId is null everywhere (tcgcsv has no deck-exclusive card products in these groups). Box contents beyond the 60 cards: coin, damage counters, rulebook, card list, single-player mat; no booster pack or code card. TCGplayer sealed products exist for 8 decks only (Hydrobloom, Wildfire, Golden Sky, Silvery Ocean, Breakthrough, Steeplechase, FireMist, FloodRush); none for Legend Maker, Crystal Guardians, Dragon Frontiers or Power Keepers decks; no sealed deck has a market price in tcgcsv (marketPrice null). Release dates are Bulbapedia's deck page dates (match the TCGplayer group dates). Left out: nothing.",
+  "decks": [
+    {
+      "set": "ex9",
+      "name": "Hydrobloom",
+      "showcase": "Milotic",
+      "showcaseCard": "ex9-8",
+      "showcasePrint": "Milotic: site rarity Rare Holo; in the deck it is the same holo as the pack print.",
+      "showcaseTcgplayerId": null,
+      "tcgplayerId": 232874,
+      "tcgplayerName": "Emerald Theme Deck - \"Hydrobloom\" [Milotic]",
+      "marketPrice": null,
+      "released": "2005-05-09",
+      "extras": "1 custom coin, damage counters, rulebook, card list and single-player mat. No booster pack, no code card (Bulbapedia deck page: 'packaged with a 60-card deck, damage counters, a custom coin, a rulebook, a card list, and a single-player mat'; TCGplayer: '1 60-card pre-constructed deck, Damage counters, 1 coin').",
+      "total": 60,
+      "cards": [
+        {
+          "id": "ex9-8",
+          "name": "Milotic",
+          "n": 1
+        },
+        {
+          "id": "ex9-10",
+          "name": "Sceptile",
+          "n": 1
+        },
+        {
+          "id": "ex9-13",
+          "name": "Glalie",
+          "n": 1
+        },
+        {
+          "id": "ex9-28",
+          "name": "Grovyle",
+          "n": 2
+        },
+        {
+          "id": "ex9-36",
+          "name": "Marshtomp",
+          "n": 2
+        },
+        {
+          "id": "ex9-40",
+          "name": "Swalot",
+          "n": 1
+        },
+        {
+          "id": "ex9-50",
+          "name": "Feebas",
+          "n": 4
+        },
+        {
+          "id": "ex9-51",
+          "name": "Gulpin",
+          "n": 3
+        },
+        {
+          "id": "ex9-56",
+          "name": "Mudkip",
+          "n": 4
+        },
+        {
+          "id": "ex9-64",
+          "name": "Snorunt",
+          "n": 3
+        },
+        {
+          "id": "ex9-70",
+          "name": "Treecko",
+          "n": 4
+        },
+        {
+          "id": "ex1-90",
+          "name": "Energy Search",
+          "n": 2
+        },
+        {
+          "id": "ex6-102",
+          "name": "Switch",
+          "n": 2
+        },
+        {
+          "id": "ex9-80",
+          "name": "Oran Berry",
+          "n": 2
+        },
+        {
+          "id": "ex9-82",
+          "name": "Professor Birch",
+          "n": 2
+        },
+        {
+          "id": "ex9-85",
+          "name": "Wally's Training",
+          "n": 2
+        },
+        {
+          "id": "ex1-104",
+          "name": "Grass Energy",
+          "n": 10
+        },
+        {
+          "id": "ex1-106",
+          "name": "Water Energy",
+          "n": 14
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Hydrobloom_(TCG)",
+          "quote": "Bulbapedia Hydrobloom deck page, EX Emerald, released May 9, 2005; 60-card list incl. rarity column; contents sentence above."
+        },
+        {
+          "url": "https://www.serebii.net/card/themedeck/hydrobloom.shtml",
+          "quote": "Serebii theme deck page: 'Theme Deck Name: Hydrobloom, Associated Set: EX Emerald', per-card Quantity column; compared card by card (differences noted)."
+        },
+        {
+          "url": "https://tcgcsv.com/tcgplayer/3/1410/products",
+          "quote": "productId 232874: Emerald Theme Deck - \"Hydrobloom\" [Milotic]; contents text '1 60-card pre-constructed deck, Damage counters, 1 coin'."
+        }
+      ],
+      "notes": "Deck-specific prints per Bulbapedia's rarity column vs the site's rarity: Sceptile ex9-10: site Rare Holo, deck print Rare. Bulbapedia trivia: *The deck contains several reprints from EX Ruby & Sapphire, which now use the card design introduced in EX Team Magma vs Team Aqua, lacking the [[e-Reader]] dot code strips or \"''e''\" logo and featuring a ©2004 copyright date. *The Non Holofoil version of Sceptile is exclusive to this deck and the Meganium ex Epic Collection Deck. Energy: Bulbapedia says Ruby & Sapphire basic Energy reprinted in the TMA design (no e-Reader strips, (c)2004), which the site holds as ex1-104..109. tcgcsv lists the product with no market price (prices file has no row), marketPrice null. DISAGREEMENT: Serebii differs: Feebas ex9-49 (Bulbapedia ex9-50; both are Common Feebas, Bulbapedia used), Switch from EX Ruby & Sapphire 92 (Bulbapedia: FireRed & LeafGreen 102, used), and Emerald's own basic Energy 101/103 (Bulbapedia: the Ruby & Sapphire Energy reprinted without e-Reader strips, used: ex1-104 and ex1-106). Coin: EX09 Blue Energy Coin.png.",
+      "product": "deck-hydrobloom"
+    },
+    {
+      "set": "ex9",
+      "name": "Wildfire",
+      "showcase": "Manectric",
+      "showcaseCard": "ex9-7",
+      "showcasePrint": "Manectric: site rarity Rare Holo; in the deck it is the same holo as the pack print.",
+      "showcaseTcgplayerId": null,
+      "tcgplayerId": 232875,
+      "tcgplayerName": "Emerald Theme Deck - \"Wildfire\" [Manectric]",
+      "marketPrice": null,
+      "released": "2005-05-09",
+      "extras": "1 custom coin, damage counters, rulebook, card list and single-player mat. No booster pack, no code card (Bulbapedia deck page: 'packaged with a 60-card deck, damage counters, a custom coin, a rulebook, a card list, and a single-player mat'; TCGplayer: '1 60-card pre-constructed deck, Damage counters, 1 coin').",
+      "total": 60,
+      "cards": [
+        {
+          "id": "ex9-7",
+          "name": "Manectric",
+          "n": 2
+        },
+        {
+          "id": "ex9-1",
+          "name": "Blaziken",
+          "n": 1
+        },
+        {
+          "id": "ex9-23",
+          "name": "Camerupt",
+          "n": 2
+        },
+        {
+          "id": "ex9-25",
+          "name": "Combusken",
+          "n": 2
+        },
+        {
+          "id": "ex9-38",
+          "name": "Ninetales",
+          "n": 1
+        },
+        {
+          "id": "ex9-47",
+          "name": "Electrike",
+          "n": 4
+        },
+        {
+          "id": "ex9-58",
+          "name": "Numel",
+          "n": 4
+        },
+        {
+          "id": "ex9-60",
+          "name": "Pikachu",
+          "n": 3
+        },
+        {
+          "id": "ex9-69",
+          "name": "Torchic",
+          "n": 4
+        },
+        {
+          "id": "ex9-72",
+          "name": "Vulpix",
+          "n": 3
+        },
+        {
+          "id": "ex1-90",
+          "name": "Energy Search",
+          "n": 2
+        },
+        {
+          "id": "ex6-101",
+          "name": "Potion",
+          "n": 2
+        },
+        {
+          "id": "ex9-81",
+          "name": "PokéNav",
+          "n": 2
+        },
+        {
+          "id": "ex9-82",
+          "name": "Professor Birch",
+          "n": 2
+        },
+        {
+          "id": "ex9-85",
+          "name": "Wally's Training",
+          "n": 2
+        },
+        {
+          "id": "ex1-108",
+          "name": "Fire Energy",
+          "n": 16
+        },
+        {
+          "id": "ex1-109",
+          "name": "Lightning Energy",
+          "n": 8
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Wildfire_(TCG)",
+          "quote": "Bulbapedia Wildfire deck page, EX Emerald, released May 9, 2005; 60-card list incl. rarity column; contents sentence above."
+        },
+        {
+          "url": "https://www.serebii.net/card/themedeck/wildfire.shtml",
+          "quote": "Serebii theme deck page: 'Theme Deck Name: Wildfire, Associated Set: EX Emerald', per-card Quantity column; compared card by card (differences noted)."
+        },
+        {
+          "url": "https://tcgcsv.com/tcgplayer/3/1410/products",
+          "quote": "productId 232875: Emerald Theme Deck - \"Wildfire\" [Manectric]; contents text '1 60-card pre-constructed deck, Damage counters, 1 coin'."
+        }
+      ],
+      "notes": "Deck-specific prints per Bulbapedia's rarity column vs the site's rarity: Blaziken ex9-1: site Rare Holo, deck print Rare (non-holo); Manectric ex9-7: one holo copy plus one non-holo copy (Bulbapedia card page: 'A Non Holofoil print was included in the Wildfire Theme Deck'). Bulbapedia trivia: *The deck contains several reprints from EX Ruby & Sapphire, which now use the card design introduced in EX Team Magma vs Team Aqua, lacking the [[e-Reader]] dot code strips or \"''e''\" logo and featuring a ©2004 copyright date. *The Non Holofoil version of Blaziken is exclusive to this deck and the Typhlosion ex Epic Collection Deck. *The Non Holofoil version of Manectric is exclusive to this deck and the Typhlosion ex Epic Collection Deck. Energy: Bulbapedia says Ruby & Sapphire basic Energy reprinted in the TMA design (no e-Reader strips, (c)2004), which the site holds as ex1-104..109. tcgcsv lists the product with no market price (prices file has no row), marketPrice null. DISAGREEMENT: Bulbapedia lists Manectric ex9-7 twice (Rare Holo plus a Rare/non-holo print; its card page says a non-holo print of ex9-7 is in this deck). Serebii lists ex9-7 once and ex9-16 (70 HP) once. Used Bulbapedia (2x ex9-7: one holo, one non-holo print; the site has only the holo ex9-7). Other differences: Numel ex9-58 (Bulbapedia, used) vs ex9-57 (Serebii); Potion FRLG 101 (Bulbapedia, used) vs RS 91; Energy from Ruby & Sapphire no-code reprint (Bulbapedia, used: ex1-108/109) vs Emerald's own 102/104 (Serebii). Coin: EX09 Gold Energy Coin.png.",
+      "product": "deck-wildfire"
+    },
+    {
+      "set": "ex10",
+      "name": "Golden Sky",
+      "showcase": "Ho-Oh",
+      "showcaseCard": "ex10-27",
+      "showcasePrint": "Ho-Oh: site rarity Rare; in the deck it is a Cosmos holofoil exclusive to the deck (pack print is non-holo).",
+      "showcaseTcgplayerId": null,
+      "tcgplayerId": 232865,
+      "tcgplayerName": "Unseen Forces Theme Deck - \"Golden Sky\" [Ho-Oh]",
+      "marketPrice": null,
+      "released": "2005-08-22",
+      "extras": "1 custom coin, damage counters, rulebook, card list and single-player mat. No booster pack, no code card (Bulbapedia deck page: 'packaged with a 60-card deck, damage counters, a custom coin, a rulebook, a card list, and a single-player mat'; TCGplayer: '1 60-card pre-constructed deck, Damage counters, 1 coin').",
+      "total": 60,
+      "cards": [
+        {
+          "id": "ex10-27",
+          "name": "Ho-Oh",
+          "n": 1
+        },
+        {
+          "id": "ex10-17",
+          "name": "Typhlosion",
+          "n": 1
+        },
+        {
+          "id": "ex10-20",
+          "name": "Chansey",
+          "n": 1
+        },
+        {
+          "id": "ex10-41",
+          "name": "Magcargo",
+          "n": 1
+        },
+        {
+          "id": "ex10-44",
+          "name": "Quagsire",
+          "n": 1
+        },
+        {
+          "id": "ex10-45",
+          "name": "Quilava",
+          "n": 2
+        },
+        {
+          "id": "ex10-54",
+          "name": "Cyndaquil",
+          "n": 4
+        },
+        {
+          "id": "ex10-61",
+          "name": "Larvitar",
+          "n": 4
+        },
+        {
+          "id": "ex10-70",
+          "name": "Pupitar",
+          "n": 2
+        },
+        {
+          "id": "ex10-73",
+          "name": "Slugma",
+          "n": 4
+        },
+        {
+          "id": "ex10-79",
+          "name": "Wooper",
+          "n": 4
+        },
+        {
+          "id": "ex10-82",
+          "name": "Energy Removal 2",
+          "n": 2
+        },
+        {
+          "id": "ex10-84",
+          "name": "Energy Switch",
+          "n": 2
+        },
+        {
+          "id": "ex10-86",
+          "name": "Mary's Request",
+          "n": 1
+        },
+        {
+          "id": "ex10-89",
+          "name": "Professor Elm's Training Method",
+          "n": 2
+        },
+        {
+          "id": "ex10-94",
+          "name": "Energy Search",
+          "n": 2
+        },
+        {
+          "id": "ex10-95",
+          "name": "Potion",
+          "n": 2
+        },
+        {
+          "id": "ex1-108",
+          "name": "Fire Energy",
+          "n": 13
+        },
+        {
+          "id": "ex1-105",
+          "name": "Fighting Energy",
+          "n": 11
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Golden_Sky_(TCG)",
+          "quote": "Bulbapedia Golden Sky deck page, EX Unseen Forces, released August 22, 2005; 60-card list incl. rarity column; contents sentence above."
+        },
+        {
+          "url": "https://www.serebii.net/card/themedeck/goldensky.shtml",
+          "quote": "Serebii theme deck page: 'Theme Deck Name: Golden Sky, Associated Set: EX Unseen Forces', per-card Quantity column; compared card by card (agrees on every card except as noted)."
+        },
+        {
+          "url": "https://tcgcsv.com/tcgplayer/3/1398/products",
+          "quote": "productId 232865: Unseen Forces Theme Deck - \"Golden Sky\" [Ho-Oh]; contents text '1 60-card pre-constructed deck, Damage counters, 1 coin'."
+        }
+      ],
+      "notes": "Deck-specific prints per Bulbapedia's rarity column vs the site's rarity: Ho-Oh ex10-27: site Rare, deck print Rare Holo; Typhlosion ex10-17: site Rare Holo, deck print Rare. Bulbapedia trivia: *The Cosmos Holofoil version of Ho-Oh is exclusive to this deck. *The Non Holofoil version of Typhlosion is exclusive to this deck and the Typhlosion ex Epic Collection Deck. Energy print: Bulbapedia only says 'Fire Energy' etc.; Serebii names the Ruby & Sapphire numbers (ex1-104..109), used. Single-source for the print. tcgcsv lists the product with no market price (prices file has no row), marketPrice null. Coin: EX10 Orange Energy Coin.png.",
+      "product": "deck-golden-sky"
+    },
+    {
+      "set": "ex10",
+      "name": "Silvery Ocean",
+      "showcase": "Lugia",
+      "showcaseCard": "ex10-29",
+      "showcasePrint": "Lugia: site rarity Rare; in the deck it is a Cosmos holofoil exclusive to the deck (pack print is non-holo).",
+      "showcaseTcgplayerId": null,
+      "tcgplayerId": 232866,
+      "tcgplayerName": "Unseen Forces Theme Deck - \"Silvery Ocean\" [Lugia]",
+      "marketPrice": null,
+      "released": "2005-08-22",
+      "extras": "1 custom coin, damage counters, rulebook, card list and single-player mat. No booster pack, no code card (Bulbapedia deck page: 'packaged with a 60-card deck, damage counters, a custom coin, a rulebook, a card list, and a single-player mat'; TCGplayer: '1 60-card pre-constructed deck, Damage counters, 1 coin').",
+      "total": 60,
+      "cards": [
+        {
+          "id": "ex10-29",
+          "name": "Lugia",
+          "n": 1
+        },
+        {
+          "id": "ex10-9",
+          "name": "Meganium",
+          "n": 1
+        },
+        {
+          "id": "ex10-32",
+          "name": "Stantler",
+          "n": 1
+        },
+        {
+          "id": "ex10-35",
+          "name": "Bayleef",
+          "n": 2
+        },
+        {
+          "id": "ex10-39",
+          "name": "Granbull",
+          "n": 1
+        },
+        {
+          "id": "ex10-49",
+          "name": "Xatu",
+          "n": 1
+        },
+        {
+          "id": "ex10-51",
+          "name": "Chikorita",
+          "n": 4
+        },
+        {
+          "id": "ex10-63",
+          "name": "Natu",
+          "n": 4
+        },
+        {
+          "id": "ex10-64",
+          "name": "Oddish",
+          "n": 3
+        },
+        {
+          "id": "ex10-74",
+          "name": "Snubbull",
+          "n": 4
+        },
+        {
+          "id": "ex10-75",
+          "name": "Spinarak",
+          "n": 3
+        },
+        {
+          "id": "ex10-85",
+          "name": "Fluffy Berry",
+          "n": 2
+        },
+        {
+          "id": "ex10-86",
+          "name": "Mary's Request",
+          "n": 1
+        },
+        {
+          "id": "ex10-89",
+          "name": "Professor Elm's Training Method",
+          "n": 2
+        },
+        {
+          "id": "ex10-90",
+          "name": "Protective Orb",
+          "n": 2
+        },
+        {
+          "id": "ex10-94",
+          "name": "Energy Search",
+          "n": 2
+        },
+        {
+          "id": "ex10-95",
+          "name": "Potion",
+          "n": 2
+        },
+        {
+          "id": "ex1-104",
+          "name": "Grass Energy",
+          "n": 18
+        },
+        {
+          "id": "ex1-107",
+          "name": "Psychic Energy",
+          "n": 6
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Silvery_Ocean_(TCG)",
+          "quote": "Bulbapedia Silvery Ocean deck page, EX Unseen Forces, released August 22, 2005; 60-card list incl. rarity column; contents sentence above."
+        },
+        {
+          "url": "https://www.serebii.net/card/themedeck/silveryocean.shtml",
+          "quote": "Serebii theme deck page: 'Theme Deck Name: Silvery Ocean, Associated Set: EX Unseen Forces', per-card Quantity column; compared card by card (differences noted)."
+        },
+        {
+          "url": "https://tcgcsv.com/tcgplayer/3/1398/products",
+          "quote": "productId 232866: Unseen Forces Theme Deck - \"Silvery Ocean\" [Lugia]; contents text '1 60-card pre-constructed deck, Damage counters, 1 coin'."
+        }
+      ],
+      "notes": "Deck-specific prints per Bulbapedia's rarity column vs the site's rarity: Lugia ex10-29: site Rare, deck print Rare Holo; Meganium ex10-9: site Rare Holo, deck print Rare. Bulbapedia trivia: *The Cosmos Holofoil version of Lugia is exclusive to this deck. *The Non Holofoil version of Meganium is exclusive to this deck and the Meganium ex Epic Collection Deck. Energy print: Bulbapedia only says 'Fire Energy' etc.; Serebii names the Ruby & Sapphire numbers (ex1-104..109), used. Single-source for the print. tcgcsv lists the product with no market price (prices file has no row), marketPrice null. DISAGREEMENT: Serebii's page adds one Magcargo (ex10-41), making 61 cards: an error; Bulbapedia's 60 used. Coin: EX10 Purple Energy Coin.png.",
+      "product": "deck-silvery-ocean"
+    },
+    {
+      "set": "ex11",
+      "name": "Breakthrough",
+      "showcase": "Crobat δ",
+      "showcaseCard": "ex11-2",
+      "showcasePrint": "Crobat δ: site rarity Rare Holo; in the deck it is the same holo as the pack print.",
+      "showcaseTcgplayerId": null,
+      "tcgplayerId": 232863,
+      "tcgplayerName": "Delta Species Theme Deck - \"Breakthrough\"",
+      "marketPrice": null,
+      "released": "2005-10-31",
+      "extras": "1 custom coin, damage counters, rulebook, card list and single-player mat. No booster pack, no code card (Bulbapedia deck page: 'packaged with a 60-card deck, damage counters, a custom coin, a rulebook, a card list, and a single-player mat'; TCGplayer: '1 60-card pre-constructed deck, Damage counters, 1 coin').",
+      "total": 60,
+      "cards": [
+        {
+          "id": "ex11-2",
+          "name": "Crobat δ",
+          "n": 1
+        },
+        {
+          "id": "ex11-21",
+          "name": "Holon's Electrode",
+          "n": 1
+        },
+        {
+          "id": "ex11-33",
+          "name": "Weezing",
+          "n": 1
+        },
+        {
+          "id": "ex11-41",
+          "name": "Dragonair δ",
+          "n": 2
+        },
+        {
+          "id": "ex11-43",
+          "name": "Golbat",
+          "n": 2
+        },
+        {
+          "id": "ex11-65",
+          "name": "Dratini δ",
+          "n": 4
+        },
+        {
+          "id": "ex11-71",
+          "name": "Holon's Voltorb",
+          "n": 4
+        },
+        {
+          "id": "ex11-72",
+          "name": "Koffing",
+          "n": 4
+        },
+        {
+          "id": "ex11-74",
+          "name": "Magnemite",
+          "n": 2
+        },
+        {
+          "id": "ex11-88",
+          "name": "Zubat",
+          "n": 4
+        },
+        {
+          "id": "ex11-90",
+          "name": "Great Ball",
+          "n": 2
+        },
+        {
+          "id": "ex11-92",
+          "name": "Holon Lass",
+          "n": 1
+        },
+        {
+          "id": "ex11-95",
+          "name": "Holon Researcher",
+          "n": 2
+        },
+        {
+          "id": "ex11-99",
+          "name": "Master Ball",
+          "n": 2
+        },
+        {
+          "id": "ex11-101",
+          "name": "Potion",
+          "n": 2
+        },
+        {
+          "id": "ex11-102",
+          "name": "Switch",
+          "n": 2
+        },
+        {
+          "id": "ex1-104",
+          "name": "Grass Energy",
+          "n": 10
+        },
+        {
+          "id": "ex1-109",
+          "name": "Lightning Energy",
+          "n": 12
+        },
+        {
+          "id": "ex11-107",
+          "name": "Metal Energy",
+          "n": 2
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Breakthrough_(TCG)",
+          "quote": "Bulbapedia Breakthrough deck page, EX Delta Species, released October 31, 2005; 60-card list incl. rarity column; contents sentence above."
+        },
+        {
+          "url": "https://www.serebii.net/card/themedeck/breakthrough.shtml",
+          "quote": "Serebii theme deck page: 'Theme Deck Name: Breakthrough, Associated Set: EX Delta Species', per-card Quantity column; compared card by card (differences noted)."
+        },
+        {
+          "url": "https://tcgcsv.com/tcgplayer/3/1429/products",
+          "quote": "productId 232863: Delta Species Theme Deck - \"Breakthrough\"; contents text '1 60-card pre-constructed deck, Damage counters, 1 coin'."
+        }
+      ],
+      "notes": "Energy print: Bulbapedia only says 'Fire Energy' etc.; Serebii names the Ruby & Sapphire numbers (ex1-104..109), used. Single-source for the print. tcgcsv lists the product with no market price (prices file has no row), marketPrice null. TCGplayer's product name carries no featured-card tag; Crobat delta (ex11-2) is the deck's holo. DISAGREEMENT: Serebii lists Swellow ex11-32 where Bulbapedia lists Weezing ex11-33 (Koffing line in a Poison deck: Bulbapedia used). Coin: EX11 Green Energy Coin.jpg.",
+      "product": "deck-breakthrough"
+    },
+    {
+      "set": "ex11",
+      "name": "Steeplechase",
+      "showcase": "Salamence δ",
+      "showcaseCard": "ex11-14",
+      "showcasePrint": "Salamence δ: site rarity Rare Holo; in the deck it is the same holo as the pack print.",
+      "showcaseTcgplayerId": null,
+      "tcgplayerId": 232864,
+      "tcgplayerName": "Delta Species Theme Deck - \"Steeplechase\"",
+      "marketPrice": null,
+      "released": "2005-10-31",
+      "extras": "1 custom coin, damage counters, rulebook, card list and single-player mat. No booster pack, no code card (Bulbapedia deck page: 'packaged with a 60-card deck, damage counters, a custom coin, a rulebook, a card list, and a single-player mat'; TCGplayer: '1 60-card pre-constructed deck, Damage counters, 1 coin').",
+      "total": 60,
+      "cards": [
+        {
+          "id": "ex11-14",
+          "name": "Salamence δ",
+          "n": 1
+        },
+        {
+          "id": "ex11-25",
+          "name": "Porygon2",
+          "n": 1
+        },
+        {
+          "id": "ex11-32",
+          "name": "Swellow",
+          "n": 1
+        },
+        {
+          "id": "ex11-52",
+          "name": "Rapidash",
+          "n": 2
+        },
+        {
+          "id": "ex11-53",
+          "name": "Shelgon δ",
+          "n": 2
+        },
+        {
+          "id": "ex11-57",
+          "name": "Bagon δ",
+          "n": 4
+        },
+        {
+          "id": "ex11-77",
+          "name": "Meowth",
+          "n": 2
+        },
+        {
+          "id": "ex11-78",
+          "name": "Ponyta",
+          "n": 4
+        },
+        {
+          "id": "ex11-80",
+          "name": "Porygon",
+          "n": 4
+        },
+        {
+          "id": "ex11-86",
+          "name": "Taillow",
+          "n": 4
+        },
+        {
+          "id": "ex11-89",
+          "name": "Dual Ball",
+          "n": 2
+        },
+        {
+          "id": "ex11-92",
+          "name": "Holon Lass",
+          "n": 1
+        },
+        {
+          "id": "ex11-95",
+          "name": "Holon Researcher",
+          "n": 2
+        },
+        {
+          "id": "ex11-99",
+          "name": "Master Ball",
+          "n": 2
+        },
+        {
+          "id": "ex11-101",
+          "name": "Potion",
+          "n": 2
+        },
+        {
+          "id": "ex11-102",
+          "name": "Switch",
+          "n": 2
+        },
+        {
+          "id": "ex1-108",
+          "name": "Fire Energy",
+          "n": 22
+        },
+        {
+          "id": "ex11-107",
+          "name": "Metal Energy",
+          "n": 2
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Steeplechase_(TCG)",
+          "quote": "Bulbapedia Steeplechase deck page, EX Delta Species, released October 31, 2005; 60-card list incl. rarity column; contents sentence above."
+        },
+        {
+          "url": "https://www.serebii.net/card/themedeck/steeplechase.shtml",
+          "quote": "Serebii theme deck page: 'Theme Deck Name: Steeplechase, Associated Set: EX Delta Species', per-card Quantity column; compared card by card (differences noted)."
+        },
+        {
+          "url": "https://tcgcsv.com/tcgplayer/3/1429/products",
+          "quote": "productId 232864: Delta Species Theme Deck - \"Steeplechase\"; contents text '1 60-card pre-constructed deck, Damage counters, 1 coin'."
+        }
+      ],
+      "notes": "Energy print: Bulbapedia only says 'Fire Energy' etc.; Serebii names the Ruby & Sapphire numbers (ex1-104..109), used. Single-source for the print. tcgcsv lists the product with no market price (prices file has no row), marketPrice null. DISAGREEMENT: Serebii lists Umbreon delta ex11-17 where Bulbapedia lists the holo Salamence delta ex11-14 (Salamence/Bagon/Shelgon deck: Bulbapedia used). Coin: EX11 Red Energy Coin.png.",
+      "product": "deck-steeplechase"
+    },
+    {
+      "set": "ex12",
+      "name": "Groundbreaker",
+      "showcase": "Golem",
+      "showcaseCard": "ex12-6",
+      "showcasePrint": "Golem: site rarity Rare Holo; in the deck it is the same holo as the pack print.",
+      "showcaseTcgplayerId": null,
+      "tcgplayerId": null,
+      "tcgplayerName": null,
+      "marketPrice": null,
+      "released": "2006-02-13",
+      "extras": "1 custom coin, damage counters, rulebook, card list and single-player mat. No booster pack, no code card (Bulbapedia deck page: 'packaged with a 60-card deck, damage counters, a custom coin, a rulebook, a card list, and a single-player mat').",
+      "total": 60,
+      "cards": [
+        {
+          "id": "ex12-6",
+          "name": "Golem",
+          "n": 1
+        },
+        {
+          "id": "ex12-24",
+          "name": "Pinsir",
+          "n": 1
+        },
+        {
+          "id": "ex12-26",
+          "name": "Spinda",
+          "n": 1
+        },
+        {
+          "id": "ex12-29",
+          "name": "Anorith",
+          "n": 2
+        },
+        {
+          "id": "ex12-34",
+          "name": "Graveler",
+          "n": 2
+        },
+        {
+          "id": "ex12-47",
+          "name": "Weepinbell",
+          "n": 2
+        },
+        {
+          "id": "ex12-49",
+          "name": "Bellsprout",
+          "n": 4
+        },
+        {
+          "id": "ex12-53",
+          "name": "Geodude",
+          "n": 4
+        },
+        {
+          "id": "ex12-56",
+          "name": "Lileep",
+          "n": 3
+        },
+        {
+          "id": "ex11-101",
+          "name": "Potion",
+          "n": 2
+        },
+        {
+          "id": "ex11-102",
+          "name": "Switch",
+          "n": 2
+        },
+        {
+          "id": "ex12-73",
+          "name": "Fieldworker",
+          "n": 2
+        },
+        {
+          "id": "ex12-77",
+          "name": "Strange Cave",
+          "n": 1
+        },
+        {
+          "id": "ex12-78",
+          "name": "Claw Fossil",
+          "n": 4
+        },
+        {
+          "id": "ex12-80",
+          "name": "Root Fossil",
+          "n": 4
+        },
+        {
+          "id": "ex12-82",
+          "name": "React Energy",
+          "n": 2
+        },
+        {
+          "id": "ex1-104",
+          "name": "Grass Energy",
+          "n": 10
+        },
+        {
+          "id": "ex1-105",
+          "name": "Fighting Energy",
+          "n": 13
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Groundbreaker_(TCG)",
+          "quote": "Bulbapedia Groundbreaker deck page, EX Legend Maker, released February 13, 2006; 60-card list incl. rarity column; contents sentence above."
+        },
+        {
+          "url": "https://www.serebii.net/card/themedeck/groundbreaker.shtml",
+          "quote": "Serebii theme deck page: 'Theme Deck Name: Groundbreaker, Associated Set: EX Legend Maker', per-card Quantity column; compared card by card (agrees on every card except as noted)."
+        }
+      ],
+      "notes": "Energy print: Bulbapedia only says 'Fire Energy' etc.; Serebii names the Ruby & Sapphire numbers (ex1-104..109), used. Single-source for the print. No TCGplayer product exists for this deck in tcgcsv (searched the set group, Miscellaneous Cards & Products and Deck Exclusives): tcgplayerId null. Coin: EX12 Silver Mew Coin.png.",
+      "product": "deck-groundbreaker"
+    },
+    {
+      "set": "ex12",
+      "name": "Shadowquake",
+      "showcase": "Gengar",
+      "showcaseCard": "ex12-5",
+      "showcasePrint": "Gengar: site rarity Rare Holo; in the deck it is the same holo as the pack print.",
+      "showcaseTcgplayerId": null,
+      "tcgplayerId": null,
+      "tcgplayerName": null,
+      "marketPrice": null,
+      "released": "2006-02-13",
+      "extras": "1 custom coin, damage counters, rulebook, card list and single-player mat. No booster pack, no code card (Bulbapedia deck page: 'packaged with a 60-card deck, damage counters, a custom coin, a rulebook, a card list, and a single-player mat').",
+      "total": 60,
+      "cards": [
+        {
+          "id": "ex12-5",
+          "name": "Gengar",
+          "n": 1
+        },
+        {
+          "id": "ex12-17",
+          "name": "Gorebyss",
+          "n": 1
+        },
+        {
+          "id": "ex12-18",
+          "name": "Huntail",
+          "n": 1
+        },
+        {
+          "id": "ex12-35",
+          "name": "Haunter",
+          "n": 2
+        },
+        {
+          "id": "ex12-43",
+          "name": "Sealeo",
+          "n": 2
+        },
+        {
+          "id": "ex12-45",
+          "name": "Tentacruel",
+          "n": 2
+        },
+        {
+          "id": "ex12-51",
+          "name": "Clamperl",
+          "n": 4
+        },
+        {
+          "id": "ex12-52",
+          "name": "Gastly",
+          "n": 4
+        },
+        {
+          "id": "ex12-64",
+          "name": "Skitty",
+          "n": 3
+        },
+        {
+          "id": "ex12-65",
+          "name": "Spheal",
+          "n": 4
+        },
+        {
+          "id": "ex12-66",
+          "name": "Tentacool",
+          "n": 4
+        },
+        {
+          "id": "ex10-94",
+          "name": "Energy Search",
+          "n": 2
+        },
+        {
+          "id": "ex11-101",
+          "name": "Potion",
+          "n": 2
+        },
+        {
+          "id": "ex12-73",
+          "name": "Fieldworker",
+          "n": 2
+        },
+        {
+          "id": "ex12-76",
+          "name": "Power Tree",
+          "n": 1
+        },
+        {
+          "id": "ex12-82",
+          "name": "React Energy",
+          "n": 2
+        },
+        {
+          "id": "ex1-106",
+          "name": "Water Energy",
+          "n": 14
+        },
+        {
+          "id": "ex1-107",
+          "name": "Psychic Energy",
+          "n": 9
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Shadowquake_(TCG)",
+          "quote": "Bulbapedia Shadowquake deck page, EX Legend Maker, released February 13, 2006; 60-card list incl. rarity column; contents sentence above."
+        },
+        {
+          "url": "https://www.serebii.net/card/themedeck/shadowquake.shtml",
+          "quote": "Serebii theme deck page: 'Theme Deck Name: Shadowquake, Associated Set: EX Legend Maker', per-card Quantity column; compared card by card (differences noted)."
+        }
+      ],
+      "notes": "Energy print: Bulbapedia only says 'Fire Energy' etc.; Serebii names the Ruby & Sapphire numbers (ex1-104..109), used. Single-source for the print. No TCGplayer product exists for this deck in tcgcsv (searched the set group, Miscellaneous Cards & Products and Deck Exclusives): tcgplayerId null. DISAGREEMENT: Serebii lists Vibrava ex12-46 where Bulbapedia lists Tentacruel ex12-45 (Water/Psychic deck: Bulbapedia used). Coin: EX12 Pink Mew Coin.png.",
+      "product": "deck-shadowquake"
+    },
+    {
+      "set": "ex13",
+      "name": "FireMist",
+      "showcase": "Latias δ",
+      "showcaseCard": "ex13-21",
+      "showcasePrint": "Latias δ: site rarity Rare; in the deck it is a Cosmos holofoil exclusive to the deck (pack print is non-holo).",
+      "showcaseTcgplayerId": null,
+      "tcgplayerId": 232850,
+      "tcgplayerName": "Holon Phantoms Theme Deck - \"FireMist\"",
+      "marketPrice": null,
+      "released": "2006-05-03",
+      "extras": "1 custom coin, damage counters, rulebook, card list and single-player mat. No booster pack, no code card (Bulbapedia deck page: 'packaged with a 60-card deck, damage counters, a custom coin, a rulebook, a card list, and a single-player mat'; TCGplayer: '1 60-card pre-constructed deck, Damage counters, 1 coin').",
+      "total": 60,
+      "cards": [
+        {
+          "id": "ex13-21",
+          "name": "Latias δ",
+          "n": 1
+        },
+        {
+          "id": "ex13-20",
+          "name": "Blaziken",
+          "n": 1
+        },
+        {
+          "id": "ex13-25",
+          "name": "Nosepass",
+          "n": 1
+        },
+        {
+          "id": "ex13-39",
+          "name": "Combusken",
+          "n": 2
+        },
+        {
+          "id": "ex13-50",
+          "name": "Primeape δ",
+          "n": 2
+        },
+        {
+          "id": "ex13-55",
+          "name": "Whiscash",
+          "n": 2
+        },
+        {
+          "id": "ex13-60",
+          "name": "Barboach",
+          "n": 4
+        },
+        {
+          "id": "ex13-65",
+          "name": "Exeggcute δ",
+          "n": 4
+        },
+        {
+          "id": "ex13-70",
+          "name": "Mankey δ",
+          "n": 4
+        },
+        {
+          "id": "ex13-75",
+          "name": "Phanpy",
+          "n": 2
+        },
+        {
+          "id": "ex13-83",
+          "name": "Torchic",
+          "n": 4
+        },
+        {
+          "id": "ex10-94",
+          "name": "Energy Search",
+          "n": 2
+        },
+        {
+          "id": "ex11-90",
+          "name": "Great Ball",
+          "n": 2
+        },
+        {
+          "id": "ex11-101",
+          "name": "Potion",
+          "n": 2
+        },
+        {
+          "id": "ex13-85",
+          "name": "Holon Adventurer",
+          "n": 2
+        },
+        {
+          "id": "ex13-87",
+          "name": "Holon Lake",
+          "n": 1
+        },
+        {
+          "id": "ex1-108",
+          "name": "Fire Energy",
+          "n": 13
+        },
+        {
+          "id": "ex1-105",
+          "name": "Fighting Energy",
+          "n": 11
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/FireMist_(TCG)",
+          "quote": "Bulbapedia FireMist deck page, EX Holon Phantoms, released May 3, 2006; 60-card list incl. rarity column; contents sentence above."
+        },
+        {
+          "url": "https://www.serebii.net/card/themedeck/firemist.shtml",
+          "quote": "Serebii theme deck page: 'Theme Deck Name: FireMist, Associated Set: EX Holon Phantoms', per-card Quantity column; compared card by card (agrees on every card except as noted)."
+        },
+        {
+          "url": "https://tcgcsv.com/tcgplayer/3/1379/products",
+          "quote": "productId 232850: Holon Phantoms Theme Deck - \"FireMist\"; contents text '1 60-card pre-constructed deck, Damage counters, 1 coin'."
+        }
+      ],
+      "notes": "Deck-specific prints per Bulbapedia's rarity column vs the site's rarity: Latias δ ex13-21: site Rare, deck print Rare Holo. Bulbapedia trivia: *The Cosmos Holofoil version of Latias δ is exclusive to this deck. Energy print: Bulbapedia only says 'Fire Energy' etc.; Serebii names the Ruby & Sapphire numbers (ex1-104..109), used. Single-source for the print. tcgcsv lists the product with no market price (prices file has no row), marketPrice null. Coin: EX13 Gold Flygon Coin.jpg.",
+      "product": "deck-firemist"
+    },
+    {
+      "set": "ex13",
+      "name": "FloodRush",
+      "showcase": "Latios δ",
+      "showcaseCard": "ex13-22",
+      "showcasePrint": "Latios δ: site rarity Rare; in the deck it is a Cosmos holofoil exclusive to the deck (pack print is non-holo).",
+      "showcaseTcgplayerId": null,
+      "tcgplayerId": 232851,
+      "tcgplayerName": "Holon Phantoms Theme Deck - \"FloodRush\"",
+      "marketPrice": null,
+      "released": "2006-05-03",
+      "extras": "1 custom coin, damage counters, rulebook, card list and single-player mat. No booster pack, no code card (Bulbapedia deck page: 'packaged with a 60-card deck, damage counters, a custom coin, a rulebook, a card list, and a single-player mat'; TCGplayer: '1 60-card pre-constructed deck, Damage counters, 1 coin').",
+      "total": 60,
+      "cards": [
+        {
+          "id": "ex13-22",
+          "name": "Latios δ",
+          "n": 1
+        },
+        {
+          "id": "ex13-19",
+          "name": "Bellossom δ",
+          "n": 1
+        },
+        {
+          "id": "ex13-34",
+          "name": "Zangoose",
+          "n": 1
+        },
+        {
+          "id": "ex13-38",
+          "name": "Claydol",
+          "n": 2
+        },
+        {
+          "id": "ex13-42",
+          "name": "Gloom δ",
+          "n": 2
+        },
+        {
+          "id": "ex13-59",
+          "name": "Baltoy",
+          "n": 4
+        },
+        {
+          "id": "ex13-62",
+          "name": "Corphish",
+          "n": 4
+        },
+        {
+          "id": "ex13-73",
+          "name": "Oddish δ",
+          "n": 4
+        },
+        {
+          "id": "ex13-74",
+          "name": "Omanyte δ",
+          "n": 2
+        },
+        {
+          "id": "ex10-94",
+          "name": "Energy Search",
+          "n": 2
+        },
+        {
+          "id": "ex11-99",
+          "name": "Master Ball",
+          "n": 2
+        },
+        {
+          "id": "ex11-101",
+          "name": "Potion",
+          "n": 2
+        },
+        {
+          "id": "ex13-85",
+          "name": "Holon Adventurer",
+          "n": 2
+        },
+        {
+          "id": "ex13-87",
+          "name": "Holon Lake",
+          "n": 1
+        },
+        {
+          "id": "ex13-89",
+          "name": "Professor Cozmo's Discovery",
+          "n": 2
+        },
+        {
+          "id": "ex13-92",
+          "name": "Mysterious Fossil",
+          "n": 4
+        },
+        {
+          "id": "ex1-106",
+          "name": "Water Energy",
+          "n": 11
+        },
+        {
+          "id": "ex1-107",
+          "name": "Psychic Energy",
+          "n": 13
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/FloodRush_(TCG)",
+          "quote": "Bulbapedia FloodRush deck page, EX Holon Phantoms, released May 3, 2006; 60-card list incl. rarity column; contents sentence above."
+        },
+        {
+          "url": "https://www.serebii.net/card/themedeck/floodrush.shtml",
+          "quote": "Serebii theme deck page: 'Theme Deck Name: FloodRush, Associated Set: EX Holon Phantoms', per-card Quantity column; compared card by card (differences noted)."
+        },
+        {
+          "url": "https://tcgcsv.com/tcgplayer/3/1379/products",
+          "quote": "productId 232851: Holon Phantoms Theme Deck - \"FloodRush\"; contents text '1 60-card pre-constructed deck, Damage counters, 1 coin'."
+        },
+        {
+          "url": "https://joshscards.com/products/ex-holon-phantoms-theme-deck-floodrush",
+          "quote": "(via search summary) 21 Pokemon, 24 Energy (13 Psychic, 11 Water), 15 Trainers incl. 2 Energy Search."
+        }
+      ],
+      "notes": "Deck-specific prints per Bulbapedia's rarity column vs the site's rarity: Latios δ ex13-22: site Rare, deck print Rare Holo. Bulbapedia trivia: *The Cosmos Holofoil version of Latios δ is exclusive to this deck. Energy print: Bulbapedia only says 'Fire Energy' etc.; Serebii names the Ruby & Sapphire numbers (ex1-104..109), used. Single-source for the print. tcgcsv lists the product with no market price (prices file has no row), marketPrice null. DISAGREEMENT: Serebii lists 2x Oddish (EX Unseen Forces 64) where Bulbapedia lists 2x Energy Search (EX Unseen Forces 94). A third list (Joshscards product page via search summary) has 2 Energy Search, 21 Pokemon, 15 Trainers: Bulbapedia used. Coin: EX13 Silver Rayquaza Coin.png.",
+      "product": "deck-floodrush"
+    },
+    {
+      "set": "ex14",
+      "name": "Green Cyclone",
+      "showcase": "Venusaur",
+      "showcaseCard": "ex14-28",
+      "showcasePrint": "Venusaur: site rarity Rare; in the deck it is a Cosmos holofoil exclusive to the deck (pack print is non-holo).",
+      "showcaseTcgplayerId": null,
+      "tcgplayerId": null,
+      "tcgplayerName": null,
+      "marketPrice": null,
+      "released": "2006-08-30",
+      "extras": "1 custom coin, damage counters, rulebook, card list and single-player mat. No booster pack, no code card (Bulbapedia deck page: 'packaged with a 60-card deck, damage counters, a custom coin, a rulebook, a card list, and a single-player mat').",
+      "total": 60,
+      "cards": [
+        {
+          "id": "ex14-28",
+          "name": "Venusaur",
+          "n": 1
+        },
+        {
+          "id": "ex14-23",
+          "name": "Loudred",
+          "n": 2
+        },
+        {
+          "id": "ex14-32",
+          "name": "Grovyle",
+          "n": 2
+        },
+        {
+          "id": "ex14-33",
+          "name": "Gulpin",
+          "n": 1
+        },
+        {
+          "id": "ex14-34",
+          "name": "Ivysaur",
+          "n": 2
+        },
+        {
+          "id": "ex14-45",
+          "name": "Bulbasaur",
+          "n": 4
+        },
+        {
+          "id": "ex14-53",
+          "name": "Jigglypuff",
+          "n": 2
+        },
+        {
+          "id": "ex14-60",
+          "name": "Seedot",
+          "n": 4
+        },
+        {
+          "id": "ex14-67",
+          "name": "Treecko",
+          "n": 4
+        },
+        {
+          "id": "ex14-69",
+          "name": "Whismur",
+          "n": 4
+        },
+        {
+          "id": "ex12-73",
+          "name": "Fieldworker",
+          "n": 2
+        },
+        {
+          "id": "ex14-73",
+          "name": "Celio's Network",
+          "n": 2
+        },
+        {
+          "id": "ex14-78",
+          "name": "Dual Ball",
+          "n": 2
+        },
+        {
+          "id": "ex14-86",
+          "name": "Energy Search",
+          "n": 2
+        },
+        {
+          "id": "ex14-87",
+          "name": "Potion",
+          "n": 2
+        },
+        {
+          "id": "ex1-104",
+          "name": "Grass Energy",
+          "n": 24
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Green_Cyclone_(TCG)",
+          "quote": "Bulbapedia Green Cyclone deck page, EX Crystal Guardians, released August 30, 2006; 60-card list incl. rarity column; contents sentence above."
+        },
+        {
+          "url": "https://www.serebii.net/card/themedeck/greencyclone.shtml",
+          "quote": "Serebii theme deck page: 'Theme Deck Name: Green Cyclone, Associated Set: EX Crystal Guardians', per-card Quantity column; compared card by card (agrees on every card except as noted)."
+        }
+      ],
+      "notes": "Deck-specific prints per Bulbapedia's rarity column vs the site's rarity: Venusaur ex14-28: site Rare, deck print Rare Holo. Bulbapedia trivia: *The Cosmos Holofoil version of Venusaur is exclusive to this deck. Energy print: Bulbapedia only says 'Fire Energy' etc.; Serebii names the Ruby & Sapphire numbers (ex1-104..109), used. Single-source for the print. No TCGplayer product exists for this deck in tcgcsv (searched the set group, Miscellaneous Cards & Products and Deck Exclusives): tcgplayerId null. Coin: PCG8S Red Groudon Coin.png.",
+      "product": "deck-green-cyclone"
+    },
+    {
+      "set": "ex14",
+      "name": "Storm Surge",
+      "showcase": "Blastoise",
+      "showcaseCard": "ex14-14",
+      "showcasePrint": "Blastoise: site rarity Rare; in the deck it is a Cosmos holofoil exclusive to the deck (pack print is non-holo).",
+      "showcaseTcgplayerId": null,
+      "tcgplayerId": null,
+      "tcgplayerName": null,
+      "marketPrice": null,
+      "released": "2006-08-30",
+      "extras": "1 custom coin, damage counters, rulebook, card list and single-player mat. No booster pack, no code card (Bulbapedia deck page: 'packaged with a 60-card deck, damage counters, a custom coin, a rulebook, a card list, and a single-player mat').",
+      "total": 60,
+      "cards": [
+        {
+          "id": "ex14-14",
+          "name": "Blastoise",
+          "n": 1
+        },
+        {
+          "id": "ex14-18",
+          "name": "Fearow δ",
+          "n": 1
+        },
+        {
+          "id": "ex14-26",
+          "name": "Pelipper δ",
+          "n": 1
+        },
+        {
+          "id": "ex14-30",
+          "name": "Charmeleon δ",
+          "n": 2
+        },
+        {
+          "id": "ex14-43",
+          "name": "Wartortle",
+          "n": 2
+        },
+        {
+          "id": "ex14-49",
+          "name": "Charmander δ",
+          "n": 4
+        },
+        {
+          "id": "ex14-54",
+          "name": "Krabby",
+          "n": 2
+        },
+        {
+          "id": "ex14-61",
+          "name": "Spearow",
+          "n": 4
+        },
+        {
+          "id": "ex14-63",
+          "name": "Squirtle",
+          "n": 4
+        },
+        {
+          "id": "ex14-70",
+          "name": "Wingull",
+          "n": 4
+        },
+        {
+          "id": "ex14-71",
+          "name": "Bill's Maintenance",
+          "n": 2
+        },
+        {
+          "id": "ex14-77",
+          "name": "Double Full Heal",
+          "n": 1
+        },
+        {
+          "id": "ex14-82",
+          "name": "Poké Ball",
+          "n": 2
+        },
+        {
+          "id": "ex14-84",
+          "name": "Warp Point",
+          "n": 2
+        },
+        {
+          "id": "ex14-86",
+          "name": "Energy Search",
+          "n": 2
+        },
+        {
+          "id": "ex14-87",
+          "name": "Potion",
+          "n": 2
+        },
+        {
+          "id": "ex1-106",
+          "name": "Water Energy",
+          "n": 11
+        },
+        {
+          "id": "ex1-109",
+          "name": "Lightning Energy",
+          "n": 13
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Storm_Surge_(TCG)",
+          "quote": "Bulbapedia Storm Surge deck page, EX Crystal Guardians, released August 30, 2006; 60-card list incl. rarity column; contents sentence above."
+        },
+        {
+          "url": "https://www.serebii.net/card/themedeck/stormsurge.shtml",
+          "quote": "Serebii theme deck page: 'Theme Deck Name: Storm Surge, Associated Set: EX Crystal Guardians', per-card Quantity column; compared card by card (agrees on every card except as noted)."
+        }
+      ],
+      "notes": "Deck-specific prints per Bulbapedia's rarity column vs the site's rarity: Blastoise ex14-14: site Rare, deck print Rare Holo. Bulbapedia trivia: *The Cosmos Holofoil version of Blastoise is exclusive to this deck. Energy print: Bulbapedia only says 'Fire Energy' etc.; Serebii names the Ruby & Sapphire numbers (ex1-104..109), used. Single-source for the print. No TCGplayer product exists for this deck in tcgcsv (searched the set group, Miscellaneous Cards & Products and Deck Exclusives): tcgplayerId null. Coin: PCG8S Blue Kyogre Coin.png.",
+      "product": "deck-storm-surge"
+    },
+    {
+      "set": "ex14",
+      "name": "Earth Shower",
+      "showcase": "Swampert",
+      "showcaseCard": "ex14-27",
+      "showcasePrint": "Swampert: site rarity Rare; in the deck it is a Cosmos holofoil exclusive to the deck (pack print is non-holo).",
+      "showcaseTcgplayerId": null,
+      "tcgplayerId": null,
+      "tcgplayerName": null,
+      "marketPrice": null,
+      "released": "2006-08-30",
+      "extras": "1 custom coin, damage counters, rulebook, card list and single-player mat. No booster pack, no code card (Bulbapedia deck page: 'packaged with a 60-card deck, damage counters, a custom coin, a rulebook, a card list, and a single-player mat').",
+      "total": 60,
+      "cards": [
+        {
+          "id": "ex14-27",
+          "name": "Swampert",
+          "n": 1
+        },
+        {
+          "id": "ex14-5",
+          "name": "Dugtrio",
+          "n": 1
+        },
+        {
+          "id": "ex14-25",
+          "name": "Medicham",
+          "n": 1
+        },
+        {
+          "id": "ex14-36",
+          "name": "Lairon",
+          "n": 2
+        },
+        {
+          "id": "ex14-38",
+          "name": "Marshtomp",
+          "n": 2
+        },
+        {
+          "id": "ex14-44",
+          "name": "Aron",
+          "n": 4
+        },
+        {
+          "id": "ex14-50",
+          "name": "Diglett",
+          "n": 4
+        },
+        {
+          "id": "ex14-55",
+          "name": "Lotad",
+          "n": 2
+        },
+        {
+          "id": "ex14-56",
+          "name": "Meditite",
+          "n": 4
+        },
+        {
+          "id": "ex14-58",
+          "name": "Mudkip",
+          "n": 4
+        },
+        {
+          "id": "ex14-71",
+          "name": "Bill's Maintenance",
+          "n": 2
+        },
+        {
+          "id": "ex14-73",
+          "name": "Celio's Network",
+          "n": 2
+        },
+        {
+          "id": "ex14-83",
+          "name": "PokéNav",
+          "n": 2
+        },
+        {
+          "id": "ex14-84",
+          "name": "Warp Point",
+          "n": 1
+        },
+        {
+          "id": "ex14-86",
+          "name": "Energy Search",
+          "n": 2
+        },
+        {
+          "id": "ex14-87",
+          "name": "Potion",
+          "n": 2
+        },
+        {
+          "id": "ex1-106",
+          "name": "Water Energy",
+          "n": 9
+        },
+        {
+          "id": "ex1-105",
+          "name": "Fighting Energy",
+          "n": 13
+        },
+        {
+          "id": "ex13-95",
+          "name": "Metal Energy",
+          "n": 2
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Earth_Shower_(TCG)",
+          "quote": "Bulbapedia Earth Shower deck page, EX Crystal Guardians, released August 30, 2006; 60-card list incl. rarity column; contents sentence above."
+        },
+        {
+          "url": "https://www.serebii.net/card/themedeck/earthshower.shtml",
+          "quote": "Serebii theme deck page: 'Theme Deck Name: Earth Shower, Associated Set: EX Crystal Guardians', per-card Quantity column; compared card by card (agrees on every card except as noted)."
+        }
+      ],
+      "notes": "Deck-specific prints per Bulbapedia's rarity column vs the site's rarity: Swampert ex14-27: site Rare, deck print Rare Holo; Dugtrio ex14-5: site Rare Holo, deck print Rare. Bulbapedia trivia: *The Cosmos Holofoil version of Swampert is exclusive to this deck. *The Non Holofoil version of Dugtrio is exclusive to this deck. Energy print: Bulbapedia only says 'Fire Energy' etc.; Serebii names the Ruby & Sapphire numbers (ex1-104..109), used. Single-source for the print. No TCGplayer product exists for this deck in tcgcsv (searched the set group, Miscellaneous Cards & Products and Deck Exclusives): tcgplayerId null. Coin: PCG8S Blue Kyogre Coin.png.",
+      "product": "deck-earth-shower"
+    },
+    {
+      "set": "ex15",
+      "name": "Shadow Blaze",
+      "showcase": "Typhlosion δ",
+      "showcaseCard": "ex15-12",
+      "showcasePrint": "Typhlosion δ: site rarity Rare Holo; in the deck it is the same holo as the pack print.",
+      "showcaseTcgplayerId": null,
+      "tcgplayerId": null,
+      "tcgplayerName": null,
+      "marketPrice": null,
+      "released": "2006-11-08",
+      "extras": "1 custom coin, damage counters, rulebook, card list and single-player mat. No booster pack, no code card (Bulbapedia deck page: 'packaged with a 60-card deck, damage counters, a custom coin, a rulebook, a card list, and a single-player mat').",
+      "total": 60,
+      "cards": [
+        {
+          "id": "ex15-12",
+          "name": "Typhlosion δ",
+          "n": 1
+        },
+        {
+          "id": "ex15-36",
+          "name": "Quilava δ",
+          "n": 2
+        },
+        {
+          "id": "ex15-45",
+          "name": "Cyndaquil δ",
+          "n": 4
+        },
+        {
+          "id": "ex15-19",
+          "name": "Lickitung δ",
+          "n": 1
+        },
+        {
+          "id": "ex15-13",
+          "name": "Arbok δ",
+          "n": 1
+        },
+        {
+          "id": "ex15-47",
+          "name": "Ekans δ",
+          "n": 4
+        },
+        {
+          "id": "ex15-24",
+          "name": "Vibrava δ",
+          "n": 2
+        },
+        {
+          "id": "ex15-68",
+          "name": "Trapinch δ",
+          "n": 4
+        },
+        {
+          "id": "ex15-33",
+          "name": "Kirlia δ",
+          "n": 2
+        },
+        {
+          "id": "ex15-61",
+          "name": "Ralts δ",
+          "n": 4
+        },
+        {
+          "id": "ex15-70",
+          "name": "Vulpix δ",
+          "n": 2
+        },
+        {
+          "id": "ex15-72",
+          "name": "Buffer Piece",
+          "n": 2
+        },
+        {
+          "id": "ex15-79",
+          "name": "Professor Elm's Training Method",
+          "n": 2
+        },
+        {
+          "id": "ex14-86",
+          "name": "Energy Search",
+          "n": 2
+        },
+        {
+          "id": "ex14-87",
+          "name": "Potion",
+          "n": 2
+        },
+        {
+          "id": "ex15-88",
+          "name": "δ Rainbow Energy",
+          "n": 1
+        },
+        {
+          "id": "ex1-108",
+          "name": "Fire Energy",
+          "n": 11
+        },
+        {
+          "id": "ex1-107",
+          "name": "Psychic Energy",
+          "n": 13
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Shadow_Blaze_(TCG)",
+          "quote": "Bulbapedia Shadow Blaze deck page, EX Dragon Frontiers, released November 8, 2006; 60-card list incl. rarity column; contents sentence above."
+        },
+        {
+          "url": "https://www.serebii.net/card/themedeck/shadowblaze.shtml",
+          "quote": "Serebii theme deck page: 'Theme Deck Name: Shadow Blaze, Associated Set: EX Dragon Frontiers', per-card Quantity column; compared card by card (differences noted)."
+        }
+      ],
+      "notes": "Energy print: Bulbapedia only says 'Fire Energy' etc.; Serebii names the Ruby & Sapphire numbers (ex1-104..109), used. Single-source for the print. No TCGplayer product exists for this deck in tcgcsv (searched the set group, Miscellaneous Cards & Products and Deck Exclusives): tcgplayerId null. DISAGREEMENT: Serebii lists Vibrava delta ex15-42 (Uncommon) x2; Bulbapedia lists ex15-24 (Rare) x2. Same name: Bulbapedia used. Search-engine summaries of retailer pages (Graffiti Games) gave 12 Fire/12 Psychic Energy; Bulbapedia, Serebii and PokemonCard.io agree on 11 Fire/13 Psychic. Coin: PCG4S Red Cyndaquil Coin.jpg.",
+      "product": "deck-shadow-blaze"
+    },
+    {
+      "set": "ex15",
+      "name": "Power Wave",
+      "showcase": "Feraligatr δ",
+      "showcaseCard": "ex15-2",
+      "showcasePrint": "Feraligatr δ: site rarity Rare Holo; in the deck it is the same holo as the pack print.",
+      "showcaseTcgplayerId": null,
+      "tcgplayerId": null,
+      "tcgplayerName": null,
+      "marketPrice": null,
+      "released": "2006-11-08",
+      "extras": "1 custom coin, damage counters, rulebook, card list and single-player mat. No booster pack, no code card (Bulbapedia deck page: 'packaged with a 60-card deck, damage counters, a custom coin, a rulebook, a card list, and a single-player mat').",
+      "total": 60,
+      "cards": [
+        {
+          "id": "ex15-2",
+          "name": "Feraligatr δ",
+          "n": 1
+        },
+        {
+          "id": "ex15-27",
+          "name": "Croconaw δ",
+          "n": 2
+        },
+        {
+          "id": "ex15-67",
+          "name": "Totodile δ",
+          "n": 4
+        },
+        {
+          "id": "ex15-20",
+          "name": "Mantine δ",
+          "n": 1
+        },
+        {
+          "id": "ex15-14",
+          "name": "Cloyster δ",
+          "n": 1
+        },
+        {
+          "id": "ex15-63",
+          "name": "Shellder δ",
+          "n": 4
+        },
+        {
+          "id": "ex15-59",
+          "name": "Pupitar δ",
+          "n": 2
+        },
+        {
+          "id": "ex15-52",
+          "name": "Larvitar δ",
+          "n": 4
+        },
+        {
+          "id": "ex15-22",
+          "name": "Seadra δ",
+          "n": 2
+        },
+        {
+          "id": "ex15-50",
+          "name": "Horsea δ",
+          "n": 4
+        },
+        {
+          "id": "ex15-72",
+          "name": "Buffer Piece",
+          "n": 2
+        },
+        {
+          "id": "ex15-82",
+          "name": "TV Reporter",
+          "n": 2
+        },
+        {
+          "id": "ex15-79",
+          "name": "Professor Elm's Training Method",
+          "n": 2
+        },
+        {
+          "id": "ex14-86",
+          "name": "Energy Search",
+          "n": 2
+        },
+        {
+          "id": "ex14-87",
+          "name": "Potion",
+          "n": 2
+        },
+        {
+          "id": "ex15-88",
+          "name": "δ Rainbow Energy",
+          "n": 1
+        },
+        {
+          "id": "ex1-105",
+          "name": "Fighting Energy",
+          "n": 9
+        },
+        {
+          "id": "ex1-109",
+          "name": "Lightning Energy",
+          "n": 15
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Power_Wave_(TCG)",
+          "quote": "Bulbapedia Power Wave deck page, EX Dragon Frontiers, released November 8, 2006; 60-card list incl. rarity column; contents sentence above."
+        },
+        {
+          "url": "https://www.serebii.net/card/themedeck/powerwave.shtml",
+          "quote": "Serebii theme deck page: 'Theme Deck Name: Power Wave, Associated Set: EX Dragon Frontiers', per-card Quantity column; compared card by card (differences noted)."
+        }
+      ],
+      "notes": "Energy print: Bulbapedia only says 'Fire Energy' etc.; Serebii names the Ruby & Sapphire numbers (ex1-104..109), used. Single-source for the print. No TCGplayer product exists for this deck in tcgcsv (searched the set group, Miscellaneous Cards & Products and Deck Exclusives): tcgplayerId null. DISAGREEMENT: Serebii lists Horsea delta ex15-31 (Uncommon) x4 and Seadra delta ex15-37 (Uncommon) x2; Bulbapedia lists Horsea delta ex15-50 (Common) x4 and Seadra delta ex15-22 (Rare) x2. Same names, different prints: Bulbapedia used (rarity column per card). Coin: PCG4S Blue Totodile Coin.png.",
+      "product": "deck-power-wave"
+    },
+    {
+      "set": "ex16",
+      "name": "Dark Blast",
+      "showcase": "Mightyena",
+      "showcaseCard": "ex16-18",
+      "showcasePrint": "Mightyena: site rarity Rare; in the deck it is a Cosmos holofoil exclusive to the deck (pack print is non-holo).",
+      "showcaseTcgplayerId": null,
+      "tcgplayerId": null,
+      "tcgplayerName": null,
+      "marketPrice": null,
+      "released": "2007-02-14",
+      "extras": "1 custom coin, damage counters, rulebook, card list and single-player mat. No booster pack, no code card (Bulbapedia deck page: 'packaged with a 60-card deck, damage counters, a custom coin, a rulebook, a card list, and a single-player mat').",
+      "total": 60,
+      "cards": [
+        {
+          "id": "ex16-18",
+          "name": "Mightyena",
+          "n": 1
+        },
+        {
+          "id": "ex16-58",
+          "name": "Poochyena",
+          "n": 4
+        },
+        {
+          "id": "ex16-28",
+          "name": "Charmeleon",
+          "n": 2
+        },
+        {
+          "id": "ex16-48",
+          "name": "Charmander",
+          "n": 4
+        },
+        {
+          "id": "ex16-29",
+          "name": "Combusken",
+          "n": 2
+        },
+        {
+          "id": "ex16-67",
+          "name": "Torchic",
+          "n": 4
+        },
+        {
+          "id": "ex16-25",
+          "name": "Zangoose",
+          "n": 1
+        },
+        {
+          "id": "ex16-8",
+          "name": "Delcatty",
+          "n": 1
+        },
+        {
+          "id": "ex16-62",
+          "name": "Skitty",
+          "n": 4
+        },
+        {
+          "id": "ex16-43",
+          "name": "Bagon",
+          "n": 2
+        },
+        {
+          "id": "ex16-74",
+          "name": "Energy Removal 2",
+          "n": 2
+        },
+        {
+          "id": "ex16-78",
+          "name": "Master Ball",
+          "n": 1
+        },
+        {
+          "id": "ex16-80",
+          "name": "Professor Birch",
+          "n": 1
+        },
+        {
+          "id": "ex16-81",
+          "name": "Scott",
+          "n": 1
+        },
+        {
+          "id": "ex16-82",
+          "name": "Sidney's Stadium",
+          "n": 2
+        },
+        {
+          "id": "ex14-86",
+          "name": "Energy Search",
+          "n": 2
+        },
+        {
+          "id": "ex14-87",
+          "name": "Potion",
+          "n": 2
+        },
+        {
+          "id": "ex1-108",
+          "name": "Fire Energy",
+          "n": 20
+        },
+        {
+          "id": "ex16-87",
+          "name": "Darkness Energy",
+          "n": 4
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Dark_Blast_(TCG)",
+          "quote": "Bulbapedia Dark Blast deck page, EX Power Keepers, released February 14, 2007; 60-card list incl. rarity column; contents sentence above."
+        },
+        {
+          "url": "https://www.serebii.net/card/themedeck/darkblast.shtml",
+          "quote": "Serebii theme deck page: 'Theme Deck Name: Dark Blast, Associated Set: EX Power Keepers', per-card Quantity column; compared card by card (differences noted)."
+        }
+      ],
+      "notes": "Deck-specific prints per Bulbapedia's rarity column vs the site's rarity: Mightyena ex16-18: site Rare, deck print Rare Holo; Delcatty ex16-8: site Rare Holo, deck print Rare. Bulbapedia trivia: *The Cosmos Holofoil version of Mightyena is exclusive to this deck. *The Non Holofoil version of Delcatty is exclusive to this deck. Energy print: Bulbapedia only says 'Fire Energy' etc.; Serebii names the Ruby & Sapphire numbers (ex1-104..109), used. Single-source for the print. Darkness Energy ex16-87 is the Power Keepers special Energy. No TCGplayer product exists for this deck in tcgcsv (searched the set group, Miscellaneous Cards & Products and Deck Exclusives): tcgplayerId null. DISAGREEMENT: Serebii names Ruby & Sapphire Fire Energy (108) x20 rather than Power Keepers' own Fire Energy; used as given. Coin: ADV1S Orange Torchic Coin.png.",
+      "product": "deck-dark-blast"
+    },
+    {
+      "set": "ex16",
+      "name": "Mind Game",
+      "showcase": "Dusclops",
+      "showcaseCard": "ex16-14",
+      "showcasePrint": "Dusclops: site rarity Rare; in the deck it is a Cosmos holofoil exclusive to the deck (pack print is non-holo).",
+      "showcaseTcgplayerId": null,
+      "tcgplayerId": null,
+      "tcgplayerName": null,
+      "marketPrice": null,
+      "released": "2007-02-14",
+      "extras": "1 custom coin, damage counters, rulebook, card list and single-player mat. No booster pack, no code card (Bulbapedia deck page: 'packaged with a 60-card deck, damage counters, a custom coin, a rulebook, a card list, and a single-player mat').",
+      "total": 60,
+      "cards": [
+        {
+          "id": "ex16-14",
+          "name": "Dusclops",
+          "n": 1
+        },
+        {
+          "id": "ex16-50",
+          "name": "Duskull",
+          "n": 4
+        },
+        {
+          "id": "ex16-9",
+          "name": "Gardevoir",
+          "n": 1
+        },
+        {
+          "id": "ex16-31",
+          "name": "Kirlia",
+          "n": 2
+        },
+        {
+          "id": "ex16-59",
+          "name": "Ralts",
+          "n": 4
+        },
+        {
+          "id": "ex16-33",
+          "name": "Machoke",
+          "n": 2
+        },
+        {
+          "id": "ex16-53",
+          "name": "Machop",
+          "n": 4
+        },
+        {
+          "id": "ex16-22",
+          "name": "Sableye",
+          "n": 1
+        },
+        {
+          "id": "ex16-55",
+          "name": "Meditite",
+          "n": 4
+        },
+        {
+          "id": "ex16-63",
+          "name": "Slakoth",
+          "n": 2
+        },
+        {
+          "id": "ex16-75",
+          "name": "Energy Switch",
+          "n": 2
+        },
+        {
+          "id": "ex16-78",
+          "name": "Master Ball",
+          "n": 1
+        },
+        {
+          "id": "ex16-80",
+          "name": "Professor Birch",
+          "n": 1
+        },
+        {
+          "id": "ex16-81",
+          "name": "Scott",
+          "n": 1
+        },
+        {
+          "id": "ex16-79",
+          "name": "Phoebe's Stadium",
+          "n": 2
+        },
+        {
+          "id": "ex14-86",
+          "name": "Energy Search",
+          "n": 2
+        },
+        {
+          "id": "ex14-87",
+          "name": "Potion",
+          "n": 2
+        },
+        {
+          "id": "ex16-107",
+          "name": "Psychic Energy",
+          "n": 14
+        },
+        {
+          "id": "ex16-108",
+          "name": "Fighting Energy",
+          "n": 10
+        }
+      ],
+      "confidence": "verified",
+      "sources": [
+        {
+          "url": "https://bulbapedia.bulbagarden.net/wiki/Mind_Game_(TCG)",
+          "quote": "Bulbapedia Mind Game deck page, EX Power Keepers, released February 14, 2007; 60-card list incl. rarity column; contents sentence above."
+        },
+        {
+          "url": "https://www.serebii.net/card/themedeck/mindgame.shtml",
+          "quote": "Serebii theme deck page: 'Theme Deck Name: Mind Game, Associated Set: EX Power Keepers', per-card Quantity column; compared card by card (differences noted)."
+        }
+      ],
+      "notes": "Deck-specific prints per Bulbapedia's rarity column vs the site's rarity: Dusclops ex16-14: site Rare, deck print Rare Holo; Gardevoir ex16-9: site Rare Holo, deck print Rare. Bulbapedia trivia: *The Cosmos Holofoil version of Dusclops is exclusive to this deck. *The Non Holofoil version of Gardevoir is exclusive to this deck. Energy print: Serebii names Power Keepers prints (ex16-107 Psychic; the Fighting is taken as ex16-108). Single-source for the print; Bulbapedia only says 'Psychic Energy' and 'Fighting Energy'. No TCGplayer product exists for this deck in tcgcsv (searched the set group, Miscellaneous Cards & Products and Deck Exclusives): tcgplayerId null. DISAGREEMENT: Serebii labels the Energy 'Water' ex16-105 x10 and Psychic ex16-107 x14 (Power Keepers numbers); the deck has no Water Pokemon so the 10 is read as Fighting (Bulbapedia: 10 Fighting, 14 Psychic). Coin: EX16 Purple Gardevoir Coin.png.",
+      "product": "deck-mind-game"
+    }
+  ],
+  "gifts": []
+}

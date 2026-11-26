@@ -4958,6 +4958,103 @@
     "tcgplayerId": 88630
   },
   {
+    "id": "bw6-91-cracked-ice",
+    "name": "Garchomp",
+    "number": "91-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "140",
+    "artist": "Naoki Saito",
+    "flavorText": "It is said that when one runs at high speed, its wings create blades of wind that can fell nearby trees.",
+    "evolvesFrom": "Gabite",
+    "image": "assets/cards/bw6/91.webp",
+    "imageSmall": "assets/cards/bw6/91-sm.webp",
+    "attacks": [
+      {
+        "name": "Jet Headbutt",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      },
+      {
+        "name": "Sand Tomb",
+        "cost": [
+          "Water",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "The Defending Pokémon can't retreat during your opponent's next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bw6-91/large",
+    "printedNumber": "91",
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (DragonSpeed Theme Deck)",
+    "tcgplayerId": 91391,
+    "market": 17.67
+  },
+  {
+    "id": "bw6-98-cracked-ice",
+    "name": "Hydreigon",
+    "number": "98-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "150",
+    "artist": "Naoki Saito",
+    "flavorText": "The heads on their arms do not have brains. They use all three heads to consume and destroy everything.",
+    "evolvesFrom": "Zweilous",
+    "image": "assets/cards/bw6/98.webp",
+    "imageSmall": "assets/cards/bw6/98-sm.webp",
+    "attacks": [
+      {
+        "name": "Consume",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Heal from this Pokémon the same amount of damage you did to the Defending Pokémon."
+      },
+      {
+        "name": "Destructor Beam",
+        "cost": [
+          "Psychic",
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "Flip a coin. If heads, discard an Energy attached to the Defending Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bw6-98/large",
+    "printedNumber": "98",
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (DragonSnarl Theme Deck)",
+    "tcgplayerId": 91392,
+    "market": 12.44
+  },
+  {
     "id": "bw6-bwp045",
     "name": "Mewtwo-EX",
     "number": "bwp045",
@@ -4965,7 +5062,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Psychic"
@@ -4995,13 +5092,13 @@
         "text": "Discard an Energy attached to this Pokémon."
       }
     ],
+    "market": 30.16,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW45/large",
     "printedNumber": "BW 045",
     "tcgplayerId": 87430,
     "era": "bw",
     "promo": true,
     "foilAs": "Rare Holo EX",
-    "market": 26.58,
     "foilMap": "assets/foil/maps/bw6/bwp045.webp"
   },
   {
@@ -5012,7 +5109,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Darkness"
@@ -5040,13 +5137,13 @@
         "type": "Ability"
       }
     ],
+    "market": 36.07,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW46/large",
     "printedNumber": "BW 046",
     "tcgplayerId": 84707,
     "era": "bw",
     "promo": true,
     "foilAs": "Rare Holo EX",
-    "market": 36.57,
     "foilMap": "assets/foil/maps/bw6/bwp046.webp"
   },
   {
@@ -5057,7 +5154,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Dragon"
@@ -5085,13 +5182,13 @@
         "text": "Discard all basic Fire Energy or all basic Lightning Energy attached to this Pokémon. This attack does 60 damage times the number of Energy you discarded."
       }
     ],
+    "market": 49.42,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW47/large",
     "printedNumber": "BW 047",
     "tcgplayerId": 88646,
     "era": "bw",
     "promo": true,
     "foilAs": "Rare Holo EX",
-    "market": 49.53,
     "foilMap": "assets/foil/maps/bw6/bwp047.webp"
   },
   {
@@ -5131,13 +5228,13 @@
         "text": "Both this Pokémon and the Defending Pokémon are now Asleep."
       }
     ],
+    "market": 31.33,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW49/large",
     "printedNumber": "BW 049",
     "tcgplayerId": 86795,
     "era": "bw",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 25.67,
     "foilMap": "assets/foil/maps/bw6/bwp049.webp"
   },
   {
@@ -5168,13 +5265,13 @@
         "text": "Flip a coin. If heads, this attack does 10 more damage."
       }
     ],
+    "market": 10.0,
     "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW52/large",
     "printedNumber": "BW 052",
     "tcgplayerId": 86801,
     "era": "bw",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 8.94,
     "foilMap": "assets/foil/maps/bw6/bwp052.webp"
   }
 ]

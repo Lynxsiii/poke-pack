@@ -118,6 +118,32 @@
       "tcgplayerId": 92168,
       "packs": 36,
       "promos": []
+    },
+    {
+      "id": "theme-deck-dark-hammer",
+      "name": "Theme Deck \"Dark Hammer\"",
+      "kind": "deck",
+      "tcgplayerId": 92217,
+      "packs": 0,
+      "promos": [
+        "68-cracked-ice"
+      ],
+      "price": 18.65,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Pangoro, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-enchanted-echo",
+      "name": "Theme Deck \"Enchanted Echo\"",
+      "kind": "deck",
+      "tcgplayerId": 92218,
+      "packs": 0,
+      "promos": [
+        "72-cracked-ice"
+      ],
+      "price": 45.99,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Sylveon, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ],
   "promoCards": {
@@ -145,6 +171,24 @@
     "xyp032": {
       "foilAs": "Rare Holo EX"
     },
-    "xyp033": {}
+    "xyp033": {},
+    "68-cracked-ice": {
+      "like": "68",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Dark Hammer Theme Deck)",
+      "tcgplayerId": 92246,
+      "tcgplayerGroup": 1840
+    },
+    "72-cracked-ice": {
+      "like": "72",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Enchanted Echo Theme Deck)",
+      "tcgplayerId": 92251,
+      "tcgplayerGroup": 1840
+    }
   }
 }

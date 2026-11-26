@@ -250,6 +250,32 @@
       "tcgplayerId": 107101,
       "packs": 36,
       "promos": []
+    },
+    {
+      "id": "theme-deck-burning-spark",
+      "name": "Theme Deck \"Burning Spark\"",
+      "kind": "deck",
+      "tcgplayerId": 107102,
+      "packs": 0,
+      "promos": [
+        "49-cracked-ice"
+      ],
+      "price": 20.17,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Raichu, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-night-striker",
+      "name": "Theme Deck \"Night Striker\"",
+      "kind": "deck",
+      "tcgplayerId": 107103,
+      "packs": 0,
+      "promos": [
+        "112-cracked-ice"
+      ],
+      "price": 56.44,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Noivern, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ],
   "promoCards": {
@@ -337,6 +363,24 @@
     },
     "xyp136": {
       "foilAs": "Rare BREAK"
+    },
+    "49-cracked-ice": {
+      "like": "49",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Burning Spark Theme Deck)",
+      "tcgplayerId": 123471,
+      "tcgplayerGroup": 1840
+    },
+    "112-cracked-ice": {
+      "like": "112",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Night Striker Theme Deck)",
+      "tcgplayerId": 123473,
+      "tcgplayerGroup": 1840
     }
   }
 }

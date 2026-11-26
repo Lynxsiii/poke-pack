@@ -81,6 +81,34 @@
         "np020"
       ],
       "note": "Three packs from EX Ruby & Sapphire, EX Sandstorm and EX Dragon and the holo Ludicolo (NP20), March 2004 (pkmn.gg NP20; TCGplayer lists the promo as 86896). The split between the three sets is not documented (Bulbapedia excerpt only), so it opens here as three Ruby & Sapphire packs. TCGplayer has no listing: priced from its packs."
+    },
+    {
+      "id": "deck-ruby",
+      "name": "Theme Deck \"Ruby\"",
+      "kind": "deck",
+      "tcgplayerId": 488309,
+      "tcgplayerGroup": 1377,
+      "packs": 0,
+      "promos": [
+        "15"
+      ],
+      "price": 41.75,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Blaziken, no booster pack (Bulbapedia and Serebii deck lists)."
+    },
+    {
+      "id": "deck-sapphire",
+      "name": "Theme Deck \"Sapphire\"",
+      "kind": "deck",
+      "tcgplayerId": 488310,
+      "tcgplayerGroup": 1377,
+      "packs": 0,
+      "promos": [
+        "23"
+      ],
+      "price": 57.78,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Swampert, no booster pack (Bulbapedia and Serebii deck lists)."
     }
   ]
 }

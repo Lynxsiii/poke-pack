@@ -130,6 +130,24 @@
     },
     "xyp197": {
       "foilAs": "Rare Holo"
+    },
+    "35-cracked-ice": {
+      "like": "35",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Pikachu Power Theme Deck)",
+      "tcgplayerId": 131308,
+      "tcgplayerGroup": 1840
+    },
+    "51-cracked-ice": {
+      "like": "51",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Mewtwo Mayhem Theme Deck)",
+      "tcgplayerId": 131305,
+      "tcgplayerGroup": 1840
     }
   },
   "products": [
@@ -423,6 +441,32 @@
       "tcgplayerId": 123446,
       "packs": 36,
       "promos": []
+    },
+    {
+      "id": "theme-deck-pikachu-power",
+      "name": "Theme Deck \"Pikachu Power\"",
+      "kind": "deck",
+      "tcgplayerId": 123449,
+      "packs": 0,
+      "promos": [
+        "35-cracked-ice"
+      ],
+      "price": 30.2,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Pikachu, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-mewtwo-mayhem",
+      "name": "Theme Deck \"Mewtwo Mayhem\"",
+      "kind": "deck",
+      "tcgplayerId": 123450,
+      "packs": 0,
+      "promos": [
+        "51-cracked-ice"
+      ],
+      "price": 21.24,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Mewtwo, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ]
 }

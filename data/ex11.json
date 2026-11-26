@@ -4110,13 +4110,13 @@
         "text": "Flip 2 coins. This attack does 20 damage times the number of heads."
       }
     ],
+    "market": 91.4,
     "imageRemote": "https://images.scrydex.com/pokemon/np-29/large",
     "printedNumber": "NP 029",
     "tcgplayerId": 84145,
     "era": "ex",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 72.46
+    "foilAs": "Rare Holo"
   },
   {
     "id": "ex11-np030",
@@ -4153,13 +4153,13 @@
         "type": "Poké-Body"
       }
     ],
+    "market": 46.43,
     "imageRemote": "https://images.scrydex.com/pokemon/np-30/large",
     "printedNumber": "NP 030",
     "tcgplayerId": 89603,
     "era": "ex",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 39.19
+    "foilAs": "Rare Holo"
   },
   {
     "id": "ex11-np031",
@@ -4169,7 +4169,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Fire"
@@ -4205,13 +4205,13 @@
         "type": "Poké-Body"
       }
     ],
+    "market": 300.0,
     "imageRemote": "https://images.scrydex.com/pokemon/np-31/large",
     "printedNumber": "NP 031",
     "tcgplayerId": 87567,
     "era": "ex",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 109.17
+    "foilAs": "Rare Holo"
   },
   {
     "id": "ex11-np032",
@@ -4221,7 +4221,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Water"
@@ -4257,13 +4257,13 @@
         "type": "Poké-Body"
       }
     ],
+    "market": 214.9,
     "imageRemote": "https://images.scrydex.com/pokemon/np-32/large",
     "printedNumber": "NP 032",
     "tcgplayerId": 83655,
     "era": "ex",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 183.77
+    "foilAs": "Rare Holo"
   },
   {
     "id": "ex11-np033",
@@ -4273,7 +4273,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Lightning"
@@ -4309,12 +4309,12 @@
         "type": "Poké-Body"
       }
     ],
+    "market": 150.74,
     "imageRemote": "https://images.scrydex.com/pokemon/np-33/large",
     "printedNumber": "NP 033",
     "tcgplayerId": 90724,
     "era": "ex",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 150.37
+    "foilAs": "Rare Holo"
   }
 ]
