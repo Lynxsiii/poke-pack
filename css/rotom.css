@@ -561,7 +561,10 @@ html[data-theme="dark"] .brand-name span::before { background: var(--yel); }
 /* ---- Phone: header and tab bar ------------------------------------------- */
 @media (max-width: 960px) {
   .site-header { background: transparent; }
-  .hud-face { border-radius: 9px; overflow: hidden; box-shadow: 0 0 0 2.5px var(--k); }
+  /* Round, like the level ring around it: a square face pokes its corners into the ring
+     and reads as off-centre. The level tag sits a little lower so more of the face shows. */
+  .hud-face { border-radius: 50%; overflow: hidden; box-shadow: 0 0 0 2px var(--k); }
+  .hud-lv { bottom: -8px; }
   .hud-lv { border-radius: 3px; background: var(--k0); color: var(--yel); font: italic 800 11px/1.4 var(--font-xc); }
   /* The bar: white, an ink line across its top, edge to edge. */
   .tabbar {
