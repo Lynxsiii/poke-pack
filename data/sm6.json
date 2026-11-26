@@ -5546,5 +5546,88 @@
     "promo": true,
     "foilAs": "Rare Holo GX",
     "foilMap": "assets/foil/maps/sm6/smp134.webp"
+  },
+  {
+    "id": "sm6-2-cracked-ice",
+    "name": "Alolan Exeggutor",
+    "number": "2-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "160",
+    "artist": "Satoshi Shirai",
+    "flavorText": "As it grew taller and taller, it outgrew its reliance on psychic powers, while within it awakened the power of the sleeping dragon.",
+    "evolvesFrom": "Exeggcute",
+    "image": "assets/cards/sm6/2.webp",
+    "imageSmall": "assets/cards/sm6/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Tropical Shake",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20+",
+        "text": "This attack does 20 more damage for each type of basic Energy card in your discard pile. You can't add more than 100 damage in this way."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm6-2/large",
+    "printedNumber": "2",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Tropical Takedown Theme Deck)",
+    "tcgplayerId": 167793,
+    "market": 0.71
+  },
+  {
+    "id": "sm6-76-cracked-ice",
+    "name": "Lycanroc",
+    "number": "76-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "120",
+    "artist": "Megumi Mizutani",
+    "flavorText": "Bathed in the setting sun of evening, Lycanroc has undergone a special kind of evolution. An intense fighting spirit underlies its calmness.",
+    "evolvesFrom": "Rockruff",
+    "image": "assets/cards/sm6/76.webp",
+    "imageSmall": "assets/cards/sm6/76-sm.webp",
+    "attacks": [
+      {
+        "name": "Dangerous Rogue",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "This attack does 20 more damage for each of your opponent's Benched Pokémon."
+      },
+      {
+        "name": "Accelerock",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm6-76/large",
+    "printedNumber": "76",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Twilight Rogue Theme Deck)",
+    "tcgplayerId": 167796,
+    "market": 1.98
   }
 ]

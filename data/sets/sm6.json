@@ -52,6 +52,24 @@
       "printedNumber": "2a/131",
       "tcgplayerId": 180514,
       "tcgplayerGroup": 1938
+    },
+    "2-cracked-ice": {
+      "like": "2",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Tropical Takedown Theme Deck)",
+      "tcgplayerId": 167793,
+      "tcgplayerGroup": 1840
+    },
+    "76-cracked-ice": {
+      "like": "76",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Twilight Rogue Theme Deck)",
+      "tcgplayerId": 167796,
+      "tcgplayerGroup": 1840
     }
   },
   "products": [
@@ -134,6 +152,32 @@
       "tcgplayerId": 164296,
       "packs": 36,
       "promos": []
+    },
+    {
+      "id": "theme-deck-tropical-takedown",
+      "name": "Theme Deck \"Tropical Takedown\"",
+      "kind": "deck",
+      "tcgplayerId": 164305,
+      "packs": 0,
+      "promos": [
+        "2-cracked-ice"
+      ],
+      "price": 16.91,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Alolan Exeggutor, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-twilight-rogue",
+      "name": "Theme Deck \"Twilight Rogue\"",
+      "kind": "deck",
+      "tcgplayerId": 164306,
+      "packs": 0,
+      "promos": [
+        "76-cracked-ice"
+      ],
+      "price": 13.73,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Lycanroc, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ],
   "skipNumbers": [

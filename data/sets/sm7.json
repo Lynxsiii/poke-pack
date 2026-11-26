@@ -79,6 +79,24 @@
       "printedNumber": "177a/168",
       "tcgplayerId": 202638,
       "tcgplayerGroup": 1938
+    },
+    "10-cracked-ice": {
+      "like": "10",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Leaf Charge Theme Deck)",
+      "tcgplayerId": 173065,
+      "tcgplayerGroup": 1840
+    },
+    "35-cracked-ice": {
+      "like": "35",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Hydro Fury Theme Deck)",
+      "tcgplayerId": 173063,
+      "tcgplayerGroup": 1840
     }
   },
   "products": [
@@ -213,6 +231,32 @@
       "tcgplayerId": 170273,
       "packs": 36,
       "promos": []
+    },
+    {
+      "id": "theme-deck-leaf-charge",
+      "name": "Theme Deck \"Leaf Charge\"",
+      "kind": "deck",
+      "tcgplayerId": 170278,
+      "packs": 0,
+      "promos": [
+        "10-cracked-ice"
+      ],
+      "price": 21.95,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Sceptile, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-hydro-fury",
+      "name": "Theme Deck \"Hydro Fury\"",
+      "kind": "deck",
+      "tcgplayerId": 170279,
+      "packs": 0,
+      "promos": [
+        "35-cracked-ice"
+      ],
+      "price": 18.33,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Swampert, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ],
   "skipNumbers": [

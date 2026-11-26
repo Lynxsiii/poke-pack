@@ -203,6 +203,32 @@
       "tcgplayerId": 133773,
       "packs": 36,
       "promos": []
+    },
+    {
+      "id": "theme-deck-rock-steady",
+      "name": "Theme Deck \"Rock Steady\"",
+      "kind": "deck",
+      "tcgplayerId": 133777,
+      "packs": 0,
+      "promos": [
+        "76-cracked-ice"
+      ],
+      "price": 9.31,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Lycanroc, no booster pack (Bulbapedia deck list, checked against a second list)."
+    },
+    {
+      "id": "theme-deck-luminous-frost",
+      "name": "Theme Deck \"Luminous Frost\"",
+      "kind": "deck",
+      "tcgplayerId": 133778,
+      "packs": 0,
+      "promos": [
+        "28-cracked-ice"
+      ],
+      "price": 12.71,
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "note": "A 60-card theme deck featuring Alolan Ninetales, no booster pack (Bulbapedia deck list, checked against a second list)."
     }
   ],
   "promoCards": {
@@ -277,6 +303,24 @@
     "smp071": {
       "foilAs": "Rare Holo GX",
       "notes": "Kommo-o-GX"
+    },
+    "76-cracked-ice": {
+      "like": "76",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Rock Steady Theme Deck)",
+      "tcgplayerId": 178762,
+      "tcgplayerGroup": 1840
+    },
+    "28-cracked-ice": {
+      "like": "28",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Luminous Frost Theme Deck)",
+      "tcgplayerId": 173088,
+      "tcgplayerGroup": 1840
     }
   }
 }

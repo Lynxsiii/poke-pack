@@ -7374,5 +7374,94 @@
     "foilAs": "Rare Ultra",
     "foilMap": "assets/foil/maps/sm9/smp169.webp",
     "etchMap": "assets/foil/maps/sm9/smp169-etch.webp"
+  },
+  {
+    "id": "sm9-14-cracked-ice",
+    "name": "Charizard",
+    "number": "14-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "150",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "When expelling a blast of superhot fire, the red flame at the tip of its tail burns more intensely.",
+    "evolvesFrom": "Charmeleon",
+    "image": "assets/cards/sm9/14.webp",
+    "imageSmall": "assets/cards/sm9/14-sm.webp",
+    "attacks": [
+      {
+        "name": "Continuous Blaze Ball",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "30+",
+        "text": "Discard all Fire Energy from this Pokémon. This attack does 50 more damage for each card you discarded in this way."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Roaring Resolve",
+        "text": "Once during your turn (before your attack), you may put 2 damage counters on this Pokémon. If you do, search your deck for up to 2 Fire Energy cards and attach them to this Pokémon. Then, shuffle your deck.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm9-14/large",
+    "printedNumber": "14",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Relentless Flame Theme Deck)",
+    "tcgplayerId": 184217,
+    "market": 42.16
+  },
+  {
+    "id": "sm9-25-cracked-ice",
+    "name": "Blastoise",
+    "number": "25-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "160",
+    "artist": "Hitoshi Ariga",
+    "flavorText": "It crushes its foe under its heavy body to cause fainting. In a pinch, it will withdraw inside its shell.",
+    "evolvesFrom": "Wartortle",
+    "image": "assets/cards/sm9/25.webp",
+    "imageSmall": "assets/cards/sm9/25-sm.webp",
+    "attacks": [
+      {
+        "name": "Hydro Tackle",
+        "cost": [
+          "Water",
+          "Water",
+          "Water"
+        ],
+        "damage": "150",
+        "text": "This Pokémon does 30 damage to itself."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Powerful Squall",
+        "text": "Once during your turn (before your attack), you may look at the top 6 cards of your deck and attach any number of Water Energy cards you find there to your Pokémon in any way you like. Shuffle the other cards back into your deck.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm9-25/large",
+    "printedNumber": "25",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Torrential Cannon Theme Deck)",
+    "tcgplayerId": 184218,
+    "market": 42.08
   }
 ]

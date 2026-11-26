@@ -9972,5 +9972,97 @@
     "foilAs": "Rare Holo GX",
     "market": 31.85,
     "foilMap": "assets/foil/maps/sm11/smp217.webp"
+  },
+  {
+    "id": "sm11-101-cracked-ice",
+    "name": "Necrozma",
+    "number": "101-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "130",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "It looks somehow pained as it rages around in search of light, which serves as its energy. It's apparently from another world.",
+    "image": "assets/cards/sm11/101.webp",
+    "imageSmall": "assets/cards/sm11/101-sm.webp",
+    "attacks": [
+      {
+        "name": "Barrier Attack",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "During your opponent's next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance)."
+      },
+      {
+        "name": "Special Laser",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "100+",
+        "text": "If this Pokémon has any Special Energy attached to it, this attack does 60 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm11-101/large",
+    "printedNumber": "101",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Laser Focus Theme Deck)",
+    "tcgplayerId": 196720,
+    "market": 2.64
+  },
+  {
+    "id": "sm11-151-cracked-ice",
+    "name": "Dragonite",
+    "number": "151-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "160",
+    "artist": "Misa Tsutsui",
+    "flavorText": "It flies over raging seas as if they were nothing. Observing this, a ship's captain dubbed this Pokémon \"the sea incarnate.\"",
+    "evolvesFrom": "Dragonair",
+    "image": "assets/cards/sm11/151.webp",
+    "imageSmall": "assets/cards/sm11/151-sm.webp",
+    "attacks": [
+      {
+        "name": "Dragon Impact",
+        "cost": [
+          "Water",
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "170",
+        "text": "Discard 3 Energy from this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Hurricane Charge",
+        "text": "Once during your turn (before your attack), you may attach a Water Energy card, a Lightning Energy card, or 1 of each from your hand to your Pokémon in any way you like.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm11-151/large",
+    "printedNumber": "151",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Soaring Storm Theme Deck)",
+    "tcgplayerId": 196721,
+    "market": 50.78
   }
 ]

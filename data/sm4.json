@@ -5559,5 +5559,97 @@
     "promo": true,
     "foilAs": "Rare Holo",
     "foilMap": "assets/foil/maps/sm4/smp099.webp"
+  },
+  {
+    "id": "sm4-62-cracked-ice",
+    "name": "Hydreigon",
+    "number": "62-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "160",
+    "artist": "Anesaki Dynamic",
+    "flavorText": "The heads on their arms do not have brains. They use all three heads to consume and destroy everything.",
+    "evolvesFrom": "Zweilous",
+    "image": "assets/cards/sm4/62.webp",
+    "imageSmall": "assets/cards/sm4/62-sm.webp",
+    "attacks": [
+      {
+        "name": "Dark Destruction",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "You may discard an Energy from this Pokémon. If you do, discard an Energy from your opponent's Active Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Weed Out",
+        "text": "Once during your turn (before your attack), you may choose 3 of your Benched Pokémon. Then, discard your other Benched Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm4-62/large",
+    "printedNumber": "62",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Destruction Fang Theme Deck)",
+    "tcgplayerId": 173089,
+    "market": 2.51
+  },
+  {
+    "id": "sm4-77-cracked-ice",
+    "name": "Kommo-o",
+    "number": "77-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "160",
+    "artist": "kawayoo",
+    "flavorText": "When it spots enemies, it threatens them by jingling the scales on its tail. Weak opponents will crack and flee in panic.",
+    "evolvesFrom": "Hakamo-o",
+    "image": "assets/cards/sm4/77.webp",
+    "imageSmall": "assets/cards/sm4/77-sm.webp",
+    "attacks": [
+      {
+        "name": "War Cry",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "If you have fewer Pokémon in play than your opponent, this attack does 90 more damage."
+      },
+      {
+        "name": "Clanging Scales",
+        "cost": [
+          "Lightning",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "During your opponent's next turn, this Pokémon takes 30 more damage from attacks (after applying Weakness and Resistance)."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm4-77/large",
+    "printedNumber": "77",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Clanging Thunder Theme Deck)",
+    "tcgplayerId": 229611,
+    "market": 3.75
   }
 ]

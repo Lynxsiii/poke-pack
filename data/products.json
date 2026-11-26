@@ -4359,6 +4359,45 @@
       "price": 995.35,
       "tcgplayerId": 126048,
       "image": "assets/products/sm1/boosterBox.webp"
+    },
+    {
+      "id": "theme-deck-forest-shadow",
+      "name": "Theme Deck \"Forest Shadow\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Decidueye, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "promos": [
+        "sm1-11-cracked-ice"
+      ],
+      "price": 17.42,
+      "tcgplayerId": 126172,
+      "image": "assets/products/sm1/theme-deck-forest-shadow.webp"
+    },
+    {
+      "id": "theme-deck-roaring-heat",
+      "name": "Theme Deck \"Roaring Heat\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Incineroar, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "promos": [
+        "sm1-26-cracked-ice"
+      ],
+      "price": 23.26,
+      "tcgplayerId": 126173,
+      "image": "assets/products/sm1/theme-deck-roaring-heat.webp"
+    },
+    {
+      "id": "theme-deck-bright-tide",
+      "name": "Theme Deck \"Bright Tide\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Primarina, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "promos": [
+        "sm1-41-cracked-ice"
+      ],
+      "price": 22.95,
+      "tcgplayerId": 126174,
+      "image": "assets/products/sm1/theme-deck-bright-tide.webp"
     }
   ],
   "sm10": [
@@ -4503,6 +4542,34 @@
       "price": 2560.51,
       "tcgplayerId": 185717,
       "image": "assets/products/sm10/boosterBox.webp"
+    },
+    {
+      "id": "theme-deck-lightning-loop",
+      "name": "Theme Deck \"Lightning Loop\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Zeraora, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "promos": [
+        "sm10-60-cracked-ice"
+      ],
+      "price": 25.71,
+      "tcgplayerId": 188400,
+      "image": "assets/products/sm10/theme-deck-lightning-loop.webp"
+    },
+    {
+      "id": "theme-deck-battle-mind",
+      "name": "Theme Deck \"Battle Mind\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Mewtwo, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "promos": [
+        "sm10-75-cracked-ice"
+      ],
+      "price": 24.14,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "tcgplayerId": 188399,
+      "image": "assets/products/sm10/theme-deck-battle-mind.webp"
     }
   ],
   "sm11": [
@@ -4674,6 +4741,34 @@
       "price": 3240.3,
       "tcgplayerId": 191882,
       "image": "assets/products/sm11/boosterBox.webp"
+    },
+    {
+      "id": "theme-deck-soaring-storm",
+      "name": "Theme Deck \"Soaring Storm\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Dragonite, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "promos": [
+        "sm11-151-cracked-ice"
+      ],
+      "price": 87.91,
+      "tcgplayerId": 191888,
+      "released": "2019-08-02",
+      "image": "assets/products/sm11/theme-deck-soaring-storm.webp"
+    },
+    {
+      "id": "theme-deck-laser-focus",
+      "name": "Theme Deck \"Laser Focus\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Necrozma, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "promos": [
+        "sm11-101-cracked-ice"
+      ],
+      "price": 40.49,
+      "tcgplayerId": 191889,
+      "released": "2019-08-02",
+      "image": "assets/products/sm11/theme-deck-laser-focus.webp"
     }
   ],
   "sm115": [
@@ -4940,6 +5035,36 @@
       "price": 4216.67,
       "tcgplayerId": 199261,
       "image": "assets/products/sm12/boosterBox.webp"
+    },
+    {
+      "id": "theme-deck-towering-heights",
+      "name": "Theme Deck \"Towering Heights\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Groudon, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "promos": [
+        "sm12-113-cracked-ice"
+      ],
+      "price": 54.58,
+      "tcgplayerId": 199306,
+      "released": "2019-11-01",
+      "image": "assets/products/sm12/theme-deck-towering-heights.webp"
+    },
+    {
+      "id": "theme-deck-unseen-depths",
+      "name": "Theme Deck \"Unseen Depths\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Kyogre, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "promos": [
+        "sm12-53-cracked-ice"
+      ],
+      "price": 28.47,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "tcgplayerId": 199305,
+      "released": "2019-11-01",
+      "image": "assets/products/sm12/theme-deck-unseen-depths.webp"
     }
   ],
   "sm2": [
@@ -5190,6 +5315,32 @@
       "price": 1881.33,
       "tcgplayerId": 129888,
       "image": "assets/products/sm2/boosterBox.webp"
+    },
+    {
+      "id": "theme-deck-steel-sun",
+      "name": "Theme Deck \"Steel Sun\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Solgaleo, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "promos": [
+        "sm2-87-cracked-ice"
+      ],
+      "price": 23.02,
+      "tcgplayerId": 129892,
+      "image": "assets/products/sm2/theme-deck-steel-sun.webp"
+    },
+    {
+      "id": "theme-deck-hidden-moon",
+      "name": "Theme Deck \"Hidden Moon\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Lunala, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "promos": [
+        "sm2-61-cracked-ice"
+      ],
+      "price": 27.67,
+      "tcgplayerId": 129891,
+      "image": "assets/products/sm2/theme-deck-hidden-moon.webp"
     }
   ],
   "sm3": [
@@ -5355,6 +5506,32 @@
       "price": 1243.1,
       "tcgplayerId": 133773,
       "image": "assets/products/sm3/boosterBox.webp"
+    },
+    {
+      "id": "theme-deck-rock-steady",
+      "name": "Theme Deck \"Rock Steady\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Lycanroc, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "promos": [
+        "sm3-76-cracked-ice"
+      ],
+      "price": 12.64,
+      "tcgplayerId": 133777,
+      "image": "assets/products/sm3/theme-deck-rock-steady.webp"
+    },
+    {
+      "id": "theme-deck-luminous-frost",
+      "name": "Theme Deck \"Luminous Frost\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Alolan Ninetales, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "promos": [
+        "sm3-28-cracked-ice"
+      ],
+      "price": 23.03,
+      "tcgplayerId": 133778,
+      "image": "assets/products/sm3/theme-deck-luminous-frost.webp"
     }
   ],
   "sm35": [
@@ -5657,6 +5834,34 @@
       "price": 677.89,
       "tcgplayerId": 146995,
       "image": "assets/products/sm4/boosterBox.webp"
+    },
+    {
+      "id": "theme-deck-destruction-fang",
+      "name": "Theme Deck \"Destruction Fang\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Hydreigon, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "promos": [
+        "sm4-62-cracked-ice"
+      ],
+      "price": 31.58,
+      "tcgplayerId": 149380,
+      "image": "assets/products/sm4/theme-deck-destruction-fang.webp"
+    },
+    {
+      "id": "theme-deck-clanging-thunder",
+      "name": "Theme Deck \"Clanging Thunder\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Kommo-o, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "promos": [
+        "sm4-77-cracked-ice"
+      ],
+      "price": 26.67,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "tcgplayerId": 149379,
+      "image": "assets/products/sm4/theme-deck-clanging-thunder.webp"
     }
   ],
   "sm5": [
@@ -5727,6 +5932,32 @@
       "price": 1450.0,
       "tcgplayerId": 155661,
       "image": "assets/products/sm5/boosterBox.webp"
+    },
+    {
+      "id": "theme-deck-mach-strike",
+      "name": "Theme Deck \"Mach Strike\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Garchomp, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "promos": [
+        "sm5-99-cracked-ice"
+      ],
+      "price": 43.34,
+      "tcgplayerId": 155665,
+      "image": "assets/products/sm5/theme-deck-mach-strike.webp"
+    },
+    {
+      "id": "theme-deck-imperial-command",
+      "name": "Theme Deck \"Imperial Command\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Empoleon, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "promos": [
+        "sm5-34-cracked-ice"
+      ],
+      "price": 36.33,
+      "tcgplayerId": 155666,
+      "image": "assets/products/sm5/theme-deck-imperial-command.webp"
     }
   ],
   "sm6": [
@@ -5775,6 +6006,32 @@
       "price": 1647.98,
       "tcgplayerId": 164296,
       "image": "assets/products/sm6/boosterBox.webp"
+    },
+    {
+      "id": "theme-deck-tropical-takedown",
+      "name": "Theme Deck \"Tropical Takedown\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Alolan Exeggutor, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "promos": [
+        "sm6-2-cracked-ice"
+      ],
+      "price": 25.54,
+      "tcgplayerId": 164305,
+      "image": "assets/products/sm6/theme-deck-tropical-takedown.webp"
+    },
+    {
+      "id": "theme-deck-twilight-rogue",
+      "name": "Theme Deck \"Twilight Rogue\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Lycanroc, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "promos": [
+        "sm6-76-cracked-ice"
+      ],
+      "price": 24.95,
+      "tcgplayerId": 164306,
+      "image": "assets/products/sm6/theme-deck-twilight-rogue.webp"
     }
   ],
   "sm7": [
@@ -5910,6 +6167,32 @@
       "price": 2485.83,
       "tcgplayerId": 170273,
       "image": "assets/products/sm7/boosterBox.webp"
+    },
+    {
+      "id": "theme-deck-leaf-charge",
+      "name": "Theme Deck \"Leaf Charge\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Sceptile, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "promos": [
+        "sm7-10-cracked-ice"
+      ],
+      "price": 49.82,
+      "tcgplayerId": 170278,
+      "image": "assets/products/sm7/theme-deck-leaf-charge.webp"
+    },
+    {
+      "id": "theme-deck-hydro-fury",
+      "name": "Theme Deck \"Hydro Fury\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Swampert, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "promos": [
+        "sm7-35-cracked-ice"
+      ],
+      "price": 54.17,
+      "tcgplayerId": 170279,
+      "image": "assets/products/sm7/theme-deck-hydro-fury.webp"
     }
   ],
   "sm75": [
@@ -6119,6 +6402,32 @@
       "price": 1568.33,
       "tcgplayerId": 175509,
       "image": "assets/products/sm8/boosterBox.webp"
+    },
+    {
+      "id": "theme-deck-storm-caller",
+      "name": "Theme Deck \"Storm Caller\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Raikou, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "promos": [
+        "sm8-79-cracked-ice"
+      ],
+      "price": 74.99,
+      "tcgplayerId": 177528,
+      "image": "assets/products/sm8/theme-deck-storm-caller.webp"
+    },
+    {
+      "id": "theme-deck-blazing-volcano",
+      "name": "Theme Deck \"Blazing Volcano\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Entei, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "promos": [
+        "sm8-47-cracked-ice"
+      ],
+      "price": 38.22,
+      "tcgplayerId": 177527,
+      "image": "assets/products/sm8/theme-deck-blazing-volcano.webp"
     }
   ],
   "sm9": [
@@ -6210,6 +6519,37 @@
       "price": 11725.0,
       "tcgplayerId": 181698,
       "image": "assets/products/sm9/boosterBox.webp"
+    },
+    {
+      "id": "theme-deck-relentless-flame",
+      "name": "Theme Deck \"Relentless Flame\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Charizard, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "promos": [
+        "sm9-14-cracked-ice"
+      ],
+      "price": 48.24,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "tcgplayerId": 181705,
+      "released": "2019-02-01",
+      "image": "assets/products/sm9/theme-deck-relentless-flame.webp"
+    },
+    {
+      "id": "theme-deck-torrential-cannon",
+      "name": "Theme Deck \"Torrential Cannon\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck featuring Blastoise, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "promos": [
+        "sm9-25-cracked-ice"
+      ],
+      "price": 43.39,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
+      "tcgplayerId": 181706,
+      "image": "assets/products/sm9/theme-deck-torrential-cannon.webp"
     }
   ],
   "smp": [
@@ -9545,7 +9885,7 @@
         "swsh1-swshp009"
       ],
       "pick": 1,
-      "price": 118.64,
+      "price": 103.17,
       "tcgplayerId": 206040,
       "released": "2020-02-07",
       "image": "assets/products/swsh1/buildBattleBox.webp"
@@ -9558,7 +9898,7 @@
       "promos": [
         "swsh1-swshp010"
       ],
-      "price": 24.99,
+      "price": 14.99,
       "tcgplayerId": 206032,
       "released": "2020-02-07",
       "image": "assets/products/swsh1/gossifleur-single-pack-blister.webp"
@@ -9571,7 +9911,7 @@
       "promos": [
         "swsh1-swshp011"
       ],
-      "price": 24.99,
+      "price": 18.49,
       "tcgplayerId": 206031,
       "released": "2020-02-07",
       "image": "assets/products/swsh1/wooloo-single-pack-blister.webp"
@@ -9596,7 +9936,7 @@
       "promos": [
         "swsh1-swshp031"
       ],
-      "price": 78.25,
+      "price": 60.16,
       "tcgplayerId": 210577,
       "released": "2020-04-03",
       "image": "assets/products/swsh1/morpeko-pin-collection.webp"
@@ -9609,7 +9949,7 @@
       "promos": [
         "swsh1-swshp032"
       ],
-      "price": 319.95,
+      "price": 160.0,
       "tcgplayerId": 210576,
       "released": "2020-04-03",
       "image": "assets/products/swsh1/snorlax-pin-collection.webp"
@@ -9620,9 +9960,8 @@
       "kind": "box",
       "packs": 36,
       "promos": [],
-      "price": 708.99,
+      "price": 688.99,
       "tcgplayerId": 206027,
-      "released": "2020-02-07",
       "image": "assets/products/swsh1/boosterBox.webp"
     },
     {
@@ -10280,7 +10619,7 @@
         "swsh2-swshp025"
       ],
       "pick": 1,
-      "price": 68.02,
+      "price": 74.97,
       "tcgplayerId": 212821,
       "released": "2020-05-01",
       "image": "assets/products/swsh2/buildBattleBox.webp"
@@ -10293,7 +10632,7 @@
       "promos": [
         "swsh2-swshp027"
       ],
-      "price": 75.0,
+      "price": 20.0,
       "tcgplayerId": 210565,
       "released": "2020-05-01",
       "image": "assets/products/swsh2/noctowl-single-pack-blister.webp"
@@ -10319,7 +10658,7 @@
       "promos": [
         "swsh2-swshp029"
       ],
-      "price": 84.86,
+      "price": 45.99,
       "tcgplayerId": 210568,
       "released": "2020-05-01",
       "image": "assets/products/swsh2/rayquaza-3-pack-blister.webp"
@@ -10330,7 +10669,7 @@
       "kind": "box",
       "packs": 36,
       "promos": [],
-      "price": 483.62,
+      "price": 483.63,
       "tcgplayerId": 210561,
       "image": "assets/products/swsh2/boosterBox.webp"
     },
@@ -10340,9 +10679,8 @@
       "kind": "etb",
       "packs": 9,
       "promos": [],
-      "price": 319.72,
+      "price": 328.81,
       "tcgplayerId": 210572,
-      "released": "2020-05-01",
       "image": "assets/products/swsh2/eliteTrainerBox.webp"
     },
     {
@@ -10385,7 +10723,7 @@
         "swsh3-swshp038"
       ],
       "pick": 1,
-      "price": 58.13,
+      "price": 58.21,
       "tcgplayerId": 216861,
       "image": "assets/products/swsh3/buildBattleBox.webp"
     },
@@ -10397,7 +10735,7 @@
       "promos": [
         "swsh3-swshp040"
       ],
-      "price": 16.65,
+      "price": 13.64,
       "tcgplayerId": 216859,
       "released": "2020-08-14",
       "image": "assets/products/swsh3/hatenna-single-pack-blister.webp"
@@ -10410,7 +10748,7 @@
       "promos": [
         "swsh3-swshp039"
       ],
-      "price": 44.78,
+      "price": 35.21,
       "tcgplayerId": 216860,
       "released": "2020-08-14",
       "image": "assets/products/swsh3/pikachu-single-pack-blister.webp"
@@ -10423,7 +10761,7 @@
       "promos": [
         "swsh3-swshp042"
       ],
-      "price": 59.99,
+      "price": 41.49,
       "tcgplayerId": 216857,
       "released": "2020-08-14",
       "image": "assets/products/swsh3/eevee-3-pack-blister.webp"
@@ -10436,7 +10774,7 @@
       "promos": [
         "swsh3-swshp041"
       ],
-      "price": 51.71,
+      "price": 47.17,
       "tcgplayerId": 216858,
       "released": "2020-08-14",
       "image": "assets/products/swsh3/flareon-3-pack-blister.webp"
@@ -10447,9 +10785,8 @@
       "kind": "box",
       "packs": 36,
       "promos": [],
-      "price": 344.81,
+      "price": 363.94,
       "tcgplayerId": 216853,
-      "released": "2020-08-14",
       "image": "assets/products/swsh3/boosterBox.webp"
     },
     {
@@ -10458,9 +10795,8 @@
       "kind": "etb",
       "packs": 9,
       "promos": [],
-      "price": 129.45,
+      "price": 116.12,
       "tcgplayerId": 216856,
-      "released": "2020-08-14",
       "image": "assets/products/swsh3/eliteTrainerBox.webp"
     },
     {
@@ -10665,7 +11001,7 @@
         "swsh4-swshp069"
       ],
       "pick": 1,
-      "price": 60.87,
+      "price": 58.15,
       "tcgplayerId": 221748,
       "image": "assets/products/swsh4/buildBattleBox.webp"
     },
@@ -10677,7 +11013,7 @@
       "promos": [
         "swsh4-swshp078"
       ],
-      "price": 70.75,
+      "price": 68.34,
       "tcgplayerId": 226137,
       "released": "2020-11-20",
       "image": "assets/products/swsh4/orbeetle-v-box.webp"
@@ -10690,7 +11026,7 @@
       "promos": [
         "swsh4-swshp083"
       ],
-      "price": 63.35,
+      "price": 60.71,
       "tcgplayerId": 228979,
       "released": "2021-01-08",
       "image": "assets/products/swsh4/alakazam-v-box.webp"
@@ -10703,7 +11039,7 @@
       "promos": [
         "swsh4-swshp073"
       ],
-      "price": 45.32,
+      "price": 43.65,
       "tcgplayerId": 221744,
       "released": "2020-11-13",
       "image": "assets/products/swsh4/sobble-3-pack-blister.webp"
@@ -10716,7 +11052,7 @@
       "promos": [
         "swsh4-swshp072"
       ],
-      "price": 46.09,
+      "price": 42.77,
       "tcgplayerId": 221745,
       "released": "2020-11-13",
       "image": "assets/products/swsh4/vaporeon-3-pack-blister.webp"
@@ -10729,7 +11065,7 @@
       "promos": [
         "swsh4-swshp070"
       ],
-      "price": 20.18,
+      "price": 17.36,
       "tcgplayerId": 221746,
       "released": "2020-11-13",
       "image": "assets/products/swsh4/grookey-single-pack-blister.webp"
@@ -10742,7 +11078,7 @@
       "promos": [
         "swsh4-swshp071"
       ],
-      "price": 23.19,
+      "price": 16.75,
       "tcgplayerId": 221747,
       "released": "2020-11-13",
       "image": "assets/products/swsh4/scorbunny-single-pack-blister.webp"
@@ -10753,9 +11089,8 @@
       "kind": "box",
       "packs": 36,
       "promos": [],
-      "price": 328.08,
+      "price": 314.0,
       "tcgplayerId": 221313,
-      "released": "2020-11-13",
       "image": "assets/products/swsh4/boosterBox.webp"
     },
     {
@@ -10764,7 +11099,7 @@
       "kind": "etb",
       "packs": 9,
       "promos": [],
-      "price": 138.64,
+      "price": 134.16,
       "tcgplayerId": 221752,
       "image": "assets/products/swsh4/eliteTrainerBox.webp"
     },
