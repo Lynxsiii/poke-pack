@@ -100,7 +100,7 @@ function homePage(ctx, root) {
       <span class="rt-row-name"><code>${esc(c.code)}</code><small>${c.revoked ? "Turned off" : c.uses >= c.maxUses ? "Used up" : `${c.maxUses - c.uses} left`}${c.note ? `, ${esc(c.note)}` : ""}</small></span>
       <span class="rt-row-val">${c.revoked ? "" : `<button type="button" class="ghost sm" data-copy="${esc(c.code)}">Copy</button><button type="button" class="ghost sm" data-revoke="${esc(c.code)}">Turn off</button>`}</span></div>`;
     const admin = () => data?.admin ? `<section class="rt-box bz-box bz-admin" aria-labelledby="bz-codes"><h2 class="cs-h" id="bz-codes">Invite codes</h2>
-      <p class="bz-note">Only you see this. Make a code, send it to someone, and they type it here to join.</p>
+      <p class="bz-note">Only you see this. Make a code, send it to someone, and they type it here to join. The games are locked to code holders, you included, so use one yourself to play.</p>
       <form class="bz-make" data-make>
         <label class="bz-field"><span>Codes</span><input class="bz-input" name="count" type="number" min="1" max="20" value="1" /></label>
         <label class="bz-field"><span>Uses each</span><input class="bz-input" name="uses" type="number" min="1" max="500" value="1" /></label>
@@ -108,7 +108,7 @@ function homePage(ctx, root) {
         <button class="solid" type="submit">Make codes</button></form>
       <div class="bz-codes">${(data.codes || []).length ? data.codes.map(codeRow).join("") : `<p class="bz-note">No codes yet.</p>`}</div></section>` : "";
     function paint() {
-      const inside = data?.member || data?.admin;
+      const inside = data?.member;
       root.innerHTML = `<div class="cs-page bz-page bz-home">
         <header class="cs-head bz-head"><h1 class="page-title">Beta testing <span class="rt-tag bz-tag">Beta</span></h1></header>
         ${!data ? `<div class="rt-skel bz-skel"></div>` : inside ? `${data.member ? `<p class="bz-lede">You're a beta tester. These games are new, so tell us what feels off.</p>` : `<p class="bz-lede">You run the beta. Join with one of your own codes to get the badge and frame.</p>`}
