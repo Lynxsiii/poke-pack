@@ -12,7 +12,7 @@
    wins, and a needle that spins and stops somewhere on it. */
 import { api, esc, coins, icon, uuid, plural, countLine, copiesIn, playerName, emptyLine, emptyBox, seatAvatar, slabTileHTML, tagHTML, stickerHTML, coinTag, arrivals } from "./casino-kit.js";
 import { UPGRADER_RULES, upgradeChance, chanceText, multiplierText } from "./upgrader-rules.js?v=3";
-import { createTargetPicker } from "./target-picker.js?v=8";
+import { createTargetPicker } from "./target-picker.js?v=9";
 import { mountWinnings, winningsSlot } from "./casino-winnings.js";
 import { gateLock, gateNoticeHTML, gateRefusal } from "./gate-notice.js";
 import { ALL_SETS } from "./catalog.js";
@@ -69,6 +69,7 @@ export function createUpgrader(ctx) {
   const targets = createTargetPicker({
     allCards: () => ctx.allCards?.() ?? [],
     sealedTargets: () => ctx.sealedTargets?.() ?? [],
+    wishlist: () => ctx.wishlist?.() ?? [],
   });
   const stop = () => { clearTimeout(timer); timer = 0; };
   const later = (fn, ms) => { stop(); timer = setTimeout(fn, ms); };

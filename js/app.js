@@ -129,7 +129,7 @@ import { THEMES, canUseTheme, resolveLook } from "./themes.js?v=1";
 import { equippedCoin, gearItem, normalizeGear } from "./gear.js?v=2";
 import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=16";
 import { initBattles } from "./battles.js?v=10";
-import { initCasino } from "./casino.js?v=27";
+import { initCasino } from "./casino.js?v=28";
 import { coinOf } from "./coin.js?v=5";
 // grading
 import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=16";
@@ -10643,6 +10643,7 @@ const casino = initCasino({
   ownedCards: casinoOwnedCards,
   ownedSlabs: casinoOwnedSlabs,
   allCards: casinoAllCards,
+  wishlist: () => wishlist.ids(), // the Upgrader's Wishlist tab
   invalidateCards: invalidateCasinoCards,
   sealedTargets: casinoSealedTargets,
   inspect: (card) => openInspect(card.id, Boolean(card.reverse), card.reverseKind || ""),
