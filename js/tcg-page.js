@@ -22,7 +22,7 @@
  *   coinFaces()         { heads, tails } art of the equipped coin, or null for the house coin
  */
 
-import { ACTIVE, FORMATS, RuleError, apply, canRetreat, conditionsOn, createGame, damageAfterTyping, defOf, energyOf, hpLeft, legalActions, markOn, marksOn, maxHp, other, retreatCost, stadiumBlock, toolOf, trainerBlock, usableAttacks } from "./tcg/engine.js";
+import { ACTIVE, FORMATS, RuleError, abilityBlock, abilityOn, apply, canRetreat, conditionsOn, createGame, damageAfterTyping, defOf, energyOf, hpLeft, legalActions, markOn, marksOn, maxHp, other, retreatCost, stadiumBlock, toolOf, trainerBlock, usableAttacks } from "./tcg/engine.js";
 import { ENERGY_TYPES, FREE_ENERGY, createDefs, isFreeEnergy } from "./tcg/cards.js";
 import { botAction } from "./tcg/bot.js";
 import { MAX_DECKS, buildBotDeck, buildDeck, checkDeck, deckList, deckSize, roomFor } from "./tcg/decks.js";
@@ -399,6 +399,7 @@ export function initTcg(deps) {
         <div><dt>Resistance</dt><dd>${side(def.resistance)}</dd></div>
         <div><dt>Retreat</dt><dd>${def.retreat ? pips(Array(def.retreat).fill("Colorless")) : "Free"}</dd></div>
       </dl>
+      ${def.ability ? `<p class="tg-look-text tg-ability-text"><b>${esc(def.ability.kind)}: ${esc(def.ability.name)}</b> ${esc(def.ability.text)}</p>` : ""}
       ${def.prizes > 1 ? `<p class="tg-look-note">Gives up ${def.prizes} prize cards when Knocked Out.</p>` : ""}
       ${def.notes.map((n) => `<p class="tg-look-note">${esc(n)}.</p>`).join("")}`;
     return `<div class="tg-sheet-bg" data-close></div>
@@ -530,11 +531,13 @@ export function initTcg(deps) {
     const left = hpLeft(state, slot, defs);
     const full = maxHp(state, slot, defs);
     const toolName = slot.tool ? defOf(state, slot.tool, defs).name : "";
-    const label = `${p === ME ? "Your" : "Their"} ${def.name}, ${left} of ${full} HP${toolName ? `, holding ${toolName}` : ""}`;
-    return `<button type="button" class="tg-mon${big ? " big" : ""}${target ? " is-target" : ""}${chosen ? " is-chosen" : ""}" data-p="${p}" data-spot="${spot}" aria-label="${esc(label)}">
+    const ready = p === ME && state.phase === "main" && !match.busy && myTurn() && !state.pending.length && !abilityBlock(state, ME, spot, defs);
+    const label = `${p === ME ? "Your" : "Their"} ${def.name}, ${left} of ${full} HP${toolName ? `, holding ${toolName}` : ""}${ready ? `, ${def.ability.name} ready` : ""}`;
+    return `<button type="button" class="tg-mon${ready ? " has-ability" : ""}${big ? " big" : ""}${target ? " is-target" : ""}${chosen ? " is-chosen" : ""}" data-p="${p}" data-spot="${spot}" aria-label="${esc(label)}">
       <img src="${img(state.cards[slot.uid], big)}" alt="" draggable="false" decoding="async" />
       ${slot.damage ? `<span class="tg-dmg">${slot.damage}</span>` : ""}
       ${big ? (slot.energy.length ? `<span class="tg-pips tg-on">${pips(energyOf(state, slot, defs))}</span>` : "") : `${hpBar(left, full)}<span class="tg-pips">${pips(energyOf(state, slot, defs))}${toolName ? `<i class="tg-en tg-toolpip" title="${esc(toolName)}">T</i>` : ""}</span>`}
+      ${ready ? `<span class="tg-abil-tag">${esc(def.ability.kind === "Ability" ? "Ability" : "Power")}</span>` : ""}
     </button>`;
   }
 
@@ -552,7 +555,7 @@ export function initTcg(deps) {
       <b class="tg-hud-name">${esc(def.name)}</b>
       <span class="tg-pips">${energy.length ? pips(energy) : `<small>No Energy</small>`}</span>
       <span class="tg-hud-hp"><em>HP</em>${hpBar(left, maxHp(state, slot, defs))}<span class="num">${left}/${maxHp(state, slot, defs)}</span></span>
-      ${conditionsOn(slot).length || marksOn(state, slot).length || edge || slot.tool ? `<span class="tg-conds">${edge}${slot.tool ? `<i class="tg-cond" data-cond="tool">${esc(defOf(state, slot.tool, defs).name)}</i>` : ""}${conditionsOn(slot).map((c) => `<i class="tg-cond" data-cond="${c}">${COND_NAME[c]}</i>`).join("")}${marksOn(state, slot).map((m) => `<i class="tg-cond" data-cond="mark" data-mark="${m.kind}">${esc(markLabel(m))}</i>`).join("")}</span>` : ""}
+      ${conditionsOn(slot).length || marksOn(state, slot).length || edge || slot.tool || def.ability ? `<span class="tg-conds">${edge}${def.ability ? `<i class="tg-cond" data-cond="ability"${abilityOn(state, slot, defs) ? "" : " data-off"}>${esc(def.ability.name)}</i>` : ""}${slot.tool ? `<i class="tg-cond" data-cond="tool">${esc(defOf(state, slot.tool, defs).name)}</i>` : ""}${conditionsOn(slot).map((c) => `<i class="tg-cond" data-cond="${c}">${COND_NAME[c]}</i>`).join("")}${marksOn(state, slot).map((m) => `<i class="tg-cond" data-cond="mark" data-mark="${m.kind}">${esc(markLabel(m))}</i>`).join("")}</span>` : ""}
     </div>`;
   }
 
@@ -574,7 +577,11 @@ export function initTcg(deps) {
     if (waiting?.player === ME && waiting.type === "pick") {
       const op = waiting.effect.op;
       const whose = waiting.side === ME ? "your" : "their";
-      const text = op === "switch" ? (waiting.side === ME ? "Choose the Benched Pokémon that comes in." : "Choose which of their Benched Pokémon to pull forward.") : op === "heal" ? `Choose one of your Pokémon to heal ${waiting.effect.n}.` : op === "discardEnergy" ? `Choose one of ${whose} Pokémon to lose an Energy.` : `Choose ${waiting.side === ME ? "one of your" : "one of their"} Pokémon for ${waiting.effect.n} damage${waiting.left > 1 ? ` (${waiting.left} to choose)` : ""}.`;
+      if (op === "ability") {
+        const asked = d(slotOf(ME, waiting.spots[0]).uid);
+        return { text: `Use ${asked.name}'s ${asked.ability.name}?`, keys: `<button type="button" class="solid sm" data-act="ability-yes">Use it</button><button type="button" class="ghost sm" data-act="pick-skip">Not now</button>` };
+      }
+      const text = op === "attachFrom" ? `Choose the Pokémon that gets the ${d(waiting.effect.uid).name}.` : op === "switch" ? (waiting.side === ME ? "Choose the Benched Pokémon that comes in." : "Choose which of their Benched Pokémon to pull forward.") : op === "heal" ? `Choose one of your Pokémon to heal ${waiting.effect.n}.` : op === "discardEnergy" ? `Choose one of ${whose} Pokémon to lose an Energy.` : `Choose ${waiting.side === ME ? "one of your" : "one of their"} Pokémon for ${waiting.effect.n} damage${waiting.left > 1 ? ` (${waiting.left} to choose)` : ""}.`;
       return { text, keys: waiting.optional ? `<button type="button" class="ghost sm" data-act="pick-skip">Stay in</button>` : "" };
     }
     if (waiting?.player === ME) return { text: "Choose your new Active Pokémon.", keys: "" };
@@ -690,6 +697,40 @@ export function initTcg(deps) {
   }
 
   /** The Stadium in play: what it says, who played it, and its once-a-turn use when it has one. */
+  const slotOf = (p, spot) => (spot === ACTIVE ? match.state.players[p].active : match.state.players[p].bench[spot]);
+
+  /** An Ability as a row: its name and text, and a key when it is one the player uses. */
+  function abilityRowHtml(spot) {
+    const state = match.state;
+    const slot = slotOf(ME, spot);
+    const ability = d(slot.uid).ability;
+    if (!ability) return "";
+    const why = !ability.use ? "" : !myTurn() ? "Wait for your turn." : abilityBlock(state, ME, spot, defs);
+    const off = !abilityOn(state, slot, defs);
+    return `<div class="tg-abil${off ? " off" : ""}">
+      <span class="tg-abil-top"><em>${esc(ability.kind)}</em><b>${esc(ability.name)}</b>${ability.use ? `<button type="button" class="solid sm" data-act="ability-use" data-spot="${spot}"${why ? " disabled" : ""}>Use</button>` : ""}</span>
+      <span class="tg-atk-text">${esc(ability.text)}</span>
+      ${why ? `<span class="tg-atk-why">${esc(why)}</span>` : !ability.use && !ability.enter ? `<span class="tg-atk-why on">${off ? "Not working right now" : "Always on"}</span>` : ""}
+    </div>`;
+  }
+
+  /** A Benched Pokémon with an Ability to use: read it, use it, or look at the card. */
+  function abilitySheetHtml() {
+    const state = match.state;
+    const slot = slotOf(ME, match.sheetSpot);
+    if (!slot) return "";
+    const def = d(slot.uid);
+    return `<div class="tg-sheet-bg" data-act="cancel"></div>
+      <div class="tg-sheet tg-stadium-sheet tg-abil-sheet" role="dialog" aria-label="${esc(def.name)}">
+        <img src="${img(state.cards[slot.uid], true)}" alt="" draggable="false" />
+        <div>
+          <h3>${esc(def.name)}</h3>
+          ${abilityRowHtml(match.sheetSpot)}
+          <div class="tg-sheet-keys"><button type="button" class="ghost sm" data-act="look-spot">View card</button><button type="button" class="ghost sm" data-act="cancel">Close</button></div>
+        </div>
+      </div>`;
+  }
+
   function stadiumSheetHtml() {
     const state = match.state;
     const def = defOf(state, state.stadium.uid, defs);
@@ -730,7 +771,9 @@ export function initTcg(deps) {
       const less = (markOn(state, foeSlot, "less")?.n || 0) + (theirs.less || 0);
       const real = blocked ? 0 : Math.max(0, typed.amount - less);
       const notes = [];
-      if (mine.plus) notes.push(`${defOf(state, slot.tool, defs).name} +${mine.plus}`);
+      if (mine.plus) notes.push(`${slot.tool && defOf(state, slot.tool, defs).tool?.plus ? defOf(state, slot.tool, defs).name : "Boost"} +${mine.plus}`);
+      if (abilityOn(state, foeSlot, defs)?.dodge) notes.push(`${foeDef.ability.name}: coin flip to block`);
+      if (abilityOn(state, foeSlot, defs)?.wall) notes.push(`${foeDef.ability.name} may block this`);
       if (typed.weak) notes.push(`Weakness ${foeDef.weakness.op === "x" ? "×" : "+"}${foeDef.weakness.n}`);
       if (typed.resist) notes.push(`Resistance -${foeDef.resistance.n}`);
       if (blocked) notes.push("Blocked this turn");
@@ -746,6 +789,7 @@ export function initTcg(deps) {
     return `<div class="tg-sheet-bg" data-act="cancel"></div>
       <div class="tg-sheet tg-attacks" role="dialog" aria-label="${esc(def.name)}">
         <header><h3>${esc(def.name)}</h3><span class="tg-pips">${units.length ? pips(units) : "<small>No Energy attached</small>"}</span></header>
+        ${abilityRowHtml(ACTIVE)}
         ${def.attacks.map((attack, i) => `<button type="button" class="tg-atk" data-attack="${i}"${usable.has(i) && myTurn() ? "" : " disabled"}>
           <span class="tg-atk-top"><span class="tg-pips">${attack.cost.length ? pips(attack.cost) : "<small>Free</small>"}</span><b>${esc(attack.name)}</b><em>${preview(attack).html}</em></span>
           ${preview(attack).note}
@@ -826,6 +870,7 @@ export function initTcg(deps) {
     if (match.opening) return openingHtml();
     if (match.sheet === "attacks") return attackSheetHtml();
     if (match.sheet === "stadium" && match.state.stadium) return stadiumSheetHtml();
+    if (match.sheet === "ability") return abilitySheetHtml();
     if (match.sheet === "flip") return flipSheetHtml();
     const waiting = match.state.pending[0];
     if (waiting?.type === "choose" && waiting.player === ME && !match.busy) return chooseSheetHtml(waiting);
@@ -918,6 +963,7 @@ export function initTcg(deps) {
       case "evolve": return `${who(event.p)} evolved into ${name(event.uid)}.`;
       case "attach": return `${who(event.p)} attached ${name(event.uid)}.`;
       case "stadium": return `${who(event.p)} played ${name(event.uid)}. It stays in play for both players.`;
+      case "ability": return `${name(event.uid)}: ${event.name}.`;
       case "stadium-use": return `${who(event.p)} used ${name(event.uid)}.`;
       case "tool": return `${who(event.p)} attached ${name(event.uid)}, a Pokémon Tool.`;
       case "play": return `${who(event.p)} played ${name(event.uid)}.`;
@@ -1148,6 +1194,11 @@ export function initTcg(deps) {
       }
       cue(`.tg-bar-${event.p === ME ? "me" : "foe"} .tg-prizes`, "bump", 420);
       return 300;
+    }
+    if (event.t === "ability") {
+      banner(event.name, event.p === ME ? "me" : "foe", d(event.uid).name);
+      cue(monSel(event.p, event.spot), "charged", 460);
+      return 620;
     }
     if (event.t === "condition") cue(`.tg-hud[data-p="${event.p}"] .tg-cond[data-cond="${event.kind}"]`, "bump", 420);
     if (event.t === "mark") cue(`.tg-hud[data-p="${event.p}"] .tg-cond[data-mark="${event.kind}"]`, "bump", 420);
@@ -1397,6 +1448,11 @@ export function initTcg(deps) {
         match.sheet = "attacks";
         return paintTable();
       }
+      if (spot !== ACTIVE && myTurn() && !sel && !waiting && d(slot.uid).ability?.use) {
+        match.sheet = "ability";
+        match.sheetSpot = spot;
+        return paintTable();
+      }
     }
     lookAtSlot(slot);
   }
@@ -1607,6 +1663,9 @@ export function initTcg(deps) {
       return paintTable();
     }
     if (act === "stadium-use") return run({ type: "stadium", player: ME });
+    if (act === "ability-use") return run({ type: "ability", player: ME, spot: match.sheet === "ability" ? match.sheetSpot : ACTIVE });
+    if (act === "ability-yes") return run({ type: "pick", player: ME, spot: state.pending[0].spots[0] });
+    if (act === "look-spot") return lookAtSlot(slotOf(ME, match.sheetSpot));
     if (act === "choose-done") {
       const uids = [...(match.choice || [])];
       match.choice = null;

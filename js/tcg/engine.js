@@ -110,16 +110,66 @@ export function inPlay(state, player) {
   return out;
 }
 
+/** Which player has this Pokémon in play, or -1. */
+export function ownerOf(state, slot) {
+  return state.players.findIndex((side) => side.active === slot || side.bench.includes(slot));
+}
+
 /**
- * What changes this Pokémon's numbers while it is in play: its Pokémon Tool and the Stadium,
- * added up ({} when neither says anything). See compileTool and compileStadium.
+ * The Ability this Pokémon has working right now, or null: nothing when its terms aren't met
+ * (the Energy it asks for, the spot it must be in), and an old Pokémon Power stops while its
+ * Pokémon is Asleep, Confused or Paralyzed.
+ */
+export function abilityOn(state, slot, defs) {
+  const ability = slot && defOf(state, slot.uid, defs)?.ability;
+  if (!ability) return null;
+  if (ability.kind === "Pokémon Power" && ["asleep", "confused", "paralyzed"].includes(statusOf(slot).main)) return null;
+  if (ability.when) {
+    const units = energyOf(state, slot, defs);
+    const want = ability.when.energy;
+    if (want === "none" ? units.length : !units.includes(want)) return null;
+  }
+  return ability;
+}
+
+/** Why this Pokémon's Ability can't be used by its owner right now, or "" when it can. */
+export function abilityBlock(state, player, spot, defs) {
+  const slot = slotAt(state, player, spot);
+  const ability = abilityOn(state, slot, defs);
+  const use = ability?.use;
+  if (!use) return "There's nothing here to use.";
+  const side = state.players[player];
+  if (!use.often && slot.used?.uid === slot.uid && slot.used.turn === state.turn) return `${ability.name} has been used this turn.`;
+  if (use.single && (side.abilitiesUsed || []).includes(ability.name)) return `Only one ${ability.name} a turn.`;
+  if (use.where === "active" && spot !== ACTIVE) return "It works only in the Active Spot.";
+  if (use.where === "bench" && spot === ACTIVE) return "It works only from the Bench.";
+  if (ability.kind === "Poké-Power" && conditionsOn(slot).length) return "A Poké-Power can't be used with a Special Condition.";
+  if (!trainerReady(use.steps, { state, defs, events: [], player, spot })) return `${ability.name} would do nothing right now.`;
+  return "";
+}
+
+/**
+ * What changes this Pokémon's numbers while it is in play: its Pokémon Tool, the Stadium and
+ * Abilities, added up ({} when none says anything). See compileTool, compileStadium, compileAbility.
  */
 export function toolOf(state, slot, defs) {
   if (!slot) return {};
   const tool = (slot.tool && defOf(state, slot.tool, defs)?.tool) || null;
   const field = (state.stadium && defOf(state, state.stadium.uid, defs)?.stadium?.field) || [];
-  const def = field.length ? defOf(state, slot.uid, defs) : null;
+  const def = defOf(state, slot.uid, defs);
   const mods = [tool, ...field.filter((f) => fieldFits(f.who, def)).map((f) => f.mod)].filter(Boolean);
+  // Abilities: its own standing one, and what its owner's other Pokémon give to those like it.
+  const own = abilityOn(state, slot, defs);
+  if (own?.mod) mods.push(own.mod);
+  const owner = ownerOf(state, slot);
+  if (owner >= 0) {
+    for (const [mate] of inPlay(state, owner)) {
+      const aura = abilityOn(state, mate, defs)?.aura;
+      if (!aura || !fieldFits(aura.who, def)) continue;
+      if (aura.who.energy && !energyOf(state, slot, defs).includes(aura.who.energy)) continue;
+      mods.push(aura.mod);
+    }
+  }
   if (!mods.length) return {};
   const sum = (key) => mods.reduce((n, m) => n + (m[key] || 0), 0);
   return {
@@ -389,6 +439,7 @@ function startTurn(state, events) {
   side.supporterUsed = false;
   side.stadiumPlayed = false;
   side.stadiumUsed = false;
+  side.abilitiesUsed = [];
   events.push({ t: "turn", p: state.current, n: state.turn });
   if (!side.deck.length) return win(state, other(state.current), "deck", events);
   draw(state, state.current, 1, events);
@@ -521,6 +572,7 @@ const HANDLERS = {
     takeFromHand(state, player, uid);
     side.bench.push(newSlot(state, uid));
     events.push({ t: "bench", p: player, uid, spot: side.bench.length - 1 });
+    offerAbility(state, player, side.bench.length - 1, "bench", defs);
   },
 
   evolve(state, { player, uid, spot }, defs, events) {
@@ -539,6 +591,7 @@ const HANDLERS = {
     slot.since = state.turn;
     clearConditions(slot);
     events.push({ t: "evolve", p: player, uid, spot });
+    offerAbility(state, player, spot, "evolve", defs);
   },
 
   /** Play a Trainer from the hand: it goes to the discard pile and does what it says. */
@@ -587,6 +640,19 @@ const HANDLERS = {
     state.players[player].stadiumUsed = true;
     events.push({ t: "stadium-use", p: player, uid: state.stadium.uid });
     runTrainer(def.stadium.use, { state, defs, events, player });
+    if (!state.pending.length) resolveKnockOuts(state, defs, events);
+  },
+
+  /** Use the Ability of one of your Pokémon in play. */
+  ability(state, { player, spot }, defs, events) {
+    const why = abilityBlock(state, player, spot, defs);
+    if (why) fail(why);
+    const slot = slotAt(state, player, spot);
+    const ability = defOf(state, slot.uid, defs).ability;
+    slot.used = { uid: slot.uid, turn: state.turn };
+    (state.players[player].abilitiesUsed ||= []).push(ability.name);
+    events.push({ t: "ability", p: player, spot, uid: slot.uid, name: ability.name });
+    runTrainer(ability.use.steps, { state, defs, events, player, spot });
     if (!state.pending.length) resolveKnockOuts(state, defs, events);
   },
 
@@ -683,11 +749,33 @@ const HANDLERS = {
       const base = hit.damage > 0 ? hit.damage + (mine.plus || 0) : hit.damage;
       const dealt = damageAfterTyping(base, def, defOf(state, target.uid, defs), { ...hit, noWeakness: hit.noWeakness || Boolean(theirs.noWeakness), noResistance: hit.noResistance || Boolean(theirs.noResistance) });
       const less = (hit.noEffects ? 0 : markOn(state, target, "less")?.n || 0) + (theirs.less || 0);
-      const guarded = ctx.shielded || (!hit.noEffects && markOn(state, target, "guard"));
-      const amount = guarded ? 0 : Math.max(0, dealt.amount - less);
+      let guarded = ctx.shielded || (!hit.noEffects && markOn(state, target, "guard"));
+      // The target's Ability: no damage from this kind of attacker, or a coin flip to take none.
+      const power = hit.noEffects ? null : abilityOn(state, target, defs);
+      if (!guarded && dealt.amount > 0 && power?.wall && walled(power.wall, def)) guarded = true;
+      if (!guarded && dealt.amount - less > 0 && power?.dodge) {
+        const heads = flip(state);
+        events.push({ t: "flip", p: foe, results: [heads], why: "ability", name: power.name });
+        guarded = heads;
+      }
+      let amount = guarded ? 0 : Math.max(0, dealt.amount - less);
+      // From full HP it hangs on instead of being Knocked Out.
+      if (power?.sturdy && target.damage === 0 && amount >= maxHp(state, target, defs) && maxHp(state, target, defs) > power.sturdy) {
+        amount = maxHp(state, target, defs) - power.sturdy;
+        events.push({ t: "ability", p: foe, spot: ACTIVE, uid: target.uid, name: power.name });
+      }
       if (amount > 0) {
         target.damage += amount;
         events.push({ t: "damage", p: foe, spot: ACTIVE, n: amount, weak: dealt.weak, resist: dealt.resist });
+        // Damaged in the Active Spot, it hits back, even when this Knocks it Out.
+        const thorns = abilityOn(state, target, defs)?.thorns;
+        if (thorns) {
+          events.push({ t: "ability", p: foe, spot: ACTIVE, uid: target.uid, name: defOf(state, target.uid, defs).ability.name });
+          if (thorns.n) {
+            slot.damage += thorns.n;
+            events.push({ t: "damage", p: player, spot: ACTIVE, n: thorns.n, self: true, why: "ability" });
+          } else if (addCondition(state, slot, thorns.status)) events.push({ t: "condition", p: player, kind: thorns.status });
+        }
       } else if (dealt.amount > 0) {
         events.push({ t: "blocked", p: foe });
       }
@@ -786,13 +874,46 @@ export function stadiumBlock(state, player, defs) {
   return "";
 }
 
+/** Does an Ability keep this Benched Pokémon safe from attack damage? */
+export function benchSafe(state, slot, spot, defs) {
+  return spot !== ACTIVE && Boolean(abilityOn(state, slot, defs)?.benchSafe);
+}
+
+/** Is this attacker one the wall stops? */
+function walled(wall, def) {
+  return wall.boxes.includes(def.box) || wall.types.some((t) => def.types.includes(t)) || (wall.stage === "basic" && def.stage === "basic");
+}
+
+/** A Pokémon just came into play from the hand: when its Ability says "you may", ask. */
+function offerAbility(state, player, spot, how, defs) {
+  const slot = slotAt(state, player, spot);
+  const enter = abilityOn(state, slot, defs)?.enter;
+  if (!enter || enter.how !== how) return;
+  if (!trainerReady(enter.steps, { state, defs, events: [], player, spot })) return;
+  askPick(state, { player, side: player, spots: [spot], left: 1, optional: true, effect: { op: "ability" } });
+}
+
 /** Carry out a choice on the Pokémon picked: damage to it, or it trades places with the Active. */
 function applyPick(state, waiting, spot, defs, events) {
   const p = waiting.side;
   const side = state.players[p];
   const { effect } = waiting;
-  if (effect.op === "damage") {
+  if (effect.op === "ability") {
+    // "When you play this Pokémon ... you may": the player said yes.
     const slot = slotAt(state, p, spot);
+    const ability = defOf(state, slot.uid, defs).ability;
+    events.push({ t: "ability", p, spot, uid: slot.uid, name: ability.name });
+    runTrainer(ability.enter.steps, { state, defs, events, player: p, spot });
+  } else if (effect.op === "attachFrom") {
+    const slot = slotAt(state, p, spot);
+    const pile = side[effect.zone];
+    if (!pile.includes(effect.uid)) return;
+    pile.splice(pile.indexOf(effect.uid), 1);
+    slot.energy.push(effect.uid);
+    events.push({ t: "attach", p, uid: effect.uid, spot, from: effect.zone });
+  } else if (effect.op === "damage") {
+    const slot = slotAt(state, p, spot);
+    if (effect.attack && benchSafe(state, slot, spot, defs)) return void events.push({ t: "blocked", p, spot });
     let n = effect.n;
     let weak = false;
     let resist = false;
@@ -846,7 +967,7 @@ export function askChoose(state, choice) {
 
 /** A choice was made: carry on with whatever the card said to do after it. */
 function resume(state, waiting, defs, events) {
-  if (waiting.then?.length) runTrainer(waiting.then, { state, defs, events, player: waiting.player });
+  if (waiting.then?.length) runTrainer(waiting.then, { state, defs, events, player: waiting.player, spot: waiting.from });
 }
 
 /** Apply one action. Changes `state`, returns what happened, throws RuleError when it isn't allowed. */
@@ -926,6 +1047,7 @@ export function legalActions(state, player, defs) {
     if (def.kind === "trainer" && !trainerBlock(state, player, def, defs)) out.push({ type: "play", player, uid });
   }
   if (state.stadium && !stadiumBlock(state, player, defs)) out.push({ type: "stadium", player });
+  for (const [, spot] of spots) if (!abilityBlock(state, player, spot, defs)) out.push({ type: "ability", player, spot });
   if (canRetreat(state, player, defs)) side.bench.forEach((_, to) => out.push({ type: "retreat", player, to }));
   for (const index of usableAttacks(state, player, defs)) out.push({ type: "attack", player, index });
   out.push({ type: "end", player });

@@ -15,7 +15,7 @@
  * ctx: { state, defs, events, player }
  */
 
-import { askChoose, askPick, conditionsOn, defOf, flip, inPlay, other, shuffle } from "./engine.js";
+import { ACTIVE, askChoose, askPick, conditionsOn, defOf, flip, inPlay, other, shuffle, slotAt, switchActive } from "./engine.js";
 
 const WORDS = { a: 1, an: 1, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8 };
 const count = (word) => WORDS[String(word).toLowerCase()] || Number(word) || 0;
@@ -40,6 +40,15 @@ const mine = (ctx) => ctx.state.players[ctx.player];
 const theirs = (ctx) => ctx.state.players[other(ctx.player)];
 const hasDeck = (ctx) => mine(ctx).deck.length > 0;
 const hurt = (ctx) => inPlay(ctx.state, ctx.player).filter(([slot]) => slot.damage > 0).map(([, spot]) => spot);
+const healSpots = (ctx, to) => hurt(ctx).filter((spot) => !to || to === "all" || (to === "active" ? spot === ACTIVE : spot === ctx.spot));
+const energyFor = (ctx, { zone, type }) => mine(ctx)[zone].filter((uid) => {
+  const def = defOf(ctx.state, uid, ctx.defs);
+  return def.kind === "energy" && def.basic && (!type || def.provides.includes(type));
+});
+const energySpots = (ctx, { to, whoType }) =>
+  inPlay(ctx.state, ctx.player)
+    .filter(([slot, spot]) => (to === "self" ? spot === ctx.spot : to === "active" ? spot === ACTIVE : to === "bench" ? spot !== ACTIVE : true) && (!whoType || defOf(ctx.state, slot.uid, ctx.defs).types.includes(whoType)))
+    .map(([, spot]) => spot);
 const benchSpots = (side) => side.bench.map((_, i) => i);
 const withEnergy = (ctx) => inPlay(ctx.state, other(ctx.player)).filter(([slot]) => slot.energy.length).map(([, spot]) => spot);
 
@@ -82,7 +91,8 @@ export const T_OPS = {
   cost: {
     must: true,
     // While the card is still in the hand it counts itself, so "other cards" is one fewer.
-    ready: (ctx, { n }) => mine(ctx).hand.length - 1 >= n,
+    // An Ability asking the same price isn't in the hand (`spare: 0`).
+    ready: (ctx, { n, spare = 1 }) => mine(ctx).hand.length - spare >= n,
     run(ctx, { n }) {
       const uids = mine(ctx).hand.slice();
       askChoose(ctx.state, { player: ctx.player, zone: "hand", what: "any", uids, min: Math.min(n, uids.length), max: n, effect: { op: "discard" } });
@@ -146,9 +156,19 @@ export const T_OPS = {
   },
   /** Heal one of your Pokémon: you choose which, among the hurt ones. */
   heal: {
-    ready: (ctx) => hurt(ctx).length > 0,
-    run(ctx, { n }) {
-      const spots = hurt(ctx);
+    ready: (ctx, { to = "" }) => healSpots(ctx, to).length > 0,
+    run(ctx, { n, to = "" }) {
+      const spots = healSpots(ctx, to);
+      // An Ability may name who is healed (itself, the Active Pokémon, all of them): no choice then.
+      if (to) {
+        for (const spot of spots) {
+          const slot = slotAt(ctx.state, ctx.player, spot);
+          const healed = Math.min(n, slot.damage);
+          slot.damage -= healed;
+          ctx.events.push({ t: "heal", p: ctx.player, spot, n: healed });
+        }
+        return;
+      }
       if (spots.length) askPick(ctx.state, { player: ctx.player, side: ctx.player, spots, left: 1, effect: { op: "heal", n } });
     },
   },
@@ -168,6 +188,28 @@ export const T_OPS = {
     run(ctx, { n = 1 }) {
       const spots = withEnergy(ctx);
       if (spots.length) askPick(ctx.state, { player: ctx.player, side: other(ctx.player), spots, left: 1, effect: { op: "discardEnergy", n } });
+    },
+  },
+  /** This Pokémon, on the Bench, trades places with the Active one. */
+  switchSelf: {
+    ready: (ctx) => ctx.spot != null && ctx.spot !== ACTIVE && Boolean(mine(ctx).active),
+    run: (ctx) => switchActive(ctx.state, ctx.player, ctx.spot, ctx.events),
+  },
+  /** Damage counters on one of their Pokémon, your choice (not an attack: no Weakness, no Resistance). */
+  counters: {
+    ready: (ctx) => inPlay(ctx.state, other(ctx.player)).length > 0,
+    run(ctx, { n }) {
+      askPick(ctx.state, { player: ctx.player, side: other(ctx.player), spots: inPlay(ctx.state, other(ctx.player)).map(([, spot]) => spot), left: 1, effect: { op: "damage", n } });
+    },
+  },
+  /** An Energy card from the hand or the discard pile goes onto one of your Pokémon, outside the one a turn. */
+  energize: {
+    ready: (ctx, step) => energyFor(ctx, step).length > 0 && energySpots(ctx, step).length > 0,
+    run(ctx, step) {
+      const uid = energyFor(ctx, step)[0];
+      const spots = energySpots(ctx, step);
+      if (!uid || !spots.length) return;
+      askPick(ctx.state, { player: ctx.player, side: ctx.player, spots, left: 1, effect: { op: "attachFrom", zone: step.zone, uid } });
     },
   },
   /** Your Active Pokémon shakes off every Special Condition. */
@@ -365,7 +407,9 @@ export function runTrainer(steps, ctx) {
     const before = ctx.state.pending.length;
     T_OPS[steps[i].op]?.run(ctx, steps[i]);
     if (ctx.state.pending.length > before && i < steps.length - 1) {
-      ctx.state.pending[ctx.state.pending.length - 1].then = steps.slice(i + 1);
+      const waiting = ctx.state.pending[ctx.state.pending.length - 1];
+      waiting.then = steps.slice(i + 1);
+      if (ctx.spot != null) waiting.from = ctx.spot;
       return;
     }
   }
@@ -374,7 +418,9 @@ export function runTrainer(steps, ctx) {
 /** For the bot and the screen: what a Trainer is for, by its first step that matters. */
 export function trainerAim(steps) {
   const ops = steps.flatMap((s) => (s.op === "flip" ? s.heads : [s])).map((s) => s.op);
-  if (ops.includes("search")) return ops.includes("cost") ? "trade" : "search";
+  for (const own of ["energize", "counters", "switchSelf"]) if (ops.includes(own)) return own;
+  if (ops.includes("cost")) return "trade";
+  if (ops.includes("search")) return "search";
   if (ops.includes("recover")) return "recover";
   if (ops.includes("heal")) return "heal";
   if (ops.includes("cure")) return "cure";

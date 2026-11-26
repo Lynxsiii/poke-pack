@@ -18,7 +18,7 @@
  *        shielded (the target takes no effects this turn) }
  */
 
-import { ACTIVE, addCondition, addMark, askPick, damageAfterTyping, defOf, flip, hpLeft, other, switchActive } from "./engine.js";
+import { ACTIVE, addCondition, addMark, askPick, benchSafe, damageAfterTyping, defOf, flip, hpLeft, other, switchActive } from "./engine.js";
 
 const WORDS = { a: 1, an: 1, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6 };
 const count = (word) => WORDS[String(word).toLowerCase()] || Number(word) || 0;
@@ -99,12 +99,13 @@ export const OPS = {
     const spots = [...(to === "any" && side.active ? [ACTIVE] : []), ...side.bench.map((_, i) => i)];
     if (!spots.length) return;
     const from = to === "any" ? ctx.slot.uid : "";
-    if (count && spots.length > count) return askPick(state, { player, side: p, spots, left: count, effect: { op: "damage", n, from } });
+    if (count && spots.length > count) return askPick(state, { player, side: p, spots, left: count, effect: { op: "damage", n, from, attack: true } });
     // No choice to make: it lands on all of them now.
     for (const spot of spots) {
       const slot = spot === ACTIVE ? side.active : side.bench[spot];
       const dealt = spot === ACTIVE && from ? damageAfterTyping(n, defOf(state, from, ctx.defs), defOf(state, slot.uid, ctx.defs)) : { amount: n, weak: false, resist: false };
       if (dealt.amount <= 0) continue;
+      if (benchSafe(state, slot, spot, ctx.defs)) continue;
       slot.damage += dealt.amount;
       events.push({ t: "damage", p, spot, n: dealt.amount, weak: dealt.weak, resist: dealt.resist });
     }

@@ -83,6 +83,8 @@ export function botAction(state, player, defs) {
   if (actions[0].type === "pick") {
     const waiting = state.pending[0];
     const picks = actions.filter((a) => a.spot != null);
+    // "When you play this Pokémon, you may": yes, unless it would draw from a deck that is nearly out.
+    if (waiting.effect.op === "ability") return side.deck.length > 4 ? picks[0] : actions.find((a) => a.spot == null);
     if (!picks.length || waiting.optional) return actions.find((a) => a.spot == null) || picks[0];
     const theirs = state.players[waiting.side];
     const slotOf = (spot) => (spot === ACTIVE ? theirs.active : theirs.bench[spot]);
@@ -91,6 +93,10 @@ export function botAction(state, player, defs) {
       const slot = slotOf(a.spot);
       const left = hpLeft(state, slot, defs);
       if (waiting.effect.op === "damage") return (left <= waiting.effect.n ? 1000 : 0) - left;
+      if (waiting.effect.op === "attachFrom") {
+        const after = plan(state, slot, defs, defOf(state, waiting.effect.uid, defs).provides);
+        return (plan(state, slot, defs).short - after.short) * 100 + after.score + (a.spot === ACTIVE ? 30 : 0);
+      }
       if (waiting.effect.op === "heal") return Math.min(slot.damage, waiting.effect.n) + (a.spot === ACTIVE ? 5 : 0);
       if (waiting.effect.op === "discardEnergy") return slot.energy.length + (a.spot === ACTIVE ? 0.5 : 0);
       // Pulling one of theirs forward: the one closest to a Knock Out. Bringing up one of its own: the readiest.
@@ -116,6 +122,19 @@ export function botAction(state, player, defs) {
     // Paying cards for a search is worth it only from a full hand.
     if (aim === "trade" && side.hand.length >= 5 && side.deck.length > 8) return action;
     if (aim === "heal" && inPlay(state, player).some(([slot]) => slot.damage >= heal.n)) return action;
+  }
+
+  // Abilities: the ones that are plainly good to use (cards, Energy, healing, damage counters).
+  for (const action of actions.filter((a) => a.type === "ability")) {
+    const slot = action.spot === ACTIVE ? side.active : side.bench[action.spot];
+    const { steps } = defOf(state, slot.uid, defs).ability.use;
+    const aim = trainerAim(steps);
+    const heal = steps.find((s) => s.op === "heal");
+    if (aim === "energize" || aim === "counters" || aim === "cure") return action;
+    if ((aim === "draw" || aim === "search" || aim === "recover") && side.deck.length > 8) return action;
+    if (aim === "trade" && side.hand.length >= 4 && side.deck.length > 8) return action;
+    if (aim === "refresh" && side.hand.length <= 3 && side.deck.length > 8) return action;
+    if (aim === "heal" && inPlay(state, player).some(([s]) => s.damage >= Math.min(heal.n, 30))) return action;
   }
 
   // What the Stadium offers is free: take it while there is a deck to work with.
