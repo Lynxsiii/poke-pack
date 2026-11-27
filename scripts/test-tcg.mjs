@@ -3441,10 +3441,93 @@ test("attack text that moves cards: read as printed, old wordings that name the 
   assert.equal(compileAttack("Discard a Fire Energy attached to Charmeleon.", "Charmeleon")[0].type, "Fire");
   // A coin's other side in the same breath is not read as if it always happened.
   assert.equal(compileAttack("Flip a coin. If heads, this attack does 10 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.) If tails, Raichu does 10 damage to itself.", "Raichu"), null);
-  assert.equal(compileAttack("Flip a coin. If tails, this attack does nothing to the Defending Pokémon and Pikachu does 10 damage to itself.", "Pikachu"), null);
+  // Both halves of tails stay with tails: no damage, and the damage to itself only then.
+  assert.deepEqual(compileAttack("Flip a coin. If tails, this attack does nothing to the Defending Pokémon and Pikachu does 10 damage to itself.", "Pikachu"),
+    [{ op: "coin", when: "before", tails: [{ op: "setDamage", n: 0 }] }, { op: "onCoin", when: "after", tails: [{ op: "selfDamage", n: 10 }] }]);
   assert.equal(compileAttack("Flip a coin. If heads, discard a random card from your opponent's hand.")[0].heads[0].op, "foeHandRandom");
   // Trainer steps that make no sense in an attack stay unread.
   assert.equal(compileAttack("During this turn, your Pokémon's attacks do 30 more damage to your opponent's Active Pokémon."), null);
+});
+
+lab("lab-c10", [
+  ["Lull", 0, "The Defending Pokémon is now Asleep. Your opponent flips 2 coins instead of 1 between turns. If either of them is tails, that Pokémon is still Asleep."],
+  ["Snore", 10, "This attack can be used even if this Pokémon is Asleep."],
+  ["Clog", 10, "Your opponent can't attach Energy cards from his or her hand to the Defending Pokémon during his or her next turn."],
+  ["Stunt", 10, "Your opponent can't play any Pokémon from his or her hand to evolve the Defending Pokémon during his or her next turn."],
+]);
+
+test("more attack wordings read: a stronger condition said after it, coins by a count, choices that are limited, HP compared", () => {
+  for (const a of defs("lab-c10").attacks) assert.ok(!a.plain, a.name);
+  // The sentence after the condition changes only that condition, and only under its coin.
+  assert.deepEqual(compileAttack("Flip a coin. If heads, the Defending Pokémon is now Poisoned. Put 2 damage counters instead of 1 on the Defending Pokémon between turns."),
+    [{ op: "flip", when: "after", heads: [{ op: "condition", when: "after", kind: "poisoned", counters: 20 }] }]);
+  // As many coins as Energy, never more than printed.
+  assert.deepEqual(compileAttack("Flip a number of coins equal to the number of Energy attached to this Pokémon. This attack does 20 damage times the number of heads. You can't flip more than 3 coins in this way."),
+    [{ op: "flipTimes", when: "before", n: 20, per: "selfEnergy", max: 3 }]);
+  assert.deepEqual(compileAttack("Flip 3 coins. For each tails, this Pokémon does 10 damage to itself."),
+    [{ op: "flipCount", when: "before", coins: 3 }, { op: "perTails", when: "after", steps: [{ op: "selfDamage", when: "after", n: 10 }] }]);
+  assert.deepEqual(compileAttack("Choose either Asleep or Poisoned. The Defending Pokémon is now affected by that Special Condition.")[0].kinds, ["Asleep", "Poisoned"]);
+  assert.equal(compileAttack("If this Pokémon has fewer remaining HP than the Defending Pokémon, this attack does 30 more damage.")[0].test, "hpBelowFoe");
+  // Older wordings said another way.
+  assert.deepEqual(compileAttack("Your opponent can't play any Trainer cards from his or her hand during your opponent's next turn."), [{ op: "lockHand", when: "after", kinds: ["trainer"] }]);
+  assert.deepEqual(compileAttack("Choose 1 of your opponent's Benched Pokémon and switch it with the Defending Pokémon."), [{ op: "trainer", when: "after", steps: [{ op: "gust" }] }]);
+  assert.deepEqual(compileAttack("Discard an Energy card attached to Jirachi and draw 3 cards.", "Jirachi"),
+    [{ op: "discardEnergy", when: "after", n: 1, type: "" }, { op: "draw", when: "after", n: 3 }]);
+  assert.deepEqual(compileAttack("Recover 20 damage from this Pokémon."), [{ op: "healSelf", when: "after", n: 20 }]);
+  assert.deepEqual(compileAttack("Flip a coin. If head, your opponent's Active Pokémon is now Paralyzed."), [{ op: "flip", when: "after", heads: [{ op: "condition", when: "after", kind: "paralyzed" }] }]);
+  // Named Stadiums, and Benched Pokémon of one type.
+  assert.deepEqual(compileAttack("If Full Flame is in play, the Defending Pokémon is now Burned."),
+    [{ op: "when", when: "after", test: "stadiumNamed", word: "Full Flame", steps: [{ op: "condition", when: "after", kind: "burned" }] }]);
+  assert.equal(compileAttack("If Registeel ex is in play, the Defending Pokémon is now Burned."), null);
+  assert.deepEqual(compileAttack("Does 10 damage to each Grass Pokémon on your opponent's Bench. (Don't apply Weakness and Resistance for Benched Pokémon.)"),
+    [{ op: "spread", when: "after", n: 10, to: "bench", ptype: "Grass" }]);
+  assert.deepEqual(compileAttack("Does 80 damage to each Active Pokémon (both yours and your opponent's)."),
+    [{ op: "setDamage", when: "before", n: 80 }, { op: "selfDamage", when: "after", n: 80 }]);
+});
+
+test("damage to their Benched Pokémon of one type only", () => {
+  lab("lab-c11", [["Singe", 10, "Does 10 damage to each of your opponent's Benched Grass Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"]]);
+  byId.set("lab-leaf", { id: "lab-leaf", name: "Leaf", supertype: "Pokémon", subtypes: ["Basic"], types: ["Grass"], hp: "200", attacks: [] });
+  for (const grass of [true, false]) {
+    const state = labgame("lab-c11", "lab-2");
+    const benched = state.players[1].bench[0];
+    if (grass) state.cards[benched.uid] = "lab-leaf";
+    assert.equal(defs(state.cards[benched.uid]).types.includes("Grass"), grass);
+    const before = benched.damage;
+    use(state, 0, "Singe");
+    assert.equal(benched.damage, before + (grass ? 10 : 0), String(grass));
+  }
+});
+
+test("a deeper Sleep: two heads to wake up, one is not enough", () => {
+  for (const [coins, asleep] of [[[true, false], true], [[true, true], false]]) {
+    const state = labgame("lab-c10", "lab-2");
+    rigFlips(state, coins);
+    use(state, 0, "Lull");
+    assert.equal(state.players[1].active.status.main === "asleep", asleep, String(coins));
+  }
+});
+
+test("an attack that can be used while Asleep: only that one", () => {
+  const state = labgame("lab-c10", "lab-2");
+  addCondition(state, state.players[0].active, "asleep");
+  assert.deepEqual(usableAttacks(state, 0, defs), [attackIndex(state, 0, "Snore")]);
+  use(state, 0, "Snore");
+  assert.equal(state.players[1].active.damage, 10);
+});
+
+test("no Energy from the hand, and no evolving, onto the Defending Pokémon for a turn", () => {
+  let state = labgame("lab-c10", "lab-2");
+  use(state, 0, "Clog");
+  give(state, 1, F);
+  let acts = legalActions(state, 1, defs);
+  assert.ok(acts.some((a) => a.type === "attach" && a.spot !== ACTIVE));
+  assert.ok(!acts.some((a) => a.type === "attach" && a.spot === ACTIVE));
+  state = labgame("lab-c10", "lab-2");
+  use(state, 0, "Stunt");
+  assert.ok(state.players[1].active.marks.some((m) => m.kind === "noEvolve"));
+  acts = legalActions(state, 1, defs);
+  assert.ok(!acts.some((a) => a.type === "evolve" && a.spot === ACTIVE));
 });
 
 test("damage counters in any way you like: one at a time, the same Pokémon again, no Weakness, and a shield keeps them off", () => {

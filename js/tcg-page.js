@@ -48,7 +48,7 @@ const enIcon = (type) => (EN_FILE[type] ? `<img src="/assets/tcg/energy/${EN_FIL
 const COND_NAME = { asleep: "Asleep", burned: "Burned", confused: "Confused", paralyzed: "Paralyzed", poisoned: "Poisoned" };
 
 /** What a turn-long effect is called on a name plate. */
-const markLabel = (m) => ({ noAttack: "Can't attack", noUse: `No ${m.name}`, costMore: `Attacks +${m.n} Colorless`, retreatMore: `Retreat +${m.n}`, ward: "Protected", dodge: "Flips to dodge", endure: `Survives at ${m.n} HP`, doomCond: `${COND_NAME[m.name] || "Condition"} at turn end`, lostKo: "Lost Zone if KO'd", less: `-${m.n} damage`, shield: "Protected", guard: "No damage", noRetreat: "Can't retreat", mustFlip: "Flips to attack", stronger: `+${m.n} damage`, weaker: `Does -${m.n}`, exposed: `Takes +${m.n}`, harden: `Ignores ${m.n} or less`, noWeakness: "No Weakness", spite: m.mirror ? "Hits back in kind" : `Hits back ${m.n / 10}`, bounty: `+${m.n} Prize if KO`, base: `${m.name}: ${m.n}`, noHeal: "Can't be healed", noAbility: m.from === "Ability" ? "No Abilities" : "No Poké-Powers", doom: `${m.n / 10} counters at turn end` })[m.kind] || "";
+const markLabel = (m) => ({ noAttack: "Can't attack", noUse: `No ${m.name}`, costMore: `Attacks +${m.n} Colorless`, retreatMore: `Retreat +${m.n}`, ward: "Protected", dodge: "Flips to dodge", endure: `Survives at ${m.n} HP`, doomCond: `${COND_NAME[m.name] || "Condition"} at turn end`, lostKo: "Lost Zone if KO'd", less: `-${m.n} damage`, shield: "Protected", guard: "No damage", noRetreat: "Can't retreat", mustFlip: "Flips to attack", stronger: `+${m.n} damage`, weaker: `Does -${m.n}`, exposed: `Takes +${m.n}`, harden: `Ignores ${m.n} or less`, noWeakness: "No Weakness", spite: m.mirror ? "Hits back in kind" : `Hits back ${m.n / 10}`, bounty: `+${m.n} Prize if KO`, base: `${m.name}: ${m.n}`, noHeal: "Can't be healed", noAbility: m.from === "Ability" ? "No Abilities" : "No Poké-Powers", doom: `${m.n / 10} counters at turn end`, noEnergy: "No Energy from hand", noEvolve: "Can't evolve", attachEnds: "Energy ends turn" })[m.kind] || "";
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const plural = (n, word) => `${n} ${word}${n === 1 ? "" : "s"}`;
@@ -1212,6 +1212,10 @@ export function initTcg(deps) {
           noHeal: `${whose} Active Pokémon can't be healed next turn.`,
           noAbility: event.name === "Ability" ? `${whose} Active Pokémon has no Abilities until the end of ${event.p === ME ? "their" : "your"} next turn.` : `${whose} Active Pokémon can't use Poké-Powers next turn.`,
           doom: `${whose} Active Pokémon gets ${event.n / 10} damage counters at the end of next turn.`,
+          noEnergy: `Energy can't be attached from the hand to ${whose.toLowerCase()} Active Pokémon next turn.`,
+          noEvolve: `${whose} Active Pokémon can't be evolved from the hand next turn.`,
+          attachEnds: `Attaching Energy from the hand to ${whose.toLowerCase()} Active Pokémon next turn ends that turn.`,
+          attachEnded: `Attaching Energy to it ended ${event.p === ME ? "your" : "their"} turn.`,
           tails: `${event.p === ME ? "Your" : "Their"} coin flips next turn count as tails.`,
           noGx: `${event.p === ME ? "You" : "They"} can't use GX attacks for the rest of the game.`,
         }[event.kind] || "";
