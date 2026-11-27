@@ -1,0 +1,37 @@
+{
+  "id": "js6a",
+  "name": "Eevee Heroes",
+  "lang": "ja",
+  "code": "S6a",
+  "series": "sword-shield",
+  "slug": "eevee-heroes",
+  "scrydexId": "swsh6a_ja",
+  "era": "swsh",
+  "tcgplayerCategory": 85,
+  "tcgplayerGroup": 23637,
+  "rarityByName": true,
+  "englishTwin": "swsh7",
+  "rarityMap": {
+    "C": "Common",
+    "U": "Uncommon",
+    "R": "Rare Holo",
+    "RR": "Rare Holo V",
+    "RRR": "Rare Holo VMAX",
+    "SR": "Rare Ultra",
+    "HR": "Rare Rainbow",
+    "UR": "Rare Secret"
+  },
+  "printedTotal": 69,
+  "products": [
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 565351,
+      "packs": 30,
+      "promos": [],
+      "hull": "strips",
+      "imageVersion": 2
+    }
+  ]
+}

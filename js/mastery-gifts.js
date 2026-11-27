@@ -17,6 +17,8 @@ export const MASTERY_GIFTS = {
   "js12a": [],
   "js8b": [],
   "js4a": [],
+  "js6a": [],
+  "jsv7a": [],
   "jsv2a": [],
   "jsm12a": [],
   "zsv10pt5": [{"kind": "sleeve", "id": "svb-black-bolt-zekrom-etb", "name": "Zekrom sleeves"}],

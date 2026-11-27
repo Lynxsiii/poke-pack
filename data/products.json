@@ -21504,5 +21504,29 @@
       "tcgplayerId": 603428,
       "image": "assets/products/jsv8a/boosterBox-v2.webp"
     }
+  ],
+  "js6a": [
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 30,
+      "promos": [],
+      "price": 774.94,
+      "tcgplayerId": 565351,
+      "image": "assets/products/js6a/boosterBox-v2.webp"
+    }
+  ],
+  "jsv7a": [
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 30,
+      "promos": [],
+      "price": 110.74,
+      "tcgplayerId": 580709,
+      "image": "assets/products/jsv7a/boosterBox-v2.webp"
+    }
   ]
 }
