@@ -311,6 +311,11 @@ export function botAction(state, player, defs) {
       const mine = waiting.uids.filter((u) => !foeOwns.has(u)).sort((x, y) => energyWorth(state, x, defs) - energyWorth(state, y, defs));
       return { type: "choose", player, uids: [...theirs.slice(0, waiting.max), ...mine.slice(0, Math.max(0, waiting.min - theirs.length))] };
     }
+    // "Look at the top card of your deck. You may discard that card": an Energy it has plenty of in hand goes, the rest stays.
+    if (waiting.effect.op === "millChosen") {
+      const spare = (uid) => defOf(state, uid, defs).kind === "energy" && side.hand.filter((u) => defOf(state, u, defs).kind === "energy").length >= 2;
+      return { type: "choose", player, uids: waiting.owner === player || waiting.owner == null ? waiting.uids.filter(spare) : waiting.uids };
+    }
     const ranked = waiting.uids.slice().sort((x, y) => worth(y) - worth(x));
     // A price is paid with the cards worth least; anything else takes the best on offer. Choosing among the
     // other player's cards (their hand, cards for their hand) it is the other way round.
@@ -387,7 +392,9 @@ export function botAction(state, player, defs) {
       if (waiting.effect.op === "attachHeld") {
         const provides = waiting.effect.uids.flatMap((uid) => defOf(state, uid, defs).provides || []);
         const after = plan(state, slot, defs, provides);
-        return (plan(state, slot, defs).short - after.short) * 100 + after.score + (a.spot === ACTIVE ? 30 : 0);
+        // "If you do, heal 120 damage from that Pokémon": the one it would heal most counts for more.
+        const mend = waiting.effect.heal ? Math.min(slot.damage, waiting.effect.heal) : 0;
+        return (plan(state, slot, defs).short - after.short) * 100 + after.score + (a.spot === ACTIVE ? 30 : 0) + mend;
       }
       // Moving Energy: off whoever needs it least, onto the Active Pokémon when it helps.
       if (waiting.effect.op === "moveEnergyFrom") return (a.spot === ACTIVE ? -50 : 0) + plan(state, slot, defs).short * 10 + slot.energy.length;

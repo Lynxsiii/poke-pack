@@ -155,6 +155,11 @@ export function fits(def, what) {
   if (what.endsWith("!ex")) return def.kind === "pokemon" && def.box !== "ex" && fits(def, what.slice(0, -3));
   if (what.endsWith("!gx")) return def.kind === "pokemon" && def.box !== "GX" && fits(def, what.slice(0, -3));
   if (what.startsWith("name=")) return def.kind === "pokemon" && def.name === what.slice(5);
+  // A rule box ("Pokémon ex", "Pokémon V"), and Special Energy cards.
+  if (what.startsWith("box=")) return def.kind === "pokemon" && def.box === what.slice(4);
+  if (what === "specialEnergy") return def.kind === "energy" && !def.basic;
+  if (what === "tera") return def.kind === "pokemon" && Boolean(def.tera);
+  if (what.startsWith("trainer=")) return def.kind === "trainer" && def.name === what.slice(8);
   if (what.startsWith("name^")) return def.kind === "pokemon" && (def.name === what.slice(5) || def.name.startsWith(`${what.slice(5)} `));
   if (what.includes(":")) {
     const [kind, type] = what.split(":");
@@ -364,7 +369,21 @@ export const T_OPS = {
     run(ctx, step) {
       const uids = fitting(ctx, mine(ctx)[step.zone], step.what);
       const spots = energySpots(ctx, step);
-      if (uids.length && spots.length) askChoose(ctx.state, { player: ctx.player, zone: step.zone, what: step.what, uids, min: step.upTo ? 0 : step.exact ? step.n : 1, max: step.n || 1, effect: { op: "attach", to: step.spread ? "spread" : "one", spots, need: true } });
+      if (uids.length && spots.length) askChoose(ctx.state, { player: ctx.player, zone: step.zone, what: step.what, uids, min: step.upTo ? 0 : step.exact ? step.n : 1, max: step.n || 1, effect: { op: "attach", to: step.spread ? "spread" : "one", spots, need: true, ...(step.heal ? { heal: step.heal, ...(step.each ? { each: true } : {}) } : {}) } });
+    },
+  },
+  /**
+   * "For each of your Benched Pokémon, search your deck for a Basic Psychic Energy card and attach it to that Pokémon",
+   * "Choose up to 2 of your Benched Pokémon and attach an Energy card from your discard pile to each of them": one card
+   * each, from `zone`, for up to `n` of the Pokémon `where` names (0: each of them). `must`: as many as can be.
+   */
+  energyEach: {
+    ready: (ctx, step) => (step.zone === "deck" ? hasDeck(ctx) : fitting(ctx, mine(ctx)[step.zone], step.what).length > 0) && energySpots(ctx, step.where).length > 0,
+    run(ctx, { zone, what, where, n = 0, must = false }) {
+      const spots = energySpots(ctx, where);
+      const uids = fitting(ctx, mine(ctx)[zone], what);
+      const max = Math.min(n || spots.length, spots.length);
+      if (spots.length && (uids.length || zone === "deck")) askChoose(ctx.state, { player: ctx.player, zone, what, uids, min: must ? Math.min(max, uids.length) : 0, max, effect: { op: "attach", to: "each", spots }, ...(zone === "deck" ? { shuffle: true } : {}) });
     },
   },
   /** Evosoda, Wally: a card from the deck evolves one of your Pokémon (`where` "active": the Active one). */
@@ -1485,6 +1504,9 @@ function plainWhat(words) {
   if (plain) return plain;
   if (/^(?:an? )?Pokémon Tool(?: cards?)?$/i.test(words)) return "tool";
   if (/^(?:an? )?Stadium(?: cards?)?$/i.test(words)) return "stadium";
+  // Cards of a style: "Rapid Strike cards", "Fusion Strike Trainer cards", "Basic Rapid Strike Pokémon".
+  const style = words.match(/^(?:an? |up to \d+ )?(Basic )?(Rapid Strike|Single Strike|Fusion Strike) (cards?|Trainer cards?|Supporter cards?|Item cards?|Pokémon)$/);
+  if (style) return `${style[1] ? "basic" : { card: "", cards: "", "Trainer card": "trainer", "Trainer cards": "trainer", "Supporter card": "supporter", "Supporter cards": "supporter", "Item card": "item", "Item cards": "item", Pokémon: "pokemon" }[style[3]]}+${style[2]}`;
   for (const [pattern, kind] of TYPED) {
     const m = words.match(pattern);
     if (m) return `${kind}:${m[1]}`;
