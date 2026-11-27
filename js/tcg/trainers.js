@@ -1867,6 +1867,7 @@ export function compileTrainer(text) {
  * Each sentence (or run of sentences) is one clause below; one that isn't read keeps the Tool out.
  */
 const TOOL_CLAUSES = [
+  [/^Once during your turn, after you flip any coins for an attack of the Pokémon this card is attached to, you may ignore all effects of those coin flips and begin flipping those coins again\. \(You may only use effects that let you flip coins again, including effects from other cards, once during your turn\.\)$/, () => ({ trick: true })],
   [/^The Pokémon this card is attached to gets \+(\d+) HP$/, (m) => ({ hp: Number(m[1]) })],
   [/^The Retreat Cost of the Pokémon this card is attached to is ((?:Colorless)+) less$/, (m) => ({ retreat: m[1].length / 9 })],
   [/^The Retreat Cost of the Pokémon this card is attached to is ((?:Colorless)+) less, and it can retreat even if it's Asleep or Paralyzed$/, (m) => ({ retreat: m[1].length / 9, escape: true })],

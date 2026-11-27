@@ -356,6 +356,8 @@ export function botAction(state, player, defs) {
       const h = Math.imul((state.rng ^ Math.imul(player + 1, 0x9e3779b1) ^ Math.imul(state.rps?.round || 0, 0x85ebca6b)) | 0, 0xc2b2ae35);
       return actions[((h ^ (h >>> 16)) >>> 0) % actions.length];
     }
+    // Trick Coin: flipped again when most of the attack's coins came up tails (on a copy, kept).
+    if (waiting.why === "trick") return simulating || !state.trick || state.trick.heads * 2 >= state.trick.flips ? actions[1] : actions[0];
     // The other player's Challenge!: accepted when it can fill a Bench that needs it more than theirs does
     // (declining only gives them 2 cards).
     if (waiting.why === "challenge") {

@@ -421,7 +421,10 @@ export const OPS = {
   },
   /** Vermilion City Gym's coin: heads, more damage if the attack does any after Weakness and Resistance; tails, damage to itself. */
   surge(ctx, { more, self }) {
+    // The Stadium's coin, not one for the attack (Trick Coin doesn't count it).
+    if (ctx.state.trick) ctx.state.trick.pause = true;
     const heads = flip(ctx.state, ctx.player);
+    if (ctx.state.trick) delete ctx.state.trick.pause;
     ctx.events.push({ t: "flip", p: ctx.player, results: [heads], why: "stadium" });
     if (heads) ctx.hit.surge = more;
     else ctx.hit.recoil = self;

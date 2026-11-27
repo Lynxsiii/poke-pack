@@ -1181,6 +1181,7 @@ export function initTcg(deps) {
       case "draw": return event.p === ME ? `You drew ${event.uids.length === 1 ? name(event.uids[0]) : plural(event.uids.length, "card")}.` : `${foeName()} drew ${event.uids.length === 1 ? "a card" : plural(event.uids.length, "card")}.`;
       case "bench": return `${who(event.p)} benched ${name(event.uid)}.`;
       case "rps": return `Rock-Paper-Scissors: ${event.p === ME ? "you" : foeName()} ${event.picks[0]}, ${event.p === ME ? foeName() : "you"} ${event.picks[1]}. ${event.won == null ? "A tie: again." : (event.won === (event.p === ME)) ? "You win." : `${foeName()} wins.`}`;
+      case "trick-coin": return `Trick Coin: ${event.p === ME ? "you flip" : `${foeName()} flips`} the attack's coins again.`;
       case "challenge-down": return `Challenge!: ${who(event.p)} put ${plural(event.n, "card")} face down.`;
       case "drop": return `${who(event.p)} ${event.to === "deck" ? "put" : "discarded"} ${name(event.uid)} ${event.to === "deck" ? "on the bottom of the deck" : "from play"}.`;
       case "evolve": return `${who(event.p)} evolved into ${name(event.uid)}.`;

@@ -96,8 +96,31 @@ export function rand(state) {
  * turn, treat it as tails" (state.tails { player, turn }): that player's coins come up tails that turn.
  */
 export function flip(state, who = state.current) {
-  const heads = rand(state) < 0.5;
-  return heads && !(state.tails && state.tails.turn === state.turn && state.tails.player === who);
+  const heads = rand(state) < 0.5 && !(state.tails && state.tails.turn === state.turn && state.tails.player === who);
+  // Trick Coin: the attacking player's coins for the attack are counted, for the choice to flip them again.
+  const trick = state.trick;
+  if (trick && !trick.offered && !trick.pause && who === trick.player) {
+    trick.flips += 1;
+    if (heads) trick.heads += 1;
+  }
+  return heads;
+}
+
+/**
+ * Trick Coin: "after you flip any coins for an attack of the Pokémon this card is attached to, you may ignore all
+ * effects of those coin flips and begin flipping those coins again." Once the attack is done, before any Knock Out
+ * is judged: asked if its coins were flipped, else forgotten. True when the question was put.
+ */
+function offerTrick(state) {
+  const trick = state.trick;
+  if (!trick || trick.offered) return false;
+  if (state.phase !== "main" || !state.ending || !trick.flips) {
+    if (state.phase !== "main" || state.ending) delete state.trick;
+    return false;
+  }
+  trick.offered = true;
+  state.pending.unshift({ type: "option", player: trick.player, why: "trick", prompt: `Trick Coin: ignore all effects of those coin flips (${trick.heads} heads of ${trick.flips}) and flip them again?`, labels: ["Flip again", "Keep"], options: [[], []] });
+  return true;
 }
 
 export function shuffle(state, list) {
@@ -909,6 +932,7 @@ function startTurn(state, events) {
 /** Move on once nothing is waiting: a turn that was ending gets its checkup, then hands over. */
 function settle(state, defs, events) {
   if (state.phase !== "main" || state.pending.length || !state.ending) return;
+  if (offerTrick(state)) return;
   if (!state.checked) {
     state.checked = true;
     dropHeld(state, events);
@@ -950,6 +974,7 @@ function dropHeld(state, events) {
  * Both sides are checked together so a double Knock Out is judged at once.
  */
 export function resolveKnockOuts(state, defs, events, { between = false } = {}) {
+  if (!between && offerTrick(state)) return;
   const took = [0, 0];
   // "If this Pokémon is Knocked Out by damage from an attack from your opponent's Pokémon": it took
   // that attack's damage this turn (`slot.hit`, cleared before the checkup), and it is going now.
@@ -1252,6 +1277,34 @@ export function strike(ctx) {
   if (!state.pending.length) resolveKnockOuts(state, defs, events);
 }
 
+/** An attack past Confusion and the coins that may stop it: its effects and its damage. */
+function attackGo(state, player, index, defs, events) {
+  const side = state.players[player];
+  const slot = side.active;
+  const def = defOf(state, slot.uid, defs);
+  const attack = attacksOf(state, slot, defs)[index];
+  const target = state.players[other(player)].active;
+  // "During your next turn, this Pokémon's Slash attack's base damage is 60": a mark from its last attack.
+  const based = (slot.marks || []).find((m) => m.kind === "base" && m.turn === state.turn && m.name === attack.name);
+  const hit = { damage: based ? based.n : attack.damage, cancelled: false };
+  // The steps before the damage, then the damage itself (strike, below). A choice among the steps (which
+  // Pokémon to switch in, which attack to copy) holds the damage back until it is made.
+  // "If this Pokémon used Rollout during your last turn", "if 1 of your Togedemaru used Toge Dash during your last turn":
+  // an attack that went ahead (not one Confusion or a coin stopped).
+  // (slot.used is the Ability's once-a-turn mark: the attacks are kept apart, this turn's and the last two.)
+  side.attacks = [...(side.attacks || []).filter((was) => was.turn >= state.turn - 2), { turn: state.turn, name: attack.name, who: def.name, uid: slot.uid }];
+  const atk = attack.lent ? [attack.lent.card, attack.lent.index] : [def.id, index];
+  // Vermilion City Gym: a Pokémon with Lt. Surge in its name that attacks may flip a coin first (its player says).
+  const surge = state.stadium && defOf(state, state.stadium.uid, defs)?.stadium?.surge;
+  if (surge && fieldFits(surge.who, def)) {
+    const steps = [...(attack.fx || []).filter((step) => step.when === "before"), { op: "strike" }];
+    const go = (list) => [{ op: "fx", steps: list, uid: slot.uid, hit, atk }];
+    state.pending.push({ type: "option", player, why: "before", prompt: `${defOf(state, state.stadium.uid, defs).name}: flip a coin? Heads, ${surge.more} more damage; tails, ${surge.self} damage to ${def.name}.`, labels: ["Flip", "Don't flip"], options: [go([{ op: "surge", ...surge }, ...steps]), go(steps)] });
+    return;
+  }
+  runAttackEffects("before", attack, { state, defs, events, player, slot, target, attack, hit, shielded: false, atk }, true);
+}
+
 const HANDLERS = {
   place(state, action, defs, events) {
     const { player } = action;
@@ -1532,9 +1585,6 @@ const HANDLERS = {
     events.push({ t: "attack", p: player, index, name: attack.name, uid: slot.uid });
     // Strength Charm goes at the end of a turn this Pokémon attacked in.
     if (slot.tool) slot.toolSpent = state.turn;
-    // "During your next turn, this Pokémon's Slash attack's base damage is 60": a mark from its last attack.
-    const based = (slot.marks || []).find((m) => m.kind === "base" && m.turn === state.turn && m.name === attack.name);
-    const hit = { damage: based ? based.n : attack.damage, cancelled: false };
     // The Baby Pokémon rule: attacking an Active Baby Pokémon takes a coin flip first; tails, the turn ends without an attack.
     if (target && defOf(state, target.uid, defs).baby) {
       const heads = flip(state);
@@ -1569,22 +1619,9 @@ const HANDLERS = {
         return;
       }
     }
-    // The steps before the damage, then the damage itself (strike, below). A choice among the steps (which
-    // Pokémon to switch in, which attack to copy) holds the damage back until it is made.
-    // "If this Pokémon used Rollout during your last turn", "if 1 of your Togedemaru used Toge Dash during your last turn":
-    // an attack that went ahead (not one Confusion or a coin stopped).
-    // (slot.used is the Ability's once-a-turn mark: the attacks are kept apart, this turn's and the last two.)
-    side.attacks = [...(side.attacks || []).filter((was) => was.turn >= state.turn - 2), { turn: state.turn, name: attack.name, who: def.name, uid: slot.uid }];
-    const atk = attack.lent ? [attack.lent.card, attack.lent.index] : [def.id, index];
-    // Vermilion City Gym: a Pokémon with Lt. Surge in its name that attacks may flip a coin first (its player says).
-    const surge = state.stadium && defOf(state, state.stadium.uid, defs)?.stadium?.surge;
-    if (surge && fieldFits(surge.who, def)) {
-      const steps = [...(attack.fx || []).filter((step) => step.when === "before"), { op: "strike" }];
-      const go = (list) => [{ op: "fx", steps: list, uid: slot.uid, hit, atk }];
-      state.pending.push({ type: "option", player, why: "before", prompt: `${defOf(state, state.stadium.uid, defs).name}: flip a coin? Heads, ${surge.more} more damage; tails, ${surge.self} damage to ${def.name}.`, labels: ["Flip", "Don't flip"], options: [go([{ op: "surge", ...surge }, ...steps]), go(steps)] });
-      return;
-    }
-    runAttackEffects("before", attack, { state, defs, events, player, slot, target, attack, hit, shielded: false, atk }, true);
+    // Trick Coin: the game as it stands before the attack's own coins, to go back to (once a turn).
+    if (toolOn(state, slot, defs)?.trick && state.trickUsed !== state.turn) state.trick = { player, index, flips: 0, heads: 0, log: [], snap: JSON.stringify(state) };
+    attackGo(state, player, index, defs, events);
   },
 
   /**
@@ -1868,6 +1905,31 @@ const HANDLERS = {
     const steps = waiting.options[index];
     if (!Number.isInteger(index) || !steps) fail("Choose one of the options.");
     state.pending.shift();
+    if (waiting.why === "trick") {
+      const trick = state.trick;
+      delete state.trick;
+      if (index === 0 && trick) {
+        // Back to before the attack's coins (the coins themselves go on), then the attack again; the choices made
+        // before the first coin are made again the same way.
+        const { rng } = state;
+        const snap = JSON.parse(trick.snap);
+        for (const key of Object.keys(state)) delete state[key];
+        Object.assign(state, snap, { rng, trickUsed: snap.turn });
+        events.push({ t: "trick-coin", p: trick.player });
+        attackGo(state, trick.player, trick.index, defs, events);
+        for (const done of trick.log) {
+          const next = state.pending[0];
+          if (!next || next.type !== done.type || next.player !== done.player) break;
+          try {
+            HANDLERS[done.type](state, done, defs, events);
+          } catch {
+            break;
+          }
+        }
+      }
+      if (!state.pending.length) resolveKnockOuts(state, defs, events);
+      return;
+    }
     runTrainer([...steps, ...(waiting.then || [])], { state, defs, events, player: waiting.by ?? waiting.player, spot: waiting.from, ...(waiting.src ? { src: waiting.src } : {}), ...(waiting.card ? { uid: waiting.card } : {}) });
     if (!state.pending.length) resolveKnockOuts(state, defs, events);
   },
@@ -2477,6 +2539,8 @@ export function apply(state, action, defs) {
     if (state.current !== player) fail("It isn't your turn.");
     if (state.ending) fail("Your turn is over.");
   }
+  // Trick Coin: the choices made during the attack before its first coin, to make again if it is flipped again.
+  if (state.trick && !state.trick.offered && !state.trick.flips && waiting) state.trick.log.push(action);
   handler(state, action, defs, events);
   toLostZone(state, defs);
   settle(state, defs, events);
@@ -2583,6 +2647,8 @@ export function viewFor(state, player) {
   delete view.rng;
   // Rock-Paper-Scissors (Dan): the other player doesn't see what was played before they choose.
   if (view.rps && view.rps.p !== player) delete view.rps;
+  // Trick Coin's copy of the game from before the attack's coins holds everything hidden.
+  if (view.trick) view.trick = { player: view.trick.player, flips: view.trick.flips, heads: view.trick.heads };
   // Challenge!: the other player's face-down cards show as how many there are.
   if (view.challenge) view.challenge.cards = view.challenge.cards.map((uids, p) => (p === player ? uids : uids.length));
   view.opening = view.opening.map((e) => (e.t === "mulligan" ? e : { ...e }));

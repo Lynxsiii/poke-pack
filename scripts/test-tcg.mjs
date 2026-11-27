@@ -6232,4 +6232,45 @@ test("Pokémon Breeder Fields: a coin for 1 or 2 Pokémon, each heads a card fro
   assert.equal(two.players[0].hand.length, hand);
 });
 
+test("Trick Coin: after the attack's coins, its player may ignore them and flip again, once a turn", () => {
+  assert.ok(defs("xy4-108").playable);
+  assert.ok(defs("xy4-108").tool.trick);
+  const deck = deckOf(["xy4-108", 4], ["base1-63", 16], [W, 10]);
+  const coined = () => {
+    const state = fossilGame(deck);
+    const side = state.players[0];
+    state.cards[side.active.uid] = "base1-63"; // Squirtle: Bubble [W] 10, heads Paralyzed
+    state.cards[state.players[1].active.uid] = "base1-63";
+    const coin = give(state, 0, "xy4-108");
+    side.hand.splice(side.hand.indexOf(coin), 1);
+    side.active.tool = coin;
+    side.active.energy.push(give(state, 0, W));
+    return state;
+  };
+  // Tails, then flipped again: heads, and only the second coin counts.
+  let state = coined();
+  rigFlips(state, [false, true]);
+  act(state, { type: "attack", player: 0, index: 0 });
+  assert.equal(state.pending[0].why, "trick");
+  // Nothing of the game before the coins shows to the other player.
+  assert.ok(!("snap" in viewFor(state, 1).trick));
+  act(state, { type: "option", player: 0, index: 0 });
+  assert.equal(state.players[1].active.damage, 10);
+  assert.ok(conditionsOn(state.players[1].active).includes("paralyzed") || state.players[1].active.conditions?.includes?.("paralyzed") || JSON.stringify(state.players[1].active).includes("paralyzed"));
+  assert.ok(!state.trick);
+  assert.notEqual(state.current, 0);
+  // Kept: tails stands.
+  state = coined();
+  rigFlips(state, [false]);
+  act(state, { type: "attack", player: 0, index: 0 });
+  act(state, { type: "option", player: 0, index: 1 });
+  assert.equal(state.players[1].active.damage, 10);
+  assert.ok(!JSON.stringify(state.players[1].active).includes("paralyzed"));
+  // No coins (Withdraw needs 2 Energy; plain Tackle-style attacks): nothing asked.
+  const plain = coined();
+  plain.cards[plain.players[0].active.uid] = "base1-46"; // Charmander: Scratch
+  act(plain, { type: "attack", player: 0, index: 0 });
+  assert.ok(!plain.pending.length || plain.pending[0].why !== "trick");
+});
+
 console.log(`${passed} checks passed${process.exitCode ? ", some failed" : ""}`);
