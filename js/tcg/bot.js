@@ -367,6 +367,12 @@ export function botAction(state, player, defs) {
       };
       return actions.slice().sort((a, b) => rank(waiting.options[a.index]) - rank(waiting.options[b.index]))[0];
     }
+    // Lt. Surge's Bargain: a Prize card each, unless that would let them win (or tie) when it can't win itself.
+    if (waiting.why === "bargain") {
+      const mineLeft = side.prizes.length;
+      const theirsLeft = state.players[other(player)].prizes.length;
+      return actions[theirsLeft <= 1 && mineLeft > 1 ? 1 : 0];
+    }
     // Trick Coin: flipped again when most of the attack's coins came up tails (on a copy, kept).
     if (waiting.why === "trick") return simulating || !state.trick || state.trick.heads * 2 >= state.trick.flips ? actions[1] : actions[0];
     // The other player's Challenge!: accepted when it can fill a Bench that needs it more than theirs does
@@ -503,6 +509,13 @@ export function botAction(state, player, defs) {
     }
     // Sabrina's Psychic Control: only playable when the other discard pile holds a Trainer that would do something.
     if (def.fx.some((s) => s.op === "psychic")) return action;
+    // Amarys: only from a hand so small the cards it draws stay under its limit.
+    const limit = def.fx.find((s) => s.op === "handLimit");
+    if (limit) {
+      const drawn = def.fx.find((s) => s.op === "draw")?.n || 0;
+      if (side.hand.length - 1 + drawn < limit.n && side.deck.length > drawn + 4) return action;
+      continue;
+    }
     const aim = trainerAim(def.fx);
     const heal = def.fx.find((s) => s.op === "heal");
     // A card that also discards the Stadium in play is not played over its own Stadium.

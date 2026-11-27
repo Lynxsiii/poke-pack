@@ -8,7 +8,7 @@
  */
 import { readFileSync, readdirSync } from "node:fs";
 import assert from "node:assert/strict";
-import { ACTIVE, FORMATS, RuleError, abilityOn, attacksOf, defOf, addCondition, addMark, apply, benchSafe, canRetreat, energyOf, toolOf, conditionsOn, createGame, flip, damageAfterTyping, legalActions, maxHp, resolveKnockOuts, retreatCost, unpaid, usableAttacks, viewFor } from "../js/tcg/engine.js";
+import { ACTIVE, FORMATS, RuleError, abilityOn, attacksOf, defOf, addCondition, addMark, apply, costFor, benchSafe, canRetreat, energyOf, toolOf, conditionsOn, createGame, flip, damageAfterTyping, legalActions, maxHp, resolveKnockOuts, retreatCost, unpaid, usableAttacks, viewFor } from "../js/tcg/engine.js";
 import { createDefs, defineCard, FREE_ENERGY } from "../js/tcg/cards.js";
 import { boostOf, compileTrainer, fits, runTrainer, trainerAim, whatOf } from "../js/tcg/trainers.js";
 import { compileAttack } from "../js/tcg/effects.js";
@@ -2056,8 +2056,8 @@ test("Trainer text, third batch: the new wordings are read", () => {
   assert.ok(fits(defs("base1-63"), "pokemon!rule") && !fits(defs("lab-ex"), "pokemon!rule") && !fits(defs("lab-ex"), "basic!ex"));
   // An Item and a Pokémon Tool: one search each.
   assert.deepEqual(compileTrainer("Search your deck for an Item card and a Pokémon Tool card, reveal them, and put them into your hand. Then, shuffle your deck.").map((s) => s.what), ["item", "tool"]);
-  // Still unread: a Stadium can't be dropped by a condition it doesn't know.
-  assert.equal(compileTrainer("You can use this card only if you have any Tera Pokémon in play. Draw 2 cards."), null);
+  // "Any Tera Pokémon in play" is a condition of its own now.
+  assert.deepEqual(compileTrainer("You can use this card only if you have any Tera Pokémon in play. Draw 2 cards."), [{ op: "only", when: { tera: true } }, { op: "draw", n: 2 }]);
 });
 
 test("a look at the top cards: take some, the rest discarded, shuffled in, or put on the bottom", () => {
@@ -6316,6 +6316,200 @@ test("Sabrina's Psychic Control: heads, a Trainer from the opponent's discard pi
   act(state, { type: "play", player: 0, uid: give(state, 0, "gym2-121") });
   assert.ok(!state.pending.length);
   assert.ok(state.players[1].active.energy.includes(energy));
+});
+
+/* ---------- Scarlet & Violet and Mega Evolution Trainers ---------- */
+
+const D = "energy-darkness";
+/** A card set into a fresh slot (its uid taken off the deck). */
+const slotFor = (state, p, id) => {
+  const uid = state.players[p].deck.pop();
+  state.cards[uid] = id;
+  return { uid, under: [], energy: [], damage: 0, since: 0 };
+};
+/** Player 0 to move: `front` and `bench` ids for its Pokémon, `foeBench` ids for the other side's Bench, `extra` cards in the deck. */
+function scene({ front = "", bench = [], foeBench = [], extra = [] } = {}) {
+  const n = extra.reduce((k, [, c]) => k + c, 0);
+  const state = fossilGame(deckOf(...extra, ["base1-46", 10], [F, 6], [W, 4], [D, 10 - n]));
+  const side = state.players[0];
+  if (front) state.cards[side.active.uid] = front;
+  side.bench = bench.map((id) => slotFor(state, 0, id));
+  state.players[1].bench = foeBench.map((id) => slotFor(state, 1, id));
+  return state;
+}
+
+test("Team Rocket's Giovanni: a Team Rocket's Pokémon switch, then theirs is pulled in", () => {
+  assert.ok(defs("sv10-174").playable);
+  const state = scene({ front: "sv10-15", bench: ["base1-46", "sv10-19"], foeBench: ["base1-63"], extra: [["sv10-174", 2]] });
+  const side = state.players[0];
+  const benchedRocket = side.bench[1].uid;
+  const foeBenched = state.players[1].bench[0].uid;
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "sv10-174") });
+  // Only the Team Rocket's Pokémon on the Bench may come in.
+  assert.deepEqual(state.pending[0].spots, [1]);
+  act(state, { type: "pick", player: 0, spot: 1 });
+  assert.equal(side.active.uid, benchedRocket);
+  act(state, { type: "pick", player: 0, spot: 0 });
+  assert.equal(state.players[1].active.uid, foeBenched);
+  // Not with another Active Pokémon.
+  const other = scene({ front: "base1-46", bench: ["sv10-19"], foeBench: ["base1-63"], extra: [["sv10-174", 2]] });
+  throws(() => act(other, { type: "play", player: 0, uid: handed(other, 0, "sv10-174") }), /nothing/);
+});
+
+test("Team Rocket's Ariana, Proton and Transceiver: Team Rocket's cards by name", () => {
+  assert.ok(defs("sv10-171").playable && defs("sv10-177").playable && defs("sv10-178").playable);
+  assert.equal(whatOf("Basic Team Rocket's Pokémon"), "basic&&name^Team Rocket's");
+  assert.equal(whatOf('a Supporter card that has "Team Rocket" in its name'), "supporter~Team Rocket");
+  assert.ok(fits(defs("sv10-171"), "supporter~Team Rocket") && !fits(defs("sv10-174"), "item~Team Rocket"));
+  assert.ok(fits(defs("sv10-15"), "basic&&name^Team Rocket's") && !fits(defs("base1-46"), "basic&&name^Team Rocket's"));
+  // Ariana: to 5, or to 8 with only Team Rocket's Pokémon in play.
+  for (const [front, want] of [["base1-46", 5], ["sv10-15", 8]]) {
+    const state = scene({ front, extra: [["sv10-171", 2]] });
+    const side = state.players[0];
+    side.deck.push(...side.hand.splice(0));
+    act(state, { type: "play", player: 0, uid: handed(state, 0, "sv10-171") });
+    assert.equal(side.hand.length, want);
+  }
+});
+
+test("N's PP Up: a Basic Energy from the discard pile onto a Benched N's Pokémon", () => {
+  assert.ok(defs("sv9-153").playable);
+  const state = scene({ bench: ["base1-46", "me2pt5-136"], extra: [["sv9-153", 2]] });
+  const side = state.players[0];
+  const energy = side.deck.find((u) => state.cards[u] === W);
+  side.deck.splice(side.deck.indexOf(energy), 1);
+  side.discard.push(energy);
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "sv9-153") });
+  act(state, { type: "choose", player: 0, uids: [energy] });
+  if (state.pending.length) {
+    assert.deepEqual(state.pending[0].spots, [1]);
+    act(state, { type: "pick", player: 0, spot: 1 });
+  }
+  assert.ok(side.bench[1].energy.includes(energy));
+});
+
+test("Ciphermaniac's Codebreaking, Eri, Crispin", () => {
+  assert.ok(defs("sv5-145").playable && defs("sv5-146").playable && defs("sv7-133").playable);
+  // Ciphermaniac's Codebreaking: 2 cards on top, in the order chosen.
+  let state = scene({ extra: [["sv5-145", 2]] });
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "sv5-145") });
+  const two = [state.pending[0].uids.find((u) => state.cards[u] === W), state.pending[0].uids.find((u) => state.cards[u] === D)];
+  act(state, { type: "choose", player: 0, uids: two });
+  assert.deepEqual(state.players[0].deck.slice(0, 2), two);
+  // Eri: their hand is shown; up to 2 Items there are discarded.
+  state = scene({ extra: [["sv5-146", 2]] });
+  const foe = state.players[1];
+  const items = foe.deck.splice(0, 3);
+  items.forEach((u, i) => (state.cards[u] = i < 2 ? "sv1-181" : "base1-63"));
+  foe.hand.push(...items);
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "sv5-146") });
+  assert.equal(state.pending[0].owner, 1);
+  assert.deepEqual(state.pending[0].uids, items.slice(0, 2));
+  assert.ok(items.every((u) => u in viewFor(state, 0).cards));
+  act(state, { type: "choose", player: 0, uids: items.slice(0, 2) });
+  assert.ok(items.slice(0, 2).every((u) => foe.discard.includes(u)));
+  // Crispin: one to the hand, one of another type attached.
+  state = scene({ extra: [["sv7-133", 2]] });
+  const side = state.players[0];
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "sv7-133") });
+  const water = state.pending[0].uids.find((u) => state.cards[u] === W);
+  act(state, { type: "choose", player: 0, uids: [water] });
+  assert.ok(side.hand.includes(water));
+  assert.ok(state.pending[0].uids.length > 0 && state.pending[0].uids.every((u) => state.cards[u] !== W));
+  const dark = state.pending[0].uids.find((u) => state.cards[u] === D);
+  act(state, { type: "choose", player: 0, uids: [dark] });
+  if (state.pending.length) act(state, { type: "pick", player: 0, spot: ACTIVE });
+  assert.ok(side.active.energy.includes(dark));
+});
+
+test("Amarys draws 4, and a hand of 5 or more is discarded at the end of the turn", () => {
+  assert.ok(defs("sv8pt5-93").playable);
+  for (const [keep, gone] of [[0, false], [3, true]]) {
+    const state = scene({ extra: [["sv8pt5-93", 2]] });
+    const side = state.players[0];
+    side.deck.push(...side.hand.splice(keep));
+    act(state, { type: "play", player: 0, uid: handed(state, 0, "sv8pt5-93") });
+    assert.equal(side.hand.length, keep + 4);
+    act(state, { type: "end", player: 0 });
+    assert.equal(side.hand.length, gone ? 0 : keep + 4);
+  }
+});
+
+test("Lt. Surge's Bargain: yes, a Prize card each; no, draw 4", () => {
+  assert.ok(defs("me1-120").playable);
+  let state = scene({ extra: [["me1-120", 2]] });
+  const prizes = [0, 1].map((p) => state.players[p].prizes.length);
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "me1-120") });
+  assert.equal(state.pending[0].player, 1);
+  act(state, { type: "option", player: 1, index: 0 });
+  assert.deepEqual([0, 1].map((p) => state.players[p].prizes.length), prizes.map((n) => n - 1));
+  state = scene({ extra: [["me1-120", 2]] });
+  const hand = state.players[0].hand.length;
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "me1-120") });
+  act(state, { type: "option", player: 1, index: 1 });
+  assert.equal(state.players[0].hand.length, hand + 4);
+  // The last Prize card wins.
+  state = scene({ extra: [["me1-120", 2]] });
+  state.players[0].prizes.splice(1);
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "me1-120") });
+  act(state, { type: "option", player: 1, index: 0 });
+  assert.equal(state.phase, "over");
+  assert.equal(state.winner, 0);
+});
+
+test("Janine's Secret Art and Glass Trumpet: Energy onto chosen Pokémon", () => {
+  assert.ok(defs("sv6pt5-59").playable && defs("sv7-135").playable);
+  // Janine's Secret Art: the Active Darkness Pokémon that takes one is Poisoned.
+  let state = scene({ front: "sv1-126", bench: ["sv1-128"], extra: [["sv6pt5-59", 2]] });
+  const side = state.players[0];
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "sv6pt5-59") });
+  assert.equal(state.pending[0].max, 2);
+  act(state, { type: "choose", player: 0, uids: state.pending[0].uids.slice(0, 2) });
+  while (state.pending.length) act(state, { type: "pick", player: 0, spot: state.pending[0].spots[0] });
+  assert.equal(side.active.energy.length + side.bench[0].energy.length, 2);
+  assert.ok(conditionsOn(side.active).includes("poisoned"));
+  // Glass Trumpet: only with a Tera Pokémon in play.
+  state = scene({ front: "base1-46", bench: ["sv1-146"], extra: [["sv7-135", 2]] });
+  const energy = state.players[0].deck.find((u) => state.cards[u] === W);
+  state.players[0].deck.splice(state.players[0].deck.indexOf(energy), 1);
+  state.players[0].discard.push(energy);
+  const trumpet = handed(state, 0, "sv7-135");
+  throws(() => act(state, { type: "play", player: 0, uid: trumpet }), /nothing/);
+  state.cards[state.players[0].active.uid] = "sv3-42";
+  act(state, { type: "play", player: 0, uid: trumpet });
+  act(state, { type: "choose", player: 0, uids: [energy] });
+  if (state.pending.length) act(state, { type: "pick", player: 0, spot: 0 });
+  assert.ok(state.players[0].bench[0].energy.includes(energy));
+});
+
+test("Kieran, Counter Gain, Rescue Board, Forest of Vitality", () => {
+  assert.ok(defs("sv6-154").playable);
+  assert.deepEqual(defs("sv6-154").fx[0].options[1].steps, [{ op: "boost", n: 30, vs: ["ex", "V", "VMAX", "VSTAR"] }]);
+  // Counter Gain: Colorless less while behind on Prize cards.
+  assert.ok(defs("sv8-169").playable && defs("sv5-159").playable && defs("me1-117").playable);
+  let state = scene({ front: "sv1-14" });
+  const front = state.players[0].active;
+  front.tool = state.players[0].deck.pop();
+  state.cards[front.tool] = "sv8-169";
+  const leaf = defs("sv1-14").attacks[1];
+  assert.deepEqual(costFor(state, front, leaf, defs), ["Grass", "Colorless"]);
+  state.players[0].prizes.push(state.players[0].deck.pop());
+  assert.deepEqual(costFor(state, front, leaf, defs), ["Grass"]);
+  // Rescue Board: 1 less, none at 30 HP or less.
+  state.cards[front.uid] = "sv1-14"; // Floragato: Retreat Cost 1
+  state.cards[front.tool] = "sv5-159";
+  assert.equal(retreatCost(state, front, defs), Math.max(0, defs("sv1-14").retreat - 1));
+  state.cards[front.uid] = "sv1-126"; // Grimer: Retreat Cost 3
+  assert.equal(retreatCost(state, front, defs), 2);
+  front.damage = 50;
+  assert.equal(retreatCost(state, front, defs), 0);
+  // Forest of Vitality: a Grass Pokémon played this turn evolves into a Grass Pokémon.
+  state = scene({ bench: ["sv1-13"], extra: [["me1-117", 1], ["sv1-14", 1]] });
+  state.players[0].bench[0].since = state.turn;
+  const flora = handed(state, 0, "sv1-14");
+  assert.ok(!legalActions(state, 0, defs).some((a) => a.type === "evolve" && a.uid === flora));
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "me1-117") });
+  assert.ok(legalActions(state, 0, defs).some((a) => a.type === "evolve" && a.uid === flora));
 });
 
 console.log(`${passed} checks passed${process.exitCode ? ", some failed" : ""}`);

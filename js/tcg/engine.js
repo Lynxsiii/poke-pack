@@ -378,6 +378,9 @@ export function maxHp(state, slot, defs) {
 
 /** What it costs this Pokémon to retreat, after its Tool. */
 export function retreatCost(state, slot, defs) {
+  // Rescue Board: none at all with that much HP left or less.
+  const freeAt = toolOn(state, slot, defs)?.freeAt;
+  if (freeAt && hpLeft(state, slot, defs) <= freeAt) return markSum(state, slot, "retreatMore");
   const less = toolOf(state, slot, defs).retreat;
   // "During your opponent's next turn, the Defending Pokémon's Retreat Cost is Colorless more" (a retreatMore mark).
   return (less === "all" ? 0 : Math.max(0, defOf(state, slot.uid, defs).retreat - (less || 0))) + markSum(state, slot, "retreatMore");
@@ -387,7 +390,17 @@ export function retreatCost(state, slot, defs) {
 export function costFor(state, slot, attack, defs = null) {
   const more = markSum(state, slot, "costMore");
   // "If your opponent has any Ultra Beasts in play, this attack can be used for Colorless" (effects.js altCost).
-  const cost = (defs && altCost(state, ownerOf(state, slot), slot, attack, defs)) || attack.cost;
+  let cost = (defs && altCost(state, ownerOf(state, slot), slot, attack, defs)) || attack.cost;
+  // Counter Gain: Colorless less while its owner has more Prize cards left.
+  const tool = defs && toolOn(state, slot, defs);
+  const owner = ownerOf(state, slot);
+  if (tool?.costLess && (!tool.behind || (owner >= 0 && prizesLeft(state.players[owner]) > prizesLeft(state.players[other(owner)])))) {
+    cost = [...cost];
+    for (let k = 0; k < tool.costLess; k += 1) {
+      const at = cost.lastIndexOf("Colorless");
+      if (at >= 0) cost.splice(at, 1);
+    }
+  }
   return more ? [...cost, ...Array(more).fill("Colorless")] : cost;
 }
 
@@ -640,6 +653,14 @@ function berries(state, defs, events) {
 /** The end of the turn, before the checkup: Tools that work then (Amulet Coin, Leftovers), and Tools that lapse. */
 function endOfTurn(state, defs, events) {
   const p = state.current;
+  // Amarys: a hand of that many cards or more is discarded.
+  const limit = state.players[p].handLimit;
+  if (limit?.turn === state.turn && state.players[p].hand.length >= limit.n) {
+    const gone = state.players[p].hand.splice(0);
+    state.players[p].discard.push(...gone);
+    events.push({ t: "discard-hand", p, uids: gone });
+  }
+  if (limit) delete state.players[p].handLimit;
   const front = state.players[p].active;
   const end = toolOn(state, front, defs)?.endTurn;
   if (end?.draw) draw(state, p, end.draw, events);
@@ -679,8 +700,12 @@ const firstTurnOf = (state) => state.turn <= 2;
  *   noEx: neither card is a Pokémon-EX; noAbility: the card has no Ability
  */
 export function canEvolveOnto(state, slot, def, defs, how = {}) {
-  if (!slot || def?.kind !== "pokemon" || !def.evolvesFrom || !mayEvolve(state, slot, defs, how)) return false;
+  if (!slot || def?.kind !== "pokemon" || !def.evolvesFrom) return false;
   const below = defOf(state, slot.uid, defs);
+  // Forest of Vitality: a Pokémon of its type into one of its type, the turn it was played (not on a first turn).
+  const grow = state.stadium && defOf(state, state.stadium.uid, defs)?.stadium?.grow;
+  const early = grow && !firstTurnOf(state) && fieldFits(grow, below) && fieldFits(grow, def);
+  if (!mayEvolve(state, slot, defs, early ? { ...how, lift: true } : how)) return false;
   if (how.noEx && def.box === "EX") return false;
   if (how.noAbility && def.abilityKind) return false;
   if (how.skip) return below.stage === "basic" && ((def.line === 2 && (def.roots || []).includes(below.name)) || (how.skip === "any" && def.line === 1 && below.name === def.evolvesFrom));
@@ -1743,12 +1768,12 @@ const HANDLERS = {
       if (picked.length) events.push({ t: "hand-to-deck", p: player, uids: picked, at: waiting.shuffle ? "into" : op === "toTop" ? "top" : "bottom" });
     } else if (op === "discard") {
       side.discard.push(...picked);
-      if (picked.length) events.push({ t: "discard-hand", p: player, uids: picked });
+      if (picked.length) events.push({ t: "discard-hand", p: owner, uids: picked });
     } else if (op === "attach") {
       // Energy from the deck onto Pokémon: a fixed one, one picked for all, or a pick for each card.
       // A Trainer may name which Pokémon can take it (`spots`), and the zone it comes from (hand, discard pile).
       const to = waiting.effect.to;
-      const heal = waiting.effect.heal ? { heal: waiting.effect.heal, ...(waiting.effect.each ? { each: true } : {}) } : {};
+      const heal = { ...(waiting.effect.heal ? { heal: waiting.effect.heal, ...(waiting.effect.each ? { each: true } : {}) } : {}), ...(waiting.effect.poison ? { poison: true } : {}) };
       const spots = (waiting.effect.spots || inPlay(state, player).map(([, s]) => s)).filter((s) => slotAt(state, player, s));
       // "Attach up to 2 ... If you do": none attached, nothing after.
       if (!picked.length && waiting.effect.need) waiting.then = null;
@@ -2314,6 +2339,8 @@ function applyPick(state, waiting, spot, defs, events) {
       // "If you do, heal 120 damage from that Pokémon" (`each`: "heal 50 damage ... for each card you attached to them").
       if (effect.heal && (effect.each || uid === effect.uids[0])) healAt(state, p, spot, effect.heal, events);
     }
+    // Janine's Secret Art: the Active Pokémon that took Energy this way is now Poisoned.
+    if (effect.poison && spot === ACTIVE && effect.uids.length && addCondition(state, slot, "poisoned", defs)) events.push({ t: "condition", p, kind: "poisoned" });
     if (effect.chain?.length) {
       const rest = waiting.spots.filter((s) => s !== spot && slotAt(state, p, s));
       if (rest.length) follow(state, waiting, { player: waiting.player, side: p, spots: rest, left: 1, effect: { ...effect, uids: [effect.chain[0]], chain: effect.chain.slice(1) } });
