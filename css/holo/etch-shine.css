@@ -182,9 +182,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map.fam-xy-full-art.fam-xy-full-art {
    per-card review of 2026-11-27). Here the glitter follows the engraving instead of the white map, and the relief
    takes the engraving in full, nothing subtracted. */
 body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map.has-etch-drawn.has-etch-drawn.has-etch-drawn {
-  --relief: 0.8;
+  --relief: 0.5;
   --relief-era: 1;
-  --shine-glit: 0.35;
+  --shine-line: 0.6;
+  --shine-glit: 0.4;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map.has-etch-drawn:is(.lit, .settling) .shine::after {
   -webkit-mask-image: var(--art), var(--shine-etch, var(--etch-map)), var(--shine-etch, var(--etch-map));

@@ -70,9 +70,38 @@ try {
     if (existsSync(p("-on.png")) && existsSync(p("-off.png")) && existsSync(p(".boxes.json"))) { done++; continue; }
     const q = `set=${job.set}&cards=${job.cards.join(",")}&proof=off&w=${w}&poses=${poses}&tilt=0`;
     try {
+      await page.setViewportSize({ width: 1900, height: 900 });
       await page.goto(`${base}${LAB}?${q}`, { waitUntil: "load", timeout: 90000 });
       await page.waitForSelector("body[data-ready='1']", { timeout: 60000 });
-      await page.waitForTimeout(Number(args.wait) || 2500); // masks are CSS images and decode late in WebKit
+      // The whole page inside the viewport, and viewport screenshots: WebKit's full-page screenshot re-paints the page
+      // in strips and drops blended foil layers on some cards at random (2026-11-27: the same card lit in one run and
+      // flat in the next; viewport shots of the same page matched run to run).
+      const fullH = await page.evaluate(() => document.documentElement.scrollHeight);
+      await page.setViewportSize({ width: 1900, height: Math.min(16000, fullH + 20) });
+      // Masks and textures are CSS images, and WebKit paints a layer whose mask has not decoded as nothing: under load
+      // (three renderers on four cores) a fixed wait left whole lit rows unlit at random (2026-11-27: jsm12a-216,
+      // js4a-207 lit in one run and flat in the next). Decode every image the cards' layers name, then wait.
+      await page.evaluate(async () => {
+        const urls = new Set();
+        for (const el of document.querySelectorAll(".tcg, .tcg *")) {
+          for (const pseudo of [null, "::before", "::after"]) {
+            const cs = getComputedStyle(el, pseudo);
+            for (const v of [cs.backgroundImage, cs.maskImage, cs.webkitMaskImage]) {
+              for (const m of String(v || "").matchAll(/url\("?([^")]+)"?\)/g)) urls.add(m[1]);
+            }
+          }
+        }
+        await Promise.all([...urls].map((u) => { const i = new Image(); i.src = u; return i.decode().catch(() => {}); }));
+      });
+      await page.waitForTimeout(Number(args.wait) || 2500);
+      // Some lit layers animate (a glint sweep, a twinkle): freeze every animation at its start, so two runs draw the
+      // same frame and a "lit" render is never caught at the dark end of a cycle.
+      const anims = await page.evaluate(() => {
+        const list = document.getAnimations();
+        for (const a of list) { a.pause(); a.currentTime = 0; }
+        return list.length;
+      });
+      if (anims) await page.waitForTimeout(200);
       const boxes = await page.evaluate(() => [...document.querySelectorAll(".lab-row")].flatMap((row) =>
         [...row.querySelectorAll(".lab-cell")].map((cell, i) => {
         const t = cell.querySelector(".tcg"), r = t.getBoundingClientRect();
@@ -82,10 +111,19 @@ try {
       })));
       const perRow = boxes.filter((b) => b.pose === boxes[0].pose).length;
       boxes.forEach((b) => { b.token = perRow === job.cards.length ? job.cards[b.i] : null; });
-      await page.screenshot({ path: p("-on.png"), fullPage: true, timeout: 240000 });
+      // Wait for a still frame: until every mask has decoded WebKit paints a masked layer unmasked, so the first
+      // seconds show washes that are not there (a 30-card page settled 13 levels darker after ~4 s, 2026-11-27).
+      let last = null;
+      for (let k = 0; k < 8; k++) {
+        const shot = await page.screenshot({ fullPage: false, timeout: 240000 });
+        if (last && shot.equals(last)) break;
+        last = shot;
+        await page.waitForTimeout(1500);
+      }
+      writeFileSync(p("-on.png"), last);
       await page.addStyleTag({ content: HIDE });
       await page.waitForTimeout(300);
-      await page.screenshot({ path: p("-off.png"), fullPage: true, timeout: 240000 });
+      await page.screenshot({ path: p("-off.png"), fullPage: false, timeout: 240000 });
       writeFileSync(p(".boxes.json"), JSON.stringify({ job, scale, boxes }));
       done++;
       if (done % 10 === 0) console.error(`${done}/${jobs.length}`);

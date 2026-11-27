@@ -5,7 +5,7 @@ what looks good". `scripts/holo_check.py` makes the pictures; this note is the b
 
 ## Who runs it
 
-- Renders and scoring: the script, or a cheap agent running it.
+- Renders and scoring: the script (Chromium, deterministic; see SKILL.md step 7), or a cheap agent running it.
 - Judging: a model that can tell good from bad (Opus or Fable). Not Haiku. One agent per 10-20 review sheets
   (120-240 cards); keep to the thread's usage pacing (two or three agents at once at most).
 

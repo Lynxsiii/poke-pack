@@ -34,8 +34,8 @@ every card a change touches, in two steps:
 
 Output in --out (default /tmp/holo-check): check.json (every score), flagged.json, crops/<id>.jpg,
 sheets/flagged-NN.jpg, review/batch-NNN.jpg + review/batch-NNN.json (every card of the run, 6 per sheet, for
-the agents; --sheets-only redraws them). Renders resume: a cut-off run picks up where it stopped. Needs PLAYWRIGHT_BROWSERS_PATH pointing
-at a WebKit install (the poke-pack-webkit-testing note).
+the agents; --sheets-only redraws them). Renders resume: a cut-off run picks up where it stopped. Renders in Chromium (see --browser); --browser webkit
+needs PLAYWRIGHT_BROWSERS_PATH pointing at a WebKit install (the poke-pack-webkit-testing note).
 """
 import argparse
 import collections
@@ -55,7 +55,7 @@ ROOT = os.path.abspath(os.path.join(HERE, "..", "..", "..", ".."))
 RENDER = os.path.join(HERE, "holo_check_render.mjs")
 CENSUS = os.path.join(HERE, "foil_census.mjs")
 LIT = "35:35"
-PER_JOB = 30
+PER_JOB = int(os.environ.get("HOLO_CHECK_PER_JOB", "30"))
 REVIEW_PER = 6
 
 # Floors on the art box, lit. Tuned on the 2026-11-27 run (see SKILL.md); a real holo adds light and texture but
@@ -119,10 +119,12 @@ def token(f):
     suffix = f["id"][len(f["set"]) + 1 + len(n):] if f["id"].startswith(f"{f['set']}-{n}") else ""
     if f["reverse"]:
         return ("r" + n) if re.match(r"\d", n) else None
+    # a ball mirror's number may already carry its suffix ("4-mb"): never double it, or the lab finds no such card
+    # and the whole page's cells lose their tokens (jsv2a 189-210 went unrendered that way, 2026-11-27)
     if "foil-rev-pokeball" in f["pattern"]:
-        return n + "-pb"
+        return n if n.endswith("-pb") else n + "-pb"
     if "foil-rev-masterball" in f["pattern"]:
-        return n + "-mb"
+        return n if n.endswith("-mb") else n + "-mb"
     return n + suffix
 
 
@@ -184,7 +186,15 @@ def render(jobs, args):
             return
         jf = os.path.join(args.renders, f"jobs-{i}.json")
         json.dump(chunks[i], open(jf, "w"))
-        subprocess.run(["node", RENDER, "--jobs", jf, "--out", args.renders, "--poses", f"rest,{LIT}"], cwd=ROOT)
+        env = dict(os.environ)
+        if args.browser == "chromium":
+            # the preinstalled Chromium, not a WebKit-only install the caller pointed at
+            if os.path.isdir("/opt/pw-browsers"):
+                env["PLAYWRIGHT_BROWSERS_PATH"] = "/opt/pw-browsers"
+            else:
+                env.pop("PLAYWRIGHT_BROWSERS_PATH", None)
+        subprocess.run(["node", RENDER, "--jobs", jf, "--out", args.renders, "--poses", f"rest,{LIT}",
+                        "--browser", args.browser], cwd=ROOT, env=env)
     with ThreadPoolExecutor(max_workers=args.jobs) as pool:
         list(pool.map(run, range(args.jobs)))
 
@@ -303,6 +313,11 @@ def main():
     ap.add_argument("--sets"), ap.add_argument("--family"), ap.add_argument("--cards")
     ap.add_argument("--all", action="store_true"), ap.add_argument("--changed", action="store_true")
     ap.add_argument("--skip-reverse", action="store_true")
+    # Chromium by default: headless Linux WebKit paints a lit card's blended foil layers only on some frames (the
+    # same card, same code, lit in one screenshot and bare in the next, master too; 2026-11-27), so a lit render
+    # there cannot be judged. Chromium draws the same frame every run. Safari-only glitches stay the job of the
+    # WebKit phone renders in the sweep (foil_probe.mjs --browser webkit).
+    ap.add_argument("--browser", default="chromium", choices=["chromium", "webkit"])
     ap.add_argument("--out", default="/tmp/holo-check")
     ap.add_argument("--renders", help="where the raw renders go (default <out>/renders)")
     ap.add_argument("--jobs", type=int, default=2, help="WebKit processes at once")

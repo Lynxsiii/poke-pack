@@ -227,6 +227,11 @@ cure"). The surface gloss throws a soft highlight.
       classifier), never by hand on one card, and re-run steps 1-2 on the
       family. Put the flagged sheets on a private Artifact page for Noah when
       the change is one he asked for.
+   The scan renders in Chromium. Headless Linux WebKit paints a lit card's blended foil layers on some frames and
+   not others (the same card and code lit in one screenshot and bare in the next, master included; 2026-11-27),
+   and WebKit's full-page screenshot drops layers on random cards; a whole review round's "the lamp adds nothing"
+   verdicts came from that. Chromium draws the same frame every run (two runs of a set match pixel for pixel);
+   Safari-only glitches stay the job of the WebKit phone renders above.
 8. **Check the cost and the settings**: `foil_probe.mjs --idle` clean, and
    foil strength, reduced motion, tilt off, shine off, Classic, phone width
    (verify.md).
