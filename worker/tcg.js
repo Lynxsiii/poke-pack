@@ -26,6 +26,8 @@
      GET  /api/tcg/matches/<id>[?since=N]      -> { match, seq, legal, view? , steps? }
      POST /api/tcg/matches/<id>/action         { action, since } -> { match, seq, legal, steps }
      POST /api/tcg/matches/<id>/concede        { since } -> { match, seq, legal, steps }
+     .../<id>/rematch, /rematch/decline, /rematch/leave   a new match with the same two (see Rematch below)
+     /api/tcg/queue, /api/tcg/queue/cancel                 quick match by format (see Quick match queue below)
 
    Without `since` a read answers with the whole view. With it, with `steps`:
    every action after step `since`, each { seq, action, events, view }, at most
@@ -34,7 +36,17 @@ import { FORMATS, RuleError, apply, createGame, legalActions, viewFor } from "..
 import { createDefs } from "../js/tcg/cards.js";
 import { checkDeck, deckList } from "../js/tcg/decks.js";
 
-export const TCG_TIMING = { DECISION_MS: 90_000, SETUP_MS: 180_000, CHALLENGE_MS: 15 * 60_000 };
+export const TCG_TIMING = {
+  DECISION_MS: 90_000,
+  SETUP_MS: 180_000,
+  CHALLENGE_MS: 15 * 60_000,
+  // A rematch offer stands this long, and only while both players are still at the finished table.
+  REMATCH_MS: 3 * 60_000,
+  // A player who hasn't read the finished table (rematch) or the queue for this long has left it.
+  PRESENCE_MS: 30_000,
+  // How long after a match ends a rematch can still be offered.
+  REMATCH_WINDOW_MS: 30 * 60_000,
+};
 const MAX_LIVE = 6;
 const STEP_LIMIT = 16;
 const RECENT_MS = 24 * 3600_000;
@@ -74,6 +86,30 @@ export const TCG_DDL = [
   "CREATE INDEX IF NOT EXISTS tcg_matches_p0 ON tcg_matches(p0, status)",
   "CREATE INDEX IF NOT EXISTS tcg_matches_p1 ON tcg_matches(p1, status)",
   "CREATE INDEX IF NOT EXISTS tcg_matches_due ON tcg_matches(status, deadline)",
+  // The same DDL as worker/migrations/0039_tcg_rematch_queue.sql.
+  `CREATE TABLE IF NOT EXISTS tcg_rematches (
+  match_id TEXT PRIMARY KEY,
+  status TEXT NOT NULL DEFAULT '',
+  by_seat INTEGER,
+  deck TEXT,
+  deck_name TEXT NOT NULL DEFAULT '',
+  deadline INTEGER NOT NULL DEFAULT 0,
+  next_id TEXT,
+  seen0 INTEGER NOT NULL DEFAULT 0,
+  seen1 INTEGER NOT NULL DEFAULT 0,
+  updated_at INTEGER NOT NULL
+)`,
+  "CREATE INDEX IF NOT EXISTS tcg_rematches_due ON tcg_rematches(status, deadline)",
+  `CREATE TABLE IF NOT EXISTS tcg_queue (
+  user_id TEXT PRIMARY KEY,
+  format TEXT NOT NULL,
+  deck TEXT NOT NULL,
+  deck_name TEXT NOT NULL DEFAULT '',
+  joined_at INTEGER NOT NULL,
+  seen_at INTEGER NOT NULL,
+  match_id TEXT
+)`,
+  "CREATE INDEX IF NOT EXISTS tcg_queue_format ON tcg_queue(format, match_id, joined_at)",
 ];
 let schemaReady = false;
 /** Tests only: forget the per-isolate cache so another database is checked. */
@@ -333,6 +369,266 @@ async function act(env, request, id, userId, body, h) {
   fail("The match is busy. Try again.", 409);
 }
 
+// ---- Starting a game ------------------------------------------------------------
+/** A fresh engine state for these two decks: the flip's winner chooses who goes first before the deal. */
+async function newGame(env, request, h, format, decks, users, seed) {
+  const lookup = await defsFor(env, request, decks.flatMap((deck) => Object.keys(deck.cards)), h);
+  return createGame({ decks: decks.map((deck) => deckList(deck)), names: users.map((u) => (u.handle ? `@${u.handle}` : u.name)), format, seed, chooseFirst: true }, lookup);
+}
+
+/** The INSERT for a match that starts at once (a rematch, a quick match), only if `guard` (a SELECT) finds a row. */
+function activeInsert(env, { id, p0, p1, format, seed, decks, state, now }, guard) {
+  return env.DB.prepare(
+    `INSERT INTO tcg_matches (id, p0, p1, format, seed, deck0, deck1, deck0_name, deck1_name, status, state, log, seq, to_move, deadline, created_at, updated_at)
+     SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, 'active', ?, '[]', 0, ?, ?, ?, ? WHERE EXISTS (${guard.sql})`
+  ).bind(id, p0, p1, format, seed, JSON.stringify(decks[0].cards), JSON.stringify(decks[1].cards), decks[0].name, decks[1].name, JSON.stringify(state), owing(state).join(","), now + TCG_TIMING.SETUP_MS, now, now, ...guard.binds);
+}
+
+const liveCount = async (env, userId) =>
+  (await env.DB.prepare("SELECT COUNT(*) AS n FROM tcg_matches WHERE (p0 = ? OR p1 = ?) AND status IN ('open', 'active')").bind(userId, userId).first())?.n || 0;
+
+// ---- Rematch ------------------------------------------------------------------------
+/* After a match ends, both players read GET .../rematch while they're at the finished
+   table, which marks them there. Either can offer (POST .../rematch, optionally with
+   another deck of the same format); the other's POST .../rematch accepts it and starts
+   a new match with a fresh seed and a fresh flip. An offer closes when it's declined or
+   called off (.../rematch/decline), when either player leaves (.../rematch/leave, or
+   PRESENCE_MS without a read), or after REMATCH_MS. Nothing is staked.
+
+     GET  /api/tcg/matches/<id>/rematch           -> { rematch: { status, mine, deadline, next, here } }
+     POST /api/tcg/matches/<id>/rematch           { deck? } -> the same (offers, or accepts theirs)
+     POST /api/tcg/matches/<id>/rematch/decline   -> the same (declines theirs, or calls off yours)
+     POST /api/tcg/matches/<id>/rematch/leave     -> the same (closes it for good) */
+
+const getRematch = (env, id) => env.DB.prepare("SELECT * FROM tcg_rematches WHERE match_id = ?").bind(id).first();
+const seenOf = (rem, seat) => (seat === 0 ? rem.seen0 : rem.seen1) || 0;
+
+/** This match's rematch row, made if missing, with `seat` marked present (when `touch`) and a stale offer closed. */
+async function rematchRow(env, row, seat, now, touch = true) {
+  if (touch) {
+    const col = seat === 0 ? "seen0" : "seen1";
+    await env.DB.prepare(`INSERT INTO tcg_rematches (match_id, ${col}, updated_at) VALUES (?, ?, ?) ON CONFLICT(match_id) DO UPDATE SET ${col} = excluded.${col}`).bind(row.id, now, now).run();
+  }
+  let rem = await getRematch(env, row.id);
+  if (!rem) return { match_id: row.id, status: "", seen0: 0, seen1: 0, deadline: 0 };
+  if (rem.status === "open") {
+    // by_seat on a closed-by-leaving row is who left.
+    const gone = [0, 1].find((p) => seenOf(rem, p) <= now - TCG_TIMING.PRESENCE_MS);
+    const closed = gone != null ? "left" : rem.deadline <= now ? "expired" : "";
+    if (closed) {
+      await env.DB.prepare("UPDATE tcg_rematches SET status = ?, by_seat = ?, updated_at = ? WHERE match_id = ? AND status = 'open'").bind(closed, gone ?? rem.by_seat, now, row.id).run();
+      rem = await getRematch(env, row.id);
+    }
+  }
+  return rem;
+}
+
+function rematchReply(rem, seat, now) {
+  return {
+    rematch: {
+      status: rem.status || "",
+      // Whose offer it is (or, once 'left', who left).
+      mine: rem.status ? rem.by_seat === seat : false,
+      deadline: rem.status === "open" ? rem.deadline : 0,
+      next: rem.status === "accepted" ? rem.next_id : null,
+      // Whether the other player is still at the finished table.
+      here: seenOf(rem, 1 - seat) > now - TCG_TIMING.PRESENCE_MS && rem.status !== "left",
+      now,
+    },
+  };
+}
+
+const ownDeckOf = (row, seat) => ({ name: (seat === 0 ? row.deck0_name : row.deck1_name) || "Deck", format: row.format, cards: decksOf(row)[seat] });
+
+async function rematchOffer(env, request, row, seat, me, body, h) {
+  const deck = body?.deck ? readDeck(body.deck) : ownDeckOf(row, seat);
+  if (deck.format !== row.format) fail(`A rematch is ${FORMATS[row.format].name} again: choose a ${FORMATS[row.format].name}.`);
+  const problem = await deckProblem(env, request, me.id, deck, h);
+  if (problem) fail(problem);
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const now = Date.now();
+    const rem = await rematchRow(env, row, seat, now);
+    if (rem.status === "accepted") return rem;
+    if (rem.status === "left") fail("They've left the table.", 409);
+    if (rem.status === "declined") fail("The rematch was turned down.", 409);
+    if (rem.status === "open" && rem.by_seat === seat) {
+      // Already offered: this changes the deck that goes with it.
+      await env.DB.prepare("UPDATE tcg_rematches SET deck = ?, deck_name = ?, updated_at = ? WHERE match_id = ? AND status = 'open' AND by_seat = ?").bind(JSON.stringify(deck.cards), deck.name, now, row.id, seat).run();
+      return getRematch(env, row.id);
+    }
+    if ((await liveCount(env, me.id)) >= MAX_LIVE) fail(`You have ${MAX_LIVE} matches and challenges going already.`);
+    if (rem.status === "open") {
+      // They offered: this accepts. Their deck is checked again, the way a challenger's is.
+      const otherId = seat === 0 ? row.p1 : row.p0;
+      const theirs = { format: row.format, cards: JSON.parse(rem.deck), name: rem.deck_name || "Deck" };
+      if (await deckProblem(env, request, otherId, theirs, h)) {
+        await env.DB.prepare("UPDATE tcg_rematches SET status = 'cancelled', updated_at = ? WHERE match_id = ? AND status = 'open'").bind(now, row.id).run();
+        fail("Their deck isn't legal any more, so the rematch was called off.", 409);
+      }
+      const decks = seat === 0 ? [deck, theirs] : [theirs, deck];
+      const users = await usersOf(env, row);
+      const seed = newSeed();
+      const state = await newGame(env, request, h, row.format, decks, users, seed);
+      const id = newId();
+      // One transaction: the offer becomes accepted and the match exists, or neither.
+      await env.DB.batch([
+        env.DB.prepare("UPDATE tcg_rematches SET status = 'accepted', next_id = ?, updated_at = ? WHERE match_id = ? AND status = 'open' AND by_seat = ?").bind(id, now, row.id, rem.by_seat),
+        activeInsert(env, { id, p0: row.p0, p1: row.p1, format: row.format, seed, decks, state, now }, { sql: "SELECT 1 FROM tcg_rematches WHERE match_id = ? AND next_id = ?", binds: [row.id, id] }),
+      ]);
+      const fresh = await getRematch(env, row.id);
+      if (fresh.status === "accepted") return fresh;
+      continue;
+    }
+    // No offer standing ('', cancelled, expired): make one, if they're still here.
+    if (seenOf(rem, 1 - seat) <= now - TCG_TIMING.PRESENCE_MS) fail("They've left the table.", 409);
+    const res = await env.DB.prepare(
+      "UPDATE tcg_rematches SET status = 'open', by_seat = ?, deck = ?, deck_name = ?, deadline = ?, next_id = NULL, updated_at = ? WHERE match_id = ? AND status IN ('', 'cancelled', 'expired')"
+    )
+      .bind(seat, JSON.stringify(deck.cards), deck.name, now + TCG_TIMING.REMATCH_MS, now, row.id)
+      .run();
+    if (res.meta.changes) return getRematch(env, row.id);
+  }
+  fail("The table is busy. Try again.", 409);
+}
+
+async function rematchRoute(env, request, row, seat, me, verb, method, h) {
+  const { json, readJson } = h;
+  const now = Date.now();
+  if (row.status === "active") return json({ rematch: null, playing: true });
+  if (row.status !== "over") fail("That match never started.", 409);
+  if (method === "GET" && verb === "rematch") return json(rematchReply(await rematchRow(env, row, seat, now), seat, now));
+  if (method !== "POST") return json({ error: "Not found." }, 404);
+  const body = (await readJson(request)) || {};
+  if (verb === "rematch") {
+    if ((row.ended_at || 0) <= now - TCG_TIMING.REMATCH_WINDOW_MS) fail("That match ended a while ago. Challenge them from Play a friend.", 409);
+    return json(rematchReply(await rematchOffer(env, request, row, seat, me, body, h), seat, Date.now()));
+  }
+  if (verb === "rematch/decline") {
+    const rem = await rematchRow(env, row, seat, now);
+    if (rem.status === "open") {
+      await env.DB.prepare("UPDATE tcg_rematches SET status = ?, updated_at = ? WHERE match_id = ? AND status = 'open'").bind(rem.by_seat === seat ? "cancelled" : "declined", now, row.id).run();
+    }
+    return json(rematchReply(await getRematch(env, row.id), seat, now));
+  }
+  if (verb === "rematch/leave") {
+    await rematchRow(env, row, seat, now, false);
+    await env.DB.prepare("UPDATE tcg_rematches SET status = 'left', by_seat = ?, updated_at = ? WHERE match_id = ? AND status IN ('', 'open', 'cancelled', 'expired')").bind(seat, now, row.id).run();
+    const rem = await getRematch(env, row.id);
+    return json(rem ? rematchReply(rem, seat, now) : { rematch: null });
+  }
+  return json({ error: "Not found." }, 404);
+}
+
+// ---- Quick match queue ----------------------------------------------------------------
+/* A player picks a legal deck and joins the queue for its format. Their page reads
+   GET /api/tcg/queue every few seconds; a place not read for PRESENCE_MS is stale: it is
+   skipped when pairing and dropped. Whenever a player joins or reads, the Worker pairs
+   them with the longest-waiting fresh player in the same format and starts the match at
+   once; both pages see `match` and go to the table. Players who aren't friends only see
+   each other's handle and display name, as their public profiles show them. No chat.
+
+     GET  /api/tcg/queue           -> { queue: null | { format, deckName, joinedAt, match }, waiting: { format: n }, expired? }
+     POST /api/tcg/queue           { deck } -> the same
+     POST /api/tcg/queue/cancel    -> the same */
+
+const getQueued = (env, userId) => env.DB.prepare("SELECT * FROM tcg_queue WHERE user_id = ?").bind(userId).first();
+
+/** Pair this player with someone waiting in the same format. Returns the new match's id, or "". */
+async function pairUp(env, request, userId, h) {
+  const now = Date.now();
+  const mine = await getQueued(env, userId);
+  if (!mine || mine.match_id) return "";
+  const fresh = now - TCG_TIMING.PRESENCE_MS;
+  const others =
+    (await env.DB.prepare("SELECT * FROM tcg_queue WHERE format = ? AND match_id IS NULL AND seen_at > ? AND user_id != ? ORDER BY joined_at LIMIT 5").bind(mine.format, fresh, userId).all()).results || [];
+  for (const other of others) {
+    const theirs = { name: other.deck_name || "Deck", format: other.format, cards: JSON.parse(other.deck) };
+    // Their deck is checked again now, the way a challenger's is when the match starts.
+    if ((await deckProblem(env, request, other.user_id, theirs, h)) || (await liveCount(env, other.user_id)) >= MAX_LIVE) {
+      await env.DB.prepare("DELETE FROM tcg_queue WHERE user_id = ? AND match_id IS NULL").bind(other.user_id).run();
+      continue;
+    }
+    const id = newId();
+    // Claim yourself first, so nobody else pairs you meanwhile; let go if they were taken.
+    const self = await env.DB.prepare("UPDATE tcg_queue SET match_id = ? WHERE user_id = ? AND match_id IS NULL").bind(id, userId).run();
+    if (!self.meta.changes) return "";
+    const p0 = other.user_id;
+    const decks = [theirs, { name: mine.deck_name || "Deck", format: mine.format, cards: JSON.parse(mine.deck) }];
+    const seed = newSeed();
+    let state;
+    try {
+      state = await newGame(env, request, h, mine.format, decks, await usersOf(env, { p0, p1: userId }), seed);
+    } catch (err) {
+      await env.DB.prepare("UPDATE tcg_queue SET match_id = NULL WHERE user_id = ? AND match_id = ?").bind(userId, id).run();
+      throw err;
+    }
+    // Claim them and start the match in one transaction: both or neither.
+    await env.DB.batch([
+      env.DB.prepare("UPDATE tcg_queue SET match_id = ? WHERE user_id = ? AND match_id IS NULL AND seen_at > ?").bind(id, p0, fresh),
+      activeInsert(env, { id, p0, p1: userId, format: mine.format, seed, decks, state, now }, { sql: "SELECT 1 FROM tcg_queue WHERE user_id = ? AND match_id = ?", binds: [p0, id] }),
+    ]);
+    if (await getRow(env, id)) return id;
+    await env.DB.prepare("UPDATE tcg_queue SET match_id = NULL WHERE user_id = ? AND match_id = ?").bind(userId, id).run();
+  }
+  return "";
+}
+
+async function queueReply(env, userId, extra = {}) {
+  const now = Date.now();
+  const row = await getQueued(env, userId);
+  const counts =
+    (await env.DB.prepare("SELECT format, COUNT(*) AS n FROM tcg_queue WHERE match_id IS NULL AND seen_at > ? AND user_id != ? GROUP BY format").bind(now - TCG_TIMING.PRESENCE_MS, userId).all()).results || [];
+  // A pairing is only news while its match is still on; after that the row is just waiting to be swept.
+  const paired = row?.match_id ? await getRow(env, row.match_id) : null;
+  const match = paired?.status === "active" ? paired.id : null;
+  if (row?.match_id && !match) return { queue: null, waiting: Object.fromEntries(counts.map((c) => [c.format, c.n])), now, ...extra };
+  return { queue: row ? { format: row.format, deckName: row.deck_name, joinedAt: row.joined_at, match } : null, waiting: Object.fromEntries(counts.map((c) => [c.format, c.n])), now, ...extra };
+}
+
+async function queueRoute(env, request, path, method, me, h) {
+  const { json, readJson } = h;
+  const now = Date.now();
+  if (path === "/api/tcg/queue" && method === "GET") {
+    const row = await getQueued(env, me.id);
+    if (row && !row.match_id && row.seen_at <= now - TCG_TIMING.PRESENCE_MS) {
+      // The page stopped reading: the place in the queue is gone.
+      await env.DB.prepare("DELETE FROM tcg_queue WHERE user_id = ? AND match_id IS NULL").bind(me.id).run();
+      return json(await queueReply(env, me.id, { expired: true }));
+    }
+    if (row && !row.match_id) {
+      // Still waiting: mark the page here and look for someone. A paired row is left to age out.
+      await env.DB.prepare("UPDATE tcg_queue SET seen_at = ? WHERE user_id = ? AND match_id IS NULL").bind(now, me.id).run();
+      await pairUp(env, request, me.id, h);
+    }
+    return json(await queueReply(env, me.id));
+  }
+  if (path === "/api/tcg/queue" && method === "POST") {
+    const body = (await readJson(request)) || {};
+    const deck = readDeck(body.deck);
+    if ((await liveCount(env, me.id)) >= MAX_LIVE) fail(`You have ${MAX_LIVE} matches and challenges going already.`);
+    const problem = await deckProblem(env, request, me.id, deck, h);
+    if (problem) fail(problem);
+    await env.DB.prepare(
+      `INSERT INTO tcg_queue (user_id, format, deck, deck_name, joined_at, seen_at, match_id) VALUES (?, ?, ?, ?, ?, ?, NULL)
+       ON CONFLICT(user_id) DO UPDATE SET format = excluded.format, deck = excluded.deck, deck_name = excluded.deck_name,
+         joined_at = excluded.joined_at, seen_at = excluded.seen_at, match_id = NULL`
+    )
+      .bind(me.id, deck.format, JSON.stringify(deck.cards), deck.name, now, now)
+      .run();
+    await pairUp(env, request, me.id, h);
+    return json(await queueReply(env, me.id));
+  }
+  if (path === "/api/tcg/queue/cancel" && method === "POST") {
+    // Before a pairing the place is let go. Once paired the match stands, and the reply says which.
+    await env.DB.prepare("DELETE FROM tcg_queue WHERE user_id = ? AND match_id IS NULL").bind(me.id).run();
+    const out = await queueReply(env, me.id);
+    // A pairing whose match is over (or never got made) is let go too.
+    if (!out.queue) await env.DB.prepare("DELETE FROM tcg_queue WHERE user_id = ?").bind(me.id).run();
+    return json(out);
+  }
+  return json({ error: "Not found." }, 404);
+}
+
 // ---- Routes -------------------------------------------------------------------
 export async function handleTcg(path, method, request, env, h) {
   const { json, requireUser, readJson } = h;
@@ -372,8 +668,7 @@ export async function handleTcg(path, method, request, env, h) {
     const friends = await env.DB.prepare("SELECT 1 AS x FROM friends WHERE from_id = ? AND to_id = ? AND status = 'accepted'").bind(me.id, them.id).first();
     if (!friends) fail("You can challenge your friends. Add them first.", 403);
     const deck = readDeck(body?.deck);
-    const live = await env.DB.prepare("SELECT COUNT(*) AS n FROM tcg_matches WHERE (p0 = ? OR p1 = ?) AND status IN ('open', 'active')").bind(me.id, me.id).first();
-    if ((live?.n || 0) >= MAX_LIVE) fail(`You have ${MAX_LIVE} matches and challenges going already.`);
+    if ((await liveCount(env, me.id)) >= MAX_LIVE) fail(`You have ${MAX_LIVE} matches and challenges going already.`);
     const pair = await env.DB.prepare("SELECT 1 AS x FROM tcg_matches WHERE status = 'open' AND ((p0 = ? AND p1 = ?) OR (p0 = ? AND p1 = ?)) AND deadline > ?")
       .bind(me.id, them.id, them.id, me.id, now)
       .first();
@@ -391,7 +686,9 @@ export async function handleTcg(path, method, request, env, h) {
     return json({ match: summary(row, 0, await usersOf(env, row)) });
   }
 
-  const m = path.match(/^\/api\/tcg\/matches\/([a-f0-9]+)(?:\/(accept|decline|cancel|action|concede))?$/);
+  if (path === "/api/tcg/queue" || path === "/api/tcg/queue/cancel") return queueRoute(env, request, path, method, me, h);
+
+  const m = path.match(/^\/api\/tcg\/matches\/([a-f0-9]+)(?:\/(accept|decline|cancel|action|concede|rematch|rematch\/decline|rematch\/leave))?$/);
   if (!m || !MATCH_ID.test(m[1])) return json({ error: "Not found." }, 404);
   const [, id, verb] = m;
   let row = await getRow(env, id);
@@ -403,6 +700,7 @@ export async function handleTcg(path, method, request, env, h) {
     const since = new URL(request.url).searchParams.get("since");
     return json(await matchReply(env, request, row, seat, h, since == null || since === "" ? null : Number(since)));
   }
+  if (verb?.startsWith("rematch")) return rematchRoute(env, request, row, seat, me, verb, method, h);
   if (method !== "POST") return json({ error: "Not found." }, 404);
   const body = (await readJson(request)) || {};
 
@@ -419,8 +717,7 @@ export async function handleTcg(path, method, request, env, h) {
       fail("Their deck isn't legal any more, so the challenge was called off.", 409);
     }
     const users = await usersOf(env, row);
-    const lookup = await defsFor(env, request, [...Object.keys(theirs.cards), ...Object.keys(deck.cards)], h);
-    const state = createGame({ decks: [deckList(theirs), deckList(deck)], names: users.map((u) => (u.handle ? `@${u.handle}` : u.name)), format: row.format, seed: row.seed, chooseFirst: true }, lookup);
+    const state = await newGame(env, request, h, row.format, [theirs, deck], users, row.seed);
     const res = await env.DB.prepare(
       `UPDATE tcg_matches SET status = 'active', deck1 = ?, deck1_name = ?, state = ?, log = '[]', seq = 0, to_move = ?, deadline = ?, updated_at = ?
        WHERE id = ? AND status = 'open'`
@@ -458,5 +755,9 @@ export async function maintainTcg(env, now = Date.now(), limit = 20) {
       console.error("tcg clock", row.id, err);
     }
   }
+  // Rematch offers that ran out, and queue places nobody is reading any more.
+  await env.DB.prepare("UPDATE tcg_rematches SET status = 'expired', updated_at = ? WHERE status = 'open' AND deadline <= ?").bind(now, now).run();
+  await env.DB.prepare("DELETE FROM tcg_rematches WHERE updated_at <= ?").bind(now - RECENT_MS).run();
+  await env.DB.prepare("DELETE FROM tcg_queue WHERE (match_id IS NULL AND seen_at <= ?) OR seen_at <= ?").bind(now - TCG_TIMING.PRESENCE_MS, now - 10 * 60_000).run();
   return rows.length;
 }
