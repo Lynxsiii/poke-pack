@@ -4907,8 +4907,8 @@ test("more wordings read: counts, tests, small differences in print", () => {
   assert.ok(steps("This attack does 20 damage to 1 of your opponent's Benched Pokemon. (Don't apply Weakness or Resistance for Benched Pokemon)."));
   assert.deepEqual(steps("Flip a coin. If tails, Electabuzz is now Confused (after doing damage).", "Electabuzz")[0].tails[0], { op: "condition", when: "after", kind: "confused", self: true });
   assert.deepEqual(steps("Does 10 damage plus 10 more damage for each damage counter on this Pokémon. Then, remove 2 damage counters from this Pokémon.")[1], { op: "healSelf", when: "after", n: 20 });
-  // Still not read: the two coins can't be told apart from the one sentence.
-  assert.equal(steps("Flip 2 coins. If both are tails, this attack does nothing. For each heads, discard an Energy attached to the Defending Pokémon."), null);
+  // Both tails and nothing; otherwise once for each heads, after the damage.
+  assert.equal(steps("Flip 2 coins. If both are tails, this attack does nothing. For each heads, discard an Energy attached to the Defending Pokémon.")[0].op, "flipCount");
 });
 
 /* ---------- attack text batch 5 ---------- */
@@ -5150,6 +5150,216 @@ test("more damage and a heal on one test, asked before the damage", () => {
   use(state, 0, "Mend");
   assert.equal(state.players[1].active.damage, 50);
   assert.equal(state.players[0].active.damage, 20);
+});
+
+/* ---------- attack text batch 7: the Lost Zone, next-turn marks, coins counted after the damage ---------- */
+
+lab("lab-l1", [
+  ["Shed", 0, "Put 2 Energy attached to this Pokémon in the Lost Zone."],
+  ["Void", 0, "Put the top 2 cards of your opponent's deck in the Lost Zone."],
+  ["Grab", 0, "Put a random card from your opponent's hand in the Lost Zone."],
+  ["Gone", 10, "If the Defending Pokémon is Knocked Out by this attack, put the Defending Pokémon and all cards attached to it in the Lost Zone instead of the discard pile."],
+  ["Count", 0, "This attack does 20 damage for each of your Pokémon in the Lost Zone."],
+]);
+lab("lab-l2", [
+  ["Weigh", 0, "During your opponent's next turn, the Defending Pokémon's attacks cost Colorless more."],
+  ["Mud", 0, "During your opponent's next turn, the Defending Pokémon's Retreat Cost is Colorless more."],
+  ["Endure", 0, "Flip a coin. If heads, if this Pokémon would be Knocked Out by damage from an attack during your opponent's next turn, it is not Knocked Out, and its remaining HP becomes 10."],
+  ["Mirror", 0, "During your opponent's next turn, if this Pokémon is damaged by an attack (even if it is Knocked Out), put damage counters on the Attacking Pokémon equal to the damage done to this Pokémon."],
+  ["Blaze", 100, "This Pokémon can't use Blaze again until it leaves the Active Spot."],
+]);
+lab("lab-l3", [
+  ["Pecks", 20, "Flip 2 coins. This attack does 20 damage times the number of heads. If either of them is heads, the Defending Pokémon is now Paralyzed."],
+  ["Gust", 0, "Flip 2 coins. If both of them are tails, this attack does nothing. For each heads, discard an Energy attached to the Defending Pokémon."],
+  ["Win", 0, "If you use this attack when you have exactly 1 Prize card remaining, you win this game."],
+  ["Bloom", 0, "Heal 20 damage from each of your Pokémon that has any Energy attached to it."],
+  ["Soothe", 0, "Heal 30 damage from both Active Pokémon."],
+]);
+lab("lab-l4", [
+  ["Nap", 0, "At the end of your opponent's next turn, the Defending Pokémon is now Confused."],
+  ["Strip", 0, "Your opponent reveals their hand. Discard all Item cards you find there."],
+  ["Send", 0, "Choose 1 of your opponent's Benched Pokémon. They shuffle that Pokémon and all attached cards into their deck."],
+  ["Brink", 0, "Put damage counters on 1 of your opponent's Pokémon until its remaining HP is 50."],
+]);
+lab("lab-l9", [
+  ["Hit", 50, ""],
+  ["Big", 300, ""],
+]);
+
+/** Answer each pending choice of cards with the first ones it allows. */
+function chooseFirst(state, p) {
+  while (state.pending[0]?.type === "choose" && state.pending[0].player === p) {
+    const waiting = state.pending[0];
+    act(state, { type: "choose", player: p, uids: waiting.uids.slice(0, Math.max(waiting.min || 0, 1)) });
+  }
+}
+
+test("batch 7 wordings are read", () => {
+  for (const id of ["lab-l1", "lab-l2", "lab-l3", "lab-l4"]) for (const a of defs(id).attacks) assert.ok(!a.plain, a.name);
+  const steps = (text, name) => compileAttack(text, name);
+  assert.deepEqual(steps("Put 2 Energy attached to your opponent's Active Pokémon in the Lost Zone.")[0], { op: "discardFoeEnergy", when: "after", n: 2, lost: true });
+  assert.equal(steps("This attack does 20 damage for each Pokémon Tool card in the Lost Zone (both yours and your opponent's).")[0].per, "lostBoth");
+  assert.equal(steps("During your next turn, this Pokémon's Blaze attack does 150 more damage.")[0].name, "Blaze");
+  assert.deepEqual(steps("Flip 4 coins. This attack does 20 damage times the number of heads. If you get 2 or more heads, the Defending Pokémon is now Confused.")[1].min, 2);
+  // Not read: a misprint ("Flip a coins ... 2 or more heads") whose heads can never come up.
+  assert.equal(steps("Flip a coins. This attack does 30 damage times the number of heads. If you get 2 or more heads, this Pokémon is now Confused."), null);
+});
+
+test("the Lost Zone: Energy, deck, hand, and a Pokémon Knocked Out go there; and are counted", () => {
+  let state = labgame("lab-l1", "lab-2");
+  const me = state.players[0];
+  while (me.active.energy.length < 3) {
+    const uid = give(state, 0, W);
+    me.hand = me.hand.filter((u) => u !== uid);
+    me.active.energy.push(uid);
+  }
+  const had = me.active.energy.length;
+  use(state, 0, "Shed");
+  chooseFirst(state, 0);
+  assert.equal(me.active.energy.length, had - 2);
+  assert.equal(me.lost.length, 2);
+  assert.ok(me.lost.every((uid) => !me.discard.includes(uid)));
+  state = labgame("lab-l1", "lab-2");
+  use(state, 0, "Void");
+  assert.equal(state.players[1].lost.length, 2);
+  state = labgame("lab-l1", "lab-2");
+  const hand = state.players[1].hand.length;
+  use(state, 0, "Grab");
+  assert.equal(state.players[1].lost.length, 1);
+  assert.equal(state.players[1].hand.length, hand - 1 + 1, "one gone, one drawn for their turn");
+  // Knocked Out by this attack: into the Lost Zone, attached cards too.
+  state = labgame("lab-l1", "lab-2");
+  const foe = state.players[1].active;
+  foe.damage = 190;
+  const gone = [foe.uid, ...foe.energy];
+  use(state, 0, "Gone");
+  for (const uid of gone) {
+    assert.ok(state.players[1].lost.includes(uid), uid);
+    assert.ok(!state.players[1].discard.includes(uid), uid);
+  }
+  // Counted: their own Pokémon there.
+  state = labgame("lab-l1", "lab-2");
+  for (const id of ["base1-63", "base1-63", T.potion]) {
+    const uid = hold(state, 0, id);
+    state.players[0].hand.pop();
+    state.players[0].lost = [...(state.players[0].lost || []), uid];
+  }
+  use(state, 0, "Count");
+  assert.equal(state.players[1].active.damage, 40);
+});
+
+test("next-turn marks: costs more, retreats for more, endures, damage back, not again until it leaves", () => {
+  let state = labgame("lab-l2", "lab-l9");
+  state.players[1].active.energy = [];
+  use(state, 0, "Weigh");
+  assert.deepEqual(usableAttacks(state, 1, defs), [], "free attacks cost Colorless now");
+  act(state, { type: "end", player: 1 });
+  act(state, { type: "end", player: 0 });
+  assert.ok(usableAttacks(state, 1, defs).length > 0, "only for that turn");
+  state = labgame("lab-l2", "lab-l9");
+  const before = retreatCost(state, state.players[1].active, defs);
+  use(state, 0, "Mud");
+  assert.equal(retreatCost(state, state.players[1].active, defs), before + 1);
+  // Endures on heads: left with 10 HP.
+  state = labgame("lab-l2", "lab-l9");
+  state.players[0].active.damage = 100;
+  rigFlips(state, [true]);
+  use(state, 0, "Endure");
+  use(state, 1, "Big");
+  assert.equal(state.players[0].active.damage, 190);
+  state = labgame("lab-l2", "lab-l9");
+  state.players[0].active.damage = 100;
+  rigFlips(state, [false]);
+  use(state, 0, "Endure");
+  use(state, 1, "Big");
+  assert.deepEqual(state.pending, [{ type: "promote", player: 0 }], "tails: Knocked Out");
+  // Damage done comes back as counters.
+  state = labgame("lab-l2", "lab-l9");
+  use(state, 0, "Mirror");
+  use(state, 1, "Hit");
+  assert.equal(state.players[1].active.damage, 50);
+  // Not again while it stays Active.
+  state = labgame("lab-l2", "lab-l9");
+  const blaze = attackIndex(state, 0, "Blaze");
+  use(state, 0, "Blaze");
+  act(state, { type: "end", player: 1 });
+  assert.ok(!usableAttacks(state, 0, defs).includes(blaze));
+  throws(() => use(state, 0, "Blaze"), /can't use Blaze/);
+  act(state, { type: "end", player: 0 });
+  act(state, { type: "end", player: 1 });
+  assert.ok(!usableAttacks(state, 0, defs).includes(blaze), "still not, turns on");
+});
+
+test("coins counted after the damage, a win on the last Prize card, heals on each and both", () => {
+  let state = labgame("lab-l3", "lab-2");
+  rigFlips(state, [true, false]);
+  use(state, 0, "Pecks");
+  assert.equal(state.players[1].active.damage, 20);
+  assert.deepEqual(conditionsOn(state.players[1].active), ["paralyzed"]);
+  state = labgame("lab-l3", "lab-2");
+  rigFlips(state, [false, false]);
+  use(state, 0, "Pecks");
+  assert.deepEqual(conditionsOn(state.players[1].active), []);
+  // One Energy off for each heads.
+  state = labgame("lab-l3", "lab-2");
+  const foe = state.players[1];
+  for (let i = 0; i < 3; i += 1) {
+    const uid = give(state, 1, F);
+    foe.hand = foe.hand.filter((u) => u !== uid);
+    foe.active.energy.push(uid);
+  }
+  const had = foe.active.energy.length;
+  rigFlips(state, [true, true]);
+  use(state, 0, "Gust");
+  chooseFirst(state, 0);
+  assert.equal(foe.active.energy.length, had - 2);
+  // Exactly 1 Prize card left: the game is won.
+  state = labgame("lab-l3", "lab-2");
+  use(state, 0, "Win");
+  assert.equal(state.winner ?? null, null);
+  state = labgame("lab-l3", "lab-2");
+  state.players[0].prizes = state.players[0].prizes.slice(0, 1);
+  use(state, 0, "Win");
+  assert.equal(state.winner, 0);
+  // Heals: only Pokémon with Energy; both Active Pokémon.
+  state = labgame("lab-l3", "lab-2");
+  const me = state.players[0];
+  me.active.damage = 50;
+  me.bench[0].energy = [];
+  me.bench[0].damage = 30;
+  use(state, 0, "Bloom");
+  assert.equal(me.active.damage, me.active.energy.length ? 30 : 50);
+  assert.equal(me.bench[0].damage, 30);
+  state = labgame("lab-l3", "lab-2");
+  state.players[0].active.damage = 50;
+  state.players[1].active.damage = 50;
+  use(state, 0, "Soothe");
+  assert.equal(state.players[0].active.damage, 20);
+  assert.equal(state.players[1].active.damage, 20);
+});
+
+test("a condition at the end of their next turn, their Items discarded, a Benched Pokémon shuffled away, HP brought down", () => {
+  let state = labgame("lab-l4", "lab-2");
+  use(state, 0, "Nap");
+  assert.deepEqual(conditionsOn(state.players[1].active), []);
+  act(state, { type: "end", player: 1 });
+  assert.deepEqual(conditionsOn(state.players[1].active), ["confused"]);
+  state = labgame("lab-l4", "lab-2");
+  const potion = hold(state, 1, T.potion);
+  const research = hold(state, 1, T.research);
+  use(state, 0, "Strip");
+  assert.ok(state.players[1].discard.includes(potion));
+  assert.ok(state.players[1].hand.includes(research), "a Supporter stays");
+  state = labgame("lab-l4", "lab-2");
+  const benched = state.players[1].bench[0].uid;
+  use(state, 0, "Send");
+  if (state.pending[0]?.type === "pick") act(state, { type: "pick", player: 0, spot: 0 });
+  assert.ok(!state.players[1].bench.some((s) => s.uid === benched));
+  assert.ok(state.players[1].deck.includes(benched) || state.players[1].hand.includes(benched));
+  state = labgame("lab-l4", "lab-2");
+  use(state, 0, "Brink");
+  act(state, { type: "pick", player: 0, spot: ACTIVE });
+  assert.equal(state.players[1].active.damage, 150);
 });
 
 console.log(`${passed} checks passed${process.exitCode ? ", some failed" : ""}`);
