@@ -697,6 +697,65 @@ export const T_OPS = {
       if (outcome === 1) runTrainer(win, ctx);
     },
   },
+  /**
+   * Challenge!: the opponent accepts or declines. Declined (or both Benches full), this card's player draws 2.
+   * Accepted, each player with room searches their deck for any number of Basic Pokémon to put face down onto the
+   * Bench: the cards wait out of sight in `state.challenge` (engine.js viewFor keeps them from the other player)
+   * until both are done, then go onto the Benches face up and the decks are shuffled.
+   */
+  challenge: {
+    ready: (ctx) => hasDeck(ctx) || [0, 1].some((p) => ctx.state.players[p].bench.length < ctx.state.rules.bench),
+    run(ctx) {
+      const full = [0, 1].every((p) => ctx.state.players[p].bench.length >= ctx.state.rules.bench);
+      if (full) return T_OPS.draw.run(ctx, { n: 2 });
+      ctx.state.pending.push({ type: "option", player: other(ctx.player), by: ctx.player, why: "challenge", prompt: "Your opponent's Challenge!: do you accept? If you do, each player puts any number of Basic Pokémon from their deck face down onto their Bench. If you decline, they draw 2 cards.", labels: ["Accept", "Decline"], options: [[{ op: "challengeGo" }], [{ op: "draw", n: 2 }]] });
+    },
+  },
+  challengeGo: {
+    ready: () => true,
+    run(ctx) {
+      const { state } = ctx;
+      const order = [ctx.player, other(ctx.player)].filter((p) => state.players[p].bench.length < state.rules.bench);
+      state.challenge = { by: ctx.player, wait: order.length, cards: [[], []] };
+      for (const p of order) {
+        const side = state.players[p];
+        const uids = side.deck.filter((uid) => fits(defOf(state, uid, ctx.defs), "basic"));
+        state.pending.push({ type: "choose", player: p, zone: "deck", what: "basic", uids, min: 0, max: Math.min(uids.length, state.rules.bench - side.bench.length), effect: { op: "challengeHold" }, prompt: "Challenge!: Basic Pokémon from your deck, face down onto your Bench (any number)." });
+      }
+    },
+  },
+  /**
+   * Pokémon Breeder Fields: 1 or 2 of your non-Baby Pokémon that can evolve are picked (their uids wait in
+   * `state.breeder`), then a coin for each; for each heads, a card from the deck that evolves from that one.
+   */
+  breeder: {
+    ready: (ctx) => hasDeck(ctx) && breederSpots(ctx).length > 0,
+    run(ctx) {
+      const spots = breederSpots(ctx);
+      if (!spots.length) return;
+      ctx.state.breeder = [];
+      askPick(ctx.state, { player: ctx.player, side: ctx.player, spots, left: 2, effect: { op: "breedMark" }, then: [{ op: "breedFlip" }] });
+    },
+  },
+  breedFlip: {
+    ready: () => true,
+    run(ctx) {
+      const { state } = ctx;
+      const marked = state.breeder || [];
+      delete state.breeder;
+      const side = mine(ctx);
+      for (const uid of marked) {
+        const at = inPlay(state, ctx.player).find(([slot]) => slot.uid === uid);
+        if (!at) continue;
+        const heads = flip(state, ctx.player);
+        ctx.events.push({ t: "flip", p: ctx.player, results: [heads] });
+        if (!heads) continue;
+        const name = defOf(state, uid, ctx.defs).name;
+        const uids = side.deck.filter((u) => evolvesOnto(defOf(state, u, ctx.defs), name));
+        askChoose(state, { player: ctx.player, zone: "deck", what: "evolution", uids, min: 0, max: 1, effect: { op: "toHand" }, shuffle: true });
+      }
+    },
+  },
   /** Kahili, Egg Incubator: this card goes back to the hand, or to the bottom of the deck, instead of the discard pile. */
   keepCard: {
     must: true,
@@ -1157,6 +1216,16 @@ const blaineSpots = (ctx) => {
   if (inPlay(state, other(ctx.player)).some(([slot]) => abilityHas(state, slot, ctx.defs, "foeAttach"))) return [];
   return whoSpots(ctx, { named: "Blaine" }).filter((spot) => !(slotAt(state, ctx.player, spot).marks || []).some((m) => ["noEnergy", "attachEnds"].includes(m.kind) && m.turn === state.turn));
 };
+/** A card that evolves from a Pokémon of this name ("a later-Stage card that matches that Pokémon"). */
+const evolvesOnto = (def, name) => def?.kind === "pokemon" && def.stage === "evolution" && def.evolvesFrom === name;
+/** Pokémon Breeder Fields: your non-Baby Pokémon that can evolve (a Basic Pokémon or a Stage 1). */
+const breederSpots = (ctx) =>
+  inPlay(ctx.state, ctx.player)
+    .filter(([slot]) => {
+      const def = defOf(ctx.state, slot.uid, ctx.defs);
+      return !(def.tags || []).includes("Baby") && (def.stage === "basic" || def.line === 1);
+    })
+    .map(([, spot]) => spot);
 /** Where a Technical Machine may go: one of your Pokémon that fits it and holds no Technical Machine yet. */
 const tmSpots = (ctx, { only = {} }) =>
   inPlay(ctx.state, ctx.player)
@@ -1408,6 +1477,10 @@ const PATTERNS = [
     const what = "pokemon<Mysterious Fossil";
     return [{ op: "flip", need: true, heads: [{ op: "choice", prompt: "Put it onto your Bench from where?", options: [{ label: "Your deck", steps: [{ op: "search", what, n: 1, to: "bench", asBasic: true }] }, { label: "Your hand", steps: [{ op: "handToBench", what }] }] }] }];
   }],
+  // Challenge!
+  [/^Ask your opponent if he or she accepts your challenge\. If your opponent declines \(or if both Benches are full\), draw 2 cards\. If your opponent accepts, each of you searches your decks for any number of Basic Pokémon cards and puts them face down onto your Benches\. \(A player can't do this if his or her Bench is full\.\) When you both have finished, shuffle your decks and turn those cards face up\.$/, () => [{ op: "challenge" }]],
+  // Pokémon Breeder Fields.
+  [/^Flip a coin for 1 or 2 of your non-Baby Pokémon that can evolve\. For each heads, search your deck for a later-Stage card that matches that Pokémon\. Then put that card into your hand\. Shuffle your deck afterward\.$/, () => [{ op: "breeder" }]],
   // Dan.
   [/^Draw (\d+) cards\. You and your opponent play Rock-Paper-Scissors until someone wins\. If you win, draw (\d+) more cards\.$/, (m) => [{ op: "draw", n: Number(m[1]) }, { op: "rps", win: [{ op: "draw", n: Number(m[2]) }] }]],
   // Fossil Excavator: the deck or the discard pile, the player's choice (only asked when the discard pile has one).

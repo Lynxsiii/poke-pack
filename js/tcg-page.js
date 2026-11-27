@@ -727,6 +727,7 @@ export function initTcg(deps) {
         heal: () => (fx.flips ? "Choose one of your Pokémon, then the coins are flipped." : null),
       }[op]?.();
       if (op === "rearrangeFrom") return { text: `Choose a Pokémon to move ${fx.type ? `a ${fx.type}` : "an"} Energy from, or finish.`, keys: `<button type="button" class="ghost sm" data-act="pick-skip">Done</button>` };
+      if (op === "breedMark") return { text: waiting.optional ? "Choose a second Pokémon to flip a coin for, or finish." : "Choose a Pokémon to flip a coin for (you may then choose a second).", keys: waiting.optional ? `<button type="button" class="ghost sm" data-act="pick-skip">Done</button>` : "" };
       if (op === "gatherFrom") return { text: `Choose a Pokémon to move ${fx.type ? `a ${fx.type}` : "an"} Energy from, or finish.`, keys: `<button type="button" class="ghost sm" data-act="pick-skip">Done</button>` };
       if (moving) return { text: moving, keys: "" };
       if (op === "damage" && fx.counters) return { text: fx.n === 10 && waiting.again ? `Choose one of their Pokémon for a damage counter (${waiting.left} to place).` : `Choose one of their Pokémon for ${fx.n / 10} damage counters${waiting.left > 1 ? ` (${waiting.left} to choose)` : ""}.`, keys: "" };
@@ -1082,6 +1083,7 @@ export function initTcg(deps) {
       : waiting.effect.op === "carryEnergy" ? "Choose the Energy to move"
       : waiting.effect.op === "fromDiscardTop" ? `Put ${many(max)} from your discard pile on top of your deck`
       : waiting.effect.op === "discard" ? `Discard ${min < max ? "up to " : ""}${many(min < max ? max : min)} from your hand`
+      : waiting.effect.op === "challengeHold" ? `Challenge!: put up to ${many(max)} face down onto your Bench`
       : waiting.effect.op === "toBench" ? `Choose ${max > 1 ? `up to ${many(max)}` : "a Basic Pokémon"} for your Bench`
       : waiting.effect.op === "attach" && waiting.zone !== "deck" ? `Attach ${max > 1 ? `up to ${many(max)}` : many(1)} from your ${waiting.zone === "hand" ? "hand" : "discard pile"}`
       : waiting.effect.op === "attach" ? `Attach ${max > 1 ? `up to ${many(max)}` : many(1)} from your ${waiting.top ? `top ${waiting.top} cards` : "deck"}`
@@ -1179,6 +1181,7 @@ export function initTcg(deps) {
       case "draw": return event.p === ME ? `You drew ${event.uids.length === 1 ? name(event.uids[0]) : plural(event.uids.length, "card")}.` : `${foeName()} drew ${event.uids.length === 1 ? "a card" : plural(event.uids.length, "card")}.`;
       case "bench": return `${who(event.p)} benched ${name(event.uid)}.`;
       case "rps": return `Rock-Paper-Scissors: ${event.p === ME ? "you" : foeName()} ${event.picks[0]}, ${event.p === ME ? foeName() : "you"} ${event.picks[1]}. ${event.won == null ? "A tie: again." : (event.won === (event.p === ME)) ? "You win." : `${foeName()} wins.`}`;
+      case "challenge-down": return `Challenge!: ${who(event.p)} put ${plural(event.n, "card")} face down.`;
       case "drop": return `${who(event.p)} ${event.to === "deck" ? "put" : "discarded"} ${name(event.uid)} ${event.to === "deck" ? "on the bottom of the deck" : "from play"}.`;
       case "evolve": return `${who(event.p)} evolved into ${name(event.uid)}.`;
       case "attach": return `${who(event.p)} attached ${name(event.uid)}.`;

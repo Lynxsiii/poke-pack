@@ -356,6 +356,14 @@ export function botAction(state, player, defs) {
       const h = Math.imul((state.rng ^ Math.imul(player + 1, 0x9e3779b1) ^ Math.imul(state.rps?.round || 0, 0x85ebca6b)) | 0, 0xc2b2ae35);
       return actions[((h ^ (h >>> 16)) >>> 0) % actions.length];
     }
+    // The other player's Challenge!: accepted when it can fill a Bench that needs it more than theirs does
+    // (declining only gives them 2 cards).
+    if (waiting.why === "challenge") {
+      const foeSide = state.players[other(player)];
+      const room = state.rules.bench - side.bench.length;
+      const basics = side.deck.filter((uid) => defOf(state, uid, defs).kind === "pokemon" && defOf(state, uid, defs).stage === "basic").length;
+      return actions[room > 0 && basics > 0 && side.bench.length <= Math.min(2, foeSide.bench.length) ? 0 : 1];
+    }
     // A Special Condition of its choosing: Paralyzed, which stops their next attack and retreat.
     if (waiting.why === "condition") return actions[waiting.labels.indexOf("Paralyzed")] || actions[0];
     // An attack's "you may": yes, except to take its own Pokémon out of play.
@@ -379,6 +387,16 @@ export function botAction(state, player, defs) {
         return picks.slice().sort((a, b) => spare(b) - spare(a))[0];
       }
       return actions.find((a) => a.spot == null) || picks[0];
+    }
+    // Pokémon Breeder Fields: the Pokémon with the most cards still unseen (deck and Prize cards) that evolve from it.
+    if (waiting.effect.op === "breedMark") {
+      const unseen = [...side.deck, ...side.prizes];
+      const count = (a) => {
+        const name = defOf(state, (a.spot === ACTIVE ? side.active : side.bench[a.spot]).uid, defs).name;
+        return unseen.filter((uid) => defOf(state, uid, defs).evolvesFrom === name).length;
+      };
+      const best = picks.slice().sort((a, b) => count(b) - count(a))[0];
+      return best && count(best) > 0 ? best : actions.find((a) => a.spot == null) || picks[0];
     }
     if (!picks.length || waiting.optional) return actions.find((a) => a.spot == null) || picks[0];
     const theirs = state.players[waiting.side];

@@ -6155,4 +6155,81 @@ test("Fossil Egg: heads, a card that evolves from Mysterious Fossil onto the Ben
   assert.equal(state.players[0].bench.length, bench);
 });
 
+test("Challenge!: declined, draw 2; accepted, both players put Basics face down onto their Benches", () => {
+  assert.ok(defs("base6-106").playable);
+  const deck = deckOf(["base6-106", 4], ["base1-46", 16], [F, 10]);
+  // Declined.
+  let state = fossilGame(deck);
+  let hand = state.players[0].hand.length;
+  act(state, { type: "play", player: 0, uid: give(state, 0, "base6-106") });
+  assert.equal(state.pending[0].player, 1);
+  act(state, { type: "option", player: 1, index: 1 });
+  assert.equal(state.players[0].hand.length, hand + 2);
+  // Accepted: each chooses, the other doesn't see what until both are done.
+  state = fossilGame(deck);
+  const benches = [0, 1].map((p) => state.players[p].bench.length);
+  act(state, { type: "play", player: 0, uid: give(state, 0, "base6-106") });
+  act(state, { type: "option", player: 1, index: 0 });
+  assert.equal(state.pending[0].player, 0);
+  const mine = state.pending[0].uids.slice(0, 2);
+  act(state, { type: "choose", player: 0, uids: mine });
+  assert.equal(state.players[0].bench.length, benches[0]);
+  const seen = viewFor(state, 1);
+  assert.equal(seen.challenge.cards[0], 2);
+  assert.ok(mine.every((uid) => !(uid in seen.cards)));
+  assert.equal(state.pending[0].player, 1);
+  const theirs = state.pending[0].uids.slice(0, 1);
+  act(state, { type: "choose", player: 1, uids: theirs });
+  assert.equal(state.players[0].bench.length, benches[0] + 2);
+  assert.equal(state.players[1].bench.length, benches[1] + 1);
+  assert.ok(!state.challenge);
+  // Both Benches full: just draw 2, nothing asked.
+  state = fossilGame(deck);
+  for (const p of [0, 1])
+    while (state.players[p].bench.length < state.rules.bench) {
+      const side = state.players[p];
+      const uid = side.deck.shift();
+      side.bench.push({ uid, under: [], energy: [], damage: 0, since: 0 });
+    }
+  hand = state.players[0].hand.length;
+  act(state, { type: "play", player: 0, uid: give(state, 0, "base6-106") });
+  assert.ok(!state.pending.length);
+  assert.equal(state.players[0].hand.length, hand + 2);
+});
+
+test("Pokémon Breeder Fields: a coin for 1 or 2 Pokémon, each heads a card from the deck that evolves from it", () => {
+  assert.ok(defs("neo3-62").playable);
+  const deck = deckOf(["neo3-62", 4], ["base1-46", 12], ["base1-24", 4], [F, 10]);
+  const breed = () => {
+    const state = fossilGame(deck);
+    const side = state.players[0];
+    while (side.bench.length < 2) side.bench.push({ uid: side.deck.splice(side.deck.findIndex((u) => state.cards[u] === "base1-46"), 1)[0], under: [], energy: [], damage: 0, since: 0 });
+    for (const slot of [side.active, ...side.bench]) state.cards[slot.uid] = "base1-46";
+    return state;
+  };
+  const state = breed();
+  const side = state.players[0];
+  const before = side.hand.filter((u) => state.cards[u] === "base1-24").length;
+  act(state, { type: "play", player: 0, uid: give(state, 0, "neo3-62") });
+  assert.equal(state.pending[0].type, "pick");
+  act(state, { type: "pick", player: 0, spot: ACTIVE });
+  // The second one is up to the player.
+  assert.ok(state.pending[0].optional);
+  rigFlips(state, [true]);
+  act(state, { type: "pick", player: 0, spot: null });
+  assert.equal(state.pending[0].type, "choose");
+  assert.ok(state.pending[0].uids.length > 0 && state.pending[0].uids.every((u) => state.cards[u] === "base1-24"));
+  act(state, { type: "choose", player: 0, uids: state.pending[0].uids.slice(0, 1) });
+  assert.equal(side.hand.filter((u) => state.cards[u] === "base1-24").length, before + 1);
+  // Tails for both: nothing.
+  const two = breed();
+  const hand = two.players[0].hand.length;
+  act(two, { type: "play", player: 0, uid: give(two, 0, "neo3-62") });
+  act(two, { type: "pick", player: 0, spot: ACTIVE });
+  rigFlips(two, [false, false]);
+  act(two, { type: "pick", player: 0, spot: 0 });
+  assert.ok(!two.pending.length);
+  assert.equal(two.players[0].hand.length, hand);
+});
+
 console.log(`${passed} checks passed${process.exitCode ? ", some failed" : ""}`);

@@ -1648,6 +1648,21 @@ const HANDLERS = {
       }
     } else if (op === "energyToDeck") {
       energyToDeck(state, owner, picked, events);
+    } else if (op === "challengeHold") {
+      // Challenge!: face down until both players are done, then onto the Benches face up and both decks shuffled.
+      const held = state.challenge;
+      held.cards[owner] = picked;
+      events.push({ t: "challenge-down", p: owner, n: picked.length });
+      if (--held.wait <= 0) {
+        for (const p of [held.by, 1 - held.by]) {
+          const slots = held.cards[p].map((uid) => newSlot(state, uid));
+          state.players[p].bench.push(...slots);
+          if (slots.length) events.push({ t: "search", p, uids: held.cards[p], from: "deck", to: "bench" });
+          for (const slot of slots) benched(state, p, slot, defs, events, false);
+          shuffle(state, state.players[p].deck);
+        }
+        delete state.challenge;
+      }
     } else if (op === "dropInPlay") {
       // Tools or Energy off any Pokémon in play, the Stadium: each to its owner's discard pile.
       for (const uid of picked) {
@@ -2024,6 +2039,12 @@ function applyPick(state, waiting, spot, defs, events) {
   const p = waiting.side;
   const side = state.players[p];
   const { effect } = waiting;
+  if (effect.op === "breedMark") {
+    // Pokémon Breeder Fields: 1 or 2 Pokémon, the second one if the player likes.
+    (state.breeder ||= []).push(slotAt(state, p, spot).uid);
+    waiting.optional = true;
+    return;
+  }
   if (effect.op === "ability") {
     // "When you play this Pokémon ... you may": the player said yes.
     const slot = slotAt(state, p, spot);
@@ -2549,6 +2570,7 @@ export function viewFor(state, player) {
   });
   // The Stadium is in plain sight, and so are the cards a player is being asked to choose from.
   if (state.stadium) shown.add(state.stadium.uid);
+  if (state.challenge) state.challenge.cards[player].forEach((uid) => shown.add(uid));
   for (const waiting of state.pending) {
     if (waiting.player !== player) continue;
     if (waiting.type === "choose") waiting.uids.forEach((uid) => shown.add(uid));
@@ -2561,6 +2583,8 @@ export function viewFor(state, player) {
   delete view.rng;
   // Rock-Paper-Scissors (Dan): the other player doesn't see what was played before they choose.
   if (view.rps && view.rps.p !== player) delete view.rps;
+  // Challenge!: the other player's face-down cards show as how many there are.
+  if (view.challenge) view.challenge.cards = view.challenge.cards.map((uids, p) => (p === player ? uids : uids.length));
   view.opening = view.opening.map((e) => (e.t === "mulligan" ? e : { ...e }));
   return view;
 }
