@@ -148,6 +148,13 @@ def record(cfg: dict, raw: dict) -> dict:
     rarity = (cfg.get("rarityMap") or {}).get(code)
     if rarity is None:
         raise RuntimeError(f"{raw['id']}: rarity code {code!r} ({raw.get('rarity')}) has no rarityMap entry")
+    if cfg.get("rarityByName"):
+        # Japan marks a V, a VMAX and a VSTAR alike (RR / RRR / SSR): the site's rarity follows the name, as English does.
+        name = en.get("name") or ""
+        if rarity in ("Rare Holo V", "Rare Holo VMAX", "Rare Holo VSTAR"):
+            rarity = "Rare Holo VMAX" if name.endswith("VMAX") else "Rare Holo VSTAR" if name.endswith("VSTAR") else "Rare Holo V"
+        elif name.startswith("Radiant ") and rarity == "Common":
+            rarity = "Radiant Rare"
     rarity = (cfg.get("rarityOverrides") or {}).get(number, rarity)
     supertype = en.get("supertype") or ""
     subtypes = [s for s in (en.get("subtypes") or []) if s]
@@ -207,6 +214,9 @@ def record(cfg: dict, raw: dict) -> dict:
     pid = product_id(raw, ("normal", "holofoil", "unlimitedHolofoil", "unlimited"))
     if pid:
         card["tcgplayerId"] = pid
+    if code in (cfg.get("galleryCodes") or {}):
+        # Shiny Star V's shinies are Shining Fates' Shiny Vault in English: `gallery: "sv"` gives them its pools and finish.
+        card["gallery"] = cfg["galleryCodes"][code]
     for field, value in ((cfg.get("cardFlags") or {}).get(number) or {}).items():
         card[field] = value
     return card
@@ -266,7 +276,8 @@ def twin_maps(cfg: dict) -> dict:
         if fields:
             # Families that keep per-card masks by id (js/fam/sv-sir.js) read the English card's.
             fields["foilTwin"] = c["id"]
-            out.setdefault((c.get("name"), c.get("rarity")), fields)
+            # Keyed by gallery too: Shining Fates' shiny Rillaboom V (gallery "sv") is not the plain Rillaboom V's art.
+            out.setdefault((c.get("name"), c.get("rarity"), c.get("gallery") or ""), fields)
     return out
 
 
@@ -300,11 +311,19 @@ def build(set_id: str, refresh: bool) -> int:
             # card (by name, from the page's own link) stands in for the text, under the Japanese number and scan.
             raw = twin_raw(cfg, twin, sid)
             raw["number"] = number
+        stand_in = (cfg.get("standIns") or {}).get(number)
+        if not raw and stand_in:
+            # `standIns`: a page scrydex lacks and no English twin covers (Shiny Star V's Rare Fossil) takes its text from
+            # the English print named here ("swsh3-167"), under the Japanese number, scan and a plain rarity.
+            other = {c["id"]: c for c in json.loads((DATA / f"{stand_in.split('-')[0]}.json").read_text(encoding="utf-8"))}
+            raw = twin_raw(cfg, other[stand_in], sid)
+            raw["number"] = number
+            raw["rarity_code"] = ""
         if not raw:
             missing.append(sid)
             continue
         card = record(cfg, raw)
-        twin = maps.get((card["name"], card["rarity"]))
+        twin = maps.get((card["name"], card["rarity"], card.get("gallery") or ""))
         if twin and cfg.get("twinMaps", True):
             card.update(twin)
         cards.append((card, raw))

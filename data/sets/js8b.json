@@ -1,0 +1,35 @@
+{
+  "id": "js8b",
+  "name": "VMAX Climax",
+  "lang": "ja",
+  "code": "S8b",
+  "series": "sword-shield",
+  "slug": "vmax-climax",
+  "scrydexId": "swsh8b_ja",
+  "era": "swsh",
+  "tcgplayerCategory": 85,
+  "tcgplayerGroup": 23644,
+  "rarityByName": true,
+  "rarityMap": {
+    "": "Common",
+    "RR": "Rare Holo V",
+    "RRR": "Rare Holo VMAX",
+    "CHR": "Trainer Gallery Rare Holo",
+    "CSR": "Rare Ultra",
+    "SR": "Rare Ultra",
+    "UR": "Rare Secret"
+  },
+  "printedTotal": 184,
+  "products": [
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 565259,
+      "packs": 10,
+      "promos": [],
+      "hull": "strips",
+      "imageVersion": 2
+    }
+  ]
+}

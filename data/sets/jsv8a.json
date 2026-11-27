@@ -1,0 +1,38 @@
+{
+  "id": "jsv8a",
+  "name": "Terastal Festival ex",
+  "lang": "ja",
+  "code": "SV8a",
+  "series": "scarlet-violet",
+  "slug": "terastal-festival-ex",
+  "scrydexId": "sv8a_ja",
+  "era": "sv",
+  "tcgplayerCategory": 85,
+  "tcgplayerGroup": 23909,
+  "englishTwin": "sv8pt5",
+  "patternPrints": [
+    "pokeball",
+    "masterball"
+  ],
+  "rarityMap": {
+    "": "Common",
+    "RR": "Double Rare",
+    "ACE": "ACE SPEC Rare",
+    "SR": "Ultra Rare",
+    "SAR": "Special Illustration Rare",
+    "UR": "Hyper Rare"
+  },
+  "printedTotal": 187,
+  "products": [
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 603428,
+      "packs": 10,
+      "promos": [],
+      "hull": "strips",
+      "imageVersion": 2
+    }
+  ]
+}
