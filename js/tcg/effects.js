@@ -339,8 +339,9 @@ export const OPS = {
     }
   },
   /** Flip some coins: damage for each heads. */
-  flipTimes(ctx, { coins, n, per = "", type = "" }) {
-    const results = flips(ctx, per ? COUNTS[per](ctx, type) : coins);
+  flipTimes(ctx, { coins, n, per = "", type = "", max = 0 }) {
+    // `max`: "You can't flip more than 3 coins in this way".
+    const results = flips(ctx, per ? (max ? Math.min(max, COUNTS[per](ctx, type)) : COUNTS[per](ctx, type)) : coins);
     // How many came up heads, and of how many, is kept for what the text says comes of it after the damage (OPS.onHeads).
     ctx.hit.heads = results.filter(Boolean).length;
     ctx.hit.coins = results.length;
@@ -701,12 +702,17 @@ export const OPS = {
     shedEnergy(state, player, foe, ACTIVE, slot.energy.filter((uid) => !defOf(state, uid, defs).basic), 1, events, defs);
   },
   /** "Choose 1 of the Defending Pokémon's attacks. That Pokémon can't use that attack during your opponent's next turn." */
-  lockFoeAttack(ctx) {
+  // `only`: "That Pokémon can use only that attack during your opponent's next turn": each of the others is locked.
+  lockFoeAttack(ctx, { only = false } = {}) {
     const { state, player, defs } = ctx;
     const target = state.players[other(player)].active;
     if (!target || ctx.shielded) return;
     const names = [...new Set(defOf(state, target.uid, defs).attacks.map((a) => a.name))];
     const lock = (name) => ({ op: "mark", kind: "noUse", on: "foe", name });
+    if (only) {
+      if (names.length < 2) return;
+      return void state.pending.push({ type: "option", player, why: "foeAttack", prompt: "Choose the only attack it can use during their next turn.", labels: names, options: names.map((name) => [{ op: "fx", steps: names.filter((n) => n !== name).map(lock), uid: ctx.slot.uid }]) });
+    }
     if (names.length === 1) return OPS.mark(ctx, lock(names[0]));
     if (names.length) state.pending.push({ type: "option", player, why: "foeAttack", prompt: "Choose the attack it can't use during their next turn.", labels: names, options: names.map((name) => [{ op: "fx", steps: [lock(name)], uid: ctx.slot.uid }]) });
   },
@@ -951,10 +957,10 @@ export const OPS = {
     runSteps([...(attack.fx || []).filter((step) => step.when === "before"), { op: "strike" }], ctx);
   },
   /** "Choose 1 Special Condition. The Defending Pokémon is now affected by that Special Condition." */
-  chooseCondition(ctx) {
+  // `kinds`: "Choose either Burned or Poisoned".
+  chooseCondition(ctx, { kinds = ["Asleep", "Burned", "Confused", "Paralyzed", "Poisoned"] } = {}) {
     const target = ctx.state.players[other(ctx.player)].active;
     if (!target || ctx.shielded) return;
-    const kinds = ["Asleep", "Burned", "Confused", "Paralyzed", "Poisoned"];
     ctx.state.pending.push({ type: "option", player: ctx.player, why: "condition", prompt: "Choose the Special Condition.", labels: kinds, options: kinds.map((kind) => [{ op: "fx", steps: [cond(kind)], uid: ctx.slot.uid }]) });
   },
   /** Look at the top n cards of their deck (`either`: the attacker picks whose) and put them back in any order. */
@@ -1329,8 +1335,9 @@ export const OPS = {
     askChoose(state, { player, owner: foe, zone: "hand", what, uids, min: Math.min(n, uids.length), max: n, effect: { op: lost ? "toLost" : "discard" } });
   },
   /** Flip some coins before the damage and keep how many were heads (OPS.perHeads); `allTails`: all tails and the attack does nothing. */
-  flipCount(ctx, { coins, allTails = false }) {
-    const results = flips(ctx, coins);
+  flipCount(ctx, { coins, allTails = false, per = "", type = "" }) {
+    // `per`: "Flip a number of coins equal to the number of ..." (COUNTS).
+    const results = flips(ctx, per ? COUNTS[per](ctx, type) : coins);
     ctx.hit.heads = results.filter(Boolean).length;
     ctx.hit.coins = results.length;
     if (allTails && !ctx.hit.heads) {
@@ -1341,6 +1348,17 @@ export const OPS = {
   /** After the damage: the steps once for each heads the coins before it came up (OPS.flipCount). */
   perHeads(ctx, { steps }) {
     runSteps(Array.from({ length: ctx.hit.heads || 0 }, () => steps).flat(), ctx);
+  },
+  /** After the damage: the steps once for each tails the coins before it came up (OPS.flipCount). */
+  perTails(ctx, { steps }) {
+    runSteps(Array.from({ length: (ctx.hit.coins || 0) - (ctx.hit.heads || 0) }, () => steps).flat(), ctx);
+  },
+  /** "This attack can be used even if this Pokémon is Asleep": nothing to do here (engine.js stuckAttack reads it). */
+  asleepOk() {},
+  /** "Then, this Pokémon does 10 damage times the number of tails to itself" (the coins flipped before the damage). */
+  selfPerTails(ctx, { n }) {
+    const tails = (ctx.hit.coins || 0) - (ctx.hit.heads || 0);
+    if (tails > 0) OPS.selfDamage(ctx, { n: n * tails });
   },
   /** "Look at the top 4 cards of your deck and put 2 of them into your hand. Put the other cards in the Lost Zone." */
   topLost(ctx, { n, top }) {
@@ -3073,6 +3091,135 @@ const BATCH9 = [
 ];
 PATTERNS.push(...BATCH9);
 
+/** The condition steps of this kind anywhere in these steps (in a coin's heads or tails, behind a test), copied so they can be changed. */
+function withCondition(steps, kind, change) {
+  const copy = JSON.parse(JSON.stringify(steps));
+  const found = [];
+  const walk = (list) => {
+    for (const step of list || []) {
+      if (step.op === "condition" && step.kind === kind) found.push(step);
+      walk(step.heads);
+      walk(step.tails);
+      walk(step.steps);
+    }
+  };
+  walk(copy);
+  if (found.length !== 1) return null;
+  Object.assign(found[0], change);
+  return copy;
+}
+/** "Flip a number of coins equal to the number of ...": the count (countOf), "amount" and "total number" read alike. */
+function coinsOf(phrase) {
+  const p = phrase.replace(/all of of /, "all of ");
+  if (/^Energy cards attached to your opponent's Pokémon$/.test(p)) return { per: "energyKind", type: "foes|energy" };
+  if (/^Pokémon in play$/.test(p)) return { per: "allKind", type: "pokemon" };
+  return countOf(p);
+}
+/** "Flip a number of coins equal to ...": the coins, kept for what the heads and tails do (OPS.flipCount, or flipTimes for damage). */
+const COINS_BY = "Flip a number of coins equal to the (?:total )?(?:number|amount) of (.+?)\\.";
+
+const BATCH10 = [
+  // A stronger Poison or a deeper Sleep, said after the sentence that gives it ("Flip a coin. If heads, the Defending Pokémon is
+  // now Poisoned. Put 2 damage counters instead of 1 on that Pokémon between turns."): the one condition step it is about.
+  [/^(.+?\.) (?:Put (\d+) damage counters instead of 1 on (?:that Pokémon|the Defending Pokémon|it) between turns|During Pokémon Checkup, put (\d+) damage counters on that Pokémon instead of 1|Your opponent now puts (\d+) damage counters on it instead of 1 after each player's turn \(even if it was already Poisoned\))\.$/, (m) => {
+    const steps = compileText(m[1]);
+    return steps && withCondition(steps, "poisoned", { counters: Number(m[2] || m[3] || m[4]) * 10 });
+  }],
+  [/^(.+?\.) (?:Your opponent flips|During Pokémon Checkup, your opponent flips|Flip|During Pokémon Checkup, flip) (\d+) coins instead of 1(?: between turns)?\. If either of them is tails, (?:that|the|the Defending|this) Pokémon is still Asleep\.$/, (m) => {
+    const steps = compileText(m[1]);
+    return steps && withCondition(steps, "asleep", { counters: Number(m[2]) });
+  }],
+  [/^(.+?\.) Put (\d+) damage counters instead of 3 on the Confused Pokémon\.$/, (m) => {
+    const steps = compileText(m[1]);
+    return steps && withCondition(steps, "confused", { counters: Number(m[2]) * 10 });
+  }],
+  // Coins by a count: "This attack does 20 damage plus 10 more damage for each heads", "You can't flip more than 3 coins in this way".
+  [/^Flip a number of coins equal to the (?:total )?(?:number|amount) of (.+?)\. This attack does \d+ damage plus (\d+) (?:more )?damage for each heads\.$/, (m) => {
+    const c = coinsOf(m[1]);
+    return c && [{ op: "flipBonusEach", when: "before", n: Number(m[2]), per: c.per, ...(c.type ? { type: c.type } : {}) }];
+  }],
+  [/^Flip a number of coins equal to the (?:total )?(?:number|amount) of (.+?)\. This attack does (\d+) damage times the number of heads\.(?: You can't flip more than (\d+) coins in this way\.)?$/, (m) => {
+    const c = coinsOf(m[1]);
+    return c && [{ op: "flipTimes", when: "before", n: Number(m[2]), per: c.per, ...(c.type ? { type: c.type } : {}), ...(m[3] ? { max: Number(m[3]) } : {}) }];
+  }],
+  [new RegExp(`^${COINS_BY} (?:If any of them (?:are|is) heads|For each heads), (.+)$`), (m) => {
+    const c = coinsOf(m[1]);
+    const steps = c && afterOnly(upper(m[2]));
+    return steps && [{ op: "flipCount", when: "before", coins: 0, per: c.per, ...(c.type ? { type: c.type } : {}) }, /For each/.test(m[0]) ? { op: "perHeads", when: "after", steps } : { op: "onHeads", when: "after", min: 1, steps }];
+  }],
+  // Damage times the heads, and more for each heads or tails after it.
+  [new RegExp(`^${COINS_BY} This attack does (\\d+) damage times the number of heads\\. (?:Then, for each heads, (.+)|Discard a number of (${TYPE}) Energy cards attached to this Pokémon equal to the number of heads\\.|Then,? this Pokémon does (\\d+) damage times the number of tails to itself\\.)$`), (m) => {
+    const c = coinsOf(m[1]);
+    const each = m[3] ? afterOnly(upper(m[3])) : m[4] ? [{ op: "discardEnergy", when: "after", n: 1, type: m[4] }] : null;
+    if (!c || (m[3] && !each)) return null;
+    return [{ op: "flipTimes", when: "before", n: Number(m[2]), per: c.per, ...(c.type ? { type: c.type } : {}) }, each ? { op: "perHeads", when: "after", steps: each } : { op: "selfPerTails", when: "after", n: Number(m[5]) }];
+  }],
+  [/^Does \d+ damage plus (\d+) more damage for each (?:(Grass|Fire|Water|Lightning|Psychic|Fighting|Darkness|Metal|Fairy) )?Energy attached to this Pokémon but not used to pay for this attack's Energy cost\.$/, (m) => [{ op: "bonusPer", when: "before", n: Number(m[1]), per: "spareEnergy", ...(m[2] ? { type: m[2] } : {}) }]],
+  [/^Choose 1 of your opponent's Benched Pokémon and switch it with the Defending Pokémon\.$/, () => fromDeck([{ op: "gust" }])],
+  [/^\(?This attack can be used even if this Pokémon is Asleep\.\)?$/, () => [{ op: "asleepOk", when: "before" }]],
+  // A coin: tails and nothing happens, heads and an effect after the damage too.
+  [/^Flip a coin\. If tails, this attack does nothing\. If heads, (.+)$/, (m) => {
+    const steps = afterOnly(upper(m[1]));
+    return steps && [{ op: "flipOrNothing", when: "before" }, { op: "onCoin", when: "after", heads: steps }];
+  }],
+  // "If heads, this attack does 30 damage to the Defending Pokémon. If tails, the Defending Pokémon is now Paralyzed": no damage on tails.
+  [/^Flip a coin\. If heads, this attack does (\d+) damage to the Defending Pokémon\. If tails, (.+)$/, (m) => {
+    const steps = afterOnly(upper(m[2]));
+    return steps && [{ op: "coin", when: "before", heads: [{ op: "setDamage", n: Number(m[1]) }], tails: [{ op: "setDamage", n: 0 }] }, { op: "onCoin", when: "after", tails: steps }];
+  }],
+  [new RegExp(`^Search your deck for as many (.+?) as you like and put them onto your Bench\\. ${SHUFFLED}$`), (m) => {
+    const what = monWhat(m[1]);
+    return /^(name=|basic)/.test(what) && fromDeck([{ op: "search", what, n: "all", to: "bench" }]);
+  }],
+  // What their Defending Pokémon can't have done to it from the hand during their next turn (engine.js legalActions).
+  [/^(?:Your opponent can't attach Energy from (?:his or her|their) hand to the Defending Pokémon during (?:his or her|their) next turn|During your opponent's next turn, Energy can't be attached from your opponent's hand to the Defending Pokémon|Energy can't be attached to the Defending Pokémon from your opponent's hand during their next turn)\.$/, () => [mark("noEnergy", { on: "foe" })]],
+  [/^(?:Your opponent can't play any Pokémon from (?:his or her|their) hand to evolve the Defending Pokémon during (?:his or her|their) next turn|During your opponent's next turn, Pokémon can't be played from your opponent's hand to evolve the Defending Pokémon)\.$/, () => [mark("noEvolve", { on: "foe" })]],
+  [/^During your opponent's next turn, if they attach an Energy card from their hand to the Defending Pokémon, their turn ends\.$/, () => [mark("attachEnds", { on: "foe" })]],
+  [/^Choose 1 of the Defending Pokémon's attacks\. (?:That Pokémon can use only that attack during your opponent's next turn|During your opponent's next turn, that Pokémon can only use that attack)\.$/, () => [{ op: "lockFoeAttack", when: "after", only: true }]],
+  [/^Choose either (Asleep|Burned|Confused|Paralyzed|Poisoned) or (Asleep|Burned|Confused|Paralyzed|Poisoned)\. (?:The Defending Pokémon|Your opponent's Active Pokémon) is now affected by that Special Condition\.$/, (m) => [{ op: "chooseCondition", when: "after", kinds: [m[1], m[2]] }]],
+  [/^Choose either (Asleep|Burned|Confused|Paralyzed|Poisoned) or (Asleep|Burned|Confused|Paralyzed|Poisoned), and either (Asleep|Burned|Confused|Paralyzed|Poisoned) or (Asleep|Burned|Confused|Paralyzed|Poisoned)\. The Defending Pokémon is now affected by both Special Conditions\.$/, (m) => [{ op: "chooseCondition", when: "after", kinds: [m[1], m[2]] }, { op: "chooseCondition", when: "after", kinds: [m[3], m[4]] }]],
+  [/^The Defending Pokémon is Knocked Out at the end of your opponent's next turn\.$/, () => [mark("doomKo", { on: "foe" })]],
+  [new RegExp(`^Flip ${N} coins\\. For each tails, (.+)$`, "i"), (m) => {
+    const steps = afterOnly(upper(m[2]));
+    return steps && [{ op: "flipCount", when: "before", coins: count(m[1]) }, { op: "perTails", when: "after", steps }];
+  }],
+  [/^Discard up to (\d+) (.+?) from your hand\. For each card you discarded, draw (\d+) cards\.$/, (m) => {
+    const what = whatOf(m[2]);
+    return what && fromDeck([{ op: "toss", n: Number(m[1]), what, upTo: true, pass: true }, { op: "drawPaid", per: Number(m[3]) }]);
+  }],
+  // "Discard all Lightning Energy attached to this Pokémon. Flip a coin for each Energy card you discarded.": paid before the damage.
+  [new RegExp(`^Discard all (?:${TYPE} )?Energy(?: cards)? attached to this Pokémon(?: in order to use this attack)?\\. (?:Flip a coin for each Energy card you discarded|Flip a number of coins equal to the number of (?:${TYPE} )?Energy cards you discarded)\\. This attack does (?:(\\d+) damage times the number of heads|\\d+ damage plus (\\d+) (?:more )?damage for each heads)\\.$`), (m) => {
+    if (m[2] && m[1] !== m[2]) return null;
+    return [{ op: "pay", when: "before", from: "self", energy: m[1] ? { type: m[1] } : {}, all: true }, { op: m[3] ? "flipTimes" : "flipBonusEach", when: "before", n: Number(m[3] || m[4]), per: "paid" }];
+  }],
+  // A card from the discard pile or the hand, and what comes of it only if there was one ("If you do, remove 2 damage counters").
+  [/^Search your discard pile for an? (.+?) and attach it to this Pokémon\. If you do, (.+)$/, (m) => {
+    const what = whatOf(m[1]);
+    const then = afterOnly(upper(m[2]));
+    return /^(basicEnergy|energy)(:\w+)?$/.test(what) && then && [{ op: "when", when: "after", test: "discardAtLeast", k: 1, what, steps: [...fromDeck([{ op: "attachPick", zone: "discard", what, to: "self", n: 1 }]), ...then] }];
+  }],
+  [/^Discard an? (.+?) from your hand\. If you do, (.+)$/, (m) => {
+    // Any card: the Trainer reader reads it (a price, T_OPS.cost).
+    const what = !/^card$/.test(m[1]) && whatOf(m[1]);
+    const then = what && afterOnly(upper(m[2]));
+    return then && [{ op: "when", when: "after", test: "handHas", k: 1, what, steps: [...fromDeck([{ op: "toss", n: 1, what }]), ...then] }];
+  }],
+  // Remaining HP side by side, judged before the damage.
+  [/^Before doing damage, count the remaining HP of the Defending Pokémon and this Pokémon\. If the Defending Pokémon has fewer remaining HP than this Pokémon(?:'s)?, this attack does (?:(\d+) damage instead|\d+ damage plus (\d+) more damage)\.$/, (m) => [m[1] ? { op: "baseIf", when: "before", n: Number(m[1]), test: "foeHpBelow" } : { op: "bonusIf", when: "before", n: Number(m[2]), test: "foeHpBelow" }]],
+  [/^If, before doing damage, your opponent's Active Pokémon has (more|less|fewer) remaining HP than this Pokémon, this attack does (\d+) more damage\.$/, (m) => [{ op: "bonusIf", when: "before", n: Number(m[2]), test: m[1] === "more" ? "hpBelowFoe" : "foeHpBelow" }]],
+  // Only 10 HP can be left below 20: "is 10" is "10 or less".
+  [/^If this Pokémon's remaining HP is 10, this attack does (\d+) more damage\.$/, (m) => [{ op: "bonusIf", when: "before", n: Number(m[1]), test: "selfHpAtMost", k: 10 }]],
+  // Old doubles wording, tidied (tidy): the switch is before the damage when the damage is to the new one.
+  [/^Switch 1 of your opponent's Benched Pokémon with the Defending Pokémon\. This attack does (\d+) damage to the new Defending Pokémon\.$/, (m) => [{ op: "trainer", when: "before", steps: [{ op: "gust" }] }, { op: "setDamage", when: "before", n: Number(m[1]) }]],
+  [/^(Switch (?:1 of your opponent's Benched Pokémon with the Defending Pokémon|the Defending Pokémon with 1 of your opponent's Benched Pokémon)\.) The new Defending Pokémon is now (Asleep|Burned|Confused|Paralyzed|Poisoned) and (Asleep|Burned|Confused|Paralyzed|Poisoned)\.$/, (m) => {
+    const first = compileOne(m[1]);
+    return first && [...first, { op: "when", when: "after", test: "foeBenchEmpty", not: true, steps: [cond(m[2]), cond(m[3])] }];
+  }],
+  // Evolving from the deck.
+  [new RegExp(`^Search your deck for a card that evolves from (?:1|one) of your Pokémon and put it on(?:to)? that Pokémon\\. \\(This counts as evolving that Pokémon\\.\\) ${SHUFFLED}$`), () => fromDeck([{ op: "evolveDeck" }])],
+];
+PATTERNS.push(...BATCH10);
+
 /** Basic Pokémon an old search puts onto the Bench, as trainers.js fits reads them, or "". */
 function benchWhat(words) {
   let m;
@@ -3259,8 +3406,31 @@ function compileOne(clean) {
   // "Then, remove 2 damage counters from this Pokémon": the steps run in the order printed anyway.
   const then = clean.match(/^Then, (.+)$/);
   if (then) return compileOne(upper(then[1]));
-  return asTrainer(clean);
+  const trainer = asTrainer(clean);
+  if (trainer) return trainer;
+  // Wordings read only when nothing else reads them: the same effect said the way it is read.
+  for (const [from, to] of REWRITES) {
+    if (!from.test(clean)) continue;
+    const steps = compileOne(clean.replace(from, to));
+    if (steps) return steps;
+  }
+  return null;
 }
+
+/** [wording, the same said as it is read]: tried by compileOne when nothing reads a sentence as printed. */
+const REWRITES = [
+  // Showing the card to the opponent is the same as revealing it.
+  [/, (?:show (?:it|them) to your opponent|reveal (?:it|them)), and put /, " and put "],
+  [/^During your opponent's next turn, attacks used by the Defending Pokémon cost ((?:Colorless)+) more, and its Retreat Cost/, "During your opponent's next turn, the Defending Pokémon's attacks cost $1 more, and its Retreat Cost"],
+  [/ to any of your Pokémon in any way you like\./, " to your Pokémon in any way you like."],
+  [/^All damage done to this Pokémon during your opponent's next turn is reduced by (\d+) \(after applying Weakness and Resistance\)\.$/, "During your opponent's next turn, any damage done to this Pokémon by attacks is reduced by $1 (after applying Weakness and Resistance)."],
+  [/^During your opponent's next turn, prevent all effects of attacks, including damage, done to this Pokémon( by Pokémon-EX)?\.$/, (all, by) => `Prevent all effects of attacks, including damage, done to this Pokémon${by ? " by your opponent's Pokémon-EX" : ""} during your opponent's next turn.`],
+  [/^Search your discard pile for ((?:up to )?(?:an?|\d+)) (.+?) and put (?:it|them) into your hand\.$/, "Put $1 $2 from your discard pile into your hand."],
+  [/ and put (it|them) in your hand\./, " and put $1 into your hand."],
+  [/^Remove all Special Conditions and (\d+|all) damage counters(?: \(all if there are less than \d+\))? from this Pokémon(?: \(all if there are less than \d+\))?\./, (all, n) => `Remove all Special Conditions from this Pokémon. Remove ${n} damage counters from this Pokémon.`],
+  [/^Choose 1 of the Defending Pokémon's attack\. /, "Choose 1 of the Defending Pokémon's attacks. "],
+  [/^(Choose 1 of the Defending Pokémon's attacks\.) The Pokémon can't/, "$1 That Pokémon can't"],
+];
 
 /**
  * The steps of an attack's text, [] when it has none, null when it can't be read yet. Older cards name
@@ -3315,6 +3485,28 @@ function tidy(text) {
     // Newer prints name types in brackets: "1 of your [Psychic] Pokémon".
     .replace(/\[(Grass|Fire|Water|Lightning|Psychic|Fighting|Darkness|Metal|Fairy|Dragon|Colorless)\]/g, "$1")
     .replace(/(^|\. |, )([Pp])lace (\d+) damage counters? on /g, (all, at, p, n) => `${at}${p === "P" ? "Put" : "put"} ${n} damage counter${n === "1" ? "" : "s"} on `)
+    // Energy "not used to pay for this attack" printed a few ways (spareUnits).
+    .replace(/^This attack does (\d+) damage plus (\d+) (?:more )?damage for each ((?:\w+ )?Energy attached to [^.]+? but not used to pay)/, "Does $1 damage plus $2 more damage for each $3")
+    .replace(/^Does (\d+) damage plus (\d+) damage for each ((?:\w+ )?Energy attached to [^.]+? but not used to pay)/, "Does $1 damage plus $2 more damage for each $3")
+    .replace(/(but not used to pay for this attack)(?:'s Energy [Cc]ost)?\. You can't add more then/, "$1's Energy cost. You can't add more than")
+    .replace(/(but not used to pay for this attack)(?:'s Energy Cost)?\. (You can't add more than|Extra)/, "$1's Energy cost. $2")
+    .replace(/(Extra \w+ Energy after the \d+(?:st|nd|rd|th)) don't count\./, "$1 doesn't count.")
+    // Old doubles wording: with one Active Pokémon a side, "1 of the Defending Pokémon" is the Defending Pokémon, and who picks it doesn't matter.
+    .replace(/^(Switch 1 of your opponent's Benched Pokémon with|Choose 1 of your opponent's Benched Pokémon and switch it with) (?:1 of )?the Defending Pokémon\.(?: Your opponent chooses the Defending Pokémon to switch\.)?/, "$1 the Defending Pokémon.")
+    .replace(/(^|\. )You switch (this Pokémon|[A-Z][\w.' é-]*?) with 1 of your Benched Pokémon\./, "$1Switch $2 with 1 of your Benched Pokémon.")
+    // Misprints that say what the usual wording says.
+    .replace(/\bIf heads the /g, "If heads, the ")
+    .replace(/\bPoisined\b/g, "Poisoned")
+    .replace(/(^|\. |, )This Defending Pokémon\b/g, "$1The Defending Pokémon")
+    .replace(/(^|\. )Flip a coin\. If heads, the Defending Pokémon is (Asleep|Burned|Confused|Paralyzed|Poisoned)\./g, "$1Flip a coin. If heads, the Defending Pokémon is now $2.")
+    .replace(/\(after applying weakness and resistance\)/g, "(after applying Weakness and Resistance)")
+    .replace(/next turn ,any /g, "next turn, any ")
+    .replace(/any damage to this Pokémon by attacks/g, "any damage done to this Pokémon by attacks")
+    .replace(/(^|\. )This attack damage isn't/g, "$1This attack's damage isn't")
+    .replace(/would be be /g, "would be ")
+    .replace(/ to that Pokémon \(Don't apply Weakness and Resistance for Benched Pokémon\.\)$/, " to that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)")
+    .replace(/times the number heads\./g, "times the number of heads.")
+    .replace(/times then number of heads\./g, "times the number of heads.")
     // A last sentence printed without its full stop.
     .replace(/([a-zé])$/, "$1.");
 }
