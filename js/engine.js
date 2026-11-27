@@ -220,6 +220,8 @@ export function poolsFrom(cards, set) {
     rainbow: pokemonOrTrainer.filter((c) => c.rarity === "Rare Rainbow"),
     secret: pokemonOrTrainer.filter((c) => c.rarity === "Rare Secret" && !c.character && !c.alph),
     character: pokemonOrTrainer.filter((c) => c.character),
+    // Japan's Art Rares in a Sword & Shield set (VSTAR Universe): the Trainer Gallery finish, numbered in the set itself.
+    galleryHolo: pokemonOrTrainer.filter((c) => c.rarity === "Trainer Gallery Rare Holo"),
     amazing: pokemonOrTrainer.filter((c) => c.rarity === "Amazing Rare"),
     radiant: pokemonOrTrainer.filter((c) => c.rarity === "Radiant Rare"),
     trainerGallery: gallery("tg"),

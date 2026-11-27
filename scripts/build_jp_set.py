@@ -107,7 +107,14 @@ def expansion(cfg: dict, refresh: bool) -> list[str]:
     text = fetch(EXPANSION_URL.format(id=sid), f"exp-{sid}", refresh)
     # Card pages by their own links: /pokemon/cards/<slug>/<id>. A made-up slug works for most cards but not all
     # (sv2a_ja-154 answers only under antique-helix-fossil).
-    paths = list(dict.fromkeys(re.findall(rf'href="(/pokemon/cards/[^/"]+/{re.escape(sid)}-[A-Za-z0-9]+)', text)))
+    pattern = rf'href="(/pokemon/cards/[^/"]+/{re.escape(sid)}-[A-Za-z0-9]+)'
+    paths = list(dict.fromkeys(re.findall(pattern, text)))
+    # The page lists 250 cards; a bigger set (Shiny Treasure ex has 360) goes on over ?page=2, 3...
+    page = 2
+    while f"?page={page}" in text:
+        text = fetch(EXPANSION_URL.format(id=sid) + f"?page={page}", f"exp-{sid}-p{page}", refresh)
+        paths += [p for p in dict.fromkeys(re.findall(pattern, text)) if p not in paths]
+        page += 1
     if not paths:
         raise RuntimeError(f"no cards listed for {sid}")
     return paths
@@ -155,6 +162,9 @@ def record(cfg: dict, raw: dict) -> dict:
         "supertype": supertype,
         "lang": "ja",
     }
+    if cfg.get("era") == "swsh":
+        # Sword & Shield finishes key off `era` (isSwsh() in js/foil-maps.js), not the set id: Japan's S12a is "js12a".
+        card["era"] = "swsh"
     if subtypes:
         card["subtypes"] = subtypes
     types = [t for t in (en.get("types") or []) if t in TYPE_WORDS]

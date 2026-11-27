@@ -1620,5 +1620,35 @@
       "secret": 0.03,
       "prismStar": 0.2
     }
+  },
+  "js12a": {
+    "name": "VSTAR Universe (Japanese)",
+    "printedTotal": 172,
+    "released": "2022-12-02",
+    "updated": "2026-11-27",
+    "source": "ESTIMATES. Japan publishes no pull rates. 10 packs a box, 10 cards a pack; the wrapper prints 'V VMAX VSTAR いずれか確定' (a V, VMAX or VSTAR in every pack). Per box: Samurai Sword Tokyo (https://samuraiswordtokyo.com/blogs/news/vstar-universe-pull-rates-best-cards) estimates about 6 AR, 1 SR, 0.3 SAR, 0.5 UR; japan-figure.com's card list estimates about 3 AR and 1 SAR. The sources disagree, so the rates here sit between them: AR 3 a box, SR or SAR 1.3 a box, UR 1 in 4 boxes, Radiant about 1 a box (estimate).",
+    "rates": {
+      "galleryHolo": 0.3,
+      "rareUltra": 0.13,
+      "radiant": 0.08,
+      "vstar": 0.25,
+      "vmax": 0.08,
+      "secret": 0.025
+    }
+  },
+  "jsv4a": {
+    "name": "Shiny Treasure ex (Japanese)",
+    "printedTotal": 190,
+    "released": "2023-12-01",
+    "updated": "2026-11-27",
+    "source": "ESTIMATES. Japan publishes no pull rates. 10 packs a box, 10 cards a pack; the wrapper prints 'ポケモンexが必ず1枚入ってる' (a Pokémon ex in every pack). Per box: Samurai Sword Tokyo (https://samuraiswordtokyo.com/blogs/news/shiny-treasure-ex-pull-rates-best-cards) gives 1 SSR guaranteed, 2-3 baby shinies, SAR about 1 in 6 boxes, SR 1 in 8, UR 1 in 12.5; SNKRDUNK's magazine (https://snkrdunk.com/en/magazine/2023/10/24/pokemon-card-game-shiny-treasure-ex-sv4a-card-list-pull-rates/) lists the same rarity split. AR about 1 a box is our own estimate. Packs roll on their own, so the box guarantees hold on average, not in every box.",
+    "rates": {
+      "shiny": 0.25,
+      "shinyUltra": 0.1,
+      "ir": 0.1,
+      "ultra": 0.0125,
+      "sir": 0.0167,
+      "hyper": 0.008
+    }
   }
 }

@@ -350,6 +350,8 @@ def cut_out(raw: bytes, hull: bool = True) -> Image.Image:
     The hull is drawn at 4x and scaled down so its edge is antialiased.
     """
     img = Image.open(BytesIO(raw)).convert("RGB")
+    if hull == "strips":
+        return cut_out_strips(img)
     marked = img.copy()
     w, h = img.size
     sentinel = (255, 0, 254)
@@ -391,8 +393,59 @@ def cut_out(raw: bytes, hull: bool = True) -> Image.Image:
     return out.crop(box) if box else out
 
 
+def cut_out_strips(img: Image.Image, bands: int = 14) -> Image.Image:
+    """`"hull": "strips"`: a Japanese display box, a box with a tall lid panel whose art is white at the edges (151's
+    confetti of Pokémon on white). The white is flooded in from the edges as for any photo, which also eats that white
+    art; then each horizontal band of the box is closed over by its own convex hull, which puts the art back inside the
+    box and still cuts away the wedges beside a narrower lid that one hull over the whole box would keep."""
+    marked = img.copy()
+    w, h = img.size
+    sentinel = (255, 0, 254)
+    seeds = [(x, y) for x in range(0, w, 4) for y in (0, h - 1)] + [(x, y) for y in range(0, h, 4) for x in (0, w - 1)]
+    for seed in seeds:
+        r, g, b = marked.getpixel(seed)
+        if min(r, g, b) >= 235 and (r, g, b) != sentinel:
+            ImageDraw.floodfill(marked, seed, sentinel, thresh=24)
+    a = np.asarray(marked)
+    fg = ~((a[..., 0] == 255) & (a[..., 1] == 0) & (a[..., 2] == 254))
+    fg = np.asarray(Image.fromarray(fg.astype(np.uint8) * 255).filter(ImageFilter.MinFilter(5))) > 0
+    fg = np.asarray(Image.fromarray(fg.astype(np.uint8) * 255).filter(ImageFilter.MaxFilter(5))) > 0
+    ys, _ = np.nonzero(fg)
+    if not len(ys):
+        return img.convert("RGBA")
+    scale = 4
+    big = Image.new("L", (w * scale, h * scale), 0)
+    draw = ImageDraw.Draw(big)
+    top, bottom = int(ys.min()), int(ys.max()) + 1
+    step = max(1, (bottom - top + bands - 1) // bands)
+    for y0 in range(top, bottom, step):
+        band = fg[y0:min(bottom, y0 + step + 1)]
+        bys, bxs = np.nonzero(band)
+        if len(bxs) < 3:
+            continue
+        pts = []
+        for y in np.unique(bys):
+            row = bxs[bys == y]
+            pts += [(row.min(), y + y0), (row.max() + 1, y + y0), (row.min(), y + y0 + 1), (row.max() + 1, y + y0 + 1)]
+        poly = convex_hull(np.array(pts))
+        if len(poly) >= 3:
+            draw.polygon([(x * scale, y * scale) for x, y in poly], fill=255)
+    alpha = big.resize((w, h), Image.LANCZOS)
+    out = img.convert("RGBA")
+    out.putalpha(alpha)
+    box = alpha.point(lambda v: 255 if v > 8 else 0).getbbox()
+    return out.crop(box) if box else out
+
+
+def product_image_rel(set_id: str, product: dict) -> str:
+    """Where a product's photo lives. A recut photo takes a new name (`"imageVersion": 2` -> <id>-v2.webp): files
+    under assets/ are cached for a year, so an old name never changes."""
+    v = int(product.get("imageVersion") or 1)
+    return f"assets/products/{set_id}/{product['id']}{f'-v{v}' if v > 1 else ''}.webp"
+
+
 def save_product_image(set_id: str, product: dict, refresh: bool) -> str | None:
-    rel = f"assets/products/{set_id}/{product['id']}.webp"
+    rel = product_image_rel(set_id, product)
     dest = ROOT / rel
     if dest.exists() and not refresh:
         return rel
@@ -708,10 +761,10 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
         if entry["kind"] == "event":
             # The card is the product: its own scan stands in for a box photo.
             image = None
-        elif not prices_only or not (ROOT / f"assets/products/{set_id}/{product['id']}.webp").exists():
+        elif not prices_only or not (ROOT / product_image_rel(set_id, product)).exists():
             image = save_product_image(set_id, product, refresh)
         else:
-            image = f"assets/products/{set_id}/{product['id']}.webp"
+            image = product_image_rel(set_id, product)
         if image:
             entry["image"] = image
         out.append(entry)
