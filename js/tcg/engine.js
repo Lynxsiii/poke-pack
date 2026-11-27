@@ -455,6 +455,9 @@ export function addCondition(state, slot, kind, defs = null, { counters = 0 } = 
     st.since = state.turn;
     if (kind === "confused" && counters) st.confuseN = counters;
     else delete st.confuseN;
+    // Asleep's `counters` is how many coins wake it (all of them heads).
+    if (kind === "asleep" && counters) st.sleepN = counters;
+    else delete st.sleepN;
   }
   return true;
 }
@@ -530,6 +533,8 @@ export function addMark(state, slot, mark) {
 }
 
 const stuck = (slot) => ["asleep", "paralyzed"].includes(statusOf(slot).main);
+/** Asleep or Paralyzed keeps this attack from being used ("This attack can be used even if this Pokémon is Asleep": an asleepOk step). */
+const stuckAttack = (slot, attack) => stuck(slot) && !(statusOf(slot).main === "asleep" && (attack?.fx || []).some((step) => step.op === "asleepOk"));
 
 /** Between turns: Poison, Burn, Sleep and Paralysis take their turn on both Active Pokémon. */
 function checkup(state, defs, events) {
@@ -554,7 +559,8 @@ function checkup(state, defs, events) {
         events.push({ t: "cure", p, kind: "burned" });
       }
     }
-    if (st.main === "asleep" && flip(state, -1)) {
+    // `sleepN`: "Your opponent flips 2 coins instead of 1. If either of them is tails, that Pokémon is still Asleep."
+    if (st.main === "asleep" && Array.from({ length: st.sleepN || 1 }, () => flip(state, -1)).every(Boolean)) {
       st.main = "";
       events.push({ t: "cure", p, kind: "asleep" });
     }
@@ -716,11 +722,11 @@ const balloonOn = (state, slot, defs) => Boolean(toolOn(state, slot, defs)?.ball
 export function usableAttacks(state, player, defs) {
   const slot = state.players[player].active;
   if (!slot || state.phase !== "main" || state.current !== player || state.pending.length) return [];
-  if (stuck(slot) || markOn(state, slot, "noAttack")) return [];
+  if (markOn(state, slot, "noAttack")) return [];
   const def = defOf(state, slot.uid, defs);
   const side = state.players[player];
   const spent = (attack) => (attack.once === "gx" && (side.gxUsed || side.gxBarred)) || (attack.once === "vstar" && side.vstarUsed);
-  return def.attacks.map((attack, index) => (canPay(state, slot, costFor(state, slot, attack, defs), defs) && !barredAttack(state, slot, attack.name) && !spent(attack) && !tooEarly(state, player, attack, defs) ? index : -1)).filter((i) => i >= 0);
+  return def.attacks.map((attack, index) => (!stuckAttack(slot, attack) && canPay(state, slot, costFor(state, slot, attack, defs), defs) && !barredAttack(state, slot, attack.name) && !spent(attack) && !tooEarly(state, player, attack, defs) ? index : -1)).filter((i) => i >= 0);
 }
 
 /**
@@ -1238,6 +1244,8 @@ const HANDLERS = {
     if (!slot) fail("There's no Pokémon there.");
     const def = defOf(state, uid, defs);
     if (handLock(state, player, def)) fail(handLock(state, player, def));
+    // "Your opponent can't play any Pokémon from his or her hand to evolve the Defending Pokémon during his or her next turn."
+    if (markOn(state, slot, "noEvolve")) fail("That Pokémon can't be evolved from your hand this turn.");
     if (!canEvolveOnto(state, slot, def, defs)) {
       if (def.evolvesFrom && defOf(state, slot.uid, defs).name === def.evolvesFrom) fail("A Pokémon can't evolve the turn it comes into play, or on your first turn.");
       fail(`${def.name} doesn't evolve from that Pokémon.`);
@@ -1292,10 +1300,17 @@ const HANDLERS = {
     const slot = slotAt(state, player, spot);
     if (!slot) fail("There's no Pokémon there.");
     if (!energyFits(energy, defOf(state, slot.uid, defs))) fail(`${energy.name} can only be attached to ${onlyFor(energy.special.only)} Pokémon.`);
+    // "Your opponent can't attach Energy from his or her hand to the Defending Pokémon during his or her next turn."
+    if (markOn(state, slot, "noEnergy")) fail("Energy can't be attached from your hand to that Pokémon this turn.");
     takeFromHand(state, player, uid);
     slot.energy.push(uid);
     side.energyUsed = true;
     events.push({ t: "attach", p: player, uid, spot });
+    // "During your opponent's next turn, if they attach an Energy card from their hand to the Defending Pokémon, their turn ends."
+    if (markOn(state, slot, "attachEnds")) {
+      events.push({ t: "mark", p: player, kind: "attachEnded" });
+      state.ending = true;
+    }
     // Healing Scarf: an Energy card from the hand heals the Pokémon it goes on.
     const scarf = toolOn(state, slot, defs)?.attachHeal;
     if (scarf && healRoom(state, slot)) {
@@ -1434,7 +1449,7 @@ const HANDLERS = {
     const early = tooEarly(state, player, attack, defs);
     if (early) fail(early);
     if (!canPay(state, slot, costFor(state, slot, attack, defs), defs)) fail("Not enough Energy for that attack.");
-    if (stuck(slot)) fail(`${def.name} is ${statusOf(slot).main === "asleep" ? "Asleep" : "Paralyzed"} and can't attack.`);
+    if (stuckAttack(slot, attack)) fail(`${def.name} is ${statusOf(slot).main === "asleep" ? "Asleep" : "Paralyzed"} and can't attack.`);
     if (markOn(state, slot, "noAttack")) fail(`${def.name} can't attack this turn.`);
     if (barredAttack(state, slot, attack.name)) fail(`${def.name} can't use ${attack.name} now.`);
     if (attack.once === "gx" && side.gxUsed) fail("You've already used your GX attack this game.");
@@ -2359,10 +2374,10 @@ export function legalActions(state, player, defs) {
     if (def.kind === "pokemon" && handLock(state, player, def)) continue;
     if (def.kind === "pokemon" && def.stage === "basic" && side.bench.length < state.rules.bench) out.push({ type: "bench", player, uid });
     if (def.kind === "pokemon" && def.evolvesFrom) {
-      for (const [slot, spot] of spots) if (canEvolveOnto(state, slot, def, defs)) out.push({ type: "evolve", player, uid, spot });
+      for (const [slot, spot] of spots) if (canEvolveOnto(state, slot, def, defs) && !markOn(state, slot, "noEvolve")) out.push({ type: "evolve", player, uid, spot });
     }
     if (def.kind === "energy" && def.playable && !side.energyUsed && !handLock(state, player, def)) {
-      for (const [slot, spot] of spots) if (energyFits(def, defOf(state, slot.uid, defs))) out.push({ type: "attach", player, uid, spot });
+      for (const [slot, spot] of spots) if (energyFits(def, defOf(state, slot.uid, defs)) && !markOn(state, slot, "noEnergy")) out.push({ type: "attach", player, uid, spot });
     }
     if (def.kind === "trainer" && def.sub === "tool") {
       if (def.playable && side.noTrainers !== state.turn && !handLock(state, player, def)) for (const [slot, spot] of spots) if (!slot.tool && toolFits(def.tool, playedAs(state, slot, defs))) out.push({ type: "tool", player, uid, spot });
