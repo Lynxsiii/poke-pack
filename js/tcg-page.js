@@ -48,7 +48,7 @@ const enIcon = (type) => (EN_FILE[type] ? `<img src="/assets/tcg/energy/${EN_FIL
 const COND_NAME = { asleep: "Asleep", burned: "Burned", confused: "Confused", paralyzed: "Paralyzed", poisoned: "Poisoned" };
 
 /** What a turn-long effect is called on a name plate. */
-const markLabel = (m) => ({ noAttack: "Can't attack", noUse: `No ${m.name}`, less: `-${m.n} damage`, shield: "Protected", guard: "No damage", noRetreat: "Can't retreat", mustFlip: "Flips to attack", stronger: `+${m.n} damage`, weaker: `Does -${m.n}`, exposed: `Takes +${m.n}`, harden: `Ignores ${m.n} or less`, noWeakness: "No Weakness", spite: `Hits back ${m.n / 10}`, bounty: `+${m.n} Prize if KO`, base: `${m.name}: ${m.n}`, noHeal: "Can't be healed", doom: `${m.n / 10} counters at turn end` })[m.kind] || "";
+const markLabel = (m) => ({ noAttack: "Can't attack", noUse: `No ${m.name}`, costMore: `Attacks +${m.n} Colorless`, retreatMore: `Retreat +${m.n}`, ward: "Protected", dodge: "Flips to dodge", endure: `Survives at ${m.n} HP`, doomCond: `${COND_NAME[m.name] || "Condition"} at turn end`, lostKo: "Lost Zone if KO'd", less: `-${m.n} damage`, shield: "Protected", guard: "No damage", noRetreat: "Can't retreat", mustFlip: "Flips to attack", stronger: `+${m.n} damage`, weaker: `Does -${m.n}`, exposed: `Takes +${m.n}`, harden: `Ignores ${m.n} or less`, noWeakness: "No Weakness", spite: m.mirror ? "Hits back in kind" : `Hits back ${m.n / 10}`, bounty: `+${m.n} Prize if KO`, base: `${m.name}: ${m.n}`, noHeal: "Can't be healed", doom: `${m.n / 10} counters at turn end` })[m.kind] || "";
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const plural = (n, word) => `${n} ${word}${n === 1 ? "" : "s"}`;
@@ -952,6 +952,7 @@ export function initTcg(deps) {
       deck: won ? "Their deck ran out." : "Your deck ran out.",
       concede: won ? `${foeName()} gave up.` : "You conceded.",
       tie: "Both sides finished at once.",
+      attack: won ? "Your attack won the game." : `${foeName()}'s attack won the game.`,
     }[state.reason];
     const clock = match.online?.summary.reason;
     if (clock === "timeout") why = won ? `${foeName()} ran out of time.` : "You ran out of time.";
@@ -1188,7 +1189,14 @@ export function initTcg(deps) {
         const whose = event.p === ME ? "Your" : "Their";
         return {
           noAttack: `${whose} Active Pokémon can't attack next turn.`,
-          noUse: `${whose} Active Pokémon can't use ${event.name} next turn.`,
+          noUse: event.until ? `${whose} Active Pokémon can't use ${event.name} again until it leaves the Active Spot.` : `${whose} Active Pokémon can't use ${event.name} next turn.`,
+          costMore: `${whose} Active Pokémon's attacks cost ${event.n} Colorless more next turn.`,
+          retreatMore: `${whose} Active Pokémon's Retreat Cost is ${event.n} more next turn.`,
+          ward: `${whose} Active Pokémon is protected next turn.`,
+          dodge: `${whose} Active Pokémon may dodge attacks next turn.`,
+          endure: `${whose} Active Pokémon can't be Knocked Out by an attack next turn.`,
+          doomCond: `${whose} Active Pokémon will be ${(COND_NAME[event.name] || "affected").toLowerCase()} at the end of next turn.`,
+          lostKo: "",
           less: `${whose} Active Pokémon takes ${event.n} less damage next turn.`,
           shield: `${whose} Active Pokémon is protected next turn.`,
           guard: `${whose} Active Pokémon takes no damage next turn.`,
@@ -1200,7 +1208,7 @@ export function initTcg(deps) {
           harden: `${whose} Active Pokémon takes no damage of ${event.n} or less next turn.`,
           base: `${whose} Active Pokémon's ${event.name} will do ${event.n} damage next turn.`,
           noWeakness: `${whose} Active Pokémon has no Weakness next turn.`,
-          spite: `${whose} Active Pokémon will put ${event.n / 10} damage counters on whatever damages it next turn.`,
+          spite: event.mirror ? `${whose} Active Pokémon will put back as many damage counters as it takes next turn.` : `${whose} Active Pokémon will put ${event.n / 10} damage counters on whatever damages it next turn.`,
           noHeal: `${whose} Active Pokémon can't be healed next turn.`,
           doom: `${whose} Active Pokémon gets ${event.n / 10} damage counters at the end of next turn.`,
         }[event.kind] || "";
@@ -1209,6 +1217,7 @@ export function initTcg(deps) {
       case "copy": return `It used ${event.name}.`;
       case "devolve": return `${name(event.uid)} went back to ${event.p === ME ? "your" : "their"} hand.`;
       case "discard-energy": return `${plural(event.uids.length, "Energy card")} discarded from ${event.p === ME ? "your" : "their"} ${event.spot >= 0 ? "Benched" : "Active"} Pokémon.`;
+      case "lost": return `${plural(event.uids.length, "card")} put in ${event.p === ME ? "your" : "their"} Lost Zone.`;
       case "mill": return `${plural(event.uids.length, "card")} discarded from ${event.p === ME ? "your" : "their"} deck.`;
       case "recycle": return `${who(event.p)} shuffled ${plural(event.uids.length, "card")} from the discard pile into the deck.`;
       case "bounce": return `${who(event.p)} put ${name(event.uid)} back into ${event.p === ME ? "your" : "its"} hand.`;
