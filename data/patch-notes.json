@@ -1,5 +1,14 @@
 [
   {
+    "id": "2026-11-27-fresh-tabs",
+    "date": "2026-11-27",
+    "title": "Old tabs catch up by themselves",
+    "summary": "A tab left open on your phone now picks up site updates when you come back to it.",
+    "items": [
+      "If you come back to a poke-pack tab after a while and the site has been updated since, it quietly reloads to the new version, so fixes show up without closing the tab. It never reloads in the middle of opening a pack or while you're typing."
+    ]
+  },
+  {
     "id": "2026-11-27-shop-show-all",
     "date": "2026-11-27",
     "title": "Show all stays open",

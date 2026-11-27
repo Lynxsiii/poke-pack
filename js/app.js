@@ -11255,8 +11255,36 @@ document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "visible") {
     renderHeader();
     scheduleDailyTick();
+    checkForNewDeploy();
+  } else {
+    hiddenSince = Date.now();
   }
 });
+
+/* A phone keeps a tab alive for days, so a fix can be live while the tab still
+   runs the old app.js and catalog (Noah saw a pack art that had been replaced
+   an hour earlier). Coming back to a tab that sat hidden for a while, ask the
+   server which app.js?v= it serves now and reload when it moved on, but only
+   when nothing is in progress: no pack open, no dialog, no field being typed in. */
+let hiddenSince = 0;
+async function checkForNewDeploy() {
+  const now = Date.now();
+  if (!hiddenSince || now - hiddenSince < 30_000) return;
+  const mine = new URL(import.meta.url).searchParams.get("v");
+  if (!mine) return;
+  try {
+    const res = await fetch("/", { cache: "no-store" });
+    const live = (await res.text()).match(/js\/app\.js\?v=(\d+)/)?.[1];
+    if (!live || live === mine) return;
+    const busy =
+      packPhase !== "idle" ||
+      document.querySelector("dialog[open], .batch-open:not(.hidden)") ||
+      document.activeElement?.matches?.("input, textarea, select, [contenteditable]");
+    if (!busy && document.visibilityState === "visible") location.reload();
+  } catch {
+    /* offline: try again next time the tab comes back */
+  }
+}
 
 /* The first-run tour (js/tour.js): once, on Home, when nothing is open over it.
    Settings and the welcome screen can start it again. */
