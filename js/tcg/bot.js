@@ -356,6 +356,17 @@ export function botAction(state, player, defs) {
       const h = Math.imul((state.rng ^ Math.imul(player + 1, 0x9e3779b1) ^ Math.imul(state.rps?.round || 0, 0x85ebca6b)) | 0, 0xc2b2ae35);
       return actions[((h ^ (h >>> 16)) >>> 0) % actions.length];
     }
+    // Sabrina's Psychic Control: the other side's discarded Trainer that does the plainest good, else none.
+    if (waiting.why === "borrow") {
+      const order = ["hammer", "energize", "evolve", "draw", "search", "recover", "heal", "cure", "tools"];
+      const rank = (steps) => {
+        if (!steps.length) return order.length;
+        const aim = trainerAim(defOf(state, steps[0].card, defs).fx);
+        if (aim === "hammer" && !inPlay(state, other(player)).some(([slot]) => slot.energy.length)) return order.length + 1;
+        return order.includes(aim) ? order.indexOf(aim) : order.length + 1;
+      };
+      return actions.slice().sort((a, b) => rank(waiting.options[a.index]) - rank(waiting.options[b.index]))[0];
+    }
     // Trick Coin: flipped again when most of the attack's coins came up tails (on a copy, kept).
     if (waiting.why === "trick") return simulating || !state.trick || state.trick.heads * 2 >= state.trick.flips ? actions[1] : actions[0];
     // The other player's Challenge!: accepted when it can fill a Bench that needs it more than theirs does
@@ -490,6 +501,8 @@ export function botAction(state, player, defs) {
       if (fitsFront && state.turn > 1 && (!step.turn || def.attacks.some((at) => !unpaid(at.cost, energyOf(state, side.active, defs))))) return action;
       continue;
     }
+    // Sabrina's Psychic Control: only playable when the other discard pile holds a Trainer that would do something.
+    if (def.fx.some((s) => s.op === "psychic")) return action;
     const aim = trainerAim(def.fx);
     const heal = def.fx.find((s) => s.op === "heal");
     // A card that also discards the Stadium in play is not played over its own Stadium.

@@ -15,7 +15,7 @@
  * ctx: { state, defs, events, player }
  */
 
-import { ACTIVE, abilityOn, addCondition, askChoose, askPick, conditionsOn, damageAfterTyping, defOf, energyOf, evolveSpots, flip, healRoom, heldOn, hpLeft, inPlay, mayEvolve, other, rand, shedEnergy, shuffle, slotAt, switchActive, toolOf, warded } from "./engine.js";
+import { ACTIVE, abilityOn, addCondition, trainerBlock, askChoose, askPick, conditionsOn, damageAfterTyping, defOf, energyOf, evolveSpots, flip, healRoom, heldOn, hpLeft, inPlay, mayEvolve, other, rand, shedEnergy, shuffle, slotAt, switchActive, toolOf, warded } from "./engine.js";
 import { runFx } from "./effects.js";
 
 export const RPS = ["Rock", "Paper", "Scissors"];
@@ -756,6 +756,37 @@ export const T_OPS = {
       }
     },
   },
+  /**
+   * Sabrina's Psychic Control: heads, one of the Trainer cards in the opponent's discard pile that isn't put in play,
+   * used as if it were in the hand (its price paid, a Supporter counting as this turn's); it stays where it is.
+   * Offered are the ones that would do something now, and "Don't use".
+   */
+  psychic: {
+    ready: (ctx) => borrowable(ctx, false).length > 0,
+    run(ctx) {
+      const heads = flip(ctx.state, ctx.player);
+      ctx.events.push({ t: "flip", p: ctx.player, results: [heads] });
+      if (!heads) return;
+      const uids = borrowable(ctx, true);
+      const seen = new Set();
+      const offers = uids.filter((uid) => {
+        const id = ctx.state.cards[uid];
+        return !seen.has(id) && seen.add(id);
+      }).map((uid) => ({ label: defOf(ctx.state, uid, ctx.defs).name, steps: [{ op: "borrowRun", card: uid }] }));
+      const all = [...offers, { label: "Don't use one", steps: [] }];
+      if (offers.length) ctx.state.pending.push({ type: "option", player: ctx.player, why: "borrow", prompt: "Sabrina's Psychic Control: use a Trainer card from your opponent's discard pile?", labels: all.map((o) => o.label), options: all.map((o) => o.steps) });
+    },
+  },
+  borrowRun: {
+    ready: () => true,
+    run(ctx, { card }) {
+      const def = defOf(ctx.state, card, ctx.defs);
+      if (!theirs(ctx).discard.includes(card)) return;
+      if (def.sub === "supporter") mine(ctx).supporterUsed = true;
+      ctx.events.push({ t: "borrow", p: ctx.player, uid: card });
+      runTrainer(borrowSteps(def.fx), ctx);
+    },
+  },
   /** Kahili, Egg Incubator: this card goes back to the hand, or to the bottom of the deck, instead of the discard pile. */
   keepCard: {
     must: true,
@@ -1226,6 +1257,21 @@ const breederSpots = (ctx) =>
       return !(def.tags || []).includes("Baby") && (def.stage === "basic" || def.line === 1);
     })
     .map(([, spot]) => spot);
+/** A borrowed card isn't in the hand: a price of "other cards" doesn't leave one out for it. */
+const borrowSteps = (fx) => fx.map((step) => (step.op === "cost" ? { ...step, spare: 0 } : step));
+/**
+ * Sabrina's Psychic Control: the opponent's discarded Trainers that aren't put in play and would do something now.
+ * Asked before this card is played (it is still in the hand, which the usual checks allow for), or after (`played`).
+ */
+const borrowable = (ctx, played) =>
+  theirs(ctx).discard.filter((uid) => {
+    const def = defOf(ctx.state, uid, ctx.defs);
+    if (def?.kind !== "trainer" || !def.playable || !["item", "supporter"].includes(def.sub) || def.fossil || def.tm) return false;
+    if (def.fx.some((step) => ["hold", "tm", "psychic"].includes(step.op))) return false;
+    if (!played) return !trainerBlock(ctx.state, ctx.player, def, ctx.defs);
+    if (def.sub === "supporter" && mine(ctx).supporterUsed) return false;
+    return trainerReady(borrowSteps(def.fx), ctx);
+  });
 /** Where a Technical Machine may go: one of your Pokémon that fits it and holds no Technical Machine yet. */
 const tmSpots = (ctx, { only = {} }) =>
   inPlay(ctx.state, ctx.player)
@@ -1481,6 +1527,8 @@ const PATTERNS = [
   [/^Ask your opponent if he or she accepts your challenge\. If your opponent declines \(or if both Benches are full\), draw 2 cards\. If your opponent accepts, each of you searches your decks for any number of Basic Pokémon cards and puts them face down onto your Benches\. \(A player can't do this if his or her Bench is full\.\) When you both have finished, shuffle your decks and turn those cards face up\.$/, () => [{ op: "challenge" }]],
   // Pokémon Breeder Fields.
   [/^Flip a coin for 1 or 2 of your non-Baby Pokémon that can evolve\. For each heads, search your deck for a later-Stage card that matches that Pokémon\. Then put that card into your hand\. Shuffle your deck afterward\.$/, () => [{ op: "breeder" }]],
+  // Sabrina's Psychic Control.
+  [/^Flip a coin\. If heads, choose a Trainer card in your opponent's discard pile that isn't put in play \(like PlusPower or Mysterious Fossil\)\. You may use that card as if it were in your hand, if you do everything required in order to play that card \(like discarding cards\)\. The card stays in your opponent's discard pile\.$/, () => [{ op: "psychic" }]],
   // Dan.
   [/^Draw (\d+) cards\. You and your opponent play Rock-Paper-Scissors until someone wins\. If you win, draw (\d+) more cards\.$/, (m) => [{ op: "draw", n: Number(m[1]) }, { op: "rps", win: [{ op: "draw", n: Number(m[2]) }] }]],
   // Fossil Excavator: the deck or the discard pile, the player's choice (only asked when the discard pile has one).

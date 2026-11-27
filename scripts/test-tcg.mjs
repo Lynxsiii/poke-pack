@@ -6273,4 +6273,49 @@ test("Trick Coin: after the attack's coins, its player may ignore them and flip 
   assert.ok(!plain.pending.length || plain.pending[0].why !== "trick");
 });
 
+test("Sabrina's Psychic Control: heads, a Trainer from the opponent's discard pile used as if in the hand", () => {
+  assert.ok(defs("gym2-121").playable);
+  assert.ok(defs("base1-92").playable);
+  const deck = deckOf(["gym2-121", 4], ["base1-46", 16], [F, 10]);
+  const setup = (ids) => {
+    const state = fossilGame(deck);
+    const foe = state.players[1];
+    const put = ids.map((id) => {
+      const uid = foe.deck.pop();
+      state.cards[uid] = id;
+      foe.discard.push(uid);
+      return uid;
+    });
+    const energy = foe.deck.pop();
+    state.cards[energy] = W;
+    foe.active.energy.push(energy);
+    return { state, put, energy };
+  };
+  // Only a PlusPower there: it is put in play, so there is nothing to use.
+  let { state } = setup(["base1-84"]);
+  const sabrina = give(state, 0, "gym2-121");
+  throws(() => act(state, { type: "play", player: 0, uid: sabrina }), /nothing/);
+  // Energy Removal: offered beside "Don't use one"; it does its work and stays in their discard pile.
+  let put, energy;
+  ({ state, put, energy } = setup(["base1-84", "base1-92"]));
+  rigFlips(state, [true]);
+  act(state, { type: "play", player: 0, uid: give(state, 0, "gym2-121") });
+  assert.deepEqual(state.pending[0].labels, ["Energy Removal", "Don't use one"]);
+  act(state, { type: "option", player: 0, index: 0 });
+  while (state.pending.length && state.pending[0].player === 0) {
+    const w = state.pending[0];
+    if (w.type === "pick") act(state, { type: "pick", player: 0, spot: w.spots[0] });
+    else act(state, { type: "choose", player: 0, uids: w.uids.slice(0, 1) });
+  }
+  assert.ok(!state.players[1].active.energy.includes(energy));
+  assert.ok(state.players[1].discard.includes(put[1]));
+  assert.ok(!state.players[0].discard.includes(put[1]) && !state.players[0].hand.includes(put[1]));
+  // Tails: nothing.
+  ({ state, put, energy } = setup(["base1-92"]));
+  rigFlips(state, [false]);
+  act(state, { type: "play", player: 0, uid: give(state, 0, "gym2-121") });
+  assert.ok(!state.pending.length);
+  assert.ok(state.players[1].active.energy.includes(energy));
+});
+
 console.log(`${passed} checks passed${process.exitCode ? ", some failed" : ""}`);
