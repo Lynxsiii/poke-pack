@@ -244,7 +244,8 @@
       ],
       "price": 29.42,
       "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
-      "note": "A 60-card theme deck featuring Dragonite, no booster pack (Bulbapedia deck list, checked against a second list)."
+      "note": "A 60-card theme deck featuring Dragonite, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "imageVersion": 2
     },
     {
       "id": "theme-deck-laser-focus",
@@ -257,7 +258,8 @@
       ],
       "price": 42.9,
       "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
-      "note": "A 60-card theme deck featuring Necrozma, no booster pack (Bulbapedia deck list, checked against a second list)."
+      "note": "A 60-card theme deck featuring Necrozma, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "imageVersion": 2
     }
   ]
 }

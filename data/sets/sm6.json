@@ -132,7 +132,8 @@
       "promos": [
         "smp133",
         "smp134"
-      ]
+      ],
+      "imageVersion": 2
     },
     {
       "id": "alolan-exeggutor-2a",
@@ -164,7 +165,8 @@
       ],
       "price": 16.91,
       "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
-      "note": "A 60-card theme deck featuring Alolan Exeggutor, no booster pack (Bulbapedia deck list, checked against a second list)."
+      "note": "A 60-card theme deck featuring Alolan Exeggutor, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "imageVersion": 2
     },
     {
       "id": "theme-deck-twilight-rogue",
@@ -177,7 +179,8 @@
       ],
       "price": 13.73,
       "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
-      "note": "A 60-card theme deck featuring Lycanroc, no booster pack (Bulbapedia deck list, checked against a second list)."
+      "note": "A 60-card theme deck featuring Lycanroc, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "imageVersion": 2
     }
   ],
   "skipNumbers": [
