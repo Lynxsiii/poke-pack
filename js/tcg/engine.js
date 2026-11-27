@@ -140,6 +140,10 @@ let gauging = false;
 function ownAbility(state, slot, defs) {
   const ability = slot && defOf(state, slot.uid, defs)?.ability;
   if (!ability) return null;
+  // "The Defending Pokémon has no Abilities until the end of your next turn", "... can't use any Poké-Powers": a noAbility
+  // mark, naming the kinds it takes away (its `from`).
+  const mute = markOn(state, slot, "noAbility");
+  if (mute && mute.from.split(",").includes(defOf(state, slot.uid, defs).abilityKind || "Ability")) return null;
   if (ability.kind === "Pokémon Power" && ["asleep", "confused", "paralyzed"].includes(statusOf(slot).main)) return null;
   const when = ability.when;
   if (when?.energy) {
@@ -987,6 +991,8 @@ export function resolveKnockOuts(state, defs, events, { between = false } = {}) 
     const side = state.players[p];
     const prizes = side.prizes.splice(0, took[p]);
     side.hand.push(...prizes);
+    // Kept for "for each Prize card your opponent took during their last turn" (js/tcg/effects.js COUNTS.foeTookLast).
+    side.taken = [...(side.taken || []).filter((t) => t.turn >= state.turn - 2), { turn: state.turn, n: prizes.length }];
     events.push({ t: "prize", p, uids: prizes });
   }
   const won = [0, 1].map((p) => {
