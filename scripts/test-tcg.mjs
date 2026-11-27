@@ -5888,4 +5888,56 @@ test("the bot benches a Fossil it can evolve and discards a dead one", () => {
   assert.deepEqual(botAction(state, 0, defs), { type: "drop", player: 0, spot });
 });
 
+test("Dan: Rock-Paper-Scissors until someone wins, each choosing unseen", () => {
+  const dan = defs("swsh2-158");
+  assert.ok(dan.playable);
+  const deck = deckOf(["swsh2-158", 10], ["base1-46", 12], [F, 8]);
+  const round = (mine, theirs) => {
+    const state = fossilGame(deck);
+    const uid = give(state, 0, "swsh2-158");
+    const hand = state.players[0].hand.length;
+    act(state, { type: "play", player: 0, uid });
+    assert.equal(state.players[0].hand.length, hand - 1 + 2, "2 cards first");
+    assert.equal(state.pending[0].why, "rps");
+    assert.equal(state.pending[0].player, 0);
+    act(state, { type: "option", player: 0, index: mine });
+    // The other player chooses without seeing it.
+    assert.equal(state.pending[0].player, 1);
+    assert.equal(viewFor(state, 1).rps, undefined);
+    assert.equal(viewFor(state, 0).rps.pick, mine);
+    assert.ok(!JSON.stringify(viewFor(state, 1).pending).includes(`"k":${mine}`));
+    const events = act(state, { type: "option", player: 1, index: theirs });
+    return { state, hand, events };
+  };
+  // Paper beats Rock: 2 more cards.
+  let { state, hand } = round(1, 0);
+  assert.equal(state.players[0].hand.length, hand + 3);
+  assert.ok(!state.pending.length && !state.rps);
+  // Rock loses to Paper: none.
+  ({ state, hand } = round(0, 1));
+  assert.equal(state.players[0].hand.length, hand + 1);
+  // Scissors beats Paper, Rock beats Scissors.
+  assert.equal(round(2, 1).state.players[0].hand.length, round(2, 1).hand + 3);
+  assert.equal(round(0, 2).state.players[0].hand.length, round(0, 2).hand + 3);
+  // A tie plays again.
+  const tie = round(2, 2);
+  assert.equal(tie.events.find((e) => e.t === "rps").won, null);
+  assert.equal(tie.state.pending[0].why, "rps");
+  assert.equal(tie.state.pending[0].player, 0);
+  act(tie.state, { type: "option", player: 0, index: 1 });
+  act(tie.state, { type: "option", player: 1, index: 0 });
+  assert.equal(tie.state.players[0].hand.length, tie.hand + 3);
+  // The bot throws all three, both as the one who played Dan and as the other player.
+  const seen = new Set();
+  for (let seed = 1; seed < 40; seed += 1) {
+    const s = fossilGame(deck, seed);
+    act(s, { type: "play", player: 0, uid: give(s, 0, "swsh2-158") });
+    const a = botAction(s, 0, defs);
+    seen.add(a.index);
+    act(s, a);
+    seen.add(100 + botAction(s, 1, defs).index);
+  }
+  assert.equal(seen.size, 6);
+});
+
 console.log(`${passed} checks passed${process.exitCode ? ", some failed" : ""}`);

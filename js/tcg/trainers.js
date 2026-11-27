@@ -18,6 +18,7 @@
 import { ACTIVE, addCondition, askChoose, askPick, conditionsOn, damageAfterTyping, defOf, energyOf, evolveSpots, flip, healRoom, heldOn, hpLeft, inPlay, mayEvolve, other, rand, shedEnergy, shuffle, slotAt, switchActive, toolOf, warded } from "./engine.js";
 import { runFx } from "./effects.js";
 
+export const RPS = ["Rock", "Paper", "Scissors"];
 const WORDS = { a: 1, an: 1, another: 1, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8 };
 const count = (word) => WORDS[String(word).toLowerCase()] || Number(word) || 0;
 
@@ -663,6 +664,37 @@ export const T_OPS = {
       ctx.events.push({ t: "flip", p: ctx.player, results });
       const heads = results.filter(Boolean).length;
       if (heads) runTrainer([{ ...step, n: heads }], ctx);
+    },
+  },
+  /**
+   * Dan: "You and your opponent play Rock-Paper-Scissors until someone wins." This card's player chooses, then the
+   * other player, who can't see that choice (it waits in `state.rps`, which engine.js viewFor keeps from them).
+   * A tie plays again. `win`: what this card's player does on winning.
+   */
+  rps: {
+    ready: hasDeck,
+    run(ctx, { win = [] }) {
+      ctx.state.rps = { p: ctx.player, round: (ctx.state.rps?.round || 0) + 1, win };
+      ctx.state.pending.push({ type: "option", player: ctx.player, why: "rps", prompt: "Rock-Paper-Scissors: what do you play?", labels: RPS, options: RPS.map((_, k) => [{ op: "rpsMine", k }]) });
+    },
+  },
+  rpsMine: {
+    ready: () => true,
+    run(ctx, { k }) {
+      ctx.state.rps.pick = k;
+      ctx.state.pending.push({ type: "option", player: other(ctx.player), by: ctx.player, why: "rps", prompt: "Your opponent's Dan: Rock-Paper-Scissors. What do you play?", labels: RPS, options: RPS.map((_, j) => [{ op: "rpsTheirs", j }]) });
+    },
+  },
+  rpsTheirs: {
+    ready: () => true,
+    run(ctx, { j }) {
+      const { pick, win, round } = ctx.state.rps;
+      // Rock 0, Paper 1, Scissors 2: each beats the one before it.
+      const outcome = (pick - j + 3) % 3;
+      ctx.events.push({ t: "rps", p: ctx.player, picks: [RPS[pick], RPS[j]], won: outcome === 0 ? null : outcome === 1, round });
+      if (!outcome) return T_OPS.rps.run(ctx, { win });
+      delete ctx.state.rps;
+      if (outcome === 1) runTrainer(win, ctx);
     },
   },
   /** Kahili, Egg Incubator: this card goes back to the hand, or to the bottom of the deck, instead of the discard pile. */
@@ -1321,6 +1353,8 @@ const PATTERNS = [
   [/^Discard an Energy card from your hand\. Then, draw (\d+) cards\.$/, (m) => [{ op: "cost", n: 1, what: "energy" }, { op: "draw", n: Number(m[1]) }]],
   [/^Discard a card from your hand in order to play this card\. (.+)$/, (m) => { const rest = compileTrainer(m[1]); return rest && [{ op: "cost", n: 1 }, ...rest]; }],
   [/^Discard a Team Plasma card from your (?:hand|card)\. \(if you can't discard a Team Plasma card, you can't play this card\.\) Draw (\d+) cards\.$/i, (m) => [{ op: "cost", n: 1, what: "any+Team Plasma" }, { op: "draw", n: Number(m[1]) }]],
+  // Dan.
+  [/^Draw (\d+) cards\. You and your opponent play Rock-Paper-Scissors until someone wins\. If you win, draw (\d+) more cards\.$/, (m) => [{ op: "draw", n: Number(m[1]) }, { op: "rps", win: [{ op: "draw", n: Number(m[2]) }] }]],
   // Fossil Excavator: the deck or the discard pile, the player's choice (only asked when the discard pile has one).
   [/^Search your deck or discard pile for a Trainer card that has Fossil in its name or a Stage 1 or Stage 2 Evolution card that evolves from a Fossil\. Show it to your opponent and put it into your hand\. If you searched your deck, shuffle your deck afterward\.$/, () => {
     const what = "trainer~Fossil|stage1<Fossil|stage2<Fossil";

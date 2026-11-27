@@ -352,6 +352,11 @@ export function botAction(state, player, defs) {
       });
       return actions[hits.indexOf(Math.max(...hits))];
     }
+    // Rock-Paper-Scissors: a throw that can't be read off the table (not the other player's, which it doesn't look at).
+    if (waiting.why === "rps") {
+      const h = Math.imul((state.rng ^ Math.imul(player + 1, 0x9e3779b1) ^ Math.imul(state.rps?.round || 0, 0x85ebca6b)) | 0, 0xc2b2ae35);
+      return actions[((h ^ (h >>> 16)) >>> 0) % actions.length];
+    }
     // A Special Condition of its choosing: Paralyzed, which stops their next attack and retreat.
     if (waiting.why === "condition") return actions[waiting.labels.indexOf("Paralyzed")] || actions[0];
     // An attack's "you may": yes, except to take its own Pokémon out of play.

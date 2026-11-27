@@ -2506,6 +2506,8 @@ export function viewFor(state, player) {
   view.cards = Object.fromEntries(Object.entries(view.cards).filter(([uid]) => shown.has(uid)));
   delete view.seed;
   delete view.rng;
+  // Rock-Paper-Scissors (Dan): the other player doesn't see what was played before they choose.
+  if (view.rps && view.rps.p !== player) delete view.rps;
   view.opening = view.opening.map((e) => (e.t === "mulligan" ? e : { ...e }));
   return view;
 }
