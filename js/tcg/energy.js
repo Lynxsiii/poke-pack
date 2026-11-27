@@ -58,6 +58,19 @@ const SENTENCES = [
   // Team Rocket's Energy.
   [/^This card can only be attached to an? (Team Rocket's) Pokémon$/, (m, out) => ((out.only = { named: m[1] }), true)],
   [new RegExp(`^As long as this card is attached to a Pokémon, it provides 2 in any combination of (${TYPE}) Energy and (${TYPE}) Energy$`), (m, out) => give(out, [`${m[1]}|${m[2]}`, `${m[1]}|${m[2]}`])],
+  // Rapid Strike Energy, Single Strike Energy.
+  [/^This card can only be attached to an? (Rapid Strike|Single Strike|Fusion Strike) Pokémon$/, (m, out) => ((out.only = { tag: m[1] }), true)],
+  [new RegExp(`^As long as this card is attached to a Pokémon, it provides (${TYPE}) and (${TYPE}) Energy but provides only 2 Energy at a time, and the attacks of the Pokémon this card is attached to do (\\d+) more damage to your opponent's Active Pokémon${BEFORE}$`), (m, out) => ((out.provides = [`${m[1]}|${m[2]}`, `${m[1]}|${m[2]}`]), (out.any = true), mod(out, "", { plus: Number(m[3]) }))],
+  // Triple Acceleration Energy, Aqua and Magma Energy: on some Pokémon only, gone at the end of the turn.
+  [/^This card can only be attached to Evolution Pokémon$/, (m, out) => ((out.only = { evolved: true }), true)],
+  [/^If this card is attached to 1 of your Pokémon, discard it at the end of the turn$/, (m, out) => (out.burnOut = true)],
+  [/^Discard this card at the end of the turn you attached it$/, (m, out) => (out.burnOut = true)],
+  [new RegExp(`^This card provides ((?:${TYPE})+) Energy only while it is attached to an Evolution Pokémon$`), (m, out) => out.only?.evolved && give(out, units(m[1]))],
+  [/^This card can only be attached to (Team Aqua|Team Magma) Pokémon$/, (m, out) => ((out.only = { named: m[1] }), true)],
+  [new RegExp(`^This card provides ((?:${TYPE})+) Energy only while it is attached to an? (Team Aqua|Team Magma) Pokémon$`), (m, out) => out.only?.named === m[2] && give(out, units(m[1]))],
+  // Nitro Fire Energy, Boomerang Energy: back after an attack of the Pokémon it was on discarded it (engine.js noteShed).
+  [new RegExp(`^If this card is discarded by an effect of an attack used by the (?:(${TYPE}) )?Pokémon this card is attached to, put this card into your hand after attack damage and effects$`), (m, out) => ((out.back = { to: "hand", ...(m[1] ? { type: m[1] } : {}) }), true)],
+  [/^If this card is discarded by an effect of an attack used by the Pokémon this card is attached to, attach this card from your discard pile to that Pokémon after attacking$/, (m, out) => ((out.back = { to: "attach" }), true)],
   // Mist Energy, Rocky Fighting Energy: no effects of the opponent's attacks (damage still lands).
   [new RegExp(`^Prevent all effects of attacks used by your opponent's Pokémon done to ${HOLDER}$`), (m, out) => mod(out, m[1], { noEffects: true })],
   // Shadowy Darkness Energy.
@@ -186,5 +199,6 @@ export function compileSpecialEnergy(text, cardName = "", debug = false) {
   if (out.alt) special.alt = out.alt;
   if (out.crowd) special.crowd = true;
   if (out.burnOut) special.burnOut = true;
+  if (out.back) special.back = out.back;
   return special;
 }

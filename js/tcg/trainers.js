@@ -15,7 +15,7 @@
  * ctx: { state, defs, events, player }
  */
 
-import { ACTIVE, abilityOn, addCondition, toolOn, trainerBlock, win, askChoose, askPick, conditionsOn, damageAfterTyping, defOf, energyOf, evolveSpots, flip, healRoom, heldOn, hpLeft, inPlay, mayEvolve, other, rand, shedEnergy, shuffle, slotAt, switchActive, toolOf, warded } from "./engine.js";
+import { ACTIVE, abilityOn, noteShed, addCondition, toolOn, trainerBlock, win, askChoose, askPick, conditionsOn, damageAfterTyping, defOf, energyOf, evolveSpots, flip, healRoom, heldOn, hpLeft, inPlay, mayEvolve, other, rand, shedEnergy, shuffle, slotAt, switchActive, toolOf, warded } from "./engine.js";
 import { runFx } from "./effects.js";
 
 export const RPS = ["Rock", "Paper", "Scissors"];
@@ -122,6 +122,7 @@ export function stripEnergy(ctx, p, spot, toHand = false) {
   const gone = slot ? slot.energy.splice(0) : [];
   if (!gone.length) return;
   ctx.state.players[p][toHand ? "hand" : "discard"].push(...gone);
+  if (!toHand) noteShed(ctx.state, p, spot, gone);
   ctx.events.push({ t: toHand ? "energy-to-hand" : "discard-energy", p, spot, uids: gone });
 }
 
@@ -1380,7 +1381,183 @@ export const T_OPS = {
       askChoose(ctx.state, { player: ctx.player, zone: "hand", what: "pokemon", uids: byNames(ctx, names), min: 1, max: 1, effect: { op: "toBench", asBasic: true } });
     },
   },
+  /** Grisham: heal n from each Pokémon, yours and your opponent's. */
+  healBoth: {
+    ready: (ctx) => [ctx.player, other(ctx.player)].some((p) => inPlay(ctx.state, p).some(([slot]) => healRoom(ctx.state, slot) > 0)),
+    run(ctx, { n }) {
+      for (const p of [ctx.player, other(ctx.player)]) {
+        for (const [slot, spot] of inPlay(ctx.state, p)) {
+          const healed = Math.min(n, healRoom(ctx.state, slot));
+          if (!healed) continue;
+          slot.damage -= healed;
+          slot.healedOn = ctx.state.turn;
+          ctx.events.push({ t: "heal", p, spot, n: healed });
+        }
+      }
+    },
+  },
+  /** Tasty Rice Ball: n from your Active Pokémon, and n more for each card of this name in your discard pile (not this one). */
+  healPerCopy: {
+    ready: (ctx) => Boolean(mine(ctx).active) && healRoom(ctx.state, mine(ctx).active) > 0,
+    run(ctx, { n, name }) {
+      const slot = mine(ctx).active;
+      if (!slot) return;
+      const copies = mine(ctx).discard.filter((uid) => uid !== ctx.uid && defOf(ctx.state, uid, ctx.defs).name === name).length;
+      const healed = Math.min(n * (1 + copies), healRoom(ctx.state, slot));
+      slot.damage -= healed;
+      if (healed) slot.healedOn = ctx.state.turn;
+      ctx.events.push({ t: "heal", p: ctx.player, spot: ACTIVE, n: healed });
+    },
+  },
+  /** Damage counters on your own Active Pokémon (Team Rocket's Venture Bomb's tails). */
+  hurtActive: {
+    ready: (ctx) => Boolean(mine(ctx).active),
+    run(ctx, { n }) {
+      const slot = mine(ctx).active;
+      if (!slot) return;
+      slot.damage += n;
+      ctx.events.push({ t: "damage", p: ctx.player, spot: ACTIVE, n, self: true });
+    },
+  },
+  /** A card for each of `of`: "foeMega" (their Mega Evolution Pokémon ex in play), "mine" with `what` (your Pokémon in play that fit). */
+  drawEach: {
+    ready: (ctx, step) => hasDeck(ctx) && eachCount(ctx, step) > 0,
+    run: (ctx, step) => draw(ctx, ctx.player, eachCount(ctx, step)),
+  },
+  /** Hand Trimmer: discard from your own hand until it holds n (your choice of cards); nothing with n or fewer. */
+  tossTo: {
+    ready: (ctx, { n }) => mine(ctx).hand.length - held(ctx) > n,
+    run(ctx, { n }) {
+      const uids = mine(ctx).hand.slice();
+      const k = uids.length - n;
+      if (k > 0) askChoose(ctx.state, { player: ctx.player, zone: "hand", what: "any", uids, min: k, max: k, effect: { op: "discard" } });
+    },
+  },
+  /** Accompanying Flute: the top n of their deck are revealed; any of their Basic Pokémon there onto their Bench, the rest shuffled back. */
+  foeTopBench: {
+    ready: (ctx) => theirs(ctx).deck.length > 0,
+    run(ctx, { n }) {
+      const side = theirs(ctx);
+      const shown = side.deck.slice(0, n);
+      ctx.events.push({ t: "reveal-deck", p: other(ctx.player), uids: shown });
+      askChoose(ctx.state, { player: ctx.player, owner: other(ctx.player), zone: "deck", what: "basic", uids: fitting(ctx, shown, "basic"), min: 0, max: Math.max(0, ctx.state.rules.bench - side.bench.length), effect: { op: "toBench" }, seen: shown, shuffle: true });
+    },
+  },
+  /** Love Ball: a Pokémon with the same name as 1 of your opponent's Pokémon in play. */
+  sameName: {
+    ready: hasDeck,
+    run(ctx) {
+      const names = inPlay(ctx.state, other(ctx.player)).map(([slot]) => defOf(ctx.state, slot.uid, ctx.defs).name);
+      const uids = mine(ctx).deck.filter((uid) => {
+        const def = defOf(ctx.state, uid, ctx.defs);
+        return def.kind === "pokemon" && names.includes(def.name);
+      });
+      askChoose(ctx.state, { player: ctx.player, zone: "deck", what: "pokemon", uids, min: 0, max: 1, effect: { op: "toHand" }, shuffle: true });
+    },
+  },
+  /** Perrin: search for up to as many cards as were just put into the deck (`paid`). */
+  searchPaid: {
+    ready: hasDeck,
+    run(ctx, { what, paid = [] }) {
+      if (!paid.length) return;
+      askChoose(ctx.state, { player: ctx.player, zone: "deck", what, uids: fitting(ctx, mine(ctx).deck, what), min: 0, max: paid.length, effect: { op: "toHand" }, shuffle: true });
+    },
+  },
+  /** Meddling Memo: they draw as many cards as their hand put on the bottom of their deck (handBottom's count). */
+  foeDrawMoved: {
+    ready: () => true,
+    run: (ctx) => draw(ctx, other(ctx.player), ctx.moved || 0),
+  },
+  /** Megaton Blower: every Special Energy on their Pokémon, discarded. */
+  dropFoeSpecial: {
+    ready: (ctx) => open(ctx).some(([slot]) => slot.energy.some((uid) => isSpecial(ctx, uid))),
+    run(ctx) {
+      for (const [slot, spot] of open(ctx)) {
+        const gone = slot.energy.filter((uid) => isSpecial(ctx, uid));
+        if (!gone.length) continue;
+        slot.energy = slot.energy.filter((uid) => !gone.includes(uid));
+        theirs(ctx).discard.push(...gone);
+        ctx.events.push({ t: "discard-energy", p: other(ctx.player), spot, uids: gone });
+      }
+    },
+  },
+  /** Redeemable Ticket: your Prize cards shuffled onto the bottom of your deck, then as many from the top become your Prize cards. */
+  prizeSwap: {
+    ready: (ctx) => mine(ctx).prizes.length > 0,
+    run(ctx) {
+      const side = mine(ctx);
+      const k = side.prizes.length;
+      const old = side.prizes.splice(0);
+      shuffle(ctx.state, old);
+      side.deck.push(...old);
+      side.prizes.push(...side.deck.splice(0, k));
+      ctx.events.push({ t: "prize-swap", p: ctx.player, n: k });
+    },
+  },
+  /** Scramble Switch: any amount of Energy from the Pokémon just moved to the Bench onto the new Active Pokémon. */
+  energyBackAll: {
+    ready: () => true,
+    run(ctx) {
+      const at = switchedOut(ctx);
+      if (!at || !at[0].energy.length || !mine(ctx).active) return;
+      askChoose(ctx.state, { player: ctx.player, zone: "play", what: "energy", uids: at[0].energy.slice(), min: 0, max: at[0].energy.length, effect: { op: "carryEnergy", from: at[1], spots: [ACTIVE] } });
+    },
+  },
+  /** "Flip 2 coins. If both of them are heads, ...". */
+  flipAll: {
+    ready: (ctx, { heads }) => heads.some((step) => !T_OPS[step.op].must && T_OPS[step.op].ready(ctx, step)),
+    run(ctx, { coins, heads }) {
+      const results = Array.from({ length: coins }, () => flip(ctx.state));
+      ctx.events.push({ t: "flip", p: ctx.player, results });
+      if (results.every(Boolean)) runTrainer(heads, ctx);
+    },
+  },
+  /** Brilliant Blender: up to n cards from the deck to the discard pile, then the deck is shuffled. */
+  searchMill: {
+    ready: hasDeck,
+    run(ctx, { n }) {
+      askChoose(ctx.state, { player: ctx.player, zone: "deck", what: "any", uids: mine(ctx).deck.slice(), min: 0, max: n, effect: { op: "millChosen" }, shuffle: true });
+    },
+  },
+  /** Energy Swatter: their hand is revealed, and you put an Energy card from it on the bottom of their deck. */
+  foeHandEnergyBottom: {
+    ready: (ctx) => theirs(ctx).hand.length > 0,
+    run(ctx) {
+      const hand = theirs(ctx).hand.slice();
+      ctx.events.push({ t: "reveal-hand", p: other(ctx.player), uids: hand });
+      askChoose(ctx.state, { player: ctx.player, owner: other(ctx.player), zone: "hand", what: "energy", uids: fitting(ctx, hand, "energy"), min: 1, max: 1, effect: { op: "toBottom" }, seen: hand });
+    },
+  },
+  /** A protection on 1 of your Pokémon until the end of your opponent's next turn (`mark` as engine.js marks read it). */
+  markOne: {
+    ready: (ctx) => inPlay(ctx.state, ctx.player).length > 0,
+    run(ctx, { mark }) {
+      askPick(ctx.state, { player: ctx.player, side: ctx.player, spots: inPlay(ctx.state, ctx.player).map(([, spot]) => spot), left: 1, effect: { op: "mark", mark: { ...mark, turn: ctx.state.turn + 1 } } });
+    },
+  },
+  /** Briar: more Prize cards this turn for a Knock Out of their Active Pokémon by an attack from one of yours that fits `who`. */
+  prizeUp: {
+    ready: () => true,
+    run(ctx, { n, who }) {
+      ctx.state.prizeUp = [...(ctx.state.prizeUp || []).filter((b) => b.turn === ctx.state.turn), { p: ctx.player, turn: ctx.state.turn, n, who }];
+    },
+  },
+  /** "Put an Energy attached to your opponent's Active Pokémon into their hand": their Active Pokémon only. */
+  hammerActive: {
+    ready: (ctx) => frontOpen(ctx) && theirs(ctx).active.energy.length > 0,
+    run(ctx) {
+      const slot = theirs(ctx).active;
+      if (!slot || !slot.energy.length || !frontOpen(ctx)) return;
+      askChoose(ctx.state, { player: ctx.player, owner: other(ctx.player), zone: "play", what: "energy", uids: slot.energy.slice(), min: 1, max: 1, effect: { op: "takeBack" } });
+    },
+  },
 };
+
+/** What drawEach counts. */
+function eachCount(ctx, { of = "mine", what = "pokemon" }) {
+  if (of === "foeMega") return inPlay(ctx.state, other(ctx.player)).filter(([slot]) => fits(defOf(ctx.state, slot.uid, ctx.defs), "mega")).length;
+  return inPlay(ctx.state, ctx.player).filter(([slot]) => fits(defOf(ctx.state, slot.uid, ctx.defs), what)).length;
+}
 
 /** Leave a choice between options a card offers (see the engine's `option` action). */
 function askOption(ctx, player, prompt, offers) {
@@ -1452,13 +1629,14 @@ const sabrinaSpots = (ctx, who) => {
  * of that type attached), `noEx`, `who` (as fits reads it), and `pay` (it must hold an Energy to discard, unless `ifHealed`).
  */
 function healable(ctx, step) {
-  const { to = "", cure = false, whoType = "", has = "", noEx = false, who = "", pay = "", ifHealed = false, lowHp = 0, energyMin = 0 } = step;
+  const { to = "", cure = false, whoType = "", has = "", noEx = false, who = "", notWho = "", pay = "", ifHealed = false, lowHp = 0, energyMin = 0 } = step;
   return (cure ? careSpots(ctx) : healSpots(ctx, to, whoType)).filter((spot) => {
     const slot = slotAt(ctx.state, ctx.player, spot);
     const def = defOf(ctx.state, slot.uid, ctx.defs);
     if (has && !energyOf(ctx.state, slot, ctx.defs).some((unit) => unit === has || unit === "Any" || unit.split("|").includes(has))) return false;
     if (noEx && def.box === "ex") return false;
     if (who && !fits(def, who)) return false;
+    if (notWho && fits(def, notWho)) return false;
     // "1 of your Pokémon that has 30 HP or less remaining", "your Active Pokémon that has 3 or more Energy attached".
     if (lowHp && hpLeft(ctx.state, slot, ctx.defs) > lowHp) return false;
     if (energyMin && slot.energy.length < energyMin) return false;
@@ -1505,6 +1683,7 @@ export function holds(ctx, when) {
   if (when.myPrizes && !within(me, when.myPrizes)) return false;
   if (when.behind && prizesLeft(me) <= prizesLeft(foe)) return false;
   if (when.lost && !(me.lostOn || []).includes(ctx.state.turn - 1)) return false;
+  if (when.lostWho && !(me.lostWho || []).some((d) => d.turn === ctx.state.turn - 1 && fits(defOf(ctx.state, d.uid, ctx.defs), when.lostWho))) return false;
   if (when.first && ctx.state.turn > 2) return false;
   if (when.second && ctx.state.turn !== 2) return false;
   if (when.alone && (me.bench.length || !me.active)) return false;
@@ -1519,6 +1698,8 @@ export function holds(ctx, when) {
   if (when.allNamed && !inPlay(ctx.state, ctx.player).every(([slot]) => fits(defOf(ctx.state, slot.uid, ctx.defs), `name^${when.allNamed}`))) return false;
   // "If you have more than 7 cards (including this one) in your hand, you can't play this card."
   if (when.handMax != null && me.hand.length > when.handMax) return false;
+  // "Then, if you have 10 or more cards in your hand" (asked once the card is played).
+  if (when.handMin != null && me.hand.length < when.handMin) return false;
   if (when.notInDiscard && me.discard.some((uid) => defOf(ctx.state, uid, ctx.defs).name === when.notInDiscard)) return false;
   // "If you don't have any Stage 2 Evolved Pokémon in play".
   if (when.noStage2 && inPlay(ctx.state, ctx.player).some(([slot]) => defOf(ctx.state, slot.uid, ctx.defs).line === 2)) return false;
@@ -1537,8 +1718,10 @@ export function condOf(words) {
   if (m) return { myPrizes: { in: nums(m[1]) } };
   if (new RegExp(`^you have more ${PRIZES} than your opponent$`).test(words)) return { behind: true };
   if (/^(?:any of your Pokémon were|1 of your Pokémon was) Knocked Out during your opponent's last turn$/.test(words)) return { lost: true };
+  m = words.match(/^any of your ((?:Team Rocket|[A-Z][a-zé]*(?: [A-Z][a-zé]*)?)'s) Pokémon were Knocked Out during your opponent's last turn$/);
+  if (m) return { lostWho: `name^${m[1]}` };
   if (/^it's your first turn$/.test(words)) return { first: true };
-  if (/^you go second and it's your first turn$/.test(words)) return { second: true };
+  if (/^you go second(?: and it's your first turn|, and only during your first turn)$/.test(words)) return { second: true };
   if (/^your Active Pokémon is your only Pokémon in play$/.test(words)) return { alone: true };
   if (/^you have a Stadium in play$/.test(words)) return { myStadium: true };
   if (/^you have any Tera Pokémon in play$/.test(words)) return { tera: true };
@@ -1884,6 +2067,50 @@ const PATTERNS = [
   [/^Switch your Active Pokémon with 1 of your Benched Pokémon\. If you do, draw (\d+) cards\.$/, (m) => [{ op: "switch", need: true }, { op: "draw", n: Number(m[1]) }]],
   [/^Flip a coin\. If heads, you may search your deck for any Basic Pokémon or Evolution card\. Show that card to your opponent, then put it into your hand\. Shuffle your deck afterward\.$/, () => [{ op: "flip", heads: [{ op: "search", what: "basic|evolution" }] }]],
   [/^During this turn, each of your Active Pokémon's attacks does (\d+) more damage to your opponent's Active Pokémon \(before applying Weakness and Resistance\)\.$/, (m) => [{ op: "boost", n: Number(m[1]) }]],
+  // Scarlet & Violet and Mega Evolution Items and Supporters.
+  [new RegExp(`^Search your deck for (?:up to (\\d+)|an?) (.+?) and attach (?:it|them) to (1 of your Pokémon|your Active Pokémon|1 of your Benched Pokémon)\\. Then, shuffle your deck\\.$`), (m) => {
+    const what = whatOf(m[2]);
+    if (!/^basicEnergy(:\w+)?$/.test(what)) return null;
+    const where = /Active/.test(m[3]) ? { to: "active" } : /Benched/.test(m[3]) ? { to: "bench" } : null;
+    return [{ op: "fetchEnergy", what, n: Number(m[1]) || 1, to: "one", ...(where ? { where } : {}) }];
+  }],
+  [/^Look at the bottom (\d+) cards of your deck\. You may reveal a Pokémon you find there and put it into your hand\. Shuffle the other cards back into your deck\.$/, (m) => [{ op: "search", what: "pokemon", n: 1, bottom: Number(m[1]) }]],
+  [/^Look at the top (\d+) cards of your deck and attach a Basic Energy card you find there to 1 of your Pokémon\. Shuffle the other cards back into your deck\.$/, (m) => [{ op: "fetchEnergy", what: "basicEnergy", n: 1, to: "one", top: Number(m[1]), mix: true }]],
+  [/^Your opponent reveals their hand, and you choose an Energy card you find there and put it on the bottom of their deck\.$/, () => [{ op: "foeHandEnergyBottom" }]],
+  [/^Discard the top (\d+) cards of your deck\.$/, (m) => [{ op: "mill", n: Number(m[1]) }]],
+  [/^Attach up to (\d+) Basic Energy cards from your discard pile to 1 of your Stage (1|2) Pokémon\.$/, (m) => [{ op: "attachPick", zone: "discard", what: "basicEnergy", to: "any", who: `stage${m[2]}`, n: Number(m[1]), upTo: true }]],
+  [/^Draw a card for each of your opponent's Mega Evolution Pokémon ex in play\.$/, () => [{ op: "drawEach", of: "foeMega" }]],
+  [/^Draw a card for each of your (Ancient|Future) Pokémon in play\.$/, (m) => [{ op: "drawEach", what: `pokemon+${m[1]}` }]],
+  [/^Heal (\d+) damage from each Pokémon \(both yours and your opponent's\)\.$/, (m) => [{ op: "healBoth", n: Number(m[1]) }]],
+  [/^Heal (\d+) damage from your Active Pokémon\. For each ([\w' ]+?) card \(not including this card\) in your discard pile, heal \1 more damage\.$/, (m) => [{ op: "healPerCopy", n: Number(m[1]), name: m[2] }]],
+  [/^Heal (\d+) damage from your Active Pokémon\. If that Pokémon is an? ((?:Team Rocket|[A-Z][a-zé]*(?: [A-Z][a-zé]*)?)'s) Pokémon, heal (\d+) damage from it instead\.$/, (m) => [{ op: "heal", n: Number(m[1]), to: "active", notWho: `name^${m[2]}` }, { op: "heal", n: Number(m[3]), to: "active", who: `name^${m[2]}` }]],
+  [/^Flip a coin\. If heads, put (\d+) damage counters on 1 of your opponent's Pokémon\. If tails, put (\d+) damage counters on your Active Pokémon\.$/, (m) => [{ op: "flip", heads: [{ op: "counters", n: Number(m[1]) * 10 }], tails: [{ op: "hurtActive", n: Number(m[2]) * 10 }] }]],
+  [/^Search your deck for up to (\d+) Pokémon Tool cards that have "([^"]+)" in their name, reveal them, and put them into your hand\. Then, shuffle your deck\.$/, (m) => [{ op: "search", what: `tool~${m[2]}`, n: Number(m[1]) }]],
+  [/^Each player discards cards from their hand until they have (\d+) cards in their hand\. Your opponent discards first\. \(If a player has \d+ or fewer cards in their hand, they do not discard\.\)$/, (m) => [{ op: "foeTossTo", n: Number(m[1]) }, { op: "tossTo", n: Number(m[1]) }]],
+  [/^Attach a Basic Energy card from your discard pile to each of your (Ancient|Future) Pokémon\.$/, (m) => [{ op: "energyEach", zone: "discard", what: "basicEnergy", where: { who: `pokemon+${m[1]}` }, must: true }]],
+  [/^Reveal the top (\d+) cards of your opponent's deck\. You may choose any number of Basic Pokémon you find there and put those Pokémon onto their Bench\. Your opponent shuffles the other cards back into their deck\.$/, (m) => [{ op: "foeTopBench", n: Number(m[1]) }]],
+  [/^Search your deck for a Pokémon with the same name as 1 of your opponent's Pokémon in play, reveal it, and put it into your hand\. Then, shuffle your deck\.$/, () => [{ op: "sameName" }]],
+  [/^Reveal up to (\d+) Pokémon in your hand and put them into your deck\. If you do, search your deck for up to that many Pokémon, reveal them, and put them into your hand\. Then, shuffle your deck\.$/, (m) => [{ op: "stash", what: "pokemon", n: Number(m[1]), upTo: true, pass: true, need: true }, { op: "searchPaid", what: "pokemon" }]],
+  [new RegExp(`^Your opponent's Active Pokémon is now (Asleep|Burned|Confused|Paralyzed|Poisoned) and (Asleep|Burned|Confused|Paralyzed|Poisoned)\\.$`), (m) => [{ op: "condition", kinds: [m[1].toLowerCase(), m[2].toLowerCase()] }]],
+  [/^Put (\d+) cards from your hand on the bottom of your deck in any order\. If you put \1 cards on the bottom of your deck in this way, draw (\d+) cards\. \(If you can't put \1 cards from your hand on the bottom of your deck, you can't use this card\.\)$/, (m) => [{ op: "stash", n: Number(m[1]), at: "bottom", need: true }, { op: "draw", n: Number(m[2]) }]],
+  [/^Search your deck for up to (\d+) cards and discard them\. Then, shuffle your deck\.$/, (m) => [{ op: "searchMill", n: Number(m[1]) }]],
+  [/^Look at the top (\d+) cards of your deck and put them back in any order, or shuffle them and put them on the bottom of your deck\.$/, (m) => [{ op: "choice", prompt: "The top cards of your deck:", options: [{ label: "Put them back in any order", steps: [{ op: "arrange", n: Number(m[1]) }] }, { label: "Shuffle them onto the bottom", steps: [{ op: "under", n: Number(m[1]) }] }] }]],
+  [new RegExp(`^Heal (\\d+) damage from your Active (${TYPE_WORD}) Pokémon\\.$`), (m) => [{ op: "heal", n: Number(m[1]), to: "active", whoType: m[2] }]],
+  [/^Shuffle your hand into your deck\. Then, flip a coin\. If heads, draw (\d+) cards\. If tails, draw (\d+) cards?\.$/, (m) => [{ op: "shuffleHand" }, { op: "flip", heads: [{ op: "draw", n: Number(m[1]) }], tails: [{ op: "draw", n: Number(m[2]) }] }]],
+  [/^Flip a coin\. If heads, draw (\d+) cards\. If tails, draw (\d+) cards?\.$/, (m) => [{ op: "flip", heads: [{ op: "draw", n: Number(m[1]) }], tails: [{ op: "draw", n: Number(m[2]) }] }]],
+  [/^Search your deck for any number of Basic Energy cards of different types, reveal them, and put them into your hand\. Then, shuffle your deck\.$/, () => [{ op: "search", what: "basicEnergy", n: "all", rule: { distinct: true } }]],
+  [/^Your opponent counts the cards in their hand, shuffles those cards, and puts them on the bottom of their deck\. If they do, they draw that many cards\.$/, () => [{ op: "handBottom", who: "foe" }, { op: "foeDrawMoved", when: { moved: true } }]],
+  [/^Discard all Pokémon Tools and Special Energy from all of your opponent's Pokémon, and discard a Stadium in play\.$/, () => [{ op: "dropFoeTools" }, { op: "dropFoeSpecial" }, { op: "dropStadium" }]],
+  [/^Search your deck for any number of Basic Pokémon and put them onto your Bench\. Then, shuffle your deck\.$/, () => [{ op: "search", what: "basic", n: "all", to: "bench" }]],
+  [/^Switch your Active Pokémon with 1 of your Benched Pokémon\. If you do, you may move any amount of Energy from the Pokémon you moved to your Bench to the new Active Pokémon\.$/, () => [{ op: "switch", need: true }, { op: "energyBackAll" }]],
+  [/^Draw (\d+) cards\. Then, if you have (\d+) or more cards in your hand, draw (\d+) more cards\.$/, (m) => [{ op: "draw", n: Number(m[1]) }, { op: "draw", n: Number(m[3]), when: { handMin: Number(m[2]) } }]],
+  [/^Search your deck for up to (\d+) Basic Pokémon or 1 Evolution Pokémon, reveal them, and put them into your hand\. Then, shuffle your deck\.$/, (m) => [{ op: "search", what: "basic|evolution", n: Number(m[1]), rule: { oneOf: ["basic", "evolution"], most: [["evolution", 1]] } }]],
+  [/^Count your Prize cards, shuffle them, and put them on the bottom of your deck\. Then, take that many cards from the top of your deck and put them face down as your Prize cards\.$/, () => [{ op: "prizeSwap" }]],
+  [/^Heal (\d+) damage from 1 of your Pokémon\. If you healed any damage in this way, discard an Energy from that Pokémon\.$/, (m) => [{ op: "heal", n: Number(m[1]), pay: "energy", ifHealed: true }]],
+  [/^Flip (\d+) coins\. If both of them are heads, (.+)$/, (m) => { const heads = compileTrainer(upper(m[2])); return heads && [{ op: "flipAll", coins: Number(m[1]), heads }]; }],
+  [/^Choose 1 of your Pokémon in play\. During your opponent's next turn, prevent all damage from and effects of attacks done to that Pokémon by your opponent's Pokémon ex\.$/, () => [{ op: "markOne", mark: { kind: "shield", from: "box:ex" } }]],
+  [/^During this turn, if your opponent's Active Pokémon is Knocked Out by damage from an attack used by your Tera Pokémon, take (\d+) more Prize cards?\.$/, (m) => [{ op: "prizeUp", n: Number(m[1]), who: "tera" }]],
+  [/^Put an Energy attached to your opponent's Active Pokémon into their hand\. If you do, attach an Energy card from your hand to your Active Pokémon\.$/, () => [{ op: "hammerActive", need: true }, { op: "attachPick", zone: "hand", what: "energy", to: "active", n: 1 }]],
 ];
 
 /** "Choose 1: • ... • ...": each part read on its own, or null when one isn't. */
@@ -1965,6 +2192,9 @@ function plainWhat(words) {
   const word = words.match(/^(?:an? )?(Supporter|Item|Trainer) cards? that (?:has|have) "([^"]+)" in (?:its|their) names?$/);
   if (word) return `${word[1].toLowerCase()}~${word[2]}`;
   if (/^(?:an? )?Pokémon Tool(?: cards?)?$/i.test(words)) return "tool";
+  if (/^(?:an? )?Stage (1|2) Pokémon$/.test(words)) return `stage${words.match(/Stage (1|2)/)[1]}`;
+  if (/^(?:an? )?Pokémon ex$/.test(words)) return "box=ex";
+  if (/^(?:an? )?Tera Pokémon$/.test(words)) return "tera";
   if (/^(?:an? )?Stadium(?: cards?)?$/i.test(words)) return "stadium";
   // Cards of a style: "Rapid Strike cards", "Fusion Strike Trainer cards", "Basic Rapid Strike Pokémon".
   const style = words.match(/^(?:an? |up to \d+ )?(Basic )?(Rapid Strike|Single Strike|Fusion Strike) (cards?|Trainer cards?|Supporter cards?|Item cards?|Pokémon)$/);
@@ -2000,7 +2230,7 @@ const TYPED_COST = /^You can (?:use|play) this card only if you discard (an?|\d+
 /** "Attach a basic Energy card from your discard pile to 1 of your Benched Pokémon. If you do, draw 3 cards." */
 const ATTACH = new RegExp(`^Attach (an?|up to (\\d+)) (.+?) from your (hand|discard pile) to (1 of your Pokémon|1 of your Benched Pokémon|your Active Pokémon|1 of your (${TYPE_WORD}) Pokémon|1 of your Benched (${TYPE_WORD}) Pokémon)\\.(?: If you do, (.+))?$`);
 const upper = (words) => words[0].toUpperCase() + words.slice(1);
-const benchable = (what) => what.split("|").every((w) => /^basic(?=$|[:@!])/.test(w));
+const benchable = (what) => what.split("|").every((w) => /^basic(?=$|[:@!&])/.test(w));
 
 /** Texts built from parts: a search, a card from the discard pile, a price to pay first, a coin flip in front. */
 function compileParts(clean) {
@@ -2172,6 +2402,17 @@ const TOOL_CLAUSES = [
   [new RegExp(`^Once during your turn, after you flip any coins for an attack of the (${'Grass|Fire|Water|Lightning|Psychic|Fighting|Darkness|Metal|Fairy|Dragon|Colorless'}) Pokémon this card is attached to, you may ignore all results of those coin flips and begin flipping those coins again$`), (m) => ({ trick: true, who: { types: [m[1]] } })],
   // Powerglass.
   [/^At the end of your turn \(after your attack\), if the Pokémon this card is attached to is in the Active Spot, you may attach a Basic Energy card from your discard pile to it$/, () => ({ endTurn: { attach: "basicEnergy" } })],
+  // Scarlet & Violet Tools.
+  [/^If the Pokémon this card is attached to is in the Active Spot and is damaged by an attack from your opponent's Pokémon \(even if this Pokémon is Knocked Out\), draw (\d+) cards$/, (m) => ({ thorns: { draw: Number(m[1]) } })],
+  [/^If the Pokémon this card is attached to has Weakness to your opponent's Active Pokémon's type, is in the Active Spot, and is damaged by an attack from your opponent's Pokémon \(even if this Pokémon is Knocked Out\), draw (\d+) cards$/, (m) => ({ thorns: { draw: Number(m[1]), weak: true } })],
+  [/^If the Pokémon this card is attached to is in the Active Spot and is damaged by an attack from your opponent's Pokémon \(even if this Pokémon is Knocked Out\), put (\d+) damage counters on the Attacking Pokémon\. If you placed any damage counters in this way, discard this card$/, (m) => ({ thorns: { n: Number(m[1]) * 10, spent: true } })],
+  [/^If the ((?:Team Rocket|[A-Z][a-zé]*(?: [A-Z][a-zé]*)?)'s) Pokémon this card is attached to is in the Active Spot and is damaged by an attack from your opponent's Pokémon \(even if this \1 Pokémon is Knocked Out\), the Attacking Pokémon is now (Asleep|Burned|Confused|Paralyzed|Poisoned)$/, (m) => ({ thorns: { status: m[2].toLowerCase() }, who: { owner: m[1] } })],
+  [/^If the Pokémon this card is attached to is Knocked Out by damage from an attack from your opponent's Pokémon, search your deck for up to (\d+) cards and put them into your hand\. Then, shuffle your deck$/, (m) => ({ ko: { steps: [{ op: "search", what: "any", n: Number(m[1]), to: "hand" }] } })],
+  [/^If the Pokémon this card is attached to has full HP and would be Knocked Out by damage from an attack from your opponent's Pokémon, it is not Knocked Out, and its remaining HP becomes (\d+)\. Then, discard this card$/, (m) => ({ sturdy: Number(m[1]) })],
+  [/^Attacks used by the ((?:Team Rocket|[A-Z][a-zé]*(?: [A-Z][a-zé]*)?)'s) Pokémon this card is attached to cost ((?:Colorless)+) less and do (\d+) more damage to your opponent's Active Pokémon \(before applying Weakness and Resistance\)$/, (m) => ({ costLess: m[2].length / 9, plus: Number(m[3]), who: { owner: m[1] } })],
+  [/^The Pokémon this card is attached to can use the attack on this card\. \(You still need the necessary Energy to use this attack\.\)$/, () => ({ lendSelf: true })],
+  [/^If this card is attached to 1 of your Pokémon, discard it at the end of your turn$/, () => ({ lapse: "turn" })],
+  [/^As long as the Pokémon this card is attached to is in the Active Spot, the Retreat Cost of both Active Pokémon is ((?:Colorless)+) more$/, (m) => ({ bothActive: m[1].length / 9 })],
   // Core Memory: the attack printed on it.
   [/^The ([A-Z][\w'. -]*?) this card is attached to can use the attack on this card\. \(You still need the necessary Energy to use this attack\.\)$/, (m) => ({ lendSelf: true, who: { name: m[1] } })],
   // Counter Gain: "If you have more Prize cards remaining than your opponent, attacks ... cost Colorless less."
@@ -2312,6 +2553,25 @@ const asYours = (words) =>
  */
 const FOSSILS = ["Omanyte", "Kabuto", "Aerodactyl", "Aerodactyl ex", "Lileep", "Anorith"];
 const STADIUM_TEXTS = [
+  // Abilities taken away by rule box.
+  [/^Pokémon-GX and Pokémon-EX in play \(both yours and your opponent's\) have no Abilities\.$/, () => ({ lock: { boxes: ["GX", "EX"] } })],
+  [/^Pokémon with a Rule Box in play \(both yours and your opponent's\) have no Abilities\. \(Pokémon V, Pokémon-GX, etc\. have Rule Boxes\.\)$/, () => ({ lock: { rule: true } })],
+  [new RegExp(`^Once during each player's turn, that player may heal (\\d+) damage from each of (?:his or her|their) (${TYPE_WORD}) Pokémon and (${TYPE_WORD}) Pokémon\\.$`), (m) => ({ use: [{ op: "healEach", n: Number(m[1]), types: [m[2], m[3]] }] })],
+  [/^Once during each player's turn, that player may draw cards until he or she has (\d+) cards in his or her hand\. If he or she does, that player's turn ends\.$/, (m) => ({ use: [{ op: "drawTo", n: Number(m[1]) }, { op: "endTurn" }] })],
+  [/^Once during each player's turn, that player may shuffle their hand into their deck and draw (\d+) cards\. If they do, their turn ends\.$/, (m) => ({ use: [{ op: "shuffleHand" }, { op: "draw", n: Number(m[1]) }, { op: "endTurn" }], loss: true })],
+  [/^Once during each player's turn, that player may flip a coin\. If heads, the player draws a card\.$/, () => ({ use: [{ op: "flip", heads: [{ op: "draw", n: 1 }] }] })],
+  [/^Once during each player's turn, the player may flip a coin until he or she gets tails\. For each heads, that player draws a card\.$/, () => ({ use: [{ op: "flipDraw" }] })],
+  [/^Whenever either player puts a Basic Pokémon from their hand onto their Bench, put (\d+) damage counters on that Pokémon\.$/, (m) => ({ benchHurt: { n: Number(m[1]) * 10, who: {}, fromHand: true } })],
+  [/^Whenever any player puts a Basic Pokémon \(except for (Team Magma) Pokémon\) from his or her hand onto his or her Bench, put (\d+) damage counters on that Pokémon\.$/, (m) => ({ benchHurt: { n: Number(m[2]) * 10, who: { notNamed: m[1] }, fromHand: true } })],
+  [/^The Retreat Cost of each Pokémon in play \(except for (Team Aqua) Pokémon\) is ((?:Colorless)+) more\.$/, (m) => ({ field: [{ who: { notNamed: m[1] }, mod: { retreat: -m[2].length / 9 } }] })],
+  [/^Put (\d+) more damage counters on Poisoned Pokémon \(both yours and your opponent's\) between turns\.$/, (m) => ({ poisonMore: { n: Number(m[1]) * 10, who: {} } })],
+  // Academy at Night: a card from the hand back on top of the deck (the bot leaves it alone: it would only stall).
+  [/^Once during each player's turn, that player may put a card from their hand on top of their deck\.$/, () => ({ use: [{ op: "stash", n: 1, at: "top", need: true, spare: 0 }], loss: true })],
+  // Lively Stadium.
+  [/^Each Basic Pokémon in play \(both yours and your opponent's\) gets \+(\d+) HP\.$/, (m) => ({ field: [{ who: { stage: "basic" }, mod: { hp: Number(m[1]) } }] })],
+  // N's Castle, Postwick: the Pokémon of an owner.
+  [/^((?:Team Rocket|[A-Z][a-zé]*(?: [A-Z][a-zé]*)?)'s) Pokémon in play \(both yours and your opponent's\) have no Retreat Cost\.$/, (m) => ({ field: [{ who: { owner: m[1] }, mod: { retreat: "all" } }] })],
+  [/^Attacks used by ((?:Team Rocket|[A-Z][a-zé]*(?: [A-Z][a-zé]*)?)'s) Pokémon \(both yours and your opponent's\) do (\d+) more damage to the opponent's Active Pokémon \(before applying Weakness and Resistance\)\.$/, (m) => ({ field: [{ who: { owner: m[1] }, mod: { plus: Number(m[2]) } }] })],
   // Full Metal Lab.
   [new RegExp(`^(${TYPE_WORD}) Pokémon \\(both yours and your opponent's\\) take (\\d+) less damage from attacks from the opponent's Pokémon \\(after applying Weakness and Resistance\\)\\.$`), (m) => ({ field: [{ who: { types: [m[1]] }, mod: { less: Number(m[2]) } }] })],
   // Gravity Mountain.
@@ -2395,10 +2655,15 @@ export function fieldFits(who, def) {
   if (who.stage && def.stage !== who.stage) return false;
   if (who.name && def.name !== who.name) return false;
   if (who.named && !named(def, who.named)) return false;
+  // "Team Rocket's Pokémon", "Hop's Pokémon": the owner's name the card's own name starts with.
+  if (who.owner && !def.name.startsWith(`${who.owner} `)) return false;
   if (who.notNamed && named(def, who.notNamed)) return false;
   if (who.plasma && !def.plasma) return false;
   // Special Energy that gives more on some Pokémon: not on these rule boxes, only on δ Pokémon.
   if (who.notBoxes && who.notBoxes.includes(def.box)) return false;
+  // A Stadium's lock by rule box ("Pokémon-GX and Pokémon-EX in play", "Pokémon with a Rule Box").
+  if (who.boxes && !who.boxes.includes(def.box)) return false;
+  if (who.rule && !def.rule) return false;
   if (who.delta && !/δ/.test(def.name)) return false;
   if (who.noRule && def.rule) return false;
   if (who.line && def.line !== who.line) return false;

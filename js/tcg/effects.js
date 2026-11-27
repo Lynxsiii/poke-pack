@@ -19,7 +19,7 @@
  *        shielded (the target takes no effects this turn) }
  */
 
-import { ACTIVE, abilityOn, shieldOn, addCondition, addMark, askChoose, askPick, benchSafe, canPay, conditionsOn, damageAfterTyping, defOf, devolveSlot, energyAlike, energyToDeck, energyFits, energyMod, energyOf, flip, healRoom, heldOn, hpLeft, inPlay, markOn, maxHp, other, rand, retreatCost, shedEnergy, shuffle, slotAt, strike, struck, switchActive, toLost, toolGone, unpaid, warded, win } from "./engine.js";
+import { ACTIVE, abilityOn, noteShed, shieldOn, addCondition, addMark, askChoose, askPick, benchSafe, canPay, conditionsOn, damageAfterTyping, defOf, devolveSlot, energyAlike, energyToDeck, energyFits, energyMod, energyOf, flip, healRoom, heldOn, hpLeft, inPlay, markOn, maxHp, other, rand, retreatCost, shedEnergy, shuffle, slotAt, strike, struck, switchActive, toLost, toolGone, unpaid, warded, win } from "./engine.js";
 import { T_OPS, compileTrainer, fits, runTrainer, trainerReady, whatOf } from "./trainers.js";
 
 const WORDS = { a: 1, an: 1, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6 };
@@ -487,6 +487,7 @@ export const OPS = {
       if (!gone.length) continue;
       slot.energy = slot.energy.filter((uid) => !gone.includes(uid));
       side.discard.push(...gone);
+      noteShed(state, player, spot ?? ACTIVE, gone);
       events.push({ t: "discard-energy", p: player, spot: spot ?? ACTIVE, uids: gone });
       paid(gone);
     }
@@ -567,6 +568,7 @@ export const OPS = {
       const dealt = (spot === ACTIVE || typed) && from ? damageAfterTyping(n, defOf(state, from, ctx.defs), defOf(state, slot.uid, ctx.defs), typing) : { amount: n, weak: false, resist: false };
       if (dealt.amount <= 0) continue;
       if (pierce ? defOf(state, slot.uid, ctx.defs).tera && spot !== ACTIVE : benchSafe(state, slot, spot, ctx.defs, p === player)) continue;
+      if (p !== player && spot !== ACTIVE && shieldOn(state, slot, defIn(ctx, ctx.slot))) continue;
       slot.damage += dealt.amount;
       struck(state, slot, dealt.amount);
       events.push({ t: "damage", p, spot, n: dealt.amount, weak: dealt.weak, resist: dealt.resist });

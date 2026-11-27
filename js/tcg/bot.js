@@ -313,7 +313,7 @@ export function botAction(state, player, defs) {
     // "Look at the top card of your deck. You may discard that card": an Energy it has plenty of in hand goes, the rest stays.
     if (waiting.effect.op === "millChosen") {
       const spare = (uid) => defOf(state, uid, defs).kind === "energy" && side.hand.filter((u) => defOf(state, u, defs).kind === "energy").length >= 2;
-      return { type: "choose", player, uids: waiting.owner === player || waiting.owner == null ? waiting.uids.filter(spare) : waiting.uids };
+      return { type: "choose", player, uids: (waiting.owner === player || waiting.owner == null ? waiting.uids.filter(spare) : waiting.uids).slice(0, waiting.max) };
     }
     const ranked = waiting.uids.slice().sort((x, y) => worth(y) - worth(x));
     // A price is paid with the cards worth least; anything else takes the best on offer. Choosing among the

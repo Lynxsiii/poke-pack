@@ -8,7 +8,7 @@
  */
 import { readFileSync, readdirSync } from "node:fs";
 import assert from "node:assert/strict";
-import { ACTIVE, FORMATS, RuleError, abilityOn, attacksOf, defOf, addCondition, addMark, apply, costFor, benchSafe, canRetreat, energyOf, warded, toolOf, conditionsOn, createGame, flip, damageAfterTyping, legalActions, maxHp, resolveKnockOuts, retreatCost, unpaid, usableAttacks, viewFor } from "../js/tcg/engine.js";
+import { ACTIVE, FORMATS, RuleError, abilityOn, noteShed, hpLeft, attacksOf, defOf, addCondition, addMark, apply, costFor, benchSafe, canRetreat, energyOf, warded, toolOf, conditionsOn, createGame, flip, damageAfterTyping, legalActions, maxHp, resolveKnockOuts, retreatCost, unpaid, usableAttacks, viewFor } from "../js/tcg/engine.js";
 import { createDefs, defineCard, FREE_ENERGY } from "../js/tcg/cards.js";
 import { boostOf, compileTrainer, fits, runTrainer, trainerAim, whatOf } from "../js/tcg/trainers.js";
 import { compileAttack } from "../js/tcg/effects.js";
@@ -42,7 +42,7 @@ function test(name, fn) {
     fn();
     passed += 1;
   } catch (err) {
-    console.error(`FAIL ${name}\n  ${err.stack.split("\n").slice(0, 4).join("\n  ")}`);
+    console.error(`FAIL ${name}\n  ${err.stack.split("\n").slice(0, 4).join("\n  ")}`, process.env.DEEP ? err.stack : "");
     process.exitCode = 1;
   }
 }
@@ -142,7 +142,7 @@ test("card definitions", () => {
   assert.equal(defs("me1-1").prizes, 1);
   assert.equal(defs(F).kind, "energy");
   assert.deepEqual(defs(F).provides, ["Fire"]);
-  assert.equal(defs("me1-113").playable, false);
+  assert.equal(defs("me1-128").playable, false);
 });
 
 test("energy costs", () => {
@@ -320,7 +320,7 @@ test("the other player's hidden cards stay hidden", () => {
 });
 
 test("deck rules: size, copies, ownership, playable", () => {
-  const owned = { "base1-46": 5, "base1-24": 1, "me1-113": 2 };
+  const owned = { "base1-46": 5, "base1-24": 1, "me1-128": 2 };
   const check = (cards, own = owned, format = "unlimited") => checkDeck({ format, cards }, own, defs);
   assert.deepEqual(check({ "base1-46": 4, [F]: 56 }).problems, []);
   assert.match(check({ "base1-46": 4, [F]: 55 }).problems[0], /1 more card to go/);
@@ -328,13 +328,13 @@ test("deck rules: size, copies, ownership, playable", () => {
   assert.match(check({ "base1-46": 5, [F]: 55 }).problems.join(" "), /5 copies of Charmander, the limit is 4/);
   assert.match(check({ "base1-46": 4, [F]: 56 }, {}).problems.join(" "), /You own 0 of Charmander/);
   assert.match(check({ "base1-46": 4, [F]: 56 }, { "base1-46": 1 }).problems.join(" "), /You own 1/);
-  assert.match(check({ "me1-113": 1, "base1-46": 4, [F]: 55 }).problems.join(" "), /can't be played yet/);
+  assert.match(check({ "me1-128": 1, "base1-46": 4, [F]: 55 }).problems.join(" "), /can't be played yet/);
   assert.match(check({ [F]: 60 }).problems.join(" "), /Basic Pokémon/);
   assert.deepEqual(check({ "base1-46": 1, [F]: 59 }).problems, [], "basic Energy has no copy limit");
   assert.equal(roomFor({ format: "unlimited", cards: { "base1-46": 4 } }, "base1-46", owned, defs), 0);
   assert.equal(roomFor({ format: "unlimited", cards: { "base1-46": 3 } }, "base1-46", owned, defs), 1);
   assert.equal(roomFor({ format: "unlimited", cards: { "base1-46": 1 } }, "base1-46", { "base1-46": 3 }, defs), 2); // owns three
-  assert.equal(roomFor({ format: "unlimited", cards: {} }, "me1-113", owned, defs), 0);
+  assert.equal(roomFor({ format: "unlimited", cards: {} }, "me1-128", owned, defs), 0);
   assert.equal(roomFor({ format: "unlimited", cards: { "base1-46": 2 } }, F, owned, defs), 58);
 });
 
@@ -6866,6 +6866,199 @@ test("Scarlet & Violet Special Energy: Ignition, Team Rocket's, Mist, Rocky Figh
   act(state, { type: "attack", player: 0, index: 0 });
   assert.equal(state.players[0].prizes.length, prizes);
   assert.ok(foe.legacyUsed);
+});
+
+test("more Scarlet & Violet and Mega Evolution Items and Supporters", () => {
+  const ids = ["dptk3a-9", "me1-113", "me2pt5-201", "me2pt5-215", "me3-73", "me3-74", "me3-84", "me5-79", "me6-93", "me6-101", "sv10-161", "sv10-179", "sv10-181", "sv5-141", "sv5-150", "sv5-158", "sv6-142", "sv6-152", "sv6-156", "sv6-160", "sv6pt5-58", "sv7-132", "sv7-138", "sv8-164", "sv8-165", "sv8-166", "sv8-170", "sv8-171", "sv8-172", "sv8-173", "sv8-176", "sv8-181", "sv8-182", "sv8-185", "sv8-186", "sv8-189", "sv9-142", "sv9-146", "sv9-147", "sv9-156", "sv9-158", "svp-svp114", "zsv10pt5-80", "zsv10pt5-81"];
+  for (const id of ids) assert.ok(defs(id).playable, id);
+  // Antique Cover Fossil: our card source lost its HP, its text gives it (60).
+  assert.equal(defs("zsv10pt5-80").fossil.mon.hp, 60);
+  assert.ok(defs("zsv10pt5-80").fossil.mon.ability.noEffects);
+  // Grisham: 50 healed from each Pokémon, both sides.
+  let state = scene();
+  state.players[0].active.damage = 60;
+  state.players[1].active.damage = 30;
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "me6-93") });
+  assert.equal(state.players[0].active.damage, 10);
+  assert.equal(state.players[1].active.damage, 0);
+  // Tasty Rice Ball: 30, and 30 more for each other Tasty Rice Ball in the discard pile.
+  state = scene();
+  state.players[0].active.damage = 90;
+  const rice = state.players[0].deck.pop();
+  state.cards[rice] = "me6-101";
+  state.players[0].discard.push(rice);
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "me6-101") });
+  assert.equal(state.players[0].active.damage, 30);
+  // Arven's Sandwich: 30 on a Pokémon that isn't an Arven's Pokémon.
+  state = scene();
+  state.players[0].active.damage = 50;
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "sv10-161") });
+  assert.equal(state.players[0].active.damage, 20);
+  // Hand Trimmer: the opponent discards down to 5 first, then you.
+  state = scene();
+  while (state.players[1].hand.length < 8) state.players[1].hand.push(state.players[1].deck.pop());
+  while (state.players[0].hand.length < 7) state.players[0].hand.push(state.players[0].deck.pop());
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "sv5-150") });
+  assert.equal(state.pending[0].player, 1);
+  assert.equal(state.pending[0].min, 3);
+  act(state, { type: "choose", player: 1, uids: state.pending[0].uids.slice(0, 3) });
+  assert.equal(state.players[1].hand.length, 5);
+  assert.equal(state.pending[0].player, 0);
+  act(state, { type: "choose", player: 0, uids: state.pending[0].uids.slice(0, state.pending[0].min) });
+  assert.equal(state.players[0].hand.length, 5);
+  // Redeemable Ticket: as many Prize cards as before, the old ones now at the bottom of the deck.
+  state = scene();
+  const prizes = state.players[0].prizes.slice();
+  const deck = state.players[0].deck.length;
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "sv9-156") });
+  assert.equal(state.players[0].prizes.length, prizes.length);
+  assert.equal(state.players[0].deck.length, deck);
+  assert.deepEqual(state.players[0].deck.slice(-prizes.length).sort(), prizes.sort());
+  // Megaton Blower: every Tool and Special Energy on their Pokémon, and the Stadium.
+  state = scene();
+  const foe = state.players[1].active;
+  foe.tool = state.players[1].deck.pop();
+  state.cards[foe.tool] = "sv6-158";
+  const special = state.players[1].deck.pop();
+  state.cards[special] = "sv5-161";
+  foe.energy.push(special);
+  const stad = state.players[1].deck.pop();
+  state.cards[stad] = "sv8-180";
+  state.stadium = { uid: stad, owner: 1 };
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "sv8-182") });
+  assert.ok(!foe.tool && !foe.energy.length && !state.stadium);
+  // Acerola's Mischief: only with 2 or fewer Prize cards left for them; the chosen Pokémon is shielded from Pokémon ex.
+  state = scene();
+  const mischief = handed(state, 0, "me1-113");
+  throws(() => act(state, { type: "play", player: 0, uid: mischief }), /nothing/);
+  state.players[1].prizes.splice(0, state.players[1].prizes.length - 2);
+  act(state, { type: "play", player: 0, uid: mischief });
+  act(state, { type: "pick", player: 0, spot: ACTIVE });
+  assert.ok(state.players[0].active.marks.some((m) => m.kind === "shield" && m.from === "box:ex" && m.turn === state.turn + 1));
+  // Briar: a Knock Out of their Active Pokémon by a Tera Pokémon's attack this turn gives 1 more Prize card.
+  state = scene({ front: "me2pt5-73" });
+  assert.ok(defs("me2pt5-73").tera);
+  state.players[1].prizes.splice(0, state.players[1].prizes.length - 2);
+  state.players[1].bench = [slotFor(state, 1, "base1-63")];
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "sv7-132") });
+  state.players[1].active.damage = maxHp(state, state.players[1].active, defs) - 10;
+  state.players[0].active.energy.push(handed(state, 0, "energy-lightning"));
+  state.players[0].hand.pop();
+  const prizesBefore = state.players[0].prizes.length;
+  const worth = defs(state.cards[state.players[1].active.uid]).prizes;
+  act(state, { type: "attack", player: 0, index: 0 });
+  assert.equal(prizesBefore - state.players[0].prizes.length, worth + 1);
+  // Energy Swatter: an Energy card from their hand to the bottom of their deck.
+  state = scene();
+  const theirs = state.players[1].hand.find((u) => defs(state.cards[u]).kind === "energy") || (state.players[1].hand.push(state.players[1].deck.find((u) => defs(state.cards[u]).kind === "energy")), state.players[1].hand.at(-1));
+  state.players[1].deck = state.players[1].deck.filter((u) => u !== theirs);
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "me3-73") });
+  act(state, { type: "choose", player: 0, uids: [theirs] });
+  assert.equal(state.players[1].deck.at(-1), theirs);
+  // Brock's Scouting: 2 Basic Pokémon, or 1 Evolution Pokémon, not both.
+  state = scene({ extra: [["sv9-146", 1]] });
+  for (const u of state.players[0].deck.slice(0, 2)) state.cards[u] = "base1-24";
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "sv9-146") });
+  const evo = state.pending[0].uids.filter((u) => defs(state.cards[u]).stage === "evolution");
+  throws(() => act(state, { type: "choose", player: 0, uids: evo.slice(0, 2) }), /kind/);
+  act(state, { type: "choose", player: 0, uids: evo.slice(0, 1) });
+  // Kofu: 2 cards to the bottom, then 4 drawn.
+  state = scene();
+  const hand = state.players[0].hand.length;
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "sv7-138") });
+  act(state, { type: "choose", player: 0, uids: state.pending[0].uids.slice(0, 2) });
+  assert.equal(state.players[0].hand.length, hand - 2 + 4);
+  // Team Rocket's Archer: only after a Team Rocket's Pokémon was Knocked Out on the opponent's last turn.
+  state = scene();
+  const archer = handed(state, 0, "me2pt5-201");
+  throws(() => act(state, { type: "play", player: 0, uid: archer }), /nothing/);
+  const rocket = state.players[0].deck.pop();
+  state.cards[rocket] = "sv10-15";
+  state.players[0].lostWho = [{ turn: state.turn - 1, uid: rocket }];
+  act(state, { type: "play", player: 0, uid: archer });
+  assert.equal(state.players[0].hand.length, 5);
+});
+
+test("more Scarlet & Violet Tools, Stadiums and Special Energy", () => {
+  for (const id of ["sv6-158", "sv7-134", "sv6-164", "sv7-137", "sv9-148", "sv8-162", "me2pt5-206", "me4-74", "sv8-180", "sv9-152", "sv9-154", "me4-86", "sv6-166"]) assert.ok(defs(id).playable, id);
+  const tooled = (state, p, slot, id) => {
+    slot.tool = state.players[p].deck.pop();
+    state.cards[slot.tool] = id;
+    return slot.tool;
+  };
+  const charge = (state, p, slot, id) => {
+    const uid = state.players[p].deck.pop();
+    state.cards[uid] = id;
+    slot.energy.push(uid);
+    return uid;
+  };
+  // Lucky Helmet: 2 cards when damaged in the Active Spot. Deluxe Bomb: 12 damage counters back, then it goes.
+  let state = scene({ front: "base1-46" });
+  tooled(state, 1, state.players[1].active, "sv6-158");
+  state.players[0].active.energy.push(handed(state, 0, F));
+  state.players[0].hand.pop();
+  let hand = state.players[1].hand.length;
+  act(state, { type: "attack", player: 0, index: 0 });
+  assert.equal(state.players[1].hand.length, hand + 2 + 1); // and the draw that starts their turn
+  state = scene({ front: "base1-46" });
+  tooled(state, 1, state.players[1].active, "sv7-134");
+  state.players[0].active.energy.push(handed(state, 0, F));
+  state.players[0].hand.pop();
+  state.players[1].bench = [slotFor(state, 1, "base1-63")];
+  act(state, { type: "attack", player: 0, index: 0 });
+  assert.equal(state.players[0].active?.damage ?? 120, 120);
+  assert.ok(!state.players[1].active.tool);
+  // Survival Brace: from full HP, a Knock Out leaves it 10 HP, and the Brace goes.
+  state = scene({ front: "base1-46" });
+  tooled(state, 1, state.players[1].active, "sv6-164");
+  state.players[0].active.energy.push(handed(state, 0, F));
+  state.players[0].hand.pop();
+  state.players[1].active.damage = 0;
+  state.cards[state.players[1].active.uid] = "base1-58"; // Pikachu, 40 HP
+  state.players[0].active.marks = [{ kind: "stronger", turn: state.turn, n: 100 }];
+  act(state, { type: "attack", player: 0, index: 0 });
+  assert.equal(hpLeft(state, state.players[1].active, defs), 10);
+  assert.ok(!state.players[1].active.tool);
+  // Gravity Gemstone: both Active Pokémon retreat for Colorless more.
+  state = scene({ front: "base1-46" });
+  const mine = retreatCost(state, state.players[0].active, defs);
+  const foes = retreatCost(state, state.players[1].active, defs);
+  tooled(state, 1, state.players[1].active, "sv7-137");
+  assert.equal(retreatCost(state, state.players[0].active, defs), mine + 1);
+  assert.equal(retreatCost(state, state.players[1].active, defs), foes + 1);
+  // Lively Stadium: Basic Pokémon get +30 HP. N's Castle: N's Pokémon retreat for free.
+  state = scene({ front: "base1-46" });
+  const uid = state.players[0].deck.pop();
+  state.cards[uid] = "sv8-180";
+  state.stadium = { uid, owner: 0 };
+  assert.equal(maxHp(state, state.players[0].active, defs), defs("base1-46").hp + 30);
+  state.cards[uid] = "sv9-152";
+  state.cards[state.players[0].active.uid] = "sv9-97";
+  assert.ok(defs("sv9-97").name.startsWith("N's ") && defs("sv9-97").retreat > 0);
+  assert.equal(retreatCost(state, state.players[0].active, defs), 0);
+  // Nitro Fire Energy: discarded by its Fire Pokémon's attack, it goes back to the hand afterwards.
+  state = scene({ front: "base1-46" });
+  state.players[1].bench = [slotFor(state, 1, "base1-63")];
+  const nitro = [charge(state, 0, state.players[0].active, "me4-86"), charge(state, 0, state.players[0].active, "me4-86")];
+  act(state, { type: "attack", player: 0, index: 1 });
+  while (state.pending[0]?.player === 0) act(state, { type: "choose", player: 0, uids: state.pending[0].uids.slice(0, state.pending[0].min || 1) });
+  if (state.pending[0]?.type === "promote") act(state, { type: "promote", player: 1, spot: 0 });
+  assert.equal(nitro.filter((u) => state.players[0].hand.includes(u)).length, 1);
+  assert.ok(!nitro.some((u) => state.players[0].discard.includes(u)));
+  // Boomerang Energy: back onto the Pokémon that discarded it, after attacking.
+  state = scene({ front: "sm11-165" });
+  state.players[1].bench = [slotFor(state, 1, "base1-63")];
+  const boom = [charge(state, 0, state.players[0].active, "sv6-166"), charge(state, 0, state.players[0].active, "sv6-166")];
+  act(state, { type: "attack", player: 0, index: 0 });
+  while (state.pending[0]?.player === 0) act(state, { type: "choose", player: 0, uids: state.pending[0].uids.slice(0, 1) });
+  assert.deepEqual(state.players[0].active.energy.slice().sort(), boom.slice().sort());
+  // Not when the opponent's effect discards it.
+  state = scene();
+  const lone = charge(state, 0, state.players[0].active, "sv6-166");
+  state.current = 1;
+  state.attackBy = { p: 1, uid: state.players[1].active.uid, turn: state.turn };
+  noteShed(state, 0, ACTIVE, [lone]);
+  assert.ok(!state.comeback);
 });
 
 console.log(`${passed} checks passed${process.exitCode ? ", some failed" : ""}`);

@@ -119,8 +119,11 @@ function boxOf(card) {
  *   drop     "At any time during your turn (before your attack), you may discard it from play": "discard";
  *            Lillie's Poké Doll: "bottom" (its cards discarded, it goes to the bottom of the deck), as the Active only
  */
+/** The HP a Fossil plays at: its printed HP, or (where our card source lost it) the "60-HP" its text names. */
+const fossilHp = (card, text) => Number(card.hp) || Number(String(text || "").match(/as if it were an? (\d+)-HP Basic/)?.[1]) || 0;
+
 function compileFossil(text, card) {
-  const hp = Number(card.hp) || 0;
+  const hp = fossilHp(card, text);
   // (Some card files carry the rules text again as an "attack" named Item: that isn't one.)
   if (!hp || !text || (card.attacks || []).some((a) => a.name !== "Item" || a.damage || (a.cost || []).length)) return null;
   const name = card.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -198,7 +201,7 @@ function fossilDef(base, card, text, fossil) {
     kind: "pokemon",
     stage: "basic",
     evolvesFrom: "",
-    hp: Number(card.hp),
+    hp: fossilHp(card, text),
     types: fossil.colorless ? ["Colorless"] : [],
     attacks: [],
     weakness: null,
@@ -270,7 +273,7 @@ function defineRules(card, row, text, lines, print) {
     }
     const fx = sub === "item" || sub === "supporter" ? compileCard(text) : null;
     // A Tool is not played and discarded: it is attached, and its numbers ride on the Pokémon.
-    const tool = sub === "tool" && subs.includes("Pokémon Tool") ? compileTool(text, card.name) : null;
+    const tool = sub === "tool" && (subs.includes("Pokémon Tool") || subs.includes("Tool")) ? compileTool(text, card.name) : null;
     const stadium = sub === "stadium" ? compileStadium(text) : null;
     const why = sub === "stadium" ? (stadium ? "" : "This Stadium's text isn't live yet.") : sub === "tool" ? (tool ? "" : "This Tool's text isn't live yet.") : fx ? "" : "This Trainer's text isn't live yet.";
     // A Tool with an attack printed on it (Core Memory): that attack, read.
