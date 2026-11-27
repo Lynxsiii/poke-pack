@@ -1,0 +1,43 @@
+{
+  "id": "js4a",
+  "name": "Shiny Star V",
+  "lang": "ja",
+  "code": "S4a",
+  "series": "sword-shield",
+  "slug": "shiny-star-v",
+  "scrydexId": "swsh4a_ja",
+  "era": "swsh",
+  "tcgplayerCategory": 85,
+  "tcgplayerGroup": 23643,
+  "rarityByName": true,
+  "englishTwin": "swsh45",
+  "rarityMap": {
+    "": "Common",
+    "RR": "Rare Holo V",
+    "RRR": "Rare Holo VMAX",
+    "SR": "Rare Ultra",
+    "R": "Rare Shiny",
+    "SSR": "Rare Holo V",
+    "UR": "Rare Secret"
+  },
+  "galleryCodes": {
+    "R": "sv",
+    "SSR": "sv"
+  },
+  "printedTotal": 190,
+  "standIns": {
+    "165": "swsh3-167"
+  },
+  "products": [
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 565369,
+      "packs": 10,
+      "promos": [],
+      "hull": "strips",
+      "imageVersion": 2
+    }
+  ]
+}
