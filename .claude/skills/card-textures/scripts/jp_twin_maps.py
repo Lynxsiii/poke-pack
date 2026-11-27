@@ -15,12 +15,15 @@ they take a drawn etch of their own (make_card_etch.py).
 
     python3 jp_twin_maps.py            # report
     python3 jp_twin_maps.py --write    # and write data/<jp set>.json
+    python3 jp_twin_maps.py --clean-text --write   # paint the English lettering out of every twin map (run after
+                                                   # foil_align.py --only-variants --fix)
 """
 import argparse
 import glob
 import json
 import os
 import re
+import sys
 
 import numpy as np
 from PIL import Image
@@ -102,5 +105,121 @@ def main():
             print(f"{s}: {changed} prints now wear their English twin's maps")
 
 
-if __name__ == "__main__":
+if __name__ == "__main__" and "--clean-text" not in sys.argv:
     main()
+
+
+# ---- English text inside a twin's map ---------------------------------------------------------------------------
+# A TCG Live map holds the English card's lettering as holes (foil) or solid shapes (etch). On the Japanese print the
+# text sits elsewhere, so lit, the English words show through the foil: "Invitation", "TRAINER" on jsv2a-206/207, an
+# attack name on jsm12a-77 (the per-card review of 2026-11-27). Wherever the Japanese scan differs from the English
+# scan once the two are registered (the text, the name bar), the map is replaced by its own heavy blur: the foil level
+# stays, the English glyphs go. Files are new (`-tN`); the data follows.
+
+def unletter(alpha, m):
+    """Take lettering out of a map's alpha where m (0..1) says the two prints differ.
+
+    Inpainting: inside the mask the map's own pixels are the English words, so none of them is used; the hole is
+    filled from the map around it (Telea). Lettering goes whatever its weight or polarity (dark glyphs cut into the
+    foil, light ones standing on the etch), and where the mask only grazes an edge (a face's or a Pokémon's outline,
+    which it catches when the two scans' detail differs) the band is thin and the outline comes back from both
+    sides. Tried first: a Gaussian blur (soft English words still readable at rest, the foil smeared over faces,
+    jsv2a-206), a close-open (filled the etch's white text lines into bars), a median (bold text survives)."""
+    import cv2
+    w = alpha.shape[1]
+    hole = (m > 0.35).astype(np.uint8)
+    flat = cv2.inpaint(alpha.astype(np.uint8), hole, max(3, int(w / 120)), cv2.INPAINT_TELEA).astype(np.float32)
+    flat = cv2.GaussianBlur(flat, (0, 0), w / 400)
+    return np.clip(alpha.astype(np.float32) * (1 - m) + flat * m, 0, 255).astype(np.uint8)
+
+
+def clean_text(write, only=None):
+    import cv2
+    from foil_align import variant_fit, warp  # noqa: E402  (scan-to-scan affine, the same fit --fix used)
+    W, H = 360, 503
+    en = {}
+    for p in glob.glob(os.path.join(ROOT, "data", "*.json")):
+        s = os.path.basename(p)[:-5]
+        if s.startswith("j"):
+            continue
+        try:
+            d = json.load(open(p, encoding="utf-8"))
+        except ValueError:
+            continue
+        if isinstance(d, list):
+            for c in d:
+                if isinstance(c, dict) and c.get("id"):
+                    en[c["id"]] = c
+    total = 0
+    for p in sorted(glob.glob(os.path.join(ROOT, "data", "j*.json"))):
+        cards = json.load(open(p, encoding="utf-8"))
+        text = open(p, encoding="utf-8").read()
+        changed = 0
+        for c in cards:
+            twin = en.get(c.get("foilTwin") or "")
+            if only and c.get("id") not in only:
+                continue
+            if not twin or not twin.get("image"):
+                continue
+            keys = [k for k in ("foilMap", "etchMap") if c.get(k) and not (k == "etchMap" and c.get("etchDrawn"))
+                    and not re.search(r"-t\d+\.webp$", c[k])]
+            if not keys:
+                continue
+            r = variant_fit((c["id"], keys[0], c["image"], c[keys[0]], twin["image"]))[4]
+            if not r or r[0] < 0.6:
+                continue
+            A = np.array(r[2], np.float32)
+            jp = np.asarray(Image.open(os.path.join(ROOT, c["image"])).convert("L").resize((W, H)), np.float32)
+            eg = np.asarray(Image.open(os.path.join(ROOT, twin["image"])).convert("L").resize((W, H)), np.float32)
+            eg = cv2.warpAffine(eg, A, (W, H), flags=cv2.INTER_LINEAR | cv2.WARP_INVERSE_MAP, borderMode=cv2.BORDER_REPLICATE)
+            # lettering is fine detail: compare the two prints' detail (high-pass), not their tone, which differs
+            # between the two scans' exposure and printing
+            def hp(x):
+                x = cv2.GaussianBlur(x, (0, 0), 0.8)
+                return np.abs(x - cv2.GaussianBlur(x, (0, 0), 3))
+            d = cv2.GaussianBlur(np.abs(hp(jp) - hp(eg)), (0, 0), 2.5)
+            diff = d > max(6.0, float(np.median(d)) * 2.2)
+            diff = cv2.morphologyEx(diff.astype(np.uint8), cv2.MORPH_OPEN, np.ones((3, 3), np.uint8))
+            diff = cv2.dilate(diff, np.ones((7, 7), np.uint8)) > 0
+            share = float(diff.mean())
+            if share < 0.01:
+                continue
+            for k in keys:
+                src = os.path.join(ROOT, c[k])
+                im = np.asarray(Image.open(src).convert("RGBA")).copy()
+                h, w = im.shape[:2]
+                m = cv2.resize(diff.astype(np.float32), (w, h), interpolation=cv2.INTER_LINEAR)
+                m = cv2.GaussianBlur(m, (0, 0), w / 160)
+                im[..., 3] = unletter(im[..., 3], m)
+                base = re.sub(r"\.webp$", "", c[k])
+                n = 1
+                while os.path.exists(os.path.join(ROOT, f"{base}-t{n}.webp")):
+                    n += 1
+                out = f"{base}-t{n}.webp"
+                if write:
+                    Image.fromarray(im, "RGBA").save(os.path.join(ROOT, out), quality=90, alpha_quality=100, method=4)
+                    at = text.find(json.dumps(c["id"]))
+                    j = text.find(json.dumps(c[k]), at)
+                    if at >= 0 and j >= 0:
+                        text = text[:j] + json.dumps(out) + text[j + len(json.dumps(c[k])):]
+                        changed += 1
+                        # a family that derives a baked map from the foil map's name (sm-gx `-gx-v1`) follows
+                        gx = os.path.join(ROOT, base + "-gx-v1.webp")
+                        if k == "foilMap" and os.path.exists(gx):
+                            g = np.asarray(Image.open(gx).convert("RGBA")).copy()
+                            gh, gw = g.shape[:2]
+                            mg = cv2.GaussianBlur(cv2.resize(diff.astype(np.float32), (gw, gh)), (0, 0), gw / 160)
+                            g[..., 3] = unletter(g[..., 3], mg)
+                            Image.fromarray(g, "RGBA").save(os.path.join(ROOT, f"{out[:-5]}-gx-v1.webp"), quality=90,
+                                                            alpha_quality=100, method=4)
+            print(f"{c['id']:14} text differs over {share:.0%} of the card: {', '.join(keys)} cleaned")
+        if write and changed:
+            open(p, "w", encoding="utf-8", newline="\n").write(text)
+            json.loads(text)
+            total += changed
+    print(f"{total} maps cleaned")
+
+
+if __name__ == "__main__" and "--clean-text" in sys.argv:
+    _o = [x.split("=", 1)[1] for x in sys.argv if x.startswith("--only=")]
+    clean_text("--write" in sys.argv, set(_o[0].split(",")) if _o else None)
