@@ -6061,4 +6061,98 @@ test("Holon Lake: Pokémon with δ on their card may use Delta Call", () => {
   assert.ok(state.pending[0].uids.every((u) => /δ/.test(defs(state.cards[u]).name)));
 });
 
+/* ---------- Gym Heroes and Gym Challenge, Neo Destiny ---------- */
+
+test("Blaine: 2 Fire Energy cards onto a Blaine's Pokémon instead of the one from the hand", () => {
+  assert.ok(defs("gym2-100").playable);
+  const deck = deckOf(["gym2-100", 4], ["gym1-35", 10], ["base1-46", 4], [F, 12]);
+  const state = fossilGame(deck);
+  state.cards[state.players[0].active.uid] = "gym1-35"; // Blaine's Growlithe in front
+  const blaine = give(state, 0, "gym2-100");
+  give(state, 0, F);
+  give(state, 0, F);
+  const fires = state.players[0].hand.filter((u) => state.cards[u] === F).length;
+  act(state, { type: "play", player: 0, uid: blaine });
+  act(state, { type: "pick", player: 0, spot: ACTIVE });
+  assert.equal(state.players[0].active.energy.length, 2);
+  assert.equal(state.players[0].hand.filter((u) => state.cards[u] === F).length, fires - 2);
+  // That was the Energy for the turn, and another Blaine does nothing now.
+  assert.ok(!legalActions(state, 0, defs).some((a) => a.type === "attach"));
+  const again = give(state, 0, "gym2-100");
+  throws(() => act(state, { type: "play", player: 0, uid: again }), /nothing/);
+  // Not after an Energy was attached this turn, nor onto a Pokémon without Blaine in its name.
+  act(state, { type: "end", player: 0 });
+  act(state, { type: "end", player: 1 });
+  state.cards[state.players[0].active.uid] = "base1-46";
+  for (const s of state.players[0].bench) state.cards[s.uid] = "base1-46";
+  throws(() => act(state, { type: "play", player: 0, uid: again }), /nothing/);
+});
+
+test("Vermilion City Gym: Lt. Surge's Pokémon may flip; heads 10 more, tails 10 to itself", () => {
+  assert.ok(defs("gym1-120").playable);
+  const deck = deckOf(["gym1-120", 2], ["gym1-52", 12], ["base1-46", 4], [F, 12]);
+  const run = (choice, heads) => {
+    const state = fossilGame(deck);
+    const front = state.players[0].active;
+    state.cards[front.uid] = "gym1-52"; // Lt. Surge's Spearow: Drill Peck 20
+    state.cards[state.players[1].active.uid] = "base1-46";
+    act(state, { type: "play", player: 0, uid: give(state, 0, "gym1-120") });
+    front.energy.push(give(state, 0, F));
+    act(state, { type: "attack", player: 0, index: 0 });
+    assert.equal(state.pending[0].type, "option");
+    rigFlips(state, [heads]);
+    act(state, { type: "option", player: 0, index: choice });
+    return [state.players[1].active.damage, front.damage];
+  };
+  assert.deepEqual(run(0, true), [30, 0]);
+  assert.deepEqual(run(0, false), [20, 10]);
+  assert.deepEqual(run(1, false), [20, 0]);
+  // Other Pokémon attack as usual.
+  const state = fossilGame(deck);
+  act(state, { type: "play", player: 0, uid: give(state, 0, "gym1-120") });
+  state.cards[state.players[0].active.uid] = "base1-46";
+  state.players[0].active.energy.push(give(state, 0, F));
+  act(state, { type: "attack", player: 0, index: 0 });
+  assert.ok(!state.pending.length || state.pending[0].why !== "before");
+});
+
+test("Fossil Egg: heads, a card that evolves from Mysterious Fossil onto the Bench as a Basic Pokémon", () => {
+  assert.ok(defs("neo2-72").playable);
+  const deck = deckOf(["neo2-72", 4], ["neo2-56", 4], ["base1-46", 12], [F, 10]);
+  const noKabuto = (state) => {
+    const side = state.players[0];
+    side.deck.push(...side.hand.filter((u) => state.cards[u] === "neo2-56"));
+    side.hand = side.hand.filter((u) => state.cards[u] !== "neo2-56");
+  };
+  let state = fossilGame(deck);
+  noKabuto(state);
+  const egg = give(state, 0, "neo2-72");
+  rigFlips(state, [true]);
+  act(state, { type: "play", player: 0, uid: egg });
+  // No Kabuto in hand: straight to the deck.
+  assert.equal(state.pending[0].zone, "deck");
+  const kabuto = state.pending[0].uids[0];
+  assert.equal(state.cards[kabuto], "neo2-56");
+  act(state, { type: "choose", player: 0, uids: [kabuto] });
+  const slot = state.players[0].bench.find((s) => s.uid === kabuto);
+  assert.ok(slot?.asBasic);
+  // With one in hand, the player says where from.
+  state = fossilGame(deck);
+  noKabuto(state);
+  const inHand = give(state, 0, "neo2-56");
+  rigFlips(state, [true]);
+  act(state, { type: "play", player: 0, uid: give(state, 0, "neo2-72") });
+  assert.equal(state.pending[0].type, "option");
+  act(state, { type: "option", player: 0, index: 1 });
+  act(state, { type: "choose", player: 0, uids: [inHand] });
+  assert.ok(state.players[0].bench.some((s) => s.uid === inHand && s.asBasic));
+  // Tails: nothing.
+  state = fossilGame(deck);
+  const bench = state.players[0].bench.length;
+  rigFlips(state, [false]);
+  act(state, { type: "play", player: 0, uid: give(state, 0, "neo2-72") });
+  assert.ok(!state.pending.length);
+  assert.equal(state.players[0].bench.length, bench);
+});
+
 console.log(`${passed} checks passed${process.exitCode ? ", some failed" : ""}`);

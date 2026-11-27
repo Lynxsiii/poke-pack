@@ -419,6 +419,13 @@ export const OPS = {
   did(ctx) {
     ctx.hit.did = true;
   },
+  /** Vermilion City Gym's coin: heads, more damage if the attack does any after Weakness and Resistance; tails, damage to itself. */
+  surge(ctx, { more, self }) {
+    const heads = flip(ctx.state, ctx.player);
+    ctx.events.push({ t: "flip", p: ctx.player, results: [heads], why: "stadium" });
+    if (heads) ctx.hit.surge = more;
+    else ctx.hit.recoil = self;
+  },
   /** "If you do, this Pokémon does 30 damage to itself": after the damage, if the attacker said yes. */
   ifDid(ctx, { steps }) {
     if (ctx.hit.did) runSteps(steps, ctx);

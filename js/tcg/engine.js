@@ -1149,7 +1149,7 @@ export function strike(ctx) {
     const noWeakness = hit.noWeakness || Boolean(theirs.noWeakness) || (theirs.noWeaknessVs || []).some((t) => def.types.includes(t)) || (!hit.noEffects && Boolean(markOn(state, target, "noWeakness")));
     const dealt = damageAfterTyping(base, def, defOf(state, target.uid, defs), { ...hit, noWeakness, noResistance: hit.noResistance || Boolean(theirs.noResistance) || Boolean(mine.pierce) });
     // Old PlusPower and Misty: more only when the attack does damage after Weakness and Resistance.
-    if (dealt.amount > 0) dealt.amount += heldSum(slot, "after") + boostOf(state, player, slot, target, defs, true) + (hit.noEffects ? 0 : markSum(state, target, "exposed"));
+    if (dealt.amount > 0) dealt.amount += (hit.surge || 0) + heldSum(slot, "after") + boostOf(state, player, slot, target, defs, true) + (hit.noEffects ? 0 : markSum(state, target, "exposed"));
     // A less mark may hold against some attackers only (`from`, as a guard's: "from Evolution Pokémon").
     const lessMark = hit.noEffects ? null : markOn(state, target, "less");
     const less = (lessMark && (!lessMark.from || GUARD_FROM[lessMark.from](def)) ? lessMark.n || 0 : 0) + (theirs.less || 0) + (hit.noEffects ? 0 : heldSum(target, "less"));
@@ -1242,6 +1242,11 @@ export function strike(ctx) {
     }
   }
   if (!hit.cancelled) runAttackEffects("after", attack, ctx);
+  // Vermilion City Gym's tails: damage to itself besides what the attack does.
+  if (hit.recoil) {
+    slot.damage += hit.recoil;
+    events.push({ t: "damage", p: player, spot: ACTIVE, n: hit.recoil, self: true, why: "stadium" });
+  }
   state.ending = true;
   // An effect that needs a choice (which Benched Pokémon?) waits for it; Knock Outs are judged after.
   if (!state.pending.length) resolveKnockOuts(state, defs, events);
@@ -1570,7 +1575,16 @@ const HANDLERS = {
     // an attack that went ahead (not one Confusion or a coin stopped).
     // (slot.used is the Ability's once-a-turn mark: the attacks are kept apart, this turn's and the last two.)
     side.attacks = [...(side.attacks || []).filter((was) => was.turn >= state.turn - 2), { turn: state.turn, name: attack.name, who: def.name, uid: slot.uid }];
-    runAttackEffects("before", attack, { state, defs, events, player, slot, target, attack, hit, shielded: false, atk: attack.lent ? [attack.lent.card, attack.lent.index] : [def.id, index] }, true);
+    const atk = attack.lent ? [attack.lent.card, attack.lent.index] : [def.id, index];
+    // Vermilion City Gym: a Pokémon with Lt. Surge in its name that attacks may flip a coin first (its player says).
+    const surge = state.stadium && defOf(state, state.stadium.uid, defs)?.stadium?.surge;
+    if (surge && fieldFits(surge.who, def)) {
+      const steps = [...(attack.fx || []).filter((step) => step.when === "before"), { op: "strike" }];
+      const go = (list) => [{ op: "fx", steps: list, uid: slot.uid, hit, atk }];
+      state.pending.push({ type: "option", player, why: "before", prompt: `${defOf(state, state.stadium.uid, defs).name}: flip a coin? Heads, ${surge.more} more damage; tails, ${surge.self} damage to ${def.name}.`, labels: ["Flip", "Don't flip"], options: [go([{ op: "surge", ...surge }, ...steps]), go(steps)] });
+      return;
+    }
+    runAttackEffects("before", attack, { state, defs, events, player, slot, target, attack, hit, shielded: false, atk }, true);
   },
 
   /**
