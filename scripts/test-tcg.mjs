@@ -6512,4 +6512,115 @@ test("Kieran, Counter Gain, Rescue Board, Forest of Vitality", () => {
   assert.ok(legalActions(state, 0, defs).some((a) => a.type === "evolve" && a.uid === flora));
 });
 
+test("Scarlet & Violet Trainers, a second batch: heals, draws and switches", () => {
+  for (const id of ["sv5-142", "me2-91", "sv5-155", "sv6pt5-56", "me5-77", "me5-78", "me6-103", "me4-76", "sv8-179", "sv5-157", "sv8pt5-115", "zsv10pt5-83", "me2pt5-205", "me3-79", "me4-77", "me5-75", "me5-80", "sv6pt5-64", "sv6-157", "rsv10pt5-83", "sv6-162", "me6-102", "sv6-144"]) assert.ok(defs(id).playable, id);
+  // Bianca's Devotion: all damage from one with 30 HP or less left, and only such a one.
+  let state = scene({ bench: ["base1-46"] });
+  const side = state.players[0];
+  side.active.damage = 30; // Charmander 50 HP: 20 left
+  side.bench[0].damage = 10;
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "sv5-142") });
+  if (state.pending.length) {
+    assert.deepEqual(state.pending[0].spots, [ACTIVE]);
+    act(state, { type: "pick", player: 0, spot: ACTIVE });
+  }
+  assert.equal(side.active.damage, 0);
+  assert.equal(side.bench[0].damage, 10);
+  // Morty's Conviction: a card for each of their Benched Pokémon, after another card is discarded.
+  state = scene({ foeBench: ["base1-63", "base1-63"] });
+  let hand = state.players[0].hand.length;
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "sv5-155") });
+  act(state, { type: "choose", player: 0, uids: state.pending[0].uids.slice(0, 1) });
+  assert.equal(state.players[0].hand.length, hand - 1 + 2);
+  // Cassiopeia: only as the last card in the hand.
+  state = scene();
+  const cass = handed(state, 0, "sv6pt5-56");
+  throws(() => act(state, { type: "play", player: 0, uid: cass }), /nothing|can't/);
+  state.players[0].deck.push(...state.players[0].hand.filter((u) => u !== cass));
+  state.players[0].hand = [cass];
+  act(state, { type: "play", player: 0, uid: cass });
+  act(state, { type: "choose", player: 0, uids: state.pending[0].uids.slice(0, 2) });
+  assert.equal(state.players[0].hand.length, 2);
+  // Gladion's Final Battle: Pokémon without a Rule Box only.
+  assert.deepEqual(defs("me5-77").fx[1], { op: "boost", n: 80, who: { noRule: true } });
+  // Zinnia's Trust: an Energy from the one sent to the Bench to the new Active Pokémon.
+  state = scene({ bench: ["base1-46"] });
+  const was = state.players[0].active;
+  was.energy.push(state.players[0].deck.pop());
+  state.cards[was.energy[0]] = F;
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "me6-103") });
+  act(state, { type: "pick", player: 0, spot: 0 });
+  if (state.pending.length) act(state, { type: "choose", player: 0, uids: state.pending[0].uids.slice(0, 1) });
+  assert.equal(state.players[0].active.energy.length, 1);
+  assert.equal(was.energy.length, 0);
+  // AZ's Tranquility: the Pokémon ex sent to the Bench is healed 80, another isn't.
+  for (const [front, healed] of [["sv3-42", true], ["base1-46", false]]) {
+    state = scene({ front, bench: ["base1-46"] });
+    const out = state.players[0].active;
+    out.damage = 40;
+    act(state, { type: "play", player: 0, uid: handed(state, 0, "me4-76") });
+    act(state, { type: "pick", player: 0, spot: 0 });
+    assert.equal(out.damage, healed ? 0 : 40);
+  }
+  // Lisia's Appeal: a Benched Basic pulled in and Confused.
+  state = scene({ foeBench: ["base1-63"] });
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "sv8-179") });
+  act(state, { type: "pick", player: 0, spot: 0 });
+  assert.ok(conditionsOn(state.players[1].active).includes("confused"));
+  // N's Plan: up to 2 Energy from the Bench to the Active Pokémon.
+  state = scene({ bench: ["base1-46", "base1-46"] });
+  const b = state.players[0].bench;
+  for (const slot of b) {
+    const e = state.players[0].deck.pop();
+    state.cards[e] = F;
+    slot.energy.push(e);
+  }
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "zsv10pt5-83") });
+  act(state, { type: "choose", player: 0, uids: state.pending[0].uids.slice(0, 2) });
+  assert.equal(state.players[0].active.energy.length, 2);
+  assert.ok(b.every((slot) => !slot.energy.length));
+  // Both Active non-Darkness Pokémon Confused.
+  state = scene({ front: "sv1-126" });
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "me5-75") });
+  assert.ok(!conditionsOn(state.players[0].active).includes("confused"));
+  assert.ok(conditionsOn(state.players[1].active).includes("confused"));
+  // They discard down to 3.
+  state = scene();
+  const foeHand = state.players[1].hand.length;
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "sv6pt5-64") });
+  if (foeHand > 3) {
+    assert.equal(state.pending[0].player, 1);
+    assert.equal(state.pending[0].min, foeHand - 3);
+    act(state, { type: "choose", player: 1, uids: state.pending[0].uids.slice(0, foeHand - 3) });
+  }
+  assert.equal(state.players[1].hand.length, Math.min(foeHand, 3));
+  // Their hand shown, a card for each Pokémon there.
+  state = scene();
+  hand = state.players[0].hand.length;
+  const pokemon = state.players[1].hand.filter((u) => defOf(state, u, defs).kind === "pokemon").length;
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "me4-77") });
+  assert.equal(state.players[0].hand.length, hand + pokemon);
+  assert.ok(state.players[1].hand.every((u) => u in viewFor(state, 0).cards));
+  // Up to 4 Water Energy onto one Pokémon, and the turn ends.
+  state = scene();
+  for (const u of state.players[0].deck.slice(0, 4)) state.cards[u] = W;
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "me5-80") });
+  act(state, { type: "choose", player: 0, uids: state.pending[0].uids.slice(0, 4) });
+  if (state.pending.length) act(state, { type: "pick", player: 0, spot: ACTIVE });
+  assert.equal(state.players[0].active.energy.length, 4);
+  assert.equal(state.current, 1);
+  // Caretaker: back into the deck with Community Center in play, else discarded.
+  state = scene();
+  const care = handed(state, 0, "sv6-144");
+  act(state, { type: "play", player: 0, uid: care });
+  assert.ok(state.players[0].discard.includes(care));
+  state = scene();
+  const center = state.players[0].deck.pop();
+  state.cards[center] = "sv6-146";
+  state.stadium = { uid: center, owner: 0 };
+  const care2 = handed(state, 0, "sv6-144");
+  act(state, { type: "play", player: 0, uid: care2 });
+  assert.ok(state.players[0].deck.includes(care2));
+});
+
 console.log(`${passed} checks passed${process.exitCode ? ", some failed" : ""}`);

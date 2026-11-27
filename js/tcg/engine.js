@@ -1710,6 +1710,12 @@ const HANDLERS = {
       }
     } else if (op === "energyToDeck") {
       energyToDeck(state, owner, picked, events);
+    } else if (op === "energyToActive") {
+      // N's Plan: Energy off the Bench onto the Active Pokémon.
+      for (const uid of picked) {
+        const from = state.players[owner].bench.findIndex((slot) => slot.energy.includes(uid));
+        if (from >= 0 && state.players[owner].active) moveEnergy(state, owner, from, ACTIVE, uid, events);
+      }
     } else if (op === "challengeHold") {
       // Challenge!: face down until both players are done, then onto the Benches face up and both decks shuffled.
       const held = state.challenge;
@@ -2498,6 +2504,8 @@ export function switchActive(state, p, spot, events, defs = null) {
   const next = side.bench[spot];
   if (!next || !side.active) return;
   clearConditions(side.active);
+  // Kept for "the Pokémon you moved to your Bench" (Zinnia's Trust, AZ's Tranquility).
+  state.switched = { p, uid: side.active.uid, turn: state.turn };
   side.bench[spot] = side.active;
   side.active = next;
   next.upOn = state.turn;

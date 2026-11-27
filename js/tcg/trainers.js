@@ -790,6 +790,86 @@ export const T_OPS = {
       runTrainer(borrowSteps(def.fx), ctx);
     },
   },
+  /** After a switch (`state.switched`, engine.js switchActive): the Pokémon that went to the Bench. */
+  /** Zinnia's Trust: an Energy from it to the new Active Pokémon. */
+  energyBack: {
+    ready: () => true,
+    run(ctx) {
+      const at = switchedOut(ctx);
+      if (!at) return;
+      const [slot, spot] = at;
+      if (!slot.energy.length || !mine(ctx).active) return;
+      askChoose(ctx.state, { player: ctx.player, zone: "play", what: "energy", uids: slot.energy.slice(), min: 1, max: 1, effect: { op: "carryEnergy", from: spot, spots: [ACTIVE] } });
+    },
+  },
+  /** AZ's Tranquility: it is healed if it fits `who` ("If you moved a Pokémon ex to your Bench in this way"). */
+  healBack: {
+    ready: () => true,
+    run(ctx, { n, who }) {
+      const at = switchedOut(ctx);
+      if (!at || !fits(defOf(ctx.state, at[0].uid, ctx.defs), who)) return;
+      const healed = Math.min(n, healRoom(ctx.state, at[0]));
+      at[0].damage -= healed;
+      if (healed) at[0].healedOn = ctx.state.turn;
+      ctx.events.push({ t: "heal", p: ctx.player, spot: at[1], n: healed });
+    },
+  },
+  /** N's Plan: up to n Energy from your Benched Pokémon onto your Active Pokémon. */
+  pullEnergy: {
+    ready: (ctx) => Boolean(mine(ctx).active) && mine(ctx).bench.some((slot) => slot.energy.length),
+    run(ctx, { n }) {
+      const uids = mine(ctx).bench.flatMap((slot) => slot.energy);
+      if (uids.length && mine(ctx).active) askChoose(ctx.state, { player: ctx.player, zone: "play", what: "energy", uids, min: 0, max: n, effect: { op: "energyToActive" } });
+    },
+  },
+  /** "Your opponent reveals their hand, and you draw a card for each Pokémon you find there." */
+  foeRevealDraw: {
+    ready: (ctx) => theirs(ctx).hand.length > 0,
+    run(ctx, { what = "pokemon" }) {
+      const hand = theirs(ctx).hand.slice();
+      ctx.events.push({ t: "reveal-hand", p: other(ctx.player), uids: hand });
+      draw(ctx, ctx.player, fitting(ctx, hand, what).length);
+      askChoose(ctx.state, { player: ctx.player, owner: other(ctx.player), zone: "hand", what: "any", uids: [], min: 0, max: 0, effect: { op: "look" }, seen: hand });
+    },
+  },
+  /** "Both Active non-Darkness Pokémon are now Confused." */
+  confuseBoth: {
+    ready: (ctx, step) => confusable(ctx, step).length > 0,
+    run(ctx, step) {
+      for (const p of confusable(ctx, step)) if (addCondition(ctx.state, ctx.state.players[p].active, "confused", ctx.defs)) ctx.events.push({ t: "condition", p, kind: "confused" });
+    },
+  },
+  /** "Your opponent discards cards from their hand until they have 3 cards in their hand" (their choice). */
+  foeTossTo: {
+    ready: (ctx, { n }) => theirs(ctx).hand.length > n,
+    run(ctx, { n }) {
+      const uids = theirs(ctx).hand.slice();
+      const k = uids.length - n;
+      if (k > 0) askChoose(ctx.state, { player: other(ctx.player), zone: "hand", what: "any", uids, min: k, max: k, effect: { op: "discard" } });
+    },
+  },
+  /** Iono-like hands to the bottom, then each player flips: heads `heads` cards, tails `tails`. */
+  flipDrawEach: {
+    ready: () => true,
+    run(ctx, { heads: hi, tails: lo }) {
+      if (!ctx.moved) return;
+      for (const p of [ctx.player, other(ctx.player)]) {
+        const up = flip(ctx.state, p);
+        ctx.events.push({ t: "flip", p, results: [up] });
+        draw(ctx, p, up ? hi : lo);
+      }
+    },
+  },
+  /** "Flip a coin. If heads, you draw 5 cards, and your opponent draws 3. If tails, the other way round." */
+  flipDrawBoth: {
+    ready: () => true,
+    run(ctx, { win, lose }) {
+      const up = flip(ctx.state, ctx.player);
+      ctx.events.push({ t: "flip", p: ctx.player, results: [up] });
+      draw(ctx, ctx.player, up ? win : lose);
+      draw(ctx, other(ctx.player), up ? lose : win);
+    },
+  },
   /** Eri: the other player's hand is shown, and up to n cards of a kind there go to their discard pile. */
   foeHandDiscard: {
     ready: (ctx) => theirs(ctx).hand.length > 0,
@@ -857,7 +937,10 @@ export const T_OPS = {
       if (!ctx.uid || !side.discard.includes(ctx.uid)) return;
       side.discard.splice(side.discard.indexOf(ctx.uid), 1);
       if (to === "bottom") side.deck.push(ctx.uid);
-      else side.hand.push(ctx.uid);
+      else if (to === "deck") {
+        side.deck.push(ctx.uid);
+        shuffle(ctx.state, side.deck);
+      } else side.hand.push(ctx.uid);
       ctx.events.push({ t: "keep-card", p: ctx.player, uid: ctx.uid, to });
     },
   },
@@ -958,9 +1041,10 @@ export const T_OPS = {
   },
   /** Draw as many as something counts: `of` "benches" (both Benches), "foeHand" (until your hand matches theirs). */
   drawFor: {
-    ready: (ctx, { of }) => hasDeck(ctx) && (of !== "foeHand" || mine(ctx).hand.length - held(ctx) < theirs(ctx).hand.length),
+    ready: (ctx, { of }) => hasDeck(ctx) && (of !== "foeHand" || mine(ctx).hand.length - held(ctx) < theirs(ctx).hand.length) && (of !== "foeBench" || theirs(ctx).bench.length > 0),
     run(ctx, { of }) {
       if (of === "benches") draw(ctx, ctx.player, mine(ctx).bench.length + theirs(ctx).bench.length);
+      else if (of === "foeBench") draw(ctx, ctx.player, theirs(ctx).bench.length);
       else draw(ctx, ctx.player, Math.max(0, theirs(ctx).hand.length - mine(ctx).hand.length));
     },
   },
@@ -1333,6 +1417,20 @@ const borrowable = (ctx, played) =>
     if (def.sub === "supporter" && mine(ctx).supporterUsed) return false;
     return trainerReady(borrowSteps(def.fx), ctx);
   });
+/** The Pokémon a switch this turn sent to the Bench, as [slot, spot], if it is still there. */
+const switchedOut = (ctx) => {
+  const done = ctx.state.switched;
+  if (!done || done.p !== ctx.player || done.turn !== ctx.state.turn) return null;
+  const spot = mine(ctx).bench.findIndex((slot) => slot.uid === done.uid);
+  return spot >= 0 ? [mine(ctx).bench[spot], spot] : null;
+};
+/** Players whose Active Pokémon may be Confused this way (theirs not kept off this card's effects). */
+const confusable = (ctx, { notType = "" }) =>
+  [ctx.player, other(ctx.player)].filter((p) => {
+    const slot = ctx.state.players[p].active;
+    if (!slot || (notType && defOf(ctx.state, slot.uid, ctx.defs).types.includes(notType))) return false;
+    return p === ctx.player || !warded(ctx.state, slot, ctx, ctx.defs);
+  });
 /** Where a Technical Machine may go: one of your Pokémon that fits it and holds no Technical Machine yet. */
 const tmSpots = (ctx, { only = {} }) =>
   inPlay(ctx.state, ctx.player)
@@ -1354,13 +1452,16 @@ const sabrinaSpots = (ctx, who) => {
  * of that type attached), `noEx`, `who` (as fits reads it), and `pay` (it must hold an Energy to discard, unless `ifHealed`).
  */
 function healable(ctx, step) {
-  const { to = "", cure = false, whoType = "", has = "", noEx = false, who = "", pay = "", ifHealed = false } = step;
+  const { to = "", cure = false, whoType = "", has = "", noEx = false, who = "", pay = "", ifHealed = false, lowHp = 0, energyMin = 0 } = step;
   return (cure ? careSpots(ctx) : healSpots(ctx, to, whoType)).filter((spot) => {
     const slot = slotAt(ctx.state, ctx.player, spot);
     const def = defOf(ctx.state, slot.uid, ctx.defs);
     if (has && !energyOf(ctx.state, slot, ctx.defs).some((unit) => unit === has || unit === "Any" || unit.split("|").includes(has))) return false;
     if (noEx && def.box === "ex") return false;
     if (who && !fits(def, who)) return false;
+    // "1 of your Pokémon that has 30 HP or less remaining", "your Active Pokémon that has 3 or more Energy attached".
+    if (lowHp && hpLeft(ctx.state, slot, ctx.defs) > lowHp) return false;
+    if (energyMin && slot.energy.length < energyMin) return false;
     if (pay && !ifHealed && !slot.energy.some((uid) => { const e = defOf(ctx.state, uid, ctx.defs); return e.kind === "energy" && (pay === "energy" || e.provides.includes(pay.split(":")[1])); })) return false;
     return true;
   });
@@ -1408,6 +1509,8 @@ export function holds(ctx, when) {
   if (when.alone && (me.bench.length || !me.active)) return false;
   if (when.moved && !ctx.moved) return false;
   if (when.myStadium && ctx.state.stadium?.owner !== ctx.player) return false;
+  if (when.deck && !me.deck.length) return false;
+  if (when.stadiumWord && !(ctx.state.stadium && defOf(ctx.state, ctx.state.stadium.uid, ctx.defs).name.includes(when.stadiumWord))) return false;
   if (when.tera && !inPlay(ctx.state, ctx.player).some(([slot]) => defOf(ctx.state, slot.uid, ctx.defs).tera)) return false;
   // "If all of your Pokémon in play are Team Rocket's Pokémon".
   if (when.allNamed && !inPlay(ctx.state, ctx.player).every(([slot]) => fits(defOf(ctx.state, slot.uid, ctx.defs), `name^${when.allNamed}`))) return false;
@@ -1436,6 +1539,7 @@ export function condOf(words) {
   if (/^your Active Pokémon is your only Pokémon in play$/.test(words)) return { alone: true };
   if (/^you have a Stadium in play$/.test(words)) return { myStadium: true };
   if (/^you have any Tera Pokémon in play$/.test(words)) return { tera: true };
+  if (/^it is the last card in your hand$/.test(words)) return { handMax: 1 };
   return null;
 }
 
@@ -1616,6 +1720,42 @@ const PATTERNS = [
   [new RegExp(`^Choose up to (\\d+) of your (${TYPE_WORD}) Pokémon\\. For each of those Pokémon, search your deck for a Basic \\2 Energy card and attach it to that Pokémon\\. Then, shuffle your deck\\. If you attached Energy to your Active Pokémon in this way, it is now Poisoned\\.$`), (m) => [{ op: "energyEach", zone: "deck", what: `basicEnergy:${m[2]}`, where: { whoType: m[2] }, n: Number(m[1]), poison: true }]],
   // Glass Trumpet: "Choose up to 2 of your Benched Colorless Pokémon and attach a Basic Energy card from your discard pile to each of them."
   [new RegExp(`^Choose up to (\\d+) of your Benched (${TYPE_WORD}) Pokémon and attach a Basic Energy card from your discard pile to each of them\\.$`), (m) => [{ op: "energyEach", zone: "discard", what: "basicEnergy", where: { to: "bench", whoType: m[2] }, n: Number(m[1]) }]],
+  // Bianca's Devotion.
+  [/^Heal all damage from 1 of your Pokémon that has (\d+) HP or less remaining\.$/, (m) => [{ op: "heal", n: 9999, lowHp: Number(m[1]) }]],
+  // Hassel-like: "Heal 80 damage from your Active Pokémon that has 3 or more Energy attached."
+  [/^Heal (\d+) damage from your Active Pokémon that has (\d+) or more Energy attached\.$/, (m) => [{ op: "heal", n: Number(m[1]), to: "active", energyMin: Number(m[2]) }]],
+  // Morty's Conviction's draw.
+  [/^Draw a card for each of your opponent's Benched Pokémon\.$/, () => [{ op: "drawFor", of: "foeBench" }]],
+  // Gladion's Final Battle's boost.
+  [/^During this turn, attacks used by your Pokémon that don't have a Rule Box do (\d+) more damage to your opponent's Active Pokémon \(before applying Weakness and Resistance\)\.$/, (m) => [{ op: "boost", n: Number(m[1]), who: { noRule: true } }]],
+  // Gwynn.
+  [/^Discard up to (\d+) Pokémon that don't have a Rule Box from your hand, and draw (\d+) cards for each card you discarded in this way\.$/, (m) => [{ op: "toss", n: Number(m[1]), what: "pokemon!rule", upTo: true, pass: true, need: true }, { op: "drawPaid", per: Number(m[2]) }]],
+  // Zinnia's Trust, AZ's Tranquility.
+  [/^Switch your Active Pokémon with 1 of your Benched Pokémon\. If you do, move an Energy from the Pokémon you moved to your Bench to the new Active Pokémon\.$/, () => [{ op: "switch" }, { op: "energyBack" }]],
+  [/^Switch your Active Pokémon with 1 of your Benched Pokémon\. If you moved a Pokémon ex to your Bench in this way, heal (\d+) damage from that Pokémon\.$/, (m) => [{ op: "switch" }, { op: "healBack", n: Number(m[1]), who: "box=ex" }]],
+  // Lisia's Appeal.
+  [/^Switch in 1 of your opponent's Benched Basic Pokémon to the Active Spot\. If you do, the new Active Pokémon is now Confused\.$/, () => [{ op: "gust", stage: "basic", need: true }, { op: "condition", kinds: ["confused"] }]],
+  // Prime Catcher.
+  [/^Switch in 1 of your opponent's Benched Pokémon to the Active Spot\. If you do, switch your Active Pokémon with 1 of your Benched Pokémon\.$/, () => [{ op: "gust", need: true }, { op: "switch" }]],
+  // Larry's Skill.
+  [/^Discard your hand and search your deck for a Pokémon, a Supporter card, and a Basic Energy card, reveal them, and put them into your hand\. Then, shuffle your deck\.$/, () => [{ op: "discardHand" }, { op: "search", what: "pokemon|supporter|basicEnergy", n: 3, rule: { apiece: ["pokemon", "supporter", "basicEnergy"] } }]],
+  // N's Plan.
+  [/^Move up to (\d+) Energy from your Benched Pokémon to your Active Pokémon\.$/, (m) => [{ op: "pullEnergy", n: Number(m[1]) }]],
+  // Heads an Evolution, tails a Basic, of an owner's Pokémon.
+  [/^Flip a coin\. If heads, search your deck for an Evolution ((?:Team Rocket|[A-Z][a-zé]*)'s) Pokémon, reveal it, and put it into your hand\. If tails, search your deck for a Basic \1 Pokémon, reveal it, and put it into your hand\. Then, shuffle your deck\.$/, (m) => [{ op: "flip", heads: [{ op: "search", what: `evolution&&name^${m[1]}` }], tails: [{ op: "search", what: `basic&&name^${m[1]}` }] }]],
+  // Draw until 5, after discarding any number first.
+  [/^Draw cards until you have (\d+) cards in your hand\. Before drawing cards, you may discard any number of cards from your hand\. \(If you can't draw any cards in this way, you can't use this card\.\)$/, (m) => [{ op: "only", when: { deck: true } }, { op: "toss", n: "all", upTo: true }, { op: "drawTo", n: Number(m[1]) }]],
+  // A last sentence of its own (after a search for Energy that is attached).
+  [/^Your turn ends\.$/, () => [{ op: "endTurn" }]],
+  [/^Your opponent reveals their hand, and you draw a card for each Pokémon you find there\.$/, () => [{ op: "foeRevealDraw", what: "pokemon" }]],
+  [new RegExp(`^Both Active non-(${TYPE_WORD}) Pokémon are now Confused\\.$`), (m) => [{ op: "confuseBoth", notType: m[1] }]],
+  [new RegExp(`^Search your deck for up to (\\d+) Basic (${TYPE_WORD}) Energy cards and attach them to 1 of your Pokémon\\. Then, shuffle your deck\\.$`), (m) => [{ op: "fetchEnergy", what: `basicEnergy:${m[2]}`, n: Number(m[1]), to: "one" }]],
+  [/^Your opponent discards cards from their hand until they have (\d+) cards in their hand\.$/, (m) => [{ op: "foeTossTo", n: Number(m[1]) }]],
+  [/^Each player shuffles their hand and puts it on the bottom of their deck\. If either player put any cards on the bottom of their deck in this way, each player flips a coin\. If heads, that player draws (\d+) cards\. If tails, they draw (\d+) cards\.$/, (m) => [{ op: "handBottom" }, { op: "flipDrawEach", heads: Number(m[1]), tails: Number(m[2]) }]],
+  [new RegExp(`^${SHUFFLE_BOTH}\\. Then, flip a coin\\. If heads, you draw (\\d+) cards, and your opponent draws (\\d+) cards\\. If tails, you draw \\2 cards, and your opponent draws \\1 cards\\.$`), (m) => [{ op: "shuffleHand", both: true }, { op: "flipDrawBoth", win: Number(m[1]), lose: Number(m[2]) }]],
+  [/^Put 1 of your Pokémon and all attached cards into your hand\.$/, () => [{ op: "bounce", keep: "all" }]],
+  // "If you drew any cards in this way, and if a Stadium that has "Legendary" in its name is in play, put this card into your hand instead."
+  [/^Draw (\d+) cards\. If you drew any cards in this way,? and if (?:a Stadium that has "([^"]+)" in its name|([A-Z][\w ]+?)) is in play, (put|shuffle) this (?:card|[\w&'. ]+?) into your (hand|deck) instead of (?:the discard pile|discarding it)\.$/, (m) => [{ op: "draw", n: Number(m[1]) }, { op: "keepCard", to: m[5] === "deck" ? "deck" : "hand", when: { stadiumWord: m[2] || m[3] } }]],
   // Dan.
   [/^Draw (\d+) cards\. You and your opponent play Rock-Paper-Scissors until someone wins\. If you win, draw (\d+) more cards\.$/, (m) => [{ op: "draw", n: Number(m[1]) }, { op: "rps", win: [{ op: "draw", n: Number(m[2]) }] }]],
   // Fossil Excavator: the deck or the discard pile, the player's choice (only asked when the discard pile has one).
@@ -1922,7 +2062,7 @@ function compileParts(clean) {
     return rest ? [{ op: "cost", n: count(m[1].replace(/ other cards?$/, "")) || 1 }, ...rest] : null;
   }
   // "You can use this card only if your opponent has 3 or fewer Prize cards remaining."
-  m = clean.match(/^You (?:can|may) (?:use|play) this card only if (.+?)\. (.+)$/);
+  m = clean.match(/^You (?:can|may) (?:use|play) this card only (?:if|when) (.+?)\. (.+)$/);
   if (m) {
     const when = condOf(m[1]);
     const rest = when && compileTrainer(m[2]);
@@ -2213,6 +2353,7 @@ export function fieldFits(who, def) {
   // Special Energy that gives more on some Pokémon: not on these rule boxes, only on δ Pokémon.
   if (who.notBoxes && who.notBoxes.includes(def.box)) return false;
   if (who.delta && !/δ/.test(def.name)) return false;
+  if (who.noRule && def.rule) return false;
   return true;
 }
 
@@ -2252,7 +2393,7 @@ export function trainerAim(steps) {
   const inner = (s) => (s.op === "flip" ? [...s.heads, ...(s.tails || [])] : s.op === "choice" ? s.options.flatMap((o) => o.steps) : s.op === "flipEach" ? [s.step] : [s]);
   const ops = steps.flatMap(inner).flatMap(inner).map((s) => s.op);
   // Ending the turn, or what the bot can't judge yet (its own Pokémon moved about, cards put in order, the other hand): left alone.
-  if (["endTurn", "arrange", "toBottomOf", "newActive", "lift", "devolve", "swapBasic", "moveAll", "trainersBack", "foeBasicsOut", "handLimit"].some((op) => ops.includes(op)) && !ops.includes("topTake")) return "move";
+  if (["endTurn", "arrange", "toBottomOf", "newActive", "lift", "devolve", "swapBasic", "moveAll", "trainersBack", "foeBasicsOut", "handLimit", "confuseBoth"].some((op) => ops.includes(op)) && !ops.includes("topTake")) return "move";
   if (ops.includes("energyOff")) return steps.some((s) => s.op === "energyOff" && s.move) ? "move" : "hammer";
   if (ops.includes("dropFoeTools")) return "tools";
   // PlusPower and Defender ride on a Pokémon; Defender is about not being hurt, which the bot doesn't plan for.
