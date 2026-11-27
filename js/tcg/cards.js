@@ -32,7 +32,7 @@ export const FREE_ENERGY = ENERGY_TYPES.map((type) => ({
 const FREE_IDS = new Set(FREE_ENERGY.map((e) => e.id));
 export const isFreeEnergy = (id) => FREE_IDS.has(id);
 
-const TAGS = ["Team Plasma", "SP", "Level-Up", "Baby", "Ultra Beast"];
+const TAGS = ["Team Plasma", "SP", "Level-Up", "Baby", "Ultra Beast", "Ancient", "Future"];
 const EVOLVED = /^(Stage 1|Stage 2|VMAX|VSTAR|BREAK|Level-Up)$/;
 const NOT_YET = /^(LEGEND|V-UNION|Restored)$/;
 
