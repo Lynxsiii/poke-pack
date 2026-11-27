@@ -1982,6 +1982,9 @@ function waitingLine() {
   return ` ${waiting.length} more open once ${list} ${names.length > 1 ? "are" : "is"} here.`;
 }
 
+/** Set ids whose sealed shelf the player opened with "Show all" this visit. */
+const sealedShownAll = new Set();
+
 function renderPromoProducts() {
   if (!els.promoGrid) return;
   let offers = promoOffers(productList[liveSet.id]).filter(
@@ -2055,8 +2058,10 @@ function renderPromoProducts() {
     })
     .join("");
   // A set's own shelf shows its first few products; the rest wait behind one button.
+  // Once opened it stays open for this set, so a buy or add-to-cart re-render
+  // (which redraws the grid) doesn't fold it shut under the player's thumb.
   const SHOWN = 5;
-  if (!grouped && offers.length > SHOWN + 1) {
+  if (!grouped && offers.length > SHOWN + 1 && !sealedShownAll.has(liveSet.id)) {
     els.promoGrid.querySelectorAll(":scope > .promo-product").forEach((el, i) => el.classList.toggle("is-more", i >= SHOWN));
     els.promoGrid.insertAdjacentHTML(
       "beforeend",
@@ -11250,8 +11255,36 @@ document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "visible") {
     renderHeader();
     scheduleDailyTick();
+    checkForNewDeploy();
+  } else {
+    hiddenSince = Date.now();
   }
 });
+
+/* A phone keeps a tab alive for days, so a fix can be live while the tab still
+   runs the old app.js and catalog (Noah saw a pack art that had been replaced
+   an hour earlier). Coming back to a tab that sat hidden for a while, ask the
+   server which app.js?v= it serves now and reload when it moved on, but only
+   when nothing is in progress: no pack open, no dialog, no field being typed in. */
+let hiddenSince = 0;
+async function checkForNewDeploy() {
+  const now = Date.now();
+  if (!hiddenSince || now - hiddenSince < 30_000) return;
+  const mine = new URL(import.meta.url).searchParams.get("v");
+  if (!mine) return;
+  try {
+    const res = await fetch("/", { cache: "no-store" });
+    const live = (await res.text()).match(/js\/app\.js\?v=(\d+)/)?.[1];
+    if (!live || live === mine) return;
+    const busy =
+      packPhase !== "idle" ||
+      document.querySelector("dialog[open], .batch-open:not(.hidden)") ||
+      document.activeElement?.matches?.("input, textarea, select, [contenteditable]");
+    if (!busy && document.visibilityState === "visible") location.reload();
+  } catch {
+    /* offline: try again next time the tab comes back */
+  }
+}
 
 /* The first-run tour (js/tour.js): once, on Home, when nothing is open over it.
    Settings and the welcome screen can start it again. */
@@ -11271,6 +11304,7 @@ maybeStartTour(
 document.addEventListener("click", (e) => {
   const btn = e.target instanceof Element && e.target.closest("[data-show-all-sealed]");
   if (!btn) return;
+  sealedShownAll.add(liveSet.id);
   btn.closest(".promo-grid")?.querySelectorAll(".is-more").forEach((el) => el.classList.remove("is-more"));
   btn.remove();
 });
