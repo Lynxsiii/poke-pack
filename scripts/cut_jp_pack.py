@@ -43,8 +43,31 @@ def fit_side(points):
     return a, b
 
 
-def cut(src, stem):
+def cut(src, stem, hole_at=None, dump=None):
     im = Image.open(src).convert("RGB")
+    rgb = np.asarray(im).astype(np.int16)
+    h, w, _ = rgb.shape
+    ink = non_white(rgb, 18)
+
+    # Official shop renders (Pokémon Center Online) sit in a white square with a
+    # caption under the pack: keep only the tallest run of inked rows, and the
+    # columns inked within it.
+    rows = ink.mean(axis=1) > 0.02
+    runs, start = [], None
+    for y, on in enumerate(list(rows) + [False]):
+        if on and start is None:
+            start = y
+        elif not on and start is not None:
+            if runs and start - runs[-1][1] < 12:
+                runs[-1] = (runs[-1][0], y)  # a short white gap inside the pack
+            else:
+                runs.append((start, y))
+            start = None
+    y0r, y1r = max(runs, key=lambda r: r[1] - r[0])
+    y0r, y1r = max(0, y0r - 3), min(h, y1r + 3)
+    colsr = np.flatnonzero(ink[y0r:y1r].mean(axis=0) > 0.05)
+    x0r, x1r = max(0, colsr[0] - 3), min(w, colsr[-1] + 4)
+    im = im.crop((x0r, y0r, x1r, y1r))
     rgb = np.asarray(im).astype(np.int16)
     h, w, _ = rgb.shape
     ink = non_white(rgb, 18)
@@ -95,16 +118,22 @@ def cut(src, stem):
     ImageDraw.Draw(big).polygon([(x * SS, y * SS) for x, y in poly], fill=255)
     alpha = np.asarray(big.resize((w, h), Image.LANCZOS)).astype(np.float32)
 
-    # Hang hole: the round cut-out near the top centre. Found by its rim (a
-    # circle of strong edges around a calm disc), wherever its fill is white,
-    # grey or see-through; if a photo shows none, use where the other packs have it.
-    cx, cy, cr, score = find_hole(rgb, w, h)
-    if score < 2.0:
-        cx, cy, cr = w * 0.485, h * 0.072, w * 0.045
-    yy, xx = np.mgrid[0:h, 0:w]
-    d = np.sqrt((xx - cx) ** 2 + (yy - cy) ** 2)
-    hole_a = np.clip((d - (cr * 1.18 + 1.5)) / 1.2, 0, 1)  # 0 inside, soft 1 px rim
-    alpha = alpha * hole_a
+    # Hang hole: the round cut-out near the top centre, found by its rim. It is
+    # filled with the pack art around it rather than punched through: English
+    # wrappers show no hole, and on the tear screen a see-through hole read as a
+    # dark disc and a dark band across the torn strip (Noah, 11-27).
+    if hole_at:
+        # Measured by eye, as fractions of the pack's width (x, r) and height (y).
+        fx, fy, fr = hole_at
+        cx, cy, cr, score = fx * w, fy * h, fr * w, 0.0
+    else:
+        cx, cy, cr, score = find_hole(rgb, w, h)
+        if score < 8.0:
+            cx, cy, cr = w * 0.485, h * 0.072, w * 0.045
+    if dump:
+        im.save(dump)
+    rgb_f = fill_disc(np.asarray(im).astype(np.float32), cx, cy, cr * 1.22 + 2)
+    im = Image.fromarray(rgb_f.clip(0, 255).astype(np.uint8), "RGB")
     hole = (round(cx), round(cy), round(cr), round(score, 1))
 
     # Crop to the outline and save.
@@ -112,38 +141,61 @@ def cut(src, stem):
     box = (xs.min(), ys.min(), xs.max() + 1, ys.max() + 1)
     out = np.dstack([np.asarray(im), alpha.clip(0, 255).astype(np.uint8)])
     art = Image.fromarray(out, "RGBA").crop(box)
-    if art.width > 520:
-        art = art.resize((520, round(art.height * 520 / art.width)), Image.LANCZOS)
+    if art.width > 640:
+        art = art.resize((640, round(art.height * 640 / art.width)), Image.LANCZOS)
     art.save(f"{stem}.png", optimize=True)
     art.save(f"{stem}.avif", quality=90)
     print(f"{stem}: {art.size}, hole {hole}")
 
 
+def fill_disc(img, cx, cy, r):
+    """Fill a disc from its surroundings: repeated neighbour averaging (a heat
+    fill) from the ring just outside, then a little grain so it isn't a smear."""
+    h, w, _ = img.shape
+    x0, x1 = int(max(0, cx - r - 4)), int(min(w, cx + r + 5))
+    y0, y1 = int(max(0, cy - r - 4)), int(min(h, cy + r + 5))
+    win = img[y0:y1, x0:x1].copy()
+    yy, xx = np.mgrid[y0:y1, x0:x1]
+    m = (xx - cx) ** 2 + (yy - cy) ** 2 <= r * r
+    ring = ((xx - cx) ** 2 + (yy - cy) ** 2 <= (r + 4) ** 2) & ~m
+    win[m] = win[ring].mean(axis=0)
+    for _ in range(int(r * 6)):
+        avg = (np.roll(win, 1, 0) + np.roll(win, -1, 0) + np.roll(win, 1, 1) + np.roll(win, -1, 1)) / 4
+        win[m] = avg[m]
+    grain = np.random.default_rng(7).normal(0, win[ring].std(axis=0).mean() * 0.15, win.shape)
+    win[m] += grain[m]
+    img[y0:y1, x0:x1] = win
+    return img
+
+
 def find_hole(rgb, w, h):
-    """Best circle in the top band: strong edges on the rim, little texture inside."""
-    grey = rgb.mean(axis=2)
-    gy, gx = np.gradient(grey)
-    grad = np.hypot(gx, gy)
+    """The hang hole: a calm, even disc that stands apart from what surrounds it
+    (white or grey on a printed wrapper). Score = how far the disc's colour is
+    from the ring just outside it, minus how busy the disc is."""
+    img = rgb.astype(np.float32)
     best = (0, 0, 0, -1)
-    angles = np.linspace(0, 2 * np.pi, 72, endpoint=False)
-    for r in np.arange(w * 0.032, w * 0.058, w * 0.003):
-        ring_x = np.cos(angles) * r
-        ring_y = np.sin(angles) * r
-        inner = np.linspace(0, 2 * np.pi, 24, endpoint=False)
-        for cy in np.arange(h * 0.035, h * 0.115, 2):
-            for cx in np.arange(w * 0.36, w * 0.64, 2):
-                px = (cx + ring_x).astype(int)
-                py = (cy + ring_y).astype(int)
-                rim = grad[py, px]
-                rim_score = np.percentile(rim, 25)  # most of the rim, not one hot spot
-                ix = (cx + np.cos(inner) * r * 0.55).astype(int)
-                iy = (cy + np.sin(inner) * r * 0.55).astype(int)
-                calm = grey[iy, ix].std() + grad[iy, ix].mean()
-                score = rim_score - calm
+    a_in = np.linspace(0, 2 * np.pi, 16, endpoint=False)
+    a_out = np.linspace(0, 2 * np.pi, 32, endpoint=False)
+    for r in np.arange(w * 0.034, w * 0.06, w * 0.004):
+        for cy in np.arange(h * 0.035, h * 0.12, max(2, h * 0.003)):
+            for cx in np.arange(w * 0.36, w * 0.64, max(2, w * 0.004)):
+                pin = []
+                for k in (0.0, 0.35, 0.7):
+                    if k == 0:
+                        pin.append(img[int(cy), int(cx)][None])
+                    else:
+                        pin.append(img[(cy + np.sin(a_in) * r * k).astype(int), (cx + np.cos(a_in) * r * k).astype(int)])
+                pin = np.vstack(pin)
+                pout = img[(cy + np.sin(a_out) * r * 1.35).astype(int).clip(0, h - 1), (cx + np.cos(a_out) * r * 1.35).astype(int).clip(0, w - 1)]
+                gap = np.abs(pin.mean(axis=0) - pout.mean(axis=0)).mean()
+                busy = pin.std(axis=0).mean()
+                score = gap - 1.5 * busy
                 if score > best[3]:
                     best = (cx, cy, r, score)
     return best
 
 
 if __name__ == "__main__":
-    cut(sys.argv[1], sys.argv[2])
+    # Optional third argument: the hole as x,y,r fractions (see cut()).
+    at = tuple(float(v) for v in sys.argv[3].split(",")) if len(sys.argv) > 3 and sys.argv[3] != "-" else None
+    cut(sys.argv[1], sys.argv[2], at, sys.argv[4] if len(sys.argv) > 4 else None)
