@@ -1,5 +1,5 @@
 {
-  "_fetchedAt": "2026-11-26",
+  "_fetchedAt": "2026-11-27",
   "me6": [
     {
       "id": "eliteTrainerBox",
@@ -21419,6 +21419,30 @@
       ],
       "price": 123.55,
       "tcgplayerId": 87402
+    }
+  ],
+  "jsv2a": [
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 20,
+      "promos": [],
+      "price": 238.52,
+      "tcgplayerId": 565243,
+      "image": "assets/products/jsv2a/boosterBox.webp"
+    }
+  ],
+  "jsm12a": [
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 10,
+      "promos": [],
+      "price": 1053.33,
+      "tcgplayerId": 576964,
+      "image": "assets/products/jsm12a/boosterBox.webp"
     }
   ]
 }

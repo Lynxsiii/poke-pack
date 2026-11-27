@@ -24,7 +24,7 @@ const listsOf = (set) => dataSetsOf(set).map(load);
 
 // ---- categories ---------------------------------------------------------------------------
 const byCat = Object.fromEntries(SET_CATEGORIES.map((cat) => [cat.id, PLAYABLE_SETS.filter((set) => setCategory(set) === cat.id)]));
-assert.deepEqual(SET_CATEGORIES.map((cat) => cat.id), ["booster", "promos", "special", "decks"]);
+assert.deepEqual(SET_CATEGORIES.map((cat) => cat.id), ["booster", "japanese", "promos", "special", "decks"]);
 assert.equal(Object.values(byCat).reduce((n, list) => n + list.length, 0), PLAYABLE_SETS.length, "every set has exactly one category");
 for (const set of byCat.promos) assert.ok(set.promoSet && set.id in PROMO_HOMES, `${set.id} is a black star binder`);
 for (const set of byCat.special) assert.match(set.id, /^(mcd|tot|pop)\d/, `${set.id} is a Happy Meal, Trick or Trade or POP pack`);
@@ -104,8 +104,8 @@ for (const id of ["me1-133", "sv3pt5-cosmos-metal", "sv6pt5-energy-metal", "sv8p
 
 // ---- mastery: booster sets only ---------------------------------------------------------------------
 const liveMasters = ACHIEVEMENTS.filter((row) => row.kind === "mastery");
-assert.deepEqual(liveMasters.map((row) => row.set), byCat.booster.map((set) => set.id), "one live mastery per booster set");
-assert.equal(RETIRED_ACHIEVEMENTS.length, (PLAYABLE_SETS.length - byCat.booster.length) * 2, "the extras' half and mastery rows are retired");
+assert.deepEqual(liveMasters.map((row) => row.set), PLAYABLE_SETS.filter(isBoosterSet).map((set) => set.id), "one live mastery per booster set");
+assert.equal(RETIRED_ACHIEVEMENTS.length, (PLAYABLE_SETS.length - PLAYABLE_SETS.filter(isBoosterSet).length) * 2, "the extras' half and mastery rows are retired");
 for (const row of RETIRED_ACHIEVEMENTS) {
   assert.ok(isRetired(row) && !ACHIEVEMENTS.includes(row));
   assert.equal(achievementById(row.id), row, `${row.id} is still found by id (XP, titles and seals of whoever claimed it)`);
@@ -135,8 +135,8 @@ for (const era of CROWN_ERAS) {
   assert.equal(isAchievementDone(row, achievementContext({ collection: owned }, {})), true, `${era}: every booster set mastered wins the crown with no extra owned`);
 }
 assert.equal(achievementById("era-xy-crown").goal, 14);
-assert.equal(achievementById("sets-done-all").goal, byCat.booster.length);
-assert.ok([...SET_INFO.values()].every((info) => info.booster === (info.category === "booster")));
+assert.equal(achievementById("sets-done-all").goal, PLAYABLE_SETS.filter(isBoosterSet).length);
+assert.ok([...SET_INFO.values()].every((info) => info.booster === (info.category === "booster" || info.category === "japanese")));
 for (const id of ["extras-100", "extras-300"]) assert.ok(ACHIEVEMENTS.some((row) => row.id === id), `${id} is on the extras ladder`);
 
 // ---- a Trainer Kit is one box: its two half-deck sets pair up, and lists show it once ------------------------

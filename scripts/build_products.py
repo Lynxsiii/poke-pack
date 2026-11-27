@@ -122,7 +122,9 @@ PRODUCT_DIR = ROOT / "assets" / "products"
 CACHE = ROOT / "scripts" / ".cache" / "products"
 
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) poke-pack.rip product builder"
-TCGCSV = "https://tcgcsv.com/tcgplayer/3/{group}/{what}"
+TCGCSV = "https://tcgcsv.com/tcgplayer/{category}/{group}/{what}"
+# TCGplayer category: 3 is Pokemon (English), 85 Pokemon Japan. Set per set from `tcgplayerCategory` in build().
+CATEGORY = 3
 TCG_IMAGE = "https://tcgplayer-cdn.tcgplayer.com/product/{id}_in_1000x1000.jpg"
 TCGL = "https://cdn.malie.io/file/malie-io/tcgl/export/{path}"
 TCGL_INDEX = "https://cdn.malie.io/file/malie-io/tcgl/export/index.json"
@@ -221,7 +223,7 @@ def page_data(raw: bytes):
 
 def tcg_prices(group: int, refresh: bool) -> dict[int, float]:
     """TCGplayer product id -> market price (or mid, for a presale with no sales yet)."""
-    raw = fetch(TCGCSV.format(group=group, what="prices"), f"tcg-{group}-prices.json", refresh)
+    raw = fetch(TCGCSV.format(category=CATEGORY, group=group, what="prices"), f"tcg-{group}-prices.json", refresh)
     out: dict[int, float] = {}
     for row in json.loads(raw)["results"]:
         price = row.get("marketPrice") or row.get("midPrice")
@@ -231,7 +233,7 @@ def tcg_prices(group: int, refresh: bool) -> dict[int, float]:
 
 
 def tcg_products(group: int, refresh: bool) -> dict[int, dict]:
-    raw = fetch(TCGCSV.format(group=group, what="products"), f"tcg-{group}-products.json", refresh)
+    raw = fetch(TCGCSV.format(category=CATEGORY, group=group, what="products"), f"tcg-{group}-products.json", refresh)
     return {row["productId"]: row for row in json.loads(raw)["results"]}
 
 
@@ -534,7 +536,9 @@ def mirror(set_id: str, record: dict, remote: str | tuple[str, str], refresh: bo
 
 
 def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
+    global CATEGORY
     cfg = json.loads((SETS / f"{set_id}.json").read_text(encoding="utf-8"))
+    CATEGORY = int(cfg.get("tcgplayerCategory") or 3)
     products = cfg.get("products") or []
     if not products:
         return []
@@ -590,7 +594,7 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
     # Product-only prints (blister exclusives) are filed in a group of their own,
     # or in Miscellaneous Cards & Products (Journey Together's Cosmos Holo box
     # cards, the stamped store promos), and a promo spec can name another.
-    groups = [g for g in groups if g] + [BLISTER_EXCLUSIVES, MISC]
+    groups = [g for g in groups if g] + ([BLISTER_EXCLUSIVES, MISC] if CATEGORY == 3 else [])
     groups += sorted({p["tcgplayerGroup"] for p in products if p.get("tcgplayerGroup")} - set(groups))
     groups += sorted({s["tcgplayerGroup"] for s in (cfg.get("promoCards") or {}).values() if s.get("tcgplayerGroup")} - set(groups))
     tcg_market: dict[int, dict[int, float]] = {}

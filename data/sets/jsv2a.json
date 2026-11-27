@@ -24,5 +24,15 @@
     "SAR": "Special Illustration Rare",
     "UR": "Hyper Rare"
   },
-  "printedTotal": 165
+  "printedTotal": 165,
+  "products": [
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 565243,
+      "packs": 20,
+      "promos": []
+    }
+  ]
 }

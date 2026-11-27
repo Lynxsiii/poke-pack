@@ -3066,7 +3066,7 @@ function renderBinder() {
 /** The category the Packs page is showing (SET_CATEGORIES in js/catalog.js). */
 let catalogCat = "booster";
 /** What one entry of a category is called in an era's count: "10 sets", "1 binder". */
-const CATEGORY_NOUN = { booster: ["set", "sets"], promos: ["binder", "binders"], special: ["pack", "packs"], decks: ["box", "boxes"] };
+const CATEGORY_NOUN = { booster: ["set", "sets"], japanese: ["set", "sets"], promos: ["binder", "binders"], special: ["pack", "packs"], decks: ["box", "boxes"] };
 
 /**
  * The Packs page: the set on the counter to jump back into, the four
@@ -3149,7 +3149,7 @@ function renderCatalog() {
       : "";
     top.innerHTML = `${back}
       <div class="cat-tabs" role="tablist" aria-label="Kinds of packs">${tabs}</div>
-      <p class="catalog-summary">${esc(cat.note)}${cat.id === "booster" ? "" : " Extras have a collection page and no mastery."}</p>
+      <p class="catalog-summary">${esc(cat.note)}${cat.id === "booster" || cat.id === "japanese" ? "" : " Extras have a collection page and no mastery."}</p>
       ${jumps}`;
   }
   els.catalogEras.innerHTML = blocks;
