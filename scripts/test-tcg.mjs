@@ -3254,7 +3254,8 @@ test("damage wordings: the lab cards are read, and old cards' own names read as 
   assert.deepEqual(compileAttack("Does 50 damage minus 10 damage for each damage counter on this Pokémon.")[0], { op: "bonusPer", when: "before", how: "less", n: 10, per: "selfCounters" });
   assert.deepEqual(compileAttack("This attack's damage isn't affected by Weakness, Resistance, Poké-Powers, Poké-Bodies, or any other effects on the Defending Pokémon.")[0], { op: "typing", when: "before", noWeakness: true, noResistance: true, noEffects: true });
   assert.equal(compileAttack("This attack's damage isn't affected by Weakness or Poké-Bodies."), null, "Poké-Bodies only beside any other effects");
-  assert.equal(compileAttack("If this Pokémon used Agility during your last turn, this attack does 60 more damage."), null, "a test it doesn't know");
+  assert.deepEqual(compileAttack("If this Pokémon used Agility during your last turn, this attack does 60 more damage."), [{ op: "bonusIf", when: "before", n: 60, test: "usedLast", name: "Agility" }]);
+  assert.equal(compileAttack("If this Pokémon is wearing a hat, this attack does 60 more damage."), null, "a test it doesn't know");
   assert.deepEqual(compileAttack("If the Defending Pokémon is Pokémon-ex, this attack does 40 damage plus 30 more damage.")[0], { op: "bonusIf", when: "before", n: 30, test: "foeBox", boxes: ["ex"] });
 });
 
@@ -5478,6 +5479,131 @@ test("Confusion and Poison that count for more, Energy off both, each player dra
   use(state, 0, "Refill");
   assert.equal(state.players[0].hand.length, 6);
   assert.equal(state.players[1].hand.length, 7, "6, then their draw");
+});
+
+/* ---------- batch 9 ---------- */
+
+lab("lab-b91", [
+  ["Reap", 0, "Knock Out each of your opponent's Pokémon that has 50 HP or less remaining."],
+  ["Claw", 0, "Knock Out 1 of your opponent's Pokémon in play that has 60 HP or less remaining."],
+  ["Acid", 10, "The Defending Pokémon has no Abilities until the end of your next turn."],
+  ["Boom", 0, "This Pokémon is Knocked Out."],
+]);
+lab("lab-b92", [
+  ["Zap", 10, "You may discard all Water Energy attached to this Pokémon. If you do, the Defending Pokémon is now Burned and Confused."],
+  ["Wake", 0, "Remove all Special Conditions from your opponent's Active Pokémon."],
+  ["Toss", 0, "Discard a card from your hand. If you can't, this attack does nothing."],
+  ["Avenge", 10, "This attack does 50 more damage for each Prize card your opponent took during their last turn."],
+]);
+lab("lab-b93", [
+  ["Gamble", 10, "You may flip a coin. If heads, this attack does 60 more damage. If tails, this attack does nothing."],
+  ["Rest", 0, "Heal 30 damage from this Pokémon. This Pokémon can't retreat during your next turn."],
+  ["Trash", 0, "This attack does 10 damage for each Pokémon in your discard pile. You can't do more than 30 damage in this way."],
+  ["Mend", 0, "Heal all damage from 1 of your Pokémon. Then, discard all Energy attached to this Pokémon."],
+]);
+
+test("batch 9 wordings are read, and the ones that can't be done right are not", () => {
+  for (const id of ["lab-b91", "lab-b92", "lab-b93"]) for (const a of defs(id).attacks) assert.ok(!a.plain, a.name);
+  const steps = (text, name) => compileAttack(text, name);
+  // An owner's name or a card suffix still reads as this Pokémon.
+  assert.deepEqual(steps("Erika's Dragonair does 20 damage to itself.", "Erika's Dragonair"), [{ op: "selfDamage", when: "after", n: 20 }]);
+  assert.ok(steps("Remove 2 damage counters from Garchomp.", "Garchomp LV.X"));
+  assert.deepEqual(steps("Flip a coin. If heads, this attack does 30 more damage and your opponent's Active Pokémon is now Paralyzed. If tails, this Pokémon does 10 damage to itself.").map((st) => st.op), ["flipBonus", "onCoin"]);
+  assert.deepEqual(steps("Your opponent can't play any Supporter cards from their hand during their next turn."), [{ op: "lockHand", when: "after", kinds: ["supporter"] }]);
+  assert.deepEqual(steps("Discard all Pokémon Tools from each of your opponent's Pokémon."), [{ op: "stripFoeAll", when: "after", special: false }]);
+  assert.deepEqual(steps("The Defending Pokémon can't retreat or use any Poké-Powers during your opponent's next turn.").map((st) => st.op), ["mute", "mark"]);
+  assert.deepEqual(steps("If your opponent's Active Pokémon has 100 HP or less remaining, it is Knocked Out."), [{ op: "when", when: "after", test: "foeHpAtMost", k: 100, steps: [{ op: "knockOut" }] }]);
+  assert.deepEqual(steps("If you go second, this attack does 60 more damage during your first turn."), [{ op: "bonusIf", when: "before", n: 60, test: "secondFirst" }]);
+  assert.deepEqual(steps("If your opponent has already used their GX attack, this attack does 80 more damage."), [{ op: "bonusIf", when: "before", n: 80, test: "foeGxUsed" }]);
+  assert.deepEqual(steps("If the Defending Pokémon is Durant, this attack does 50 more damage."), [{ op: "bonusIf", when: "before", n: 50, test: "foeIs", what: "name=Durant" }]);
+  assert.equal(steps("If the Defending Pokémon is Fighting, this attack does 50 more damage."), null, "a type, not a name");
+  assert.deepEqual(steps("Discard 1 Fire Energy and 1 Lightning Energy attached to this Pokémon.").map((st) => st.type), ["Fire", "Lightning"]);
+  assert.deepEqual(steps("Flip 2 coins. If 1 or both of them are tails, this attack does nothing."), [{ op: "flipCancel", when: "before", coins: 2 }]);
+  assert.deepEqual(steps("If the Defending Pokémon is Knocked Out by this attack, take 1 more Prize card."), [{ op: "bounty", when: "before", n: 1 }]);
+  assert.deepEqual(steps("Discard a Plasma Energy attached to this Pokémon. If you can't discard a Plasma Energy, this attack does nothing.").map((st) => st.op), ["cancelIf", "discardEnergy"]);
+  assert.equal(steps("If your opponent has any Benched Pokémon, choose 1 of them and flip a coin. If heads, this attack does 30 damage to that Pokémon.")[0].heads[0].n, 30);
+  assert.equal(steps("Flip a coin. If heads, search your deck for any 1 card and put it into your hand. Shuffle your deck afterward.")[0].heads[0].steps[0].what, "any");
+  // Searching for a named Pokémon reads as it always did.
+  assert.deepEqual(steps("Search your deck for up to 2 Surskit and put them onto your Bench. Then, shuffle your deck.")[0].steps[0], { op: "search", what: "name=Surskit", n: 2, to: "bench" });
+  // Not read: a Pokémon Power lock on every Pokémon they have (it reaches ones played later), and a Base Set misprint.
+  assert.equal(steps("Your opponent can't use Poké-Powers on his or her Pokémon during your opponent's next turn."), null);
+});
+
+test("Knock Outs by HP left, no Abilities, Knocking itself Out", () => {
+  let state = labgame("lab-b91", "lab-2");
+  const foe = state.players[1];
+  const small = foe.bench[0].uid; // Charmander, 50 HP
+  foe.active.damage = 140; // 60 left
+  use(state, 0, "Reap");
+  assert.ok(foe.discard.includes(small), "50 HP left: Knocked Out");
+  assert.equal(foe.active.damage, 140, "60 HP left: not");
+  state = labgame("lab-b91", "lab-2");
+  state.players[1].active.damage = 140;
+  use(state, 0, "Claw");
+  const waiting = state.pending[0];
+  assert.equal(waiting.type, "pick");
+  assert.deepEqual([...waiting.spots].sort(), [ACTIVE, 0].sort(), "both have 60 HP or less left");
+  act(state, { type: "pick", player: 0, spot: ACTIVE });
+  assert.ok(state.players[1].discard.includes(state.players[1].discard.find((u) => state.cards[u] === "lab-2")), "the chosen one is Knocked Out");
+  // No Abilities: a mark on the Defending Pokémon that lasts until the end of the attacker's next turn.
+  state = labgame("lab-b91", "lab-2");
+  const target = state.players[1].active;
+  use(state, 0, "Acid");
+  assert.ok(target.marks.some((m) => m.kind === "noAbility" && m.from === "Ability"));
+  state = labgame("lab-b91", "lab-2");
+  const self = state.players[0].active.uid;
+  use(state, 0, "Boom");
+  assert.ok(state.players[0].discard.includes(self), "Knocked Out by its own attack");
+});
+
+test("may pay for an effect, their Special Conditions removed, a card from the hand or nothing, Prize cards they took", () => {
+  let state = labgame("lab-b92", "lab-2");
+  state.players[0].active.energy = [];
+  use(state, 0, "Zap");
+  assert.ok(!state.pending.some((w) => w.why === "mayDo"), "nothing to discard: not asked");
+  assert.deepEqual(conditionsOn(state.players[1].active), []);
+  state = labgame("lab-b92", "lab-2");
+  state.players[0].active.energy.push(give(state, 0, W));
+  state.players[0].hand = state.players[0].hand.filter((u) => !state.players[0].active.energy.includes(u));
+  use(state, 0, "Zap");
+  assert.equal(state.pending.at(-1).why, "mayDo");
+  act(state, { type: "option", player: 0, index: 1 });
+  assert.deepEqual(conditionsOn(state.players[1].active), [], "said no");
+  state = labgame("lab-b92", "lab-2");
+  use(state, 0, "Zap");
+  act(state, { type: "option", player: 0, index: 0 });
+  assert.deepEqual(state.players[0].active.energy, [], "paid");
+  assert.deepEqual(conditionsOn(state.players[1].active).sort(), ["burned", "confused"]);
+  state = labgame("lab-b92", "lab-2");
+  state.players[1].active.status = { ...(state.players[1].active.status || {}), poisoned: true, burned: true };
+  use(state, 0, "Wake");
+  assert.deepEqual(conditionsOn(state.players[1].active), []);
+  state = labgame("lab-b92", "lab-2");
+  state.players[0].hand = [];
+  use(state, 0, "Toss");
+  assert.equal(state.players[1].active.damage, 0);
+  state = labgame("lab-b92", "lab-2");
+  state.players[1].taken = [{ turn: state.turn - 1, n: 2 }];
+  use(state, 0, "Avenge");
+  assert.equal(state.players[1].active.damage, 110, "10 and 2 Prize cards' worth");
+});
+
+test("a coin it may flip, a rest that pins it, damage held to a limit, healing 1 of yours", () => {
+  let state = labgame("lab-b93", "lab-2");
+  state.players[0].active.damage = 50;
+  use(state, 0, "Rest");
+  assert.equal(state.players[0].active.damage, 20);
+  assert.ok(state.players[0].active.marks.some((m) => m.kind === "noRetreat"));
+  state = labgame("lab-b93", "lab-2");
+  for (let i = 0; i < 5; i += 1) state.players[0].discard.push(give(state, 0, "base1-63"));
+  use(state, 0, "Trash");
+  assert.equal(state.players[1].active.damage, 30, "no more than 30");
+  state = labgame("lab-b93", "lab-2");
+  state.players[0].bench[0].damage = 30;
+  use(state, 0, "Mend");
+  if (state.pending.length) act(state, { type: "pick", player: 0, spot: 0 });
+  assert.equal(state.players[0].bench[0].damage, 0);
+  assert.deepEqual(state.players[0].active.energy, []);
 });
 
 console.log(`${passed} checks passed${process.exitCode ? ", some failed" : ""}`);
