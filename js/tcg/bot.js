@@ -342,6 +342,8 @@ export function botAction(state, player, defs) {
     // A "you may" before an attack's damage: each answer played out on copies, the better one taken
     // (while already playing out the attack on a copy, yes).
     if (waiting.why === "before") return simulating ? actions[0] : best(state, player, actions, defs);
+    // "You may <a price>. If you do, <more>" after the damage: played out the same way, the price weighed against what it buys.
+    if (waiting.why === "mayDo") return simulating ? actions[1] : best(state, player, actions, defs);
     // "Choose 1 of your opponent's Active Pokémon's attacks and use it as this attack": the one that hits hardest.
     if (waiting.why === "copy") {
       const hits = waiting.options.map((steps) => {
