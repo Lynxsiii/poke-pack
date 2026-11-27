@@ -1692,5 +1692,34 @@
       "ultra": 0.02,
       "hyper": 0.007
     }
+  },
+  "js6a": {
+    "name": "Eevee Heroes (Japanese)",
+    "printedTotal": 69,
+    "released": "2021-05-28",
+    "updated": "2026-11-27",
+    "source": "ESTIMATES. Japan publishes no pull rates. 30 packs a box, 5 cards a pack (3 common, 1 uncommon, 1 rare or better). Samurai Sword Tokyo (https://samuraiswordtokyo.com/blogs/news/eevee-heroes-card-list-pull-rates) estimates about 3 RR/RRR, 1 SR, 0.5 HR and 0.1 UR a box, and the Umbreon VMAX Special Art about 1 in 36 boxes; its other guide (https://samuraiswordtokyo.com/blogs/news/s6a-eevee-heroes-pull-rates-best-cards) notes Pokémon publishes no official rates. Our split between V and VMAX is our own estimate.",
+    "rates": {
+      "v": 0.14,
+      "vmax": 0.05,
+      "rareUltra": 0.033,
+      "rainbow": 0.0167,
+      "secret": 0.0033
+    }
+  },
+  "jsv7a": {
+    "name": "Paradise Dragona (Japanese)",
+    "printedTotal": 64,
+    "released": "2024-09-13",
+    "updated": "2026-11-27",
+    "source": "ESTIMATES. Japan publishes no pull rates. 30 packs a box, 5 cards a pack. Samurai Sword Tokyo (https://samuraiswordtokyo.com/blogs/news/paradise-dragona-sv7a-pull-rates-best-cards-guide) lists about 4 RR, 3 AR and 1 ACE SPEC a box, SR about 0.8 a box (1 in 37.5 packs) and SAR about 1 in 5 boxes; Hobby Collectors Australia (https://hobbycollectorsaustralia.com.au/products/japanese-pokemon-tcg-scarlet-violet-sv7a-paradise-dragona-booster-box) lists 4 RR and 3 AR a box. UR rate is our own estimate.",
+    "rates": {
+      "ir": 0.1,
+      "double": 0.14,
+      "ace": 0.033,
+      "ultra": 0.0267,
+      "sir": 0.0067,
+      "hyper": 0.005
+    }
   }
 }

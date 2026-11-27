@@ -1,0 +1,5004 @@
+[
+  {
+    "id": "js6a-1",
+    "name": "Pinsir",
+    "nameJa": "カイロス",
+    "number": "1",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic",
+      "Single Strike"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "120",
+    "artist": "Shin Nagasawa",
+    "attacks": [
+      {
+        "name": "Seismic Toss",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Vise Coach",
+        "text": "Damage from the attacks of your Single Strike Pokémon isn't affected by Resistance on your opponent's Active Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fire",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      127
+    ],
+    "regulationMark": "E",
+    "printedNumber": "001/069",
+    "image": "assets/cards/js6a/1.webp",
+    "imageSmall": "assets/cards/js6a/1-sm.webp",
+    "tcgplayerId": 570464,
+    "market": 0.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-1/large"
+  },
+  {
+    "id": "js6a-2",
+    "name": "Leafeon V",
+    "nameJa": "リーフィアV",
+    "number": "2",
+    "rarity": "Rare Holo V",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "200",
+    "artist": "5ban Graphics",
+    "attacks": [
+      {
+        "name": "Leaf Blade",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90+",
+        "text": "Flip a coin. If heads, this attack does 60 more damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Greening Cells",
+        "text": "Once during your turn, you may search your deck for a Grass Energy card and attach it to 1 of your Pokémon. Then, shuffle your deck. If you use this Ability, your turn ends.",
+        "type": "Ability"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fire",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      470
+    ],
+    "regulationMark": "E",
+    "printedNumber": "002/069",
+    "image": "assets/cards/js6a/2.webp",
+    "imageSmall": "assets/cards/js6a/2-sm.webp",
+    "tcgplayerId": 570465,
+    "foilMap": "assets/foil/maps/swsh7/7.webp",
+    "foilTwin": "swsh7-7",
+    "market": 1.48,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-2/large"
+  },
+  {
+    "id": "js6a-3",
+    "name": "Leafeon VMAX",
+    "nameJa": "リーフィアVMAX",
+    "number": "3",
+    "rarity": "Rare Holo VMAX",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "VMAX"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "310",
+    "artist": "PLANETA Tsuji",
+    "evolvesFrom": "Leafeon V",
+    "attacks": [
+      {
+        "name": "Grass Knot",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "60×",
+        "text": "This attack does 60 damage for each Colorless in your opponent's Active Pokémon's Retreat Cost."
+      },
+      {
+        "name": "Max Leaf",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "170",
+        "text": "Heal 30 damage from this Pokémon."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fire",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      470
+    ],
+    "regulationMark": "E",
+    "printedNumber": "003/069",
+    "image": "assets/cards/js6a/3.webp",
+    "imageSmall": "assets/cards/js6a/3-sm.webp",
+    "tcgplayerId": 570466,
+    "foilMap": "assets/foil/maps/swsh7/8.webp",
+    "etchMap": "assets/foil/maps/swsh7/8-etch-v4.webp",
+    "foilTwin": "swsh7-8",
+    "market": 2.96,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-3/large"
+  },
+  {
+    "id": "js6a-4",
+    "name": "Sewaddle",
+    "nameJa": "クルミル",
+    "number": "4",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "50",
+    "artist": "Akira Komayama",
+    "attacks": [
+      {
+        "name": "Grass Nibble",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": "Discard a Grass Energy from your opponent's Active Pokémon."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fire",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      540
+    ],
+    "regulationMark": "E",
+    "printedNumber": "004/069",
+    "image": "assets/cards/js6a/4.webp",
+    "imageSmall": "assets/cards/js6a/4-sm.webp",
+    "tcgplayerId": 570467,
+    "market": 0.12,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-4/large"
+  },
+  {
+    "id": "js6a-5",
+    "name": "Swadloon",
+    "nameJa": "クルマユ",
+    "number": "5",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "0313",
+    "evolvesFrom": "Sewaddle",
+    "attacks": [
+      {
+        "name": "Trip Over",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 20 more damage."
+      },
+      {
+        "name": "Seed Bomb",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fire",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      541
+    ],
+    "regulationMark": "E",
+    "printedNumber": "005/069",
+    "image": "assets/cards/js6a/5.webp",
+    "imageSmall": "assets/cards/js6a/5-sm.webp",
+    "tcgplayerId": 570468,
+    "market": 0.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-5/large"
+  },
+  {
+    "id": "js6a-6",
+    "name": "Leavanny",
+    "nameJa": "ハハコモリ",
+    "number": "6",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "130",
+    "artist": "kodama",
+    "evolvesFrom": "Swadloon",
+    "attacks": [
+      {
+        "name": "Healing Circle",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Heal all damage from each of your Benched Pokémon. Then, shuffle this Pokémon and all cards attached to it into your deck."
+      },
+      {
+        "name": "Razor Leaf",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fire",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      542
+    ],
+    "regulationMark": "E",
+    "printedNumber": "006/069",
+    "image": "assets/cards/js6a/6.webp",
+    "imageSmall": "assets/cards/js6a/6-sm.webp",
+    "tcgplayerId": 570469,
+    "market": 0.2,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-6/large"
+  },
+  {
+    "id": "js6a-7",
+    "name": "Dewpider",
+    "nameJa": "シズクモ",
+    "number": "7",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "50",
+    "artist": "Miki Tanaka",
+    "attacks": [
+      {
+        "name": "Bug Bite",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fire",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      751
+    ],
+    "regulationMark": "E",
+    "printedNumber": "007/069",
+    "image": "assets/cards/js6a/7.webp",
+    "imageSmall": "assets/cards/js6a/7-sm.webp",
+    "tcgplayerId": 570470,
+    "market": 0.1,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-7/large"
+  },
+  {
+    "id": "js6a-8",
+    "name": "Araquanid",
+    "nameJa": "オニシズクモ",
+    "number": "8",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "120",
+    "artist": "KIYOTAKA OSHIYAMA",
+    "evolvesFrom": "Dewpider",
+    "attacks": [
+      {
+        "name": "Bug Bite",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Bubble Ball Hurl",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": "Move an Energy from this Pokémon to 1 of your Benched Pokémon."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fire",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      752
+    ],
+    "regulationMark": "E",
+    "printedNumber": "008/069",
+    "image": "assets/cards/js6a/8.webp",
+    "imageSmall": "assets/cards/js6a/8-sm.webp",
+    "tcgplayerId": 570471,
+    "market": 0.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-8/large"
+  },
+  {
+    "id": "js6a-9",
+    "name": "Gossifleur",
+    "nameJa": "ヒメンカ",
+    "number": "9",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "50",
+    "artist": "Mizue",
+    "attacks": [
+      {
+        "name": "Blot",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": "Heal 10 damage from this Pokémon."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fire",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      829
+    ],
+    "regulationMark": "E",
+    "printedNumber": "009/069",
+    "image": "assets/cards/js6a/9.webp",
+    "imageSmall": "assets/cards/js6a/9-sm.webp",
+    "tcgplayerId": 570472,
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-9/large"
+  },
+  {
+    "id": "js6a-10",
+    "name": "Eldegoss",
+    "nameJa": "ワタシラガ",
+    "number": "10",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "Kouki Saitou",
+    "evolvesFrom": "Gossifleur",
+    "attacks": [
+      {
+        "name": "Cotton Guard",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "30",
+        "text": "During your opponent's next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance)."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Cotton Transport",
+        "text": "Once during your turn, you may search your deck for up to 2 basic Energy cards, reveal them, and put them into your hand. Then, shuffle your deck.",
+        "type": "Ability"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fire",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      830
+    ],
+    "regulationMark": "E",
+    "printedNumber": "010/069",
+    "image": "assets/cards/js6a/10.webp",
+    "imageSmall": "assets/cards/js6a/10-sm.webp",
+    "tcgplayerId": 570473,
+    "foilMap": "assets/foil/maps/swsh7/16.webp",
+    "foilTwin": "swsh7-16",
+    "market": 0.25,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-10/large"
+  },
+  {
+    "id": "js6a-11",
+    "name": "Flareon V",
+    "nameJa": "ブースターV",
+    "number": "11",
+    "rarity": "Rare Holo V",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic",
+      "V",
+      "Single Strike"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "attacks": [
+      {
+        "name": "Burning Breath",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Search your deck for a Fire Energy card and attach it to this Pokémon. Then, shuffle your deck."
+      },
+      {
+        "name": "Scorching Column",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Your opponent's Active Pokémon is now Burned."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Water",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      136
+    ],
+    "regulationMark": "E",
+    "printedNumber": "011/069",
+    "image": "assets/cards/js6a/11.webp",
+    "imageSmall": "assets/cards/js6a/11-sm.webp",
+    "tcgplayerId": 570474,
+    "market": 1.54,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-11/large"
+  },
+  {
+    "id": "js6a-12",
+    "name": "Slugma",
+    "nameJa": "マグマッグ",
+    "number": "12",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "80",
+    "artist": "otumami",
+    "attacks": [
+      {
+        "name": "Live Coal",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Flare",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Water",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      218
+    ],
+    "regulationMark": "E",
+    "printedNumber": "012/069",
+    "image": "assets/cards/js6a/12.webp",
+    "imageSmall": "assets/cards/js6a/12-sm.webp",
+    "tcgplayerId": 570475,
+    "market": 0.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-12/large"
+  },
+  {
+    "id": "js6a-13",
+    "name": "Magcargo",
+    "nameJa": "マグカルゴ",
+    "number": "13",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "130",
+    "artist": "Eri Yamaki",
+    "evolvesFrom": "Slugma",
+    "attacks": [
+      {
+        "name": "Rock Throw",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      },
+      {
+        "name": "Body Splash",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "Flip 3 coins. For each tails, discard an Energy from this Pokémon."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Water",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      219
+    ],
+    "regulationMark": "E",
+    "printedNumber": "013/069",
+    "image": "assets/cards/js6a/13.webp",
+    "imageSmall": "assets/cards/js6a/13-sm.webp",
+    "tcgplayerId": 570476,
+    "market": 0.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-13/large"
+  },
+  {
+    "id": "js6a-14",
+    "name": "Entei",
+    "nameJa": "エンテイ",
+    "number": "14",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic",
+      "Single Strike"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "120",
+    "artist": "NC Empire",
+    "attacks": [
+      {
+        "name": "Raging Fang",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "10×",
+        "text": "This attack does 10 damage for each damage counter on your Benched Single Strike Pokémon."
+      },
+      {
+        "name": "Heat Tackle",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "This Pokémon also does 30 damage to itself."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Water",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      244
+    ],
+    "regulationMark": "E",
+    "printedNumber": "014/069",
+    "image": "assets/cards/js6a/14.webp",
+    "imageSmall": "assets/cards/js6a/14-sm.webp",
+    "tcgplayerId": 570477,
+    "foilMap": "assets/foil/maps/swsh7/19.webp",
+    "foilTwin": "swsh7-19",
+    "market": 0.26,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-14/large"
+  },
+  {
+    "id": "js6a-15",
+    "name": "Vaporeon V",
+    "nameJa": "シャワーズV",
+    "number": "15",
+    "rarity": "Rare Holo V",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic",
+      "V",
+      "Rapid Strike"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "attacks": [
+      {
+        "name": "Triple Draw",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw 3 cards."
+      },
+      {
+        "name": "Splash Jump",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "Switch this Pokémon with 1 of your Benched Pokémon."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Lightning",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      134
+    ],
+    "regulationMark": "E",
+    "printedNumber": "015/069",
+    "image": "assets/cards/js6a/15.webp",
+    "imageSmall": "assets/cards/js6a/15-sm.webp",
+    "tcgplayerId": 570478,
+    "market": 1.84,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-15/large"
+  },
+  {
+    "id": "js6a-16",
+    "name": "Marill",
+    "nameJa": "マリル",
+    "number": "16",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "sowsow",
+    "attacks": [
+      {
+        "name": "Aqua Liner",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "This attack does 20 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Everyone Rollout",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "This attack does 20 damage for each of your Benched Pokémon that has the Everyone Rollout attack."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Lightning",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      183
+    ],
+    "regulationMark": "E",
+    "printedNumber": "016/069",
+    "image": "assets/cards/js6a/16.webp",
+    "imageSmall": "assets/cards/js6a/16-sm.webp",
+    "tcgplayerId": 570479,
+    "market": 0.24,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-16/large"
+  },
+  {
+    "id": "js6a-17",
+    "name": "Azumarill",
+    "nameJa": "マリルリ",
+    "number": "17",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "120",
+    "artist": "Sanosuke Sakuma",
+    "evolvesFrom": "Marill",
+    "attacks": [
+      {
+        "name": "Diving Rescue",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Put 3 in any combination of Pokémon and Supporter cards from your discard pile into your hand."
+      },
+      {
+        "name": "Surf",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Lightning",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      184
+    ],
+    "regulationMark": "E",
+    "printedNumber": "017/069",
+    "image": "assets/cards/js6a/17.webp",
+    "imageSmall": "assets/cards/js6a/17-sm.webp",
+    "tcgplayerId": 570480,
+    "market": 0.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-17/large"
+  },
+  {
+    "id": "js6a-18",
+    "name": "Mantine",
+    "nameJa": "マンタイン",
+    "number": "18",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "110",
+    "artist": "Saya Tsuruta",
+    "attacks": [
+      {
+        "name": "Bounce",
+        "cost": [
+          "Water"
+        ],
+        "damage": "20",
+        "text": "Switch this Pokémon with 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Wave Splash",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Lightning",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      226
+    ],
+    "regulationMark": "E",
+    "printedNumber": "018/069",
+    "image": "assets/cards/js6a/18.webp",
+    "imageSmall": "assets/cards/js6a/18-sm.webp",
+    "tcgplayerId": 570481,
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-18/large"
+  },
+  {
+    "id": "js6a-19",
+    "name": "Mudkip",
+    "nameJa": "ミズゴロウ",
+    "number": "19",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "KIYOTAKA OSHIYAMA",
+    "attacks": [
+      {
+        "name": "Mud-Slap",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Playful Kick",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Lightning",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      258
+    ],
+    "regulationMark": "E",
+    "printedNumber": "019/069",
+    "image": "assets/cards/js6a/19.webp",
+    "imageSmall": "assets/cards/js6a/19-sm.webp",
+    "tcgplayerId": 570482,
+    "market": 0.3,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-19/large"
+  },
+  {
+    "id": "js6a-20",
+    "name": "Marshtomp",
+    "nameJa": "ヌマクロー",
+    "number": "20",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "90",
+    "artist": "tetsuya koizumi",
+    "evolvesFrom": "Mudkip",
+    "attacks": [
+      {
+        "name": "Mud-Slap",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Energy Loop",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "Put an Energy attached to this Pokémon into your hand."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Lightning",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      259
+    ],
+    "regulationMark": "E",
+    "printedNumber": "020/069",
+    "image": "assets/cards/js6a/20.webp",
+    "imageSmall": "assets/cards/js6a/20-sm.webp",
+    "tcgplayerId": 570483,
+    "market": 0.18,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-20/large"
+  },
+  {
+    "id": "js6a-21",
+    "name": "Swampert",
+    "nameJa": "ラグラージ",
+    "number": "21",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "170",
+    "artist": "Masakazu Fukuda",
+    "evolvesFrom": "Marshtomp",
+    "attacks": [
+      {
+        "name": "Earthquake",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": "This attack also does 20 damage to each of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Muddy Maker",
+        "text": "Once during your turn, you may attach a Water or a Fighting Energy card from your hand to 1 of your Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Lightning",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      260
+    ],
+    "regulationMark": "E",
+    "printedNumber": "021/069",
+    "image": "assets/cards/js6a/21.webp",
+    "imageSmall": "assets/cards/js6a/21-sm.webp",
+    "tcgplayerId": 570484,
+    "market": 0.38,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-21/large"
+  },
+  {
+    "id": "js6a-22",
+    "name": "Feebas",
+    "nameJa": "ヒンバス",
+    "number": "22",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic",
+      "Rapid Strike"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "30",
+    "artist": "tetsuya koizumi",
+    "attacks": [
+      {
+        "name": "Flail Around",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10×",
+        "text": "Flip 3 coins. This attack does 10 damage for each heads."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Lightning",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      349
+    ],
+    "regulationMark": "E",
+    "printedNumber": "022/069",
+    "image": "assets/cards/js6a/22.webp",
+    "imageSmall": "assets/cards/js6a/22-sm.webp",
+    "tcgplayerId": 570485,
+    "market": 0.18,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-22/large"
+  },
+  {
+    "id": "js6a-23",
+    "name": "Milotic",
+    "nameJa": "ミロカロス",
+    "number": "23",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Stage 1",
+      "Rapid Strike"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "120",
+    "artist": "sui",
+    "evolvesFrom": "Feebas",
+    "attacks": [
+      {
+        "name": "Double Smash",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "70×",
+        "text": "Flip 2 coins. This attack does 70 damage for each heads."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Droplet Protection",
+        "text": "Whenever your opponent plays a Supporter card from their hand, prevent all effects of that card done to you or your hand.",
+        "type": "Ability"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Lightning",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      350
+    ],
+    "regulationMark": "E",
+    "printedNumber": "023/069",
+    "image": "assets/cards/js6a/23.webp",
+    "imageSmall": "assets/cards/js6a/23-sm.webp",
+    "tcgplayerId": 570486,
+    "market": 0.22,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-23/large"
+  },
+  {
+    "id": "js6a-24",
+    "name": "Glaceon V",
+    "nameJa": "グレイシアV",
+    "number": "24",
+    "rarity": "Rare Holo V",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "attacks": [
+      {
+        "name": "Freezing Ascension",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Search your deck for a card that evolves from this Pokémon and put it onto this Pokémon to evolve it. Then, shuffle your deck."
+      },
+      {
+        "name": "Whiteout",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Discard any Stadium in play."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Metal",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      471
+    ],
+    "regulationMark": "E",
+    "printedNumber": "024/069",
+    "image": "assets/cards/js6a/24.webp",
+    "imageSmall": "assets/cards/js6a/24-sm.webp",
+    "tcgplayerId": 570487,
+    "foilMap": "assets/foil/maps/swsh7/40.webp",
+    "foilTwin": "swsh7-40",
+    "market": 1.53,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-24/large"
+  },
+  {
+    "id": "js6a-25",
+    "name": "Glaceon VMAX",
+    "nameJa": "グレイシアVMAX",
+    "number": "25",
+    "rarity": "Rare Holo VMAX",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "VMAX"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "310",
+    "artist": "PLANETA Tsuji",
+    "evolvesFrom": "Glaceon V",
+    "attacks": [
+      {
+        "name": "Max Icicle",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "This attack also does 30 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Crystal Veil",
+        "text": "Prevent all damage done to this Pokémon by attacks from your opponent's Pokémon VMAX, except Glaceon VMAX.",
+        "type": "Ability"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Metal",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      471
+    ],
+    "regulationMark": "E",
+    "printedNumber": "025/069",
+    "image": "assets/cards/js6a/25.webp",
+    "imageSmall": "assets/cards/js6a/25-sm.webp",
+    "tcgplayerId": 570488,
+    "foilMap": "assets/foil/maps/swsh7/41.webp",
+    "etchMap": "assets/foil/maps/swsh7/41-etch-v4.webp",
+    "foilTwin": "swsh7-41",
+    "market": 2.43,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-25/large"
+  },
+  {
+    "id": "js6a-26",
+    "name": "Pikachu",
+    "nameJa": "ピカチュウ",
+    "number": "26",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "chibi",
+    "attacks": [
+      {
+        "name": "Energize",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "Attach a Lightning Energy card from your discard pile to this Pokémon."
+      },
+      {
+        "name": "Electro Ball",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fighting",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      25
+    ],
+    "regulationMark": "E",
+    "printedNumber": "026/069",
+    "image": "assets/cards/js6a/26.webp",
+    "imageSmall": "assets/cards/js6a/26-sm.webp",
+    "tcgplayerId": 570489,
+    "market": 0.42,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-26/large"
+  },
+  {
+    "id": "js6a-27",
+    "name": "Raichu",
+    "nameJa": "ライチュウ",
+    "number": "27",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "130",
+    "artist": "Mitsuhiro Arita",
+    "evolvesFrom": "Pikachu",
+    "attacks": [
+      {
+        "name": "Big Sparking",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "This attack does 50 damage to each Pokémon V and Pokémon-GX (both yours and your opponent's). (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Thunderbolt",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": "Discard all Energy from this Pokémon."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fighting",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      26
+    ],
+    "regulationMark": "E",
+    "printedNumber": "027/069",
+    "image": "assets/cards/js6a/27.webp",
+    "imageSmall": "assets/cards/js6a/27-sm.webp",
+    "tcgplayerId": 570490,
+    "foilMap": "assets/foil/maps/swsh7/50.webp",
+    "foilTwin": "swsh7-50",
+    "market": 0.34,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-27/large"
+  },
+  {
+    "id": "js6a-28",
+    "name": "Voltorb",
+    "nameJa": "ビリリダマ",
+    "number": "28",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic",
+      "Single Strike"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Tomokazu Komiya",
+    "attacks": [
+      {
+        "name": "One-Shot Bomb",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fighting",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      100
+    ],
+    "regulationMark": "E",
+    "printedNumber": "028/069",
+    "image": "assets/cards/js6a/28.webp",
+    "imageSmall": "assets/cards/js6a/28-sm.webp",
+    "tcgplayerId": 570491,
+    "market": 0.26,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-28/large"
+  },
+  {
+    "id": "js6a-29",
+    "name": "Electrode",
+    "nameJa": "マルマイン",
+    "number": "29",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Stage 1",
+      "Single Strike"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "90",
+    "artist": "Kouki Saitou",
+    "evolvesFrom": "Voltorb",
+    "attacks": [
+      {
+        "name": "Sonic Boom",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "This attack's damage isn't affected by Weakness or Resistance."
+      },
+      {
+        "name": "Explosion",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "This Pokémon also does 90 damage to itself."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fighting",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      101
+    ],
+    "regulationMark": "E",
+    "printedNumber": "029/069",
+    "image": "assets/cards/js6a/29.webp",
+    "imageSmall": "assets/cards/js6a/29-sm.webp",
+    "tcgplayerId": 570492,
+    "market": 0.11,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-29/large"
+  },
+  {
+    "id": "js6a-30",
+    "name": "Jolteon V",
+    "nameJa": "サンダースV",
+    "number": "30",
+    "rarity": "Rare Holo V",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "190",
+    "artist": "5ban Graphics",
+    "attacks": [
+      {
+        "name": "Thunder Spear",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 20 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Pin Missile",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60×",
+        "text": "Flip 4 coins. This attack does 60 damage for each heads."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fighting",
+        "value": "×2"
+      }
+    ],
+    "nationalPokedexNumbers": [
+      135
+    ],
+    "regulationMark": "E",
+    "printedNumber": "030/069",
+    "image": "assets/cards/js6a/30.webp",
+    "imageSmall": "assets/cards/js6a/30-sm.webp",
+    "tcgplayerId": 570493,
+    "market": 1.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-30/large"
+  },
+  {
+    "id": "js6a-31",
+    "name": "Rotom",
+    "nameJa": "ロトム",
+    "number": "31",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "80",
+    "artist": "Sekio",
+    "attacks": [
+      {
+        "name": "Surprise Short",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Discard all Pokémon Tools from all of your opponent's Pokémon."
+      },
+      {
+        "name": "Static Shock",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fighting",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      479
+    ],
+    "regulationMark": "E",
+    "printedNumber": "031/069",
+    "image": "assets/cards/js6a/31.webp",
+    "imageSmall": "assets/cards/js6a/31-sm.webp",
+    "tcgplayerId": 570494,
+    "market": 0.12,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-31/large"
+  },
+  {
+    "id": "js6a-32",
+    "name": "Tynamo",
+    "nameJa": "シビシラス",
+    "number": "32",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "40",
+    "artist": "Yuka Morii",
+    "attacks": [
+      {
+        "name": "Thunder Wave",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fighting",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      602
+    ],
+    "regulationMark": "E",
+    "printedNumber": "032/069",
+    "image": "assets/cards/js6a/32.webp",
+    "imageSmall": "assets/cards/js6a/32-sm.webp",
+    "tcgplayerId": 570495,
+    "market": 0.19,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-32/large"
+  },
+  {
+    "id": "js6a-33",
+    "name": "Eelektrik",
+    "nameJa": "シビビール",
+    "number": "33",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "90",
+    "artist": "Shigenori Negishi",
+    "evolvesFrom": "Tynamo",
+    "attacks": [
+      {
+        "name": "Lightning Ball",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Thunder",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "This Pokémon also does 20 damage to itself."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fighting",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      603
+    ],
+    "regulationMark": "E",
+    "printedNumber": "033/069",
+    "image": "assets/cards/js6a/33.webp",
+    "imageSmall": "assets/cards/js6a/33-sm.webp",
+    "tcgplayerId": 570496,
+    "market": 0.09,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-33/large"
+  },
+  {
+    "id": "js6a-34",
+    "name": "Eelektross",
+    "nameJa": "シビルドン",
+    "number": "34",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "160",
+    "artist": "OKACHEKE",
+    "evolvesFrom": "Eelektrik",
+    "attacks": [
+      {
+        "name": "Upper Shock",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "40",
+        "text": "If this Pokémon evolved from Eelektrik during this turn, your opponent's Active Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Wild Charge",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": "This Pokémon also does 30 damage to itself."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fighting",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      604
+    ],
+    "regulationMark": "E",
+    "printedNumber": "034/069",
+    "image": "assets/cards/js6a/34.webp",
+    "imageSmall": "assets/cards/js6a/34-sm.webp",
+    "tcgplayerId": 570497,
+    "market": 0.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-34/large"
+  },
+  {
+    "id": "js6a-35",
+    "name": "Espeon V",
+    "nameJa": "エーフィV",
+    "number": "35",
+    "rarity": "Rare Holo V",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "200",
+    "artist": "5ban Graphics",
+    "attacks": [
+      {
+        "name": "Zen Bullet",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "This attack does 60 damage to 1 of your opponent's Pokémon V. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Super Psy Bolt",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Darkness",
+        "value": "×2"
+      }
+    ],
+    "resistances": [
+      {
+        "type": "Fighting",
+        "value": "-30"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      196
+    ],
+    "regulationMark": "E",
+    "printedNumber": "035/069",
+    "image": "assets/cards/js6a/35.webp",
+    "imageSmall": "assets/cards/js6a/35-sm.webp",
+    "tcgplayerId": 570498,
+    "foilMap": "assets/foil/maps/swsh7/64.webp",
+    "foilTwin": "swsh7-64",
+    "market": 1.65,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-35/large"
+  },
+  {
+    "id": "js6a-36",
+    "name": "Mawile",
+    "nameJa": "クチート",
+    "number": "36",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "90",
+    "artist": "Kouki Saitou",
+    "attacks": [
+      {
+        "name": "Chomp Chomp Hold",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "30",
+        "text": "During your opponent's next turn, the Defending Pokémon's attacks cost Colorless more and it's Retreat Cost is Colorless more."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Metal",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      303
+    ],
+    "regulationMark": "E",
+    "printedNumber": "036/069",
+    "image": "assets/cards/js6a/36.webp",
+    "imageSmall": "assets/cards/js6a/36-sm.webp",
+    "tcgplayerId": 570499,
+    "market": 0.24,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-36/large"
+  },
+  {
+    "id": "js6a-37",
+    "name": "Flabébé",
+    "nameJa": "フラベベ",
+    "number": "37",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic",
+      "Rapid Strike"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "40",
+    "artist": "OKACHEKE",
+    "attacks": [
+      {
+        "name": "Hypnotic Gaze",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Asleep."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Metal",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      669
+    ],
+    "regulationMark": "E",
+    "printedNumber": "037/069",
+    "image": "assets/cards/js6a/37.webp",
+    "imageSmall": "assets/cards/js6a/37-sm.webp",
+    "tcgplayerId": 570500,
+    "market": 0.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-37/large"
+  },
+  {
+    "id": "js6a-38",
+    "name": "Floette",
+    "nameJa": "フラエッテ",
+    "number": "38",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Stage 1",
+      "Rapid Strike"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "chibi",
+    "evolvesFrom": "Flabébé",
+    "attacks": [
+      {
+        "name": "Fairy Wind",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Double Spin",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50×",
+        "text": "Flip 2 coins. This attack does 50 damage for each heads."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Metal",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      670
+    ],
+    "regulationMark": "E",
+    "printedNumber": "038/069",
+    "image": "assets/cards/js6a/38.webp",
+    "imageSmall": "assets/cards/js6a/38-sm.webp",
+    "tcgplayerId": 570501,
+    "market": 0.12,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-38/large"
+  },
+  {
+    "id": "js6a-39",
+    "name": "Florges",
+    "nameJa": "フラージェス",
+    "number": "39",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Stage 2",
+      "Rapid Strike"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "130",
+    "artist": "Kagemaru Himeno",
+    "evolvesFrom": "Floette",
+    "attacks": [
+      {
+        "name": "Wonder Shine",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": "Your opponent's Active Pokémon is now Confused."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Rapid Strike Connection",
+        "text": "As often as you like during your turn, you may move an Energy from 1 of your Pokémon to 1 of your Rapid Strike Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Metal",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      671
+    ],
+    "regulationMark": "E",
+    "printedNumber": "039/069",
+    "image": "assets/cards/js6a/39.webp",
+    "imageSmall": "assets/cards/js6a/39-sm.webp",
+    "tcgplayerId": 570502,
+    "foilMap": "assets/foil/maps/swsh7/73.webp",
+    "foilTwin": "swsh7-73",
+    "market": 0.24,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-39/large"
+  },
+  {
+    "id": "js6a-40",
+    "name": "Sylveon V",
+    "nameJa": "ニンフィアV",
+    "number": "40",
+    "rarity": "Rare Holo V",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic",
+      "V",
+      "Rapid Strike"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "200",
+    "artist": "5ban Graphics",
+    "attacks": [
+      {
+        "name": "Magical Shot",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Dream Gift",
+        "text": "Once during your turn, you may search your deck for an Item card, reveal it, and put it into your hand. Then, shuffle your deck. If you use this Ability, your turn ends.",
+        "type": "Ability"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Metal",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      700
+    ],
+    "regulationMark": "E",
+    "printedNumber": "040/069",
+    "image": "assets/cards/js6a/40.webp",
+    "imageSmall": "assets/cards/js6a/40-sm.webp",
+    "tcgplayerId": 570503,
+    "foilMap": "assets/foil/maps/swsh7/74.webp",
+    "foilTwin": "swsh7-74",
+    "market": 2.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-40/large"
+  },
+  {
+    "id": "js6a-41",
+    "name": "Sylveon VMAX",
+    "nameJa": "ニンフィアVMAX",
+    "number": "41",
+    "rarity": "Rare Holo VMAX",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Rapid Strike",
+      "VMAX"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "310",
+    "artist": "Ryota Murayama",
+    "evolvesFrom": "Sylveon V",
+    "attacks": [
+      {
+        "name": "Precious Touch",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Attach an Energy from your hand to 1 of your Benched Pokémon. Then, heal 120 damage from that Pokémon."
+      },
+      {
+        "name": "Max Harmony",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70+",
+        "text": "This attack does 30 more damage for each different type of Pokémon on your Bench."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Metal",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      700
+    ],
+    "regulationMark": "E",
+    "printedNumber": "041/069",
+    "image": "assets/cards/js6a/41.webp",
+    "imageSmall": "assets/cards/js6a/41-sm.webp",
+    "tcgplayerId": 570504,
+    "foilMap": "assets/foil/maps/swsh7/75.webp",
+    "etchMap": "assets/foil/maps/swsh7/75-etch-v4.webp",
+    "foilTwin": "swsh7-75",
+    "market": 4.92,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-41/large"
+  },
+  {
+    "id": "js6a-42",
+    "name": "Sandygast",
+    "nameJa": "スナバァ",
+    "number": "42",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "80",
+    "artist": "KIYOTAKA OSHIYAMA",
+    "attacks": [
+      {
+        "name": "Vibration",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Spooky Shot",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Darkness",
+        "value": "×2"
+      }
+    ],
+    "resistances": [
+      {
+        "type": "Fighting",
+        "value": "-30"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      769
+    ],
+    "regulationMark": "E",
+    "printedNumber": "042/069",
+    "image": "assets/cards/js6a/42.webp",
+    "imageSmall": "assets/cards/js6a/42-sm.webp",
+    "tcgplayerId": 570505,
+    "market": 0.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-42/large"
+  },
+  {
+    "id": "js6a-43",
+    "name": "Palossand",
+    "nameJa": "シロデスナ",
+    "number": "43",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "140",
+    "artist": "Shibuzoh.",
+    "evolvesFrom": "Sandygast",
+    "attacks": [
+      {
+        "name": "Sand Hollow",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": ""
+      },
+      {
+        "name": "Sandstorm Pressure",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "If your opponent's Active Pokémon is a Basic Pokémon, that Pokémon is Knocked Out."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Darkness",
+        "value": "×2"
+      }
+    ],
+    "resistances": [
+      {
+        "type": "Fighting",
+        "value": "-30"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless",
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      770
+    ],
+    "regulationMark": "E",
+    "printedNumber": "043/069",
+    "image": "assets/cards/js6a/43.webp",
+    "imageSmall": "assets/cards/js6a/43-sm.webp",
+    "tcgplayerId": 570506,
+    "market": 0.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-43/large"
+  },
+  {
+    "id": "js6a-44",
+    "name": "Marshadow",
+    "nameJa": "マーシャドー",
+    "number": "44",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic",
+      "Rapid Strike"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "80",
+    "artist": "Yuya Oka",
+    "attacks": [
+      {
+        "name": "Rapid Hunt",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Rapid Strike cards, reveal them, and put them into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Shadow Flicker",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "During your next turn, if the Defending Pokémon is Knocked Out, take 1 more Prize card."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Darkness",
+        "value": "×2"
+      }
+    ],
+    "resistances": [
+      {
+        "type": "Fighting",
+        "value": "-30"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      802
+    ],
+    "regulationMark": "E",
+    "printedNumber": "044/069",
+    "image": "assets/cards/js6a/44.webp",
+    "imageSmall": "assets/cards/js6a/44-sm.webp",
+    "tcgplayerId": 570507,
+    "foilMap": "assets/foil/maps/swsh7/80.webp",
+    "foilTwin": "swsh7-80",
+    "market": 0.22,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-44/large"
+  },
+  {
+    "id": "js6a-45",
+    "name": "Indeedee",
+    "nameJa": "イエッサン",
+    "number": "45",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "100",
+    "artist": "sui",
+    "attacks": [
+      {
+        "name": "Call for Family",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Basic Pokémon and put them onto your Bench. Then, shuffle your deck."
+      },
+      {
+        "name": "Heart Sign",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Darkness",
+        "value": "×2"
+      }
+    ],
+    "resistances": [
+      {
+        "type": "Fighting",
+        "value": "-30"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      876
+    ],
+    "regulationMark": "E",
+    "printedNumber": "045/069",
+    "image": "assets/cards/js6a/45.webp",
+    "imageSmall": "assets/cards/js6a/45-sm.webp",
+    "tcgplayerId": 570508,
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-45/large"
+  },
+  {
+    "id": "js6a-46",
+    "name": "Pancham",
+    "nameJa": "ヤンチャム",
+    "number": "46",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "60",
+    "artist": "Mina Nakai",
+    "attacks": [
+      {
+        "name": "Evil Growth",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Darkness Energy cards and attach them to this Pokémon. Then, shuffle your deck."
+      },
+      {
+        "name": "Smash Kick",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Psychic",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      674
+    ],
+    "regulationMark": "E",
+    "printedNumber": "046/069",
+    "image": "assets/cards/js6a/46.webp",
+    "imageSmall": "assets/cards/js6a/46-sm.webp",
+    "tcgplayerId": 570509,
+    "market": 0.12,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-46/large"
+  },
+  {
+    "id": "js6a-47",
+    "name": "Umbreon V",
+    "nameJa": "ブラッキーV",
+    "number": "47",
+    "rarity": "Rare Holo V",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic",
+      "V",
+      "Single Strike"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "200",
+    "artist": "5ban Graphics",
+    "attacks": [
+      {
+        "name": "Mean Look",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "30",
+        "text": "During your opponent's next turn, the Defending Pokémon can't retreat."
+      },
+      {
+        "name": "Lunar Blade",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80+",
+        "text": "If this Pokémon has any damage counters on it, this attack does 100 more damage."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      197
+    ],
+    "regulationMark": "E",
+    "printedNumber": "047/069",
+    "image": "assets/cards/js6a/47.webp",
+    "imageSmall": "assets/cards/js6a/47-sm.webp",
+    "tcgplayerId": 570510,
+    "foilMap": "assets/foil/maps/swsh7/94.webp",
+    "foilTwin": "swsh7-94",
+    "market": 2.79,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-47/large"
+  },
+  {
+    "id": "js6a-48",
+    "name": "Umbreon VMAX",
+    "nameJa": "ブラッキーVMAX",
+    "number": "48",
+    "rarity": "Rare Holo VMAX",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Single Strike",
+      "VMAX"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "310",
+    "artist": "AKIRA EGAWA",
+    "evolvesFrom": "Umbreon V",
+    "attacks": [
+      {
+        "name": "Max Darkness",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Dark Signal",
+        "text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may switch 1 of your opponent's Benched Pokémon with their Active Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      197
+    ],
+    "regulationMark": "E",
+    "printedNumber": "048/069",
+    "image": "assets/cards/js6a/48.webp",
+    "imageSmall": "assets/cards/js6a/48-sm.webp",
+    "tcgplayerId": 570511,
+    "foilMap": "assets/foil/maps/swsh7/95.webp",
+    "etchMap": "assets/foil/maps/swsh7/95-etch-v4.webp",
+    "foilTwin": "swsh7-95",
+    "market": 7.65,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-48/large"
+  },
+  {
+    "id": "js6a-49",
+    "name": "Zorua",
+    "nameJa": "ゾロア",
+    "number": "49",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "70",
+    "artist": "ryoma uratsuka",
+    "attacks": [
+      {
+        "name": "Rear Kick",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      570
+    ],
+    "regulationMark": "E",
+    "printedNumber": "049/069",
+    "image": "assets/cards/js6a/49.webp",
+    "imageSmall": "assets/cards/js6a/49-sm.webp",
+    "tcgplayerId": 570512,
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-49/large"
+  },
+  {
+    "id": "js6a-50",
+    "name": "Zoroark",
+    "nameJa": "ゾロアーク",
+    "number": "50",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "120",
+    "artist": "Souichirou Gunjima",
+    "evolvesFrom": "Zorua",
+    "attacks": [
+      {
+        "name": "Night Daze",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Illusory Transformation",
+        "text": "Once during your turn, you may discard this Pokémon and all attached cards, then put a Stage 1 Pokémon, except Zoroark, from your discard pile in its place.",
+        "type": "Ability"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      571
+    ],
+    "regulationMark": "E",
+    "printedNumber": "050/069",
+    "image": "assets/cards/js6a/50.webp",
+    "imageSmall": "assets/cards/js6a/50-sm.webp",
+    "tcgplayerId": 570513,
+    "foilMap": "assets/foil/maps/swsh7/103.webp",
+    "foilTwin": "swsh7-103",
+    "market": 0.25,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-50/large"
+  },
+  {
+    "id": "js6a-51",
+    "name": "Pangoro",
+    "nameJa": "ゴロンダ",
+    "number": "51",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "140",
+    "artist": "HYOGONOSUKE",
+    "evolvesFrom": "Pancham",
+    "attacks": [
+      {
+        "name": "Knock Hammer",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "Discard the top card of your opponent's deck."
+      },
+      {
+        "name": "Shakedown",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "Discard a random card from your opponent's hand."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless",
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      675
+    ],
+    "regulationMark": "E",
+    "printedNumber": "051/069",
+    "image": "assets/cards/js6a/51.webp",
+    "imageSmall": "assets/cards/js6a/51-sm.webp",
+    "tcgplayerId": 570514,
+    "market": 0.39,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-51/large"
+  },
+  {
+    "id": "js6a-52",
+    "name": "Impidimp",
+    "nameJa": "ベロバー",
+    "number": "52",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic",
+      "Single Strike"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "70",
+    "artist": "sowsow",
+    "attacks": [
+      {
+        "name": "Play Rough",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 30 more damage."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      859
+    ],
+    "regulationMark": "E",
+    "printedNumber": "052/069",
+    "image": "assets/cards/js6a/52.webp",
+    "imageSmall": "assets/cards/js6a/52-sm.webp",
+    "tcgplayerId": 570515,
+    "market": 0.22,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-52/large"
+  },
+  {
+    "id": "js6a-53",
+    "name": "Morgrem",
+    "nameJa": "ギモー",
+    "number": "53",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Stage 1",
+      "Single Strike"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "90",
+    "artist": "tetsuya koizumi",
+    "evolvesFrom": "Impidimp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Crushing Blow",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "40",
+        "text": "Flip a coin. If heads, discard an Energy from your opponent's Active Pokémon."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      860
+    ],
+    "regulationMark": "E",
+    "printedNumber": "053/069",
+    "image": "assets/cards/js6a/53.webp",
+    "imageSmall": "assets/cards/js6a/53-sm.webp",
+    "tcgplayerId": 570516,
+    "market": 0.2,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-53/large"
+  },
+  {
+    "id": "js6a-54",
+    "name": "Grimmsnarl",
+    "nameJa": "オーロンゲ",
+    "number": "54",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Stage 2",
+      "Single Strike"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "170",
+    "artist": "kawayoo",
+    "evolvesFrom": "Morgrem",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "60",
+        "text": ""
+      },
+      {
+        "name": "Rearguard Attack",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "100+",
+        "text": "If you have 2 or less Benched Pokémon, this attack does 140 more damage."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      861
+    ],
+    "regulationMark": "E",
+    "printedNumber": "054/069",
+    "image": "assets/cards/js6a/54.webp",
+    "imageSmall": "assets/cards/js6a/54-sm.webp",
+    "tcgplayerId": 570517,
+    "market": 0.24,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-54/large"
+  },
+  {
+    "id": "js6a-55",
+    "name": "Meowth",
+    "nameJa": "ニャース",
+    "number": "55",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Kouki Saitou",
+    "attacks": [
+      {
+        "name": "Pay Day",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Draw a card."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fighting",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      52
+    ],
+    "regulationMark": "E",
+    "printedNumber": "055/069",
+    "image": "assets/cards/js6a/55.webp",
+    "imageSmall": "assets/cards/js6a/55-sm.webp",
+    "tcgplayerId": 570518,
+    "market": 0.2,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-55/large"
+  },
+  {
+    "id": "js6a-56",
+    "name": "Persian",
+    "nameJa": "ペルシアン",
+    "number": "56",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "110",
+    "artist": "Lee HyunJung",
+    "evolvesFrom": "Meowth",
+    "attacks": [
+      {
+        "name": "Pay Day",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fighting",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      53
+    ],
+    "regulationMark": "E",
+    "printedNumber": "056/069",
+    "image": "assets/cards/js6a/56.webp",
+    "imageSmall": "assets/cards/js6a/56-sm.webp",
+    "tcgplayerId": 570519,
+    "market": 0.18,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-56/large"
+  },
+  {
+    "id": "js6a-57",
+    "name": "Kangaskhan",
+    "nameJa": "ガルーラ",
+    "number": "57",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic",
+      "Rapid Strike"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "120",
+    "artist": "Souichirou Gunjima",
+    "attacks": [
+      {
+        "name": "Pound",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Parent and Child Coordinated Punch",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "Flip a coin. If heads, this attack does 100 more damage."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fighting",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      115
+    ],
+    "regulationMark": "E",
+    "printedNumber": "057/069",
+    "image": "assets/cards/js6a/57.webp",
+    "imageSmall": "assets/cards/js6a/57-sm.webp",
+    "tcgplayerId": 570520,
+    "market": 0.25,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-57/large"
+  },
+  {
+    "id": "js6a-58",
+    "name": "Eevee",
+    "nameJa": "イーブイ",
+    "number": "58",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Atsushi Furusawa",
+    "attacks": [
+      {
+        "name": "Vee Search",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 3 Pokémon V, reveal them, and put them into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Stampede",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fighting",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      133
+    ],
+    "regulationMark": "E",
+    "printedNumber": "058/069",
+    "image": "assets/cards/js6a/58.webp",
+    "imageSmall": "assets/cards/js6a/58-sm.webp",
+    "tcgplayerId": 570521,
+    "market": 0.62,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-58/large"
+  },
+  {
+    "id": "js6a-59",
+    "name": "Smeargle",
+    "nameJa": "ドーブル",
+    "number": "59",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "80",
+    "artist": "Kouki Saitou",
+    "attacks": [
+      {
+        "name": "Live Paint",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "Reveal any number of basic Energy cards in your hand. This attack does 30 more damage for each type of Energy card you revealed in this way."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fighting",
+        "value": "×2"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      235
+    ],
+    "regulationMark": "E",
+    "printedNumber": "059/069",
+    "image": "assets/cards/js6a/59.webp",
+    "imageSmall": "assets/cards/js6a/59-sm.webp",
+    "tcgplayerId": 570522,
+    "market": 0.19,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-59/large"
+  },
+  {
+    "id": "js6a-60",
+    "name": "Boost Shake",
+    "nameJa": "ぐんぐんシェイク",
+    "number": "60",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "sadaji",
+    "rules": [
+      "Search your deck for a card that evolves from 1 of your Pokémon and put it onto that Pokémon to evolve it. Then, shuffle your deck. You can use this card during your first turn or on a Pokémon that was put into play this turn. Your turn ends."
+    ],
+    "regulationMark": "E",
+    "printedNumber": "060/069",
+    "image": "assets/cards/js6a/60.webp",
+    "imageSmall": "assets/cards/js6a/60-sm.webp",
+    "tcgplayerId": 570523,
+    "market": 0.06,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-60/large"
+  },
+  {
+    "id": "js6a-61",
+    "name": "Dream Ball",
+    "nameJa": "ドリームボール",
+    "number": "61",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Ryo Ueda",
+    "rules": [
+      "You can play this card only if you took it as a face-down Prize card, before you put it into your hand.\r\n\r\nSearch your deck for a Pokémon and put it onto your Bench. Then, shuffle your deck."
+    ],
+    "regulationMark": "E",
+    "printedNumber": "061/069",
+    "image": "assets/cards/js6a/61.webp",
+    "imageSmall": "assets/cards/js6a/61-sm.webp",
+    "tcgplayerId": 570524,
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-61/large"
+  },
+  {
+    "id": "js6a-62",
+    "name": "Elemental Badge",
+    "nameJa": "エレメンタルバッジ",
+    "number": "62",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Item",
+      "Pokémon Tool"
+    ],
+    "artist": "Studio Bora Inc.",
+    "rules": [
+      "If the Pokémon this card is attached to has \"Flareon V\", \"Vaporeon V\", or \"Jolteon V\" in its name, its attacks cost Colorless less."
+    ],
+    "regulationMark": "E",
+    "printedNumber": "062/069",
+    "image": "assets/cards/js6a/62.webp",
+    "imageSmall": "assets/cards/js6a/62-sm.webp",
+    "tcgplayerId": 570525,
+    "market": 0.06,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-62/large"
+  },
+  {
+    "id": "js6a-63",
+    "name": "Snow Leaf Badge",
+    "nameJa": "スノーリーフバッジ",
+    "number": "63",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Item",
+      "Pokémon Tool"
+    ],
+    "artist": "Studio Bora Inc.",
+    "rules": [
+      "If the Pokémon this card is attached to has \"Leafeon V\" or \"Glaceon V\" in its name, it has no Weakness or Retreat Cost."
+    ],
+    "regulationMark": "E",
+    "printedNumber": "063/069",
+    "image": "assets/cards/js6a/63.webp",
+    "imageSmall": "assets/cards/js6a/63-sm.webp",
+    "tcgplayerId": 577287,
+    "market": 0.06,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-63/large"
+  },
+  {
+    "id": "js6a-64",
+    "name": "Moon & Sun Badge",
+    "nameJa": "月と太陽のバッジ",
+    "number": "64",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Item",
+      "Pokémon Tool"
+    ],
+    "artist": "Studio Bora Inc.",
+    "rules": [
+      "If the Pokémon this card is attached to has \"Espeon V\" or \"Umbreon V\" in its name, whenever your opponent plays a Supporter card from their hand, prevent all effects of that card done to the Pokémon this card is attached to."
+    ],
+    "regulationMark": "E",
+    "printedNumber": "064/069",
+    "image": "assets/cards/js6a/64.webp",
+    "imageSmall": "assets/cards/js6a/64-sm.webp",
+    "tcgplayerId": 570526,
+    "market": 0.12,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-64/large"
+  },
+  {
+    "id": "js6a-65",
+    "name": "Ribbon Badge",
+    "nameJa": "リボンバッジ",
+    "number": "65",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Item",
+      "Pokémon Tool"
+    ],
+    "artist": "Studio Bora Inc.",
+    "rules": [
+      "If the Pokémon this card is attached to has \"Sylveon V\" in its name and is Knocked Out by damage from an opponent's attack, that player takes 1 fewer Prize card."
+    ],
+    "regulationMark": "E",
+    "printedNumber": "065/069",
+    "image": "assets/cards/js6a/65.webp",
+    "imageSmall": "assets/cards/js6a/65-sm.webp",
+    "tcgplayerId": 570527,
+    "market": 0.1,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-65/large"
+  },
+  {
+    "id": "js6a-66",
+    "name": "Aroma Lady",
+    "nameJa": "アロマなおねえさん",
+    "number": "66",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Megumi Mizutani",
+    "rules": [
+      "Draw 2 cards. Then, your Active Pokémon recovers from all Special Conditions."
+    ],
+    "regulationMark": "E",
+    "printedNumber": "066/069",
+    "image": "assets/cards/js6a/66.webp",
+    "imageSmall": "assets/cards/js6a/66-sm.webp",
+    "tcgplayerId": 570528,
+    "market": 0.12,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-66/large"
+  },
+  {
+    "id": "js6a-67",
+    "name": "Gordie",
+    "nameJa": "マクワ",
+    "number": "67",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "take",
+    "rules": [
+      "Look at the top 7 cards of your deck, reveal as many Energy cards you find there as you like, and put them into your hand. Shuffle the other cards back into your deck."
+    ],
+    "regulationMark": "E",
+    "printedNumber": "067/069",
+    "image": "assets/cards/js6a/67.webp",
+    "imageSmall": "assets/cards/js6a/67-sm.webp",
+    "tcgplayerId": 570529,
+    "market": 0.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-67/large"
+  },
+  {
+    "id": "js6a-68",
+    "name": "Shopping Center",
+    "nameJa": "ファッションモール",
+    "number": "68",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "Oswaldo KATO",
+    "rules": [
+      "Once during each player's turn, that player may put a Pokémon Tool attached to 1 of their Pokémon into their hand."
+    ],
+    "regulationMark": "E",
+    "printedNumber": "068/069",
+    "image": "assets/cards/js6a/68.webp",
+    "imageSmall": "assets/cards/js6a/68-sm.webp",
+    "tcgplayerId": 570530,
+    "market": 0.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-68/large"
+  },
+  {
+    "id": "js6a-69",
+    "name": "Treasure Energy",
+    "nameJa": "トレジャーエネルギー",
+    "number": "69",
+    "rarity": "Uncommon",
+    "supertype": "Energy",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Special"
+    ],
+    "rules": [
+      "As long as this card is attached to a Pokémon, it provides Colorless Energy.\r\n\r\nIf you took this card as a face-down Prize card during your turn, before you put it into your hand, you may attach it to 1 of your Pokémon."
+    ],
+    "regulationMark": "E",
+    "printedNumber": "069/069",
+    "image": "assets/cards/js6a/69.webp",
+    "imageSmall": "assets/cards/js6a/69-sm.webp",
+    "tcgplayerId": 570531,
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-69/large"
+  },
+  {
+    "id": "js6a-70",
+    "name": "Leafeon V",
+    "nameJa": "リーフィアV",
+    "number": "70",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "200",
+    "artist": "5ban Graphics",
+    "attacks": [
+      {
+        "name": null,
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90+",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": null,
+        "text": null,
+        "type": "特性"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      470
+    ],
+    "regulationMark": "E",
+    "printedNumber": "070/069",
+    "image": "assets/cards/js6a/70.webp",
+    "imageSmall": "assets/cards/js6a/70-sm.webp",
+    "tcgplayerId": 570532,
+    "foilMap": "assets/foil/maps/swsh7/166.webp",
+    "etchMap": "assets/foil/maps/swsh7/166-etch-v4.webp",
+    "foilTwin": "swsh7-166",
+    "market": 10.46,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-70/large"
+  },
+  {
+    "id": "js6a-71",
+    "name": "Leafeon V",
+    "nameJa": "リーフィアV",
+    "number": "71",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "200",
+    "artist": "You Iribi",
+    "attacks": [
+      {
+        "name": null,
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90+",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": null,
+        "text": null,
+        "type": "特性"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      470
+    ],
+    "regulationMark": "E",
+    "printedNumber": "071/069",
+    "image": "assets/cards/js6a/71.webp",
+    "imageSmall": "assets/cards/js6a/71-sm.webp",
+    "tcgplayerId": 570533,
+    "foilMap": "assets/foil/maps/swsh7/167.webp",
+    "etchMap": "assets/foil/maps/swsh7/167-etch-v4.webp",
+    "foilTwin": "swsh7-167",
+    "market": 97.09,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-71/large"
+  },
+  {
+    "id": "js6a-72",
+    "name": "Flareon V",
+    "nameJa": "ブースターV",
+    "number": "72",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic",
+      "V",
+      "Single Strike"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "attacks": [
+      {
+        "name": null,
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": null,
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": ""
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      136
+    ],
+    "regulationMark": "E",
+    "printedNumber": "072/069",
+    "image": "assets/cards/js6a/72.webp",
+    "imageSmall": "assets/cards/js6a/72-sm.webp",
+    "tcgplayerId": 570534,
+    "foilMap": "assets/foil/maps/swsh7/169.webp",
+    "etchMap": "assets/foil/maps/swsh7/169-etch-v4.webp",
+    "foilTwin": "swsh7-169",
+    "market": 11.31,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-72/large"
+  },
+  {
+    "id": "js6a-73",
+    "name": "Flareon V",
+    "nameJa": "ブースターV",
+    "number": "73",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic",
+      "V",
+      "Single Strike"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "210",
+    "artist": "Souichirou Gunjima",
+    "attacks": [
+      {
+        "name": null,
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": null,
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": ""
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      136
+    ],
+    "regulationMark": "E",
+    "printedNumber": "073/069",
+    "image": "assets/cards/js6a/73.webp",
+    "imageSmall": "assets/cards/js6a/73-sm.webp",
+    "tcgplayerId": 570535,
+    "foilMap": "assets/foil/maps/swsh7/169.webp",
+    "etchMap": "assets/foil/maps/swsh7/169-etch-v4.webp",
+    "foilTwin": "swsh7-169",
+    "market": 122.97,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-73/large"
+  },
+  {
+    "id": "js6a-74",
+    "name": "Vaporeon V",
+    "nameJa": "シャワーズV",
+    "number": "74",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic",
+      "V",
+      "Rapid Strike"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "attacks": [
+      {
+        "name": null,
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": ""
+      },
+      {
+        "name": null,
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": ""
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      134
+    ],
+    "regulationMark": "E",
+    "printedNumber": "074/069",
+    "image": "assets/cards/js6a/74.webp",
+    "imageSmall": "assets/cards/js6a/74-sm.webp",
+    "tcgplayerId": 570536,
+    "foilMap": "assets/foil/maps/swsh7/172.webp",
+    "etchMap": "assets/foil/maps/swsh7/172-etch-v4.webp",
+    "foilTwin": "swsh7-172",
+    "market": 15.39,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-74/large"
+  },
+  {
+    "id": "js6a-75",
+    "name": "Vaporeon V",
+    "nameJa": "シャワーズV",
+    "number": "75",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic",
+      "V",
+      "Rapid Strike"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "210",
+    "artist": "Tika Matsuno",
+    "attacks": [
+      {
+        "name": null,
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": ""
+      },
+      {
+        "name": null,
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": ""
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      134
+    ],
+    "regulationMark": "E",
+    "printedNumber": "075/069",
+    "image": "assets/cards/js6a/75.webp",
+    "imageSmall": "assets/cards/js6a/75-sm.webp",
+    "tcgplayerId": 570537,
+    "foilMap": "assets/foil/maps/swsh7/172.webp",
+    "etchMap": "assets/foil/maps/swsh7/172-etch-v4.webp",
+    "foilTwin": "swsh7-172",
+    "market": 92.21,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-75/large"
+  },
+  {
+    "id": "js6a-76",
+    "name": "Glaceon V",
+    "nameJa": "グレイシアV",
+    "number": "76",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "attacks": [
+      {
+        "name": null,
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": ""
+      },
+      {
+        "name": null,
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": ""
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      471
+    ],
+    "regulationMark": "E",
+    "printedNumber": "076/069",
+    "image": "assets/cards/js6a/76.webp",
+    "imageSmall": "assets/cards/js6a/76-sm.webp",
+    "tcgplayerId": 570538,
+    "foilMap": "assets/foil/maps/swsh7/174.webp",
+    "etchMap": "assets/foil/maps/swsh7/174-etch-v4.webp",
+    "foilTwin": "swsh7-174",
+    "market": 18.35,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-76/large"
+  },
+  {
+    "id": "js6a-77",
+    "name": "Glaceon V",
+    "nameJa": "グレイシアV",
+    "number": "77",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "210",
+    "artist": "Narumi Sato",
+    "attacks": [
+      {
+        "name": null,
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": ""
+      },
+      {
+        "name": null,
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": ""
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      471
+    ],
+    "regulationMark": "E",
+    "printedNumber": "077/069",
+    "image": "assets/cards/js6a/77.webp",
+    "imageSmall": "assets/cards/js6a/77-sm.webp",
+    "tcgplayerId": 570539,
+    "foilMap": "assets/foil/maps/swsh7/175.webp",
+    "etchMap": "assets/foil/maps/swsh7/175-etch-v4.webp",
+    "foilTwin": "swsh7-175",
+    "market": 112.44,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-77/large"
+  },
+  {
+    "id": "js6a-78",
+    "name": "Jolteon V",
+    "nameJa": "サンダースV",
+    "number": "78",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "190",
+    "artist": "5ban Graphics",
+    "attacks": [
+      {
+        "name": null,
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": ""
+      },
+      {
+        "name": null,
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60×",
+        "text": ""
+      }
+    ],
+    "nationalPokedexNumbers": [
+      135
+    ],
+    "regulationMark": "E",
+    "printedNumber": "078/069",
+    "image": "assets/cards/js6a/78.webp",
+    "imageSmall": "assets/cards/js6a/78-sm.webp",
+    "tcgplayerId": 570540,
+    "foilMap": "assets/foil/maps/swsh7/177.webp",
+    "etchMap": "assets/foil/maps/swsh7/177-etch-v4.webp",
+    "foilTwin": "swsh7-177",
+    "market": 12.38,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-78/large"
+  },
+  {
+    "id": "js6a-79",
+    "name": "Jolteon V",
+    "nameJa": "サンダースV",
+    "number": "79",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "190",
+    "artist": "nagimiso",
+    "attacks": [
+      {
+        "name": null,
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": ""
+      },
+      {
+        "name": null,
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60×",
+        "text": ""
+      }
+    ],
+    "nationalPokedexNumbers": [
+      135
+    ],
+    "regulationMark": "E",
+    "printedNumber": "079/069",
+    "image": "assets/cards/js6a/79.webp",
+    "imageSmall": "assets/cards/js6a/79-sm.webp",
+    "tcgplayerId": 570541,
+    "foilMap": "assets/foil/maps/swsh7/177.webp",
+    "etchMap": "assets/foil/maps/swsh7/177-etch-v4.webp",
+    "foilTwin": "swsh7-177",
+    "market": 73.9,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-79/large"
+  },
+  {
+    "id": "js6a-80",
+    "name": "Espeon V",
+    "nameJa": "エーフィV",
+    "number": "80",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "200",
+    "artist": "5ban Graphics",
+    "attacks": [
+      {
+        "name": null,
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": ""
+      },
+      {
+        "name": null,
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": ""
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      196
+    ],
+    "regulationMark": "E",
+    "printedNumber": "080/069",
+    "image": "assets/cards/js6a/80.webp",
+    "imageSmall": "assets/cards/js6a/80-sm.webp",
+    "tcgplayerId": 570542,
+    "foilMap": "assets/foil/maps/swsh7/179.webp",
+    "etchMap": "assets/foil/maps/swsh7/179-etch-v4.webp",
+    "foilTwin": "swsh7-179",
+    "market": 18.56,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-80/large"
+  },
+  {
+    "id": "js6a-81",
+    "name": "Espeon V",
+    "nameJa": "エーフィV",
+    "number": "81",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "200",
+    "artist": "sowsow",
+    "attacks": [
+      {
+        "name": null,
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": ""
+      },
+      {
+        "name": null,
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": ""
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      196
+    ],
+    "regulationMark": "E",
+    "printedNumber": "081/069",
+    "image": "assets/cards/js6a/81.webp",
+    "imageSmall": "assets/cards/js6a/81-sm.webp",
+    "tcgplayerId": 570543,
+    "foilMap": "assets/foil/maps/swsh7/180.webp",
+    "etchMap": "assets/foil/maps/swsh7/180-etch-v4.webp",
+    "foilTwin": "swsh7-180",
+    "market": 150.67,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-81/large"
+  },
+  {
+    "id": "js6a-82",
+    "name": "Sylveon V",
+    "nameJa": "ニンフィアV",
+    "number": "82",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic",
+      "V",
+      "Rapid Strike"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "200",
+    "artist": "aky CG Works",
+    "attacks": [
+      {
+        "name": null,
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": null,
+        "text": null,
+        "type": "特性"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      700
+    ],
+    "regulationMark": "E",
+    "printedNumber": "082/069",
+    "image": "assets/cards/js6a/82.webp",
+    "imageSmall": "assets/cards/js6a/82-sm.webp",
+    "tcgplayerId": 570544,
+    "foilMap": "assets/foil/maps/swsh7/183.webp",
+    "etchMap": "assets/foil/maps/swsh7/183-etch-v4.webp",
+    "foilTwin": "swsh7-183",
+    "market": 22.66,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-82/large"
+  },
+  {
+    "id": "js6a-83",
+    "name": "Sylveon V",
+    "nameJa": "ニンフィアV",
+    "number": "83",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic",
+      "V",
+      "Rapid Strike"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "200",
+    "artist": "Yuu Nishida",
+    "attacks": [
+      {
+        "name": null,
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": null,
+        "text": null,
+        "type": "特性"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      700
+    ],
+    "regulationMark": "E",
+    "printedNumber": "083/069",
+    "image": "assets/cards/js6a/83.webp",
+    "imageSmall": "assets/cards/js6a/83-sm.webp",
+    "tcgplayerId": 570545,
+    "foilMap": "assets/foil/maps/swsh7/184.webp",
+    "etchMap": "assets/foil/maps/swsh7/184-etch-v4.webp",
+    "foilTwin": "swsh7-184",
+    "market": 153.63,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-83/large"
+  },
+  {
+    "id": "js6a-84",
+    "name": "Umbreon V",
+    "nameJa": "ブラッキーV",
+    "number": "84",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic",
+      "V",
+      "Single Strike"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "200",
+    "artist": "5ban Graphics",
+    "attacks": [
+      {
+        "name": null,
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": null,
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80+",
+        "text": ""
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      197
+    ],
+    "regulationMark": "E",
+    "printedNumber": "084/069",
+    "image": "assets/cards/js6a/84.webp",
+    "imageSmall": "assets/cards/js6a/84-sm.webp",
+    "tcgplayerId": 570546,
+    "foilMap": "assets/foil/maps/swsh7/188.webp",
+    "etchMap": "assets/foil/maps/swsh7/188-etch-v4.webp",
+    "foilTwin": "swsh7-188",
+    "market": 35.97,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-84/large"
+  },
+  {
+    "id": "js6a-85",
+    "name": "Umbreon V",
+    "nameJa": "ブラッキーV",
+    "number": "85",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Basic",
+      "V",
+      "Single Strike"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "200",
+    "artist": "Teeziro",
+    "attacks": [
+      {
+        "name": null,
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": null,
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80+",
+        "text": ""
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      197
+    ],
+    "regulationMark": "E",
+    "printedNumber": "085/069",
+    "image": "assets/cards/js6a/85.webp",
+    "imageSmall": "assets/cards/js6a/85-sm.webp",
+    "tcgplayerId": 570547,
+    "foilMap": "assets/foil/maps/swsh7/189.webp",
+    "etchMap": "assets/foil/maps/swsh7/189-etch-v4.webp",
+    "foilTwin": "swsh7-189",
+    "market": 280.0,
+    "marketSource": "scrydex",
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-85/large"
+  },
+  {
+    "id": "js6a-86",
+    "name": "Aroma Lady",
+    "nameJa": "アロマなおねえさん",
+    "number": "86",
+    "rarity": "Rare Ultra",
+    "supertype": "Trainer",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "En Morikura",
+    "regulationMark": "E",
+    "printedNumber": "086/069",
+    "image": "assets/cards/js6a/86.webp",
+    "imageSmall": "assets/cards/js6a/86-sm.webp",
+    "tcgplayerId": 570548,
+    "foilMap": "assets/foil/maps/swsh7/199.webp",
+    "etchMap": "assets/foil/maps/swsh7/199-etch-v4.webp",
+    "foilTwin": "swsh7-199",
+    "market": 8.69,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-86/large"
+  },
+  {
+    "id": "js6a-87",
+    "name": "Gordie",
+    "nameJa": "マクワ",
+    "number": "87",
+    "rarity": "Rare Ultra",
+    "supertype": "Trainer",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Hitoshi Ariga",
+    "regulationMark": "E",
+    "printedNumber": "087/069",
+    "image": "assets/cards/js6a/87.webp",
+    "imageSmall": "assets/cards/js6a/87-sm.webp",
+    "tcgplayerId": 570549,
+    "foilMap": "assets/foil/maps/swsh7/201.webp",
+    "etchMap": "assets/foil/maps/swsh7/201-etch-v4.webp",
+    "foilTwin": "swsh7-201",
+    "market": 0.71,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-87/large"
+  },
+  {
+    "id": "js6a-88",
+    "name": "Leafeon VMAX",
+    "nameJa": "リーフィアVMAX",
+    "number": "88",
+    "rarity": "Rare Rainbow",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "VMAX"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "310",
+    "artist": "PLANETA Tsuji",
+    "evolvesFrom": "Leafeon V",
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      470
+    ],
+    "printedNumber": "088/069",
+    "image": "assets/cards/js6a/88.webp",
+    "imageSmall": "assets/cards/js6a/88-sm.webp",
+    "tcgplayerId": 570550,
+    "foilMap": "assets/foil/maps/swsh7/204.webp",
+    "etchMap": "assets/foil/maps/swsh7/204-etch-v4.webp",
+    "foilTwin": "swsh7-204",
+    "market": 22.16,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-88/large"
+  },
+  {
+    "id": "js6a-89",
+    "name": "Leafeon VMAX",
+    "nameJa": "リーフィアVMAX",
+    "number": "89",
+    "rarity": "Rare Rainbow",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "VMAX"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "310",
+    "artist": "HYOGONOSUKE",
+    "evolvesFrom": "Leafeon V",
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      470
+    ],
+    "printedNumber": "089/069",
+    "image": "assets/cards/js6a/89.webp",
+    "imageSmall": "assets/cards/js6a/89-sm.webp",
+    "tcgplayerId": 570551,
+    "foilMap": "assets/foil/maps/swsh7/205.webp",
+    "etchMap": "assets/foil/maps/swsh7/205-etch-v4.webp",
+    "foilTwin": "swsh7-205",
+    "market": 314.65,
+    "marketSource": "scrydex",
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-89/large"
+  },
+  {
+    "id": "js6a-90",
+    "name": "Glaceon VMAX",
+    "nameJa": "グレイシアVMAX",
+    "number": "90",
+    "rarity": "Rare Rainbow",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "VMAX"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "310",
+    "artist": "PLANETA Tsuji",
+    "evolvesFrom": "Glaceon V",
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      471
+    ],
+    "printedNumber": "090/069",
+    "image": "assets/cards/js6a/90.webp",
+    "imageSmall": "assets/cards/js6a/90-sm.webp",
+    "tcgplayerId": 570552,
+    "foilMap": "assets/foil/maps/swsh7/208.webp",
+    "etchMap": "assets/foil/maps/swsh7/208-etch-v4.webp",
+    "foilTwin": "swsh7-208",
+    "market": 15.95,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-90/large"
+  },
+  {
+    "id": "js6a-91",
+    "name": "Glaceon VMAX",
+    "nameJa": "グレイシアVMAX",
+    "number": "91",
+    "rarity": "Rare Rainbow",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "VMAX"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "310",
+    "artist": "kirisAki",
+    "evolvesFrom": "Glaceon V",
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      471
+    ],
+    "printedNumber": "091/069",
+    "image": "assets/cards/js6a/91.webp",
+    "imageSmall": "assets/cards/js6a/91-sm.webp",
+    "tcgplayerId": 570553,
+    "foilMap": "assets/foil/maps/swsh7/209.webp",
+    "etchMap": "assets/foil/maps/swsh7/209-etch-v4.webp",
+    "foilTwin": "swsh7-209",
+    "market": 370.0,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-91/large"
+  },
+  {
+    "id": "js6a-92",
+    "name": "Sylveon VMAX",
+    "nameJa": "ニンフィアVMAX",
+    "number": "92",
+    "rarity": "Rare Rainbow",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Rapid Strike",
+      "VMAX"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "310",
+    "artist": "Ryota Murayama",
+    "evolvesFrom": "Sylveon V",
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      700
+    ],
+    "printedNumber": "092/069",
+    "image": "assets/cards/js6a/92.webp",
+    "imageSmall": "assets/cards/js6a/92-sm.webp",
+    "tcgplayerId": 570554,
+    "foilMap": "assets/foil/maps/swsh7/211.webp",
+    "etchMap": "assets/foil/maps/swsh7/211-etch-v4.webp",
+    "foilTwin": "swsh7-211",
+    "market": 33.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-92/large"
+  },
+  {
+    "id": "js6a-93",
+    "name": "Sylveon VMAX",
+    "nameJa": "ニンフィアVMAX",
+    "number": "93",
+    "rarity": "Rare Rainbow",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Rapid Strike",
+      "VMAX"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "310",
+    "artist": "Taira Akitsu",
+    "evolvesFrom": "Sylveon V",
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      700
+    ],
+    "printedNumber": "093/069",
+    "image": "assets/cards/js6a/93.webp",
+    "imageSmall": "assets/cards/js6a/93-sm.webp",
+    "tcgplayerId": 570555,
+    "foilMap": "assets/foil/maps/swsh7/212.webp",
+    "etchMap": "assets/foil/maps/swsh7/212-etch-v4.webp",
+    "foilTwin": "swsh7-212",
+    "market": 600.0,
+    "marketSource": "scrydex",
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-93/large"
+  },
+  {
+    "id": "js6a-94",
+    "name": "Umbreon VMAX",
+    "nameJa": "ブラッキーVMAX",
+    "number": "94",
+    "rarity": "Rare Rainbow",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Single Strike",
+      "VMAX"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "310",
+    "artist": "AKIRA EGAWA",
+    "evolvesFrom": "Umbreon V",
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      197
+    ],
+    "printedNumber": "094/069",
+    "image": "assets/cards/js6a/94.webp",
+    "imageSmall": "assets/cards/js6a/94-sm.webp",
+    "tcgplayerId": 570556,
+    "foilMap": "assets/foil/maps/swsh7/214.webp",
+    "etchMap": "assets/foil/maps/swsh7/214-etch-v4.webp",
+    "foilTwin": "swsh7-214",
+    "market": 41.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-94/large"
+  },
+  {
+    "id": "js6a-95",
+    "name": "Umbreon VMAX",
+    "nameJa": "ブラッキーVMAX",
+    "number": "95",
+    "rarity": "Rare Rainbow",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Single Strike",
+      "VMAX"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "310",
+    "artist": "KEIICHIRO ITO",
+    "evolvesFrom": "Umbreon V",
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      197
+    ],
+    "regulationMark": "E",
+    "printedNumber": "095/069",
+    "image": "assets/cards/js6a/95.webp",
+    "imageSmall": "assets/cards/js6a/95-sm.webp",
+    "tcgplayerId": 570557,
+    "foilMap": "assets/foil/maps/swsh7/215.webp",
+    "etchMap": "assets/foil/maps/swsh7/215-etch-v4.webp",
+    "foilTwin": "swsh7-215",
+    "market": 3630.0,
+    "marketSource": "scrydex-jpy",
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-95/large"
+  },
+  {
+    "id": "js6a-96",
+    "name": "Aroma Lady",
+    "nameJa": "アロマなおねえさん",
+    "number": "96",
+    "rarity": "Rare Rainbow",
+    "supertype": "Trainer",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "En Morikura",
+    "printedNumber": "096/069",
+    "image": "assets/cards/js6a/96.webp",
+    "imageSmall": "assets/cards/js6a/96-sm.webp",
+    "tcgplayerId": 570558,
+    "foilMap": "assets/foil/maps/swsh7/221.webp",
+    "etchMap": "assets/foil/maps/swsh7/221-etch-v4.webp",
+    "foilTwin": "swsh7-221",
+    "market": 4.96,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-96/large"
+  },
+  {
+    "id": "js6a-97",
+    "name": "Gordie",
+    "nameJa": "マクワ",
+    "number": "97",
+    "rarity": "Rare Rainbow",
+    "supertype": "Trainer",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Hitoshi Ariga",
+    "printedNumber": "097/069",
+    "image": "assets/cards/js6a/97.webp",
+    "imageSmall": "assets/cards/js6a/97-sm.webp",
+    "tcgplayerId": 570559,
+    "foilMap": "assets/foil/maps/swsh7/223.webp",
+    "etchMap": "assets/foil/maps/swsh7/223-etch-v4.webp",
+    "foilTwin": "swsh7-223",
+    "market": 1.81,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-97/large"
+  },
+  {
+    "id": "js6a-98",
+    "name": "Inteleon",
+    "nameJa": "インテレオン",
+    "number": "98",
+    "rarity": "Rare Secret",
+    "supertype": "Pokémon",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Stage 2",
+      "Rapid Strike"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "150",
+    "artist": "Saki Hayashiro",
+    "evolvesFrom": "Drizzile",
+    "retreatCost": [
+      "Colorless"
+    ],
+    "nationalPokedexNumbers": [
+      818
+    ],
+    "printedNumber": "098/069",
+    "image": "assets/cards/js6a/98.webp",
+    "imageSmall": "assets/cards/js6a/98-sm.webp",
+    "tcgplayerId": 570560,
+    "foilMap": "assets/foil/maps/swsh7/227.webp",
+    "etchMap": "assets/foil/maps/swsh7/227-etch-v4.webp",
+    "foilTwin": "swsh7-227",
+    "market": 6.87,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-98/large"
+  },
+  {
+    "id": "js6a-99",
+    "name": "Boost Shake",
+    "nameJa": "ぐんぐんシェイク",
+    "number": "99",
+    "rarity": "Rare Secret",
+    "supertype": "Trainer",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "sadaji",
+    "printedNumber": "099/069",
+    "image": "assets/cards/js6a/99.webp",
+    "imageSmall": "assets/cards/js6a/99-sm.webp",
+    "tcgplayerId": 570561,
+    "foilMap": "assets/foil/maps/swsh7/229.webp",
+    "etchMap": "assets/foil/maps/swsh7/229-etch-v4.webp",
+    "foilTwin": "swsh7-229",
+    "market": 1.61,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-99/large"
+  },
+  {
+    "id": "js6a-100",
+    "name": "Turffield Stadium",
+    "nameJa": "ターフスタジアム",
+    "number": "100",
+    "rarity": "Rare Secret",
+    "supertype": "Trainer",
+    "lang": "ja",
+    "era": "swsh",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "aky CG Works",
+    "printedNumber": "100/069",
+    "image": "assets/cards/js6a/100.webp",
+    "imageSmall": "assets/cards/js6a/100-sm.webp",
+    "tcgplayerId": 570562,
+    "foilMap": "assets/foil/maps/swsh7/234.webp",
+    "etchMap": "assets/foil/maps/swsh7/234-etch-v4.webp",
+    "foilTwin": "swsh7-234",
+    "market": 3.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-100/large"
+  },
+  {
+    "id": "js6a-101",
+    "name": "Darkness Energy",
+    "nameJa": "基本悪エネルギー",
+    "number": "101",
+    "rarity": "Rare Secret",
+    "supertype": "Energy",
+    "lang": "ja",
+    "era": "swsh",
+    "printedNumber": "101/069",
+    "image": "assets/cards/js6a/101.webp",
+    "imageSmall": "assets/cards/js6a/101-sm.webp",
+    "tcgplayerId": 577288,
+    "foilMap": "assets/foil/maps/swsh7/236.webp",
+    "etchMap": "assets/foil/maps/swsh7/236-etch-v4.webp",
+    "foilTwin": "swsh7-236",
+    "market": 16.18,
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh6a_ja-101/large"
+  }
+]

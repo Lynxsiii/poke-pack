@@ -277,7 +277,9 @@ def twin_maps(cfg: dict) -> dict:
             # Families that keep per-card masks by id (js/fam/sv-sir.js) read the English card's.
             fields["foilTwin"] = c["id"]
             # Keyed by gallery too: Shining Fates' shiny Rillaboom V (gallery "sv") is not the plain Rillaboom V's art.
-            out.setdefault((c.get("name"), c.get("rarity"), c.get("gallery") or ""), fields)
+            # A list per key, in number order: Eevee Heroes' two Umbreon V SRs (full art, then alternate art) take Evolving
+            # Skies' two in the same order.
+            out.setdefault((c.get("name"), c.get("rarity"), c.get("gallery") or ""), []).append(fields)
     return out
 
 
@@ -290,6 +292,7 @@ def build(set_id: str, refresh: bool) -> int:
     path = DATA / f"{set_id}.json"
     prior = {c["id"]: c for c in json.loads(path.read_text(encoding="utf-8"))} if path.exists() else {}
     maps = twin_maps(cfg)
+    seen_twin: dict = {}
     cards: list[dict] = []
     balls: list[dict] = []
     missing = []
@@ -323,7 +326,10 @@ def build(set_id: str, refresh: bool) -> int:
             missing.append(sid)
             continue
         card = record(cfg, raw)
-        twin = maps.get((card["name"], card["rarity"], card.get("gallery") or ""))
+        key = (card["name"], card["rarity"], card.get("gallery") or "")
+        options = maps.get(key) or []
+        twin = options[min(seen_twin.get(key, 0), len(options) - 1)] if options else None
+        seen_twin[key] = seen_twin.get(key, 0) + 1
         if twin and cfg.get("twinMaps", True):
             card.update(twin)
         cards.append((card, raw))

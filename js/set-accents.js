@@ -10,6 +10,8 @@ export const SET_ACCENTS = {
   "jsv8a": { a: "#d8a541", b: "#59a8cf" },
   "js8b": { a: "#d97340", b: "#52a3d5" },
   "js4a": { a: "#dcb73c", b: "#8873e8" },
+  "js6a": { a: "#d5ac4b", b: "#8173e8" },
+  "jsv7a": { a: "#d3a345", b: "#59a3cf" },
   "me5": { a: "#8b6cf0", b: "#3fc7d9" },
   "me4": { a: "#36b4ee", b: "#7cf0d2" },
   "me3": { a: "#7fd94a", b: "#f2d44b" },
