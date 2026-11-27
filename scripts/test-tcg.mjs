@@ -6711,4 +6711,94 @@ test("Scarlet & Violet Tools: more damage, less damage, cheaper attacks, fewer P
   assert.equal(state.current, 1);
 });
 
+test("Scarlet & Violet Stadiums", () => {
+  for (const id of ["me2pt5-261", "me1-129", "me2pt5-203", "me2pt5-210", "me3-77", "me6-94", "me6-96", "sv8-177", "me2pt5-197", "me5-76", "sv5-148", "sv5-156", "sv6-146"]) assert.ok(defs(id).playable, id);
+  const stadium = (state, id, owner = 0) => {
+    const uid = state.players[owner].deck.pop();
+    state.cards[uid] = id;
+    state.stadium = { uid, owner };
+    return uid;
+  };
+  // Jamming Tower: Tools do nothing.
+  let state = scene({ front: "me2pt5-109" });
+  const front = state.players[0].active;
+  front.tool = state.players[0].deck.pop();
+  state.cards[front.tool] = "sv10-162";
+  assert.equal(maxHp(state, front, defs), 140);
+  stadium(state, "me2pt5-261");
+  assert.equal(maxHp(state, front, defs), 70);
+  // Gravity Mountain: Stage 2 Pokémon get -30 HP.
+  stadium(state, "sv8-177");
+  state.cards[front.uid] = "base1-4";
+  delete front.tool;
+  assert.equal(maxHp(state, front, defs), defs("base1-4").hp - 30);
+  state.cards[front.uid] = "base1-24";
+  assert.equal(maxHp(state, front, defs), defs("base1-24").hp);
+  // Nighttime Mine: a Tera Pokémon's attacks cost Colorless more.
+  stadium(state, "me2pt5-197");
+  state.cards[front.uid] = "sv3-42";
+  assert.equal(costFor(state, front, defs("sv3-42").attacks[0], defs).length, 4);
+  // Legendary Summit: a Colorless Pokémon Knocked Out by an attack gives 1 fewer Prize card.
+  state = scene({ front: "base1-46" });
+  stadium(state, "me6-96");
+  state.cards[state.players[1].active.uid] = "sv1-146"; // Zangoose, Colorless
+  state.players[1].bench = [slotFor(state, 1, "base1-63")];
+  state.players[1].active.damage = defs("sv1-146").hp - 10;
+  state.players[0].active.energy.push(handed(state, 0, F));
+  state.players[0].hand.pop();
+  const prizes = state.players[0].prizes.length;
+  act(state, { type: "attack", player: 0, index: 0 });
+  assert.equal(state.players[0].prizes.length, prizes);
+  // Perilous Jungle: Poison does 30 to a non-Darkness Pokémon, 10 to a Darkness one.
+  for (const [id, n] of [["base1-46", 30], ["sv1-126", 10]]) {
+    state = scene({ front: id });
+    stadium(state, "sv5-156");
+    addCondition(state, state.players[0].active, "poisoned", defs);
+    act(state, { type: "end", player: 0 });
+    assert.equal(state.players[0].active.damage, n);
+  }
+  // Full Metal Lab: a Metal Pokémon takes 30 less.
+  assert.deepEqual(defs("sv5-148").stadium.field, [{ who: { types: ["Metal"] }, mod: { less: 30 } }]);
+  // Community Center: heal 10 from each, only after a Supporter from the hand.
+  state = scene({ bench: ["base1-46"] });
+  stadium(state, "sv6-146", 1);
+  state.players[0].active.damage = 20;
+  state.players[0].bench[0].damage = 10;
+  assert.ok(!legalActions(state, 0, defs).some((a) => a.type === "stadium"));
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "sv1-189") });
+  act(state, { type: "stadium", player: 0 });
+  assert.equal(state.players[0].active.damage, 10);
+  assert.equal(state.players[0].bench[0].damage, 0);
+  // Lumiose City: a Basic Pokémon from the deck onto the Bench, and the turn ends.
+  state = scene();
+  stadium(state, "me3-77");
+  const bench = state.players[0].bench.length;
+  act(state, { type: "stadium", player: 0 });
+  act(state, { type: "choose", player: 0, uids: state.pending[0].uids.slice(0, 1) });
+  assert.equal(state.players[0].bench.length, bench + 1);
+  assert.equal(state.current, 1);
+  // Surfing Beach: only a Water Active Pokémon with a Water Benched one.
+  state = scene({ front: "base1-63", bench: ["base1-46", "base1-63"] });
+  stadium(state, "me1-129");
+  act(state, { type: "stadium", player: 0 });
+  assert.deepEqual(state.pending[0].spots, [1]);
+});
+
+test("Stadiums that take Abilities away", () => {
+  const state = scene({ front: "base1-46" });
+  // A Colorless Pokémon with an Ability: Pidgeot ex? Use any Colorless Pokémon with one.
+  const mon = [...byId.values()].find((c) => c.supertype === "Pokémon" && (c.types || []).includes("Colorless") && (c.subtypes || []).includes("Basic") && defs(c.id).ability && defs(c.id).playable);
+  const evo = [...byId.values()].find((c) => c.supertype === "Pokémon" && !(c.types || []).includes("Colorless") && (c.subtypes || []).includes("Stage 1") && defs(c.id).ability && defs(c.id).playable);
+  state.cards[state.players[0].active.uid] = mon.id;
+  assert.ok(abilityOn(state, state.players[0].active, defs));
+  const uid = state.players[0].deck.pop();
+  state.cards[uid] = "me2pt5-210";
+  state.stadium = { uid, owner: 1 };
+  assert.equal(abilityOn(state, state.players[0].active, defs), null);
+  state.cards[state.players[0].active.uid] = evo.id;
+  assert.ok(abilityOn(state, state.players[0].active, defs));
+  state.cards[uid] = "me6-94";
+  assert.equal(abilityOn(state, state.players[0].active, defs), null);
+});
+
 console.log(`${passed} checks passed${process.exitCode ? ", some failed" : ""}`);

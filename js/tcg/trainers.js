@@ -95,7 +95,7 @@ const isSpecial = (ctx, uid) => {
   return def.kind === "energy" && !def.basic;
 };
 /** For the Stadiums' steps: your hurt Pokémon of these types, your Pokémon of a type, your Pokémon that fit `who`. */
-const typedHurt = (ctx, types) => hurt(ctx).filter((spot) => defOf(ctx.state, slotAt(ctx.state, ctx.player, spot).uid, ctx.defs).types.some((t) => types.includes(t)));
+const typedHurt = (ctx, types) => hurt(ctx).filter((spot) => !types || defOf(ctx.state, slotAt(ctx.state, ctx.player, spot).uid, ctx.defs).types.some((t) => types.includes(t)));
 const typedIn = (ctx, type) => inPlay(ctx.state, ctx.player).filter(([slot]) => defOf(ctx.state, slot.uid, ctx.defs).types.includes(type)).length;
 const whoSpots = (ctx, who) => inPlay(ctx.state, ctx.player).filter(([slot]) => fieldFits(who, defOf(ctx.state, slot.uid, ctx.defs))).map(([, spot]) => spot);
 const namedEnergy = (ctx, who) => whoSpots(ctx, who).flatMap((spot) => slotAt(ctx.state, ctx.player, spot).energy.filter((uid) => defOf(ctx.state, uid, ctx.defs).basic));
@@ -1511,6 +1511,8 @@ export function holds(ctx, when) {
   if (when.moved && !ctx.moved) return false;
   if (when.myStadium && ctx.state.stadium?.owner !== ctx.player) return false;
   if (when.deck && !me.deck.length) return false;
+  // "If they played a Supporter card from their hand this turn" (side.played: the Trainers played from the hand this turn).
+  if (when.played && !(me.played || []).some((uid) => fits(defOf(ctx.state, uid, ctx.defs), when.played))) return false;
   if (when.stadiumWord && !(ctx.state.stadium && defOf(ctx.state, ctx.state.stadium.uid, ctx.defs).name.includes(when.stadiumWord))) return false;
   if (when.tera && !inPlay(ctx.state, ctx.player).some(([slot]) => defOf(ctx.state, slot.uid, ctx.defs).tera)) return false;
   // "If all of your Pokémon in play are Team Rocket's Pokémon".
@@ -1757,6 +1759,8 @@ const PATTERNS = [
   [/^Put 1 of your Pokémon and all attached cards into your hand\.$/, () => [{ op: "bounce", keep: "all" }]],
   // "If you drew any cards in this way, and if a Stadium that has "Legendary" in its name is in play, put this card into your hand instead."
   [/^Draw (\d+) cards\. If you drew any cards in this way,? and if (?:a Stadium that has "([^"]+)" in its name|([A-Z][\w ]+?)) is in play, (put|shuffle) this (?:card|[\w&'. ]+?) into your (hand|deck) instead of (?:the discard pile|discarding it)\.$/, (m) => [{ op: "draw", n: Number(m[1]) }, { op: "keepCard", to: m[5] === "deck" ? "deck" : "hand", when: { stadiumWord: m[2] || m[3] } }]],
+  // Surfing Beach, as its player's own: "switch your Active Water Pokémon with 1 of your Benched Water Pokémon".
+  [new RegExp(`^Switch your Active (${TYPE_WORD}) Pokémon with 1 of your Benched \\1 Pokémon\\.$`), (m) => [{ op: "switch", who: `pokemon:${m[1]}` }]],
   // Dan.
   [/^Draw (\d+) cards\. You and your opponent play Rock-Paper-Scissors until someone wins\. If you win, draw (\d+) more cards\.$/, (m) => [{ op: "draw", n: Number(m[1]) }, { op: "rps", win: [{ op: "draw", n: Number(m[2]) }] }]],
   // Fossil Excavator: the deck or the discard pile, the player's choice (only asked when the discard pile has one).
@@ -2308,6 +2312,27 @@ const asYours = (words) =>
  */
 const FOSSILS = ["Omanyte", "Kabuto", "Aerodactyl", "Aerodactyl ex", "Lileep", "Anorith"];
 const STADIUM_TEXTS = [
+  // Full Metal Lab.
+  [new RegExp(`^(${TYPE_WORD}) Pokémon \\(both yours and your opponent's\\) take (\\d+) less damage from attacks from the opponent's Pokémon \\(after applying Weakness and Resistance\\)\\.$`), (m) => ({ field: [{ who: { types: [m[1]] }, mod: { less: Number(m[2]) } }] })],
+  // Gravity Mountain.
+  [/^Each Stage (1|2) Pokémon in play \(both yours and your opponent's\) gets -(\d+) HP\.$/, (m) => ({ field: [{ who: { line: Number(m[1]) }, mod: { hp: -Number(m[2]) } }] })],
+  // Nighttime Mine.
+  [/^Attacks used by each Tera Pokémon in play \(both yours and your opponent's\) cost ((?:Colorless)+) more\.$/, (m) => ({ field: [{ who: { tera: true }, mod: { costMore: m[1].length / 9 } }] })],
+  // Jamming Tower.
+  [/^Pokémon Tools attached to each Pokémon \(both yours and your opponent's\) have no effect\.$/, () => ({ toolLock: true })],
+  // Team Rocket's Watchtower, Legendary Pyroduct.
+  [new RegExp(`^(${TYPE_WORD}|Evolution|Basic) Pokémon in play \\(both yours and your opponent's\\) have no Abilities\\.$`), (m) => ({ lock: m[1] === "Evolution" ? { stage: "evolution" } : m[1] === "Basic" ? { stage: "basic" } : { types: [m[1]] } })],
+  // Legendary Summit.
+  [new RegExp(`^Whenever an? (${TYPE_WORD}) Pokémon \\(yours or your opponent's\\) is Knocked Out by damage from an attack from the opponent's Pokémon, that player takes (\\d+) fewer Prize cards?\\.$`), (m) => ({ fewer: { who: { types: [m[1]] }, n: Number(m[2]) } })],
+  // Perilous Jungle.
+  [new RegExp(`^During Pokémon Checkup, put (\\d+) more damage counters on each Poisoned non-(${TYPE_WORD}) Pokémon \\(both yours and your opponent's\\)\\.$`), (m) => ({ poisonMore: { n: Number(m[1]) * 10, who: { notTypes: [m[2]] } } })],
+  // Lumiose City.
+  [/^Once during each player's turn, that player may search their deck for a Basic Pokémon and put it onto their Bench\. Then, that player shuffles their deck\. If a player searches their deck in this way, their turn ends\.$/, () => ({ use: [{ op: "search", what: "basic", n: 1, to: "bench" }, { op: "endTurn" }] })],
+  // Fossil Quarry.
+  [/^Once during each player's turn, that player may search their deck for up to (\d+) Item cards that have "(Antique)" in their name and put them onto their Bench\. Then, that player shuffles their deck\.$/, (m) => ({ use: [{ op: "search", what: `item~${m[2]}`, n: Number(m[1]), to: "bench" }] })],
+  // Community Center, Team Rocket's Factory.
+  [/^Once during each player's turn, if they played a Supporter card from their hand this turn, they may heal (\d+) damage from each of their Pokémon\.$/, (m) => ({ use: [{ op: "only", when: { played: "supporter" } }, { op: "healEach", n: Number(m[1]) }] })],
+  [/^Once during each player's turn, if they played a Supporter card that has "([^"]+)" in its name from their hand this turn, they may draw (\d+) cards\.$/, (m) => ({ use: [{ op: "only", when: { played: `supporter~${m[1]}` } }, { op: "draw", n: Number(m[2]) }] })],
   // Forest of Vitality.
   [new RegExp(`^Each player's (${TYPE_WORD}) Pokémon can evolve into \\1 Pokémon during the turn they play those Pokémon, except during their first turn\\.$`), (m) => ({ grow: { types: [m[1]] } })],
   [/^Whenever a player attacks with a Pokémon with (Lt\. Surge) in its name, he or she may flip a coin\. If heads, and if that Pokémon's attack does damage to the Defending Pokémon \(after applying Weakness and Resistance\), that attack does (\d+) more damage to the Defending Pokémon\. If tails, the attacking Pokémon does (\d+) damage to itself in addition to whatever its attack usually does\.$/, (m) => ({ surge: { who: { named: m[1] }, more: Number(m[2]), self: Number(m[3]) } })],
@@ -2376,6 +2401,7 @@ export function fieldFits(who, def) {
   if (who.notBoxes && who.notBoxes.includes(def.box)) return false;
   if (who.delta && !/δ/.test(def.name)) return false;
   if (who.noRule && def.rule) return false;
+  if (who.line && def.line !== who.line) return false;
   if (who.notMega && def.box === "ex" && /^Mega /.test(def.name)) return false;
   if (who.tera && !def.tera) return false;
   return true;

@@ -213,6 +213,9 @@ function lockedOut(state, slot, ability, defs) {
   const owner = ownerOf(state, slot);
   if (owner < 0) return false;
   const def = defOf(state, slot.uid, defs);
+  // A Stadium that takes Abilities away from some Pokémon ("Colorless Pokémon in play have no Abilities").
+  const field = state.stadium && defOf(state, state.stadium.uid, defs)?.stadium?.lock;
+  if (field && fieldFits(field, def)) return true;
   for (const p of [0, 1]) {
     for (const [locker] of inPlay(state, p)) {
       if (!locker || locker === slot) continue;
@@ -338,6 +341,7 @@ export function toolOf(state, slot, defs) {
     // Old Gym Stadiums: its attacks ignore Resistance; Weakness doesn't count against attackers of these types.
     pierce: mods.some((m) => m.pierce),
     noWeaknessVs: mods.flatMap((m) => m.noWeaknessVs || []),
+    costMore: sum("costMore"),
   };
 }
 
@@ -351,6 +355,8 @@ function playedAs(state, slot, defs) {
 export function toolOn(state, slot, defs) {
   const tool = (slot?.tool && defOf(state, slot.tool, defs)?.tool) || null;
   if (!tool) return null;
+  // Jamming Tower: Tools have no effect.
+  if (state.stadium && defOf(state, state.stadium.uid, defs)?.stadium?.toolLock) return null;
   const def = playedAs(state, slot, defs);
   // Binding Mochi: only while the Pokémon is Poisoned.
   if (tool.poisoned && !conditionsOn(slot).includes("poisoned")) return null;
@@ -393,7 +399,8 @@ export function retreatCost(state, slot, defs) {
 
 /** What this attack costs this Pokémon now: its printed cost, and Colorless more for each costMore mark on it. */
 export function costFor(state, slot, attack, defs = null) {
-  const more = markSum(state, slot, "costMore");
+  // Nighttime Mine: Colorless more for the Pokémon a Stadium names.
+  const more = markSum(state, slot, "costMore") + (defs ? toolOf(state, slot, defs).costMore || 0 : 0);
   // "If your opponent has any Ultra Beasts in play, this attack can be used for Colorless" (effects.js altCost).
   let cost = (defs && altCost(state, ownerOf(state, slot), slot, attack, defs)) || attack.cost;
   // Counter Gain: Colorless less while its owner has more Prize cards left. Sparkling Crystal: any 1 less (Colorless first).
@@ -612,8 +619,11 @@ function checkup(state, defs, events) {
     const st = slot?.status;
     if (!st) continue;
     if (st.poisoned) {
-      slot.damage += st.poisonN || 10;
-      events.push({ t: "damage", p, spot: ACTIVE, n: st.poisonN || 10, why: "poisoned" });
+      // Perilous Jungle: 2 more damage counters on a Poisoned Pokémon it names.
+      const jungle = state.stadium && defOf(state, state.stadium.uid, defs)?.stadium?.poisonMore;
+      const n = (st.poisonN || 10) + (jungle && fieldFits(jungle.who, defOf(state, slot.uid, defs)) ? jungle.n : 0);
+      slot.damage += n;
+      events.push({ t: "damage", p, spot: ACTIVE, n, why: "poisoned" });
     }
     if (st.burned) {
       slot.damage += 20;
@@ -1103,7 +1113,10 @@ export function resolveKnockOuts(state, defs, events, { between = false } = {}) 
       // Expert Belt: one more Prize card.
       // "If your opponent's Pokémon is Knocked Out by damage from this attack, take 1 more Prize card."
       // Lillie's Pearl: one fewer, Knocked Out by damage from their attack.
-      if (!def.fossil?.noPrize) took[other(p)] += Math.max(0, (def.prizes ?? 1) + (tool?.prize || 0) + (byAttack(slot, p) ? (markOn(state, slot, "bounty")?.n || 0) - (tool?.fewer || 0) : 0));
+      // Legendary Summit: one fewer for the Pokémon it names.
+      const summit = state.stadium && defOf(state, state.stadium.uid, defs)?.stadium?.fewer;
+      const fewer = (tool?.fewer || 0) + (summit && fieldFits(summit.who, def) ? summit.n : 0);
+      if (!def.fossil?.noPrize) took[other(p)] += Math.max(0, (def.prizes ?? 1) + (tool?.prize || 0) + (byAttack(slot, p) ? (markOn(state, slot, "bounty")?.n || 0) - fewer : 0));
       if (!counts) continue;
       // Remembered by turn for "if any of your Pokémon were Knocked Out during your opponent's last turn"
       // (the checkup between turns is no one's turn).
