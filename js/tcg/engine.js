@@ -729,6 +729,30 @@ const stuckFor = (state, slot, defs) => stuck(slot) && !toolOn(state, slot, defs
 const balloonOn = (state, slot, defs) => Boolean(toolOn(state, slot, defs)?.balloon) && retreatCost(state, slot, defs) > 0;
 
 /** The attacks the Active Pokémon can pay for right now, by index. */
+/**
+ * Every attack this Pokémon may use: its own, then the ones lent to it, each carrying `lent` { card, index, from }
+ * (the card it is printed on and where): a Technical Machine held on it ("That Pokémon may use this card's attack
+ * instead of its own"), the Stadium in play (Holon Lake: Pokémon with δ on their card), and Meteor Falls' attacks of
+ * the Basic Pokémon and Stage 1 card under an Active Evolved Pokémon. Attack actions index into this list.
+ */
+export function attacksOf(state, slot, defs) {
+  const def = defOf(state, slot.uid, defs);
+  const out = [];
+  const lend = (card, from) => (defs(card)?.attacks || []).forEach((attack, index) => out.push({ ...attack, lent: { card, index, from } }));
+  for (const h of slot.held || []) if (h.tm) lend(state.cards[h.uid], "tm");
+  const owner = ownerOf(state, slot);
+  const lent = state.stadium && defOf(state, state.stadium.uid, defs)?.stadium?.lend;
+  if (lent?.who && fieldFits(lent.who, def)) lend(state.cards[state.stadium.uid], "stadium");
+  // Meteor Falls: "Each player's Active Evolved Pokémon (excluding Pokémon-ex) can use any attack from its Basic Pokémon or its Stage 1 Evolution card."
+  if (lent?.under && owner >= 0 && state.players[owner].active === slot && def.stage === "evolution" && def.box !== "ex") {
+    for (const uid of slot.under) {
+      const below = defOf(state, uid, defs);
+      if (below?.kind === "pokemon" && (below.stage === "basic" || below.line === 1)) lend(state.cards[uid], "under");
+    }
+  }
+  return out.length ? [...def.attacks, ...out] : def.attacks;
+}
+
 export function usableAttacks(state, player, defs) {
   const slot = state.players[player].active;
   if (!slot || state.phase !== "main" || state.current !== player || state.pending.length) return [];
@@ -736,7 +760,7 @@ export function usableAttacks(state, player, defs) {
   const def = defOf(state, slot.uid, defs);
   const side = state.players[player];
   const spent = (attack) => (attack.once === "gx" && (side.gxUsed || side.gxBarred)) || (attack.once === "vstar" && side.vstarUsed);
-  return def.attacks.map((attack, index) => (!stuckAttack(slot, attack) && canPay(state, slot, costFor(state, slot, attack, defs), defs) && !barredAttack(state, slot, attack.name) && !spent(attack) && !tooEarly(state, player, attack, defs) ? index : -1)).filter((i) => i >= 0);
+  return attacksOf(state, slot, defs).map((attack, index) => (!stuckAttack(slot, attack) && canPay(state, slot, costFor(state, slot, attack, defs), defs) && !barredAttack(state, slot, attack.name) && !spent(attack) && !tooEarly(state, player, attack, defs) ? index : -1)).filter((i) => i >= 0);
 }
 
 /**
@@ -1483,7 +1507,7 @@ const HANDLERS = {
     const side = state.players[player];
     const slot = side.active;
     const def = defOf(state, slot.uid, defs);
-    const attack = def.attacks[index];
+    const attack = attacksOf(state, slot, defs)[index];
     if (state.turn === 1 && !attack) fail("The player who goes first can't attack on the first turn.");
     if (!attack) fail("That Pokémon has no such attack.");
     const early = tooEarly(state, player, attack, defs);
@@ -1546,7 +1570,7 @@ const HANDLERS = {
     // an attack that went ahead (not one Confusion or a coin stopped).
     // (slot.used is the Ability's once-a-turn mark: the attacks are kept apart, this turn's and the last two.)
     side.attacks = [...(side.attacks || []).filter((was) => was.turn >= state.turn - 2), { turn: state.turn, name: attack.name, who: def.name, uid: slot.uid }];
-    runAttackEffects("before", attack, { state, defs, events, player, slot, target, attack, hit, shielded: false, atk: [def.id, index] }, true);
+    runAttackEffects("before", attack, { state, defs, events, player, slot, target, attack, hit, shielded: false, atk: attack.lent ? [attack.lent.card, attack.lent.index] : [def.id, index] }, true);
   },
 
   /**
@@ -1608,6 +1632,8 @@ const HANDLERS = {
         side.hand.push(uid);
         events.push({ t: "energy-to-hand", p: owner, spot: hit[1], uids: [uid] });
       }
+    } else if (op === "energyToDeck") {
+      energyToDeck(state, owner, picked, events);
     } else if (op === "dropInPlay") {
       // Tools or Energy off any Pokémon in play, the Stadium: each to its owner's discard pile.
       for (const uid of picked) {
@@ -2226,6 +2252,19 @@ function dropEnergy(state, p, spot, uids, events, lost = false) {
 }
 
 /** Cards put in the Lost Zone: out of the game for good (a player's `lost` pile, face up). */
+/** Energy cards off `p`'s Pokémon in play, shuffled into `p`'s deck. */
+export function energyToDeck(state, p, uids, events) {
+  const side = state.players[p];
+  for (const uid of uids) {
+    const hit = inPlay(state, p).find(([slot]) => slot.energy.includes(uid));
+    if (!hit) continue;
+    hit[0].energy.splice(hit[0].energy.indexOf(uid), 1);
+    side.deck.push(uid);
+    events.push({ t: "energy-to-deck", p, spot: hit[1], uids: [uid] });
+  }
+  shuffle(state, side.deck);
+}
+
 export function toLost(state, p, uids, events) {
   if (!uids.length) return;
   const side = state.players[p];

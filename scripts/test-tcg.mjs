@@ -8,7 +8,7 @@
  */
 import { readFileSync, readdirSync } from "node:fs";
 import assert from "node:assert/strict";
-import { ACTIVE, FORMATS, RuleError, abilityOn, defOf, addCondition, addMark, apply, benchSafe, canRetreat, energyOf, toolOf, conditionsOn, createGame, flip, damageAfterTyping, legalActions, maxHp, resolveKnockOuts, retreatCost, unpaid, usableAttacks, viewFor } from "../js/tcg/engine.js";
+import { ACTIVE, FORMATS, RuleError, abilityOn, attacksOf, defOf, addCondition, addMark, apply, benchSafe, canRetreat, energyOf, toolOf, conditionsOn, createGame, flip, damageAfterTyping, legalActions, maxHp, resolveKnockOuts, retreatCost, unpaid, usableAttacks, viewFor } from "../js/tcg/engine.js";
 import { createDefs, defineCard, FREE_ENERGY } from "../js/tcg/cards.js";
 import { boostOf, compileTrainer, fits, runTrainer, trainerAim, whatOf } from "../js/tcg/trainers.js";
 import { compileAttack } from "../js/tcg/effects.js";
@@ -5938,6 +5938,127 @@ test("Dan: Rock-Paper-Scissors until someone wins, each choosing unseen", () => 
     seen.add(100 + botAction(s, 1, defs).index);
   }
   assert.equal(seen.size, 6);
+});
+
+/* ---------- Attacks lent by a Technical Machine or a Stadium ---------- */
+
+/** Player 0's turn 3 or later with these cards in the deck; Charmander (base1-46) to start. */
+function lendGame(extra, seed = 3) {
+  const deck = deckOf(...extra, ["base1-46", 10], ["base1-24", 4], [F, 8], ["energy-fighting", 4], ["energy-lightning", 4]);
+  return fossilGame(deck.slice(0, 30), seed);
+}
+const evolveFront = (state, id) => {
+  const front = state.players[0].active;
+  front.under.unshift(front.uid);
+  front.uid = give(state, 0, id);
+  return front;
+};
+
+test("Technical Machine TS-1: held on a Pokémon for good, which may use Evoluter (Colorless)", () => {
+  const def = defs("dp6-136");
+  assert.ok(def.playable && def.tm);
+  assert.deepEqual(def.attacks[0].cost, ["Colorless"], "the card prints Colorless; our source lost it");
+  const state = lendGame([["dp6-136", 2], ["base1-4", 2]]);
+  const front = evolveFront(state, "base1-24");
+  front.since = 1;
+  const tm = give(state, 0, "dp6-136");
+  act(state, { type: "play", player: 0, uid: tm });
+  assert.equal(state.pending[0].type, "pick");
+  act(state, { type: "pick", player: 0, spot: ACTIVE });
+  assert.ok(front.held.some((h) => h.uid === tm && h.tm));
+  assert.ok(!state.players[0].discard.includes(tm));
+  // A second one can't go on the same Pokémon.
+  const list = attacksOf(state, front, defs);
+  assert.equal(list.length, defs("base1-24").attacks.length + 1);
+  const at = list.findIndex((a) => a.name === "Evoluter");
+  assert.equal(list[at].lent.card, "dp6-136");
+  front.energy.push(give(state, 0, F));
+  assert.ok(usableAttacks(state, 0, defs).includes(at));
+  act(state, { type: "attack", player: 0, index: at });
+  // Evoluter: Charizard from the deck onto Charmeleon.
+  assert.equal(state.pending[0]?.type, "choose");
+  const zard = state.pending[0].uids.find((u) => state.cards[u] === "base1-4");
+  act(state, { type: "choose", player: 0, uids: [zard] });
+  if (state.pending[0]?.type === "pick") act(state, { type: "pick", player: 0, spot: ACTIVE });
+  assert.equal(front.uid, zard);
+  // It stays after the turn.
+  act(state, { type: "end", player: 1 });
+  assert.ok(front.held.some((h) => h.uid === tm));
+});
+
+test("Miracle Sphere α: on an Evolved Fire, Lightning or Fighting Pokémon, its Energy pairs, gone at the end of the turn", () => {
+  const def = defs("ecard3-129");
+  assert.ok(def.playable);
+  let state = lendGame([["ecard3-129", 2]]);
+  // Not on a Basic Pokémon.
+  const ms = give(state, 0, "ecard3-129");
+  throws(() => act(state, { type: "play", player: 0, uid: ms }), /nothing/);
+  const front = evolveFront(state, "base1-24");
+  act(state, { type: "play", player: 0, uid: ms });
+  if (state.pending[0]?.type === "pick") act(state, { type: "pick", player: 0, spot: ACTIVE });
+  // Fire Force with Fire and Fighting: 30 and 10 more, and 3 damage counters off itself.
+  front.energy.push(give(state, 0, F), give(state, 0, "energy-fighting"), give(state, 0, F));
+  front.damage = 40;
+  const foe = state.players[1].active;
+  state.cards[foe.uid] = "base1-46"; // Charmander: no Weakness to Fire
+  const at = attacksOf(state, front, defs).findIndex((a) => a.name === "Fire Force");
+  act(state, { type: "attack", player: 0, index: at });
+  assert.equal(foe.damage, 40);
+  assert.equal(front.damage, 10);
+  assert.deepEqual(conditionsOn(foe), [], "no Lightning: not Confused");
+  // Discarded at the end of that turn.
+  assert.ok(!(front.held || []).some((h) => h.uid === ms));
+  assert.ok(state.players[0].discard.includes(ms));
+  // With Fire and Lightning too: Confused as well.
+  state = lendGame([["ecard3-129", 2]]);
+  const second = evolveFront(state, "base1-24");
+  act(state, { type: "play", player: 0, uid: give(state, 0, "ecard3-129") });
+  if (state.pending[0]?.type === "pick") act(state, { type: "pick", player: 0, spot: ACTIVE });
+  second.energy.push(give(state, 0, F), give(state, 0, "energy-lightning"), give(state, 0, F));
+  state.cards[state.players[1].active.uid] = "base1-46";
+  act(state, { type: "attack", player: 0, index: attacksOf(state, second, defs).findIndex((a) => a.name === "Fire Force") });
+  assert.equal(state.players[1].active.damage, 30);
+  assert.deepEqual(conditionsOn(state.players[1].active), ["confused"]);
+});
+
+test("Meteor Falls: an Active Evolved Pokémon may use its Basic Pokémon's attacks, not a Benched one", () => {
+  assert.ok(defs("ex8-89").playable);
+  const state = lendGame([["ex8-89", 2]]);
+  const front = evolveFront(state, "base1-24");
+  const own = defs("base1-24").attacks.length;
+  assert.equal(attacksOf(state, front, defs).length, own);
+  act(state, { type: "play", player: 0, uid: give(state, 0, "ex8-89") });
+  const list = attacksOf(state, front, defs);
+  assert.deepEqual(list.slice(own).map((a) => a.name), defs("base1-46").attacks.map((a) => a.name));
+  assert.equal(list[own].lent.from, "under");
+  // A Benched Evolved Pokémon, and a Basic one in front, get none.
+  const bench = { ...front, uid: front.uid };
+  state.players[0].bench.push(bench);
+  assert.equal(attacksOf(state, bench, defs).length, own);
+  state.players[0].bench.pop();
+  // Scratch, paid for as printed.
+  front.energy.push(give(state, 0, F));
+  const scratch = list.findIndex((a) => a.name === "Scratch");
+  assert.ok(usableAttacks(state, 0, defs).includes(scratch));
+  state.cards[state.players[1].active.uid] = "base1-46";
+  act(state, { type: "attack", player: 0, index: scratch });
+  assert.equal(state.players[1].active.damage, 10);
+});
+
+test("Holon Lake: Pokémon with δ on their card may use Delta Call", () => {
+  assert.ok(defs("ex13-87").playable);
+  const state = lendGame([["ex13-87", 2], ["ex13-3", 4]]);
+  const front = state.players[0].active;
+  act(state, { type: "play", player: 0, uid: give(state, 0, "ex13-87") });
+  assert.equal(attacksOf(state, front, defs).length, defs("base1-46").attacks.length, "Charmander has no δ");
+  state.cards[front.uid] = "ex13-3";
+  const list = attacksOf(state, front, defs);
+  const call = list.findIndex((a) => a.name === "Delta Call");
+  assert.ok(call >= 0);
+  front.energy.push(give(state, 0, F));
+  act(state, { type: "attack", player: 0, index: call });
+  assert.equal(state.pending[0].type, "choose");
+  assert.ok(state.pending[0].uids.every((u) => /δ/.test(defs(state.cards[u]).name)));
 });
 
 console.log(`${passed} checks passed${process.exitCode ? ", some failed" : ""}`);

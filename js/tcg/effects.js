@@ -19,7 +19,7 @@
  *        shielded (the target takes no effects this turn) }
  */
 
-import { ACTIVE, abilityOn, shieldOn, addCondition, addMark, askChoose, askPick, benchSafe, canPay, conditionsOn, damageAfterTyping, defOf, devolveSlot, energyAlike, energyFits, energyOf, flip, healRoom, heldOn, hpLeft, inPlay, markOn, maxHp, other, rand, retreatCost, shedEnergy, shuffle, slotAt, strike, struck, switchActive, toLost, toolGone, unpaid, warded, win } from "./engine.js";
+import { ACTIVE, abilityOn, shieldOn, addCondition, addMark, askChoose, askPick, benchSafe, canPay, conditionsOn, damageAfterTyping, defOf, devolveSlot, energyAlike, energyToDeck, energyFits, energyOf, flip, healRoom, heldOn, hpLeft, inPlay, markOn, maxHp, other, rand, retreatCost, shedEnergy, shuffle, slotAt, strike, struck, switchActive, toLost, toolGone, unpaid, warded, win } from "./engine.js";
 import { T_OPS, compileTrainer, fits, runTrainer, trainerReady, whatOf } from "./trainers.js";
 
 const WORDS = { a: 1, an: 1, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6 };
@@ -173,6 +173,8 @@ function energyKindFits(def, kind) {
 
 /** What "If ..., this attack does more damage" asks. */
 const TESTS = {
+  // "If the Pokémon using this attack has Fire and Lightning basic Energy cards attached to it": a basic Energy card of each.
+  basicPair: (ctx, { types }) => types.every((t) => ctx.slot.energy.some((uid) => defOf(ctx.state, uid, ctx.defs).basic && defOf(ctx.state, uid, ctx.defs).provides.includes(t))),
   foeDamaged: (ctx) => ctx.target?.damage > 0,
   foeCountersAtLeast: (ctx, { k }) => (ctx.target?.damage || 0) >= k * 10,
   selfDamaged: (ctx) => ctx.slot.damage > 0,
@@ -579,6 +581,15 @@ export const OPS = {
     if (!side.active || !side.bench.length || ctx.shielded || hpLeft(state, side.active, ctx.defs) <= 0) return;
     if (side.bench.length === 1) return switchActive(state, foe, 0, ctx.events, ctx.defs);
     askPick(state, { player: foe, side: foe, spots: side.bench.map((_, i) => i), left: 1, effect: { op: "switch" } });
+  },
+  /** Miracle Sphere β: an Energy card on the other Active Pokémon, the attacker's choice, shuffled into its owner's deck. */
+  foeEnergyToDeck(ctx) {
+    const { state, player, defs } = ctx;
+    const foe = other(player);
+    const slot = state.players[foe].active;
+    if (!slot || ctx.shielded || !slot.energy.length) return;
+    if (slot.energy.length === 1 || energyAlike(state, slot.energy, defs)) return void energyToDeck(state, foe, [slot.energy[slot.energy.length - 1]], ctx.events);
+    askChoose(state, { player, zone: "play", what: "energy", uids: slot.energy.slice(), min: 1, max: 1, owner: foe, effect: { op: "energyToDeck" } });
   },
   /** Discard Energy (of one type, when the card names it) from the other Active Pokémon: the attacker chooses which, when they differ. */
   discardFoeEnergy(ctx, { n, type = "", lost = false, special = false }) {
@@ -2006,8 +2017,33 @@ const ifMore = (phrase, n) => {
   return t && [{ op: "bonusIf", when: "before", n: Number(n), ...t }];
 };
 
+/**
+ * One half of a Miracle Sphere's attack (after "If the Pokémon using this attack has A and B basic Energy cards attached
+ * to it, "): { n: more damage, steps: after the damage }, or null.
+ */
+function sphereClause(words) {
+  const more = words.match(/^this attack does \d+ damage plus (\d+) more damage and (.+)$/);
+  const n = more ? Number(more[1]) : 0;
+  const rest = more ? more[2] : words;
+  let m;
+  if ((m = rest.match(new RegExp(`^(?:the Defending Pokémon|${FOE}) is now ${COND}(?: and ${COND})?$`, "i")))) return { n, steps: [cond(m[1]), ...(m[2] ? [cond(m[2])] : [])] };
+  if ((m = rest.match(/^remove (\d+) damage counters from the Pokémon that Miracle (?:Plate|Sphere) [αβγ] is attached to$/))) return { n, steps: [{ op: "healSelf", n: Number(m[1]) * 10 }] };
+  if ((m = rest.match(/^lets you put (\d+) damage counters? on each of your opponent's Benched Pokémon$/))) return { n, steps: [{ op: "counters", n: Number(m[1]) * 10, where: "bench" }] };
+  if (/^choose an Energy card attached to the Defending Pokémon, if any, and your opponent shuffles that card into his or her deck$/.test(rest)) return { n, steps: [{ op: "foeEnergyToDeck" }] };
+  return null;
+}
+
 /** [wording, steps]. A text compiles only when its sentences are all read. */
 const PATTERNS = [
+  // Miracle Sphere α, β, γ: two pairs of basic Energy cards, each with what it does (both, with both pairs).
+  [new RegExp(`^If the Pokémon using this attack has ${POKE_TYPE} and ${POKE_TYPE} basic Energy cards attached to it, (.+?)\\. If the Pokémon using this attack has ${POKE_TYPE} and ${POKE_TYPE} basic Energy cards attached to it, (.+)\\.$`), (m) => {
+    const halves = [[[m[1], m[2]], sphereClause(m[3])], [[m[4], m[5]], sphereClause(m[6])]];
+    if (halves.some(([, c]) => !c)) return null;
+    return halves.flatMap(([types, c]) => [
+      ...(c.n ? [{ op: "bonusIf", when: "before", n: c.n, test: "basicPair", types }] : []),
+      { op: "when", when: "after", test: "basicPair", types, steps: c.steps.map(({ when, ...step }) => step) },
+    ]);
+  }],
   [new RegExp(`^${FOE} is now ${COND}\\.$`, "i"), (m) => [cond(m[1])]],
   [new RegExp(`^${FOE} is now ${COND} and ${COND}\\.$`, "i"), (m) => [cond(m[1]), cond(m[2])]],
   [new RegExp(`^Flip a coin\\. If heads, ${FOE} is now ${COND}\\.$`, "i"), (m) => [{ op: "flip", when: "after", heads: [cond(m[1])] }]],

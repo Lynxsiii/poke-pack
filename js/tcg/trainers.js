@@ -744,6 +744,17 @@ export const T_OPS = {
       if (ctx.uid && spots.length) askPick(ctx.state, { player: ctx.player, side: ctx.player, spots, left: 1, effect: { op: "hold", uid: ctx.uid, mod: { ...mod, until: ctx.state.turn + until } } });
     },
   },
+  /**
+   * A Technical Machine goes on 1 of your Pokémon that fits `only` ({ evolved, types }) and holds none yet, which may
+   * then use its attack (engine.js attacksOf); `turn`: it is discarded at the end of this turn, else it stays.
+   */
+  tm: {
+    ready: (ctx, step) => tmSpots(ctx, step).length > 0,
+    run(ctx, step) {
+      const spots = tmSpots(ctx, step);
+      if (ctx.uid && spots.length) askPick(ctx.state, { player: ctx.player, side: ctx.player, spots, left: 1, effect: { op: "hold", uid: ctx.uid, mod: { until: step.turn ? ctx.state.turn : 1e9, tm: true } } });
+    },
+  },
   /** A Special Condition on your Active Pokémon goes: the player chooses which, when there are several (Big Malasada). */
   cureOne: {
     ready: (ctx) => conditionsOn(mine(ctx).active).length > 0,
@@ -1118,6 +1129,14 @@ export const T_OPS = {
 function askOption(ctx, player, prompt, offers) {
   ctx.state.pending.push({ type: "option", player, prompt, labels: offers.map((o) => o.label), options: offers.map((o) => o.steps) });
 }
+/** Where a Technical Machine may go: one of your Pokémon that fits it and holds no Technical Machine yet. */
+const tmSpots = (ctx, { only = {} }) =>
+  inPlay(ctx.state, ctx.player)
+    .filter(([slot]) => {
+      const def = defOf(ctx.state, slot.uid, ctx.defs);
+      return !(slot.held || []).some((h) => h.tm) && (!only.evolved || def.stage === "evolution") && (!only.types || only.types.some((t) => def.types.includes(t)));
+    })
+    .map(([, spot]) => spot);
 const withMine = (ctx) => inPlay(ctx.state, ctx.player).filter(([slot]) => slot.energy.length).map(([, spot]) => spot);
 const liftSpots = (ctx, who) => inPlay(ctx.state, ctx.player).filter(([slot]) => fits(defOf(ctx.state, slot.uid, ctx.defs), who)).map(([, spot]) => spot);
 const plainBasics = (ctx) => inPlay(ctx.state, ctx.player).filter(([slot]) => !slot.under.length && defOf(ctx.state, slot.uid, ctx.defs).stage === "basic").map(([, spot]) => spot);
@@ -1537,6 +1556,12 @@ function oneWhat(words) {
   if (m) [words, suffix] = [m[1], `@${m[2]}`];
   m = words.match(/^(.+?) that (?:doesn't|don't) have a Rule Box$/);
   if (m) [words, suffix] = [m[1], `!rule${suffix}`];
+  // "a Pokémon that has δ on its card": a δ (Delta Species) Pokémon, δ printed by its name.
+  m = words.match(/^(.+?) that (?:has|have) δ on (?:its|their) cards?$/);
+  if (m) {
+    const kind = plainWhat(m[1]);
+    return /^(pokemon|basic|evolution)$/.test(kind) && !suffix ? `${kind}~δ` : "";
+  }
   const what = plainWhat(words);
   if (suffix && !/^(pokemon|basic|evolution)(:|$)/.test(what)) return "";
   return what && what + suffix;

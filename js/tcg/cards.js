@@ -161,6 +161,33 @@ function compileFossil(text, card) {
   return { noKo: out.noKo, noPrize: out.noKo || Boolean(out.noPrize), noRetreat: true, immune: out.immune, drop: out.drop, colorless: out.colorless, trainer: out.trainer };
 }
 
+/** Printed costs our card source lost (checked against the card): Technical Machine TS-1's Evoluter costs Colorless. */
+const COST_FIX = { "dp6-136": ["Colorless"] };
+
+const TM_TYPE = "(?:Grass|Fire|Water|Lightning|Psychic|Fighting|Darkness|Metal)";
+/**
+ * A Technical Machine: "Attach this card to 1 of your [Evolved] [Fire, Lightning, or Fighting] Pokémon in play. That Pokémon
+ * may use this card's attack instead of its own. [At the end of your turn, discard this card.]" -> { only, turn }
+ * (`turn`: it goes at the end of the turn, else it stays), or null. Played like an Item, it is held on the Pokémon (engine.js heldOn).
+ */
+function compileTm(text, card) {
+  // Miracle Sphere α's text names the card Miracle Plate α.
+  const own = [card.name, card.name.replace(/^Miracle Sphere/, "Miracle Plate")].map((n) => n.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|");
+  const clean = String(text || "").replace(/\s+/g, " ").trim();
+  const m = clean.match(new RegExp(`^Attach this card to 1 of your (Evolved )?(?:(${TM_TYPE}(?:, ${TM_TYPE})*,? or ${TM_TYPE}|${TM_TYPE}) )?Pokémon(?: in play)?\\. That Pokémon may use this card's attack instead of its own\\.( At the end of your turn, discard (?:${own})\\.)?$`));
+  if (!m) return null;
+  const types = m[2] ? m[2].match(new RegExp(TM_TYPE, "g")) : null;
+  return { only: { ...(m[1] ? { evolved: true } : {}), ...(types ? { types } : {}) }, turn: Boolean(m[3]) };
+}
+
+/** A Stadium whose attacks Pokémon may use: Holon Lake ({ who: { delta } }) and Meteor Falls ({ under: true }). */
+function compileLend(text) {
+  const clean = String(text || "").replace(/\s+/g, " ").trim();
+  if (clean === "Each player's Pokémon that has δ on its card can use attacks on this card instead of its own.") return { who: { delta: true } };
+  if (clean === "Each player's Active Evolved Pokémon (excluding Pokémon-ex) can use any attack from its Basic Pokémon or its Stage 1 Evolution card. (You still have to pay for that attack's Energy cost.)") return { under: true };
+  return null;
+}
+
 /** The Item card, carrying the Pokémon it is in play (`fossil.mon`). */
 function fossilDef(base, card, text, fossil) {
   const printed = card.abilities || [];
@@ -232,6 +259,15 @@ function defineRules(card, row, text, lines, print) {
     const sub = subs.includes("Supporter") ? "supporter" : subs.includes("Stadium") ? "stadium" : subs.some((x) => /Tool|Technical Machine/.test(x)) ? "tool" : "item";
     const fossil = sub === "item" ? compileFossil(text, card) : null;
     if (fossil) return fossilDef(base, card, text, fossil);
+    // Technical Machines and the Stadiums whose attacks Pokémon may use: the card's own attacks, all of them read.
+    const lent = subs.includes("Technical Machine") ? compileTm(text, card) : sub === "stadium" ? compileLend(text) : null;
+    if (lent) {
+      const attacks = (card.attacks || []).map((raw) => attackOf({ ...raw, cost: COST_FIX[card.id] || raw.cost }, card.name));
+      const read = lent.under ? !attacks.length : attacks.length && attacks.every((a) => !a.plain);
+      const why = read ? "" : `This ${sub === "stadium" ? "Stadium" : "Technical Machine"}'s attack text isn't live yet.`;
+      if (sub === "stadium") return { ...base, kind: "trainer", sub, text, fx: [], stadium: { lend: lent }, attacks, playable: !why, why };
+      return { ...base, kind: "trainer", sub: "item", tm: true, text, fx: [{ op: "tm", ...lent }], attacks, playable: !why, why };
+    }
     const fx = sub === "item" || sub === "supporter" ? compileCard(text) : null;
     // A Tool is not played and discarded: it is attached, and its numbers ride on the Pokémon.
     const tool = sub === "tool" && subs.includes("Pokémon Tool") ? compileTool(text, card.name) : null;

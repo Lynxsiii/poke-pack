@@ -23,7 +23,7 @@
  *   coinFaces()         { heads, tails } art of the equipped coin, or null for the house coin
  */
 
-import { ACTIVE, FORMATS, RuleError, abilityBlock, abilityOn, apply, canRetreat, dropBlock, conditionsOn, createGame, damageAfterTyping, defOf, energyOf, hpLeft, legalActions, markOn, marksOn, maxHp, other, retreatCost, shieldOn, stadiumBlock, toolOf, trainerBlock, usableAttacks } from "./tcg/engine.js";
+import { ACTIVE, FORMATS, RuleError, abilityBlock, abilityOn, apply, attacksOf, canRetreat, dropBlock, conditionsOn, createGame, damageAfterTyping, defOf, energyOf, hpLeft, legalActions, markOn, marksOn, maxHp, other, retreatCost, shieldOn, stadiumBlock, toolOf, trainerBlock, usableAttacks } from "./tcg/engine.js";
 import { ENERGY_TYPES, FREE_ENERGY, createDefs, isFreeEnergy } from "./tcg/cards.js";
 import { botAction } from "./tcg/bot.js";
 import { MAX_DECKS, buildBotDeck, buildDeck, checkDeck, deckList, deckSize, notLegal, roomFor, rulesOf } from "./tcg/decks.js";
@@ -677,7 +677,7 @@ export function initTcg(deps) {
       <b class="tg-hud-name">${esc(def.name)}</b>
       <span class="tg-pips">${energy.length ? pips(energy) : `<small>No Energy</small>`}</span>
       <span class="tg-hud-hp"><em>HP</em>${hpBar(left, maxHp(state, slot, defs))}<span class="num">${left}/${maxHp(state, slot, defs)}</span></span>
-      ${conditionsOn(slot).length || marksOn(state, slot).length || edge || slot.tool || def.ability ? `<span class="tg-conds">${edge}${def.ability ? `<i class="tg-cond" data-cond="ability"${abilityOn(state, slot, defs) ? "" : " data-off"}>${esc(def.ability.name)}</i>` : ""}${slot.tool ? `<i class="tg-cond" data-cond="tool">${esc(defOf(state, slot.tool, defs).name)}</i>` : ""}${conditionsOn(slot).map((c) => `<i class="tg-cond" data-cond="${c}">${COND_NAME[c]}</i>`).join("")}${marksOn(state, slot).map((m) => `<i class="tg-cond" data-cond="mark" data-mark="${m.kind}">${esc(markLabel(m))}</i>`).join("")}</span>` : ""}
+      ${conditionsOn(slot).length || marksOn(state, slot).length || edge || slot.tool || (slot.held || []).length || def.ability ? `<span class="tg-conds">${edge}${def.ability ? `<i class="tg-cond" data-cond="ability"${abilityOn(state, slot, defs) ? "" : " data-off"}>${esc(def.ability.name)}</i>` : ""}${slot.tool ? `<i class="tg-cond" data-cond="tool">${esc(defOf(state, slot.tool, defs).name)}</i>` : ""}${(slot.held || []).map((h) => `<i class="tg-cond" data-cond="tool">${esc(defOf(state, h.uid, defs).name)}</i>`).join("")}${conditionsOn(slot).map((c) => `<i class="tg-cond" data-cond="${c}">${COND_NAME[c]}</i>`).join("")}${marksOn(state, slot).map((m) => `<i class="tg-cond" data-cond="mark" data-mark="${m.kind}">${esc(markLabel(m))}</i>`).join("")}</span>` : ""}
     </div>`;
   }
 
@@ -944,8 +944,9 @@ export function initTcg(deps) {
         <header><h3>${esc(def.name)}</h3><span class="tg-pips">${units.length ? pips(units) : "<small>No Energy attached</small>"}</span></header>
         ${abilityRowHtml(ACTIVE)}
         ${dropRowHtml(ACTIVE)}
-        ${def.attacks.map((attack, i) => `<button type="button" class="tg-atk" data-attack="${i}"${usable.has(i) && myTurn() ? "" : " disabled"}>
+        ${attacksOf(state, slot, defs).map((attack, i) => `<button type="button" class="tg-atk" data-attack="${i}"${usable.has(i) && myTurn() ? "" : " disabled"}>
           <span class="tg-atk-top"><span class="tg-pips">${attack.cost.length ? pips(attack.cost) : "<small>Free</small>"}</span><b>${esc(attack.name)}</b><em>${preview(attack).html}</em></span>
+          ${attack.lent ? `<span class="tg-atk-note">From ${esc(defs(attack.lent.card).name)}</span>` : ""}
           ${preview(attack).note}
           ${attack.text ? `<span class="tg-atk-text${attack.plain ? " off" : ""}">${attack.plain ? "Text not live yet: " : ""}${esc(attack.text)}</span>` : ""}
           ${usable.has(i) || !myTurn() ? "" : `<span class="tg-atk-why">${whyNot(attack)}</span>`}
@@ -1248,6 +1249,7 @@ export function initTcg(deps) {
         return `${who(event.p)} put ${name(event.uid)} back into ${event.p === ME ? "your" : "its"} hand.`;
       case "boost": return `${event.p === ME ? "Your" : "Their"} attacks can do ${event.n} more damage this turn.`;
       case "energy-to-hand": return `${plural(event.uids.length, "Energy card")} went back to ${event.p === ME ? "your" : "their"} hand.`;
+      case "energy-to-deck": return `${plural(event.uids.length, "Energy card")} shuffled into ${event.p === ME ? "your" : "their"} deck.`;
       case "stadium-gone": return `${name(event.uid)} was discarded.`;
       case "discard-tool": return `${name(event.uid)} was discarded from ${event.p === ME ? "your" : "their"} Pokémon.`;
       case "hand-to-deck": return `${who(event.p)} put ${plural(event.uids.length, "card")} from ${event.p === ME ? "your" : "its"} hand ${event.at === "top" ? "on top of" : event.at === "bottom" ? "on the bottom of" : "into"} the deck.`;
@@ -1573,8 +1575,9 @@ export function initTcg(deps) {
         // The attack is called out by name before it lands, so a bot's turn can be followed.
         const user = before.players[p].active;
         const used = user && defOf(before, user.uid, defs);
-        if (used?.attacks[action.index]) {
-          banner(used.attacks[action.index].name, p === ME ? "me" : "foe", used.name);
+        const called = user && attacksOf(before, user, defs)[action.index];
+        if (called) {
+          banner(called.name, p === ME ? "me" : "foe", used.name);
           await wait(430);
         }
         cue(`.tg-spot[data-p="${p}"] .tg-mon`, p === ME ? "lunge-up" : "lunge-down", 420);

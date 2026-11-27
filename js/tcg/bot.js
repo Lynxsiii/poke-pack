@@ -17,7 +17,7 @@
  */
 
 import { trainerAim } from "./trainers.js";
-import { ACTIVE, apply, chooseBlock, damageAfterTyping, defOf, energyOf, hpLeft, inPlay, legalActions, other, retreatCost, statusOf, unpaid, usableAttacks } from "./engine.js";
+import { ACTIVE, apply, attacksOf, chooseBlock, damageAfterTyping, defOf, energyOf, hpLeft, inPlay, legalActions, other, retreatCost, statusOf, unpaid, usableAttacks } from "./engine.js";
 
 /** How much an attack is worth against this defender, before any coin flip. */
 function attackWorth(attack, def, foeDef, foeHp) {
@@ -27,10 +27,9 @@ function attackWorth(attack, def, foeDef, foeHp) {
 
 /** A Pokémon's best attack and how many Energy it still needs for it. */
 function plan(state, slot, defs, extra = []) {
-  const def = defOf(state, slot.uid, defs);
   const units = [...energyOf(state, slot, defs), ...extra];
   let best = null;
-  for (const attack of def.attacks) {
+  for (const attack of attacksOf(state, slot, defs)) {
     const short = unpaid(attack.cost, units);
     const score = attack.damage / (1 + short);
     if (!best || score > best.score) best = { attack, short, score };
@@ -87,7 +86,7 @@ function hitNow(state, player, slot, defs, extra = []) {
   const foeDef = defOf(state, foe.uid, defs);
   const units = [...energyOf(state, slot, defs), ...extra];
   let most = 0;
-  for (const attack of def.attacks) if (unpaid(attack.cost, units) === 0) most = Math.max(most, damageAfterTyping(attack.damage, def, foeDef).amount);
+  for (const attack of attacksOf(state, slot, defs)) if (unpaid(attack.cost, units) === 0) most = Math.max(most, damageAfterTyping(attack.damage, def, foeDef).amount);
   return most;
 }
 
@@ -213,7 +212,7 @@ function energyWorth(state, uid, defs) {
   const units = energyOf(state, slot, defs);
   const rest = energyOf(state, { ...slot, energy: slot.energy.filter((u) => u !== uid) }, defs);
   let worth = def.basic ? 10 : 25;
-  for (const attack of mon.attacks) {
+  for (const attack of attacksOf(state, slot, defs)) {
     if (!unpaid(attack.cost, units) && unpaid(attack.cost, rest)) worth += 20 + attack.damage / 2;
     if ((def.provides || []).some((t) => attack.cost.includes(t))) worth += 5;
   }
@@ -412,6 +411,8 @@ export function botAction(state, player, defs) {
       }
       if (waiting.effect.op === "moveCountersFrom") return slot.damage + (a.spot === ACTIVE ? 5 : 0);
       if (waiting.effect.op === "moveCountersTo") return waiting.side === player ? left : (left <= waiting.effect.n ? 1000 : 0) - left;
+      // A Technical Machine goes on the Active Pokémon, which can use its attack now.
+      if (waiting.effect.op === "hold" && waiting.effect.mod?.tm) return a.spot === ACTIVE ? 1 : 0;
       if (waiting.effect.op === "heal") return Math.min(slot.damage, waiting.effect.n) + (a.spot === ACTIVE ? 5 : 0);
       if (waiting.effect.op === "discardEnergy") return slot.energy.length + (a.spot === ACTIVE ? 0.5 : 0);
       // "Knock Out 1 of your opponent's Pokémon": the one worth the most Prizes, then the one most built up.
@@ -461,6 +462,14 @@ export function botAction(state, player, defs) {
   for (const action of actions.filter((a) => a.type === "play")) {
     const def = defOf(state, action.uid, defs);
     if (def.fossil) continue;
+    // A Technical Machine: onto the Active Pokémon when it can use the attack this turn (one that stays: whenever it fits).
+    if (def.tm) {
+      const step = def.fx[0];
+      const front = side.active && defOf(state, side.active.uid, defs);
+      const fitsFront = front && (!step.only.evolved || front.stage === "evolution") && (!step.only.types || step.only.types.some((t) => front.types.includes(t))) && !(side.active.held || []).some((h) => h.tm);
+      if (fitsFront && state.turn > 1 && (!step.turn || def.attacks.some((at) => !unpaid(at.cost, energyOf(state, side.active, defs))))) return action;
+      continue;
+    }
     const aim = trainerAim(def.fx);
     const heal = def.fx.find((s) => s.op === "heal");
     // A card that also discards the Stadium in play is not played over its own Stadium.
@@ -555,7 +564,7 @@ export function botAction(state, player, defs) {
   if (side.active && foe && foeSide.bench.length) {
     const mine = defOf(state, side.active.uid, defs);
     const units = energyOf(state, side.active, defs);
-    const ready = mine.attacks.filter((at) => unpaid(at.cost, units) === 0);
+    const ready = attacksOf(state, side.active, defs).filter((at) => unpaid(at.cost, units) === 0);
     const kos = (slot) => ready.some((at) => damageAfterTyping(at.damage, mine, defOf(state, slot.uid, defs)).amount >= hpLeft(state, slot, defs));
     if (ready.length && !kos(foe) && foeSide.bench.some((slot) => kos(slot)) && usableAttacks(state, player, defs).length) {
       const gust = actions.find((a) => {
@@ -577,7 +586,7 @@ export function botAction(state, player, defs) {
     const foeHp = foe ? hpLeft(state, foe, defs) : 0;
     // The Knock Out first; between two that both do it, the one that costs its own side nothing.
     const worth = (a) => {
-      const attack = def.attacks[a.index];
+      const attack = attacksOf(state, side.active, defs)[a.index];
       const base = attackWorth(attack, def, foeDef, foeHp);
       return base - (costly(attack) ? (base >= 1000 ? 5 : 25) : 0);
     };
