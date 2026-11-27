@@ -586,8 +586,21 @@ export function unitsOn(state, slot, def, holder, defs) {
   // Multi Energy beside another Special Energy: Colorless only (itself is one of those counted).
   if (def.special?.crowd && slot.energy.filter((uid) => defOf(state, uid, defs)?.special).length > 1) return ["Colorless"];
   const alt = (def.special?.alt || []).find((a) => fieldFits(a.who, holder) && (!a.who.behind || behind));
-  return alt ? alt.provides : def.provides || [];
+  if (alt) return alt.provides;
+  // Meganium's Wild Growth: "Each Basic Grass Energy attached to all of your Pokémon provides GrassGrass Energy" (doesn't stack).
+  // Read once, not again while an Ability's own Energy term is being judged (which only asks whether there is any).
+  if (def.basic && owner >= 0 && !growing) {
+    growing = true;
+    try {
+      const type = def.provides?.[0];
+      if (type && inPlay(state, owner).some(([mate]) => defOf(state, mate.uid, defs)?.ability?.growth === type && abilityOn(state, mate, defs)?.growth === type)) return [type, type];
+    } finally {
+      growing = false;
+    }
+  }
+  return def.provides || [];
 }
+let growing = false;
 
 /** Can this Energy card go on this Pokémon? A Special Energy may name the kind it is for. */
 export function energyFits(def, holder) {
@@ -685,11 +698,16 @@ export function addCondition(state, slot, kind, defs = null, { counters = 0 } = 
 }
 
 /** Leaving the Active spot or evolving clears every condition, and every effect an attack left. */
-function clearConditions(slot) {
+function clearConditions(slot, keep = "") {
   if (!slot) return;
+  const st = slot.status;
   delete slot.status;
   delete slot.marks;
+  // Dizzying Valley: a Confused Pokémon stays Confused as it evolves or devolves.
+  if (keep && st?.main === keep) slot.status = { ...NO_STATUS, main: keep, since: st.since, ...(st.confuseN ? { confuseN: st.confuseN } : {}) };
 }
+/** What evolving or devolving doesn't take away while this Stadium is in play ("" for nothing). */
+const keptOnEvolve = (state, defs) => (defs && state.stadium && defOf(state, state.stadium.uid, defs)?.stadium?.keepConfused ? "confused" : "");
 
 /* ---------- effects that last a turn ----------
    "During your next turn, this Pokémon can't attack", "takes 30 less damage during your
@@ -984,7 +1002,7 @@ export function evolveSlot(state, player, spot, uid, defs, events, from = "hand"
   slot.evolvedOn = state.turn;
   delete slot.asBasic;
   delete slot.spent;
-  clearConditions(slot);
+  clearConditions(slot, keptOnEvolve(state, defs));
   events.push({ t: "evolve", p: player, uid, spot, ...(from !== "hand" ? { from } : {}) });
   // A Tool that may not stay on what it became (Protective Orb on a Pokémon-ex) is discarded.
   const tool = slot.tool && defOf(state, slot.tool, defs)?.tool;
@@ -1105,9 +1123,12 @@ function tooEarly(state, player, attack, defs) {
   return attackBlock(state, player, attack, defs);
 }
 
+/** Roxie's Performance: "During your opponent's next turn, their Poisoned Pokémon can't retreat." */
+const poisonPinned = (state, side, slot) => side.poisonPin === state.turn && conditionsOn(slot).includes("poisoned");
+
 export function canRetreat(state, player, defs) {
   const side = state.players[player];
-  if (!side.active || side.retreated || !side.bench.length || stuckFor(state, side.active, defs) || markOn(state, side.active, "noRetreat") || defOf(state, side.active.uid, defs).fossil?.noRetreat) return false;
+  if (!side.active || side.retreated || !side.bench.length || stuckFor(state, side.active, defs) || markOn(state, side.active, "noRetreat") || defOf(state, side.active.uid, defs).fossil?.noRetreat || poisonPinned(state, side, side.active)) return false;
   return balloonOn(state, side.active, defs) || energyOf(state, side.active, defs).length >= retreatCost(state, side.active, defs);
 }
 
@@ -2017,6 +2038,7 @@ const HANDLERS = {
     const slot = side.active;
     if (stuckFor(state, slot, defs)) fail(statusOf(slot).main === "asleep" ? "An Asleep Pokémon can't retreat." : "A Paralyzed Pokémon can't retreat.");
     if (markOn(state, slot, "noRetreat")) fail("That Pokémon can't retreat this turn.");
+    if (poisonPinned(state, side, slot)) fail("A Poisoned Pokémon can't retreat this turn.");
     if (defOf(state, slot.uid, defs).fossil?.noRetreat) fail(`${defOf(state, slot.uid, defs).name} can't retreat.`);
     const cost = retreatCost(state, slot, defs);
     const gone = [];
@@ -2543,7 +2565,11 @@ export function trainerBlock(state, player, def, defs) {
     if (state.turn === 1 && !def.fx.some((step) => step.op === "early")) return "No Supporter on the first turn of the match.";
   }
   if (def.sub === "stadium") {
-    if (side.stadiumPlayed) return "You've already played a Stadium this turn.";
+    // Ange Floette: "only if you discard a Prism Tower in play, and ... during the same turn you play Prism Tower".
+    const over = def.stadium?.over;
+    const onTop = over && state.stadium && defOf(state, state.stadium.uid, defs).name === over;
+    if (over && !onTop) return `${def.name} goes only onto a ${over} in play.`;
+    if (side.stadiumPlayed && !onTop) return "You've already played a Stadium this turn.";
     if (state.stadium && defOf(state, state.stadium.uid, defs).name === def.name) return `${def.name} is already in play.`;
     return "";
   }
@@ -2587,7 +2613,7 @@ export function devolveSlot(state, p, spot, events) {
   slot.since = state.turn;
   delete slot.evolvedOn;
   delete slot.spent;
-  clearConditions(slot);
+  clearConditions(slot, keptOnEvolve(state, liveDefs));
   return true;
 }
 

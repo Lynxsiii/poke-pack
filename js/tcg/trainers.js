@@ -510,6 +510,14 @@ export const T_OPS = {
       askChoose(ctx.state, { player: ctx.player, zone: "deck", what, uids: fitting(ctx, pool, what), min: 0, max: n, effect: { op: "attach", to, spot: to === "self" ? ctx.spot : to === "active" ? ACTIVE : null, ...(where ? { spots: energySpots(ctx, where) } : {}), ...(hurt ? { hurt } : {}) }, shuffle: !top || mix || rest === "shuffle", ...after, ...(rule ? { rule } : {}) });
     },
   },
+  /** Roxie's Performance: the other player's Poisoned Pokémon can't retreat during their next turn (engine.js canRetreat). */
+  poisonPin: {
+    ready: () => true,
+    run(ctx) {
+      theirs(ctx).poisonPin = ctx.state.turn + 1;
+      ctx.events.push({ t: "lock", p: other(ctx.player), what: "poisoned-retreat" });
+    },
+  },
   /** "Search your deck for a Pokémon Tool card and attach it to this Pokémon" (it has none yet; one that can't go on it isn't offered). */
   toolFetch: {
     ready: (ctx) => ctx.spot != null && hasDeck(ctx) && !slotAt(ctx.state, ctx.player, ctx.spot)?.tool,
@@ -1917,6 +1925,7 @@ const SHUFFLE_BOTH = "Each player shuffles (?:their|his or her) hand into (?:the
 /** [wording, steps]. */
 const TYPE_WORD = "Grass|Fire|Water|Lightning|Psychic|Fighting|Darkness|Metal|Fairy|Dragon|Colorless";
 const PATTERNS = [
+  [/^During your opponent's next turn, their Poisoned Pokémon can't retreat\. \(This includes newly Poisoned Pokémon\.\)$/, () => [{ op: "poisonPin" }]],
   [new RegExp(`^Draw ${N} cards?\\.$`, "i"), (m) => [{ op: "draw", n: count(m[1]) }]],
   [/^Discard your hand and draw (\d+) cards\.$/, (m) => [{ op: "discardHand" }, { op: "draw", n: Number(m[1]) }]],
   [/^Discard your hand, then draw (\d+) cards\.$/, (m) => [{ op: "discardHand" }, { op: "draw", n: Number(m[1]) }]],
@@ -2807,6 +2816,10 @@ const STADIUM_TEXTS = [
   [/^Ignore Weakness when a (Water) Pokémon does damage to a Pokémon with (Blaine) in its name\.$/, (m) => ({ field: [{ who: { named: m[2] }, mod: { noWeaknessVs: [m[1]] } }] })],
   [/^Whenever a Pokémon with (Giovanni) in its name evolves, its owner removes (\d+) damage counters from that Pokémon \(or 1 if it only has 1\)\.$/, (m) => ({ evolveHeal: { n: Number(m[2]) * 10, who: { named: m[1] } } })],
   [/^Each Pokémon in play with (Dark) in its name \(even your opponent's\) gets \+(\d+) HP\.$/, (m) => ({ field: [{ who: { named: m[1] }, mod: { hp: Number(m[2]) } }] })],
+  // Dizzying Valley (engine.js clearConditions keeps Confusion).
+  [/^Confused Pokémon \(both yours and your opponent's\) don't recover from that Special Condition when they evolve or devolve\.$/, () => ({ keepConfused: true })],
+  // Ange Floette: only over a Prism Tower in play, the same turn too (engine.js trainerBlock); more HP for a Pokémon by name.
+  [/^You can put this card into play only if you discard an? ([A-Z][\w'é.-]*(?: [A-Z][\w'é.-]*)*) in play, and you can put this card into play during the same turn you play \1\. Each ([A-Z][\w'é.-]*(?: [A-Z][\w'é.-]*)*(?: ex)?) in play \(both yours and your opponent's\) gets \+(\d+) HP\.$/, (m) => ({ over: m[1], field: [{ who: { name: m[2] }, mod: { hp: Number(m[3]) } }] })],
   // Festival Grounds: while it has any Energy attached, a Pokémon has no Special Conditions (engine.js sweepConditions).
   [/^Each Pokémon that has any Energy attached \(both yours and your opponent's\) recovers from all Special Conditions and can't be affected by any Special Conditions\.$/, () => ({ field: [{ who: { energized: true }, mod: { immune: ["all"] } }] })],
   [/^Each player's (Darkness) Pokémon can't be (Asleep), (Confused), or (Paralyzed)\.$/, (m) => ({ field: [{ who: { types: [m[1]] }, mod: { immune: [m[2], m[3], m[4]].map((w) => w.toLowerCase()) } }] })],

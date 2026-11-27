@@ -1109,10 +1109,12 @@ export const OPS = {
     }
   },
   /** "Heal 20 damage from each of your Pokémon" (`foe`: "each Pokémon (both yours and your opponent's)", theirs too). */
-  healEvery(ctx, { n, own = true, foe = false }) {
+  // `tera`: only the Tera Pokémon ("heal all damage from each of your Tera Pokémon").
+  healEvery(ctx, { n, own = true, foe = false, tera = false }) {
     const { state, player, events } = ctx;
     for (const p of [...(own ? [player] : []), ...(foe ? [other(player)] : [])]) {
       for (const [slot, spot] of inPlay(state, p)) {
+        if (tera && !defOf(state, slot.uid, ctx.defs)?.tera) continue;
         const healed = Math.min(n, healRoom(state, slot));
         if (!healed) continue;
         slot.damage -= healed;
@@ -2408,6 +2410,8 @@ const PATTERNS = [
   [/^Remove all damage counters from this Pokémon\.$/, () => [{ op: "healSelf", when: "after", n: 9990 }]],
   [/^Remove all Special Conditions from this Pokémon\.$/, () => fromDeck([{ op: "cure", to: "self" }])],
   [/^Heal all damage from (?:all|each) of your Pokémon\.$/, () => [{ op: "healEvery", when: "after", n: 9990 }]],
+  // Technical Machine: Fluorite.
+  [/^Discard all Energy from this Pokémon, and heal all damage from each of your Tera Pokémon\.$/, () => [{ op: "discardEnergy", when: "after", n: 99, type: "" }, { op: "healEvery", when: "after", n: 9990, tera: true }]],
   [/^Heal (\d+) damage from each Pokémon \(both yours and your opponent's\)\.$/, (m) => [{ op: "healEvery", when: "after", n: Number(m[1]), foe: true }]],
   [new RegExp(`^Discard ${N} (?:${TYPE} )?Energy(?: card)? (?:from|attached to) this Pokémon and heal all damage from it\\.$`, "i"), (m) => [{ op: "discardEnergy", when: "after", n: count(m[1]), type: m[2] || "" }, { op: "healSelf", when: "after", n: 9990 }]],
   [/^(?:After your attack, )?[Rr]emove from this Pokémon the number of damage counters equal to the damage you did to the Defending Pokémon\.(?: If this Pokémon has fewer damage counters than that, remove all of them\.)?$/, () => [{ op: "healDealt", when: "after" }]],

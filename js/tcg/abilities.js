@@ -131,6 +131,8 @@ const FROM_FOE = "(?:from (?:your opponent's )?attacks|from attacks from your op
 
 /** Newer standing wordings: auras on all or some of your Pokémon, numbers that grow, and walls with terms. */
 const STANDING_MORE = [
+  // Meganium's Wild Growth: each Basic Grass Energy on its owner's Pokémon provides 2 (engine.js unitsOn).
+  [new RegExp(`^Each Basic (${TYPE}) Energy attached to all of your Pokémon provides \\1 ?\\1 Energy\\.$`), (m) => ({ growth: m[1] })],
   // Relicanth, Mew ex: attacks of other cards (engine.js attacksOf).
   [/^Each of your evolved Pokémon can use any attack from its previous Evolutions\. \(You still need the necessary Energy to use each attack\.\)$/, () => ({ lendUnder: true })],
   [/^This Pokémon can use the attacks of any of your Benched Pokémon\. \(You still need the necessary Energy to use each attack\.\)$/, () => ({ lendBench: true })],
@@ -555,7 +557,7 @@ function readAbility(ability, cardName, named) {
   text = text.replace(/ The effect of (?:.+?) doesn't stack\.$/, () => ((noStack = true), ""));
   const base = { name: ability.name || kind, kind, text: String(ability.text || "").replace(/\s+/g, " ").trim() };
   // Only what toolOf and the Prize count read is kept to one; anything else that says so waits.
-  const stacked = (got) => (!noStack ? got : got && (got.aura || got.foeAura || got.prizes || got.foeEvolve) ? { ...got, noStack } : null);
+  const stacked = (got) => (!noStack ? got : got && (got.aura || got.foeAura || got.prizes || got.foeEvolve || got.growth) ? { ...got, noStack } : null);
 
   const front = text.match(FRONT_FIRST);
   if (front) {

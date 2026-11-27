@@ -7524,4 +7524,39 @@ test("Pidove, Latios, Misty's Psyduck, Relicanth and Mew ex", () => {
   assert.equal(attacksOf(state, state.players[0].active, defs).length, defs("me55-66").attacks.length + defs("base1-46").attacks.length);
 });
 
+test("Meganium's Wild Growth, Technical Machine: Fluorite, Roxie's Performance, Dizzying Valley, Ange Floette", () => {
+  // Meganium: each Basic Grass Energy provides 2, once however many Meganium.
+  let state = scene({ bench: ["me1-10", "me1-10"] });
+  energize(state, 0, state.players[0].active, G, 1);
+  assert.deepEqual(energyOf(state, state.players[0].active, defs), ["Grass", "Grass"]);
+  // Fluorite: its attack discards the Energy and heals the Tera Pokémon.
+  assert.ok(defs("sv8-188").playable && defs("sv8-188").attacks.every((a) => !a.plain));
+  // Roxie's Performance: their Poisoned Active Pokémon can't retreat during their next turn.
+  state = scene({ extra: [["me4-81", 1]] });
+  state.players[1].bench = [slotFor(state, 1, "base1-63")];
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "me4-81") });
+  act(state, { type: "end", player: 0 });
+  const foe = state.players[1].active;
+  assert.ok(canRetreat(state, 1, defs) || energyOf(state, foe, defs).length < retreatCost(state, foe, defs));
+  addCondition(state, foe, "poisoned", defs);
+  assert.ok(!canRetreat(state, 1, defs));
+  // Dizzying Valley: Confused stays Confused as it evolves.
+  state = scene();
+  state.stadium = { uid: handed(state, 0, "me2-88"), owner: 0 };
+  state.players[0].hand.pop();
+  state.players[0].active.since = 0;
+  addCondition(state, state.players[0].active, "confused", defs);
+  addCondition(state, state.players[0].active, "poisoned", defs);
+  act(state, { type: "evolve", player: 0, uid: handed(state, 0, "base1-24"), spot: ACTIVE });
+  assert.deepEqual(conditionsOn(state.players[0].active), ["confused"]);
+  // Ange Floette: only onto a Prism Tower in play, the same turn too; Mega Floette ex gets +150 HP.
+  state = scene({ bench: ["me4-35"] });
+  const ange = handed(state, 0, "me4-75");
+  throws(() => act(state, { type: "play", player: 0, uid: ange }), /Prism Tower/);
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "me4-80") });
+  act(state, { type: "play", player: 0, uid: ange });
+  assert.equal(state.stadium.uid, ange);
+  assert.equal(maxHp(state, state.players[0].bench[0], defs), 400);
+});
+
 console.log(`${passed} checks passed${process.exitCode ? ", some failed" : ""}`);
