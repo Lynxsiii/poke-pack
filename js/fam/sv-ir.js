@@ -18,7 +18,7 @@
  *              through the all-white map instead of Live's (which blacks out the Pokemon).
  */
 
-const SV_ID = /^([zr]?sv\d|svp-)/;
+const SV_ID = /^([zrj]?sv\d|svp-)/;
 const WHOLE_FACE = new Set(["svp-svp028", "svp-svp029"]);
 
 /** Whether a card face is this family's. */

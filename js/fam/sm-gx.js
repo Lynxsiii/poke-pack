@@ -16,7 +16,7 @@
  * White Kyurem-GX SM141 (sm75-smp141), whose Live map is inverted (the gold background black, Kyurem white): it takes
  * the shared text-safe GX median (background and frame foil, a typical Pokémon matte).
  */
-import { isSm, smPattern } from "../sm-foil.js?v=8";
+import { isSm, smPattern } from "../sm-foil.js?v=9";
 
 const has = (pattern, cls) => ` ${pattern || ""} `.includes(` ${cls} `);
 

@@ -22,7 +22,7 @@
  * `cure` (window only): the window holo lights with two layers, `.foil` multiplying the band colour onto the print and `.cure`
  * colour-dodging a gain over it (the foil seen through ink: print x colour x light), both masked by the foil map.
  */
-import { isSm, smPattern } from "../sm-foil.js?v=8";
+import { isSm, smPattern } from "../sm-foil.js?v=9";
 
 const has = (pattern, cls) => ` ${pattern || ""} `.includes(` ${cls} `);
 const DIR = "assets/foil/fam/sm-holo";

@@ -61,7 +61,7 @@ const mirror = (card) => (card.subtypes || []).some((s) => s === "Ancient" || s 
 /** Whether a card face is this family's. */
 export function claims(card) {
   if (!card?.reverse || card.foilAs || card.pattern) return false;
-  if (!/^[rz]?sv\d/.test(setOf(card))) return false;
+  if (!/^[rzj]?sv\d/.test(setOf(card))) return false;
   if (OTHER_KINDS.has(card.reverseKind)) return false;
   return Boolean(pattern(card));
 }

@@ -1592,5 +1592,33 @@
       "cuUncommon": 0.1653,
       "rareAt": 1
     }
+  },
+  "jsv2a": {
+    "name": "Pokémon Card 151 (Japanese)",
+    "printedTotal": 165,
+    "released": "2023-06-16",
+    "updated": "2026-11-27",
+    "source": "ESTIMATES. The Pokémon Company Japan publishes no pull rates. Structure: 7 cards a pack, ¥290 (pokemon-card.com/ex/sv2a: '内容物：カード7枚入り'), 20 packs a box at ¥5,800 (SNKRDUNK set guide https://snkrdunk.com/en/magazine/2023/06/16/japanese-pokemon-151-where-to-buy-full-card-set-list-and-pull-rate/ and Samurai Sword Tokyo's box guide), and '必ず2枚キラカード' (2 holo cards guaranteed) printed on the wrapper. Every C/U/R Pokémon and two Trainers have a Poké Ball pattern mirror and a Master Ball pattern mirror (Scrydex variants pokeBallReverseHolofoil / masterBallReverseHolofoil, TCGplayer Japan lists both); the Master Ball mirror is 'only one per box' (SNKRDUNK) and replaces the Poké Ball mirror. RR about 4 a box, AR about 3, SR/SAR/UR about one between them: community box-break averages quoted by the same retailers, not measured here. SNKRDUNK's ~1/700 god pack is not modelled.",
+    "rates": {
+      "double": 0.2,
+      "ultra": 0.03,
+      "sir": 0.015,
+      "hyper": 0.0075,
+      "ir": 0.15,
+      "masterball": 0.05
+    }
+  },
+  "jsm12a": {
+    "name": "Tag All Stars (Japanese)",
+    "printedTotal": 173,
+    "released": "2019-10-04",
+    "updated": "2026-11-27",
+    "source": "ESTIMATES. pokemon-card.com/ex/sm12a: high class pack, ¥500 + tax, 11 cards a pack ('1パック11枚入り'), 'at least one SR or better in every box' (not modelled: packs roll on their own). The wrapper prints 'GX確定' (a GX in every pack). 10 packs a box (retailer listings; the official page gives none). Per box about 1 SR (Special Arts included), 0.5 HR, 0.3 UR: Samurai Sword Tokyo's estimate table (https://samuraiswordtokyo.com/blogs/news/sm12a-tag-all-stars-pull-rates-best-cards), a retailer's figures; the SR rate here is set a little higher so the box guarantee is met on average. The 134 commons carry no rarity mark and each has a mirror holo print (TCGplayer Japan 'Mirror Holofoil'); the 17 Prism Rares share that mirror slot, about 2 a box (estimate).",
+    "rates": {
+      "rareUltra": 0.13,
+      "rainbow": 0.05,
+      "secret": 0.03,
+      "prismStar": 0.2
+    }
   }
 }

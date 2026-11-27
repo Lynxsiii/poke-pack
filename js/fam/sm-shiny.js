@@ -14,7 +14,7 @@
  *   sms-shining    the Shining Pokémon: only the Pokémon is foil; ink stays saturated, the engraving reads on it and
  *                  colour flashes only on its highlights.
  */
-import { isSm, smPattern } from "../sm-foil.js?v=8";
+import { isSm, smPattern } from "../sm-foil.js?v=9";
 
 const has = (pattern, cls) => ` ${pattern || ""} `.includes(` ${cls} `);
 

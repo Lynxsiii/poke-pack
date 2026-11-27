@@ -15,7 +15,7 @@
  * Research and what changed: .claude/skills/card-textures/reference/fam-sv-holo.md.
  */
 
-const SV_ID = /^([zr]?sv\d|svp-|tot23-)/;
+const SV_ID = /^([zrj]?sv\d|svp-|tot23-)/;
 const RECT_MAP = new Set(["tot23-21"]);
 const BAKED = new Set(["sv10-96-prerelease"]);
 /* Surging Sparks onward: the photos show the fine glitter a step more visible. */

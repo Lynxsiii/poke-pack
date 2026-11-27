@@ -1,0 +1,28 @@
+{
+  "id": "jsv2a",
+  "name": "Pokémon Card 151",
+  "lang": "ja",
+  "code": "SV2a",
+  "series": "scarlet-violet",
+  "slug": "pokemon-card-151-japanese",
+  "scrydexId": "sv2a_ja",
+  "era": "sv",
+  "tcgplayerCategory": 85,
+  "tcgplayerGroup": 23599,
+  "englishTwin": "sv3pt5",
+  "patternPrints": [
+    "pokeball",
+    "masterball"
+  ],
+  "rarityMap": {
+    "C": "Common",
+    "U": "Uncommon",
+    "R": "Rare",
+    "RR": "Double Rare",
+    "AR": "Illustration Rare",
+    "SR": "Ultra Rare",
+    "SAR": "Special Illustration Rare",
+    "UR": "Hyper Rare"
+  },
+  "printedTotal": 165
+}

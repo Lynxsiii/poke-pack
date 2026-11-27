@@ -19,7 +19,10 @@
  * adds items the stored row lacks.
  */
 
-const TCGCSV = "https://tcgcsv.com/tcgplayer/3";
+const TCGCSV = "https://tcgcsv.com/tcgplayer";
+// TCGplayer category of a set's groups: 3 is Pokémon, 85 Pokémon Japan (a Japanese set's entry in
+// data/tcgplayer-ids.json carries "category": 85). Group ids are unique across categories.
+const DEFAULT_CATEGORY = 3;
 const TCGCSV_HEADERS = { "user-agent": "poke-pack.rip daily prices (github.com/Lynxsiii/poke-pack)" };
 // The same printing the backfill charts: holofoil, else normal (sealed is
 // "Normal" on tcgcsv too); reverse holo only when there is nothing else.
@@ -86,18 +89,21 @@ async function loadIds(env) {
   const sets = body?.sets && typeof body.sets === "object" ? body.sets : {};
   const list = Object.entries(sets).filter(([id, entry]) => SET_ID.test(id) && Array.isArray(entry?.groups));
   const pids = new Set();
+  const categories = new Map();
   for (const [, entry] of list) {
+    const category = Number(entry.category) > 0 ? Number(entry.category) : DEFAULT_CATEGORY;
+    for (const group of entry.groups) categories.set(group, category);
     for (const section of ["cards", "sealed"]) {
       for (const pid of Object.values(entry[section] || {})) pids.add(Number(pid));
     }
   }
-  idsCache = { list, pids };
+  idsCache = { list, pids, categories };
   return idsCache;
 }
 
 /** {pid: price} for the products this site uses from one group's price file. */
-async function fetchGroup(group, wanted, fetcher) {
-  const res = await fetcher(`${TCGCSV}/${group}/prices`, { headers: TCGCSV_HEADERS });
+async function fetchGroup(group, wanted, fetcher, category = DEFAULT_CATEGORY) {
+  const res = await fetcher(`${TCGCSV}/${category}/${group}/prices`, { headers: TCGCSV_HEADERS });
   if (!res.ok) throw new Error(`tcgcsv group ${group}: ${res.status}`);
   const body = await res.json();
   const rows = new Map();
@@ -156,7 +162,7 @@ export async function recordDailyPrices(env, now = new Date(), fetcher = fetch) 
   await Promise.all(
     batch.map(async (group) => {
       try {
-        const prices = await fetchGroup(group, ids.pids, fetcher);
+        const prices = await fetchGroup(group, ids.pids, fetcher, ids.categories?.get(group));
         writes.push(
           upsert(env, "price_group_days", ["day", "group_id"], ["day", "group_id", "prices", "recorded_at"], [
             day,

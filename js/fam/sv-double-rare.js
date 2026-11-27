@@ -4,7 +4,7 @@
  *
  * Scope: every face the app draws as `foil-ex foil-sunpillar` (js/app.js foilPattern(): a Double Rare ex with a foil
  * map, not Tera) whose id is a Scarlet & Violet one (sv1-sv10, the pt5 sets, rsv/zsv, and the SVP black-star promos).
- * The 36 SVP faces miss `era-sv` (js/foil-maps.js tests /^[zr]?sv\d/), so the sheet is scoped to the family class
+ * The 36 SVP faces miss `era-sv` (js/foil-maps.js tests /^[zrj]?sv\d/), so the sheet is scoped to the family class
  * alone and draws them like their set siblings. Mega Evolution Double Rares stay with me-holo; Tera ex are foil-tera.
  *
  * See js/holo-fam.js for the contract: famExtras(card, url, base) returns null when the face is not this family's,
@@ -12,7 +12,7 @@
  * Research and what changed: .claude/skills/card-textures/reference/fam-sv-double-rare.md.
  */
 
-const SV_ID = /^([zr]?sv\d|svp-)/;
+const SV_ID = /^([zrj]?sv\d|svp-)/;
 
 const isExCard = (card) =>
   (card.subtypes || []).some((s) => String(s).toLowerCase() === "ex") || /(^|\s)ex$/i.test(card.name || "");

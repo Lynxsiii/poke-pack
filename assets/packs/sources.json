@@ -1282,6 +1282,30 @@
           "file": "pop5/pack-0.avif"
         }
       ]
+    },
+    "jsv2a": {
+      "name": "Pokémon Card 151 (Japanese)",
+      "slug": "tcgplayer-565242",
+      "packs": [
+        {
+          "id": "mew",
+          "remote": "https://tcgplayer-cdn.tcgplayer.com/product/565242_in_1000x1000.jpg",
+          "file": "jsv2a/mew.avif",
+          "note": "TCGplayer product photo on white, trimmed and cut out with scripts/clean_pack_art.py"
+        }
+      ]
+    },
+    "jsm12a": {
+      "name": "Tag All Stars (Japanese)",
+      "slug": "tcgplayer-576963",
+      "packs": [
+        {
+          "id": "tag-all-stars",
+          "remote": "https://tcgplayer-cdn.tcgplayer.com/product/576963_in_1000x1000.jpg",
+          "file": "jsm12a/tag-all-stars.avif",
+          "note": "TCGplayer product photo on white, trimmed and cut out with scripts/clean_pack_art.py"
+        }
+      ]
     }
   }
 }

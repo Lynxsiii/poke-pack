@@ -2,7 +2,7 @@ import { createCardMotion } from "./card-motion.js?v=4";
 import {
   foilExtras, foilClass as finishClass, foilLayout as finishLayout, foilLook as finishLook, foilPattern as finishPattern,
   reverseKindOf as finishReverseKind, dataFinish,
-} from "./foil-maps.js?v=143";
+} from "./foil-maps.js?v=144";
 import { initFx } from "./fx.js";
 import { PROFILE_PAGE_LIMIT } from "./profile-pages.js";
 import * as profileView from "./profile-view.js"; // the public profile page: hero, sections, room
@@ -90,7 +90,7 @@ import * as questArea from "./quest-area.js?v=10";
 import * as levelUi from "./level-ui.js";
 import { rollFigures, growBars, flyCoins, markPicks, landPreview } from "./acct-motion.js";
 import { createXpFeed } from "./level-feed.js";
-import { startLivePrices, applyCachedPrices, applyLatestSealed } from "./liveprices.js?v=4";
+import { startLivePrices, applyCachedPrices, applyLatestSealed } from "./liveprices.js?v=5";
 import {
   loadPriceHistory,
   priceHistoryReady,
@@ -8304,6 +8304,8 @@ function openInspect(id, reverse = false, reverseKind = "") {
   // The name, the rarity as a type badge, what it is worth and what you can do
   // with your copies; then the chart, and the facts as rows in a box.
   const rows = [
+    // A Japanese print (data/<set>.json `lang`): English name and text on the site, the printed name here.
+    card.lang === "ja" ? ["Language", `Japanese${card.nameJa ? ` <span lang="ja">${esc(card.nameJa)}</span>` : ""}`] : null,
     type ? ["Type", esc(type)] : null,
     card.evolvesFrom ? ["Evolves from", esc(card.evolvesFrom)] : null,
     ["Illustrator", esc(card.artist || "Unknown")],
