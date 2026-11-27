@@ -72,8 +72,8 @@ await befriend("ann", "bob");
 
 let matchId = "";
 
-await check("the migration file holds the Worker's DDL", async () => {
-  const sql = readFileSync(new URL("../worker/migrations/0038_tcg_matches.sql", import.meta.url), "utf8").replace(/\s+/g, " ");
+await check("the migration files hold the Worker's DDL", async () => {
+  const sql = ["0038_tcg_matches.sql", "0039_tcg_rematch_queue.sql"].map((f) => readFileSync(new URL(`../worker/migrations/${f}`, import.meta.url), "utf8")).join("\n").replace(/\s+/g, " ");
   for (const stmt of TCG_DDL) assert.ok(sql.includes(stmt.replace(/\s+/g, " ")), stmt.slice(0, 60));
 });
 
@@ -325,6 +325,276 @@ await check("two moves at once: one lands, the other is judged on top of it", as
   assert.equal(JSON.parse(row.state).phase, "main", "both placed, the game began");
   const later = a.body.seq === 3 ? a : b;
   assert.equal(later.body.steps.length, 3, "the later one hears every step since 0");
+});
+
+// ---- Rematch -----------------------------------------------------------------------
+const finished = async () => {
+  const id = await startMatch();
+  await placeBoth(id);
+  const r = await api("ann", `/api/tcg/matches/${id}/concede`, "POST", { since: 3 });
+  assert.equal(r.body.match.status, "over");
+  return id;
+};
+const rematch = (user, id, verb = "", body) => {
+  const get = body === undefined && !verb;
+  return api(user, `/api/tcg/matches/${id}/rematch${verb ? `/${verb}` : ""}`, get ? "GET" : "POST", get ? undefined : (body ?? {}));
+};
+const endLive = async () => {
+  // Concede whatever is still going between the test players, so the live-match cap doesn't get in the way.
+  for (const row of db.prepare("SELECT id, p0 FROM tcg_matches WHERE status IN ('open', 'active')").all()) {
+    db.prepare("UPDATE tcg_matches SET status = 'over', reason = 'concede', ended_at = ? WHERE id = ?").run(clock, row.id);
+  }
+};
+
+await check("rematch: one offers, the other accepts, a new match with the same decks and a fresh flip", async () => {
+  await endLive();
+  const id = await finished();
+  const old = rowOf(id);
+  let r = await rematch("bob", id);
+  assert.equal(r.status, 200, JSON.stringify(r.body));
+  assert.equal(r.body.rematch.status, "");
+  assert.equal(r.body.rematch.here, false, "ann hasn't looked at the finished table");
+  r = await rematch("bob", id, "", {});
+  assert.equal(r.status, 409, "no offer to someone who isn't there");
+  r = await rematch("ann", id);
+  assert.equal(r.body.rematch.here, true, "bob is at the table");
+  assert.equal((await rematch("cat", id)).status, 404, "a stranger can't see it");
+  r = await rematch("ann", id, "", {});
+  assert.equal(r.status, 200, JSON.stringify(r.body));
+  assert.equal(r.body.rematch.status, "open");
+  assert.equal(r.body.rematch.mine, true);
+  assert.ok(r.body.rematch.deadline > clock && r.body.rematch.deadline <= clock + TCG_TIMING.REMATCH_MS);
+  r = await rematch("bob", id);
+  assert.equal(r.body.rematch.status, "open");
+  assert.equal(r.body.rematch.mine, false, "bob sees ann's offer");
+  r = await rematch("bob", id, "", {});
+  assert.equal(r.status, 200, JSON.stringify(r.body));
+  assert.equal(r.body.rematch.status, "accepted");
+  const next = r.body.rematch.next;
+  assert.match(next, /^[a-f0-9]{20}$/);
+  assert.equal((await rematch("ann", id)).body.rematch.next, next, "ann's page hears it and goes to the new table");
+  assert.equal((await rematch("ann", id, "", {})).body.rematch.next, next, "a late press joins the same match");
+  const row = rowOf(next);
+  assert.equal(row.status, "active");
+  assert.equal(row.p0, old.p0);
+  assert.equal(row.p1, old.p1);
+  assert.equal(row.deck0, old.deck0, "same decks");
+  assert.equal(row.deck1, old.deck1);
+  assert.equal(row.format, old.format);
+  assert.equal(row.log, "[]");
+  const state = stateOf(next);
+  assert.equal(state.dealt, false, "a fresh flip: its winner chooses before the deal");
+  assert.equal(row.to_move, String(state.flipWinner));
+  assert.equal(db.prepare("SELECT COUNT(*) AS n FROM tcg_matches WHERE id = ?").get(next).n, 1);
+  assert.equal((await rematch("ann", next)).body.playing, true, "no rematch of a match still going");
+  for (const u of ["ann", "bob"]) assert.ok(Object.values(ownedOf(u)).every((n) => n === 2), "nothing was paid");
+});
+
+await check("rematch: swapping deck, the format holds, call off, decline", async () => {
+  await endLive();
+  const id = await finished();
+  await rematch("ann", id);
+  await rematch("bob", id);
+  let r = await rematch("ann", id, "", { deck: deckFor("ann", "unlimited") });
+  assert.equal(r.status, 400, "a rematch keeps the format");
+  const stolen = deckFor("ann", "standard", 11);
+  const some = Object.keys(stolen.cards).find((c) => !c.startsWith("energy-"));
+  r = await rematch("ann", id, "", { deck: { ...stolen, cards: { ...stolen.cards, [some]: 3 } } });
+  assert.equal(r.status, 400, "the deck is checked against what ann owns");
+  const swap = deckFor("ann", "standard", 11);
+  r = await rematch("ann", id, "", { deck: swap });
+  assert.equal(r.body.rematch.status, "open");
+  r = await rematch("ann", id, "decline");
+  assert.equal(r.body.rematch.status, "cancelled", "ann called her offer off");
+  r = await rematch("bob", id, "", {});
+  assert.equal(r.body.rematch.status, "open", "an offer can be made again");
+  assert.equal(r.body.rematch.mine, true);
+  r = await rematch("ann", id, "decline");
+  assert.equal(r.body.rematch.status, "declined");
+  r = await rematch("bob", id);
+  assert.equal(r.body.rematch.status, "declined", "bob hears no");
+  r = await rematch("bob", id, "", {});
+  assert.equal(r.status, 409, "turned down stays turned down");
+  // A swapped deck goes into the new match.
+  const id2 = await finished();
+  await rematch("bob", id2);
+  await rematch("ann", id2, "", { deck: swap });
+  r = await rematch("bob", id2, "", {});
+  assert.equal(r.body.rematch.status, "accepted", JSON.stringify(r.body));
+  assert.deepEqual(JSON.parse(rowOf(r.body.rematch.next).deck0), swap.cards);
+  assert.equal(rowOf(r.body.rematch.next).deck0_name, swap.name);
+});
+
+await check("rematch: an offer expires after a few minutes, or when either player leaves", async () => {
+  await endLive();
+  const id = await finished();
+  await rematch("ann", id);
+  await rematch("bob", id);
+  await rematch("ann", id, "", {});
+  // Both stay at the table, polling, until the offer runs out.
+  for (let t = 0; t <= TCG_TIMING.REMATCH_MS; t += 20_000) {
+    clock += 20_000;
+    await rematch("ann", id);
+    await rematch("bob", id);
+  }
+  let r = await rematch("bob", id);
+  assert.equal(r.body.rematch.status, "expired");
+  r = await rematch("bob", id, "", {});
+  assert.equal(r.body.rematch.status, "open", "a new offer after one ran out");
+  r = await rematch("ann", id, "leave");
+  assert.equal(r.body.rematch.status, "left");
+  assert.equal(r.body.rematch.mine, true, "ann is the one who left");
+  r = await rematch("bob", id);
+  assert.equal(r.body.rematch.status, "left", "bob sees ann left");
+  assert.equal(r.body.rematch.mine, false);
+  assert.equal(r.body.rematch.here, false);
+  assert.equal((await rematch("bob", id, "", {})).status, 409);
+  assert.equal((await rematch("ann", id, "", {})).status, 409, "leaving closes it for both");
+
+  // The one who offered stops polling (closed the tab): the offer goes.
+  const id2 = await finished();
+  await rematch("ann", id2);
+  await rematch("bob", id2);
+  await rematch("bob", id2, "", {});
+  clock += TCG_TIMING.PRESENCE_MS - 5000;
+  assert.equal((await rematch("ann", id2)).body.rematch.status, "open");
+  clock += 10_000;
+  r = await rematch("ann", id2);
+  assert.equal(r.body.rematch.status, "left", "bob stopped reading the table");
+  assert.equal((await rematch("ann", id2, "", {})).status, 409);
+
+  // Scheduled maintenance closes offers nobody reads.
+  const id3 = await finished();
+  await rematch("ann", id3);
+  await rematch("bob", id3);
+  await rematch("ann", id3, "", {});
+  clock += TCG_TIMING.REMATCH_MS + 1000;
+  await maintainTcg(env, clock);
+  assert.equal(db.prepare("SELECT status FROM tcg_rematches WHERE match_id = ?").get(id3).status, "expired");
+
+  // The one who offered sold a card from their deck: accepting calls it off.
+  const id4 = await finished();
+  await rematch("ann", id4);
+  await rematch("bob", id4);
+  await rematch("ann", id4, "", {});
+  const sold = Object.keys(JSON.parse(rowOf(id4).deck0)).find((c) => !c.startsWith("energy-"));
+  db.prepare("DELETE FROM cards WHERE user_id = 'ann' AND card_id = ?").run(sold);
+  r = await rematch("bob", id4, "", {});
+  assert.equal(r.status, 409, JSON.stringify(r.body));
+  assert.equal(db.prepare("SELECT status FROM tcg_rematches WHERE match_id = ?").get(id4).status, "cancelled");
+  giveSet("ann");
+
+  // Long after the match, there's no rematch.
+  const id5 = await finished();
+  clock += TCG_TIMING.REMATCH_WINDOW_MS + 1000;
+  await rematch("ann", id5);
+  await rematch("bob", id5);
+  assert.equal((await rematch("ann", id5, "", {})).status, 409);
+});
+
+// ---- Quick match queue ---------------------------------------------------------------
+const queue = (user, body) => api(user, "/api/tcg/queue", body ? "POST" : "GET", body);
+const unqueue = (user) => api(user, "/api/tcg/queue/cancel", "POST", {});
+
+await check("queue: two players in the same format are paired and both go to the table", async () => {
+  await endLive();
+  let r = await queue("ann", { deck: deckFor("ann", "standard", 3) });
+  assert.equal(r.status, 200, JSON.stringify(r.body));
+  assert.equal(r.body.queue.format, "standard");
+  assert.equal(r.body.queue.match, null);
+  r = await queue("bob");
+  assert.equal(r.body.queue, null, "bob isn't queued");
+  assert.equal(r.body.waiting.standard, 1, "one trainer is looking for a Standard match");
+  r = await queue("ann");
+  assert.equal(r.body.queue.match, null, "still waiting");
+  // cat isn't ann's friend: the queue pairs strangers.
+  r = await queue("cat", { deck: deckFor("cat", "standard", 5) });
+  assert.equal(r.status, 200, JSON.stringify(r.body));
+  const id = r.body.queue.match;
+  assert.match(id, /^[a-f0-9]{20}$/, "paired on joining");
+  assert.equal((await queue("ann")).body.queue.match, id, "ann's page hears it");
+  const row = rowOf(id);
+  assert.equal(row.status, "active");
+  assert.equal(row.p0, "ann", "the one who waited longest");
+  assert.equal(row.p1, "cat");
+  assert.deepEqual(JSON.parse(row.deck0), deckFor("ann", "standard", 3).cards);
+  const state = stateOf(id);
+  assert.equal(row.to_move, String(state.flipWinner), "the flip comes first");
+  const g = await api("cat", `/api/tcg/matches/${id}`);
+  assert.equal(g.status, 200);
+  assert.deepEqual(Object.keys(g.body.match.them).sort(), ["handle", "name"], "only the public name and handle");
+  assert.equal(g.body.match.them.handle, "ann");
+  assert.equal((await api("bob", `/api/tcg/matches/${id}`)).status, 404);
+  // Cancelling after the pairing leaves the match standing.
+  r = await unqueue("ann");
+  assert.equal(r.body.queue.match, id);
+  assert.equal(rowOf(id).status, "active");
+  assert.equal((await queue("bob")).body.waiting.standard ?? 0, 0, "nobody left waiting");
+  // Once that match is over the pairing is old news: the page isn't sent back to it.
+  await api("cat", `/api/tcg/matches/${id}/concede`, "POST", {});
+  assert.equal(rowOf(id).status, "over");
+  assert.equal((await queue("cat")).body.queue, null);
+});
+
+await check("queue: other formats aren't paired, cancel, and a page that stops polling loses its place", async () => {
+  await endLive();
+  db.prepare("DELETE FROM tcg_queue").run();
+  let r = await queue("ann", { deck: deckFor("ann", "expanded", 3) });
+  assert.equal(r.status, 200, JSON.stringify(r.body));
+  assert.equal(r.body.queue.format, "expanded");
+  r = await queue("bob", { deck: deckFor("bob", "unlimited", 3) });
+  assert.equal(r.body.queue.match, null, "Unlimited doesn't meet Expanded");
+  r = await queue("cat", { deck: deckFor("cat", "standard", 3) });
+  assert.equal(r.body.queue.match, null, "nor Standard");
+  assert.deepEqual(r.body.waiting, { expanded: 1, unlimited: 1 });
+  r = await unqueue("ann");
+  assert.equal(r.body.queue, null, "ann let her place go");
+  r = await queue("cat");
+  assert.equal(r.body.waiting.expanded ?? 0, 0);
+  // Decks are checked the same way a challenge's are.
+  const deck = deckFor("ann", "standard", 3);
+  const some = Object.keys(deck.cards).find((c) => !c.startsWith("energy-"));
+  assert.equal((await queue("ann", { deck: { ...deck, cards: { ...deck.cards, [some]: 3 } } })).status, 400);
+  assert.equal((await queue("ann", { deck: { ...deck, format: "half" } })).status, 400);
+  assert.equal((await queue("ann", {})).status, 400);
+  // bob's page stops polling; cat keeps polling. Then ann queues Unlimited: bob is stale, so no pairing.
+  clock += TCG_TIMING.PRESENCE_MS / 2;
+  await queue("cat");
+  clock += TCG_TIMING.PRESENCE_MS / 2 + 1000;
+  r = await queue("ann", { deck: deckFor("ann", "unlimited", 3) });
+  assert.equal(r.body.queue.match, null, "bob's stale place isn't paired");
+  r = await queue("bob");
+  assert.equal(r.body.expired, true, "bob's place ran out");
+  assert.equal(r.body.queue, null);
+  assert.ok(!db.prepare("SELECT 1 FROM tcg_queue WHERE user_id = 'bob'").get());
+  // Scheduled maintenance drops places nobody reads.
+  clock += TCG_TIMING.PRESENCE_MS + 1000;
+  await maintainTcg(env, clock);
+  assert.equal(db.prepare("SELECT COUNT(*) AS n FROM tcg_queue").get().n, 0);
+  // A queued player who sold a card from their deck is dropped when someone comes to pair.
+  await queue("ann", { deck: deckFor("ann", "standard", 3) });
+  db.prepare("DELETE FROM cards WHERE user_id = 'ann' AND card_id = ?").run(some);
+  r = await queue("cat", { deck: deckFor("cat", "standard", 3) });
+  assert.equal(r.body.queue.match, null);
+  assert.ok(!db.prepare("SELECT 1 FROM tcg_queue WHERE user_id = 'ann'").get(), "ann's place went with her deck");
+  giveSet("ann");
+  await unqueue("cat");
+});
+
+await check("queue: three at once make one match, never two for the same player", async () => {
+  await endLive();
+  db.prepare("DELETE FROM tcg_queue").run();
+  const rs = await Promise.all(["ann", "bob", "cat"].map((u, i) => queue(u, { deck: deckFor(u, "standard", 3 + i) })));
+  for (const r of rs) assert.equal(r.status, 200, JSON.stringify(r.body));
+  for (const u of ["ann", "bob", "cat"]) await queue(u);
+  const made = db.prepare("SELECT * FROM tcg_matches WHERE status = 'active'").all();
+  assert.equal(made.length, 1, "one pair, one left waiting");
+  const paired = [made[0].p0, made[0].p1];
+  assert.notEqual(paired[0], paired[1]);
+  const left = ["ann", "bob", "cat"].find((u) => !paired.includes(u));
+  assert.equal((await queue(left)).body.queue.match, null);
+  for (const u of paired) assert.equal((await queue(u)).body.queue.match, made[0].id);
+  await unqueue(left);
 });
 
 Date.now = realNow;

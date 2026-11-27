@@ -205,8 +205,8 @@ export function initTcg(deps) {
         <button type="button" class="solid sm" data-lesson>Start lesson</button>
       </div>`}
       <div class="rt-box tg-learn tg-friend-entry">
-        <p><b>Play a friend</b>${lobby.matches?.incoming.length ? `${plural(lobby.matches.incoming.length, "challenge")} waiting for you.` : lobby.matches?.live.length ? `${lobby.matches.live.length === 1 ? "A match is" : `${lobby.matches.live.length} matches are`} on.` : "Challenge a friend with one of your decks."}</p>
-        <button type="button" class="${lobby.matches?.incoming.length || lobby.matches?.live.length ? "solid" : "ghost"} sm" data-go="/play/friends">${lobby.matches?.incoming.length ? "See challenges" : lobby.matches?.live.length ? "Back to it" : "Challenge"}</button>
+        <p><b>Play online</b>${lobby.matches?.incoming.length ? `${plural(lobby.matches.incoming.length, "challenge")} waiting for you.` : lobby.matches?.live.length ? `${lobby.matches.live.length === 1 ? "A match is" : `${lobby.matches.live.length} matches are`} on.` : "Find a quick match, or challenge a friend with one of your decks."}</p>
+        <button type="button" class="${lobby.matches?.incoming.length || lobby.matches?.live.length ? "solid" : "ghost"} sm" data-go="/play/friends">${lobby.matches?.incoming.length ? "See challenges" : lobby.matches?.live.length ? "Back to it" : "Play online"}</button>
       </div>
       <section class="tg-block">
         <h2 class="tg-h2">Your decks</h2>
@@ -965,12 +965,24 @@ export function initTcg(deps) {
         </div>
       </div>`;
     }
+    if (match.online) {
+      return `<div class="tg-sheet-bg"></div>
+      <div class="tg-sheet tg-over" role="dialog" aria-label="Match over">
+        <h2>${tie ? "A tie" : won ? "You win" : "You lose"}</h2>
+        <p>${esc(why)} ${plural(state.turn, "turn")}.</p>
+        <div class="tg-rematch" data-rematch aria-live="polite">${rematchHtml()}</div>
+        <div class="tg-sheet-keys">
+          <button type="button" class="ghost" data-go="/play/friends">Play online</button>
+          <button type="button" class="tlink" data-go="/play">Decks</button>
+        </div>
+      </div>`;
+    }
     return `<div class="tg-sheet-bg"></div>
       <div class="tg-sheet tg-over" role="dialog" aria-label="Match over">
         <h2>${tie ? "A tie" : won ? "You win" : "You lose"}</h2>
         <p>${esc(why)} ${plural(state.turn, "turn")}.</p>
         <div class="tg-sheet-keys">
-          <button type="button" class="solid rt-go" data-act="again">${match.online ? "Challenge again" : "Play again"}</button>
+          <button type="button" class="solid rt-go" data-act="again">Play again</button>
           <button type="button" class="ghost" data-go="/play">Decks</button>
         </div>
       </div>`;
@@ -1631,7 +1643,11 @@ export function initTcg(deps) {
     match.over = true;
     match.busy = false;
     // A match against a friend is kept by the Worker, and no record or reward comes of it here.
-    if (match.online) return paintTable(), true;
+    if (match.online) {
+      paintTable();
+      loadRematch();
+      return true;
+    }
     if (match.lesson != null) write("learned", true);
     else if (match.state.winner === ME) record.wins += 1;
     else if (match.state.winner === BOT) record.losses += 1;
@@ -1825,6 +1841,8 @@ export function initTcg(deps) {
     clearInterval(clockTimer);
     clockTimer = setInterval(() => {
       if (!shown || route.name !== "online") return clearInterval(clockTimer);
+      const left = root.querySelector("[data-rematch-time]");
+      if (left) left.textContent = rematchLeft();
       const el = root.querySelector("[data-clock]");
       const clock = clockNow();
       if (!el || !clock) return;
@@ -1850,10 +1868,142 @@ export function initTcg(deps) {
     return `<span class="tg-clock${clock.mine ? " is-mine" : ""}${clock.low ? " is-low" : ""}" data-clock title="${esc(clock.title)}">${clock.text}</span>`;
   }
 
-  /* ---------- the friends page: challenges and matches ---------- */
+  /* ---------- a rematch, from the finished table (worker/tcg.js Rematch) ----------
+     While the finished table is open the page reads the rematch every few seconds, which
+     tells the Worker this player is still here. Either player offers; the other accepts and
+     both pages go to the new table. Leaving the table closes any offer. */
 
-  const lobby = { friends: null, matches: null, deckId: "", loading: false, error: "", known: new Set() };
+  const REMATCH_POLL_MS = 2500;
+  let rematchTimer = 0;
+
+  const rematchLeft = () => {
+    const r = match?.rematch;
+    if (!r || r.status !== "open") return "";
+    const secs = Math.max(0, Math.round((r.deadline - (Date.now() + (match.rematchSkew || 0))) / 1000));
+    return `${Math.floor(secs / 60)}:${String(secs % 60).padStart(2, "0")}`;
+  };
+
+  function rematchDeckHtml() {
+    const format = match.online.summary?.format;
+    const choices = readyDecks().filter((deck) => deck.format === format);
+    if (!choices.length) return "";
+    if (!choices.some((deck) => deck.id === match.rematchDeck)) match.rematchDeck = "";
+    return `<label class="tg-rematch-deck"><span>Deck</span><select class="filter" id="tg-rematch-deck">
+      <option value="">The same deck</option>
+      ${choices.map((deck) => `<option value="${esc(deck.id)}"${deck.id === match.rematchDeck ? " selected" : ""}>${esc(deck.name)}</option>`).join("")}
+    </select></label>`;
+  }
+
+  function rematchHtml() {
+    const r = match.rematch;
+    const them = esc(foeName());
+    const busy = match.rematchBusy ? " disabled" : "";
+    if (!r) return `<p class="tg-rematch-line">Checking whether ${them} is still at the table.</p>`;
+    if (r.status === "accepted") return `<p class="tg-rematch-line"><b>Rematch on.</b>Taking you to the table.</p>`;
+    if (r.status === "declined") return `<p class="tg-rematch-line">${r.mine ? `${them} said no to a rematch.` : "You said no to a rematch."}</p>`;
+    if (r.status === "left") return `<p class="tg-rematch-line">${r.mine ? "You left the table, so the rematch closed." : `${them} has left the table.`}</p>`;
+    if (!r.here && !(r.status === "open" && !r.mine)) return `<p class="tg-rematch-line">${them} isn't at the table right now.</p>`;
+    if (r.status === "open" && !r.mine) {
+      return `<p class="tg-rematch-line"><b>${them} wants a rematch.</b>Same format, a fresh coin flip. <span data-rematch-time>${rematchLeft()}</span> to answer.</p>
+        ${rematchDeckHtml()}
+        <div class="tg-sheet-keys"><button type="button" class="solid rt-go" data-act="rematch"${busy}>Accept rematch</button><button type="button" class="ghost" data-act="rematch-no"${busy}>No thanks</button></div>`;
+    }
+    if (r.status === "open") {
+      return `<p class="tg-rematch-line"><b>Rematch offered.</b>Waiting for ${them} to answer, <span data-rematch-time>${rematchLeft()}</span> left.</p>
+        <div class="tg-sheet-keys"><button type="button" class="ghost" data-act="rematch-no"${busy}>Call it off</button></div>`;
+    }
+    const lead = r.status === "expired" ? "The offer ran out. " : r.status === "cancelled" ? "The offer was called off. " : "";
+    return `<p class="tg-rematch-line">${lead}Play ${them} again: same format, a fresh coin flip.</p>
+      ${rematchDeckHtml()}
+      <div class="tg-sheet-keys"><button type="button" class="solid rt-go" data-act="rematch"${busy}>Rematch</button></div>`;
+  }
+
+  function paintRematch() {
+    const el = root.querySelector("[data-rematch]");
+    if (el) el.innerHTML = rematchHtml();
+  }
+
+  function takeRematch(r) {
+    if (!r || !match?.online) return;
+    const same = (a) => JSON.stringify(a ? { ...a, now: 0 } : null);
+    const changed = same(match.rematch) !== same(r);
+    match.rematch = r;
+    match.rematchSkew = r.now - Date.now();
+    if (r.status === "accepted" && r.next) {
+      clearTimeout(rematchTimer);
+      paintRematch();
+      deps.navigate(`/play/online/${r.next}`);
+      return;
+    }
+    if (changed) paintRematch();
+  }
+
+  function rematchSoon(ms = REMATCH_POLL_MS) {
+    clearTimeout(rematchTimer);
+    rematchTimer = setTimeout(loadRematch, ms);
+  }
+
+  async function loadRematch() {
+    const mine = match;
+    if (!shown || route.name !== "online" || !mine?.online || !mine.over || mine.rematchGone) return;
+    try {
+      const res = await api(`/api/tcg/matches/${mine.online.id}/rematch`);
+      if (mine !== match) return;
+      takeRematch(res.rematch);
+    } catch {
+      /* a dropped read: the next one catches up */
+    }
+    // A rematch that was turned down or left can't change again; there's nothing more to read.
+    if (mine === match && !["accepted", "declined", "left"].includes(match.rematch?.status)) rematchSoon();
+  }
+
+  async function rematchAct(kind) {
+    const mine = match;
+    if (!mine?.online || mine.rematchBusy) return;
+    mine.rematchBusy = true;
+    paintRematch();
+    try {
+      const deck = kind === "offer" ? decks.find((x) => x.id === mine.rematchDeck) : null;
+      const res = await api(`/api/tcg/matches/${mine.online.id}/rematch${kind === "offer" ? "" : "/decline"}`, {
+        method: "POST",
+        body: JSON.stringify(deck ? { deck: { name: deck.name, format: deck.format, cards: deck.cards } } : {}),
+      });
+      mine.rematchBusy = false;
+      if (mine === match) takeRematch(res.rematch);
+    } catch (err) {
+      mine.rematchBusy = false;
+      toast(err.message || "That didn't go through.");
+    }
+    if (mine !== match) return;
+    paintRematch();
+    rematchSoon();
+  }
+
+  /** Leaving a finished table closes any rematch offer, for both players. */
+  function leaveRematch(m) {
+    if (!m?.online || !m.over || m.rematchGone || m.rematch?.status === "accepted") return;
+    m.rematchGone = true;
+    clearTimeout(rematchTimer);
+    api(`/api/tcg/matches/${m.online.id}/rematch/leave`, { method: "POST", body: "{}", keepalive: true }).catch(() => null);
+  }
+
+  /* ---------- the online page: quick match, challenges and matches ---------- */
+
+  const lobby = { friends: null, matches: null, deckId: "", loading: false, error: "", known: new Set(), queue: null, waiting: {}, queueSkew: 0, queueBusy: false, html: "" };
   let lobbyTimer = 0;
+  let queueTimer = 0;
+  let queueTick = 0;
+  const QUEUE_POLL_MS = 2500;
+
+  /** Paint the online page, unless nothing on it changed (a repaint would restart the waiting animation and close the deck menu). */
+  function paintLobby(force = false) {
+    if (!shown || route.name !== "friends") return;
+    const html = friendsHtml();
+    if (!force && html === lobby.html && root.querySelector(".tg-pvp")) return;
+    lobby.html = html;
+    root.innerHTML = html;
+    tickQueue();
+  }
 
   const readyDecks = () => decks.filter((deck) => checkDeck(deck, owned(), defs).ok);
   const timeLeft = (ms) => (ms < 60000 ? "under a minute" : `${Math.round(ms / 60000)} min`);
@@ -1862,14 +2012,18 @@ export function initTcg(deps) {
   async function loadLobby() {
     if (lobby.loading) return;
     if (!deps.signedIn?.()) {
-      lobby.error = "Sign in to play your friends.";
-      if (shown && route.name === "friends") root.innerHTML = friendsHtml();
+      lobby.error = "Sign in to play online.";
+      paintLobby();
       return;
     }
     lobby.loading = true;
     try {
-      const [friends, matches] = await Promise.all([lobby.friends ? Promise.resolve(lobby.friends) : api("/api/friends"), api("/api/tcg/matches")]);
+      const [friends, matches, queue] = await Promise.all([lobby.friends ? Promise.resolve(lobby.friends) : api("/api/friends"), api("/api/tcg/matches"), route.name === "friends" ? api("/api/tcg/queue").catch(() => null) : null]);
       lobby.friends = friends;
+      if (queue && takeQueue(queue)) {
+        lobby.loading = false;
+        return;
+      }
       // A challenge you sent was just accepted: go to the table.
       const started = matches.live.find((m) => m.challenger && lobby.known.has(m.id));
       lobby.known = new Set(matches.outgoing.map((m) => m.id));
@@ -1880,10 +2034,132 @@ export function initTcg(deps) {
         return deps.navigate(`/play/online/${started.id}`);
       }
     } catch (err) {
-      lobby.error = err.status === 401 ? "Sign in to play your friends." : err.message || "Couldn't load your friends.";
+      lobby.error = err.status === 401 ? "Sign in to play online." : err.message || "Couldn't load your friends.";
     }
     lobby.loading = false;
-    if (shown && route.name === "friends") root.innerHTML = friendsHtml();
+    paintLobby();
+  }
+
+  /* The quick match queue (worker/tcg.js Quick match queue). While this page has a place
+     it reads the queue every few seconds: that keeps the place, and is how it hears it was
+     paired. Leaving the page gives the place up. */
+
+  /** Take the Worker's answer about the queue. True when it paired this player and the page is going to the table. */
+  function takeQueue(res) {
+    const was = lobby.queue;
+    lobby.waiting = res.waiting || {};
+    lobby.queueSkew = (res.now || Date.now()) - Date.now();
+    // Only a page that was waiting goes to the table: a pairing from before (a reload, an old tab) is in Matches on.
+    if (res.queue?.match) {
+      lobby.queue = null;
+      if (was && shown && route.name === "friends") {
+        clearTimeout(queueTimer);
+        deps.navigate(`/play/online/${res.queue.match}`);
+        return true;
+      }
+      return false;
+    }
+    lobby.queue = res.queue || null;
+    if (was && !lobby.queue && res.expired) toast("Your place in the queue ran out. Find a match again when you're ready.");
+    if (lobby.queue) queueSoon();
+    return false;
+  }
+
+  function queueSoon(ms = QUEUE_POLL_MS) {
+    clearTimeout(queueTimer);
+    queueTimer = setTimeout(pollQueue, ms);
+  }
+
+  async function pollQueue() {
+    if (!shown || route.name !== "friends" || !lobby.queue) return;
+    try {
+      const res = await api("/api/tcg/queue");
+      if (!lobby.queue || route.name !== "friends") return;
+      if (takeQueue(res)) return;
+    } catch {
+      /* a dropped read: the next one catches up, well inside the time a place is kept */
+      queueSoon();
+    }
+    paintLobby();
+  }
+
+  /** How long this player has been waiting, on the waiting card. Text only, no repaint. */
+  function tickQueue() {
+    clearInterval(queueTick);
+    if (!lobby.queue) return;
+    const draw = () => {
+      const el = root.querySelector("[data-quick-time]");
+      if (!el || !lobby.queue) return clearInterval(queueTick);
+      const secs = Math.max(0, Math.round((Date.now() + lobby.queueSkew - lobby.queue.joinedAt) / 1000));
+      el.textContent = `${Math.floor(secs / 60)}:${String(secs % 60).padStart(2, "0")}`;
+    };
+    draw();
+    queueTick = setInterval(draw, 1000);
+  }
+
+  async function findMatch() {
+    const deck = decks.find((x) => x.id === lobby.deckId);
+    if (!deck || lobby.queueBusy) return;
+    lobby.queueBusy = true;
+    paintLobby();
+    try {
+      const res = await api("/api/tcg/queue", { method: "POST", body: JSON.stringify({ deck: { name: deck.name, format: deck.format, cards: deck.cards } }) });
+      lobby.queueBusy = false;
+      // Paired straight away still counts as waiting: go to the table.
+      lobby.queue = lobby.queue || { format: deck.format, deckName: deck.name, joinedAt: res.now };
+      if (takeQueue(res)) return;
+    } catch (err) {
+      lobby.queueBusy = false;
+      toast(err.message || "Couldn't join the queue.");
+    }
+    paintLobby();
+  }
+
+  async function cancelQueue() {
+    if (lobby.queueBusy) return;
+    lobby.queueBusy = true;
+    clearTimeout(queueTimer);
+    paintLobby();
+    try {
+      const res = await api("/api/tcg/queue/cancel", { method: "POST", body: "{}" });
+      lobby.queueBusy = false;
+      // Paired just before the cancel: the match stands, so go to it.
+      if (takeQueue(res)) return;
+      lobby.queue = null;
+    } catch (err) {
+      lobby.queueBusy = false;
+      toast(err.message || "That didn't go through.");
+      if (lobby.queue) queueSoon();
+    }
+    paintLobby();
+  }
+
+  /** Leaving the page gives the place up; the Worker would drop it soon anyway. */
+  function dropQueue() {
+    clearTimeout(queueTimer);
+    clearInterval(queueTick);
+    if (!lobby.queue) return;
+    lobby.queue = null;
+    api("/api/tcg/queue/cancel", { method: "POST", body: "{}", keepalive: true }).catch(() => null);
+  }
+
+  function quickHtml(chosen) {
+    const fmt = (id) => FORMATS[id]?.name || "Deck";
+    const q = lobby.queue;
+    const busy = lobby.queueBusy ? " disabled" : "";
+    if (q) {
+      return `<div class="rt-box tg-learn tg-quick is-on">
+        <div class="tg-quick-scan" aria-hidden="true"><i></i><i></i><i></i></div>
+        <p role="status"><b>Looking for a ${fmt(q.format)} match</b>With ${esc(q.deckName || "your deck")}, waiting <span data-quick-time>0:00</span>. The table opens when you're paired.</p>
+        <button type="button" class="ghost sm" data-quick-cancel${busy}>Cancel</button>
+      </div>`;
+    }
+    const n = chosen ? lobby.waiting[chosen.format] || 0 : 0;
+    const line = chosen ? `Play anyone looking for a ${fmt(chosen.format)} match with ${esc(chosen.name)}. ${n ? `${plural(n, "trainer")} waiting now.` : "Nobody's waiting yet, so you'd be first in line."}` : "Pick a ready deck first.";
+    return `<div class="rt-box tg-learn tg-quick">
+      <p><b>Quick match</b>${line} You see each other's name and nothing else.</p>
+      <button type="button" class="solid sm" data-quick-find${chosen && !busy ? "" : " disabled"}>Find a match</button>
+    </div>`;
   }
 
   function lobbySoon() {
@@ -1923,14 +2199,15 @@ export function initTcg(deps) {
     return `<div class="tg-page tg-pvp">
       <header class="tg-head">
         <button type="button" class="tlink tg-back" data-go="/play">Your decks</button>
-        <h1 class="page-title tg-title">Play a friend</h1>
-        <p class="tg-lede">Challenge a friend with one of your decks. Each move has ${TCG_MOVE_SECONDS} seconds on the clock. Just for fun: nothing is won or lost.</p>
+        <h1 class="page-title tg-title">Play online</h1>
+        <p class="tg-lede">Find a quick match or challenge a friend with one of your decks. Each move has ${TCG_MOVE_SECONDS} seconds on the clock. Just for fun: nothing is won or lost.</p>
       </header>
       ${lobby.error ? `<p class="rt-empty tg-none">${esc(lobby.error)}</p>` : ""}
       <div class="tg-pvp-deck">
         <span>Your deck</span>
-        ${ready.length ? `<select class="filter" id="tg-pvp-deck" aria-label="Your deck">${ready.map((deck) => `<option value="${esc(deck.id)}"${deck.id === lobby.deckId ? " selected" : ""}>${esc(deck.name)}, ${fmt(deck.format)}</option>`).join("")}</select>` : `<p>No deck is ready yet. <button type="button" class="tlink" data-go="/play">Build one</button></p>`}
+        ${ready.length ? `<select class="filter" id="tg-pvp-deck" aria-label="Your deck"${lobby.queue ? " disabled" : ""}>${ready.map((deck) => `<option value="${esc(deck.id)}"${deck.id === lobby.deckId ? " selected" : ""}>${esc(deck.name)}, ${fmt(deck.format)}</option>`).join("")}</select>` : `<p>No deck is ready yet. <button type="button" class="tlink" data-go="/play">Build one</button></p>`}
       </div>
+      ${lobby.error ? "" : quickHtml(chosen)}
       ${!m ? (lobby.error ? "" : `<div class="rt-skel tg-loading">Loading</div>`) : `
       ${m.incoming.length ? `<section class="tg-block"><h2 class="tg-h2">Challenges for you</h2>
         ${m.incoming.map((x) => matchRowHtml(x, `<button type="button" class="solid sm" data-accept="${x.id}"${chosen?.format === x.format ? "" : " disabled"}>Accept</button><button type="button" class="ghost sm" data-decline="${x.id}">Decline</button>`, `${fmt(x.format)}, ${timeLeft(x.deadline - now)} to answer${chosen?.format === x.format ? "" : `. Pick a ${fmt(x.format)} to accept`}`)).join("")}
@@ -2235,7 +2512,8 @@ export function initTcg(deps) {
       match = null;
       return startLesson();
     }
-    if (act === "again" && match.online) return deps.navigate("/play/friends");
+    if (act === "rematch" && match.online) return rematchAct("offer");
+    if (act === "rematch-no" && match.online) return rematchAct("decline");
     if (act === "again") {
       const id = match.deckId;
       match = null;
@@ -2303,7 +2581,7 @@ export function initTcg(deps) {
     if (table) return paintTable();
     fxLayer(false);
     if (route.name === "friends") {
-      root.innerHTML = friendsHtml();
+      paintLobby(true);
       return;
     }
     if (route.name === "deck") {
@@ -2325,6 +2603,8 @@ export function initTcg(deps) {
     if (look) return openLook(look.dataset.look);
 
     if (route.name === "friends") {
+      const quick = t.closest("[data-quick-find], [data-quick-cancel]");
+      if (quick && !quick.disabled) return quick.dataset.quickCancel != null ? cancelQueue() : findMatch();
       const key = t.closest("[data-challenge], [data-accept], [data-decline], [data-call-off]");
       if (!key || key.disabled) return;
       key.disabled = true;
@@ -2416,9 +2696,13 @@ export function initTcg(deps) {
     }
   });
   root.addEventListener("change", (e) => {
+    if (route.name === "online" && match?.online && e.target.id === "tg-rematch-deck") {
+      match.rematchDeck = e.target.value;
+      return;
+    }
     if (route.name === "friends" && e.target.id === "tg-pvp-deck") {
       lobby.deckId = e.target.value;
-      root.innerHTML = friendsHtml();
+      paintLobby();
       return;
     }
     const deck = route.name === "deck" ? deckById(route.id) : null;
@@ -2443,9 +2727,17 @@ export function initTcg(deps) {
     return { name: "hub" };
   }
 
+  /** Moving off a page: a finished table closes its rematch offer, the online page gives up its place in the queue. */
+  function leaving(from, to) {
+    if (from.name === "online" && !(to?.name === "online" && to.id === from.id) && match?.online?.id === from.id) leaveRematch(match);
+    if (from.name === "friends" && to?.name !== "friends") dropQueue();
+  }
+
   async function show(path) {
+    const from = route;
     shown = true;
     route = parse(path || "/play");
+    leaving(from, route);
     if (!defs) root.innerHTML = `<div class="tg-page"><div class="rt-skel tg-loading">Loading</div></div>`;
     try {
       await load();
@@ -2497,11 +2789,20 @@ export function initTcg(deps) {
     if (route.name === "online" && match?.online) {
       tickClock();
       pollSoon(300);
+      if (match.over) {
+        // Back at a finished table: read where the rematch stands.
+        match.rematchGone = false;
+        loadRematch();
+      }
     }
   }
 
   function hide() {
+    if (shown) leaving(route, null);
     shown = false;
+    clearTimeout(rematchTimer);
+    clearTimeout(queueTimer);
+    clearInterval(queueTick);
     clearTimeout(pollTimer);
     clearTimeout(lobbyTimer);
     clearInterval(clockTimer);
