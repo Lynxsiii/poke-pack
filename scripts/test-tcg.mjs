@@ -8,7 +8,7 @@
  */
 import { readFileSync, readdirSync } from "node:fs";
 import assert from "node:assert/strict";
-import { ACTIVE, FORMATS, RuleError, abilityOn, noteShed, hpLeft, attacksOf, defOf, addCondition, addMark, apply, costFor, benchSafe, canRetreat, energyOf, warded, toolOf, conditionsOn, createGame, flip, damageAfterTyping, legalActions, maxHp, resolveKnockOuts, retreatCost, unpaid, usableAttacks, viewFor } from "../js/tcg/engine.js";
+import { ACTIVE, FORMATS, RuleError, abilityOn, rand, noteShed, hpLeft, attacksOf, defOf, addCondition, addMark, apply, costFor, benchSafe, canRetreat, energyOf, warded, toolOf, conditionsOn, createGame, flip, damageAfterTyping, legalActions, maxHp, resolveKnockOuts, retreatCost, unpaid, usableAttacks, viewFor } from "../js/tcg/engine.js";
 import { createDefs, defineCard, FREE_ENERGY } from "../js/tcg/cards.js";
 import { boostOf, compileTrainer, fits, runTrainer, trainerAim, whatOf } from "../js/tcg/trainers.js";
 import { compileAttack } from "../js/tcg/effects.js";
@@ -7059,6 +7059,87 @@ test("more Scarlet & Violet Tools, Stadiums and Special Energy", () => {
   state.attackBy = { p: 1, uid: state.players[1].active.uid, turn: state.turn };
   noteShed(state, 0, ACTIVE, [lone]);
   assert.ok(!state.comeback);
+});
+
+test("more Scarlet & Violet and Mega Evolution Abilities", () => {
+  for (const id of ["me2pt5-159", "me2pt5-79", "me1-11", "me1-110", "me6-52", "me2-62", "sv5-25", "me2pt5-26", "me2pt5-70", "me5-45", "sv10-8", "me6-47", "sv7-115", "me2-82"]) assert.ok(defs(id).ability, id);
+  const charge = (state, p, slot, id) => {
+    const uid = state.players[p].deck.pop();
+    state.cards[uid] = id;
+    slot.energy.push(uid);
+    return uid;
+  };
+  // Drakloak: 1 of the top 2 into the hand, the other to the bottom.
+  let state = scene({ bench: ["me2pt5-159"] });
+  const [a, b] = state.players[0].deck.slice(0, 2);
+  act(state, { type: "ability", player: 0, spot: 0 });
+  act(state, { type: "choose", player: 0, uids: [b] });
+  assert.ok(state.players[0].hand.includes(b));
+  assert.equal(state.players[0].deck.at(-1), a);
+  // Team Rocket's Mewtwo ex: no attack without 4 Team Rocket's Pokémon; Mega Golurk ex: not with fewer than 10 cards in hand.
+  state = scene({ front: "me2pt5-79" });
+  throws(() => act(state, { type: "attack", player: 0, index: 0 }), /unless/);
+  state = scene({ front: "me2pt5-79", bench: ["sv10-15", "sv10-19", "sv10-15"] });
+  assert.ok(!/unless/.test((() => { try { act(state, { type: "attack", player: 0, index: 0 }); return ""; } catch (err) { return err.message; } })()));
+  state = scene({ front: "me6-47" });
+  throws(() => act(state, { type: "attack", player: 0, index: 0 }), /unless/);
+  // Shuckle: only with a Grass Energy on it.
+  state = scene({ front: "me1-11", bench: ["base1-46"] });
+  state.players[0].bench[0].damage = 30;
+  throws(() => act(state, { type: "ability", player: 0, spot: ACTIVE }), /nothing/);
+  charge(state, 0, state.players[0].active, G);
+  act(state, { type: "ability", player: 0, spot: ACTIVE });
+  act(state, { type: "pick", player: 0, spot: 0 });
+  assert.equal(state.players[0].bench[0].damage, 0);
+  // Gumshoos: a card from the hand and the top card of the deck trade places.
+  state = scene({ front: "me1-110" });
+  const top = state.players[0].deck[0];
+  const card = state.players[0].hand[0];
+  act(state, { type: "ability", player: 0, spot: ACTIVE });
+  act(state, { type: "choose", player: 0, uids: [card] });
+  assert.equal(state.players[0].deck[0], card);
+  assert.ok(state.players[0].hand.includes(top) && !state.players[0].hand.includes(card));
+  // Steelix: 60 less damage from full HP only. Seviper: 120 more with a Darkness Mega Evolution Pokémon ex in play.
+  state = scene({ front: "me6-52" });
+  assert.equal(toolOf(state, state.players[0].active, defs).less, 60);
+  state.players[0].active.damage = 10;
+  assert.ok(!toolOf(state, state.players[0].active, defs).less);
+  state = scene({ front: "me2-62" });
+  assert.ok(!toolOf(state, state.players[0].active, defs).plus);
+  assert.ok(fits(defs("me2-56"), "mega:Darkness"));
+  state.players[0].bench = [slotFor(state, 0, "me2-56")];
+  assert.equal(toolOf(state, state.players[0].active, defs).plus, 120);
+  // Cynthia's Roserade: Cynthia's Pokémon only.
+  state = scene({ front: "sv10-8" });
+  assert.equal(toolOf(state, state.players[0].active, defs).plus, 30);
+  state.players[0].bench = [slotFor(state, 0, "base1-46")];
+  assert.ok(!toolOf(state, state.players[0].bench[0], defs).plus);
+  // Iron Leaves ex: onto the Bench, then into the Active Spot, taking Energy along the way.
+  state = scene();
+  const old = state.players[0].active;
+  charge(state, 0, old, G);
+  const leaves = handed(state, 0, "sv5-25");
+  act(state, { type: "bench", player: 0, uid: leaves });
+  act(state, { type: "pick", player: 0, spot: state.players[0].bench.length - 1 });
+  assert.equal(state.players[0].active.uid, leaves);
+  act(state, { type: "pick", player: 0, spot: state.pending[0].spots[0] });
+  assert.equal(state.players[0].active.energy.length, 1);
+  // Ethan's Ho-Oh ex: up to 2 Basic Fire Energy onto 1 Benched Ethan's Pokémon, not another.
+  state = scene({ front: "me2pt5-26", bench: ["base1-46"] });
+  throws(() => act(state, { type: "ability", player: 0, spot: ACTIVE }), /nothing/);
+  // Rampardos ex: heads, an Energy off the other Active Pokémon.
+  state = scene({ front: "me5-45" });
+  const theirs = charge(state, 1, state.players[1].active, W);
+  // A seed whose first coin is heads.
+  let rng = 0;
+  for (; rng < 50; rng += 1) {
+    const probe = { rng };
+    if (rand(probe) < 0.5) break;
+  }
+  state.rng = rng;
+  act(state, { type: "ability", player: 0, spot: ACTIVE });
+  if (state.pending[0]) act(state, { type: "pick", player: 0, spot: ACTIVE });
+  assert.ok(state.players[1].discard.includes(theirs));
 });
 
 console.log(`${passed} checks passed${process.exitCode ? ", some failed" : ""}`);

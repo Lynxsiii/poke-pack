@@ -182,7 +182,18 @@ function ownAbility(state, slot, defs) {
   if (when?.energy) {
     const units = energyOf(state, slot, defs);
     const want = when.energy;
-    if (want === "none" ? units.length : !units.includes(want)) return null;
+      if (want === "none" ? units.length : want === "any" ? !units.length : !units.includes(want)) return null;
+  }
+  // "If this Pokémon has full HP", "has 2 or more damage counters on it".
+  if (when?.fullHp && slot.damage) return null;
+  if (when?.countersMin && (slot.damage || 0) < when.countersMin * 10) return null;
+  if (when?.inPlay || when?.foeInPlay || when?.sameHand) {
+    const owner = ownerOf(state, slot);
+    if (owner < 0) return null;
+    // "If you have any Darkness Mega Evolution Pokémon ex in play", "If your opponent has any Pokémon ex in play".
+    if (when.inPlay && !inPlay(state, owner).some(([mate]) => fits(defOf(state, mate.uid, defs), when.inPlay))) return null;
+    if (when.foeInPlay && !inPlay(state, other(owner)).some(([rival]) => fits(defOf(state, rival.uid, defs), when.foeInPlay))) return null;
+    if (when.sameHand && state.players[owner].hand.length !== state.players[other(owner)].hand.length) return null;
   }
   if (when?.status && statusOf(slot).main !== when.status) return null;
   if (when?.special && !slot.energy.some((uid) => defOf(state, uid, defs)?.kind === "energy" && !defOf(state, uid, defs).basic)) return null;
@@ -887,6 +898,13 @@ function tooEarly(state, player, attack, defs) {
   const says = (op) => (attack.fx || []).some((step) => step.op === op);
   if (state.turn === 1 && !says("firstTurn")) return "The player who goes first can't attack on the first turn.";
   if (state.turn === 2 && player !== state.first && says("notSecondFirst")) return "If you go second, you can't use this attack during your first turn.";
+  // "This Pokémon can't attack unless you have 4 or more Team Rocket's Pokémon in play", "... unless you have 10 or more cards in your hand".
+  const bar = abilityOn(state, state.players[player].active, defs)?.attackUnless;
+  if (bar) {
+    const side = state.players[player];
+    if (bar.hand != null && side.hand.length < bar.hand) return `It can't attack unless you have ${bar.hand} or more cards in your hand.`;
+    if (bar.what && inPlay(state, player).filter(([slot]) => fits(defOf(state, slot.uid, defs), bar.what)).length < bar.n) return `It can't attack unless you have ${bar.n} or more of those Pokémon in play.`;
+  }
   // "You can use this attack only if ...", "You can't use this attack if your Bench is full" (effects.js OPS.onlyIf).
   return attackBlock(state, player, attack, defs);
 }
@@ -1879,6 +1897,13 @@ const HANDLERS = {
         askPick(state, { player, side: player, spots, left: 1, effect: { op: "evolveHeld", uid, zone: waiting.zone }, ...(waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) });
         waiting.then = null;
       } else if (waiting.zone === "deck") events.push({ t: "search", p: player, uids: [], from: "deck", to: "hand" });
+    } else if (op === "swapTop") {
+      // "Switch a card from your hand with the top card of your deck."
+      const top = side.deck.shift();
+      side.deck.unshift(...picked);
+      if (top) side.hand.push(top);
+      events.push({ t: "hand-to-deck", p: player, uids: picked, at: "top" });
+      if (top) events.push({ t: "draw", p: player, uids: [top] });
     } else if (op === "toTop" || op === "toBottom") {
       // From the hand onto the top or the bottom of the deck (or into it, when it is shuffled next).
       if (op === "toTop") side.deck.unshift(...picked);
