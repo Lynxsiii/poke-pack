@@ -1253,6 +1253,7 @@ export function initTcg(deps) {
       case "bounce": if (event.discard) return `${name(event.uid)} was discarded, with all cards attached to it.`;
         return `${who(event.p)} put ${name(event.uid)} back into ${event.p === ME ? "your" : "its"} hand.`;
       case "boost": return `${event.p === ME ? "Your" : "Their"} attacks can do ${event.n} more damage this turn.`;
+      case "team-guard": return `${event.p === ME ? "Your" : "Their"} Pokémon take ${event.n} less damage during the next turn.`;
       case "energy-to-hand": return `${plural(event.uids.length, "Energy card")} went back to ${event.p === ME ? "your" : "their"} hand.`;
       case "energy-to-deck": return `${plural(event.uids.length, "Energy card")} shuffled into ${event.p === ME ? "your" : "their"} deck.`;
       case "stadium-gone": return `${name(event.uid)} was discarded.`;

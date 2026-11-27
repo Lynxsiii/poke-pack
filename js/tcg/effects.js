@@ -19,7 +19,7 @@
  *        shielded (the target takes no effects this turn) }
  */
 
-import { ACTIVE, abilityOn, noteShed, shieldOn, addCondition, addMark, askChoose, askPick, benchSafe, canPay, conditionsOn, damageAfterTyping, defOf, devolveSlot, energyAlike, energyToDeck, energyFits, energyMod, energyOf, flip, healRoom, heldOn, hpLeft, inPlay, markOn, maxHp, other, rand, retreatCost, shedEnergy, shuffle, slotAt, strike, struck, switchActive, toLost, toolGone, unpaid, warded, win } from "./engine.js";
+import { ACTIVE, abilityOn, noteShed, shieldOn, sideHit, addCondition, addMark, askChoose, askPick, benchSafe, canPay, conditionsOn, damageAfterTyping, defOf, devolveSlot, energyAlike, energyToDeck, energyFits, energyMod, energyOf, flip, healRoom, heldOn, hpLeft, inPlay, markOn, maxHp, other, rand, retreatCost, shedEnergy, shuffle, slotAt, strike, struck, switchActive, toLost, toolGone, unpaid, warded, win } from "./engine.js";
 import { T_OPS, compileTrainer, fits, runTrainer, trainerReady, whatOf } from "./trainers.js";
 
 const WORDS = { a: 1, an: 1, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6 };
@@ -569,9 +569,12 @@ export const OPS = {
       if (dealt.amount <= 0) continue;
       if (pierce ? defOf(state, slot.uid, ctx.defs).tera && spot !== ACTIVE : benchSafe(state, slot, spot, ctx.defs, p === player)) continue;
       if (p !== player && spot !== ACTIVE && shieldOn(state, slot, defIn(ctx, ctx.slot))) continue;
-      slot.damage += dealt.amount;
-      struck(state, slot, dealt.amount);
-      events.push({ t: "damage", p, spot, n: dealt.amount, weak: dealt.weak, resist: dealt.resist });
+      // What is on that Pokémon still counts: less damage, a wall (engine.js sideHit).
+      const amount = p !== player && !pierce && !ctx.hit.noEffects ? sideHit(state, slot, dealt.amount, ctx.slot, p, ctx.defs, events) : dealt.amount;
+      if (amount <= 0) continue;
+      slot.damage += amount;
+      struck(state, slot, amount);
+      events.push({ t: "damage", p, spot, n: amount, weak: dealt.weak, resist: dealt.resist });
     }
   },
   /** The attacker trades places with one of its Benched Pokémon (its player chooses). */

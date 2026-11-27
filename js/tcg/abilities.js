@@ -56,6 +56,8 @@ function wallOf(words) {
     else if (/^Pokémon VMAX$/.test(p)) out.boxes.push("VMAX");
     else if (/^Pokémon VSTAR$/.test(p)) out.boxes.push("VSTAR");
     else if (/^Basic Pokémon$/.test(p)) out.stage = "basic";
+    else if (/^Basic Pokémon ex$/.test(p)) out.basicEx = true;
+    else if (/^Tera Pokémon$/.test(p)) out.tera = true;
     else if ((m = p.match(new RegExp(`^(${TYPE}) Pokémon$`)))) out.types.push(m[1]);
     else return null;
   }
@@ -77,6 +79,14 @@ const FRONT = [
   [/^your opponent's Basic Pokémon in play have no Abilities, except for Pokémon with a Rule Box \(Pokémon V, Pokémon-GX, etc\. have Rule Boxes\)\.$/, () => ({ lock: { side: "foe", stage: "basic", exceptRuleBox: true } })],
   [/^your opponent's Pokémon in play have no Abilities, except for (.+)\.$/, (m) => ({ lock: { side: "foe", except: m[1] } })],
   [/^Basic Pokémon in play \(both yours and your opponent's\) have no Abilities, except for (.+)\.$/, (m) => ({ lock: { side: "all", stage: "basic", except: m[1] } })],
+  [/^Pokémon with a Rule Box in play \(both yours and your opponent's\) have no Abilities, except for (Future|Ancient) Pokémon\.$/, (m) => ({ lock: { side: "all", ruleBox: true, exceptTag: m[1] } })],
+  // Cards the other player can't play from their hand (engine.js handLock).
+  [/^your opponent can't play any (Item|Stadium) cards(?: or Pokémon Tool cards)? from their hand\.$/, (m) => ({ handBar: { kinds: [m[1].toLowerCase()] } })],
+  [/^your opponent can't play any Pokémon that has an Ability from their hand, except for ((?:Team Rocket|[A-Z][a-zé]*)'s) Pokémon\.$/, (m) => ({ handBar: { abilityMon: true, exceptOwner: m[1] } })],
+  [/^whenever your opponent plays a Supporter card from their hand, prevent all effects of that card done to all of your Pokémon\.$/, () => ({ teamWard: "supporter" })],
+  [/^whenever you attach an Energy card from your hand to 1 of your Pokémon, heal (\d+) damage from that Pokémon\.$/, (m) => ({ attachHealAll: Number(m[1]) })],
+  [/^whenever your opponent's Active Pokémon moves to the Bench during their turn, their new Active Pokémon is now (Confused|Burned|Poisoned|Asleep|Paralyzed)\.$/, (m) => ({ foeSwap: { status: m[1].toLowerCase() } })],
+  [/^put (\d+) more damage counters on your opponent's (Poisoned|Burned) Pokémon during Pokémon Checkup\.$/, (m) => ({ checkupMore: { n: Number(m[1]) * 10, kind: m[2].toLowerCase() } })],
   [/^your opponent's Pokémon can't use any Poké-Powers\.$/, () => ({ lock: { side: "foe", kinds: ["Poké-Power"] } })],
   [/^Benched Pokémon \(yours and your opponent's\) can't use Poké-Powers\.$/, () => ({ lock: { side: "all", bench: true, kinds: ["Poké-Power"] } })],
   [/^each player's Pokémon can't use any Poké-Powers\.$/, () => ({ lock: { side: "all", kinds: ["Poké-Power"] } })],
@@ -95,6 +105,105 @@ const KO_DOES = [
   [/^put (\d+) damage counters on the Attacking Pokémon\.$/, (m) => ({ counters: Number(m[1]) * 10 })],
   [/^discard the top (\d+) cards of your opponent's deck\.$/, (m) => ({ steps: [{ op: "foeMill", n: Number(m[1]) }] })],
   [/^discard (\d+) random cards? from your opponent's hand\.$/, (m) => ({ steps: [{ op: "foeDiscardRandom", n: Number(m[1]) }] })],
+];
+
+/** "your Grass Pokémon and Fire Pokémon", "your Evolution Fire Pokémon", "your Future Pokémon, except any Iron Crown ex". */
+function whoOf(words) {
+  let m = words.match(/^(.+?), except any (.+)$/);
+  if (m) {
+    const who = whoOf(m[1]);
+    return who && { ...who, notName: m[2] };
+  }
+  if (words === "Pokémon") return {};
+  m = words.match(new RegExp(`^(Basic |Evolution )?(${TYPE}) Pokémon(?: and (${TYPE}) Pokémon)?$`));
+  if (m) return { types: [m[2], ...(m[3] ? [m[3]] : [])], ...(m[1] ? { stage: m[1] === "Basic " ? "basic" : "evolution" } : {}) };
+  m = words.match(/^(Basic |Evolution )?(Future|Ancient) Pokémon$/);
+  if (m) return { tag: m[2], ...(m[1] ? { stage: m[1] === "Basic " ? "basic" : "evolution" } : {}) };
+  m = words.match(/^((?:Team Rocket|[A-Z][a-zé]*)'s) Pokémon$/);
+  if (m) return { owner: m[1] };
+  return null;
+}
+const FROM_FOE = "(?:from (?:your opponent's )?attacks|from attacks from your opponent's Pokémon)";
+
+/** Newer standing wordings: auras on all or some of your Pokémon, numbers that grow, and walls with terms. */
+const STANDING_MORE = [
+  [new RegExp(`^All of your Pokémon that have any (${TYPE}) Energy attached take (\\d+) less damage ${FROM_FOE}${AFTER}\\.$`), (m) => ({ aura: { who: { energy: m[1] }, mod: { less: Number(m[2]) } } })],
+  [new RegExp(`^(?:All of your|Your) (.+?) take (\\d+) less damage ${FROM_FOE}${AFTER}\\.$`), (m) => {
+    const who = whoOf(m[1]);
+    return who ? { aura: { who, mod: { less: Number(m[2]) } } } : null;
+  }],
+  // Bouffalant's Curly Wall: "As long as you have at least 1 other Bouffalant in play, ..." (its own name reads "this Pokémon" here).
+  [new RegExp(`^As long as you have at least 1 other this Pokémon in play, all of your (.+?) take (\\d+) less damage ${FROM_FOE}${AFTER}\\.$`), (m) => {
+    const who = whoOf(m[1]);
+    return who ? { aura: { who, mod: { less: Number(m[2]) } }, term: { twoOf: true } } : null;
+  }],
+  [new RegExp(`^As long as this Pokémon is on your Bench, all of your (.+?) take (\\d+) less damage ${FROM_FOE}${AFTER}\\.$`), (m) => {
+    const who = whoOf(m[1]);
+    return who ? { aura: { who, mod: { less: Number(m[2]) } }, where: "bench" } : null;
+  }],
+  [new RegExp(`^Attacks used by your (.+?) do (\\d+) more damage to your opponent's Active Pokémon${BEFORE}\\.$`), (m) => {
+    const who = whoOf(m[1]);
+    return who ? { aura: { who, mod: { plus: Number(m[2]) } } } : null;
+  }],
+  [/^All of your Pokémon in play get \+(\d+) HP\.$/, (m) => ({ aura: { who: {}, mod: { hp: Number(m[1]) } } })],
+  [new RegExp(`^If this Pokémon has any Energy attached(?: to it)?, it takes (\\d+) less damage from attacks${AFTER}\\.$`), (m) => ({ mod: { less: Number(m[1]) }, when: { energy: "any" } })],
+  [/^Your opponent's Active Evolution Pokémon's Retreat Cost is ((?:Colorless)+) more\.$/, (m) => ({ foeAura: { who: { active: true, stage: "evolution" }, mod: { retreat: -colorless(m[1]) } } })],
+  // Thick Fat: less damage from attackers of these types.
+  [new RegExp(`^This Pokémon takes (\\d+) less damage from attacks from your opponent's (${TYPE}) or (${TYPE}) Pokémon${AFTER}\\.$`), (m) => ({ guardLess: { n: Number(m[1]), types: [m[2], m[3]] } })],
+  [/^Prevent all damage done to this Pokémon by attacks from your opponent's Pokémon if that damage is (\d+) or more\.$/, (m) => ({ wall: { min: Number(m[1]), boxes: [], types: [], stage: "" } })],
+  // "Prevent all damage from and effects of attacks from your opponent's Tera Pokémon done to this Pokémon."
+  [/^Prevent all damage from and effects of attacks (?:from your opponent's (.+?) done to this Pokémon|done to this Pokémon by your opponent's Pokémon that have any (Special) Energy attached)\.$/, (m) => {
+    if (m[2]) return { wall: { special: true, boxes: [], types: [], stage: "" }, wallFx: true };
+    const wall = wallOf(m[1]);
+    return wall ? { wall, wallFx: true } : null;
+  }],
+  [/^As long as this Pokémon is on your Bench, prevent all damage from and effects of attacks from your opponent's Pokémon done to this Pokémon\.$/, () => ({ benchSafe: "foe", noEffects: true, where: "bench" })],
+  [/^Prevent all damage from and effects of attacks from your opponent's Pokémon done to your Benched Pokémon\.$/, () => ({ benchWall: true, benchWard: true })],
+  [/^Prevent all damage done to your Benched Pokémon that don't have a Rule Box by attacks from your opponent's Pokémon\.$/, () => ({ benchWall: "noRule" })],
+  [/^Damage from attacks used by this Pokémon isn't affected by any effects on your opponent's Active Pokémon\.$/, () => ({ pierce: true })],
+  // Numbers that grow: HP for each Energy or each Prize card taken, more damage for each Prize card taken.
+  [new RegExp(`^This Pokémon gets \\+(\\d+) HP for each (${TYPE}) Energy attached to it\\.$`), (m) => ({ grow: { hp: Number(m[1]), per: "energy", type: m[2] } })],
+  [/^This Pokémon gets \+(\d+) HP for each Prize card your opponent has taken\.$/, (m) => ({ grow: { hp: Number(m[1]), per: "foeTaken" } })],
+  [new RegExp(`^If this Pokémon has (\\d+) or more (${TYPE}) Energy attached, it gets \\+(\\d+) HP\\.$`), (m) => ({ grow: { hp: Number(m[3]), per: "energy", type: m[2], min: Number(m[1]) } })],
+  [new RegExp(`^Attacks used by this Pokémon do (\\d+) more damage to your opponent's Active Pokémon for each Prize card your opponent has taken${BEFORE}\\.$`), (m) => ({ grow: { plus: Number(m[1]), per: "foeTaken" } })],
+  // More damage to some Defending Pokémon only.
+  [new RegExp(`^Attacks used by this Pokémon do (\\d+) more damage to your opponent's Active Pokémon that has an Ability${BEFORE}\\.$`), (m) => ({ plusVs: { n: Number(m[1]), foe: "ability", who: null } })],
+  [new RegExp(`^Attacks used by your Pokémon do (\\d+) more damage to your opponent's Active Evolution Pokémon${BEFORE}\\.$`), (m) => ({ plusVs: { n: Number(m[1]), foe: "evolution", who: {} } })],
+  // Attack costs: Colorless less for each of something, all Colorless (or all Energy) ignored on terms, another cost.
+  [/^(?:Attacks used by this Pokémon cost|(.+?) used by this Pokémon costs) (?:1 )?Colorless(?: Energy)? less for each (of your opponent's Benched Pokémon|Kofu card in your discard pile|Prize card your opponent has taken)\.$/, (m) => ({
+    cost: { less: 1, per: /Benched/.test(m[2]) ? "foeBench" : /Kofu/.test(m[2]) ? "discard:Kofu" : "foeTaken", ...(m[1] ? { attack: m[1] } : {}) },
+  })],
+  [/^If (.+?), ignore all (Colorless )?Energy in the costs? of (attacks|.+?) used by this Pokémon\.$/, (m) => {
+    const term = condOf(m[1]);
+    return term ? { cost: { ignore: m[2] ? "Colorless" : "all", ...(m[3] !== "attacks" ? { attack: m[3] } : {}) }, term } : null;
+  }],
+  [new RegExp(`^If (.+?), this Pokémon can use the (.+?) attack for (${TYPE})\\.$`), (m) => {
+    const term = condOf(m[1]);
+    return term ? { cost: { as: [m[3]], attack: m[2] }, term } : null;
+  }],
+  [/^If you go first, this Pokémon can use attacks during your first turn\.$/, () => ({ firstAttack: true })],
+  [/^If your opponent has no (Pokémon ex or Pokémon V) in play, this Pokémon can't attack\.$/, () => ({ attackUnless: { foe: "box=ex|box=V|box=VSTAR|box=VMAX" } })],
+  [/^If (.+?), this Pokémon can evolve during your first turn or the turn you play it\.$/, (m) => {
+    const term = condOf(m[1]);
+    return term ? { early: "any", term } : null;
+  }],
+  [/^As long as this Pokémon is on your Bench, Benched Stage 2 Pokémon \(both yours and your opponent's\) have no Abilities\.$/, () => ({ lock: { side: "all", bench: true, line: 2 }, where: "bench" })],
+  [/^If this Pokémon has a Pokémon Tool attached, your opponent can't play any ACE SPEC cards from their hand\.$/, () => ({ handBar: { ace: true }, when: { tool: true } })],
+  [/^Whenever your opponent's Active Pokémon moves to the Bench during their turn, (?:place|put) (\d+) damage counters? on that Pokémon\.$/, (m) => ({ foeSwap: { counters: Number(m[1]) * 10 } })],
+  [/^Whenever your opponent's Active Pokémon moves to the Bench during their turn, their new Active Pokémon is now (Confused|Burned|Poisoned|Asleep|Paralyzed)\.$/, (m) => ({ foeSwap: { status: m[1].toLowerCase() } })],
+  [/^During Pokémon Checkup, put (\d+) more damage counters on your opponent's (Poisoned|Burned) Pokémon\.$/, (m) => ({ checkupMore: { n: Number(m[1]) * 10, kind: m[2].toLowerCase() } })],
+  [/^During Pokémon Checkup, put (\d+) damage counters? on each Pokémon that has an Ability \(both yours and your opponent's\), except any (.+)\.$/, (m) => ({ checkupHurt: { n: Number(m[1]) * 10, ability: true, notName: m[2] } })],
+  [/^During Pokémon Checkup, if this Pokémon is in the Active Spot, put (\d+) damage counters? on each of your opponent's (Basic )?Pokémon\.$/, (m) => ({ checkupHurt: { n: Number(m[1]) * 10, foe: true, ...(m[2] ? { stage: "basic" } : {}) }, where: "active" })],
+  // Prize cards more or fewer (engine.js prizeShift).
+  [/^If this Pokémon is Knocked Out by damage from an attack from your opponent's Pokémon ex, your opponent can't take any Prize cards for it\.$/, () => ({ prizes: { self: true, none: true, by: "box=ex" } })],
+  [/^If this Pokémon is Knocked Out by damage from an attack from your opponent's Pokémon, and if you have any (.+?) in play, your opponent takes 1 fewer Prize card\.$/, (m) => {
+    const what = whatOf(m[1]) || (/^[A-Z][\w'é.-]*(?: [A-Z][\w'é.-]*)*(?: ex)?$/.test(m[1]) ? `name=${m[1]}` : "");
+    return what ? { prizes: { self: true, fewer: 1 }, term: { inPlay: what } } : null;
+  }],
+  [new RegExp(`^If 1 of your (${TYPE}) Pokémon is Knocked Out by damage from an attack from your opponent's Pokémon ex, that player takes 1 fewer Prize card\\.$`), (m) => ({ prizes: { ally: { types: [m[1]] }, fewer: 1, by: "box=ex" } })],
+  [/^If your opponent's (Basic )?Pokémon is Knocked Out by damage from an attack used by this Pokémon, take 1 more Prize card\.$/, (m) => ({ prizes: { attacker: true, more: 1, ...(m[1] ? { foe: "basic" } : {}) } })],
+  [/^When your opponent's Active Pokémon is Knocked Out, flip a coin\. If heads, take 1 more Prize card\.$/, () => ({ prizes: { flipMore: 1 } })],
+  [/^If this Pokémon remains Asleep during Pokémon Checkup, heal all damage from this Pokémon\.$/, () => ({ sleepHeal: true })],
 ];
 
 /** Texts that stand for as long as the Pokémon is in play. */
@@ -172,7 +281,82 @@ const FETCH_TO = { "this Pokémon": "self", "your Active Pokémon": "active", "1
 const UPTO = "(?:up to )?(\\d+|an?)";
 const many = (word) => (/^an?$/.test(word) ? 1 : Number(word));
 /** What "you may ..." asks for, where a Trainer wouldn't say it that way. [wording, steps]. */
+const CONDS = "(Asleep|Burned|Confused|Paralyzed|Poisoned)";
+const LOOK_REST = { "Shuffle the other cards back into your deck": "shuffle", "Shuffle the other cards and put them on the bottom of your deck": "bottom", "Discard the other cards": "discard" };
+const isEnergy = (what) => /^(basicEnergy|energy)(:|$)/.test(what) || /^card=.* Energy$/.test(what);
+/** Newer wordings of what an Ability does. */
+const DOES_MORE = [
+  // "Look at the top 6 cards of your deck and attach any number of Basic Energy cards you find there to your Dragon Pokémon in any way you like."
+  [new RegExp(`^Look at the top (\\d+) cards of your deck and attach (any number of|an?|up to \\d+) (.+?) you find there to (this Pokémon|your Pokémon in any way you like|your (${TYPE}) Pokémon in any way you like)\\. (Shuffle the other cards back into your deck|Shuffle the other cards and put them on the bottom of your deck|Discard the other cards)\\.$`), (m) => {
+    const what = whatOf(m[3]);
+    const top = Number(m[1]);
+    if (!isEnergy(what)) return null;
+    const n = /^any/.test(m[2]) ? top : /^up to/.test(m[2]) ? Number(m[2].slice(6)) : 1;
+    return [{ op: "fetchEnergy", what, n, top, to: m[4] === "this Pokémon" ? "self" : "spread", ...(m[5] ? { where: { to: "any", whoType: m[5] } } : {}), rest: LOOK_REST[m[6]] }];
+  }],
+  [new RegExp(`^Search your deck for (up to \\d+|an?) (.+?) and attach (?:it|them) to (your ((?:Team Rocket|[A-Z][a-zé]*)'s) Pokémon in any way you like|1 of your Benched (${TYPE}) Pokémon)\\. Then, shuffle your deck\\.$`), (m) => {
+    const what = whatOf(m[2]);
+    if (!isEnergy(what)) return null;
+    const n = /^up to/.test(m[1]) ? Number(m[1].slice(6)) : 1;
+    return [{ op: "fetchEnergy", what, n, to: m[4] ? "spread" : "one", where: m[4] ? { to: "any", who: `name^${m[4]}` } : { to: "bench", whoType: m[5] } }];
+  }],
+  [new RegExp(`^Search your deck for a Basic (${TYPE}) Energy card, a Basic (${TYPE}) Energy card, or 1 of each and attach them to your (${TYPE}) Pokémon and (${TYPE}) Pokémon in any way you like\\. Then, shuffle your deck\\.$`), (m) => [
+    { op: "fetchEnergy", what: `basicEnergy:${m[1]}|basicEnergy:${m[2]}`, n: 2, to: "spread", where: { to: "any", who: `pokemon:${m[3]}|pokemon:${m[4]}` }, rule: { apiece: [`basicEnergy:${m[1]}`, `basicEnergy:${m[2]}`] } },
+  ]],
+  [new RegExp(`^Attach (up to \\d+|an?) (.+?) from your (hand|discard pile) to (this Pokémon|your (${TYPE}) Pokémon in any way you like|your Pokémon in any way you like|1 of your Pokémon)\\.(?: If you attached Energy to a Pokémon in this way, heal (\\d+) damage from that Pokémon\\.)?$`), (m) => {
+    const what = whatOf(m[2]);
+    if (!isEnergy(what)) return null;
+    const n = /^up to/.test(m[1]) ? Number(m[1].slice(6)) : 1;
+    const spread = /any way/.test(m[4]);
+    if (m[6] && spread) return null;
+    return [{ op: "attachPick", zone: m[3] === "hand" ? "hand" : "discard", what, to: m[4] === "this Pokémon" ? "self" : "any", whoType: m[5] || "", n, ...(/^up to/.test(m[1]) ? { upTo: true } : {}), ...(spread ? { spread: true } : {}), ...(m[6] ? { heal: Number(m[6]) } : {}) }];
+  }],
+  [new RegExp(`^Attach a Basic (${TYPE}) Energy card, a Basic (${TYPE}) Energy card, or 1 of each from your hand to your (Pokémon|[A-Z][\\w'é.-]*(?: ex)? and [A-Z][\\w'é.-]*(?: ex)?) in any way you like\\.$`), (m) => [
+    { op: "attachPick", zone: "hand", what: `basicEnergy:${m[1]}|basicEnergy:${m[2]}`, to: "any", n: 2, spread: true, rule: { apiece: [`basicEnergy:${m[1]}`, `basicEnergy:${m[2]}`] }, ...(m[3] !== "Pokémon" ? { who: m[3].split(" and ").map((x) => `name=${x}`).join("|") } : {}) },
+  ]],
+  [/^Choose (\d+) of your opponent's (Benched )?Pokémon and put (\d+) damage counters? on each of them\.$/, (m) => [{ op: "counters", n: Number(m[3]) * 10, count: Number(m[1]), ...(m[2] ? { where: "bench" } : {}) }]],
+  [new RegExp(`^Heal all damage from your Active (${TYPE}) Pokémon\\. If you healed any damage in this way, discard all Energy from that Pokémon\\.$`), (m) => [{ op: "heal", n: 9990, to: "active", whoType: m[1], strip: true }]],
+  [/^Heal all damage from each of your Evolution Pokémon\. If you healed any damage in this way, discard all Energy from those Pokémon\.$/, () => [{ op: "heal", n: 9990, to: "all", who: "evolution", strip: true }]],
+  [/^Heal (\d+) damage from your Active Pokémon and have it recover from a Special Condition\.$/, (m) => [{ op: "heal", n: Number(m[1]), to: "active" }, { op: "cureOne" }]],
+  [/^Discard the top (card|\d+ cards) of your opponent's deck\.$/, (m) => [{ op: "foeMill", n: m[1] === "card" ? 1 : Number(m[1].split(" ")[0]) }]],
+  [/^Discard a Stadium in play\.$/, () => [{ op: "dropStadium" }]],
+  [/^Have each player draw a card\.$/, () => [{ op: "draw", n: 1 }, { op: "foeDraw", n: 1 }]],
+  [/^Switch your Active Pokémon with 1 of your Benched Pokémon\. If you do, switch out your opponent's Active Pokémon to the Bench\. \(Your opponent chooses the new Active Pokémon\.\)$/, () => [{ op: "switch", need: true }, { op: "foeSwitch" }]],
+  [new RegExp(`^Switch 1 of your Benched (${TYPE}) Pokémon, except any (.+?), with your Active Pokémon\\. If you do, the new Active Pokémon is now ${CONDS}\\.$`), (m) => [{ op: "switch", benchWho: `pokemon:${m[1]}&&not:name=${m[2]}`, need: true }, { op: "selfCondition", kinds: [m[3].toLowerCase()] }]],
+  [new RegExp(`^Switch in 1 of your opponent's Benched Pokémon to the Active Spot, and the new Active Pokémon is now ${CONDS}\\.$`), (m) => [{ op: "gust", need: true }, { op: "condition", kinds: [m[1].toLowerCase()] }]],
+  [/^Switch in 1 of your opponent's Benched Pokémon that has (\d+) HP or less remaining to the Active Spot\.$/, (m) => [{ op: "gust", hpMax: Number(m[1]) }]],
+  [/^Choose Burned, Confused, or Poisoned\. Your opponent's Active Pokémon is now affected by that Special Condition\.$/, () => [
+    { op: "choice", prompt: "Choose the Special Condition.", options: ["burned", "confused", "poisoned"].map((kind) => ({ label: kind[0].toUpperCase() + kind.slice(1), steps: [{ op: "condition", kinds: [kind] }] })) },
+  ]],
+  [/^Look at the top (\d+) cards of your deck, reveal (an?) (.+?) you find there, and put it into your hand\. (Shuffle the other cards back into your deck|Shuffle the other cards and put them on the bottom of your deck)\.$/, (m) => {
+    const what = whatOf(`${m[2]} ${m[3]}`);
+    return what && what !== "any" ? [{ op: "search", what, n: 1, top: Number(m[1]), ...(/bottom/.test(m[4]) ? { rest: "bottom" } : {}) }] : null;
+  }],
+  [/^Put (an?) (.+?) from your discard pile onto your Bench\.$/, (m) => {
+    const what = whatOf(`${m[1]} ${m[2]}`);
+    return what && what.split("|").every((w) => /^basic(?=$|[:@!&])/.test(w)) ? [{ op: "recover", what, n: 1, to: "bench" }] : null;
+  }],
+  [/^Move (\d+) damage counters? from 1 of your ((?:Team Rocket|[A-Z][a-zé]*)'s) Pokémon to another of your Pokémon\.$/, (m) => [{ op: "moveCounters", n: Number(m[1]) * 10, to: "mine", fromWho: `name^${m[2]}` }]],
+  [/^Move an Energy from 1 of your other Pokémon to this Pokémon\.$/, () => [{ op: "moveEnergy", type: "", basic: false, from: "others", to: "self" }]],
+  [/^Search your deck for up to (\d+) (.+?) and discard them\. Then, shuffle your deck\.$/, (m) => {
+    const what = whatOf(m[2]);
+    return what && what !== "any" ? [{ op: "searchMill", n: Number(m[1]), what }] : null;
+  }],
+  [/^Search your deck for a card\. Shuffle your deck, then put that card on top of it\.$/, () => [{ op: "search", what: "any", n: 1, to: "top" }]],
+  [/^Look at the top card of your deck\. You may discard that card\.$/, () => [{ op: "topMill", n: 1 }]],
+  [/^Shuffle (?:it|this Pokémon) and all attached cards into your deck\.$/, () => [{ op: "selfIn" }]],
+  [/^Draw (\d+) cards\. If you drew any cards in this way, shuffle this Pokémon and all attached cards into your deck\.$/, (m) => [{ op: "draw", n: Number(m[1]), need: true }, { op: "selfIn" }]],
+  [new RegExp(`^Put (\\d+) damage counters on this Pokémon\\. If you do, during this turn, attacks used by this Pokémon do (\\d+) more damage to your opponent's Active Pokémon${BEFORE}\\.$`), (m) => [{ op: "hurtSelf", n: Number(m[1]) * 10 }, { op: "boost", n: Number(m[2]), self: true }]],
+  [/^(?:Have your opponent reveal their hand and you put any number of Basic Pokémon you find there onto their Bench|Your opponent reveals their hand, and you put (an?) (.+?) that you find there onto your opponent's Bench)\.$/, (m) => {
+    if (!m[1]) return [{ op: "foeBasicsOut" }];
+    const what = whatOf(`${m[1]} ${m[2]}`);
+    return what && what.split("|").every((w) => /^basic(?=$|[:@!&])/.test(w)) ? [{ op: "foeBasicsOut", what, n: 1 }] : null;
+  }],
+  [/^Devolve 1 of your opponent's evolved Pokémon by putting the highest Stage Evolution card on it into your opponent's hand\.$/, () => [{ op: "foeDevolve" }]],
+];
+
 const DOES = [
+  ...DOES_MORE,
   [new RegExp(`^Move any amount of (?:(${TYPE}) )?Energy from your other Pokémon to (?:it|this Pokémon)\\.$`), (m) => [{ op: "gather", type: m[1] || "" }]],
   [/^Switch in 1 of your opponent's Benched (Basic )?Pokémon to the Active Spot\.$/, (m) => [{ op: "gust", stage: m[1] ? "basic" : "" }]],
   [new RegExp(`^Move ${ENERGY} (?:from|attached to) 1 of your (Benched )?Pokémon to (another of your Pokémon|your Active Pokémon|this Pokémon|1 of your Benched Pokémon)\\.$`), (m) => [{ op: "moveEnergy", type: m[1] || "", basic: /[Bb]asic/.test(m[0]), from: m[2] ? "bench" : "any", to: MOVE_TO[m[3]] }]],
@@ -235,22 +419,70 @@ function stepsOf(words, cardName = "") {
   }
   for (const [pattern, build] of DOES) {
     const m = text.match(pattern);
-    if (m) return build(m);
+    const got = m && build(m);
+    if (got) return got;
   }
   return compileTrainer(text);
 }
 
-const PRICE = /^You must discard (an?|\d+) cards? from your hand in order to use this (?:Ability|Poké-Power)\. /;
+const PRICE = /^You must (discard|put) (.+?) in order to use this (?:Ability|Poké-Power)\. /;
+const INLINE_PRICE = /^((?:Once|As often as you like) during your turn(?: \(before your attack\))?, (?:if this Pokémon is (?:in the Active Spot|your Active Pokémon|on your Bench), )?)you may (discard) (an? .+? from your hand) in order to use this (?:Ability|Poké-Power)\. (.+)$/;
+/** "discard a Basic Fire Energy card from your hand", "discard a Basic Lightning Energy from this Pokémon", "put a card from your hand on the bottom of your deck" -> the steps that pay it, or null. */
+function priceOf(verb, words) {
+  let m = words.match(/^(an?|\d+) (.+?) from your hand$/);
+  if (verb === "discard" && m) {
+    const n = many(m[1]);
+    if (/^cards?$/.test(m[2])) return [{ op: "cost", n, spare: 0 }];
+    const named = m[2].match(/^([A-Z][\w'é.-]*(?: [A-Z][\w'é.-]*)*) cards?$/);
+    const what = whatOf(`${m[1]} ${m[2]}`) || (named && !/^(Basic|Energy|Pokémon|Item|Supporter|Trainer)\b/.test(named[1]) && !/ (Energy|Pokémon)$/.test(named[1]) ? `trainer=${named[1]}` : "");
+    return what && what !== "any" ? [{ op: "cost", n, what, spare: 0 }] : null;
+  }
+  m = words.match(new RegExp(`^(an?) (Basic )?(?:(${TYPE}) )?Energy(?: card)? from this Pokémon$`));
+  if (verb === "discard" && m) return [{ op: "selfShed", type: m[3] || "", basic: Boolean(m[2]) }];
+  if (verb === "put" && /^a card from your hand on the bottom of your deck$/.test(words)) return [{ op: "stash", n: 1, at: "bottom", need: true }];
+  return null;
+}
 const USE = /^(?:If this Pokémon is your Active Pokémon, )?(Once|As often as you like|During your turn)(?: during your turn)?(?: \(before your attack\))?, (?:if this Pokémon is (in the Active Spot|your Active Pokémon|on your Bench), )?(?:you may )?(.+)$/;
 const ACTIVE_FIRST = /^If this Pokémon is your Active Pokémon, /;
 const ENTER = /^(?:Once during your turn, )?[Ww]hen you play this Pokémon from your hand (onto your Bench|to evolve 1 of your Pokémon)(?: during your turn)?, (?:if (.+?), )?you may (.+)$/;
 
+const SYMBOL = { G: "Grass", R: "Fire", W: "Water", L: "Lightning", P: "Psychic", F: "Fighting", D: "Darkness", M: "Metal", Y: "Fairy", N: "Dragon", C: "Colorless" };
+/**
+ * One line of an Ability's text, as the wordings below read it: Energy symbols written out ("{L}",
+ * "[Water]"), "Pokemon" with its accent, and the misprints some card sources carry.
+ */
+function tidyAbility(raw) {
+  return String(raw || "")
+    .replace(/\s+/g, " ")
+    .replace(/[’‘]/g, "'")
+    .replace(/\{([GRWLPFDMYNC])\}/g, (_, k) => SYMBOL[k])
+    .replace(new RegExp(`\\[(${TYPE})\\]`, "g"), "$1")
+    .replace(/\bPokemon\b/g, "Pokémon")
+    .replace(/\+(\d+)HP\b/g, "+$1 HP")
+    .replace(/\bKnocket Out\b/g, "Knocked Out")
+    .replace(/\bdiscord pile\b/g, "discard pile")
+    .replace(/^Once during your turn you may /, "Once during your turn, you may ")
+    .replace(/ \(Pokémon ex, Pokémon V, etc\. have Rule Boxes\.\)$/, "")
+    .replace(/ If you attached Energy to a Pokémon this way, /, " If you attached Energy to a Pokémon in this way, ")
+    .trim()
+    // A print that lost its last full stop.
+    .replace(/([a-z])$/, "$1.");
+}
+
 export function compileAbility(ability, cardName = "") {
+  const got = readAbility(ability, cardName, true);
+  // A text that names its own card among others ("If you have Tornadus, Thundurus, Landorus, and Enamorus in play") is
+  // read again with the names left as they are.
+  if (got || !cardName || !tidyAbility(ability?.text).includes(cardName)) return got;
+  return readAbility(ability, cardName, false);
+}
+
+function readAbility(ability, cardName, named) {
   const kind = ability?.type || "Ability";
-  let text = String(ability?.text || "").replace(/\s+/g, " ").replace(/’/g, "'").trim();
+  let text = tidyAbility(ability?.text);
   if (!text) return null;
   // Older cards name themselves where newer ones say "this Pokémon".
-  if (cardName) text = text.split(cardName).join("this Pokémon");
+  if (cardName && named) text = text.split(cardName).join("this Pokémon");
   text = text.replace(/^this Pokémon\b/, "This Pokémon");
   let calm = false, vstar = false, ends = false, selfKo = false, single = false;
   text = text
@@ -262,22 +494,40 @@ export function compileAbility(ability, cardName = "") {
     .replace(/ Either way, this ends your turn\./, () => ((ends = true), ""))
     .replace(/ (?:If you use this (?:Ability|Poké-Power)|If you searched your deck in this way), this Pokémon is Knocked Out\./, () => ((selfKo = true), ""))
     .replace(/ You can't use more than 1 .+? (?:Ability|Poké-Power)(?: each turn| during your turn)\./, () => ((single = true), ""));
+  // "The effect of Tundra Wall doesn't stack": two of these Pokémon in play give it once (engine.js toolOf, by the Ability's name).
+  let noStack = false;
+  text = text.replace(/ The effect of (?:.+?) doesn't stack\.$/, () => ((noStack = true), ""));
   const base = { name: ability.name || kind, kind, text: String(ability.text || "").replace(/\s+/g, " ").trim() };
+  // Only what toolOf and the Prize count read is kept to one; anything else that says so waits.
+  const stacked = (got) => (!noStack ? got : got && (got.aura || got.foeAura || got.prizes) ? { ...got, noStack } : null);
 
   const front = text.match(FRONT_FIRST);
   if (front) {
     for (const [pattern, build] of FRONT) {
       const m = front[1].match(pattern);
-      if (m) return { ...base, ...build(m), where: "active" };
+      const got = m && build(m);
+      if (got) return stacked({ ...base, ...got, where: got.where || "active" });
     }
   }
 
+  // The newer wordings first; one whose words it can't name lets the older ones try.
+  for (const [pattern, build] of STANDING_MORE) {
+    const m = text.match(pattern);
+    const got = m && stacked(build(m));
+    if (!got) continue;
+    if (got.term?.twoOf) {
+      if (!cardName) continue;
+      got.term = { nameCount: { name: cardName, n: 2 } };
+    }
+    return { ...base, ...got };
+  }
   for (const [pattern, build] of STANDING) {
     const m = text.match(pattern);
     if (!m) continue;
-    const got = build(m);
+    const got = stacked(build(m));
     return got ? { ...base, ...got } : null;
   }
+  if (noStack) return null;
 
   const ko = text.match(KO);
   if (ko) {
@@ -314,12 +564,21 @@ export function compileAbility(ability, cardName = "") {
     return `${head}${spot ? spot.replace(/, and $/, ", ") : ""}you may `;
   });
 
-  let cost = 0;
+  // The price of a use: cards from the hand (of a kind), an Energy from this Pokémon, a card to the bottom of the deck.
+  let pay = [];
   const price = text.match(PRICE);
   if (price) {
-    cost = Number(price[1]) || 1;
+    pay = priceOf(price[1], price[2]);
+    if (!pay) return null;
     text = text.slice(price[0].length);
   }
+  const inline = !price && text.match(INLINE_PRICE);
+  if (inline) {
+    pay = priceOf(inline[2], inline[3]);
+    if (!pay) return null;
+    text = `${inline[1]}you may ${inline[4]}`;
+  }
+  const cost = pay.length;
   let m = text.match(USE);
   // "During your turn, you may" is a VSTAR Power's wording: once a game is the only limit then.
   if (m && (m[1] !== "During your turn" || vstar)) {
@@ -327,7 +586,7 @@ export function compileAbility(ability, cardName = "") {
     const steps = stepsOf(m[3], cardName);
     const where = ACTIVE_FIRST.test(text) ? "active" : !m[2] ? "" : /Bench/.test(m[2]) ? "bench" : "active";
     const flags = { ...(calm ? { calm } : {}), ...(vstar ? { vstar } : {}), ...(ends ? { ends } : {}), ...(selfKo ? { selfKo } : {}), ...(Object.keys(need).length ? { need } : {}) };
-    if (steps) return { ...base, use: { steps: [...(term ? [{ op: "only", when: term }] : []), ...(cost ? [{ op: "cost", n: cost, spare: 0 }] : []), ...steps], where, often: m[1] === "As often as you like", single, ...flags } };
+    if (steps) return { ...base, use: { steps: [...(term ? [{ op: "only", when: term }] : []), ...pay, ...steps], where, often: m[1] === "As often as you like", single, ...flags } };
   }
   m = !cost && !ends && !selfKo && !vstar && !term && !Object.keys(need).length && text.match(ENTER);
   if (m) {
