@@ -8,7 +8,7 @@
  */
 import { readFileSync, readdirSync } from "node:fs";
 import assert from "node:assert/strict";
-import { ACTIVE, FORMATS, RuleError, abilityOn, addCondition, apply, benchSafe, canRetreat, energyOf, toolOf, conditionsOn, createGame, damageAfterTyping, legalActions, maxHp, resolveKnockOuts, retreatCost, unpaid, usableAttacks, viewFor } from "../js/tcg/engine.js";
+import { ACTIVE, FORMATS, RuleError, abilityOn, addCondition, addMark, apply, benchSafe, canRetreat, energyOf, toolOf, conditionsOn, createGame, damageAfterTyping, legalActions, maxHp, resolveKnockOuts, retreatCost, unpaid, usableAttacks, viewFor } from "../js/tcg/engine.js";
 import { createDefs, defineCard, FREE_ENERGY } from "../js/tcg/cards.js";
 import { boostOf, compileTrainer, fits, runTrainer, trainerAim, whatOf } from "../js/tcg/trainers.js";
 import { compileAttack } from "../js/tcg/effects.js";
@@ -4561,6 +4561,354 @@ test("remaining Prize cards counted, two Benched Pokémon healed, Energy types i
   state.players[0].hand.splice(-4);
   use(state, 0, "Shake");
   assert.equal(state.players[1].active.damage, 20 + 40);
+});
+
+/* ---------- attack text batch 4 ---------- */
+
+/** A lab Pokémon with more to it than lab(): its own subtypes, types, HP, Weakness or Resistance. */
+const labMon = (id, { subtypes = ["Basic"], types = ["Colorless"], hp = "200", name = "Lab", ...more }, attacks) => byId.set(id, { id, name, supertype: "Pokémon", subtypes, types, hp, ...more, attacks: attacks.map(([n, damage, text]) => ({ name: n, cost: [], damage: String(damage), text })) });
+labMon("lab-v", { subtypes: ["Basic", "V"], name: "Lab V" }, [["Poke", 10, ""]]);
+labMon("lab-gx", { subtypes: ["Basic", "GX"], name: "Lab-GX" }, [["Poke", 10, ""]]);
+lab("lab-q1", [
+  ["Rest", 0, "Remove all damage counters from this Pokémon."],
+  ["Mend", 0, "Heal all damage from all of your Pokémon."],
+  ["Spring", 0, "Heal 30 damage from each Pokémon (both yours and your opponent's)."],
+  ["Nap", 0, "Draw a card. If you do, this Pokémon is now Asleep."],
+  ["Lure", 0, "Switch 1 of your opponent's Benched Pokémon with their Active Pokémon. The new Active Pokémon is now Confused."],
+  ["Ram", 20, "If your opponent has any Benched Pokémon, he or she chooses 1 of them and switches it with the Defending Pokémon. (Do the damage before switching the Pokémon.)"],
+  ["Spin", 20, "Switch this Pokémon with 1 of your Benched Pokémon. If you do, your opponent switches their Active Pokémon with 1 of their Benched Pokémon."],
+  ["Plunder", 20, "Before doing damage, discard all Trainer cards attached to the Defending Pokémon."],
+]);
+
+test("all damage healed, every Pokémon healed (theirs too), a draw that puts it to sleep", () => {
+  let state = labgame("lab-q1", "lab-2");
+  const me = state.players[0], foe = state.players[1];
+  me.active.damage = 120;
+  use(state, 0, "Rest");
+  assert.equal(me.active.damage, 0);
+  state = labgame("lab-q1", "lab-2");
+  state.players[0].active.damage = 50;
+  state.players[0].bench[0].damage = 30;
+  use(state, 0, "Mend");
+  assert.deepEqual([state.players[0].active.damage, state.players[0].bench[0].damage], [0, 0]);
+  state = labgame("lab-q1", "lab-2");
+  state.players[0].active.damage = 50;
+  state.players[1].active.damage = 20;
+  state.players[1].bench[0].damage = 40;
+  use(state, 0, "Spring");
+  assert.deepEqual([state.players[0].active.damage, state.players[1].active.damage, state.players[1].bench[0].damage], [20, 0, 10]);
+  state = labgame("lab-q1", "lab-2");
+  const hand = state.players[0].hand.length;
+  use(state, 0, "Nap");
+  assert.equal(state.players[0].hand.length, hand + 1);
+  assert.ok(conditionsOn(state.players[0].active).includes("asleep"));
+  // An empty deck: nothing drawn, so it doesn't fall asleep.
+  state = labgame("lab-q1", "lab-2");
+  state.players[0].deck = [];
+  use(state, 0, "Nap");
+  assert.ok(!conditionsOn(state.players[0].active).includes("asleep"));
+  void me; void foe;
+});
+
+test("a new Active Pokémon pulled in and Confused; the old switching wordings", () => {
+  let state = labgame("lab-q1", "lab-2");
+  const benched = state.players[1].bench[0].uid;
+  use(state, 0, "Lure");
+  act(state, { type: "pick", player: 0, spot: 0 });
+  assert.equal(state.players[1].active.uid, benched);
+  assert.ok(conditionsOn(state.players[1].active).includes("confused"));
+  assert.ok(!conditionsOn(state.players[1].bench[0]).includes("confused"));
+  // Nobody on their Bench: nothing switched, nobody Confused.
+  state = labgame("lab-q1", "lab-2");
+  state.players[1].bench = [];
+  use(state, 0, "Lure");
+  assert.ok(!conditionsOn(state.players[1].active).includes("confused"));
+  state = labgame("lab-q1", "lab-2");
+  const before = state.players[1].active.uid;
+  use(state, 0, "Ram");
+  assert.equal(state.players[1].bench[0].uid, before, "one on the Bench: switched");
+  assert.equal(state.players[1].bench[0].damage, 20, "the damage went on the old Active Pokémon");
+  // "If you do": its own switch first, then theirs.
+  state = labgame("lab-q1", "lab-2");
+  const mine = state.players[0].active.uid;
+  use(state, 0, "Spin");
+  act(state, { type: "pick", player: 0, spot: 0 });
+  assert.equal(state.players[0].bench[0].uid, mine);
+  assert.equal(state.players[1].bench[0].uid, before);
+  state = labgame("lab-q1", "lab-2");
+  state.players[0].bench = [];
+  use(state, 0, "Spin");
+  assert.equal(state.players[1].active.uid, before, "no switch of its own, none of theirs");
+  assert.deepEqual(compileAttack("If your opponent has any Benched Pokémon, he or she chooses 1 of them and switches it with his or her Active Pokémon, then, if you have any Benched Pokémon, you switch 1 of them with your Active Pokémon. (Do the damage before switching the Pokémon.)").map((s) => s.op), ["switchFoe", "switchSelf"]);
+});
+
+test("Trainer cards on the Defending Pokémon discarded before the damage", () => {
+  const state = labgame("lab-q1", "lab-2");
+  const foe = state.players[1];
+  foe.active.tool = hold(state, 1, TOOL.cape);
+  foe.hand.pop();
+  foe.active.held = [{ uid: hold(state, 1, T.potion), less: 20 }];
+  foe.hand.pop();
+  use(state, 0, "Plunder");
+  assert.equal(foe.active.tool, undefined);
+  assert.equal(foe.active.held, undefined);
+  assert.equal(foe.active.damage, 20, "nothing it held softened the damage");
+  assert.equal(foe.discard.length >= 2, true);
+});
+
+labMon("lab-q2", { types: ["Water"] }, [
+  ["Leaf", 0, "This attack does 20 damage to 1 of your opponent's Pokémon for each Energy attached to this Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"],
+  ["Pierce", 0, "This attack does 50 damage to 1 of your opponent's Pokémon. This attack's damage isn't affected by Weakness or Resistance, or by any effects on that Pokémon."],
+  ["Typed", 0, "This attack does 30 damage to 1 of your opponent's Pokémon. Also apply Weakness and Resistance for Benched Pokémon."],
+  ["Basics", 0, "This attack does 30 damage to each of your opponent's Benched Basic Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"],
+  ["Vee", 0, "This attack does 60 damage to each of your opponent's Pokémon V. This damage isn't affected by Weakness or Resistance."],
+  ["Coins", 0, "For each of your opponent's Pokémon, flip a coin. If heads, this attack does 30 damage to that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"],
+  ["Hail", 0, "Flip 2 coins. This attack does 10 damage times the number of heads to each of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"],
+  ["Shot", 0, "Discard an Energy from this Pokémon, and this attack does 40 damage to 1 of your opponent's Pokémon. (Don't apply Weakness or Resistance for Benched Pokemon)."],
+]);
+
+test("damage to some of their Pokémon by a count, past everything on them, with Weakness on the Bench, only to some kinds", () => {
+  let state = labgame("lab-q2", "lab-2");
+  const me = state.players[0];
+  attachNew(state, me.active, W);
+  const units = me.active.energy.length;
+  use(state, 0, "Leaf");
+  act(state, { type: "pick", player: 0, spot: 0 });
+  assert.equal(state.players[1].bench[0].damage, 20 * units);
+  // Past an effect that keeps the Bench safe, and past Weakness on the Active Pokémon.
+  state = labgame("lab-q2", "base1-4");
+  use(state, 0, "Pierce");
+  act(state, { type: "pick", player: 0, spot: ACTIVE });
+  assert.equal(state.players[1].active.damage, 50);
+  state = labgame("lab-q2", "lab-2");
+  state.cards[state.players[1].bench[0].uid] = "base1-24";
+  use(state, 0, "Typed");
+  act(state, { type: "pick", player: 0, spot: 0 });
+  assert.equal(state.players[1].bench[0].damage, 60, "Weakness on the Bench too (a Charmeleon, weak to Water)");
+  state = labgame("lab-q2", "lab-2");
+  state.players[1].bench.push({ ...state.players[1].bench[0], uid: hold(state, 1, "base1-24"), damage: 0, energy: [] });
+  state.players[1].hand.pop();
+  use(state, 0, "Basics");
+  assert.deepEqual(state.players[1].bench.map((s) => s.damage), [30, 0], "the Stage 1 Pokémon is spared");
+  state = labgame("lab-q2", "lab-v");
+  use(state, 0, "Vee");
+  assert.equal(state.players[1].active.damage, 60);
+  assert.equal(state.players[1].bench[0].damage, 0, "not a Pokémon V");
+  state = labgame("lab-q2", "lab-2");
+  rigFlips(state, [false, true]);
+  use(state, 0, "Coins");
+  assert.deepEqual([state.players[1].active.damage, state.players[1].bench[0].damage], [0, 30]);
+  state = labgame("lab-q2", "lab-2");
+  rigFlips(state, [true, true]);
+  use(state, 0, "Hail");
+  assert.deepEqual([state.players[1].active.damage, state.players[1].bench[0].damage], [20, 20]);
+  state = labgame("lab-q2", "lab-2");
+  const n = state.players[0].active.energy.length;
+  use(state, 0, "Shot");
+  if (state.pending[0]?.type === "choose") act(state, { type: "choose", player: 0, uids: state.pending[0].uids.slice(0, 1) });
+  act(state, { type: "pick", player: 0, spot: 0 });
+  assert.equal(state.players[0].active.energy.length, n - 1);
+  assert.equal(state.players[1].bench[0].damage, 40);
+});
+
+lab("lab-q3", [
+  ["Charge", 0, "Attach any number of basic Energy cards from your hand to your Pokémon in any way you like."],
+  ["Fetch", 0, "Search your deck for up to 2 basic Energy cards and attach them to your Pokémon V in any way you like. Then, shuffle your deck."],
+  ["Count", 0, "If your opponent's Active Pokémon has exactly 4 damage counters on it, that Pokémon is Knocked Out."],
+  ["Gouge", 0, "Knock Out your opponent's Active Pokémon. If your opponent's Active Pokémon is Knocked Out in this way, this Pokémon does 150 damage to itself."],
+  ["Ruin", 0, "At the end of your opponent's next turn, the Defending Pokémon will be Knocked Out."],
+  ["Impact", 30, "Put 3 damage counters on 1 of your Pokémon."],
+  ["Echo", 0, "Move all damage counters from 1 of your Benched Pokémon to your opponent's Active Pokémon."],
+  ["Pain", 0, "Put up to 3 damage counters on this Pokémon. This attack does 40 damage for each damage counter you placed in this way."],
+]);
+
+test("Energy from the hand in any way you like; from the deck onto Pokémon V only", () => {
+  let state = labgame("lab-q3", "lab-2");
+  const me = state.players[0];
+  const a = hold(state, 0, W), b = hold(state, 0, F);
+  use(state, 0, "Charge");
+  assert.equal(state.pending[0].type, "choose");
+  assert.equal(state.pending[0].min, 0);
+  act(state, { type: "choose", player: 0, uids: [a, b] });
+  act(state, { type: "pick", player: 0, spot: ACTIVE });
+  act(state, { type: "pick", player: 0, spot: 0 });
+  assert.ok(me.active.energy.includes(a) && me.bench[0].energy.includes(b));
+  // Only the Pokémon V may take it: the Active one here, never the Squirtle on the Bench.
+  state = labgame("lab-q3", "lab-2");
+  state.cards[state.players[0].bench[0].uid] = "lab-v";
+  use(state, 0, "Fetch");
+  const pick = state.pending[0].uids.slice(0, 2);
+  act(state, { type: "choose", player: 0, uids: pick });
+  for (const _ of pick) {
+    assert.deepEqual(state.pending[0].spots, [0]);
+    act(state, { type: "pick", player: 0, spot: 0 });
+  }
+  assert.ok(pick.every((uid) => state.players[0].bench[0].energy.includes(uid)), "the only Pokémon V");
+});
+
+test("Knock Outs: by an exact count of damage counters, outright with a price, at the end of their next turn", () => {
+  let state = labgame("lab-q3", "lab-2");
+  const prizes = state.players[0].prizes.length;
+  state.players[1].active.damage = 30;
+  use(state, 0, "Count");
+  assert.equal(state.players[0].prizes.length, prizes, "3 counters: not 4");
+  state = labgame("lab-q3", "lab-2");
+  state.players[1].active.damage = 40;
+  use(state, 0, "Count");
+  assert.equal(state.players[0].prizes.length, prizes - 1);
+  state = labgame("lab-q3", "lab-2");
+  use(state, 0, "Gouge");
+  assert.equal(state.players[0].active.damage, 150);
+  assert.equal(state.players[0].prizes.length, prizes - 1);
+  // Nothing Knocked Out (it is protected): no damage to itself.
+  state = labgame("lab-q3", "lab-2");
+  addMark(state, state.players[1].active, { kind: "shield", turn: state.turn });
+  use(state, 0, "Gouge");
+  assert.equal(state.players[0].active.damage, 0);
+  state = labgame("lab-q3", "lab-2");
+  use(state, 0, "Ruin");
+  assert.equal(state.players[1].active.damage, 0);
+  act(state, { type: "end", player: 1 });
+  assert.equal(state.players[0].prizes.length, prizes - 1, "Knocked Out at the end of their turn");
+});
+
+test("damage counters on its own side, moved over, as many as it likes for more damage", () => {
+  let state = labgame("lab-q3", "lab-2");
+  use(state, 0, "Impact");
+  assert.equal(state.pending[0].effect.op, "damage");
+  act(state, { type: "pick", player: 0, spot: 0 });
+  assert.equal(state.players[0].bench[0].damage, 30);
+  state = labgame("lab-q3", "lab-2");
+  state.players[0].bench[0].damage = 40;
+  use(state, 0, "Echo");
+  act(state, { type: "pick", player: 0, spot: 0 });
+  assert.deepEqual(state.pending[0].spots, [ACTIVE], "only to their Active Pokémon");
+  act(state, { type: "pick", player: 0, spot: ACTIVE });
+  assert.equal(state.players[0].bench[0].damage, 0);
+  assert.equal(state.players[1].active.damage, 40);
+  state = labgame("lab-q3", "lab-2");
+  use(state, 0, "Pain");
+  assert.deepEqual(state.pending[0].labels, ["0", "1", "2", "3"]);
+  act(state, { type: "option", player: 0, index: 2 });
+  assert.equal(state.players[0].active.damage, 20);
+  assert.equal(state.players[1].active.damage, 80);
+});
+
+lab("lab-q4", [
+  ["Curse", 0, "Place 1 damage counter on your opponent's Active Pokémon for each card in your hand."],
+  ["Half", 0, "Does damage to the Defending Pokémon equal to half the Defending Pokémon's remaining HP (rounded up to the nearest 10)."],
+  ["Barrier", 0, "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Pokémon V."],
+  ["Bounty", 200, "If your opponent's Pokémon-GX or Pokémon-EX is Knocked Out by damage from this attack, take 1 more Prize card."],
+  ["Blade", 0, "Take a Prize card."],
+  ["Flush", 0, "Shuffle all Energy from each of your opponent's Pokémon into their deck."],
+  ["Gust", 0, "Put 1 of your opponent's Benched Pokémon and all cards attached to them into your opponent's hand."],
+  ["Tide", 0, "Shuffle your opponent's Active Pokémon and all cards attached to it into their deck. If your opponent has no Benched Pokémon, this attack does nothing."],
+]);
+lab("lab-q5", [
+  ["Shift", 0, "Move an Energy from your opponent's Active Pokémon to 1 of their Benched Pokémon."],
+  ["Mimic", 0, "Choose 1 of your opponent's Pokémon's attacks and use it as this attack."],
+  ["Drain", 60, "Remove a number of damage counters from this Pokémon equal to half the damage done to the Defending Pokémon (after applying Weakness and Resistance) (rounded up to the nearest 10). If this Pokémon has fewer damage counters than that, remove all of them."],
+]);
+
+test("damage counters by a count, half their HP, protection from some attackers, Prize cards taken", () => {
+  let state = labgame("lab-q4", "lab-2");
+  const hand = state.players[0].hand.length;
+  use(state, 0, "Curse");
+  assert.equal(state.players[1].active.damage, hand * 10);
+  state = labgame("lab-q4", "lab-2");
+  state.players[1].active.damage = 50;
+  use(state, 0, "Half");
+  assert.equal(state.players[1].active.damage, 50 + 80, "150 left: 75, up to 80");
+  state = labgame("lab-q4", "lab-2");
+  use(state, 0, "Barrier");
+  state.cards[state.players[1].active.uid] = "lab-v";
+  act(state, { type: "attack", player: 1, index: 0 });
+  assert.equal(state.players[0].active.damage, 0, "a Pokémon V's attack does nothing to it");
+  state = labgame("lab-q4", "lab-2");
+  use(state, 0, "Barrier");
+  act(state, { type: "attack", player: 1, index: attackIndex(state, 1, "Sting") });
+  assert.ok(state.players[0].active.damage > 0, "any other's still does");
+  state = labgame("lab-q4", "lab-gx");
+  const prizes = state.players[0].prizes.length;
+  use(state, 0, "Bounty");
+  assert.equal(state.players[0].prizes.length, prizes - 3, "a Pokémon-GX is worth 2, and 1 more");
+  state = labgame("lab-q4", "lab-v");
+  state.players[1].active.damage = maxHp(state, state.players[1].active, defs) - 200;
+  use(state, 0, "Bounty");
+  assert.equal(state.players[0].prizes.length, prizes - 2, "a Pokémon V is not a Pokémon-GX");
+  state = labgame("lab-q4", "lab-2");
+  use(state, 0, "Blade");
+  assert.equal(state.players[0].prizes.length, prizes - 1);
+  // The last one wins.
+  state = labgame("lab-q4", "lab-2");
+  state.players[0].prizes.splice(1);
+  use(state, 0, "Blade");
+  assert.equal(state.phase, "over");
+  assert.equal(state.winner, 0);
+});
+
+test("their Energy shuffled into their deck, their Pokémon sent away, an Energy of theirs moved", () => {
+  let state = labgame("lab-q4", "lab-2");
+  const foe = state.players[1];
+  const sent = [attachNew(state, foe.active, F), attachNew(state, foe.bench[0], F)];
+  use(state, 0, "Flush");
+  assert.deepEqual([foe.active.energy.length, foe.bench[0].energy.length], [0, 0]);
+  assert.ok(sent.every((uid) => foe.deck.includes(uid) || foe.hand.includes(uid)), "into the deck (they have drawn since)");
+  state = labgame("lab-q4", "lab-2");
+  const benched = state.players[1].bench[0].uid;
+  use(state, 0, "Gust");
+  act(state, { type: "pick", player: 0, spot: 0 });
+  assert.ok(state.players[1].hand.includes(benched));
+  assert.equal(state.players[1].bench.length, 0);
+  state = labgame("lab-q4", "lab-2");
+  const active = state.players[1].active.uid;
+  use(state, 0, "Tide");
+  assert.ok(state.players[1].deck.includes(active));
+  assert.equal(state.pending[0].type, "promote");
+  state = labgame("lab-q4", "lab-2");
+  state.players[1].bench = [];
+  use(state, 0, "Tide");
+  assert.equal(state.players[1].active.uid, active, "no Benched Pokémon: the attack does nothing");
+  state = labgame("lab-q5", "lab-2");
+  const e = attachNew(state, state.players[1].active, F);
+  use(state, 0, "Shift");
+  act(state, { type: "pick", player: 0, spot: 0 });
+  assert.deepEqual(state.players[1].bench[0].energy, [e]);
+  assert.deepEqual(state.players[1].active.energy, []);
+});
+
+test("any of their Pokémon's attacks copied; healed by half the damage done", () => {
+  let state = labgame("lab-q5", "lab-2");
+  use(state, 0, "Mimic");
+  assert.equal(state.pending[0].why, "copy");
+  const names = state.pending[0].labels;
+  assert.ok(names.includes("Sting") && names.includes(defs("base1-46").attacks[0].name), "the Benched Charmander's too");
+  act(state, { type: "option", player: 0, index: names.indexOf("Sting") });
+  assert.ok(conditionsOn(state.players[1].active).includes("poisoned"));
+  state = labgame("lab-q5", "lab-2");
+  state.players[0].active.damage = 100;
+  use(state, 0, "Drain");
+  assert.equal(state.players[0].active.damage, 70);
+});
+
+test("more wordings read: counts, tests, small differences in print", () => {
+  const steps = (text, name) => compileAttack(text, name);
+  assert.deepEqual(steps("This attack does 30 damage for each of your Darkness Pokémon in play.")[0], { op: "bonusPer", when: "before", how: "times", n: 30, per: "ownType", type: "Darkness" });
+  assert.deepEqual(steps("This attack does 50 more damage for each Leon card in your discard pile.")[0].type, "trainer~Leon");
+  assert.deepEqual(steps("This attack does 10 more damage for each Ancient card in your discard pile.")[0].type, "+Ancient");
+  assert.equal(steps("This attack does 20 damage for each Item card in your opponent's discard pile.")[0].per, "foeDiscardKind");
+  assert.equal(steps("Does 20 damage plus 20 more damage for each Nidoking you have in play.")[0].per, "ownNamed");
+  assert.equal(steps("If this Pokémon is Burned or Poisoned, this attack does 60 more damage.")[0].test, "selfStatusOf");
+  assert.equal(steps("If the Defending Pokémon is a Stage 2 Evolved Pokémon, this attack does 30 damage plus 30 more damage.")[0].line, 2);
+  assert.equal(steps("If you have at least 4 Water Energy in play, this attack does 90 more damage.")[0].test, "ownEnergyAtLeast");
+  assert.equal(steps("If your opponent's Active Pokémon has Fighting Resistance, this attack does 50 more damage.")[0].type, "Fighting");
+  assert.deepEqual(steps("If this Pokémon didn't move from the Bench to the Active Spot this turn, this attack does nothing.")[0], { op: "cancelIf", when: "before", test: "movedUp", not: true });
+  // "Pokemon", "Weakness or Resistance", the switch reminder, "(after doing damage)".
+  assert.ok(steps("This attack does 20 damage to 1 of your opponent's Benched Pokemon. (Don't apply Weakness or Resistance for Benched Pokemon)."));
+  assert.deepEqual(steps("Flip a coin. If tails, Electabuzz is now Confused (after doing damage).", "Electabuzz")[0].tails[0], { op: "condition", when: "after", kind: "confused", self: true });
+  assert.deepEqual(steps("Does 10 damage plus 10 more damage for each damage counter on this Pokémon. Then, remove 2 damage counters from this Pokémon.")[1], { op: "healSelf", when: "after", n: 20 });
+  // Still not read: the two coins can't be told apart from the one sentence.
+  assert.equal(steps("Flip 2 coins. If both are tails, this attack does nothing. For each heads, discard an Energy attached to the Defending Pokémon."), null);
 });
 
 console.log(`${passed} checks passed${process.exitCode ? ", some failed" : ""}`);

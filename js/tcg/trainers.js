@@ -58,9 +58,10 @@ const energyFor = (ctx, { zone, type }) => mine(ctx)[zone].filter((uid) => {
   return def.kind === "energy" && def.basic && (!type || def.provides.includes(type));
 });
 /** `who` (as fits reads it) narrows it further: "basic!rule", "stage2:Fire|stage2:Water". */
-const energySpots = (ctx, { to, whoType, who = "" }) =>
+// `boxes`: only Pokémon with these rule boxes ("to your Pokémon V in any way you like").
+const energySpots = (ctx, { to, whoType, who = "", boxes = null }) =>
   inPlay(ctx.state, ctx.player)
-    .filter(([slot, spot]) => (to === "self" ? spot === ctx.spot : to === "active" ? spot === ACTIVE : to === "bench" ? spot !== ACTIVE : true) && (!whoType || defOf(ctx.state, slot.uid, ctx.defs).types.includes(whoType)) && (!who || fits(defOf(ctx.state, slot.uid, ctx.defs), who)))
+    .filter(([slot, spot]) => (to === "self" ? spot === ctx.spot : to === "active" ? spot === ACTIVE : to === "bench" ? spot !== ACTIVE : true) && (!whoType || defOf(ctx.state, slot.uid, ctx.defs).types.includes(whoType)) && (!who || fits(defOf(ctx.state, slot.uid, ctx.defs), who)) && (!boxes || boxes.includes(defOf(ctx.state, slot.uid, ctx.defs).box)))
     .map(([, spot]) => spot);
 /** Their Pokémon this card may touch: not one whose Ability keeps off this kind of card (see `warded`). */
 const open = (ctx) => inPlay(ctx.state, other(ctx.player)).filter(([slot]) => !warded(ctx.state, slot, ctx, ctx.defs));
