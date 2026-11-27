@@ -461,6 +461,47 @@ body.no-motion .tg-table *, body.no-motion .tg-fx *, body.no-motion .tg-sheet, b
   .tg-pvp-row .tg-deck-keys { flex-direction: column; }
 }
 
+/* Quick match on the online page: a card to join the queue, and the same card while it waits. */
+.tg-quick { margin: 14px 0 4px; }
+.tg-quick.is-on { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; box-shadow: inset 5px 0 0 var(--yel); }
+.tg-quick [data-quick-time] { font-family: var(--font-n); font-variant-numeric: tabular-nums; color: var(--k); }
+/* Three card backs dealt in turn while it looks for someone: transform and opacity only. */
+.tg-quick-scan { position: relative; width: 40px; height: 44px; }
+.tg-quick-scan i {
+  position: absolute; left: 8px; top: 6px; width: 22px; height: 31px; border: 2px solid var(--k); border-radius: 3px; background: var(--box-2);
+  transform-origin: 50% 120%; animation: tg-deal 1.8s var(--ease-out) infinite;
+}
+.tg-quick-scan i:nth-child(2) { animation-delay: 0.3s; background: var(--yel); }
+.tg-quick-scan i:nth-child(3) { animation-delay: 0.6s; }
+@keyframes tg-deal {
+  0% { opacity: 0; transform: translateY(8px) rotate(0deg); }
+  25% { opacity: 1; }
+  55% { opacity: 1; transform: translateY(0) rotate(var(--fan, 0deg)); }
+  100% { opacity: 0; transform: translateY(-4px) rotate(var(--fan, 0deg)); }
+}
+.tg-quick-scan i:nth-child(1) { --fan: -14deg; }
+.tg-quick-scan i:nth-child(3) { --fan: 14deg; }
+body.no-motion .tg-quick-scan i { animation: none; }
+@media (prefers-reduced-motion: reduce) { .tg-quick-scan i { animation: none; } }
+@media (max-width: 520px) {
+  .tg-quick.is-on { grid-template-columns: auto minmax(0, 1fr); }
+  .tg-quick.is-on button { grid-column: 1 / -1; justify-self: start; }
+}
+
+/* A rematch, on the finished table's sheet: the offer, its answer, and which deck to bring. */
+.tg-rematch { display: grid; justify-items: center; gap: 8px; width: 100%; margin-top: 6px; padding-top: 12px; border-top: 1px solid var(--rule); }
+.tg-rematch .tg-sheet-keys { justify-content: center; margin-top: 0; }
+.tg-rematch-line b { display: block; color: var(--k); font: italic 800 20px/1.15 var(--font-xc); letter-spacing: -0.015em; }
+.rt-dark .tg-rematch-line b, .rt-dark .tg-over .tlink { color: var(--on-k); }
+.tg-rematch [data-rematch-time] { font-family: var(--font-n); font-variant-numeric: tabular-nums; }
+.tg-rematch-deck { display: flex; align-items: center; gap: 8px; width: 100%; max-width: 320px; }
+.tg-rematch-deck span { flex: none; font: 700 13px var(--font-h); color: var(--k-2); }
+.tg-rematch-deck select { flex: 1; min-width: 0; }
+/* On the dark table the page's field colours vanish: the menu takes the sheet's own. */
+.rt-dark .tg-rematch-deck span { color: inherit; opacity: 0.75; }
+.rt-dark .tg-rematch-deck select { background: transparent; border: 2px solid currentColor; color: inherit; color-scheme: dark; }
+.rt-dark .tg-rematch-deck option { background: var(--box); color: inherit; }
+
 /* The move clock in a match against a friend: whose time is running, how much is left. */
 .tg-clock { min-width: 44px; padding: 2px 7px 3px; border-radius: 4px; background: rgb(var(--box-rgb) / 0.12); font: 700 14px var(--font-n); font-variant-numeric: tabular-nums; text-align: center; opacity: 0.75; }
 .tg-clock:empty { display: none; }
