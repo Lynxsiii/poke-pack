@@ -182,7 +182,18 @@ function ownAbility(state, slot, defs) {
   if (when?.energy) {
     const units = energyOf(state, slot, defs);
     const want = when.energy;
-    if (want === "none" ? units.length : !units.includes(want)) return null;
+      if (want === "none" ? units.length : want === "any" ? !units.length : !units.includes(want)) return null;
+  }
+  // "If this Pokémon has full HP", "has 2 or more damage counters on it".
+  if (when?.fullHp && slot.damage) return null;
+  if (when?.countersMin && (slot.damage || 0) < when.countersMin * 10) return null;
+  if (when?.inPlay || when?.foeInPlay || when?.sameHand) {
+    const owner = ownerOf(state, slot);
+    if (owner < 0) return null;
+    // "If you have any Darkness Mega Evolution Pokémon ex in play", "If your opponent has any Pokémon ex in play".
+    if (when.inPlay && !inPlay(state, owner).some(([mate]) => fits(defOf(state, mate.uid, defs), when.inPlay))) return null;
+    if (when.foeInPlay && !inPlay(state, other(owner)).some(([rival]) => fits(defOf(state, rival.uid, defs), when.foeInPlay))) return null;
+    if (when.sameHand && state.players[owner].hand.length !== state.players[other(owner)].hand.length) return null;
   }
   if (when?.status && statusOf(slot).main !== when.status) return null;
   if (when?.special && !slot.energy.some((uid) => defOf(state, uid, defs)?.kind === "energy" && !defOf(state, uid, defs).basic)) return null;
@@ -394,7 +405,14 @@ export function retreatCost(state, slot, defs) {
   if (freeAt && hpLeft(state, slot, defs) <= freeAt) return markSum(state, slot, "retreatMore");
   const less = toolOf(state, slot, defs).retreat;
   // "During your opponent's next turn, the Defending Pokémon's Retreat Cost is Colorless more" (a retreatMore mark).
-  return (less === "all" ? 0 : Math.max(0, defOf(state, slot.uid, defs).retreat - (less || 0))) + markSum(state, slot, "retreatMore");
+  return (less === "all" ? 0 : Math.max(0, defOf(state, slot.uid, defs).retreat - (less || 0))) + markSum(state, slot, "retreatMore") + gemstone(state, slot, defs);
+}
+
+/** Gravity Gemstone: while its holder is in the Active Spot, the Retreat Cost of both Active Pokémon is more. */
+function gemstone(state, slot, defs) {
+  const fronts = [state.players[0].active, state.players[1].active];
+  if (!fronts.includes(slot)) return 0;
+  return fronts.reduce((n, front) => n + ((front && toolOn(state, front, defs)?.bothActive) || 0), 0);
 }
 
 /** What this attack costs this Pokémon now: its printed cost, and Colorless more for each costMore mark on it. */
@@ -465,6 +483,8 @@ export function energyFits(def, holder) {
   if (only.evolved && holder.stage !== "evolution") return false;
   if (only.noEx && holder.box === "ex") return false;
   if (only.named && !fieldFits({ named: only.named }, holder)) return false;
+  // Rapid Strike Energy: a kind the card prints.
+  if (only.tag && !(holder.tags || []).includes(only.tag)) return false;
   return true;
 }
 const onlyFor = (only) => [only.named, only.types?.join(" or "), only.evolved ? "Evolved" : ""].filter(Boolean).join(" ");
@@ -740,7 +760,8 @@ function endOfTurn(state, defs, events) {
       if (later && spot === ACTIVE && addCondition(state, slot, later.name, defs)) events.push({ t: "condition", p: q, kind: later.name });
       const lapse = slot.tool && defOf(state, slot.tool, defs)?.tool?.lapse;
       // Strength Charm: the turn it attacked. Buffer Piece: the opponent's turn after it was played.
-      if ((lapse === "attack" && slot.toolSpent === state.turn) || (lapse === "foe" && q !== p && slot.toolOn < state.turn)) dropTool(state, q, spot, slot, defs, events);
+      // Technical Machine: Fluorite: the end of its owner's turn.
+      if ((lapse === "attack" && slot.toolSpent === state.turn) || (lapse === "foe" && q !== p && slot.toolOn < state.turn) || (lapse === "turn" && q === p)) dropTool(state, q, spot, slot, defs, events);
     }
   }
 }
@@ -877,6 +898,13 @@ function tooEarly(state, player, attack, defs) {
   const says = (op) => (attack.fx || []).some((step) => step.op === op);
   if (state.turn === 1 && !says("firstTurn")) return "The player who goes first can't attack on the first turn.";
   if (state.turn === 2 && player !== state.first && says("notSecondFirst")) return "If you go second, you can't use this attack during your first turn.";
+  // "This Pokémon can't attack unless you have 4 or more Team Rocket's Pokémon in play", "... unless you have 10 or more cards in your hand".
+  const bar = abilityOn(state, state.players[player].active, defs)?.attackUnless;
+  if (bar) {
+    const side = state.players[player];
+    if (bar.hand != null && side.hand.length < bar.hand) return `It can't attack unless you have ${bar.hand} or more cards in your hand.`;
+    if (bar.what && inPlay(state, player).filter(([slot]) => fits(defOf(state, slot.uid, defs), bar.what)).length < bar.n) return `It can't attack unless you have ${bar.n} or more of those Pokémon in play.`;
+  }
   // "You can use this attack only if ...", "You can't use this attack if your Bench is full" (effects.js OPS.onlyIf).
   return attackBlock(state, player, attack, defs);
 }
@@ -1017,6 +1045,8 @@ function settle(state, defs, events) {
   if (offerTrick(state)) return;
   if (!state.checked) {
     state.checked = true;
+    if (state.comeback) comeback(state, defs, events);
+    delete state.attackBy;
     dropHeld(state, events);
     endOfTurn(state, defs, events);
     checkup(state, defs, events);
@@ -1141,11 +1171,13 @@ export function resolveKnockOuts(state, defs, events, { between = false } = {}) 
       const legacy = byAttack(slot, p) && !state.players[p].legacyUsed && energyMod(state, slot, "legacy", defs);
       if (legacy) state.players[p].legacyUsed = true;
       const fewer = (tool?.fewer || 0) + (summit && fieldFits(summit.who, def) ? summit.n : 0) + (legacy ? 1 : 0);
-      if (!def.fossil?.noPrize) took[other(p)] += Math.max(0, (def.prizes ?? 1) + (tool?.prize || 0) + (byAttack(slot, p) ? (markOn(state, slot, "bounty")?.n || 0) - fewer : 0));
+      if (!def.fossil?.noPrize) took[other(p)] += Math.max(0, (def.prizes ?? 1) + (tool?.prize || 0) + (byAttack(slot, p) ? (markOn(state, slot, "bounty")?.n || 0) + prizeUp(state, other(p), spot, defs) - fewer : 0));
       if (!counts) continue;
       // Remembered by turn for "if any of your Pokémon were Knocked Out during your opponent's last turn"
       // (the checkup between turns is no one's turn).
       if (state.current === other(p) && !between) side.lostOn = [...new Set([...(side.lostOn || []).filter((t) => t >= state.turn - 1), state.turn])];
+      // Which card it was, for "if any of your Team Rocket's Pokémon were Knocked Out during your opponent's last turn".
+      if (state.current === other(p) && !between) side.lostWho = [...(side.lostWho || []).filter((d) => d.turn >= state.turn - 1), { turn: state.turn, uid: slot.uid }];
       // And for "Knocked Out by damage from an attack" (not damage counters, not the checkup): `downedOn`.
       // `downed` keeps which card it was, for "if any of your Fighting Pokémon were Knocked Out ...".
       if (byAttack(slot, p)) side.downed = [...(side.downed || []).filter((d) => d.turn >= state.turn - 1), { turn: state.turn, uid: slot.uid }];
@@ -1314,6 +1346,13 @@ export function strike(ctx) {
       amount = maxHp(state, target, defs) - power.sturdy;
       events.push({ t: "ability", p: foe, spot: ACTIVE, uid: target.uid, name: power.name });
     }
+    // Survival Brace: the same from its Tool, which is then discarded.
+    const brace = toolOn(state, target, defs)?.sturdy;
+    if (brace && target.damage === 0 && amount >= maxHp(state, target, defs) && maxHp(state, target, defs) > brace) {
+      amount = maxHp(state, target, defs) - brace;
+      events.push({ t: "tool-effect", p: foe, spot: ACTIVE, uid: target.tool });
+      dropTool(state, foe, ACTIVE, target, defs, events);
+    }
     // Or a coin flip decides it, from any HP.
     if (power?.hangOn && amount > 0 && amount >= hpLeft(state, target, defs) && hpLeft(state, target, defs) > power.hangOn) {
       const heads = flip(state, foe);
@@ -1349,7 +1388,9 @@ export function strike(ctx) {
       }
       // Its Tool too: Rocky Helmet's damage counters, Lucky Helmet's cards, Counterattack Claws' coin flip.
       const spikes = toolOn(state, target, defs)?.thorns;
-      if (spikes) {
+      // Adversity Policy: only when the holder has Weakness to the attacker's type.
+      const weakTo = defOf(state, target.uid, defs).weakness?.type;
+      if (spikes && (!spikes.weak || (weakTo && def.types.includes(weakTo)))) {
         events.push({ t: "tool-effect", p: foe, spot: ACTIVE, uid: target.tool });
         const heads = spikes.flip ? flip(state, foe) : true;
         if (spikes.flip) events.push({ t: "flip", p: foe, results: [heads], why: "tool" });
@@ -1358,6 +1399,8 @@ export function strike(ctx) {
           events.push({ t: "damage", p: player, spot: ACTIVE, n: spikes.n, self: true, why: "tool" });
         }
         if (spikes.draw) draw(state, foe, spikes.draw, events);
+        // Team Rocket's Hypnotizer: the Attacking Pokémon is now Asleep.
+        if (spikes.status && addCondition(state, slot, spikes.status, defs)) events.push({ t: "condition", p: player, kind: spikes.status });
         if (spikes.spent) dropTool(state, foe, ACTIVE, target, defs, events);
       }
       // Spiky Energy: damage counters on the Attacking Pokémon, each one attached.
@@ -1691,6 +1734,7 @@ const HANDLERS = {
     const foe = other(player);
     const target = state.players[foe].active;
     events.push({ t: "attack", p: player, index, name: attack.name, uid: slot.uid });
+    state.attackBy = { p: player, uid: slot.uid, turn: state.turn };
     // Strength Charm goes at the end of a turn this Pokémon attacked in.
     if (slot.tool) slot.toolSpent = state.turn;
     // The Baby Pokémon rule: attacking an Active Baby Pokémon takes a coin flip first; tails, the turn ends without an attack.
@@ -1830,7 +1874,10 @@ const HANDLERS = {
           const lost = Boolean(waiting.effect.lost);
           if (slot.tool === uid) toolGone(state, p, uid, defs);
           else if (lost) toLost(state, p, [uid], events);
-          else state.players[p].discard.push(uid);
+          else {
+            state.players[p].discard.push(uid);
+            noteShed(state, p, spot, [uid]);
+          }
           if (slot.tool === uid) {
             delete slot.tool;
             events.push({ t: "discard-tool", p, spot, uid });
@@ -1850,6 +1897,13 @@ const HANDLERS = {
         askPick(state, { player, side: player, spots, left: 1, effect: { op: "evolveHeld", uid, zone: waiting.zone }, ...(waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) });
         waiting.then = null;
       } else if (waiting.zone === "deck") events.push({ t: "search", p: player, uids: [], from: "deck", to: "hand" });
+    } else if (op === "swapTop") {
+      // "Switch a card from your hand with the top card of your deck."
+      const top = side.deck.shift();
+      side.deck.unshift(...picked);
+      if (top) side.hand.push(top);
+      events.push({ t: "hand-to-deck", p: player, uids: picked, at: "top" });
+      if (top) events.push({ t: "draw", p: player, uids: [top] });
     } else if (op === "toTop" || op === "toBottom") {
       // From the hand onto the top or the bottom of the deck (or into it, when it is shuffled next).
       if (op === "toTop") side.deck.unshift(...picked);
@@ -1970,6 +2024,7 @@ const HANDLERS = {
         if (lost) toLost(state, player, [uid], events);
         else side.discard.push(uid);
         at[0].energy.splice(at[0].energy.indexOf(uid), 1);
+        if (!lost) noteShed(state, player, at[1], [uid]);
         events.push({ t: "discard-energy", p: player, spot: at[1], uids: [uid], ...(lost ? { lost } : {}) });
       }
       if (waiting.zone === "hand" && picked.length) events.push({ t: "discard-hand", p: player, uids: picked });
@@ -2182,6 +2237,18 @@ export function benchSafe(state, slot, spot, defs, own = false) {
   return owner >= 0 && inPlay(state, owner).some(([mate]) => abilityOn(state, mate, defs)?.benchWall);
 }
 
+/**
+ * Briar: "During this turn, if your opponent's Active Pokémon is Knocked Out by damage from an attack used by your
+ * Tera Pokémon, take 1 more Prize card." `state.prizeUp` holds { p, turn, who (as fits reads it), n } for the turn.
+ */
+function prizeUp(state, taker, spot, defs) {
+  if (spot !== ACTIVE || state.current !== taker) return 0;
+  const attacker = state.players[taker].active;
+  if (!attacker) return 0;
+  const def = defOf(state, attacker.uid, defs);
+  return (state.prizeUp || []).filter((b) => b.p === taker && b.turn === state.turn && fits(def, b.who)).reduce((n, b) => n + b.n, 0);
+}
+
 /** Is this attacker one the wall stops? */
 function walled(wall, def, state, slot, defs) {
   // "...that have Special Energy attached", "...that have an Ability".
@@ -2256,6 +2323,9 @@ function applyPick(state, waiting, spot, defs, events) {
     const slot = slotAt(state, p, spot);
     // `pierce`: the attack ignores effects on that Pokémon; a Tera Pokémon's own rule still keeps it safe on the Bench.
     if (effect.attack && (effect.pierce ? defOf(state, slot.uid, defs).tera && spot !== ACTIVE : benchSafe(state, slot, spot, defs, p === waiting.player))) return void events.push({ t: "blocked", p, spot });
+    // A shield on it (Acerola's Mischief on a Benched Pokémon) stops the attack's damage there too.
+    const striker = state.players[waiting.player]?.active;
+    if (effect.attack && p !== waiting.player && striker && shieldOn(state, slot, defOf(state, striker.uid, defs))) return void events.push({ t: "blocked", p, spot });
     // "This attack does 20 damage to 1 of your opponent's Benched Pokémon for each damage counter on that Pokémon."
     let n = effect.perCounter ? effect.perCounter * Math.floor(slot.damage / 10) : effect.n;
     let weak = false;
@@ -2320,6 +2390,10 @@ function applyPick(state, waiting, spot, defs, events) {
     const slot = slotAt(state, p, spot);
     (slot.held ||= []).push({ uid: effect.uid, ...effect.mod });
     events.push({ t: "hold", p, spot, uid: effect.uid });
+  } else if (effect.op === "mark") {
+    // A Trainer's protection on the Pokémon chosen (Acerola's Mischief): a mark for the turn it names.
+    addMark(state, slotAt(state, p, spot), { ...effect.mark });
+    events.push({ t: "mark", p, spot, kind: effect.mark.kind });
   } else if (effect.op === "lift") {
     slotAt(state, p, spot).lift = state.turn;
     events.push({ t: "lift", p, spot });
@@ -2462,8 +2536,48 @@ function dropEnergy(state, p, spot, uids, events, lost = false) {
   const slot = slotAt(state, p, spot);
   for (const uid of uids) slot.energy.splice(slot.energy.indexOf(uid), 1);
   if (lost) toLost(state, p, uids, events);
-  else state.players[p].discard.push(...uids);
+  else {
+    state.players[p].discard.push(...uids);
+    noteShed(state, p, spot, uids);
+  }
   events.push({ t: "discard-energy", p, spot, uids, ...(lost ? { lost } : {}) });
+}
+
+/**
+ * Nitro Fire Energy, Boomerang Energy: "If this card is discarded by an effect of an attack used by the Pokémon this
+ * card is attached to, ... after attacking". From the moment an attack is declared until its turn ends
+ * (`state.attackBy`), Energy discarded from that attacker to the discard pile is remembered in `state.comeback`
+ * (a Knock Out discards a Pokémon's cards another way, so it doesn't count); once the attack is over, before the
+ * end of the turn (settle), each one still in the discard pile comes back as its card says.
+ */
+export function noteShed(state, p, spot, uids) {
+  const holder = state.players[p].active;
+  const by = state.attackBy;
+  if (!by || by.p !== p || by.turn !== state.turn || spot !== ACTIVE || !holder || holder.uid !== by.uid) return;
+  state.comeback = [...(state.comeback || []), ...uids.map((uid) => ({ uid, p, holder: holder.uid, turn: state.turn }))];
+}
+function comeback(state, defs, events) {
+  const list = state.comeback || [];
+  delete state.comeback;
+  for (const { uid, p, holder, turn } of list) {
+    const back = defOf(state, uid, defs)?.special?.back;
+    const side = state.players[p];
+    if (!back || turn !== state.turn || !side.discard.includes(uid)) continue;
+    // Nitro Fire Energy: only from an attack of the Fire Pokémon it was on.
+    if (back.type && !(defOf(state, holder, defs)?.types || []).includes(back.type)) continue;
+    if (back.to === "hand") {
+      side.discard.splice(side.discard.indexOf(uid), 1);
+      side.hand.push(uid);
+      events.push({ t: "energy-to-hand", p, uids: [uid], from: "discard" });
+      continue;
+    }
+    // Boomerang Energy: back onto that Pokémon, if it is still in play.
+    const at = inPlay(state, p).find(([slot]) => slot.uid === holder);
+    if (!at) continue;
+    side.discard.splice(side.discard.indexOf(uid), 1);
+    at[0].energy.push(uid);
+    events.push({ t: "attach", p, uid, spot: at[1], from: "discard" });
+  }
 }
 
 /** Cards put in the Lost Zone: out of the game for good (a player's `lost` pile, face up). */
@@ -2539,6 +2653,8 @@ export function chooseBlock(state, waiting, picked, defs) {
     if (sum < rule.covers) return "That doesn't cover the Retreat Cost.";
     if (units.some((u) => sum - u >= rule.covers)) return "Discard only what the Retreat Cost needs.";
   }
+  // `most`: no more than k cards of a kind ("up to 2 Basic Pokémon or 1 Evolution Pokémon").
+  if (rule.most && rule.most.some(([what, k]) => cards.filter((def) => fits(def, what)).length > k)) return "That's more cards of that kind than the card allows.";
   if (rule.distinct) {
     const types = cards.map((def) => def.provides || def.types || []);
     if (types.some((a, i) => types.some((b, j) => j > i && a.some((t) => b.includes(t))))) return "Each card must be a different type.";

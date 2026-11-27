@@ -34,7 +34,7 @@
  * `kind` is the printed label: "Ability", "Poké-Body", "Poké-Power" or "Pokémon Power".
  */
 
-import { compileTrainer, whatOf } from "./trainers.js";
+import { compileTrainer, condOf, whatOf } from "./trainers.js";
 
 const TYPE = "(?:Grass|Fire|Water|Lightning|Psychic|Fighting|Darkness|Metal|Fairy|Dragon|Colorless)";
 const AFTER = "(?: \\(after applying Weakness and Resistance\\))?";
@@ -131,6 +131,19 @@ const STANDING = [
   [/^Prevent all effects of (?:attacks (?:from|used by) your opponent's Pokémon done to this Pokémon\. \(Damage is not an effect\.\)|your opponent's attacks, except damage, done to this Pokémon\.)$/, () => ({ noEffects: true })],
   [new RegExp(`^(?:This Pokémon takes (\\d+) less damage from (?:your opponent's )?attacks|(?:Any|All) damage done (?:to this Pokémon by attacks|by attacks to this Pokémon) is reduced by (\\d+))${AFTER}\\.$`), (m) => ({ mod: { less: Number(m[1] || m[2]) } })],
   [/^This Pokémon has no Retreat Cost\.$/, () => ({ mod: { retreat: "all" } })],
+  [/^If this Pokémon has any Energy attached(?: to it)?, it has no Retreat Cost\.$/, () => ({ mod: { retreat: "all" }, when: { energy: "any" } })],
+  [/^This Pokémon can't attack unless you have (\d+) or more (.+?) in play\.$/, (m) => (whatOf(m[2]) ? { attackUnless: { what: whatOf(m[2]), n: Number(m[1]) } } : null)],
+  [/^This Pokémon can't use attacks unless you have (\d+) or more cards in your hand\.$/, (m) => ({ attackUnless: { hand: Number(m[1]) } })],
+  [new RegExp(`^If this Pokémon has full HP, it takes (\\d+) less damage from (?:your opponent's attacks|attacks from your opponent's Pokémon)${AFTER}\\.$`), (m) => ({ mod: { less: Number(m[1]) }, when: { fullHp: true } })],
+  [new RegExp(`^Your Basic Pokémon's attacks do (\\d+) more damage to your opponent's Active Pokémon${BEFORE}\\.$`), (m) => ({ aura: { who: { stage: "basic" }, mod: { plus: Number(m[1]) } } })],
+  [new RegExp(`^Attacks used by your (${TYPE}) Pokémon do (\\d+) more damage to your opponent's Active Pokémon${BEFORE}\\.$`), (m) => ({ aura: { who: { types: [m[1]] }, mod: { plus: Number(m[2]) } } })],
+  [new RegExp(`^Attacks used by your ((?:Team Rocket|[A-Z][a-zé]*)'s) Pokémon do (\\d+) more damage to your opponent's Active Pokémon${BEFORE}\\.$`), (m) => ({ aura: { who: { owner: m[1] }, mod: { plus: Number(m[2]) } } })],
+  [new RegExp(`^All of your Pokémon that have "([A-Z][a-zé]+)" in their name take (\\d+) less damage from (?:your opponent's attacks|attacks from your opponent's Pokémon)${AFTER}\\.$`), (m) => ({ aura: { who: { named: m[1] }, mod: { less: Number(m[2]) } } })],
+  [/^As long as this Pokémon is on your Bench, your Active Pokémon's Retreat Cost is (\d+) less\.$/, (m) => ({ aura: { who: { active: true }, mod: { retreat: Number(m[1]) } }, where: "bench" })],
+  [new RegExp(`^If you have any (.+?) in play, attacks used by this Pokémon do (\\d+) more damage to your opponent's Active Pokémon${BEFORE}\\.$`), (m) => (whatOf(m[1]) ? { mod: { plus: Number(m[2]) }, when: { inPlay: whatOf(m[1]) } } : null)],
+  [new RegExp(`^If you have the same number of cards in your hand as your opponent, attacks used by this Pokémon do (\\d+) more damage to your opponent's Active Pokémon${BEFORE}\\.?$`), (m) => ({ mod: { plus: Number(m[1]) }, when: { sameHand: true } })],
+  [new RegExp(`^If this Pokémon has (\\d+) or more damage counters on it, attacks used by this Pokémon do (\\d+) more damage to your opponent's Active Pokémon${BEFORE}\\.$`), (m) => ({ mod: { plus: Number(m[2]) }, when: { countersMin: Number(m[1]) } })],
+  [/^If your opponent has any (.+?) in play, this Pokémon has no Retreat Cost\.$/, (m) => (whatOf(m[1]) ? { mod: { retreat: "all" }, when: { foeInPlay: whatOf(m[1]) } } : null)],
   [/^This Pokémon has no Weakness\.$/, () => ({ mod: { noWeakness: true } })],
   [new RegExp(`^If this Pokémon has any (${TYPE}) Energy attached(?: to it)?, (?:it has no Retreat Cost|the Retreat Cost for this Pokémon is 0)\\.$`), (m) => ({ mod: { retreat: "all" }, when: { energy: m[1] } })],
   [/^If this Pokémon has no Energy attached(?: to it)?, it has no Retreat Cost\.$/, () => ({ mod: { retreat: "all" }, when: { energy: "none" } })],
@@ -179,6 +192,19 @@ const DOES = [
     if (!/^(basicEnergy|energy)/.test(what)) return null;
     return [{ op: "fetchEnergy", what, n: Number(m[1]), to: "self", top: Number(m[1]), rest: "hand" }];
   }],
+  [/^Discard an Energy from your opponent's Active Pokémon\.$/, () => [{ op: "hammer", active: true }]],
+  [/^Put an Energy attached to your opponent's Active Pokémon into their hand\.$/, () => [{ op: "hammerActive" }]],
+  [/^Discard a random card from your opponent's hand\.$/, () => [{ op: "foeDiscardRandom", n: 1 }]],
+  [/^Each player draws a card\.$/, () => [{ op: "draw", n: 1 }, { op: "foeDraw", n: 1 }]],
+  [/^Have your opponent shuffle their hand into their deck and draw (\d+) cards\.$/, (m) => [{ op: "foeShuffle" }, { op: "foeDraw", n: Number(m[1]) }]],
+  [/^Heal all damage from 1 of your Pokémon\.$/, () => [{ op: "heal", n: 9999 }]],
+  [/^Switch a card from your hand with the top card of your deck\.$/, () => [{ op: "swapTop" }]],
+  [/^Draw a card\. If you do, you may put a card from your hand on the bottom of your deck\.$/, () => [{ op: "draw", n: 1, need: true }, { op: "stash", n: 1, at: "bottom", upTo: true }]],
+  [/^Switch (?:it|this Pokémon) with your Active Pokémon\. If you do, you may move any amount of Energy from your other Pokémon to this Pokémon\.$/, () => [{ op: "switchSelf", need: true }, { op: "gather", type: "" }]],
+  // "to 1 of your Iono's Pokémon", "to 1 of your Benched Ethan's Pokémon", "to your Active Larry's Pokémon".
+  [new RegExp(`^Attach (an?|up to (\\d+)) (Basic (${TYPE}) Energy cards?|Energy card) from your hand to (1 of your|1 of your Benched|your Active) ((?:Team Rocket|[A-Z][a-zé]*)'s) Pokémon\\.$`), (m) => [
+    { op: "attachPick", zone: "hand", what: m[4] ? `basicEnergy:${m[4]}` : "energy", to: /Benched/.test(m[5]) ? "bench" : /Active/.test(m[5]) ? "active" : "any", who: `name^${m[6]}`, n: m[2] ? Number(m[2]) : 1, ...(m[2] ? { upTo: true } : {}) },
+  ]],
   // Old Pokémon Powers that do damage: to the Active Pokémon, with Weakness and Resistance, but not an attack.
   [/^[Dd]o (\d+) damage to your opponent's Active Pokémon\. \(Apply Weakness and Resistance\.\)$/, (m) => [{ op: "zap", n: Number(m[1]) }]],
   [/^Heal (\d+) damage from each of your Pokémon\.$/, (m) => [{ op: "heal", n: Number(m[1]), to: "all" }]],
@@ -217,7 +243,7 @@ function stepsOf(words, cardName = "") {
 const PRICE = /^You must discard (an?|\d+) cards? from your hand in order to use this (?:Ability|Poké-Power)\. /;
 const USE = /^(?:If this Pokémon is your Active Pokémon, )?(Once|As often as you like|During your turn)(?: during your turn)?(?: \(before your attack\))?, (?:if this Pokémon is (in the Active Spot|your Active Pokémon|on your Bench), )?(?:you may )?(.+)$/;
 const ACTIVE_FIRST = /^If this Pokémon is your Active Pokémon, /;
-const ENTER = /^(?:Once during your turn, )?[Ww]hen you play this Pokémon from your hand (onto your Bench|to evolve 1 of your Pokémon)(?: during your turn)?, you may (.+)$/;
+const ENTER = /^(?:Once during your turn, )?[Ww]hen you play this Pokémon from your hand (onto your Bench|to evolve 1 of your Pokémon)(?: during your turn)?, (?:if (.+?), )?you may (.+)$/;
 
 export function compileAbility(ability, cardName = "") {
   const kind = ability?.type || "Ability";
@@ -280,6 +306,14 @@ export function compileAbility(ability, cardName = "") {
       return head;
     });
 
+  // Other terms, as a Trainer says them ("if this Pokémon has any Grass Energy attached", "if you have any Tera Pokémon in play").
+  let term = null;
+  text = text.replace(/^((?:Once|As often as you like) during your turn(?: \(before your attack\))?, )(if this Pokémon is (?:in the Active Spot|on your Bench), and )?if (.+?), you may /, (all, head, spot, words) => {
+    term = condOf(words);
+    if (!term) return all;
+    return `${head}${spot ? spot.replace(/, and $/, ", ") : ""}you may `;
+  });
+
   let cost = 0;
   const price = text.match(PRICE);
   if (price) {
@@ -293,12 +327,14 @@ export function compileAbility(ability, cardName = "") {
     const steps = stepsOf(m[3], cardName);
     const where = ACTIVE_FIRST.test(text) ? "active" : !m[2] ? "" : /Bench/.test(m[2]) ? "bench" : "active";
     const flags = { ...(calm ? { calm } : {}), ...(vstar ? { vstar } : {}), ...(ends ? { ends } : {}), ...(selfKo ? { selfKo } : {}), ...(Object.keys(need).length ? { need } : {}) };
-    if (steps) return { ...base, use: { steps: cost ? [{ op: "cost", n: cost, spare: 0 }, ...steps] : steps, where, often: m[1] === "As often as you like", single, ...flags } };
+    if (steps) return { ...base, use: { steps: [...(term ? [{ op: "only", when: term }] : []), ...(cost ? [{ op: "cost", n: cost, spare: 0 }] : []), ...steps], where, often: m[1] === "As often as you like", single, ...flags } };
   }
-  m = !cost && !ends && !selfKo && !vstar && !Object.keys(need).length && text.match(ENTER);
+  m = !cost && !ends && !selfKo && !vstar && !term && !Object.keys(need).length && text.match(ENTER);
   if (m) {
-    const steps = stepsOf(m[2], cardName);
-    return steps ? { ...base, enter: { steps, how: /Bench/.test(m[1]) ? "bench" : "evolve" } } : null;
+    const term = m[2] ? condOf(m[2]) : null;
+    if (m[2] && !term) return null;
+    const steps = stepsOf(m[3], cardName);
+    return steps ? { ...base, enter: { steps: term ? [{ op: "only", when: term }, ...steps] : steps, how: /Bench/.test(m[1]) ? "bench" : "evolve" } } : null;
   }
   return null;
 }
