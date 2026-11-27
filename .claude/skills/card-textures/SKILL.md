@@ -258,6 +258,16 @@ cure"). The surface gloss throws a soft highlight.
   its own drawn etch, since an English etch would ghost English text where the Japanese card prints Japanese. A
   "Rare Ultra" VMAX/VSTAR (the JP SAR/CSR alt arts) is `foil-ir swsh-rainbow swsh-alt`, the English alt-art recipe
   (`srb-alt`). `holo_check.py` lists any face still on the tile.
+  A twin's maps also hold the English card's lettering (holes in the foil, solid shapes in the etch), and the
+  per-card review saw "TRAINER", "Invitation", move names shine through the Japanese prints. Then run
+  `jp_twin_maps.py --clean-text --write` (after `foil_align.py --only-variants --fix`): it registers the two scans,
+  masks where their fine detail differs and inpaints the map there (`-tN` files). Blurring, closing or a median all
+  left words readable. A family that keys a per-card asset by `foilTwin` (sv-sir's ink mask did) carries the same
+  English text and the English scan's ink cut: draw the Japanese print its own (make_sir_masks.py takes `j` ids).
+  A face with a drawn etch (`has-etch-drawn`) has no foil map, only the white fallback: any layer masked by
+  `--foil-map` covers faces edge to edge (glitter as speckle on the figure), and the shared relief, which subtracts
+  the foil map, subtracted everything (the engraving never caught the light). etch-shine.css masks both by the etch
+  for those faces; a family that masks its own grain by `--foil-map` needs the same thought (srb-alt does).
 
 - **A sheen masked once by the etch is a wash, not a texture.** The SIR `.foil::after` etch sheen (white pool plus
   spectrum, in the colour-dodge group) was masked by the etch map once. The etch is grey nearly everywhere, so the
