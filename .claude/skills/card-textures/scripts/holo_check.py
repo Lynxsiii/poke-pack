@@ -33,8 +33,8 @@ every card a change touches, in two steps:
     python3 holo_check.py --cards ex13-16,js12a-214
 
 Output in --out (default /tmp/holo-check): check.json (every score), flagged.json, crops/<id>.jpg,
-sheets/flagged-NN.jpg, review/batch-NNN.jpg + review/batch-NNN.json (every card of the run, 12 per sheet, for
-the agents). Renders resume: a cut-off run picks up where it stopped. Needs PLAYWRIGHT_BROWSERS_PATH pointing
+sheets/flagged-NN.jpg, review/batch-NNN.jpg + review/batch-NNN.json (every card of the run, 6 per sheet, for
+the agents; --sheets-only redraws them). Renders resume: a cut-off run picks up where it stopped. Needs PLAYWRIGHT_BROWSERS_PATH pointing
 at a WebKit install (the poke-pack-webkit-testing note).
 """
 import argparse
@@ -56,6 +56,7 @@ RENDER = os.path.join(HERE, "holo_check_render.mjs")
 CENSUS = os.path.join(HERE, "foil_census.mjs")
 LIT = "35:35"
 PER_JOB = 30
+REVIEW_PER = 6
 
 # Floors on the art box, lit. Tuned on the 2026-11-27 run (see SKILL.md); a real holo adds light and texture but
 # keeps the drawing: its darks stay dark, its contrast holds, its own detail stays put, and it carries no cast.
@@ -307,12 +308,15 @@ def main():
     ap.add_argument("--jobs", type=int, default=2, help="WebKit processes at once")
     ap.add_argument("--keep-renders", action="store_true")
     ap.add_argument("--score-only", action="store_true", help="score renders already on disk")
+    ap.add_argument("--sheets-only", action="store_true", help="redraw the sheets from check.json and the crops")
     args = ap.parse_args()
     OUT = args.out
     args.renders = args.renders or os.path.join(args.out, "renders")
     for d in ("crops", "sheets", "review"):
         os.makedirs(os.path.join(args.out, d), exist_ok=True)
 
+    if args.sheets_only:
+        return sheets(json.load(open(os.path.join(args.out, "check.json"))), args)
     faces = json.loads(subprocess.run(["node", CENSUS], capture_output=True, text=True, cwd=ROOT, check=True).stdout)
     selected = select(faces, args)
     by_key = {face_key(f): f for f in selected}
@@ -329,18 +333,27 @@ def main():
     rows = flag(rows)
     rows.sort(key=lambda r: -r["severity"])
     json.dump(rows, open(old, "w"), indent=0)
+    return sheets(rows, args)
+
+
+def sheets(rows, args):
     flagged = [r for r in rows if r["flags"]]
     json.dump(flagged, open(os.path.join(args.out, "flagged.json"), "w"), indent=1)
     for i in range(0, len(flagged), 12):
         sheet(flagged[i:i + 12], os.path.join(args.out, "sheets", f"flagged-{i // 12:02d}.jpg"),
               f"flagged {i + 1}-{min(i + 12, len(flagged))} of {len(flagged)} (plain | rest | lit)")
     ordered = sorted(rows, key=lambda r: r["key"])
-    for i in range(0, len(ordered), 12):
-        part = ordered[i:i + 12]
-        sheet(part, os.path.join(args.out, "review", f"batch-{i // 12:03d}.jpg"), f"review batch {i // 12}")
+    # six cards a sheet in two columns: each card's three pictures stay about 330 px wide when an agent's image reader
+    # scales the sheet to 2000 px, enough to judge an etch (twelve a sheet left 110 px a picture)
+    for f in os.listdir(os.path.join(args.out, "review")):
+        os.remove(os.path.join(args.out, "review", f))
+    for i in range(0, len(ordered), REVIEW_PER):
+        part = ordered[i:i + REVIEW_PER]
+        n = i // REVIEW_PER
+        sheet(part, os.path.join(args.out, "review", f"batch-{n:03d}.jpg"), f"review batch {n}", cols=2)
         json.dump([{"id": r["id"], "key": r["key"], "name": r["name"], "rarity": r["rarity"], "family": r["family"],
                     "flags": r["flags"]} for r in part],
-                  open(os.path.join(args.out, "review", f"batch-{i // 12:03d}.json"), "w"), indent=1)
+                  open(os.path.join(args.out, "review", f"batch-{n:03d}.json"), "w"), indent=1)
     for r in flagged[:40]:
         a = r["art"]
         print(f"{r['id']:16} {r['family'][:26]:26} haze {a['haze']:5.1f} con {a['con']:.2f} keep {a['keep']:.2f} "
