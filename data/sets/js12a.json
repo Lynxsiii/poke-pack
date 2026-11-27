@@ -1,0 +1,47 @@
+{
+  "id": "js12a",
+  "name": "VSTAR Universe",
+  "lang": "ja",
+  "code": "S12a",
+  "series": "sword-shield",
+  "slug": "vstar-universe",
+  "scrydexId": "swsh12a_ja",
+  "era": "swsh",
+  "tcgplayerCategory": 85,
+  "tcgplayerGroup": 23645,
+  "rarityMap": {
+    "": "Common",
+    "RR": "Rare Holo V",
+    "RRR": "Rare Holo VSTAR",
+    "AR": "Trainer Gallery Rare Holo",
+    "SAR": "Rare Ultra",
+    "SR": "Rare Ultra",
+    "UR": "Rare Secret"
+  },
+  "rarityOverrides": {
+    "15": "Radiant Rare",
+    "33": "Radiant Rare",
+    "39": "Radiant Rare",
+    "55": "Radiant Rare",
+    "78": "Radiant Rare",
+    "115": "Radiant Rare",
+    "41": "Rare Holo VMAX",
+    "54": "Rare Holo VMAX",
+    "66": "Rare Holo VMAX",
+    "72": "Rare Holo VMAX",
+    "108": "Rare Holo VMAX"
+  },
+  "printedTotal": 172,
+  "products": [
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 565252,
+      "packs": 10,
+      "promos": [],
+      "hull": "strips",
+      "imageVersion": 2
+    }
+  ]
+}

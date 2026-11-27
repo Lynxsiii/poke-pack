@@ -404,7 +404,7 @@ export function eraFoilExtras(card, url, reverseKind) {
   if (/^me\d(pt5)?-/.test(String(card.id || ""))) classes.push("era-me");
   // Sword & Shield prints (css/holo/swsh.css): the numbered sets, Champion's
   // Path, Shining Fates, Celebrations, Pokémon GO, Crown Zenith, the promos.
-  if (/^(swsh|cel25|pgo)/.test(String(card.id || ""))) classes.push("era-swsh");
+  if (card.era === "swsh" || /^(swsh|cel25|pgo)/.test(String(card.id || ""))) classes.push("era-swsh");
   // Sun & Moon prints (css/holo/sm.css and its siblings): the numbered sets,
   // Shiny Vault, Detective Pikachu, the promos.
   if (sm) classes.push("era-sm");

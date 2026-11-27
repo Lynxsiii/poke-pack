@@ -1,0 +1,36 @@
+{
+  "id": "jsv4a",
+  "name": "Shiny Treasure ex",
+  "lang": "ja",
+  "code": "SV4a",
+  "series": "scarlet-violet",
+  "slug": "shiny-treasure-ex",
+  "scrydexId": "sv4a_ja",
+  "era": "sv",
+  "tcgplayerCategory": 85,
+  "tcgplayerGroup": 23601,
+  "englishTwin": "sv4pt5",
+  "rarityMap": {
+    "": "Common",
+    "RR": "Double Rare",
+    "S": "Shiny Rare",
+    "SSR": "Shiny Ultra Rare",
+    "AR": "Illustration Rare",
+    "SR": "Ultra Rare",
+    "SAR": "Special Illustration Rare",
+    "UR": "Hyper Rare"
+  },
+  "printedTotal": 190,
+  "products": [
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 565232,
+      "packs": 10,
+      "promos": [],
+      "hull": "strips",
+      "imageVersion": 2
+    }
+  ]
+}

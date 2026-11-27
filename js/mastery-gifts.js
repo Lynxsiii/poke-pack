@@ -3,8 +3,6 @@
    MASTERY_GIFTS: set id to the sleeve/coin its mastery gifts. CROWN_GIFTS: era slug to its crown gifts. */
 export const MASTERY_GIFTS = {
   "me6": [],
-  "jsv2a": [],
-  "jsm12a": [],
   "me55": [{"kind": "sleeve", "id": "me-upc-day-sleeves", "name": "Pikachu, Espeon and Mew sleeves"}, {"kind": "coin", "id": "me-upc-espeon-coin", "name": "Espeon coin"}],
   "me5": [{"kind": "sleeve", "id": "me-darkrai-etb-sleeves", "name": "Darkrai sleeves"}, {"kind": "coin", "id": "me-tepig-coin", "name": "Tepig coin"}],
   "me4": [{"kind": "sleeve", "id": "me-greninja-etb-sleeves", "name": "Greninja sleeves"}, {"kind": "coin", "id": "me-chikorita-coin", "name": "Chikorita coin"}],
@@ -14,6 +12,10 @@ export const MASTERY_GIFTS = {
   "me1": [{"kind": "sleeve", "id": "me-mega-gardevoir-etb-sleeves", "name": "Mega Gardevoir sleeves"}, {"kind": "coin", "id": "me-me1-blister-coin", "name": "Mega Evolution blister coin"}],
   "mep": [],
   "mcd26": [],
+  "jsv4a": [],
+  "js12a": [],
+  "jsv2a": [],
+  "jsm12a": [],
   "zsv10pt5": [{"kind": "sleeve", "id": "svb-black-bolt-zekrom-etb", "name": "Zekrom sleeves"}],
   "rsv10pt5": [{"kind": "sleeve", "id": "svb-white-flare-reshiram-etb", "name": "Reshiram sleeves"}],
   "sv10": [{"kind": "sleeve", "id": "svb-destined-rivals-giovanni-mewtwo-etb", "name": "Giovanni and Mewtwo sleeves"}, {"kind": "coin", "id": "svb-moltres-fire-energy-coin", "name": "Fire Energy coin"}],
@@ -191,6 +193,7 @@ export const MASTERY_GIFTS = {
 
 export const CROWN_GIFTS = {
   "mega-evolution": [{"kind": "sleeve", "id": "me-mega-lucario-etb-sleeves", "name": "Mega Lucario sleeves"}, {"kind": "coin", "id": "me-upc-umbreon-coin", "name": "Umbreon coin"}],
+  "japanese": [],
   "scarlet-violet": [{"kind": "sleeve", "id": "sva-miraidon-etb", "name": "Miraidon sleeves"}, {"kind": "coin", "id": "svb-fidough-coin", "name": "Fidough coin"}],
   "sword-shield": [{"kind": "sleeve", "id": "swshb-cz-pc-lucario-sleeves", "name": "Crown Zenith Lucario sleeves (Pokemon Center)"}, {"kind": "coin", "id": "swshb-cz-pc-lucario-coin", "name": "Lucario coin"}],
   "sun-moon": [{"kind": "sleeve", "id": "sm-dusk-mane-necrozma-etb", "name": "Dusk Mane Necrozma sleeves"}, {"kind": "coin", "id": "sm-kommo-o-coin", "name": "Kommo-o coin"}],
