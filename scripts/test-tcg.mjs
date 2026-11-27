@@ -8,7 +8,7 @@
  */
 import { readFileSync, readdirSync } from "node:fs";
 import assert from "node:assert/strict";
-import { ACTIVE, FORMATS, RuleError, abilityOn, attacksOf, defOf, addCondition, addMark, apply, costFor, benchSafe, canRetreat, energyOf, toolOf, conditionsOn, createGame, flip, damageAfterTyping, legalActions, maxHp, resolveKnockOuts, retreatCost, unpaid, usableAttacks, viewFor } from "../js/tcg/engine.js";
+import { ACTIVE, FORMATS, RuleError, abilityOn, attacksOf, defOf, addCondition, addMark, apply, costFor, benchSafe, canRetreat, energyOf, warded, toolOf, conditionsOn, createGame, flip, damageAfterTyping, legalActions, maxHp, resolveKnockOuts, retreatCost, unpaid, usableAttacks, viewFor } from "../js/tcg/engine.js";
 import { createDefs, defineCard, FREE_ENERGY } from "../js/tcg/cards.js";
 import { boostOf, compileTrainer, fits, runTrainer, trainerAim, whatOf } from "../js/tcg/trainers.js";
 import { compileAttack } from "../js/tcg/effects.js";
@@ -6799,6 +6799,73 @@ test("Stadiums that take Abilities away", () => {
   assert.ok(abilityOn(state, state.players[0].active, defs));
   state.cards[uid] = "me6-94";
   assert.equal(abilityOn(state, state.players[0].active, defs), null);
+});
+
+test("Scarlet & Violet Special Energy: Ignition, Team Rocket's, Mist, Rocky Fighting, Shadowy Darkness, Neo Upper, Spiky, Legacy", () => {
+  for (const id of ["me2-124", "sv10-182", "me3-87", "me5-83", "sv5-161", "sv5-162", "sv9-159", "sv6-167"]) assert.ok(defs(id).playable, id);
+  const put = (state, p, slot, id) => {
+    const uid = state.players[p].deck.pop();
+    state.cards[uid] = id;
+    slot.energy.push(uid);
+    return uid;
+  };
+  // Ignition Energy: 1 Colorless on a Basic, 3 on an Evolution Pokémon; discarded at the end of its owner's turn.
+  let state = scene();
+  const front = state.players[0].active;
+  const spark = put(state, 0, front, "me2-124");
+  assert.deepEqual(energyOf(state, front, defs), ["Colorless"]);
+  state.cards[front.uid] = "base1-4";
+  assert.deepEqual(energyOf(state, front, defs), ["Colorless", "Colorless", "Colorless"]);
+  act(state, { type: "end", player: 0 });
+  assert.ok(!front.energy.includes(spark) && state.players[0].discard.includes(spark));
+  // Neo Upper Energy: 2 of any type on a Stage 2 Pokémon.
+  state = scene({ front: "base1-4" });
+  put(state, 0, state.players[0].active, "sv5-162");
+  assert.deepEqual(energyOf(state, state.players[0].active, defs), ["Any", "Any"]);
+  state.cards[state.players[0].active.uid] = "base1-24";
+  assert.deepEqual(energyOf(state, state.players[0].active, defs), ["Colorless"]);
+  // Team Rocket's Energy: only on a Team Rocket's Pokémon, 2 in any mix of Psychic and Darkness.
+  state = scene({ bench: ["sv10-15"] });
+  const rocket = handed(state, 0, "sv10-182");
+  throws(() => act(state, { type: "attach", player: 0, uid: rocket, spot: ACTIVE }), /Team Rocket's/);
+  act(state, { type: "attach", player: 0, uid: rocket, spot: 0 });
+  assert.deepEqual(energyOf(state, state.players[0].bench[0], defs), ["Psychic|Darkness", "Psychic|Darkness"]);
+  // Mist Energy: no effects of the opponent's attacks. Rocky Fighting Energy: the same, on a Fighting Pokémon only.
+  state = scene({ bench: ["base1-46"] });
+  const mist = state.players[1].active;
+  put(state, 1, mist, "sv5-161");
+  assert.ok(warded(state, mist, { player: 0, src: "attack" }, defs));
+  const rocky = slotFor(state, 1, "base1-46");
+  state.players[1].bench = [rocky];
+  put(state, 1, rocky, "me3-87");
+  assert.ok(!warded(state, rocky, { player: 0, src: "attack" }, defs));
+  state.cards[rocky.uid] = "base1-47"; // Diglett, Fighting
+  assert.ok(warded(state, rocky, { player: 0, src: "attack" }, defs));
+  // Shadowy Darkness Energy: a Benched Darkness Pokémon takes no damage from the opponent's attacks.
+  put(state, 1, rocky, "me5-83");
+  assert.ok(!benchSafe(state, rocky, 0, defs));
+  state.cards[rocky.uid] = "sv1-126";
+  assert.ok(benchSafe(state, rocky, 0, defs));
+  assert.ok(!benchSafe(state, rocky, 0, defs, true));
+  // Spiky Energy: the attacker takes 2 damage counters when the Active Pokémon it is on is damaged.
+  state = scene({ front: "base1-46" });
+  put(state, 1, state.players[1].active, "sv9-159");
+  state.players[0].active.energy.push(handed(state, 0, F));
+  state.players[0].hand.pop();
+  act(state, { type: "attack", player: 0, index: 0 });
+  assert.equal(state.players[0].active.damage, 20);
+  // Legacy Energy: 1 fewer Prize card, once a game.
+  state = scene({ front: "base1-46" });
+  const foe = state.players[1];
+  foe.bench = [slotFor(state, 1, "base1-63"), slotFor(state, 1, "base1-63")];
+  put(state, 1, foe.active, "sv6-167");
+  foe.active.damage = maxHp(state, foe.active, defs) - 10;
+  state.players[0].active.energy.push(handed(state, 0, F));
+  state.players[0].hand.pop();
+  const prizes = state.players[0].prizes.length;
+  act(state, { type: "attack", player: 0, index: 0 });
+  assert.equal(state.players[0].prizes.length, prizes);
+  assert.ok(foe.legacyUsed);
 });
 
 console.log(`${passed} checks passed${process.exitCode ? ", some failed" : ""}`);

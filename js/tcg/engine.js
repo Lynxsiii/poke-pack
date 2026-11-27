@@ -261,7 +261,7 @@ export function warded(state, slot, { player, src }, defs) {
   // An attack's effects (js/tcg/effects.js, src "attack"): an Ability that keeps them off, or a shield an earlier attack left.
   // A ward: the effects of attacks kept off, their damage not.
   const attacker = state.players[player]?.active;
-  if (src === "attack") return Boolean(ability?.noEffects) || shieldOn(state, slot, attacker ? defOf(state, attacker.uid, defs) : null) || Boolean(markOn(state, slot, "ward"));
+  if (src === "attack") return Boolean(ability?.noEffects) || Boolean(energyMod(state, slot, "noEffects", defs)) || shieldOn(state, slot, attacker ? defOf(state, attacker.uid, defs) : null) || Boolean(markOn(state, slot, "ward"));
   return src === "ability" ? Boolean(ability?.ward) : src === "trainer" ? Boolean(ability?.trainerWard) : false;
 }
 
@@ -448,7 +448,7 @@ export function energyOf(state, slot, defs) {
 }
 
 /** What one Energy card gives on this Pokémon: a Special Energy may give more on some ("on a Basic Pokémon, every type"). */
-function unitsOn(state, slot, def, holder, defs) {
+export function unitsOn(state, slot, def, holder, defs) {
   const owner = ownerOf(state, slot);
   const behind = owner >= 0 && prizesLeft(state.players[owner]) > prizesLeft(state.players[other(owner)]);
   // Multi Energy beside another Special Energy: Colorless only (itself is one of those counted).
@@ -464,9 +464,26 @@ export function energyFits(def, holder) {
   if (only.types && !only.types.some((t) => (holder.types || []).includes(t))) return false;
   if (only.evolved && holder.stage !== "evolution") return false;
   if (only.noEx && holder.box === "ex") return false;
+  if (only.named && !fieldFits({ named: only.named }, holder)) return false;
   return true;
 }
-const onlyFor = (only) => [only.types?.join(" or "), only.evolved ? "Evolved" : ""].filter(Boolean).join(" ");
+const onlyFor = (only) => [only.named, only.types?.join(" or "), only.evolved ? "Evolved" : ""].filter(Boolean).join(" ");
+
+/**
+ * Does a Special Energy attached to this Pokémon (one it works on) say this about it?
+ * Mist Energy `noEffects`, Shadowy Darkness Energy `benchSafe`, Spiky Energy `thorns`, Legacy Energy `legacy`.
+ */
+export function energyMod(state, slot, key, defs) {
+  if (!slot) return null;
+  const holder = defOf(state, slot.uid, defs);
+  for (const uid of slot.energy) {
+    const def = defOf(state, uid, defs);
+    if (!energyFits(def, holder)) continue;
+    const m = (def?.special?.mods || []).find((x) => x.mod[key] && fieldFits(x.who, holder));
+    if (m) return { uid, n: m.mod[key] };
+  }
+  return null;
+}
 
 /**
  * Can these Energy pay this cost? Each unit is a list of the types it may count
@@ -689,6 +706,11 @@ function endOfTurn(state, defs, events) {
     events.push({ t: "discard-hand", p, uids: gone });
   }
   if (limit) delete state.players[p].handLimit;
+  // Ignition Energy: discarded at the end of its owner's turn.
+  for (const [slot, spot] of inPlay(state, p)) {
+    const gone = slot.energy.filter((uid) => defOf(state, uid, defs)?.special?.burnOut);
+    if (gone.length) dropEnergy(state, p, spot, gone, events);
+  }
   const front = state.players[p].active;
   const end = toolOn(state, front, defs)?.endTurn;
   if (end?.draw) draw(state, p, end.draw, events);
@@ -1115,7 +1137,10 @@ export function resolveKnockOuts(state, defs, events, { between = false } = {}) 
       // Lillie's Pearl: one fewer, Knocked Out by damage from their attack.
       // Legendary Summit: one fewer for the Pokémon it names.
       const summit = state.stadium && defOf(state, state.stadium.uid, defs)?.stadium?.fewer;
-      const fewer = (tool?.fewer || 0) + (summit && fieldFits(summit.who, def) ? summit.n : 0);
+      // Legacy Energy: one fewer, once a game for its player.
+      const legacy = byAttack(slot, p) && !state.players[p].legacyUsed && energyMod(state, slot, "legacy", defs);
+      if (legacy) state.players[p].legacyUsed = true;
+      const fewer = (tool?.fewer || 0) + (summit && fieldFits(summit.who, def) ? summit.n : 0) + (legacy ? 1 : 0);
       if (!def.fossil?.noPrize) took[other(p)] += Math.max(0, (def.prizes ?? 1) + (tool?.prize || 0) + (byAttack(slot, p) ? (markOn(state, slot, "bounty")?.n || 0) - fewer : 0));
       if (!counts) continue;
       // Remembered by turn for "if any of your Pokémon were Knocked Out during your opponent's last turn"
@@ -1226,7 +1251,7 @@ export function strike(ctx) {
   // What an earlier attack left on the target: less damage, or none at all.
   const marked = Boolean(target && !hit.noEffects && shieldOn(state, target, def));
   // An Ability that keeps off every effect of attacks except damage counts as a shield for the effects.
-  ctx.shielded = marked || Boolean(target && !hit.noEffects && (abilityOn(state, target, defs)?.noEffects || markOn(state, target, "ward")));
+  ctx.shielded = marked || Boolean(target && !hit.noEffects && (abilityOn(state, target, defs)?.noEffects || energyMod(state, target, "noEffects", defs) || markOn(state, target, "ward")));
   if (!hit.cancelled && target) {
     // Tools: the attacker's adds damage before Weakness, the target's can lift its Weakness or soak some.
     const mine = toolOf(state, slot, defs);
@@ -1334,6 +1359,16 @@ export function strike(ctx) {
         }
         if (spikes.draw) draw(state, foe, spikes.draw, events);
         if (spikes.spent) dropTool(state, foe, ACTIVE, target, defs, events);
+      }
+      // Spiky Energy: damage counters on the Attacking Pokémon, each one attached.
+      const holder = defOf(state, target.uid, defs);
+      for (const uid of target.energy) {
+        const card = defOf(state, uid, defs);
+        if (!energyFits(card, holder)) continue;
+        const n = (card.special?.mods || []).filter((x) => x.mod.thorns && fieldFits(x.who, holder)).reduce((k, x) => k + x.mod.thorns, 0);
+        if (!n) continue;
+        slot.damage += n;
+        events.push({ t: "damage", p: player, spot: ACTIVE, n, self: true, why: "energy" });
       }
     } else if (dealt.amount > 0) {
       events.push({ t: "blocked", p: foe });
@@ -2141,6 +2176,8 @@ export function benchSafe(state, slot, spot, defs, own = false) {
   if (defOf(state, slot.uid, defs)?.tera) return true;
   if (abilityOn(state, slot, defs)?.benchSafe) return true;
   if (own) return false;
+  // Shadowy Darkness Energy: no damage from the opponent's attacks on the Bench.
+  if (energyMod(state, slot, "benchSafe", defs)) return true;
   const owner = ownerOf(state, slot);
   return owner >= 0 && inPlay(state, owner).some(([mate]) => abilityOn(state, mate, defs)?.benchWall);
 }

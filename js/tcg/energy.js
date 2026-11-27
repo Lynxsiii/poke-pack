@@ -35,6 +35,7 @@ const HOLDER = "the (?:(" + TYPE + ") )?Pokémon (?:that )?this card is attached
 const ASIDES = [
   /\s*\(Doesn't count as a basic Energy card(?: when not in play)?(?: and has no effect other than providing Energy)?\.\)/g,
   /\s*\(Has no effect other than providing Energy\.\)/g,
+  /\s*\(Existing effects are not removed\. Damage is not an effect\.\)/g,
   /\s*\(Don't apply Weakness and Resistance\.\)/g,
   /\s*Doesn't count as a basic Energy card\./g,
   /\s*\(Doesn't count as a [Bb]asic card\.\)/g,
@@ -49,6 +50,23 @@ const SENTENCES = [
   [new RegExp(`^Provides ((?:${TYPE} ?)+) [Ee]nergy$`), (m, out) => give(out, units(m[1]))],
   [new RegExp(`^As long as this card is attached to a Pokémon, it provides ((?:${TYPE} ?)+) Energy$`), (m, out) => give(out, units(m[1]))],
   [/^Attach this card to 1 of your Pokémon$/, () => true],
+  // Neo Upper Energy: on a Stage 2 Pokémon, 2 units of any type.
+  [/^If this card is attached to a Stage 2 Pokémon, this card provides every type of Energy but provides only 2 Energy at a time$/, (m, out) => alt(out, { line: 2 }, ["Any", "Any"])],
+  // Ignition Energy: 3 Colorless on an Evolution Pokémon, and gone at the end of its owner's turn.
+  [/^If this card is attached to an Evolution Pokémon, it provides ColorlessColorlessColorless Energy instead$/, (m, out) => alt(out, { stage: "evolution" }, ["Colorless", "Colorless", "Colorless"])],
+  [/^If this card is attached to 1 of your Pokémon, discard it at the end of your turn$/, (m, out) => (out.burnOut = true)],
+  // Team Rocket's Energy.
+  [/^This card can only be attached to an? (Team Rocket's) Pokémon$/, (m, out) => ((out.only = { named: m[1] }), true)],
+  [new RegExp(`^As long as this card is attached to a Pokémon, it provides 2 in any combination of (${TYPE}) Energy and (${TYPE}) Energy$`), (m, out) => give(out, [`${m[1]}|${m[2]}`, `${m[1]}|${m[2]}`])],
+  // Mist Energy, Rocky Fighting Energy: no effects of the opponent's attacks (damage still lands).
+  [new RegExp(`^Prevent all effects of attacks used by your opponent's Pokémon done to ${HOLDER}$`), (m, out) => mod(out, m[1], { noEffects: true })],
+  // Shadowy Darkness Energy.
+  [new RegExp(`^As long as ${HOLDER} is on your Bench, prevent all damage done to it by attacks from your opponent's Pokémon$`), (m, out) => mod(out, m[1], { benchSafe: true })],
+  // Spiky Energy.
+  [new RegExp(`^If ${HOLDER} is in the Active Spot and is damaged by an attack from your opponent's Pokémon \\(even if this Pokémon is Knocked Out\\), put (\\d+) damage counters? on the Attacking Pokémon$`), (m, out) => mod(out, m[1], { thorns: Number(m[2]) * 10 })],
+  // Legacy Energy: one fewer Prize card, once a game.
+  [new RegExp(`^If ${HOLDER} is Knocked Out by damage from an attack from your opponent's Pokémon, that player takes 1 fewer Prize card$`), (m, out) => mod(out, m[1], { legacy: 1 })],
+  [/^This effect of (?:your )?this card can't be applied more than once per game$/, (m, out) => out.mods.some((x) => x.mod.legacy)],
   [new RegExp(`^This card provides 1 (${TYPE}) Energy$`), (m, out) => give(out, [m[1]])],
   [/^(?:As long as|While) this card is attached to a Pokémon, it provides every type of Energy but provides only 1 Energy at a time$/, (m, out) => ((out.provides = ["Any"]), (out.any = true))],
   [new RegExp(`^(?:While this card is attached to a Pokémon, it|When this card is attached to a Pokémon, this card|While in play, this card) provides ((?:${TYPE}(?:, or |, and |, | or | and )?)+) Energy,? but provides only 1 Energy at a time$`), (m, out) => ((out.provides = [units(m[1]).join("|")]), (out.any = true))],
@@ -167,5 +185,6 @@ export function compileSpecialEnergy(text, cardName = "", debug = false) {
   if (out.attach) special.attach = out.attach;
   if (out.alt) special.alt = out.alt;
   if (out.crowd) special.crowd = true;
+  if (out.burnOut) special.burnOut = true;
   return special;
 }

@@ -17,7 +17,7 @@
  */
 
 import { trainerAim } from "./trainers.js";
-import { ACTIVE, apply, attacksOf, chooseBlock, damageAfterTyping, defOf, energyOf, hpLeft, inPlay, legalActions, other, retreatCost, statusOf, unpaid, usableAttacks } from "./engine.js";
+import { ACTIVE, apply, attacksOf, chooseBlock, damageAfterTyping, defOf, energyFits, energyOf, hpLeft, unitsOn, inPlay, legalActions, other, retreatCost, statusOf, unpaid, usableAttacks } from "./engine.js";
 
 /** How much an attack is worth against this defender, before any coin flip. */
 function attackWorth(attack, def, foeDef, foeHp) {
@@ -584,7 +584,13 @@ export function botAction(state, player, defs) {
     for (const action of attaches) {
       const slot = action.spot === ACTIVE ? side.active : side.bench[action.spot];
       const before = aimFor(state, player, slot, defs);
-      const after = aimFor(state, player, slot, defs, defOf(state, action.uid, defs).provides);
+      const card = defOf(state, action.uid, defs);
+      const holder = defOf(state, slot.uid, defs);
+      // What it gives on this Pokémon (Neo Upper Energy on a Stage 2: 2 of any type).
+      const gives = energyFits(card, holder) ? unitsOn(state, slot, card, holder, defs) : [];
+      const after = aimFor(state, player, slot, defs, gives);
+      // Ignition Energy is gone at the end of the turn: only onto the Active Pokémon, when it lets it attack now.
+      if (card.special?.burnOut && (action.spot !== ACTIVE || plan(state, slot, defs).short === 0 || plan(state, slot, defs, gives).short > 0 || state.turn === 1)) continue;
       const front = action.spot === ACTIVE ? (doomed && before.short === 0 ? -40 : 30) : 0;
       // Worth it when it brings an attack closer, toward what the Pokémon will become.
       const gain = (before.short - after.short) * 100 + after.score + front - (before.short === 0 ? 80 : 0) + slot.energy.length * 5;

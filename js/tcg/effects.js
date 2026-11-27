@@ -19,7 +19,7 @@
  *        shielded (the target takes no effects this turn) }
  */
 
-import { ACTIVE, abilityOn, shieldOn, addCondition, addMark, askChoose, askPick, benchSafe, canPay, conditionsOn, damageAfterTyping, defOf, devolveSlot, energyAlike, energyToDeck, energyFits, energyOf, flip, healRoom, heldOn, hpLeft, inPlay, markOn, maxHp, other, rand, retreatCost, shedEnergy, shuffle, slotAt, strike, struck, switchActive, toLost, toolGone, unpaid, warded, win } from "./engine.js";
+import { ACTIVE, abilityOn, shieldOn, addCondition, addMark, askChoose, askPick, benchSafe, canPay, conditionsOn, damageAfterTyping, defOf, devolveSlot, energyAlike, energyToDeck, energyFits, energyMod, energyOf, flip, healRoom, heldOn, hpLeft, inPlay, markOn, maxHp, other, rand, retreatCost, shedEnergy, shuffle, slotAt, strike, struck, switchActive, toLost, toolGone, unpaid, warded, win } from "./engine.js";
 import { T_OPS, compileTrainer, fits, runTrainer, trainerReady, whatOf } from "./trainers.js";
 
 const WORDS = { a: 1, an: 1, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6 };
@@ -1129,7 +1129,7 @@ export const OPS = {
   refocus(ctx) {
     const target = ctx.state.players[other(ctx.player)].active;
     ctx.target = target;
-    ctx.shielded = Boolean(target && (shieldOn(ctx.state, target, defIn(ctx, ctx.slot)) || abilityOn(ctx.state, target, ctx.defs)?.noEffects));
+    ctx.shielded = Boolean(target && (shieldOn(ctx.state, target, defIn(ctx, ctx.slot)) || abilityOn(ctx.state, target, ctx.defs)?.noEffects || energyMod(ctx.state, target, "noEffects", ctx.defs)));
   },
   /** "If your opponent's Active Pokémon has exactly 6 damage counters on it (6 or more: `atLeast`), that Pokémon is Knocked Out." */
   knockOutIf(ctx, { k, atLeast = false }) {
