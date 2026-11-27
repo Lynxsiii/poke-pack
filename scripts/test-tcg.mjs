@@ -8,7 +8,7 @@
  */
 import { readFileSync, readdirSync } from "node:fs";
 import assert from "node:assert/strict";
-import { ACTIVE, FORMATS, RuleError, abilityOn, rand, noteShed, hpLeft, attacksOf, defOf, addCondition, addMark, apply, costFor, benchSafe, canRetreat, energyOf, warded, toolOf, conditionsOn, createGame, flip, damageAfterTyping, legalActions, maxHp, resolveKnockOuts, retreatCost, unpaid, usableAttacks, viewFor } from "../js/tcg/engine.js";
+import { ACTIVE, FORMATS, RuleError, abilityOn, healRoom, rand, noteShed, hpLeft, attacksOf, defOf, addCondition, addMark, apply, costFor, benchSafe, canRetreat, energyOf, warded, toolOf, conditionsOn, createGame, flip, damageAfterTyping, legalActions, maxHp, resolveKnockOuts, retreatCost, unpaid, usableAttacks, viewFor } from "../js/tcg/engine.js";
 import { createDefs, defineCard, FREE_ENERGY } from "../js/tcg/cards.js";
 import { boostOf, compileTrainer, fits, runTrainer, trainerAim, whatOf } from "../js/tcg/trainers.js";
 import { compileAttack } from "../js/tcg/effects.js";
@@ -7212,6 +7212,412 @@ test("Dudunsparce: draw 3, then it goes back into the deck", () => {
 test("Lillie's Ribombee: an on-play Ability the bot leaves alone", () => {
   const ribombee = defs("sv9-164").ability.enter;
   assert.equal(trainerAim(ribombee.steps), "move");
+});
+
+/* ---------- the last Standard Abilities ---------- */
+
+labMon("lab-zap", { types: ["Lightning"], name: "Lab zap" }, [["Zap", 30, ""]]);
+labMon("lab-psy", { types: ["Psychic"], name: "Lab psy" }, [["Psy", 30, ""]]);
+labMon("lab-dragon", { types: ["Dragon"], name: "Lab dragon" }, [["Claw", 10, ""]]);
+labMon("lab-dark", { types: ["Darkness"], name: "Lab dark" }, [["Bite", 10, ""]]);
+labMon("lab-tap", { name: "Lab tap" }, [["Tap", 10, ""]]);
+labMon("lab-fest", { types: ["Grass"], name: "Lab fest", abilities: [{ type: "Ability", name: "Festival Lead", text: "If Festival Grounds is in play, this Pokémon may use an attack it has twice. If the first attack Knocks Out your opponent's Active Pokémon, you may attack again after your opponent chooses a new Active Pokémon." }] }, [["Tap", 30, ""]]);
+/** A seed whose next coin is heads (or tails). */
+const coinSeed = (heads) => {
+  for (let rng = 0; rng < 200; rng += 1) if ((rand({ rng }) < 0.5) === heads) return rng;
+  return 0;
+};
+const energize = (state, p, slot, id, n = 1) => {
+  const out = [];
+  for (let i = 0; i < n; i += 1) {
+    const uid = state.players[p].deck.pop();
+    state.cards[uid] = id;
+    slot.energy.push(uid);
+    out.push(uid);
+  }
+  return out;
+};
+/** Answer whatever pick or choice is waiting with its first offer (or the cards given). */
+const answer = (state, uids = null) => {
+  const w = state.pending[0];
+  if (w.type === "pick") return act(state, { type: "pick", player: w.player, spot: w.spots[0] });
+  if (w.type === "choose") return act(state, { type: "choose", player: w.player, uids: uids || w.uids.slice(0, Math.max(1, w.min)) });
+  throw new Error(`can't answer ${w.type}`);
+};
+
+test("Clawitzer and Palafin: Abilities as the Pokémon moves from the Active Spot to the Bench", () => {
+  for (const id of ["me1-38", "sv6-60", "sv6-61", "svp-svp126"]) assert.ok(defs(id).ability, id);
+  // Clawitzer: retreated, then up to 2 Basic Water Energy from the hand onto it.
+  let state = scene({ front: "me1-38", bench: ["base1-46"] });
+  const claw = state.players[0].active;
+  energize(state, 0, claw, W, 3);
+  const waters = [handed(state, 0, W), handed(state, 0, W)];
+  act(state, { type: "retreat", player: 0, to: 0 });
+  assert.equal(state.pending[0]?.effect?.key, "fall");
+  act(state, { type: "pick", player: 0, spot: 0 });
+  act(state, { type: "choose", player: 0, uids: waters });
+  while (state.pending.length) answer(state);
+  assert.equal(state.players[0].bench[0], claw);
+  assert.equal(claw.energy.length, 3 - retreatCost(state, claw, defs) + 2);
+  // Palafin: retreated, Palafin ex from the deck takes its place, damage and Energy kept; Palafin goes into the deck.
+  state = scene({ front: "sv6-60", bench: ["base1-46"] });
+  const fin = state.players[0].active;
+  fin.under = [handed(state, 0, "sv6-59")];
+  state.players[0].hand.pop();
+  fin.damage = 30;
+  energize(state, 0, fin, W, 2);
+  const hero = state.players[0].deck[0];
+  state.cards[hero] = "sv6-61";
+  act(state, { type: "retreat", player: 0, to: 0 });
+  act(state, { type: "pick", player: 0, spot: 0 });
+  act(state, { type: "choose", player: 0, uids: [hero] });
+  const now = state.players[0].bench[0];
+  assert.equal(now.uid, hero);
+  assert.equal(now.damage, 30);
+  assert.ok(now.energy.length >= 1 && now.under.length === 1);
+  assert.ok(state.players[0].deck.some((uid) => state.cards[uid] === "sv6-60"));
+  // Palafin ex can't be played from the hand onto Finizen.
+  state = scene({ front: "sv6-59" });
+  state.players[0].active.since = 0;
+  const ex = handed(state, 0, "sv6-61");
+  assert.ok(!legalActions(state, 0, defs).some((a) => a.type === "evolve" && a.uid === ex));
+  throws(() => act(state, { type: "evolve", player: 0, uid: ex, spot: ACTIVE }), /evolve/);
+});
+
+test("Eevee ex: any Pokémon ex that evolves from Eevee, from the hand", () => {
+  const state = scene({ front: "sv8pt5-75" });
+  const sylveon = handed(state, 0, "sv8pt5-41");
+  assert.ok(legalActions(state, 0, defs).some((a) => a.type === "evolve" && a.uid === sylveon));
+  act(state, { type: "evolve", player: 0, uid: sylveon, spot: ACTIVE });
+  assert.equal(state.players[0].active.uid, sylveon);
+});
+
+test("Lillie's Clefairy ex and Illumise: Weakness as their Abilities say", () => {
+  const hit = (front, foe, bench = []) => {
+    const state = scene({ front, bench });
+    state.cards[state.players[1].active.uid] = foe;
+    const target = state.players[1].active;
+    act(state, { type: "attack", player: 0, index: 0 });
+    return target.damage;
+  };
+  assert.equal(hit("lab-psy", "lab-dragon"), 30);
+  assert.equal(hit("lab-psy", "lab-dragon", ["me2pt5-76"]), 60);
+  // Squirtle's Lightning Weakness: ×2, and ×3 with Illumise and Volbeat in play.
+  assert.equal(hit("lab-zap", "base1-63"), 60);
+  assert.equal(hit("lab-zap", "base1-63", ["me55-4"]), 60);
+  assert.equal(hit("lab-zap", "base1-63", ["me55-4", "sv6-9"]), 90);
+});
+
+test("Abilities that answer attack damage: Orthworm ex, Spiritomb, Wishiwashi, Turtonator, Team Rocket's Koffing", () => {
+  // Orthworm ex: 2 damage counters for each Metal Energy on it, in the Active Spot or on the Bench.
+  let state = scene({ front: "lab-tap" });
+  state.cards[state.players[1].active.uid] = "sv7-110";
+  energize(state, 1, state.players[1].active, "energy-metal", 2);
+  act(state, { type: "attack", player: 0, index: 0 });
+  assert.equal(state.players[0].active.damage, 40);
+  state = scene({ front: "lab-spread", foeBench: ["sv7-110"] });
+  energize(state, 1, state.players[1].bench[0], "energy-metal", 1);
+  act(state, { type: "attack", player: 0, index: 0 });
+  assert.equal(state.players[0].active.damage, 20);
+  // Spiritomb: their Active Darkness Pokémon damaged, 1 damage counter.
+  state = scene({ front: "lab-tap", foeBench: ["me1-87"] });
+  state.cards[state.players[1].active.uid] = "lab-dark";
+  act(state, { type: "attack", player: 0, index: 0 });
+  assert.equal(state.players[0].active.damage, 10);
+  state = scene({ front: "lab-tap", foeBench: ["me1-87"] });
+  act(state, { type: "attack", player: 0, index: 0 });
+  assert.equal(state.players[0].active.damage, 0);
+  // Turtonator: once the attack is done, its player discards an Energy from the Attacking Pokémon.
+  state = scene({ front: "lab-tap" });
+  state.cards[state.players[1].active.uid] = "me3-17";
+  const [fire, water] = [...energize(state, 0, state.players[0].active, F), ...energize(state, 0, state.players[0].active, W)];
+  act(state, { type: "attack", player: 0, index: 0 });
+  assert.equal(state.pending[0].player, 1);
+  act(state, { type: "choose", player: 1, uids: [water] });
+  assert.deepEqual(state.players[0].active.energy, [fire]);
+  assert.ok(state.players[0].discard.includes(water));
+  // Team Rocket's Koffing: Koffing from the deck onto the Bench.
+  state = scene({ front: "lab-tap" });
+  state.cards[state.players[1].active.uid] = "sv10-125";
+  const koffing = state.players[1].deck.slice(0, 2);
+  for (const uid of koffing) state.cards[uid] = "sv10-125";
+  act(state, { type: "attack", player: 0, index: 0 });
+  act(state, { type: "choose", player: 1, uids: koffing });
+  assert.equal(state.players[1].bench.length, 2);
+});
+
+test("Yveltal, Team Rocket's Ampharos, Bastiodon, Team Rocket's Articuno, Garbodor", () => {
+  // Yveltal: the other Active Pokémon can't be healed; a Benched one can.
+  let state = scene({ bench: ["base1-46"], foeBench: ["me55-100"] });
+  state.players[0].active.damage = 30;
+  state.players[0].bench[0].damage = 30;
+  assert.equal(healRoom(state, state.players[0].active), 0);
+  assert.equal(healRoom(state, state.players[0].bench[0]), 30);
+  // Team Rocket's Ampharos: 4 damage counters on what the other player evolves from the hand.
+  state = scene({ foeBench: ["sv10-74"] });
+  state.players[0].active.since = 0;
+  act(state, { type: "evolve", player: 0, uid: handed(state, 0, "base1-24"), spot: ACTIVE });
+  assert.equal(state.players[0].active.damage, 40);
+  // Bastiodon: from the Bench, no damage from an attacker with 2 or less Energy.
+  state = scene({ front: "lab-tap", foeBench: ["me5-62"] });
+  act(state, { type: "attack", player: 0, index: 0 });
+  assert.equal(state.players[1].active.damage, 0);
+  state = scene({ front: "lab-tap", foeBench: ["me5-62"] });
+  energize(state, 0, state.players[0].active, F, 3);
+  act(state, { type: "attack", player: 0, index: 0 });
+  assert.equal(state.players[1].active.damage, 10);
+  // Team Rocket's Articuno: no effects of attacks on its Basic Team Rocket's Pokémon.
+  state = scene({ front: "sv10-125", bench: ["sv10-51"] });
+  assert.ok(warded(state, state.players[0].active, { player: 1, src: "attack" }, defs));
+  state = scene({ front: "base1-46", bench: ["sv10-51"] });
+  assert.ok(!warded(state, state.players[0].active, { player: 1, src: "attack" }, defs));
+  // Garbodor: 20 less from their Active Pokémon while it has a Tool attached.
+  state = scene({ foeBench: ["me4-57"] });
+  assert.ok(!toolOf(state, state.players[0].active, defs).plus);
+  state.players[0].active.tool = handed(state, 0, "sv5-159");
+  state.players[0].hand.pop();
+  assert.equal(toolOf(state, state.players[0].active, defs).plus, -20);
+});
+
+test("Gengar ex and Miraidon: as they are Knocked Out", () => {
+  // Gengar ex: heads, the Attacking Pokémon is Knocked Out too.
+  let state = scene({ front: "lab-smash-ex", bench: ["base1-46"], foeBench: ["base1-63"] });
+  state.cards[state.players[1].active.uid] = "me55-90";
+  const smash = state.players[0].active;
+  state.rng = coinSeed(true);
+  act(state, { type: "attack", player: 0, index: 0 });
+  assert.ok(state.players[0].discard.includes(smash.uid));
+  state = scene({ front: "lab-smash-ex", bench: ["base1-46"], foeBench: ["base1-63"] });
+  state.cards[state.players[1].active.uid] = "me55-90";
+  state.rng = coinSeed(false);
+  act(state, { type: "attack", player: 0, index: 0 });
+  assert.ok(state.players[0].active && !state.players[0].discard.includes(state.players[0].active.uid));
+  // Miraidon: up to 2 Basic Lightning Energy from it to 1 Benched Pokémon.
+  state = scene({ front: "lab-smash-ex", foeBench: ["base1-63"] });
+  state.cards[state.players[1].active.uid] = "me5-28";
+  const bolts = energize(state, 1, state.players[1].active, "energy-lightning", 2);
+  act(state, { type: "attack", player: 0, index: 0 });
+  act(state, { type: "choose", player: 1, uids: bolts });
+  while (state.pending[0]?.type === "pick") answer(state);
+  assert.deepEqual(state.players[1].bench[0].energy, bolts);
+});
+
+test("Festival Lead: two attacks with Festival Grounds in play, and Thwackey", () => {
+  for (const id of ["sv6-18", "sv6-15", "sv6-149"]) assert.ok(defs(id).playable && (defs(id).kind !== "pokemon" || defs(id).ability), id);
+  const grounds = (state) => {
+    const uid = handed(state, 0, "sv6-149");
+    state.players[0].hand.pop();
+    state.stadium = { uid, owner: 0 };
+  };
+  let state = scene({ front: "lab-fest" });
+  grounds(state);
+  const foe = state.players[1].active;
+  state.cards[foe.uid] = "lab-tap";
+  act(state, { type: "attack", player: 0, index: 0 });
+  assert.equal(state.current, 0);
+  assert.deepEqual([...new Set(legalActions(state, 0, defs).map((a) => a.type))].sort(), ["attack", "end"]);
+  throws(() => act(state, { type: "retreat", player: 0, to: 0 }), /second attack/);
+  act(state, { type: "attack", player: 0, index: 0 });
+  assert.equal(foe.damage, 60);
+  assert.equal(state.current, 1);
+  // Without the Stadium, one attack.
+  state = scene({ front: "lab-fest" });
+  act(state, { type: "attack", player: 0, index: 0 });
+  assert.equal(state.current, 1);
+  // A Knock Out first: the new Active Pokémon is chosen, then the second attack.
+  state = scene({ front: "lab-fest", foeBench: ["base1-63"] });
+  grounds(state);
+  state.players[1].active.damage = maxHp(state, state.players[1].active, defs) - 10;
+  act(state, { type: "attack", player: 0, index: 0 });
+  act(state, { type: "promote", player: 1, spot: 0 });
+  assert.equal(state.current, 0);
+  act(state, { type: "attack", player: 0, index: 0 });
+  assert.equal(state.players[1].active.damage, 30);
+  // Thwackey: a search, only with a Festival Lead Pokémon in the Active Spot.
+  state = scene({ front: "lab-fest", bench: ["sv6-15"] });
+  grounds(state);
+  act(state, { type: "ability", player: 0, spot: 0 });
+  assert.equal(state.pending[0].type, "choose");
+  state = scene({ bench: ["sv6-15"] });
+  grounds(state);
+  throws(() => act(state, { type: "ability", player: 0, spot: 0 }), /Festival Lead/);
+  // Festival Grounds: a Pokémon with Energy attached shakes off its Special Conditions and can't get them.
+  state = scene();
+  grounds(state);
+  const front = state.players[0].active;
+  addCondition(state, front, "poisoned", defs);
+  assert.ok(conditionsOn(front).includes("poisoned"));
+  act(state, { type: "attach", player: 0, uid: handed(state, 0, F), spot: ACTIVE });
+  assert.deepEqual(conditionsOn(front), []);
+  assert.ok(!addCondition(state, front, "asleep", defs));
+});
+
+test("on-play Abilities: Meowth ex's Last-Ditch Catch, Farfetch'd, Ninjask, Toxtricity", () => {
+  // Meowth ex: a Supporter, once a turn among Last-Ditch Abilities.
+  let state = scene({ extra: [["sv4pt5-87", 2]] });
+  act(state, { type: "bench", player: 0, uid: handed(state, 0, "me3-62") });
+  assert.equal(state.pending[0].effect.op, "ability");
+  answer(state);
+  const supporter = state.pending[0].uids[0];
+  act(state, { type: "choose", player: 0, uids: [supporter] });
+  assert.ok(state.players[0].hand.includes(supporter));
+  act(state, { type: "bench", player: 0, uid: handed(state, 0, "me3-62") });
+  assert.equal(state.pending.length, 0);
+  // Farfetch'd: a Pokémon Tool from the deck onto it.
+  state = scene({ extra: [["sv5-159", 4]] });
+  act(state, { type: "bench", player: 0, uid: handed(state, 0, "sv6-132") });
+  answer(state);
+  act(state, { type: "choose", player: 0, uids: state.pending[0].uids.slice(0, 1) });
+  assert.equal(state.cards[state.players[0].bench[0].tool], "sv5-159");
+  // Ninjask: Shedinja from the deck straight onto the Bench.
+  state = scene({ extra: [["me1-61", 4]] });
+  state.players[0].active.since = 0;
+  state.cards[state.players[0].active.uid] = "me1-16";
+  act(state, { type: "evolve", player: 0, uid: handed(state, 0, "me1-17"), spot: ACTIVE });
+  answer(state);
+  act(state, { type: "choose", player: 0, uids: state.pending[0].uids.slice(0, 1) });
+  assert.equal(state.cards[state.players[0].bench[0].uid], "me1-61");
+  // Toxtricity: a Basic Darkness Energy onto a Benched Darkness Pokémon, and 2 damage counters on it.
+  state = scene({ bench: ["me2-68", "me1-87"] });
+  act(state, { type: "ability", player: 0, spot: 0 });
+  answer(state);
+  assert.deepEqual(state.pending[0].spots, [0, 1]);
+  act(state, { type: "pick", player: 0, spot: 1 });
+  assert.equal(state.players[0].bench[1].energy.length, 1);
+  assert.equal(state.players[0].bench[1].damage, 20);
+});
+
+test("Pidove, Latios, Misty's Psyduck, Relicanth and Mew ex", () => {
+  // Pidove: at 30 HP or less, Unfezant from the deck straight onto it.
+  let state = scene({ front: "sv5-133", extra: [["sv5-135", 4]] });
+  const pidove = state.players[0].active;
+  pidove.since = 0;
+  throws(() => act(state, { type: "ability", player: 0, spot: ACTIVE }), /nothing/);
+  pidove.damage = maxHp(state, pidove, defs) - 30;
+  act(state, { type: "ability", player: 0, spot: ACTIVE });
+  act(state, { type: "choose", player: 0, uids: state.pending[0].uids.slice(0, 1) });
+  assert.equal(state.cards[pidove.uid], "sv5-135");
+  // Latios: Mega Latias ex comes up from the Bench, and Energy from the Bench may follow it.
+  state = scene({ bench: ["me1-100", "me1-101"] });
+  energize(state, 0, state.players[0].active, F, 1);
+  const spare = energize(state, 0, state.players[0].bench[1], F, 1)[0];
+  act(state, { type: "retreat", player: 0, to: 0 });
+  assert.equal(state.pending[0].effect.key, "allyRise");
+  act(state, { type: "pick", player: 0, spot: 1 });
+  act(state, { type: "pick", player: 0, spot: 1 });
+  while (state.pending[0]?.type === "pick") act(state, { type: "pick", player: 0, spot: null });
+  assert.ok(state.players[0].active.energy.includes(spare));
+  // Misty's Psyduck: the bottom card of the deck goes, and it goes on top of the deck.
+  state = scene({ bench: ["sv10-45"] });
+  const duck = state.players[0].bench[0];
+  const bottom = state.players[0].deck.at(-1);
+  act(state, { type: "ability", player: 0, spot: 0 });
+  assert.equal(state.players[0].deck[0], duck.uid);
+  assert.ok(state.players[0].discard.includes(bottom) && !state.players[0].bench.length);
+  // Relicanth: an evolved Pokémon may use its Basic Pokémon's attacks.
+  state = scene({ front: "base1-24", bench: ["sv5-84"] });
+  state.players[0].active.under = [handed(state, 0, "base1-46")];
+  state.players[0].hand.pop();
+  assert.equal(attacksOf(state, state.players[0].active, defs).length, defs("base1-24").attacks.length + defs("base1-46").attacks.length);
+  // Mew ex: its Benched Pokémon's attacks.
+  state = scene({ front: "me55-66", bench: ["base1-46"] });
+  assert.equal(attacksOf(state, state.players[0].active, defs).length, defs("me55-66").attacks.length + defs("base1-46").attacks.length);
+});
+
+test("Meganium's Wild Growth, Technical Machine: Fluorite, Roxie's Performance, Dizzying Valley, Ange Floette", () => {
+  // Meganium: each Basic Grass Energy provides 2, once however many Meganium.
+  let state = scene({ bench: ["me1-10", "me1-10"] });
+  energize(state, 0, state.players[0].active, G, 1);
+  assert.deepEqual(energyOf(state, state.players[0].active, defs), ["Grass", "Grass"]);
+  // Fluorite: its attack discards the Energy and heals the Tera Pokémon.
+  assert.ok(defs("sv8-188").playable && defs("sv8-188").attacks.every((a) => !a.plain));
+  // Roxie's Performance: their Poisoned Active Pokémon can't retreat during their next turn.
+  state = scene({ extra: [["me4-81", 1]] });
+  state.players[1].bench = [slotFor(state, 1, "base1-63")];
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "me4-81") });
+  act(state, { type: "end", player: 0 });
+  const foe = state.players[1].active;
+  assert.ok(canRetreat(state, 1, defs) || energyOf(state, foe, defs).length < retreatCost(state, foe, defs));
+  addCondition(state, foe, "poisoned", defs);
+  assert.ok(!canRetreat(state, 1, defs));
+  // Dizzying Valley: Confused stays Confused as it evolves.
+  state = scene();
+  state.stadium = { uid: handed(state, 0, "me2-88"), owner: 0 };
+  state.players[0].hand.pop();
+  state.players[0].active.since = 0;
+  addCondition(state, state.players[0].active, "confused", defs);
+  addCondition(state, state.players[0].active, "poisoned", defs);
+  act(state, { type: "evolve", player: 0, uid: handed(state, 0, "base1-24"), spot: ACTIVE });
+  assert.deepEqual(conditionsOn(state.players[0].active), ["confused"]);
+  // Ange Floette: only onto a Prism Tower in play, the same turn too; Mega Floette ex gets +150 HP.
+  state = scene({ bench: ["me4-35"] });
+  const ange = handed(state, 0, "me4-75");
+  throws(() => act(state, { type: "play", player: 0, uid: ange }), /Prism Tower/);
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "me4-80") });
+  act(state, { type: "play", player: 0, uid: ange });
+  assert.equal(state.stadium.uid, ange);
+  assert.equal(maxHp(state, state.players[0].bench[0], defs), 400);
+});
+
+labMon("lab-mega", { subtypes: ["Basic", "MEGA", "ex"], name: "Mega Lab ex" }, [["Blast", 250, ""]]);
+labMon("lab-heavy", { name: "Lab heavy" }, [["Tap", 10, ""]]);
+
+test("Ogre's Mask, Heavy Baton, Handheld Fan, Tremendous Bomb", () => {
+  // Ogre's Mask: an Ogerpon ex from the discard pile takes the place of one in play, damage and Energy kept.
+  let state = scene({ front: "sv6-25" });
+  const front = state.players[0].active;
+  front.damage = 50;
+  energize(state, 0, front, G, 1);
+  const mask = handed(state, 0, "sv6-40");
+  state.players[0].hand.pop();
+  state.players[0].discard.push(mask);
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "sv6-159") });
+  act(state, { type: "choose", player: 0, uids: [mask] });
+  if (state.pending[0]?.type === "pick") act(state, { type: "pick", player: 0, spot: ACTIVE });
+  assert.equal(front.uid, mask);
+  assert.equal(front.damage, 50);
+  assert.equal(front.energy.length, 1);
+  assert.ok(state.players[0].discard.some((uid) => state.cards[uid] === "sv6-25"));
+  // Heavy Baton: Knocked Out with a Retreat Cost of exactly 4, up to 3 Basic Energy to the Bench in any way.
+  state = scene({ front: "lab-smash-ex" });
+  state.players[1].bench = [slotFor(state, 1, "base1-63"), slotFor(state, 1, "base1-63")];
+  const big = state.players[1].active;
+  state.cards[big.uid] = "sv7-110";
+  big.tool = handed(state, 1, "sv5-151");
+  state.players[1].hand.pop();
+  assert.equal(retreatCost(state, big, defs), 4);
+  {
+    const cards = energize(state, 1, big, "energy-metal", 3);
+    act(state, { type: "attack", player: 0, index: 0 });
+    act(state, { type: "choose", player: 1, uids: cards });
+    act(state, { type: "pick", player: 1, spot: 0 });
+    act(state, { type: "pick", player: 1, spot: 1 });
+    act(state, { type: "pick", player: 1, spot: 1 });
+    assert.equal(state.players[1].bench[0].energy.length, 1);
+    assert.equal(state.players[1].bench[1].energy.length, 2);
+  }
+  // Handheld Fan: an Energy from the Attacking Pokémon to one of its own Benched Pokémon.
+  state = scene({ front: "lab-tap", bench: ["base1-46"] });
+  state.players[1].active.tool = handed(state, 1, "sv6-150");
+  state.players[1].hand.pop();
+  const [moved] = energize(state, 0, state.players[0].active, F, 1);
+  act(state, { type: "attack", player: 0, index: 0 });
+  act(state, { type: "choose", player: 1, uids: [moved] });
+  act(state, { type: "pick", player: 1, spot: 0 });
+  assert.ok(state.players[0].bench[0].energy.includes(moved));
+  // Tremendous Bomb: 240 or more from a Mega Evolution Pokémon ex, 12 damage counters back.
+  state = scene({ front: "lab-mega" });
+  state.cards[state.players[1].active.uid] = "lab-heavy";
+  state.players[1].active.tool = handed(state, 1, "me5-82");
+  state.players[1].hand.pop();
+  act(state, { type: "attack", player: 0, index: 0 });
+  assert.equal(state.players[0].active.damage, 120);
+  state = scene({ front: "lab-smash-ex" });
+  state.cards[state.players[1].active.uid] = "lab-heavy";
+  state.players[1].active.tool = handed(state, 1, "me5-82");
+  state.players[1].hand.pop();
+  act(state, { type: "attack", player: 0, index: 0 });
+  assert.equal(state.players[0].active.damage, 0);
 });
 
 console.log(`${passed} checks passed${process.exitCode ? ", some failed" : ""}`);

@@ -1269,6 +1269,7 @@ export function initTcg(deps) {
       case "move-energy": return `${who(event.p)} moved ${name(event.uid)}.`;
       case "form": return `${who(event.p)} switched in ${name(event.uid)}.`;
       case "turn-ends": return `${event.name} ends the turn.`;
+      case "encore": return `${event.name}: ${name(event.uid)} may attack again.`;
       case "ko": return `${name(event.uid)} was Knocked Out.`;
       case "ko-hand": return `${name(event.uid)} went back to ${event.p === ME ? "your" : "their"} hand.`;
       case "to-prizes": return `${plural(event.n, "card")} went onto ${event.p === ME ? "your" : "their"} Prize cards.`;

@@ -105,6 +105,10 @@ const KO_DOES = [
   [/^put (\d+) damage counters on the Attacking Pokémon\.$/, (m) => ({ counters: Number(m[1]) * 10 })],
   [/^discard the top (\d+) cards of your opponent's deck\.$/, (m) => ({ steps: [{ op: "foeMill", n: Number(m[1]) }] })],
   [/^discard (\d+) random cards? from your opponent's hand\.$/, (m) => ({ steps: [{ op: "foeDiscardRandom", n: Number(m[1]) }] })],
+  // Gengar ex: heads, the Attacking Pokémon is Knocked Out too (engine.js resolveKnockOuts).
+  [/^flip a coin\. If heads, the Attacking Pokémon is Knocked Out\.$/, () => ({ flipKo: true })],
+  // Miraidon: Energy of a type from it to 1 Benched Pokémon, as Wishful Baton moves it.
+  [new RegExp(`^move up to (\\d+) Basic (${TYPE}) Energy cards? from this Pokémon to 1 of your Benched Pokémon\\.$`), (m) => ({ baton: Number(m[1]), batonType: m[2] })],
 ];
 
 /** "your Grass Pokémon and Fire Pokémon", "your Evolution Fire Pokémon", "your Future Pokémon, except any Iron Crown ex". */
@@ -127,6 +131,43 @@ const FROM_FOE = "(?:from (?:your opponent's )?attacks|from attacks from your op
 
 /** Newer standing wordings: auras on all or some of your Pokémon, numbers that grow, and walls with terms. */
 const STANDING_MORE = [
+  // Meganium's Wild Growth: each Basic Grass Energy on its owner's Pokémon provides 2 (engine.js unitsOn).
+  [new RegExp(`^Each Basic (${TYPE}) Energy attached to all of your Pokémon provides \\1 ?\\1 Energy\\.$`), (m) => ({ growth: m[1] })],
+  // Relicanth, Mew ex: attacks of other cards (engine.js attacksOf).
+  [/^Each of your evolved Pokémon can use any attack from its previous Evolutions\. \(You still need the necessary Energy to use each attack\.\)$/, () => ({ lendUnder: true })],
+  [/^This Pokémon can use the attacks of any of your Benched Pokémon\. \(You still need the necessary Energy to use each attack\.\)$/, () => ({ lendBench: true })],
+  // Festival Lead: two attacks a turn with the Stadium in play (engine.js encoreDue).
+  [/^If ([A-Z][\w'é.-]*(?: [A-Z][\w'é.-]*)*) is in play, this Pokémon may use an attack it has twice\. If the first attack Knocks Out your opponent's Active Pokémon, you may attack again after your opponent chooses a new Active Pokémon\.$/, (m) => ({ encore: true, when: { stadium: m[1] } })],
+  // Palafin ex: it comes into play only by Palafin's Zero to Hero (engine.js canEvolveOnto keeps it out of the hand's evolutions).
+  [/^Put this Pokémon into play only with the effect of (?:.+?)'s (.+?) Ability\.$/, (m) => ({ onlyVia: m[1] })],
+  // Lillie's Clefairy ex: their Dragon Pokémon take Psychic Weakness (engine.js typedDef).
+  [new RegExp(`^The Weakness of each of your opponent's (${TYPE}) Pokémon in play is now (${TYPE})\\. \\(Apply Weakness as ×2\\.\\)$`), (m) => ({ foeAura: { who: { types: [m[1]] }, mod: { weakAs: m[2] } } })],
+  // Illumise: Weakness ×3 for both Active Pokémon, with Volbeat in play.
+  [/^If you have ([A-Z][\w'é.-]*(?: [A-Z][\w'é.-]*)*) in play, apply Weakness for both Active Pokémon as [x×](\d+)\.?$/, (m) => ({ weakTimes: Number(m[2]), when: { inPlay: `name=${m[1]}` } })],
+  // Eevee ex: played from the hand onto it, any Pokémon ex that evolves from Eevee.
+  [/^This Pokémon can evolve into any Pokémon ex that evolves from ([A-Z][\w'é.-]*) if you play it from your hand onto this Pokémon\. \(This Pokémon can't evolve during your first turn or the turn you play it\.\)$/, (m) => ({ rainbow: m[1] })],
+  // Hits back for each Energy of a type on it; in the Active Spot only, or (without those words) wherever it is damaged.
+  [new RegExp(`^If this Pokémon (is in the Active Spot and )?is damaged by an attack from your opponent's Pokémon \\(even if this Pokémon is Knocked Out\\), ${COUNTERS} the Attacking Pokémon( for each (${TYPE}) Energy attached to this Pokémon)?\\.$`), (m) => ({ thorns: { n: Number(m[2]) * 10, ...(m[3] ? { per: m[4] } : {}), ...(m[1] ? {} : { any: true }) } })],
+  // Turtonator: an Energy off the Attacking Pokémon; Team Rocket's Koffing: a search. Both once the attack is done (engine.js strike).
+  [/^If this Pokémon is in the Active Spot and is damaged by an attack from your opponent's Pokémon \(even if this Pokémon is Knocked Out\), (discard an Energy from the Attacking Pokémon|search your deck for up to (\d+) Pokémon that have "([A-Z][\w'é.-]*)" in their name and put them onto your Bench\. Then, shuffle your deck)\.$/, (m) => ({
+    thorns: m[2] ? { steps: [{ op: "search", what: `basic~${m[3]}`, n: Number(m[2]), to: "bench" }] } : { shed: 1 },
+  })],
+  // Spiritomb, Wishiwashi: one of your Active Pokémon of a kind is damaged, and the Attacking Pokémon takes damage counters.
+  [new RegExp(`^If your Active (${TYPE}) Pokémon is damaged by an attack from your opponent's Pokémon \\(even if your Active \\1 Pokémon is Knocked Out\\), ${COUNTERS} the Attacking Pokémon\\.$`), (m) => ({ allyThorns: { what: `pokemon:${m[1]}`, n: Number(m[2]) * 10 } })],
+  [new RegExp(`^If your ([A-Z][\\w'é.-]*) or \\1 ex is in the Active Spot and is damaged by an attack from your opponent's Pokémon \\(even if your Pokémon is Knocked Out\\), ${COUNTERS} the Attacking Pokémon\\.$`), (m) => ({ allyThorns: { what: `name=${m[1]}|name=${m[1]} ex`, n: Number(m[2]) * 10 } })],
+  // Yveltal: the other Active Pokémon can't be healed (engine.js healRoom).
+  [/^Your opponent's Active Pokémon can't be healed\.$/, () => ({ noHealFoe: true })],
+  // Garbodor: less damage from their Active Pokémon while it has a Tool attached.
+  [new RegExp(`^Attacks used by your opponent's Active Pokémon that has a Pokémon Tool attached do (\\d+) less damage${BEFORE}\\.$`), (m) => ({ foeAura: { who: { active: true, tooled: true }, mod: { plus: -Number(m[1]) } } })],
+  // Team Rocket's Articuno: the effects of their attacks kept off some of your Pokémon.
+  [/^Prevent all effects of attacks used by your opponent's Pokémon done to your (.+?)\. \(Existing effects are not removed\. Damage is not an effect\.\)$/, (m) => {
+    const what = whatOf(m[1]);
+    return what && what !== "any" ? { teamNoEffects: what } : null;
+  }],
+  // Team Rocket's Ampharos: damage counters on what they evolve from their hand.
+  [/^Whenever your opponent plays a Pokémon from their hand to evolve 1 of their Pokémon, put (\d+) damage counters on that Pokémon\.$/, (m) => ({ foeEvolve: Number(m[1]) * 10 })],
+  // Bastiodon: from the Bench, no damage to your Pokémon from attackers with that little Energy.
+  [/^As long as this Pokémon is on your Bench, prevent all damage done to each of your Pokémon by attacks from your opponent's Pokémon that have (\d+) or less Energy attached\.$/, (m) => ({ teamWall: { energyMax: Number(m[1]) }, where: "bench" })],
   [new RegExp(`^All of your Pokémon that have any (${TYPE}) Energy attached take (\\d+) less damage ${FROM_FOE}${AFTER}\\.$`), (m) => ({ aura: { who: { energy: m[1] }, mod: { less: Number(m[2]) } } })],
   [new RegExp(`^(?:All of your|Your) (.+?) take (\\d+) less damage ${FROM_FOE}${AFTER}\\.$`), (m) => {
     const who = whoOf(m[1]);
@@ -286,6 +327,22 @@ const LOOK_REST = { "Shuffle the other cards back into your deck": "shuffle", "S
 const isEnergy = (what) => /^(basicEnergy|energy)(:|$)/.test(what) || /^card=.* Energy$/.test(what);
 /** Newer wordings of what an Ability does. */
 const DOES_MORE = [
+  // Palafin's Zero to Hero: the Pokémon named takes over this one's place (as a form change does).
+  [/^Search your deck for an? ([A-Z][\w'é.-]*(?: [A-Z][\w'é.-]*)*(?: ex)?) and switch it with this Pokémon\. Any attached cards, damage counters, Special Conditions, turns in play, and any other effects remain on the new Pokémon\. If you switched a Pokémon in this way, put this card into your deck\. Then, shuffle your deck\.$/, (m) => [{ op: "formChange", name: m[1] }]],
+  // Ninjask, Silcoon: a Pokémon by name straight onto the Bench (an Evolution card too: the Ability says so).
+  [/^Search your deck for an? ([A-Z][\w'é.-]*)(?: or an? ([A-Z][\w'é.-]*))? and put it onto your Bench\. Then, shuffle your deck\.$/, (m) => [{ op: "search", what: [m[1], m[2]].filter(Boolean).map((n) => `name=${n}`).join("|"), n: 1, to: "bench" }]],
+  // Pidove: an Unfezant from the deck onto it (past its Stage 1), as the rules for evolving allow.
+  [/^Search your deck for an? ([A-Z][\w'é.-]*)(?: or (?:an? )?([A-Z][\w'é.-]*(?: ex)?))? and put it onto this (?:this Pokémon|[A-Z][\w'é.-]*) to evolve it\. Then, shuffle your deck\.$/, (m) => [{ op: "evolveDeck", how: { skip: "any" }, self: true, what: [m[1], m[2]].filter(Boolean).map((n) => `name=${n}`).join("|") }]],
+  // Misty's Psyduck: the bottom card of the deck for this Pokémon on top of it.
+  [/^Discard the bottom card of your deck\. If you do, discard all cards from this Pokémon and put this Pokémon on top of your deck\.$/, () => [{ op: "selfTop" }]],
+  // Latios: Energy from the Bench to the Active Pokémon, any amount.
+  [/^Move any amount of Energy from your Benched Pokémon to your Active Pokémon\.$/, () => [{ op: "gather", type: "", to: "active" }]],
+  // Farfetch'd: a Pokémon Tool from the deck onto this Pokémon.
+  [/^Search your deck for a Pokémon Tool card and attach it to this Pokémon\. Then, shuffle your deck\.$/, () => [{ op: "toolFetch" }]],
+  // Ambipom: coins, and for each heads a random card from their hand into their deck.
+  [/^Flip (\d+) coins\. For each heads, choose a random card from your opponent's hand\. Your opponent reveals those cards and shuffles them into their deck\.$/, (m) => [{ op: "foeHandToDeck", coins: Number(m[1]) }]],
+  // Toxtricity: a Basic Energy onto a Benched Pokémon of a type, and damage counters on it.
+  [new RegExp(`^Search your deck for a Basic (${TYPE}) Energy card and attach it to 1 of your Benched (${TYPE}) Pokémon\\. Then, shuffle your deck\\. If you attached Energy to a Pokémon in this way, place (\\d+) damage counters on that Pokémon\\.$`), (m) => [{ op: "fetchEnergy", what: `basicEnergy:${m[1]}`, n: 1, to: "one", where: { to: "bench", whoType: m[2] }, hurt: Number(m[3]) * 10 }]],
   // "Look at the top 6 cards of your deck and attach any number of Basic Energy cards you find there to your Dragon Pokémon in any way you like."
   [new RegExp(`^Look at the top (\\d+) cards of your deck and attach (any number of|an?|up to \\d+) (.+?) you find there to (this Pokémon|your Pokémon in any way you like|your (${TYPE}) Pokémon in any way you like)\\. (Shuffle the other cards back into your deck|Shuffle the other cards and put them on the bottom of your deck|Discard the other cards)\\.$`), (m) => {
     const what = whatOf(m[3]);
@@ -484,7 +541,7 @@ function readAbility(ability, cardName, named) {
   // Older cards name themselves where newer ones say "this Pokémon".
   if (cardName && named) text = text.split(cardName).join("this Pokémon");
   text = text.replace(/^this Pokémon\b/, "This Pokémon");
-  let calm = false, vstar = false, ends = false, selfKo = false, single = false;
+  let calm = false, vstar = false, ends = false, selfKo = false, single = false, singleTag = "";
   text = text
     .replace(/ This power can't be used if this Pokémon is affected by a Special Condition\./, () => ((calm = true), ""))
     .replace(/ This power can't be used if this Pokémon is Asleep, Confused, or Paralyzed\./, "")
@@ -493,13 +550,14 @@ function readAbility(ability, cardName, named) {
     .replace(/ If you use this (?:Ability|Poké-Power|power), your turn ends\./, () => ((ends = true), ""))
     .replace(/ Either way, this ends your turn\./, () => ((ends = true), ""))
     .replace(/ (?:If you use this (?:Ability|Poké-Power)|If you searched your deck in this way), this Pokémon is Knocked Out\./, () => ((selfKo = true), ""))
+    .replace(/ You can't use more than 1 Ability that has "(.+?)" in its name each turn\./, (_, tag) => ((singleTag = tag), ""))
     .replace(/ You can't use more than 1 .+? (?:Ability|Poké-Power)(?: each turn| during your turn)\./, () => ((single = true), ""));
   // "The effect of Tundra Wall doesn't stack": two of these Pokémon in play give it once (engine.js toolOf, by the Ability's name).
   let noStack = false;
   text = text.replace(/ The effect of (?:.+?) doesn't stack\.$/, () => ((noStack = true), ""));
   const base = { name: ability.name || kind, kind, text: String(ability.text || "").replace(/\s+/g, " ").trim() };
   // Only what toolOf and the Prize count read is kept to one; anything else that says so waits.
-  const stacked = (got) => (!noStack ? got : got && (got.aura || got.foeAura || got.prizes) ? { ...got, noStack } : null);
+  const stacked = (got) => (!noStack ? got : got && (got.aura || got.foeAura || got.prizes || got.foeEvolve || got.growth) ? { ...got, noStack } : null);
 
   const front = text.match(FRONT_FIRST);
   if (front) {
@@ -544,6 +602,24 @@ function readAbility(ability, cardName, named) {
     const steps = stepsOf(rise[1], cardName);
     return steps ? { ...base, rise: { steps } } : null;
   }
+  // Latios: "Once during your turn, when your Mega Latias ex moves from your Bench to the Active Spot, you may use this Ability."
+  const allyRise = !ends && !selfKo && !vstar && !singleTag && text.match(/^Once during your turn, when your ([A-Z][\w'é.-]*(?: [A-Z][\w'é.-]*)*(?: ex)?) moves from your Bench to the Active Spot, you may (.+)$/);
+  if (allyRise) {
+    const steps = stepsOf(allyRise[2], cardName);
+    return steps ? { ...base, allyRise: { steps, name: allyRise[1] } } : null;
+  }
+  // "Once during your turn, when this Pokémon moves from the Active Spot to your Bench, you may ..." (engine.js benchedFrom).
+  const fall = !ends && !selfKo && !vstar && !singleTag && text.match(/^Once during your turn, when this Pokémon moves from the Active Spot to (?:your|the) Bench, you may (.+)$/);
+  if (fall) {
+    const steps = stepsOf(fall[1], cardName);
+    return steps ? { ...base, fall: { steps } } : null;
+  }
+  // Flygon: as it evolves from the hand, and also as it is Knocked Out in the Active Spot by their attack.
+  const twice = !ends && !selfKo && !vstar && !singleTag && text.match(/^Once during your turn, when you play this Pokémon from your hand (onto your Bench|to evolve 1 of your Pokémon), you may use this Ability\. You may also use this Ability if this Pokémon (is in the Active Spot and )?is Knocked Out by damage from an attack from your opponent's Pokémon\. (.+)$/);
+  if (twice) {
+    const steps = stepsOf(twice[3], cardName);
+    return steps ? { ...base, enter: { steps, how: /Bench/.test(twice[1]) ? "bench" : "evolve" }, ko: { steps, ...(twice[2] ? { active: true } : {}) } } : null;
+  }
 
   // Terms on a use: the first turn only, after a Knock Out last turn, with a Stadium in play, late in the game.
   const need = {};
@@ -554,7 +630,9 @@ function readAbility(ability, cardName, named) {
       else if (/Stadium/.test(what)) need.stadium = true;
       else need.foePrizes = Number(n);
       return head;
-    });
+    })
+    // Thwackey: "if your Active Pokémon has the Festival Lead Ability".
+    .replace(/^(Once during your turn(?: \(before your attack\))?, )if your Active Pokémon has the (.+?) Ability, /, (_, head, name) => ((need.activeAbility = name), head));
 
   // Other terms, as a Trainer says them ("if this Pokémon has any Grass Energy attached", "if you have any Tera Pokémon in play").
   let term = null;
@@ -586,14 +664,14 @@ function readAbility(ability, cardName, named) {
     const steps = stepsOf(m[3], cardName);
     const where = ACTIVE_FIRST.test(text) ? "active" : !m[2] ? "" : /Bench/.test(m[2]) ? "bench" : "active";
     const flags = { ...(calm ? { calm } : {}), ...(vstar ? { vstar } : {}), ...(ends ? { ends } : {}), ...(selfKo ? { selfKo } : {}), ...(Object.keys(need).length ? { need } : {}) };
-    if (steps) return { ...base, use: { steps: [...(term ? [{ op: "only", when: term }] : []), ...pay, ...steps], where, often: m[1] === "As often as you like", single, ...flags } };
+    if (steps) return { ...base, use: { steps: [...(term ? [{ op: "only", when: term }] : []), ...pay, ...steps], where, often: m[1] === "As often as you like", single, ...(singleTag ? { singleTag } : {}), ...flags } };
   }
   m = !cost && !ends && !selfKo && !vstar && !term && !Object.keys(need).length && text.match(ENTER);
   if (m) {
     const term = m[2] ? condOf(m[2]) : null;
     if (m[2] && !term) return null;
     const steps = stepsOf(m[3], cardName);
-    return steps ? { ...base, enter: { steps: term ? [{ op: "only", when: term }, ...steps] : steps, how: /Bench/.test(m[1]) ? "bench" : "evolve" } } : null;
+    return steps ? { ...base, enter: { steps: term ? [{ op: "only", when: term }, ...steps] : steps, how: /Bench/.test(m[1]) ? "bench" : "evolve", ...(singleTag ? { singleTag } : {}) } } : null;
   }
   return null;
 }

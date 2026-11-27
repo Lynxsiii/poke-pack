@@ -19,7 +19,7 @@
  *        shielded (the target takes no effects this turn) }
  */
 
-import { ACTIVE, abilityOn, noteShed, shieldOn, sideHit, addCondition, addMark, askChoose, askPick, benchSafe, canPay, conditionsOn, damageAfterTyping, defOf, devolveSlot, energyAlike, energyToDeck, energyFits, energyMod, energyOf, flip, healRoom, heldOn, hpLeft, inPlay, markOn, maxHp, other, rand, retreatCost, shedEnergy, shuffle, slotAt, strike, struck, switchActive, toLost, toolGone, unpaid, warded, win } from "./engine.js";
+import { ACTIVE, abilityOn, hitBack, typedDef, noteShed, shieldOn, sideHit, addCondition, addMark, askChoose, askPick, benchSafe, canPay, conditionsOn, damageAfterTyping, defOf, devolveSlot, energyAlike, energyToDeck, energyFits, energyMod, energyOf, flip, healRoom, heldOn, hpLeft, inPlay, markOn, maxHp, other, rand, retreatCost, shedEnergy, shuffle, slotAt, strike, struck, switchActive, toLost, toolGone, unpaid, warded, win } from "./engine.js";
 import { T_OPS, compileTrainer, fits, runTrainer, trainerReady, whatOf } from "./trainers.js";
 
 const WORDS = { a: 1, an: 1, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6 };
@@ -565,7 +565,7 @@ export const OPS = {
     // No choice to make: it lands on all of them now.
     for (const spot of spots) {
       const slot = spot === ACTIVE ? side.active : side.bench[spot];
-      const dealt = (spot === ACTIVE || typed) && from ? damageAfterTyping(n, defOf(state, from, ctx.defs), defOf(state, slot.uid, ctx.defs), typing) : { amount: n, weak: false, resist: false };
+      const dealt = (spot === ACTIVE || typed) && from ? damageAfterTyping(n, defOf(state, from, ctx.defs), typedDef(state, slot, ctx.defs), typing) : { amount: n, weak: false, resist: false };
       if (dealt.amount <= 0) continue;
       if (pierce ? defOf(state, slot.uid, ctx.defs).tera && spot !== ACTIVE : benchSafe(state, slot, spot, ctx.defs, p === player)) continue;
       if (p !== player && spot !== ACTIVE && shieldOn(state, slot, defIn(ctx, ctx.slot))) continue;
@@ -575,6 +575,8 @@ export const OPS = {
       slot.damage += amount;
       struck(state, slot, amount);
       events.push({ t: "damage", p, spot, n: amount, weak: dealt.weak, resist: dealt.resist });
+      // An Ability that answers attack damage (Orthworm ex's, wherever it is).
+      if (p !== player) hitBack(state, slot, p, ctx.slot, player, spot, ctx.defs, events);
     }
   },
   /** The attacker trades places with one of its Benched Pokémon (its player chooses). */
@@ -1107,10 +1109,12 @@ export const OPS = {
     }
   },
   /** "Heal 20 damage from each of your Pokémon" (`foe`: "each Pokémon (both yours and your opponent's)", theirs too). */
-  healEvery(ctx, { n, own = true, foe = false }) {
+  // `tera`: only the Tera Pokémon ("heal all damage from each of your Tera Pokémon").
+  healEvery(ctx, { n, own = true, foe = false, tera = false }) {
     const { state, player, events } = ctx;
     for (const p of [...(own ? [player] : []), ...(foe ? [other(player)] : [])]) {
       for (const [slot, spot] of inPlay(state, p)) {
+        if (tera && !defOf(state, slot.uid, ctx.defs)?.tera) continue;
         const healed = Math.min(n, healRoom(state, slot));
         if (!healed) continue;
         slot.damage -= healed;
@@ -2406,6 +2410,8 @@ const PATTERNS = [
   [/^Remove all damage counters from this Pokémon\.$/, () => [{ op: "healSelf", when: "after", n: 9990 }]],
   [/^Remove all Special Conditions from this Pokémon\.$/, () => fromDeck([{ op: "cure", to: "self" }])],
   [/^Heal all damage from (?:all|each) of your Pokémon\.$/, () => [{ op: "healEvery", when: "after", n: 9990 }]],
+  // Technical Machine: Fluorite.
+  [/^Discard all Energy from this Pokémon, and heal all damage from each of your Tera Pokémon\.$/, () => [{ op: "discardEnergy", when: "after", n: 99, type: "" }, { op: "healEvery", when: "after", n: 9990, tera: true }]],
   [/^Heal (\d+) damage from each Pokémon \(both yours and your opponent's\)\.$/, (m) => [{ op: "healEvery", when: "after", n: Number(m[1]), foe: true }]],
   [new RegExp(`^Discard ${N} (?:${TYPE} )?Energy(?: card)? (?:from|attached to) this Pokémon and heal all damage from it\\.$`, "i"), (m) => [{ op: "discardEnergy", when: "after", n: count(m[1]), type: m[2] || "" }, { op: "healSelf", when: "after", n: 9990 }]],
   [/^(?:After your attack, )?[Rr]emove from this Pokémon the number of damage counters equal to the damage you did to the Defending Pokémon\.(?: If this Pokémon has fewer damage counters than that, remove all of them\.)?$/, () => [{ op: "healDealt", when: "after" }]],
