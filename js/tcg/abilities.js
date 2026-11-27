@@ -131,6 +131,9 @@ const FROM_FOE = "(?:from (?:your opponent's )?attacks|from attacks from your op
 
 /** Newer standing wordings: auras on all or some of your Pokémon, numbers that grow, and walls with terms. */
 const STANDING_MORE = [
+  // Relicanth, Mew ex: attacks of other cards (engine.js attacksOf).
+  [/^Each of your evolved Pokémon can use any attack from its previous Evolutions\. \(You still need the necessary Energy to use each attack\.\)$/, () => ({ lendUnder: true })],
+  [/^This Pokémon can use the attacks of any of your Benched Pokémon\. \(You still need the necessary Energy to use each attack\.\)$/, () => ({ lendBench: true })],
   // Festival Lead: two attacks a turn with the Stadium in play (engine.js encoreDue).
   [/^If ([A-Z][\w'é.-]*(?: [A-Z][\w'é.-]*)*) is in play, this Pokémon may use an attack it has twice\. If the first attack Knocks Out your opponent's Active Pokémon, you may attack again after your opponent chooses a new Active Pokémon\.$/, (m) => ({ encore: true, when: { stadium: m[1] } })],
   // Palafin ex: it comes into play only by Palafin's Zero to Hero (engine.js canEvolveOnto keeps it out of the hand's evolutions).
@@ -326,6 +329,12 @@ const DOES_MORE = [
   [/^Search your deck for an? ([A-Z][\w'é.-]*(?: [A-Z][\w'é.-]*)*(?: ex)?) and switch it with this Pokémon\. Any attached cards, damage counters, Special Conditions, turns in play, and any other effects remain on the new Pokémon\. If you switched a Pokémon in this way, put this card into your deck\. Then, shuffle your deck\.$/, (m) => [{ op: "formChange", name: m[1] }]],
   // Ninjask, Silcoon: a Pokémon by name straight onto the Bench (an Evolution card too: the Ability says so).
   [/^Search your deck for an? ([A-Z][\w'é.-]*)(?: or an? ([A-Z][\w'é.-]*))? and put it onto your Bench\. Then, shuffle your deck\.$/, (m) => [{ op: "search", what: [m[1], m[2]].filter(Boolean).map((n) => `name=${n}`).join("|"), n: 1, to: "bench" }]],
+  // Pidove: an Unfezant from the deck onto it (past its Stage 1), as the rules for evolving allow.
+  [/^Search your deck for an? ([A-Z][\w'é.-]*)(?: or (?:an? )?([A-Z][\w'é.-]*(?: ex)?))? and put it onto this (?:this Pokémon|[A-Z][\w'é.-]*) to evolve it\. Then, shuffle your deck\.$/, (m) => [{ op: "evolveDeck", how: { skip: "any" }, self: true, what: [m[1], m[2]].filter(Boolean).map((n) => `name=${n}`).join("|") }]],
+  // Misty's Psyduck: the bottom card of the deck for this Pokémon on top of it.
+  [/^Discard the bottom card of your deck\. If you do, discard all cards from this Pokémon and put this Pokémon on top of your deck\.$/, () => [{ op: "selfTop" }]],
+  // Latios: Energy from the Bench to the Active Pokémon, any amount.
+  [/^Move any amount of Energy from your Benched Pokémon to your Active Pokémon\.$/, () => [{ op: "gather", type: "", to: "active" }]],
   // Farfetch'd: a Pokémon Tool from the deck onto this Pokémon.
   [/^Search your deck for a Pokémon Tool card and attach it to this Pokémon\. Then, shuffle your deck\.$/, () => [{ op: "toolFetch" }]],
   // Ambipom: coins, and for each heads a random card from their hand into their deck.
@@ -590,6 +599,12 @@ function readAbility(ability, cardName, named) {
   if (rise) {
     const steps = stepsOf(rise[1], cardName);
     return steps ? { ...base, rise: { steps } } : null;
+  }
+  // Latios: "Once during your turn, when your Mega Latias ex moves from your Bench to the Active Spot, you may use this Ability."
+  const allyRise = !ends && !selfKo && !vstar && !singleTag && text.match(/^Once during your turn, when your ([A-Z][\w'é.-]*(?: [A-Z][\w'é.-]*)*(?: ex)?) moves from your Bench to the Active Spot, you may (.+)$/);
+  if (allyRise) {
+    const steps = stepsOf(allyRise[2], cardName);
+    return steps ? { ...base, allyRise: { steps, name: allyRise[1] } } : null;
   }
   // "Once during your turn, when this Pokémon moves from the Active Spot to your Bench, you may ..." (engine.js benchedFrom).
   const fall = !ends && !selfKo && !vstar && !singleTag && text.match(/^Once during your turn, when this Pokémon moves from the Active Spot to (?:your|the) Bench, you may (.+)$/);

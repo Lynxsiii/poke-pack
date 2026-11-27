@@ -7487,4 +7487,41 @@ test("on-play Abilities: Meowth ex's Last-Ditch Catch, Farfetch'd, Ninjask, Toxt
   assert.equal(state.players[0].bench[1].damage, 20);
 });
 
+test("Pidove, Latios, Misty's Psyduck, Relicanth and Mew ex", () => {
+  // Pidove: at 30 HP or less, Unfezant from the deck straight onto it.
+  let state = scene({ front: "sv5-133", extra: [["sv5-135", 4]] });
+  const pidove = state.players[0].active;
+  pidove.since = 0;
+  throws(() => act(state, { type: "ability", player: 0, spot: ACTIVE }), /nothing/);
+  pidove.damage = maxHp(state, pidove, defs) - 30;
+  act(state, { type: "ability", player: 0, spot: ACTIVE });
+  act(state, { type: "choose", player: 0, uids: state.pending[0].uids.slice(0, 1) });
+  assert.equal(state.cards[pidove.uid], "sv5-135");
+  // Latios: Mega Latias ex comes up from the Bench, and Energy from the Bench may follow it.
+  state = scene({ bench: ["me1-100", "me1-101"] });
+  energize(state, 0, state.players[0].active, F, 1);
+  const spare = energize(state, 0, state.players[0].bench[1], F, 1)[0];
+  act(state, { type: "retreat", player: 0, to: 0 });
+  assert.equal(state.pending[0].effect.key, "allyRise");
+  act(state, { type: "pick", player: 0, spot: 1 });
+  act(state, { type: "pick", player: 0, spot: 1 });
+  while (state.pending[0]?.type === "pick") act(state, { type: "pick", player: 0, spot: null });
+  assert.ok(state.players[0].active.energy.includes(spare));
+  // Misty's Psyduck: the bottom card of the deck goes, and it goes on top of the deck.
+  state = scene({ bench: ["sv10-45"] });
+  const duck = state.players[0].bench[0];
+  const bottom = state.players[0].deck.at(-1);
+  act(state, { type: "ability", player: 0, spot: 0 });
+  assert.equal(state.players[0].deck[0], duck.uid);
+  assert.ok(state.players[0].discard.includes(bottom) && !state.players[0].bench.length);
+  // Relicanth: an evolved Pokémon may use its Basic Pokémon's attacks.
+  state = scene({ front: "base1-24", bench: ["sv5-84"] });
+  state.players[0].active.under = [handed(state, 0, "base1-46")];
+  state.players[0].hand.pop();
+  assert.equal(attacksOf(state, state.players[0].active, defs).length, defs("base1-24").attacks.length + defs("base1-46").attacks.length);
+  // Mew ex: its Benched Pokémon's attacks.
+  state = scene({ front: "me55-66", bench: ["base1-46"] });
+  assert.equal(attacksOf(state, state.players[0].active, defs).length, defs("me55-66").attacks.length + defs("base1-46").attacks.length);
+});
+
 console.log(`${passed} checks passed${process.exitCode ? ", some failed" : ""}`);

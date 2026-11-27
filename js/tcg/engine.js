@@ -1061,6 +1061,14 @@ export function attacksOf(state, slot, defs) {
       if (below?.kind === "pokemon" && (below.stage === "basic" || below.line === 1)) lend(state.cards[uid], "under");
     }
   }
+  if (owner >= 0) {
+    // Relicanth's Memory Dive: "Each of your evolved Pokémon can use any attack from its previous Evolutions."
+    if (def.stage === "evolution" && !(lent?.under && state.players[owner].active === slot && def.box !== "ex") && inPlay(state, owner).some(([mate]) => abilityOn(state, mate, defs)?.lendUnder)) {
+      for (const uid of slot.under) if (defOf(state, uid, defs)?.kind === "pokemon") lend(state.cards[uid], "under");
+    }
+    // Mew ex's Memory Helix: "This Pokémon can use the attacks of any of your Benched Pokémon."
+    if (abilityOn(state, slot, defs)?.lendBench) for (const [mate, at] of inPlay(state, owner)) if (at !== ACTIVE && mate !== slot) lend(state.cards[mate.uid], "bench");
+  }
   return out.length ? [...def.attacks, ...out] : def.attacks;
 }
 
@@ -2224,7 +2232,7 @@ const HANDLERS = {
     } else if (op === "evolveFrom") {
       // A card that evolves one of your Pokémon (Rare Candy from the hand, Evosoda from the deck): onto which one.
       const uid = picked[0];
-      const spots = uid ? evolveSpots(state, player, defOf(state, uid, defs), defs, waiting.effect.how, waiting.effect.where) : [];
+      const spots = uid ? evolveSpots(state, player, defOf(state, uid, defs), defs, waiting.effect.how, waiting.effect.where).filter((s) => waiting.effect.at == null || s === waiting.effect.at) : [];
       if (uid && !spots.length) pile.push(uid);
       else if (spots.length === 1) evolveSlot(state, player, spots[0], uid, defs, events, waiting.zone);
       else if (spots.length) {
@@ -2693,11 +2701,26 @@ function offerAbility(state, player, spot, how, defs) {
  */
 function offerRise(state, player, defs) {
   const slot = state.players[player].active;
+  offerAllyRise(state, player, defs);
   const rise = abilityOn(state, slot, defs)?.rise;
   if (!rise || state.current !== player || state.phase !== "main") return;
   if (slot.used?.uid === slot.uid && slot.used.turn === state.turn) return;
   if (!trainerReady(rise.steps, { state, defs, events: [], player, spot: ACTIVE, src: "ability" })) return;
   askPick(state, { player, side: player, spots: [ACTIVE], left: 1, optional: true, effect: { op: "ability", key: "rise" } });
+}
+
+/** Latios's Lustrous Assist: "when your Mega Latias ex moves from your Bench to the Active Spot, you may use this Ability." */
+function offerAllyRise(state, player, defs) {
+  const front = state.players[player].active;
+  if (!front || state.current !== player || state.phase !== "main") return;
+  const name = defOf(state, front.uid, defs).name;
+  for (const [mate, spot] of inPlay(state, player)) {
+    const rise = abilityOn(state, mate, defs)?.allyRise;
+    if (!rise || rise.name !== name) continue;
+    if (mate.used?.uid === mate.uid && mate.used.turn === state.turn) continue;
+    if (!trainerReady(rise.steps, { state, defs, events: [], player, spot, src: "ability" })) continue;
+    askPick(state, { player, side: player, spots: [spot], left: 1, optional: true, effect: { op: "ability", key: "allyRise" } });
+  }
 }
 
 /** Carry out a choice on the Pokémon picked: damage to it, or it trades places with the Active. */
@@ -2716,7 +2739,7 @@ function applyPick(state, waiting, spot, defs, events) {
     const slot = slotAt(state, p, spot);
     const ability = defOf(state, slot.uid, defs).ability;
     const key = effect.key || "enter";
-    if (key === "rise" || key === "fall") slot.used = { uid: slot.uid, turn: state.turn };
+    if (key === "rise" || key === "fall" || key === "allyRise") slot.used = { uid: slot.uid, turn: state.turn };
     (side.abilitiesUsed ||= []).push(ability.name);
     events.push({ t: "ability", p, spot, uid: slot.uid, name: ability.name });
     runTrainer(ability[key].steps, { state, defs, events, player: p, spot, src: "ability" });
