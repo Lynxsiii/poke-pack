@@ -17,7 +17,7 @@
  */
 
 import { trainerAim } from "./trainers.js";
-import { ACTIVE, apply, attacksOf, chooseBlock, damageAfterTyping, defOf, energyFits, energyOf, hpLeft, unitsOn, inPlay, legalActions, other, retreatCost, statusOf, unpaid, usableAttacks } from "./engine.js";
+import { ACTIVE, abilityOn, apply, attacksOf, chooseBlock, damageAfterTyping, defOf, energyFits, energyOf, hpLeft, unitsOn, inPlay, legalActions, other, retreatCost, statusOf, unpaid, usableAttacks } from "./engine.js";
 
 /** How much an attack is worth against this defender, before any coin flip. */
 function attackWorth(attack, def, foeDef, foeHp) {
@@ -394,7 +394,14 @@ export function botAction(state, player, defs) {
     const waiting = state.pending[0];
     const picks = actions.filter((a) => a.spot != null);
     // "When you play this Pokémon, you may": yes, unless it would draw from a deck that is nearly out.
-    if (waiting.effect.op === "ability") return side.deck.length > 4 ? picks[0] : actions.find((a) => a.spot == null);
+    // Not one it can't judge (moving cards around, a Special Condition on itself, Energy stripped away).
+    if (waiting.effect.op === "ability") {
+      const spot = picks[0]?.spot;
+      const ability = picks.length ? abilityOn(state, spot === ACTIVE ? side.active : side.bench[spot], defs) : null;
+      const steps = (ability?.[waiting.effect.key || "enter"]?.steps || []).flatMap((s) => (s.op === "flip" ? s.heads || [] : [s]));
+      const unsure = steps.some((s) => s.op === "strip" || s.op === "selfCondition" || s.op === "selfShed") || ["move", "form"].includes(trainerAim(steps));
+      return side.deck.length > 4 && !unsure ? picks[0] : actions.find((a) => a.spot == null);
+    }
     // "Move any amount of Energy to it": keep taking while the Pokémon it goes to can't pay for its best attack.
     if (waiting.effect.op === "gatherFrom" && picks.length) {
       const to = waiting.effect.to === ACTIVE ? side.active : side.bench[waiting.effect.to];
