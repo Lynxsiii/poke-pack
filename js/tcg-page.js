@@ -677,6 +677,8 @@ export function initTcg(deps) {
   function promptOf() {
     const state = match.state;
     if (match.busy) return { text: match.line || "", keys: "" };
+    // Behind the end sheet: nobody is thinking any more.
+    if (state.phase === "over") return { text: "The match is over.", keys: "" };
     if (state.phase === "setup") {
       if (match.online && state.players[ME].placed) return { text: `Waiting for ${foeName()} to set up.`, keys: "" };
       if (!match.setup.active) return { text: "Choose your Active Pokémon from your hand.", keys: "" };
@@ -954,6 +956,10 @@ export function initTcg(deps) {
     const clock = match.online?.summary.reason;
     if (clock === "timeout") why = won ? `${foeName()} ran out of time.` : "You ran out of time.";
     if (clock === "abandoned") why = "Neither of you set up in time.";
+    // A match given up before anyone took a turn has no turns to count.
+    const early = state.turn < 1;
+    if (early && state.reason === "concede") why = won ? `${foeName()} gave up before the first turn.` : "You gave up before the first turn.";
+    const span = early ? "" : ` ${plural(state.turn, "turn")}.`;
     if (match.lesson != null) {
       return `<div class="tg-sheet-bg"></div>
       <div class="tg-sheet tg-over" role="dialog" aria-label="Lesson over">
@@ -969,7 +975,7 @@ export function initTcg(deps) {
       return `<div class="tg-sheet-bg"></div>
       <div class="tg-sheet tg-over" role="dialog" aria-label="Match over">
         <h2>${tie ? "A tie" : won ? "You win" : "You lose"}</h2>
-        <p>${esc(why)} ${plural(state.turn, "turn")}.</p>
+        <p>${esc(why)}${span}</p>
         <div class="tg-rematch" data-rematch aria-live="polite">${rematchHtml()}</div>
         <div class="tg-sheet-keys">
           <button type="button" class="ghost" data-go="/play/friends">Play online</button>
@@ -980,7 +986,7 @@ export function initTcg(deps) {
     return `<div class="tg-sheet-bg"></div>
       <div class="tg-sheet tg-over" role="dialog" aria-label="Match over">
         <h2>${tie ? "A tie" : won ? "You win" : "You lose"}</h2>
-        <p>${esc(why)} ${plural(state.turn, "turn")}.</p>
+        <p>${esc(why)}${span}</p>
         <div class="tg-sheet-keys">
           <button type="button" class="solid rt-go" data-act="again">Play again</button>
           <button type="button" class="ghost" data-go="/play">Decks</button>

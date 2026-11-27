@@ -52,7 +52,7 @@
  * printed damage only. Not in yet: Trainers, Abilities.
  */
 
-import { runAttackEffects } from "./effects.js";
+import { attackBlock, runAttackEffects } from "./effects.js";
 import { T_OPS, boostOf, energyCards, energyIn, fieldFits, fits, moveTargets, prizesLeft, runTrainer, stripEnergy, toolFits, trainerReady } from "./trainers.js";
 
 /**
@@ -629,6 +629,8 @@ export function evolveSlot(state, player, spot, uid, defs, events, from = "hand"
   slot.under.unshift(slot.uid);
   slot.uid = uid;
   slot.since = state.turn;
+  // "If this Pokémon evolved during this turn" (effects.js TESTS.evolvedNow).
+  slot.evolvedOn = state.turn;
   delete slot.asBasic;
   clearConditions(slot);
   events.push({ t: "evolve", p: player, uid, spot, ...(from !== "hand" ? { from } : {}) });
@@ -677,7 +679,7 @@ export function usableAttacks(state, player, defs) {
   const barred = (slot.marks || []).filter((m) => m.kind === "noUse" && m.turn === state.turn).map((m) => m.name);
   const side = state.players[player];
   const spent = (attack) => (attack.once === "gx" && side.gxUsed) || (attack.once === "vstar" && side.vstarUsed);
-  return def.attacks.map((attack, index) => (canPay(state, slot, attack.cost, defs) && !barred.includes(attack.name) && !spent(attack) && !tooEarly(state, player, attack) ? index : -1)).filter((i) => i >= 0);
+  return def.attacks.map((attack, index) => (canPay(state, slot, attack.cost, defs) && !barred.includes(attack.name) && !spent(attack) && !tooEarly(state, player, attack, defs) ? index : -1)).filter((i) => i >= 0);
 }
 
 /**
@@ -685,11 +687,12 @@ export function usableAttacks(state, player, defs) {
  * use this attack on your first turn"; "If you go second, you can't use this attack during your first turn" (turn 2).
  * Why it can't be used yet, or "".
  */
-function tooEarly(state, player, attack) {
+function tooEarly(state, player, attack, defs) {
   const says = (op) => (attack.fx || []).some((step) => step.op === op);
   if (state.turn === 1 && !says("firstTurn")) return "The player who goes first can't attack on the first turn.";
   if (state.turn === 2 && player !== state.first && says("notSecondFirst")) return "If you go second, you can't use this attack during your first turn.";
-  return "";
+  // "You can use this attack only if ...", "You can't use this attack if your Bench is full" (effects.js OPS.onlyIf).
+  return attackBlock(state, player, attack, defs);
 }
 
 export function canRetreat(state, player, defs) {
@@ -815,6 +818,8 @@ function startTurn(state, events) {
   side.stadiumPlayed = false;
   side.stadiumUsed = false;
   side.abilitiesUsed = [];
+  // The Trainers played from the hand this turn ("If you played Cynthia from your hand during this turn").
+  side.played = [];
   events.push({ t: "turn", p: state.current, n: state.turn });
   if (!side.deck.length) return win(state, other(state.current), "deck", events);
   draw(state, state.current, 1, events);
@@ -1205,6 +1210,7 @@ const HANDLERS = {
     }
     side.discard.push(uid);
     if (def.sub === "supporter") side.supporterUsed = true;
+    side.played = [...(side.played || []), uid];
     events.push({ t: "play", p: player, uid, sub: def.sub });
     runTrainer(def.fx, { state, defs, events, player, src: "trainer", uid });
     if (!state.pending.length) resolveKnockOuts(state, defs, events);
@@ -1360,7 +1366,7 @@ const HANDLERS = {
     const attack = def.attacks[index];
     if (state.turn === 1 && !attack) fail("The player who goes first can't attack on the first turn.");
     if (!attack) fail("That Pokémon has no such attack.");
-    const early = tooEarly(state, player, attack);
+    const early = tooEarly(state, player, attack, defs);
     if (early) fail(early);
     if (!canPay(state, slot, attack.cost, defs)) fail("Not enough Energy for that attack.");
     if (stuck(slot)) fail(`${def.name} is ${statusOf(slot).main === "asleep" ? "Asleep" : "Paralyzed"} and can't attack.`);
@@ -1413,6 +1419,10 @@ const HANDLERS = {
     }
     // The steps before the damage, then the damage itself (strike, below). A choice among the steps (which
     // Pokémon to switch in, which attack to copy) holds the damage back until it is made.
+    // "If this Pokémon used Rollout during your last turn", "if 1 of your Togedemaru used Toge Dash during your last turn":
+    // an attack that went ahead (not one Confusion or a coin stopped).
+    slot.used = { turn: state.turn, name: attack.name };
+    side.used = { turn: state.turn, name: attack.name, who: def.name };
     runAttackEffects("before", attack, { state, defs, events, player, slot, target, attack, hit, shielded: false, atk: [def.id, index] }, true);
   },
 
@@ -1521,6 +1531,7 @@ const HANDLERS = {
       // Energy from the deck onto Pokémon: a fixed one, one picked for all, or a pick for each card.
       // A Trainer may name which Pokémon can take it (`spots`), and the zone it comes from (hand, discard pile).
       const to = waiting.effect.to;
+      const heal = waiting.effect.heal ? { heal: waiting.effect.heal, ...(waiting.effect.each ? { each: true } : {}) } : {};
       const spots = (waiting.effect.spots || inPlay(state, player).map(([, s]) => s)).filter((s) => slotAt(state, player, s));
       // "Attach up to 2 ... If you do": none attached, nothing after.
       if (!picked.length && waiting.effect.need) waiting.then = null;
@@ -1529,11 +1540,16 @@ const HANDLERS = {
         const slot = slotAt(state, player, waiting.effect.spot);
         slot.energy.push(...picked);
         for (const uid of picked) events.push({ t: "attach", p: player, uid, spot: waiting.effect.spot, from: "deck" });
+        if (heal.heal) healAt(state, player, waiting.effect.spot, heal.each ? heal.heal * picked.length : heal.heal, events);
+      } else if (picked.length && to === "each") {
+        // "For each of your Benched Pokémon, ... attach it to that Pokémon": a different Pokémon for each card, one pick at a time.
+        askPick(state, { player, side: player, spots, left: 1, effect: { op: "attachHeld", uids: [picked[0]], chain: picked.slice(1), ...(waiting.zone !== "deck" ? { zone: waiting.zone } : {}), ...heal }, ...(waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) });
+        waiting.then = null;
       } else if (picked.length && to === "spread") {
-        picked.forEach((uid, i) => askPick(state, { player, side: player, spots, left: 1, effect: { op: "attachHeld", uids: [uid], ...(waiting.zone !== "deck" ? { zone: waiting.zone } : {}) }, ...(i === picked.length - 1 && waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) }));
+        picked.forEach((uid, i) => askPick(state, { player, side: player, spots, left: 1, effect: { op: "attachHeld", uids: [uid], ...(waiting.zone !== "deck" ? { zone: waiting.zone } : {}), ...heal }, ...(i === picked.length - 1 && waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) }));
         waiting.then = null;
       } else if (picked.length) {
-        askPick(state, { player, side: player, spots, left: 1, effect: { op: "attachHeld", uids: picked, ...(waiting.zone !== "deck" ? { zone: waiting.zone } : {}) }, ...(waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) });
+        askPick(state, { player, side: player, spots, left: 1, effect: { op: "attachHeld", uids: picked, ...(waiting.zone !== "deck" ? { zone: waiting.zone } : {}), ...heal }, ...(waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) });
         waiting.then = null;
       } else if (!picked.length && waiting.zone === "deck") events.push({ t: "search", p: player, uids: [], from: waiting.zone, to: "hand" });
       // Cards looked at from the top and not taken go to the hand (the Ability says so), else the deck is shuffled.
@@ -1593,13 +1609,14 @@ const HANDLERS = {
       const spots = fx.spots ? fx.spots.filter((s) => slotAt(state, owner, s)) : inPlay(state, owner).map(([, s]) => s).filter((s) => s !== fx.from);
       if (picked.length && fx.spots && spots.length === 1) {
         for (const uid of picked) moveEnergy(state, owner, fx.from, spots[0], uid, events);
+        if (fx.heal) healAt(state, owner, spots[0], fx.heal, events);
         if (fx.again) offerAgain(state, waiting, owner, fx.again, defs);
         if (fx.gather) {
           const next = inPlay(state, owner).filter(([s, at]) => at !== fx.gather.to && energyIn({ state, defs }, s, fx.gather.type)).map(([, at]) => at);
           if (next.length) follow(state, waiting, { player, side: owner, spots: next, left: 1, optional: true, effect: fx.gather });
         }
       } else if (picked.length && spots.length) {
-        askPick(state, { player, side: owner, spots, left: 1, effect: { op: "moveEnergyCards", from: waiting.effect.from, uids: picked, ...(fx.again ? { again: fx.again } : {}) }, ...(waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) });
+        askPick(state, { player, side: owner, spots, left: 1, effect: { op: "moveEnergyCards", from: waiting.effect.from, uids: picked, ...(fx.again ? { again: fx.again } : {}), ...(fx.heal ? { heal: fx.heal } : {}) }, ...(waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) });
         waiting.then = null;
       }
     } else if (op === "payFor") {
@@ -1629,6 +1646,10 @@ const HANDLERS = {
       state.pending.shift();
       HANDLERS.retreat(state, { player, to: waiting.effect.to, discard: picked }, defs, events);
       return;
+    } else if (op === "millChosen") {
+      // "Look at the top card of your deck. You may discard that card."
+      side.discard.push(...picked);
+      if (picked.length) events.push({ t: "mill", p: owner, uids: picked });
     } else if (op === "look") {
       // "Look at your opponent's hand": the cards were seen, nothing moves.
     } else {
@@ -1733,6 +1754,7 @@ export function devolveSlot(state, p, spot, events) {
   events.push({ t: "devolve", p, spot, uid: slot.uid });
   slot.uid = slot.under.shift();
   slot.since = state.turn;
+  delete slot.evolvedOn;
   clearConditions(slot);
   return true;
 }
@@ -1899,6 +1921,8 @@ function applyPick(state, waiting, spot, defs, events) {
     if (spots.length && uids.length) follow(state, waiting, { player: waiting.player, side: p, spots, left: 1, effect: { op: "moveEnergyCards", from: spot, uids } });
   } else if (effect.op === "moveEnergyCards") {
     for (const uid of effect.uids) moveEnergy(state, p, effect.from, spot, uid, events);
+    // "If you do, heal 50 damage from that Pokémon."
+    if (effect.heal && effect.uids.length) healAt(state, p, spot, effect.heal, events);
     if (effect.again) offerAgain(state, waiting, p, effect.again, defs);
   } else if (effect.op === "rearrangeFrom") {
     // "Move any number of Energy from your Pokémon to your other Pokémon in any way you like": one card a time,
@@ -1973,6 +1997,13 @@ function applyPick(state, waiting, spot, defs, events) {
       }
       slot.energy.push(uid);
       events.push({ t: "attach", p, uid, spot, from: effect.zone || "deck" });
+      // "If you do, heal 120 damage from that Pokémon" (`each`: "heal 50 damage ... for each card you attached to them").
+      if (effect.heal && (effect.each || uid === effect.uids[0])) healAt(state, p, spot, effect.heal, events);
+    }
+    if (effect.chain?.length) {
+      const rest = waiting.spots.filter((s) => s !== spot && slotAt(state, p, s));
+      if (rest.length) follow(state, waiting, { player: waiting.player, side: p, spots: rest, left: 1, effect: { ...effect, uids: [effect.chain[0]], chain: effect.chain.slice(1) } });
+      else side[effect.zone || "deck"].push(...effect.chain);
     }
   } else if (effect.op === "discardEnergy") {
     const slot = slotAt(state, p, spot);
@@ -2058,6 +2089,16 @@ export function chooseBlock(state, waiting, picked, defs) {
     if (types.some((a, i) => types.some((b, j) => j > i && a.some((t) => b.includes(t))))) return "Each card must be a different type.";
   }
   return "";
+}
+
+/** Heal damage from one Pokémon (as much as it has, and none while it can't be healed). */
+function healAt(state, p, spot, n, events) {
+  const slot = slotAt(state, p, spot);
+  const healed = slot ? Math.min(n, healRoom(state, slot)) : 0;
+  if (!healed) return;
+  slot.damage -= healed;
+  slot.healedOn = state.turn;
+  events.push({ t: "heal", p, spot, n: healed });
 }
 
 function moveEnergy(state, p, from, to, uid, events) {
