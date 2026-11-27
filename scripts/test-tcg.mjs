@@ -4988,6 +4988,12 @@ test("an attack that can be used only sometimes is offered only then", () => {
   act(state, { type: "end", player: 0 });
   act(state, { type: "end", player: 1 });
   assert.ok(!usableAttacks(state, 0, defs).includes(follow), "two turns on: not any more");
+  // An Ability used first this turn doesn't wipe what this Pokémon did last turn (slot.used is the Ability's mark).
+  state = labgame("lab-b5", "lab-2");
+  use(state, 0, "Lead");
+  act(state, { type: "end", player: 1 });
+  state.players[0].active.used = { uid: state.players[0].active.uid, turn: state.turn };
+  assert.ok(usableAttacks(state, 0, defs).includes(follow));
 });
 
 test("Energy attached, then the Pokémon that took it healed", () => {
@@ -5079,6 +5085,71 @@ test("a Trainer played this turn by name, and evolved from a named Pokémon this
   slot.evolvedOn = state.turn;
   use(state, 0, "Grown");
   assert.equal(state.players[1].active.damage, 100);
+});
+
+/* ---------- attack text batch 6: Rapid Strike, Single Strike, Fusion Strike ---------- */
+
+lab("lab-b7", [
+  ["Cross", 10, "If 1 of your other Rapid Strike Pokémon used an attack during your last turn, this attack does 90 more damage."],
+  ["Mirror", 0, "Choose 1 of your Benched Fusion Strike Pokémon's attacks and use it as this attack."],
+  ["Mend", 10, "If your opponent's Active Pokémon has any damage counters on it, this attack does 30 more damage and heal 30 damage from this Pokémon."],
+  ["Unite", 0, "This attack does 30 damage for each Fusion Strike Energy attached to all of your Pokémon."],
+]);
+byId.set("lab-rs", { id: "lab-rs", name: "Lab", supertype: "Pokémon", subtypes: ["Basic", "Rapid Strike"], types: ["Colorless"], hp: "200", attacks: [{ name: "Jab", cost: [], damage: "10", text: "" }] });
+byId.set("lab-fs", { id: "lab-fs", name: "Lab", supertype: "Pokémon", subtypes: ["Basic", "Fusion Strike"], types: ["Colorless"], hp: "200", attacks: [{ name: "Fuse", cost: [], damage: "70", text: "" }] });
+
+test("batch 6 wordings are read", () => {
+  for (const a of defs("lab-b7").attacks) assert.ok(!a.plain, a.name);
+  const steps = (text, name) => compileAttack(text, name);
+  assert.deepEqual(steps("Search your deck for a Psychic Energy card and attach it to 1 of your Fusion Strike Pokémon. Then, shuffle your deck.")[0].steps, [{ op: "fetchEnergy", what: "basicEnergy:Psychic", n: 1, to: "one", where: { to: "any", who: "+Fusion Strike" } }]);
+  assert.equal(steps("Search your deck for up to 3 Basic Rapid Strike Pokémon and put them onto your Bench. Then, shuffle your deck.")[0].steps[0].what, "basic+Rapid Strike");
+  assert.equal(steps("If you played a Rapid Strike Supporter card from your hand during this turn, this attack does 50 more damage.")[0].what, "supporter+Rapid Strike");
+  // A history test after the damage too: "this attack also does 160 damage to 1 of your opponent's Benched Pokémon".
+  assert.equal(steps("If 1 of your other Rapid Strike Pokémon used an attack during your last turn, this attack also does 160 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)")[0].op, "ifTest");
+  // Not read: the effect after "and" is before the damage.
+  assert.equal(steps("If there is any Stadium card in play, this attack does 50 more damage, and this attack's damage isn't affected by Resistance."), null);
+});
+
+test("another Rapid Strike Pokémon's attack last turn; a Benched Fusion Strike Pokémon's attack used", () => {
+  let state = labgame("lab-b7", "lab-2");
+  benchSlot(state, 0, "lab-rs");
+  use(state, 0, "Cross");
+  assert.equal(state.players[1].active.damage, 10, "nobody attacked last turn");
+  state = labgame("lab-b7", "lab-2");
+  benchSlot(state, 0, "lab-rs");
+  state.players[0].attacks = [{ turn: state.turn - 2, name: "Jab", who: "Lab", uid: state.players[0].bench.at(-1).uid }];
+  use(state, 0, "Cross");
+  assert.equal(state.players[1].active.damage, 100);
+  // This Pokémon itself doesn't count, nor one that isn't Rapid Strike.
+  state = labgame("lab-b7", "lab-2");
+  state.players[0].attacks = [{ turn: state.turn - 2, name: "Cross", who: "Lab", uid: state.players[0].active.uid }];
+  use(state, 0, "Cross");
+  assert.equal(state.players[1].active.damage, 10);
+  // Mirror: only Fusion Strike Pokémon on the Bench are offered.
+  state = labgame("lab-b7", "lab-2");
+  benchSlot(state, 0, "lab-rs");
+  benchSlot(state, 0, "lab-fs");
+  use(state, 0, "Mirror");
+  const choice = state.pending[0];
+  if (choice?.type === "option") {
+    assert.deepEqual(choice.labels, ["Fuse"]);
+    act(state, { type: "option", player: 0, index: 0 });
+  }
+  assert.equal(state.players[1].active.damage, 70);
+});
+
+test("more damage and a heal on one test, asked before the damage", () => {
+  let state = labgame("lab-b7", "lab-2");
+  state.players[0].active.damage = 50;
+  use(state, 0, "Mend");
+  assert.equal(state.players[1].active.damage, 10, "no counters on theirs before: no more damage");
+  assert.equal(state.players[0].active.damage, 50, "and no heal, though the attack put counters there");
+  state = labgame("lab-b7", "lab-2");
+  state.players[0].active.damage = 50;
+  state.players[1].active.damage = 10;
+  use(state, 0, "Mend");
+  assert.equal(state.players[1].active.damage, 50);
+  assert.equal(state.players[0].active.damage, 20);
 });
 
 console.log(`${passed} checks passed${process.exitCode ? ", some failed" : ""}`);

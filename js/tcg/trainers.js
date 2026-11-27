@@ -1504,6 +1504,9 @@ function plainWhat(words) {
   if (plain) return plain;
   if (/^(?:an? )?Pokémon Tool(?: cards?)?$/i.test(words)) return "tool";
   if (/^(?:an? )?Stadium(?: cards?)?$/i.test(words)) return "stadium";
+  // Cards of a style: "Rapid Strike cards", "Fusion Strike Trainer cards", "Basic Rapid Strike Pokémon".
+  const style = words.match(/^(?:an? |up to \d+ )?(Basic )?(Rapid Strike|Single Strike|Fusion Strike) (cards?|Trainer cards?|Supporter cards?|Item cards?|Pokémon)$/);
+  if (style) return `${style[1] ? "basic" : { card: "", cards: "", "Trainer card": "trainer", "Trainer cards": "trainer", "Supporter card": "supporter", "Supporter cards": "supporter", "Item card": "item", "Item cards": "item", Pokémon: "pokemon" }[style[3]]}+${style[2]}`;
   for (const [pattern, kind] of TYPED) {
     const m = words.match(pattern);
     if (m) return `${kind}:${m[1]}`;

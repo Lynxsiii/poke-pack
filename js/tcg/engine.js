@@ -1421,8 +1421,8 @@ const HANDLERS = {
     // Pokémon to switch in, which attack to copy) holds the damage back until it is made.
     // "If this Pokémon used Rollout during your last turn", "if 1 of your Togedemaru used Toge Dash during your last turn":
     // an attack that went ahead (not one Confusion or a coin stopped).
-    slot.used = { turn: state.turn, name: attack.name };
-    side.used = { turn: state.turn, name: attack.name, who: def.name };
+    // (slot.used is the Ability's once-a-turn mark: the attacks are kept apart, this turn's and the last two.)
+    side.attacks = [...(side.attacks || []).filter((was) => was.turn >= state.turn - 2), { turn: state.turn, name: attack.name, who: def.name, uid: slot.uid }];
     runAttackEffects("before", attack, { state, defs, events, player, slot, target, attack, hit, shielded: false, atk: [def.id, index] }, true);
   },
 
