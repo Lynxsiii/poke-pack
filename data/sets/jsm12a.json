@@ -17,5 +17,15 @@
     "SR": "Rare Ultra",
     "HR": "Rare Rainbow",
     "UR": "Rare Secret"
-  }
+  },
+  "products": [
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 576964,
+      "packs": 10,
+      "promos": []
+    }
+  ]
 }

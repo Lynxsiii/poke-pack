@@ -326,8 +326,11 @@ export function sealedOffers(prices, products = []) {
   return SEALED_PRODUCTS.flatMap((product) => {
     const price = prices?.[product.id];
     if (!(typeof price === "number" && price > 0)) return [];
+    // A Japanese box holds 20 or 10 packs, not 36: data/products.json says so for the set.
+    const packs = Math.floor(Number(extra[product.id]?.packs) || 0) || product.packs;
     return [{
       ...product,
+      packs,
       price: money(price),
       promos: extra[product.id]?.promos || [],
       pick: promoPick(extra[product.id]),
@@ -2370,6 +2373,7 @@ export const JP_151 = {
   name: "Pokémon Card 151",
   edition: "Scarlet & Violet",
   era: "Japanese",
+  lang: "ja",
   released: "June 16, 2023",
   live: true,
   printedTotal: 165,
@@ -2432,6 +2436,7 @@ export const JP_TAG_ALL_STARS = {
   name: "Tag All Stars",
   edition: "Sun & Moon",
   era: "Japanese",
+  lang: "ja",
   released: "October 4, 2019",
   live: true,
   printedTotal: 173,
@@ -7016,7 +7021,8 @@ export function boxPromoCards(set, lists) {
  * Packs, Collection, Mastery and search all group by this, in SET_CATEGORIES order.
  */
 export const SET_CATEGORIES = [
-  { id: "booster", name: "Sets", one: "Booster set", note: "Expansions with booster packs." },
+  { id: "booster", name: "Sets", one: "Booster set", note: "English expansions with booster packs." },
+  { id: "japanese", name: "Japanese", one: "Japanese set", note: "Sets printed in Japan, with Japanese cards and Japanese market prices." },
   { id: "promos", name: "Promos", one: "Black Star Promos", note: "One binder an era. Every card comes in a box." },
   { id: "special", name: "Special packs", one: "Special pack", note: "Happy Meal, Trick or Trade and POP Series." },
   { id: "decks", name: "Decks and kits", one: "Deck or kit", note: "One box, always the same cards." },
@@ -7024,6 +7030,7 @@ export const SET_CATEGORIES = [
 
 export function setCategory(set) {
   if (!set) return "booster";
+  if (set.lang === "ja") return "japanese";
   if (set.id in PROMO_HOMES) return "promos";
   if (set.promoSet) return "decks";
   if (/^(?:mcd|tot|pop)\d/.test(set.id)) return "special";
@@ -7032,7 +7039,9 @@ export function setCategory(set) {
 
 /** True for a booster expansion: the only kind of set with a mastery track, a crown share and a "sets completed" count. */
 export function isBoosterSet(set) {
-  return setCategory(set) === "booster";
+  // A Japanese set is a booster expansion too, shelved on its own tab.
+  const kind = setCategory(set);
+  return kind === "booster" || kind === "japanese";
 }
 
 /** True for a promo binder, a special pack or a deck: it has a collection page and a Complete stamp, no mastery. */
