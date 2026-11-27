@@ -202,10 +202,35 @@ cure"). The surface gloss throws a soft highlight.
    recipe that scores lower than the one it replaces. A finish that is
    matte or mirror-smooth on the real card goes in
    `scripts/foil_visibility_allow.json` with the reason.
-7. **Check the cost and the settings**: `foil_probe.mjs --idle` clean, and
+7. **Check every affected card, one by one (standing rule, Noah 2026-11-27).**
+   "Everytime we do a holo update I want every card quickly checked
+   individually by a agent no matter what it may be as long as it's smart
+   enough to tell what looks good." The sweeps above pick one or two cards
+   per finish; EX Holon Phantoms Rayquaza δ 016/110 passed them all while its
+   whole art box sat under a blue-purple haze (its Pokémon mask was the whole
+   window). So every holo change, however small, ends with:
+   1. `python3 scripts/holo_check.py --changed` (or `--family`, `--sets`,
+      `--cards`; `--all` after touching a shared sheet, the classifier or
+      `js/app.js`). It renders EVERY affected face in WebKit at 220 px x 3,
+      plain, at rest and lit, scores the art box (haze, contrast, detail kept,
+      tint) and writes one plain | rest | lit crop per card, contact sheets of
+      the flagged ones and `review/batch-NNN.jpg` + `.json`, 12 cards a sheet,
+      covering every card of the run.
+   2. A vision review of EVERY review sheet, flagged or not, by agents on a
+      model good enough to judge what looks good (Opus or Fable; never Haiku
+      for judging; a cheap model may run the renders). Brief and answer format:
+      [reference/per-card-review.md](reference/per-card-review.md). Each card
+      gets "good" or what is wrong, judged beside a real photo where the
+      project has one. The metrics only order the queue; no card passes on a
+      number alone.
+   3. Fix what the review finds by family (the mask, the recipe, the
+      classifier), never by hand on one card, and re-run steps 1-2 on the
+      family. Put the flagged sheets on a private Artifact page for Noah when
+      the change is one he asked for.
+8. **Check the cost and the settings**: `foil_probe.mjs --idle` clean, and
    foil strength, reduced motion, tilt off, shine off, Classic, phone width
    (verify.md).
-8. **Ship**: move the rules into `css/holo/`, masks into `assets/masks/`,
+9. **Ship**: move the rules into `css/holo/`, masks into `assets/masks/`,
    per-card data into `data/<set>.json`, update `NOTICE.md`, bump the
    `?v=` of every sheet and script you changed in `index.html` (every CSS or
    JS change, however small: Cloudflare's edge kept serving a stylesheet under
@@ -214,6 +239,25 @@ cure"). The surface gloss throws a soft highlight.
    record what you learned in the finish's catalogue entry.
 
 ## Pitfalls
+
+- **A refractor mask that covers the window lights the sky.** Holon Phantoms Rayquaza δ 016/110's silhouette was set to
+  the whole art window on purpose ("its coils fill the window"), so the refractor's screened rainbow and rest sheen sat
+  over the matte blue sky too, and on Noah's graded slab (2026-11-27) the art read as a blue-purple haze. The real card
+  shines on the Pokémon only. `make_ex_delta_masks.py` now has no whole-window exceptions, a `bghue` hint (the sky's
+  hue, smoothed past the print's grain, is background; `hueonly` skips GrabCut when it eats thin coils) and fails any
+  mask that lights more than 70 % of its window. The refractor's lit wash (`--exd-soft`) and rest sheen were also
+  halved: screened colour over a dark Pokémon greys it (Latios δ's contrast fell to x0.69).
+- **Japanese prints have no TCG Live maps of their own.** They wear an English twin's maps or nothing. Until
+  2026-11-27, VSTAR Universe, VMAX Climax and Tag All Stars had no `englishTwin` at all, so every full art, AR/CHR and
+  VMAX there sat on the shared hatch tile `sir-etch.webp` (Noah, of Simisear VSTAR SAR 214/172: "just wavy lines,
+  it's not the correct texture at all"), and the high-class sets' Double Rares, Shiny Rares and ACE SPECs, whose art
+  comes from many English sets, had no map. After adding or rebuilding any Japanese set run
+  `scripts/jp_twin_maps.py --write` (English twin from ANY English set of the era, matched by name, rarity and art
+  correlation >= 0.55; matches sit at 0.75-0.94, wrong arts under 0.3) and then
+  `scripts/make_card_etch.py --set <jp set> --cards <every has-etch-tile face> --ship --write-data`: a full art keeps
+  its own drawn etch, since an English etch would ghost English text where the Japanese card prints Japanese. A
+  "Rare Ultra" VMAX/VSTAR (the JP SAR/CSR alt arts) is `foil-ir swsh-rainbow swsh-alt`, the English alt-art recipe
+  (`srb-alt`). `holo_check.py` lists any face still on the tile.
 
 - **A sheen masked once by the etch is a wash, not a texture.** The SIR `.foil::after` etch sheen (white pool plus
   spectrum, in the colour-dodge group) was masked by the etch map once. The etch is grey nearly everywhere, so the
@@ -701,6 +745,8 @@ gold Hyper Rare), [reference/sv-reverse.md](reference/sv-reverse.md) and
 | `scripts/native_era_etch.py` | Ships TCG Live's etch for a Sword and Shield era set at its native size (`<n>-etch-v4.webp`, sigma 0.6, no grain); never soften a Live etch |
 | `scripts/soften_era_etch.py` | The older blurred and grained era etch (`-etch-v3`), kept for a card with no cached Live etch |
 | `scripts/etch_zones.py` | Scores the painted zone and the foil zone of each engraved family's most ink-heavy faces apart, in WebKit at phone size: fails an engraving that does not read over the painting or a foil that repaints it (`--family`, `--cards`, `--css` to try a change); exceptions with their reason in `etch_zones_allow.json` |
+| `scripts/holo_check.py` (+ `holo_check_render.mjs`) | The per-card check (Workflow step 7): every affected face rendered plain, at rest and lit in WebKit at phone size, art-box haze / contrast / detail / tint, outliers per family, crops and 12-card review sheets for the vision agents; `--changed`, `--family`, `--sets`, `--cards`, `--all` |
+| `scripts/jp_twin_maps.py` | Japanese prints: copy an English twin's TCG Live maps from any English set of the era when the art matches (`--write`) |
 | `scripts/foil_align.py` | Gate: every foil and etch map against its own scan (offset as % of card width); `--fix` re-fits the ones that are off |
 | `scripts/foil_coverage.mjs` | Finds every oversized repeating layer whose position lets its tile edge into the card (the moving vertical seam); prints nothing when clean; `BATCH=60` for every card of a set |
 | `scripts/rainbow_speed.py`, `scripts/rainbow_motion.py` | How many spectra slide past as the pointer crosses the card: the first reads the CSS (every layer over 1.5 exits 1), the second renders the card at 41 poses and counts them on the pixels |

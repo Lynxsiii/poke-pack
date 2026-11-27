@@ -79,7 +79,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refracto
   background-size: 190% 190%;
   background-position: 30% 40%;
   background-repeat: repeat;
-  opacity: calc(0.2 * var(--foil-strength, 1));
+  opacity: calc(0.12 * var(--foil-strength, 1));
 }
 /* the Pokémon keeps its printed colours: away from the highlight only a faint tint (--exd-soft, a hue sweep at 0.1 alpha) lies on it.
    The glare is a narrow soft band (about a fifth of the card: the layer is 200% wide, so a 7% stop span is 14% of the layer's diagonal) of the spectrum, a white specular streak in its middle, and the print's
@@ -87,8 +87,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refracto
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor {
   --exd-band: linear-gradient(118deg, transparent 46%, rgba(0, 0, 0, 0.12) 47.2%, rgba(0, 0, 0, 0.5) 48.7%, #000 50%, rgba(0, 0, 0, 0.5) 51.3%, rgba(0, 0, 0, 0.12) 52.8%, transparent 54%);
   --exd-streak: linear-gradient(118deg, transparent 48.6%, rgba(0, 0, 0, 0.55) 49.5%, #000 50%, rgba(0, 0, 0, 0.55) 50.5%, transparent 51.4%);
-  --exd-soft: hsla(2, 92%, 62%, 0.26), hsla(32, 100%, 62%, 0.26), hsla(58, 96%, 62%, 0.26), hsla(128, 80%, 56%, 0.26), hsla(176, 90%, 56%, 0.26),
-    hsla(214, 92%, 64%, 0.26), hsla(268, 86%, 68%, 0.26), hsla(322, 90%, 66%, 0.26), hsla(2, 92%, 62%, 0.26);
+  --exd-soft: hsla(2, 92%, 62%, 0.12), hsla(32, 100%, 62%, 0.12), hsla(58, 96%, 62%, 0.12), hsla(128, 80%, 56%, 0.12), hsla(176, 90%, 56%, 0.12),
+    hsla(214, 92%, 64%, 0.12), hsla(268, 86%, 68%, 0.12), hsla(322, 90%, 66%, 0.12), hsla(2, 92%, 62%, 0.12);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.lit .foil,
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.settling .foil {

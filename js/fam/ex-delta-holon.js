@@ -14,7 +14,7 @@
  * attribute, so it wins (`--foil-map` included). `card` has been through foilLook(), so a promo's rarity is its foilAs.
  * Never import js/foil-maps.js from here (it waits on this module).
  */
-import { isEx, exPattern } from "../ex-foil.js?v=9";
+import { isEx, exPattern } from "../ex-foil.js?v=10";
 
 /** The refractor faces whose era silhouette cuts the Pokémon short or spills onto the art; each has a redrawn map. */
 const REDRAWN = new Set(["ex11-13", "ex13-5", "ex13-6", "ex13-12", "ex15-95"]);

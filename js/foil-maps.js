@@ -30,10 +30,10 @@ import { isBw, bwEtched, bwMap, bwPattern, bwReverseExtras, bwReverseFinish, BW_
 
 import { isDp, dpEtched, dpMap, dpPattern, dpReverseExtras, dpReverseFinish, DP_FULL_ART } from "./dp-foil.js?v=3";
 
-import { isEx, exEtched, exMap, exPattern, exReverseExtras, exReverseFinish, exReversePattern } from "./ex-foil.js?v=9";
+import { isEx, exEtched, exMap, exPattern, exReverseExtras, exReverseFinish, exReversePattern } from "./ex-foil.js?v=10";
 import { isWotc, wotcLegendaryExtras, wotcMap, wotcPattern, wotcReverseFinish, WOTC_FULL_ART } from "./wotc-foil.js?v=6";
 import { specialInk, specialReverseMap } from "./wotc-special.js?v=3";
-import { famExtras } from "./holo-fam.js?v=114";
+import { famExtras } from "./holo-fam.js?v=115";
 import { HIT_RARITIES } from "./engine.js";
 
 export { isSm, smPattern, isXy, xyPattern, isBw, bwPattern, isDp, dpPattern, isEx, exPattern, isWotc, wotcPattern };
@@ -152,7 +152,11 @@ export function swshPattern(card) {
       return "foil-ir swsh-rainbow";
     case "Rare Ultra":
       if (trainer) return "foil-ultra swsh-tfa";
-      if (is("VMAX") || is("VSTAR")) return "foil-ultra swsh-vmax swsh-alt";
+      // An alternate-art VMAX or VSTAR filed "Rare Ultra": the Japanese SAR / CSR prints (VSTAR Universe, VMAX Climax). The
+      // English data files the same stock as "Rare Rainbow" (Moonbreon swsh7-215), so they ride its alt-art recipe
+      // (js/fam/swsh-rainbow.js `srb-alt`); until 2026-11-27 no family claimed this branch and the Japanese ones fell to the
+      // shared hatch tile (Noah: "it's just wavy lines").
+      if (is("VMAX") || is("VSTAR")) return "foil-ir swsh-rainbow swsh-alt";
       return "foil-ultra swsh-vfa";
     case "Rare Holo VMAX":
       return "foil-ultra swsh-vmax";

@@ -146,7 +146,11 @@ def warp(map_path, w, out_path):
     A = np.array([[A[0, 0], A[0, 1] * sx / sy, A[0, 2] * sx], [A[1, 0] * sy / sx, A[1, 1], A[1, 2] * sy]])
     # ECC's warp maps scan coordinates to map coordinates (it is applied with WARP_INVERSE_MAP)
     out = cv2.warpAffine(arr, A, (wd, h), flags=cv2.INTER_LINEAR | cv2.WARP_INVERSE_MAP, borderMode=cv2.BORDER_REPLICATE)
-    Image.fromarray(out, "RGBA").save(out_path, quality=90, alpha_quality=100, method=6)
+    Image.fromarray(out, "RGBA").save(out_path, quality=90, alpha_quality=100, method=4)
+
+
+def warp_job(t):
+    warp(*t)
 
 
 def main():
@@ -159,6 +163,9 @@ def main():
     ap.add_argument("--out", default="/tmp/foil-align.json")
     ap.add_argument("--fix", action="store_true")
     ap.add_argument("--jobs", type=int, default=4)
+    ap.add_argument("--max-fix", type=float, default=3.0, help="a scan-to-scan offset above this is a different layout")
+    ap.add_argument("--only-variants", action="store_true",
+                    help="report and fix only the scan-to-scan fits (variant prints and Japanese twins), the sure ones")
     args = ap.parse_args()
     sets = set(filter(None, (args.sets or "").split(",")))
     todo = [(c["id"], k, c["image"], c[k]) for _, c in cards(sets) for k in ("foilMap", "etchMap") if c.get(k)]
@@ -171,11 +178,25 @@ def main():
     by_id = {c["id"]: c for _, c in cards(set())}
     vt = [(i, k, sc, m, by_id[i.rsplit("-", 1)[0]]["image"]) for i, k, sc, m in todo
           if i.rsplit("-", 1)[0] in by_id and by_id[i.rsplit("-", 1)[0]].get("image") and i.count("-") >= 2]
+    # a Japanese print wearing its English twin's map (`foilTwin`, scripts/jp_twin_maps.py and build_jp_set.py): the same
+    # painting in a frame cropped differently, so the twin's scan is the base (first run 2026-11-27: 142 of 1,471 JP maps
+    # off by more than 0.8 %); an etch drawn from the print's own scan (`etchDrawn`) is its own and stays out
+    twin = {c["id"]: c for _, c in cards(sets) if c.get("foilTwin")}
+    vt += [(i, k, sc, m, by_id[twin[i]["foilTwin"]]["image"]) for i, k, sc, m in todo
+           if i in twin and twin[i]["foilTwin"] in by_id and by_id[twin[i]["foilTwin"]].get("image")
+           and not (k == "etchMap" and twin[i].get("etchDrawn"))]
     with Pool(args.jobs) as p:
         vres = p.map(variant_fit, vt, chunksize=8)
+    if args.only_variants:
+        bad = []
     have = {(t[0], t[1]) for t in bad}
     for i, k, sc, m, r in vres:
+        # past --max-fix the two prints are laid out differently (a Japanese gold Energy with a printed name bar over
+        # the English one's open art): no affine makes that map fit, so it is reported, never warped
         if r and r[0] >= 0.75 and r[1] > args.max and r[3] >= 0.02 and (i, k) not in have:
+            if r[1] > args.max_fix:
+                print(f"{i:28} {k:8} laid out differently from its base ({r[1]:.1f}%): left alone", file=sys.stderr)
+                continue
             bad.append((i, k, sc, m, (r[0], r[1], r[2], r[3])))
     unmeasured = sum(1 for *_, r in res if not r or r[0] < args.min_cc)
     for i, k, s, m, r in sorted(bad, key=lambda t: -t[4][1]):
@@ -183,18 +204,22 @@ def main():
     print(f"{len(bad)} of {len(res)} maps off their scan by more than {args.max}%; {unmeasured} unmeasured; {args.out}",
           file=sys.stderr)
     if args.fix and bad:
-        new = {}
+        new, taken, warps = {}, set(), []
         for i, k, s, m, r in bad:
-            base, ext = os.path.splitext(m)
-            n = 1
-            base0 = re.sub(r"-a\d+$", "", base)
-            while os.path.exists(os.path.join(ROOT, f"{base0}-a{n}{ext}")):
-                n += 1
-            out = f"{base0}-a{n}{ext}"
-            if (m, tuple(map(tuple, r[2]))) not in new:
-                warp(os.path.join(ROOT, m), r[2], os.path.join(ROOT, out))
-                new[(m, tuple(map(tuple, r[2])))] = out
-            new[(i, k)] = new[(m, tuple(map(tuple, r[2])))]
+            key = (m, tuple(map(tuple, r[2])))
+            if key not in new:
+                base, ext = os.path.splitext(m)
+                base0 = re.sub(r"-a\d+$", "", base)
+                n = 1
+                while os.path.exists(os.path.join(ROOT, f"{base0}-a{n}{ext}")) or f"{base0}-a{n}{ext}" in taken:
+                    n += 1
+                out = f"{base0}-a{n}{ext}"
+                taken.add(out)
+                warps.append((os.path.join(ROOT, m), r[2], os.path.join(ROOT, out)))
+                new[key] = out
+            new[(i, k)] = new[key]
+        with Pool(args.jobs) as p:  # several hundred maps at once for a Japanese set: in parallel
+            p.map(warp_job, warps, chunksize=4)
         for f in sorted({f for f, c in cards(sets)}):
             p = os.path.join(ROOT, "data", f)
             text = open(p).read()

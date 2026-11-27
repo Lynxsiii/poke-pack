@@ -49,8 +49,12 @@ WIN_BOX = (43, 78, 556, 388)
 HINTS: dict[str, dict] = json.load(open(Path(__file__).with_name("make_ex_delta_hints.json")))
 # cards that take a soft centred oval instead of a derived silhouette
 FALLBACK: set[str] = set()
-# cards whose art is the Pokémon edge to edge (Rayquaza's coils fill the window): the whole window, eased in from its edge
-FULL: set[str] = {"ex13-16"}
+# cards whose art is the Pokémon edge to edge: the whole window, eased in from its edge. Empty on purpose: ex13-16 (Rayquaza δ)
+# was here until 2026-11-27, and the refractor rainbow then washed its whole sky blue-purple on Noah's graded slab; its sky is
+# matte on the real card, so it takes a `bghue` hint instead. A refractor mask that covers more than MAX_COVER of the window
+# fails the run (--check): it is lighting the background, which the real card never does.
+FULL: set[str] = set()
+MAX_COVER = 0.70
 
 
 OFF = (36, 70)  # hints are read off the preview crop (the art window with a margin): add this to get card pixels
@@ -66,6 +70,8 @@ def shift_hint(h: dict) -> dict:
             out[k] = [[(x + ox, y + oy) for x, y in poly] for poly in v]
         elif k == "box":
             out[k] = (v[0] + ox, v[1] + oy, v[2] + ox, v[3] + oy)
+        else:  # bghue and any other key that is not in pixels
+            out[k] = v
     return out
 
 
@@ -123,6 +129,22 @@ def segment(rgb: np.ndarray, win: np.ndarray, hint: dict) -> np.ndarray:
     m[ell & inside] = cv2.GC_PR_FGD
     if "fg" not in hint:
         m[core & inside] = cv2.GC_FGD
+    if "bghue" in hint:
+        # art whose background is one hue the Pokémon never takes (Holon Phantoms Rayquaza δ: a green dragon whose coils fill
+        # the window, on a textured blue sky): that hue, smoothed past the print's grain, is surely background; the rest of
+        # the window is probably Pokémon, and GrabCut settles the edges
+        lo, hi, minsat = hint["bghue"]
+        hsv = cv2.cvtColor(cv2.GaussianBlur(crop, (0, 0), 2.5), cv2.COLOR_RGB2HSV_FULL).astype(np.float32)
+        hue, sat = hsv[..., 0] * 360 / 255, hsv[..., 1] / 255
+        sky = (hue >= lo) & (hue <= hi) & (sat >= minsat)
+        sky = ndi.binary_opening(sky, iterations=2)
+        m[:] = cv2.GC_PR_FGD
+        m[ndi.binary_erosion(sky, iterations=2)] = cv2.GC_BGD
+        m[sky & ~ndi.binary_erosion(sky, iterations=2)] = cv2.GC_PR_BGD
+        if hint.get("hueonly"):  # GrabCut's colour model eats thin coils of the same green as the frame: trust the hue alone
+            full = np.zeros((H, W), bool)
+            full[y0:y1, x0:x1] = ~sky & inside
+            return full
     m[~inside] = cv2.GC_BGD
     b = 3
     m[:b, :] = m[-b:, :] = cv2.GC_BGD
@@ -242,8 +264,13 @@ def main() -> None:
     if prev:
         prev.mkdir(parents=True, exist_ok=True)
     total = 0
+    over = []
     with Pool(4) as pool:
-        for cid, mean, fb, alpha, rgb in pool.imap(draw, jobs):
+        for (cid, mean, fb, alpha, rgb), job in zip(pool.imap(draw, jobs), jobs):
+            win = window_alpha(*job) > 0.5
+            cover = float((alpha[win] > 0.5).mean())
+            if cover > MAX_COVER:
+                over.append(f"{cid} lights {cover:.0%} of its art window")
             path = out / f"{cid}{a.force}.webp"
             note = ""
             if not a.no_save:
@@ -266,6 +293,10 @@ def main() -> None:
             rgb = np.array(Image.alpha_composite(bgc, im).convert("RGB")).astype(np.float32)
             Image.fromarray((rgb * (0.18 + 0.82 * energy_mask()[..., None])).astype(np.uint8)).save(prev / "energy-art.png")
     print("bytes written", total)
+    if over:
+        print("FAIL: a refractor lights its Pokémon, not the sky behind it; give these a hint (bghue, bgpoly):\n  "
+              + "\n  ".join(over))
+        return 1
 
 
 if __name__ == "__main__":
