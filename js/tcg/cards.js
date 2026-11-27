@@ -273,6 +273,12 @@ function defineRules(card, row, text, lines, print) {
     const tool = sub === "tool" && subs.includes("Pokémon Tool") ? compileTool(text, card.name) : null;
     const stadium = sub === "stadium" ? compileStadium(text) : null;
     const why = sub === "stadium" ? (stadium ? "" : "This Stadium's text isn't live yet.") : sub === "tool" ? (tool ? "" : "This Tool's text isn't live yet.") : fx ? "" : "This Trainer's text isn't live yet.";
+    // A Tool with an attack printed on it (Core Memory): that attack, read.
+    if (tool?.lendSelf) {
+      const attacks = (card.attacks || []).map((raw) => attackOf(raw, card.name));
+      const read = attacks.length && attacks.every((a) => !a.plain);
+      return { ...base, kind: "trainer", sub, text: text || "", fx: [], tool, attacks, playable: Boolean(read), why: read ? "" : "This Tool's attack text isn't live yet." };
+    }
     return { ...base, kind: "trainer", sub, text: text || "", fx: fx || [], ...(tool ? { tool } : {}), ...(stadium ? { stadium } : {}), playable: !why, why };
   }
 

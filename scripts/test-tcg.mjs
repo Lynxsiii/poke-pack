@@ -6623,4 +6623,92 @@ test("Scarlet & Violet Trainers, a second batch: heals, draws and switches", () 
   assert.ok(state.players[0].deck.includes(care2));
 });
 
+test("Scarlet & Violet Tools: more damage, less damage, cheaper attacks, fewer Prize cards", () => {
+  for (const id of ["sv6pt5-55", "me2-93", "me5-104", "me6-91", "sv5-154", "sv7-142", "sv8pt5-111", "sv9-151", "me2pt5-191", "me2pt5-211", "me3-70", "me5-74", "sv10-162", "sv6pt5-63"]) assert.ok(defs(id).playable, id);
+  const tooled = (state, p, slot, id) => {
+    slot.tool = state.players[p].deck.pop();
+    state.cards[slot.tool] = id;
+    return slot.tool;
+  };
+  // Maximum Belt: 50 more against an Active Pokémon ex only. Brave Bangle: 30, on one without a Rule Box.
+  let state = scene();
+  const mine = state.players[0].active;
+  const theirs = state.players[1].active;
+  tooled(state, 0, mine, "sv5-154");
+  assert.equal(boostOf(state, 0, mine, theirs, defs), 0);
+  state.cards[theirs.uid] = "sv3-42";
+  assert.equal(boostOf(state, 0, mine, theirs, defs), 50);
+  state.cards[mine.tool] = "me5-104";
+  assert.equal(boostOf(state, 0, mine, theirs, defs), 30);
+  state.cards[mine.uid] = "sv3-42";
+  assert.equal(boostOf(state, 0, mine, theirs, defs), 0);
+  // Binding Mochi: 40 more while Poisoned.
+  state.cards[mine.uid] = "base1-46";
+  state.cards[mine.tool] = "sv6pt5-55";
+  assert.equal(toolOf(state, mine, defs).plus || 0, 0);
+  addCondition(state, mine, "poisoned", defs);
+  assert.equal(toolOf(state, mine, defs).plus, 40);
+  // Thick Scale: the Dragon Pokémon takes 50 less from a Fire attacker; Haban Berry 60 less from a Dragon one, then it goes.
+  state = scene({ front: "sv3-161" }); // Drampa: Outrage 60+
+  state.cards[state.players[1].active.uid] = "sv3-157"; // Dratini
+  const drat = state.players[1].active;
+  const berry = tooled(state, 1, drat, "sv8pt5-111");
+  const front = state.players[0].active;
+  for (let k = 0; k < 2; k += 1) front.energy.push(handed(state, 0, W));
+  front.energy.forEach((u) => state.players[0].hand.splice(state.players[0].hand.indexOf(u), 1));
+  act(state, { type: "attack", player: 0, index: 0 });
+  assert.equal(drat.damage, 0);
+  assert.ok(!drat.tool && state.players[1].discard.includes(berry));
+  state = scene({ front: "base1-46" }); // Charmander, Fire: Scratch 10
+  state.cards[state.players[1].active.uid] = "sv3-157";
+  const scaled = state.players[1].active;
+  tooled(state, 1, scaled, "me2pt5-211");
+  state.players[0].active.energy.push(handed(state, 0, F));
+  state.players[0].hand.pop();
+  act(state, { type: "attack", player: 0, index: 0 });
+  assert.equal(scaled.damage, 0);
+  assert.ok(scaled.tool);
+  // Sparkling Crystal: a Tera Pokémon's attack costs 1 Energy less, whichever suits.
+  state = scene({ front: "sv3-42" }); // Eiscue ex: Scalding Block [WWW]
+  const eiscue = state.players[0].active;
+  tooled(state, 0, eiscue, "sv7-142");
+  assert.equal(costFor(state, eiscue, defs("sv3-42").attacks[0], defs).length, 2);
+  state.cards[eiscue.uid] = "base1-46";
+  assert.equal(costFor(state, eiscue, defs("base1-46").attacks[0], defs).length, defs("base1-46").attacks[0].cost.length);
+  // Cynthia's Power Weight: +70 HP on Cynthia's Pokémon only.
+  state = scene({ front: "me2pt5-109" });
+  tooled(state, 0, state.players[0].active, "sv10-162");
+  assert.equal(maxHp(state, state.players[0].active, defs), 140);
+  state.cards[state.players[0].active.uid] = "base1-46";
+  assert.equal(maxHp(state, state.players[0].active, defs), 50);
+  // Core Memory: Mega Zygarde ex may use Geobuster.
+  state = scene({ front: "me3-47" });
+  tooled(state, 0, state.players[0].active, "me3-70");
+  assert.ok(attacksOf(state, state.players[0].active, defs).some((a) => a.name === "Geobuster" && a.lent));
+  state.cards[state.players[0].active.uid] = "base1-46";
+  assert.ok(!attacksOf(state, state.players[0].active, defs).some((a) => a.name === "Geobuster"));
+  // Lillie's Pearl: one fewer Prize card when Lillie's Pokémon is Knocked Out by an attack.
+  state = scene({ front: "base1-46" });
+  state.cards[state.players[1].active.uid] = "sv9-66"; // Lillie's Cutiefly, 30 HP
+  state.players[1].bench = [slotFor(state, 1, "base1-63")];
+  tooled(state, 1, state.players[1].active, "sv9-151");
+  state.players[1].active.damage = 20;
+  state.players[0].active.energy.push(handed(state, 0, F));
+  state.players[0].hand.pop();
+  const prizes = state.players[0].prizes.length;
+  act(state, { type: "attack", player: 0, index: 0 });
+  assert.equal(state.players[0].prizes.length, prizes);
+  // Powerglass: at the end of the turn, a Basic Energy from the discard pile onto the Active Pokémon, if the player likes.
+  state = scene();
+  tooled(state, 0, state.players[0].active, "sv6pt5-63");
+  const spare = state.players[0].deck.pop();
+  state.cards[spare] = W;
+  state.players[0].discard.push(spare);
+  act(state, { type: "end", player: 0 });
+  assert.equal(state.pending[0].player, 0);
+  act(state, { type: "choose", player: 0, uids: [spare] });
+  assert.ok(state.players[0].active.energy.includes(spare));
+  assert.equal(state.current, 1);
+});
+
 console.log(`${passed} checks passed${process.exitCode ? ", some failed" : ""}`);

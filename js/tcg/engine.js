@@ -352,8 +352,13 @@ export function toolOn(state, slot, defs) {
   const tool = (slot?.tool && defOf(state, slot.tool, defs)?.tool) || null;
   if (!tool) return null;
   const def = playedAs(state, slot, defs);
+  // Binding Mochi: only while the Pokémon is Poisoned.
+  if (tool.poisoned && !conditionsOn(slot).includes("poisoned")) return null;
   return (!tool.who || fieldFits(tool.who, def)) && toolFits(tool, def) ? tool : null;
 }
+
+/** The attackers a Tool's `lessVs` holds against: `ability` (one with an Ability), `mega` (a Mega Evolution Pokémon ex), types. */
+const attackerFits = (from, def) => (!from.ability || def.abilityKind === "Ability") && (!from.mega || (def.box === "ex" && /^Mega /.test(def.name))) && fieldFits(from, def);
 
 /** A Tool leaves play: to its owner's discard pile, or to the hand when it says so (U-Turn Board). */
 export function toolGone(state, p, uid, defs) {
@@ -391,8 +396,21 @@ export function costFor(state, slot, attack, defs = null) {
   const more = markSum(state, slot, "costMore");
   // "If your opponent has any Ultra Beasts in play, this attack can be used for Colorless" (effects.js altCost).
   let cost = (defs && altCost(state, ownerOf(state, slot), slot, attack, defs)) || attack.cost;
-  // Counter Gain: Colorless less while its owner has more Prize cards left.
+  // Counter Gain: Colorless less while its owner has more Prize cards left. Sparkling Crystal: any 1 less (Colorless first).
   const tool = defs && toolOn(state, slot, defs);
+  if (tool?.anyLess) {
+    // The Energy left out is whichever suits the player best: one that lets the attack be paid for, else a Colorless.
+    const units = energyOf(state, slot, defs);
+    for (let k = 0; k < tool.anyLess && cost.length; k += 1) {
+      const kinds = [...new Set(cost)];
+      const tries = kinds.map((type) => {
+        const left = [...cost];
+        left.splice(left.lastIndexOf(type), 1);
+        return left;
+      });
+      cost = tries.find((left) => unpaid(left, units) === 0) || tries[kinds.indexOf("Colorless")] || tries[tries.length - 1];
+    }
+  }
   const owner = ownerOf(state, slot);
   if (tool?.costLess && (!tool.behind || (owner >= 0 && prizesLeft(state.players[owner]) > prizesLeft(state.players[other(owner)])))) {
     cost = [...cost];
@@ -664,6 +682,11 @@ function endOfTurn(state, defs, events) {
   const front = state.players[p].active;
   const end = toolOn(state, front, defs)?.endTurn;
   if (end?.draw) draw(state, p, end.draw, events);
+  // Powerglass: "you may attach a Basic Energy card from your discard pile to it".
+  if (end?.attach && front) {
+    const uids = state.players[p].discard.filter((uid) => fits(defOf(state, uid, defs), end.attach));
+    if (uids.length) askChoose(state, { player: p, zone: "discard", what: end.attach, uids, min: 0, max: 1, effect: { op: "attach", to: "one", spot: ACTIVE }, prompt: "Powerglass: attach a Basic Energy from your discard pile to your Active Pokémon?" });
+  }
   if (end?.heal && healRoom(state, front)) {
     const healed = Math.min(end.heal, healRoom(state, front));
     front.damage -= healed;
@@ -788,6 +811,8 @@ export function attacksOf(state, slot, defs) {
   const out = [];
   const lend = (card, from) => (defs(card)?.attacks || []).forEach((attack, index) => out.push({ ...attack, lent: { card, index, from } }));
   for (const h of slot.held || []) if (h.tm) lend(state.cards[h.uid], "tm");
+  // A Tool with an attack printed on it (Core Memory), for the Pokémon it names.
+  if (slot.tool && toolOn(state, slot, defs)?.lendSelf) lend(state.cards[slot.tool], "tool");
   const owner = ownerOf(state, slot);
   const lent = state.stadium && defOf(state, state.stadium.uid, defs)?.stadium?.lend;
   if (lent?.who && fieldFits(lent.who, def)) lend(state.cards[state.stadium.uid], "stadium");
@@ -1077,7 +1102,8 @@ export function resolveKnockOuts(state, defs, events, { between = false } = {}) 
       else side.bench[spot] = null;
       // Expert Belt: one more Prize card.
       // "If your opponent's Pokémon is Knocked Out by damage from this attack, take 1 more Prize card."
-      if (!def.fossil?.noPrize) took[other(p)] += (def.prizes ?? 1) + (tool?.prize || 0) + (byAttack(slot, p) ? markOn(state, slot, "bounty")?.n || 0 : 0);
+      // Lillie's Pearl: one fewer, Knocked Out by damage from their attack.
+      if (!def.fossil?.noPrize) took[other(p)] += Math.max(0, (def.prizes ?? 1) + (tool?.prize || 0) + (byAttack(slot, p) ? (markOn(state, slot, "bounty")?.n || 0) - (tool?.fewer || 0) : 0));
       if (!counts) continue;
       // Remembered by turn for "if any of your Pokémon were Knocked Out during your opponent's last turn"
       // (the checkup between turns is no one's turn).
@@ -1202,7 +1228,11 @@ export function strike(ctx) {
     if (dealt.amount > 0) dealt.amount += (hit.surge || 0) + heldSum(slot, "after") + boostOf(state, player, slot, target, defs, true) + (hit.noEffects ? 0 : markSum(state, target, "exposed"));
     // A less mark may hold against some attackers only (`from`, as a guard's: "from Evolution Pokémon").
     const lessMark = hit.noEffects ? null : markOn(state, target, "less");
-    const less = (lessMark && (!lessMark.from || GUARD_FROM[lessMark.from](def)) ? lessMark.n || 0 : 0) + (theirs.less || 0) + (hit.noEffects ? 0 : heldSum(target, "less"));
+    // A Tool that soaks damage from some attackers only (Thick Scale, Haban Berry: then it is discarded).
+    const vs = toolOn(state, target, defs)?.lessVs;
+    const soak = vs && dealt.amount > 0 && attackerFits(vs.from, def) ? vs.n : 0;
+    const less = (lessMark && (!lessMark.from || GUARD_FROM[lessMark.from](def)) ? lessMark.n || 0 : 0) + (theirs.less || 0) + (hit.noEffects ? 0 : heldSum(target, "less")) + soak;
+    if (soak && vs.spent) hit.spentTool = true;
     let guarded = marked || (!hit.noEffects && guardedFrom(state, target, def));
     // The target's Ability: no damage from this kind of attacker, or a coin flip to take none.
     const power = hit.noEffects ? null : abilityOn(state, target, defs);
@@ -1226,6 +1256,11 @@ export function strike(ctx) {
       while (results[results.length - 1] && results.length < 60);
       events.push({ t: "flip", p: foe, results, why: "ability", name: power.name });
       amount = Math.max(0, amount - power.soften * results.filter(Boolean).length);
+    }
+    // Haban Berry is used up once it has soaked an attack.
+    if (hit.spentTool && target.tool) {
+      dropTool(state, foe, ACTIVE, target, defs, events);
+      delete hit.spentTool;
     }
     // "Prevent that attack's damage if that damage is 30 or less": judged on what would land.
     const harden = !hit.noEffects && markOn(state, target, "harden");

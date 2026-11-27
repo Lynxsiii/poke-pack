@@ -15,7 +15,7 @@
  * ctx: { state, defs, events, player }
  */
 
-import { ACTIVE, abilityOn, addCondition, trainerBlock, win, askChoose, askPick, conditionsOn, damageAfterTyping, defOf, energyOf, evolveSpots, flip, healRoom, heldOn, hpLeft, inPlay, mayEvolve, other, rand, shedEnergy, shuffle, slotAt, switchActive, toolOf, warded } from "./engine.js";
+import { ACTIVE, abilityOn, addCondition, toolOn, trainerBlock, win, askChoose, askPick, conditionsOn, damageAfterTyping, defOf, energyOf, evolveSpots, flip, healRoom, heldOn, hpLeft, inPlay, mayEvolve, other, rand, shedEnergy, shuffle, slotAt, switchActive, toolOf, warded } from "./engine.js";
 import { runFx } from "./effects.js";
 
 export const RPS = ["Rock", "Paper", "Scissors"];
@@ -1483,7 +1483,8 @@ export function boostOf(state, player, slot, target, defs, after = false) {
   const box = defOf(state, target.uid, defs).box;
   const counts = (b) => fieldFits(b.who || {}, mine) && (!(b.vs || []).length || b.vs.includes(box));
   const played = (state.boosts || []).filter((b) => b.p === player && b.turn === state.turn && Boolean(b.after) === after && counts(b));
-  const tool = (!after && slot.tool && defOf(state, slot.tool, defs)?.tool?.plusVs) || null;
+  // Only on a Pokémon the Tool works for (Brave Bangle: one without a Rule Box; Light Ball: Pikachu ex).
+  const tool = (!after && toolOn(state, slot, defs)?.plusVs) || null;
   return played.reduce((n, b) => n + (b.n || 0), 0) + (tool && counts(tool) ? tool.n : 0);
 }
 
@@ -2148,6 +2149,27 @@ export function compileTrainer(text) {
  * Each sentence (or run of sentences) is one clause below; one that isn't read keeps the Tool out.
  */
 const TOOL_CLAUSES = [
+  // Against some attackers only (`lessVs.from`, as engine.js attackerFits reads it); `spent`: then this card is discarded.
+  [/^The Pokémon this card is attached to takes (\d+) less damage from attacks from your opponent's Pokémon that have an Ability \(after applying Weakness and Resistance\)$/, (m) => ({ lessVs: { n: Number(m[1]), from: { ability: true } } })],
+  [/^If the Pokémon this card is attached to isn't a Mega Evolution Pokémon ex, it takes (\d+) less damage from attacks from your opponent's Mega Evolution Pokémon ex \(after applying Weakness and Resistance\)$/, (m) => ({ lessVs: { n: Number(m[1]), from: { mega: true } }, who: { notMega: true } })],
+  [new RegExp(`^The (${'Grass|Fire|Water|Lightning|Psychic|Fighting|Darkness|Metal|Fairy|Dragon|Colorless'}) Pokémon this card is attached to takes (\\d+) less damage from attacks from your opponent's ((?:${'Grass|Fire|Water|Lightning|Psychic|Fighting|Darkness|Metal|Fairy|Dragon|Colorless'})(?:(?:, | or |, or )(?:${'Grass|Fire|Water|Lightning|Psychic|Fighting|Darkness|Metal|Fairy|Dragon|Colorless'}))*) Pokémon \\(after applying Weakness and Resistance\\)$`), (m) => ({ lessVs: { n: Number(m[2]), from: { types: m[3].split(/, or |, | or /) } }, who: { types: [m[1]] } })],
+  [new RegExp(`^If the Pokémon this card is attached to is damaged by an attack from your opponent's (${'Grass|Fire|Water|Lightning|Psychic|Fighting|Darkness|Metal|Fairy|Dragon|Colorless'}) Pokémon, it takes (\\d+) less damage \\(after applying Weakness and Resistance\\), and discard this card$`), (m) => ({ lessVs: { n: Number(m[2]), from: { types: [m[1]] }, spent: true } })],
+  // More damage against some, or from some holders only.
+  [/^Attacks used by the Pokémon this card is attached to do (\d+) more damage to your opponent's Active Pokémon ex \(before applying Weakness and Resistance\)$/, (m) => ({ plusVs: { n: Number(m[1]), vs: ["ex"] } })],
+  [/^Attacks used by the ([A-Z][\w'. -]*? ex) this card is attached to do (\d+) more damage to your opponent's Active Pokémon ex \(before applying Weakness and Resistance\)$/, (m) => ({ plusVs: { n: Number(m[2]), vs: ["ex"] }, who: { name: m[1] } })],
+  [/^If the Pokémon this card is attached to doesn't have a Rule Box, the attacks it uses do (\d+) more damage to your opponent's Active Pokémon ex \(before applying Weakness and Resistance\)$/, (m) => ({ plusVs: { n: Number(m[1]), vs: ["ex"] }, who: { noRule: true } })],
+  [/^Attacks used by the Poisoned Pokémon this card is attached to do (\d+) more damage to your opponent's Active Pokémon \(before applying Weakness and Resistance\)$/, (m) => ({ plus: Number(m[1]), poisoned: true })],
+  [/^The ([A-Z][\w.]*)'s Pokémon this card is attached to gets \+(\d+) HP$/, (m) => ({ hp: Number(m[2]), who: { named: m[1] } })],
+  // Sparkling Crystal: 1 Energy less, of any type.
+  [/^When the Tera Pokémon this card is attached to uses an attack, that attack costs (\d+) Energy less\. \(The Energy can be of any type\.\)$/, (m) => ({ anyLess: Number(m[1]), who: { tera: true } })],
+  // Lillie's Pearl.
+  [/^If the ([A-Z][\w.]*)'s Pokémon this card is attached to is Knocked Out by damage from an attack from your opponent's Pokémon, that player takes (\d+) fewer Prize cards?$/, (m) => ({ fewer: Number(m[2]), who: { named: m[1] } })],
+  // Backtrack Badge: Trick Coin's way, for the Pokémon of a type.
+  [new RegExp(`^Once during your turn, after you flip any coins for an attack of the (${'Grass|Fire|Water|Lightning|Psychic|Fighting|Darkness|Metal|Fairy|Dragon|Colorless'}) Pokémon this card is attached to, you may ignore all results of those coin flips and begin flipping those coins again$`), (m) => ({ trick: true, who: { types: [m[1]] } })],
+  // Powerglass.
+  [/^At the end of your turn \(after your attack\), if the Pokémon this card is attached to is in the Active Spot, you may attach a Basic Energy card from your discard pile to it$/, () => ({ endTurn: { attach: "basicEnergy" } })],
+  // Core Memory: the attack printed on it.
+  [/^The ([A-Z][\w'. -]*?) this card is attached to can use the attack on this card\. \(You still need the necessary Energy to use this attack\.\)$/, (m) => ({ lendSelf: true, who: { name: m[1] } })],
   // Counter Gain: "If you have more Prize cards remaining than your opponent, attacks ... cost Colorless less."
   [/^If you have more Prize cards remaining than your opponent, attacks used by the Pokémon this card is attached to cost ((?:Colorless)+) less$/, (m) => ({ costLess: m[1].length / 9, behind: true })],
   // Rescue Board's second sentence.
@@ -2206,7 +2228,7 @@ const TOOL_CLAUSES = [
   [/^If the Pokémon this card is attached to is a Basic Pokémon or Pokémon-ex, discard this card$/, (m, out) => out.only?.evolved && { only: { ...out.only, drop: true } }],
 ];
 export function compileTool(text, cardName = "") {
-  let clean = tidy(text);
+  let clean = tidy(text).replace(/\s*\([^()]*have Rule Boxes\.\)/g, "");
   if (!clean) return null;
   // Older Tools name themselves where newer ones say "this card".
   if (cardName) clean = clean.split(cardName).join("this card");
@@ -2354,6 +2376,8 @@ export function fieldFits(who, def) {
   if (who.notBoxes && who.notBoxes.includes(def.box)) return false;
   if (who.delta && !/δ/.test(def.name)) return false;
   if (who.noRule && def.rule) return false;
+  if (who.notMega && def.box === "ex" && /^Mega /.test(def.name)) return false;
+  if (who.tera && !def.tera) return false;
   return true;
 }
 
