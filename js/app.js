@@ -1982,6 +1982,9 @@ function waitingLine() {
   return ` ${waiting.length} more open once ${list} ${names.length > 1 ? "are" : "is"} here.`;
 }
 
+/** Set ids whose sealed shelf the player opened with "Show all" this visit. */
+const sealedShownAll = new Set();
+
 function renderPromoProducts() {
   if (!els.promoGrid) return;
   let offers = promoOffers(productList[liveSet.id]).filter(
@@ -2055,8 +2058,10 @@ function renderPromoProducts() {
     })
     .join("");
   // A set's own shelf shows its first few products; the rest wait behind one button.
+  // Once opened it stays open for this set, so a buy or add-to-cart re-render
+  // (which redraws the grid) doesn't fold it shut under the player's thumb.
   const SHOWN = 5;
-  if (!grouped && offers.length > SHOWN + 1) {
+  if (!grouped && offers.length > SHOWN + 1 && !sealedShownAll.has(liveSet.id)) {
     els.promoGrid.querySelectorAll(":scope > .promo-product").forEach((el, i) => el.classList.toggle("is-more", i >= SHOWN));
     els.promoGrid.insertAdjacentHTML(
       "beforeend",
@@ -11271,6 +11276,7 @@ maybeStartTour(
 document.addEventListener("click", (e) => {
   const btn = e.target instanceof Element && e.target.closest("[data-show-all-sealed]");
   if (!btn) return;
+  sealedShownAll.add(liveSet.id);
   btn.closest(".promo-grid")?.querySelectorAll(".is-more").forEach((el) => el.classList.remove("is-more"));
   btn.remove();
 });
