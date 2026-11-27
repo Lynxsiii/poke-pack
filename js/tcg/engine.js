@@ -472,7 +472,8 @@ const markSum = (state, slot, kind, name = "") => (slot?.marks || []).filter((m)
 
 /** A guard mark that stops this attacker's damage: some guard only against Basic or Evolution Pokémon. */
 const GUARD_FROM = { basic: (d) => d.stage === "basic", evolution: (d) => d.stage === "evolution", basicNonColorless: (d) => d.stage === "basic" && !d.types.includes("Colorless") };
-const guardedFrom = (state, slot, attackerDef) => (slot?.marks || []).some((m) => m.kind === "guard" && m.turn === state.turn && (!m.from || GUARD_FROM[m.from](attackerDef)));
+// "box:GX,EX": only against Pokémon with those rule boxes ("by attacks from Pokémon-GX and Pokémon-EX").
+const guardedFrom = (state, slot, attackerDef) => (slot?.marks || []).some((m) => m.kind === "guard" && m.turn === state.turn && (!m.from || (m.from.startsWith("box:") ? m.from.slice(4).split(",").includes(attackerDef.box) : GUARD_FROM[m.from](attackerDef))));
 
 /**
  * Damage from an attack landed on this Pokémon: `hit` the turn (cleared before the checkup), and kept past it
@@ -575,6 +576,8 @@ function endOfTurn(state, defs, events) {
     for (const [slot, spot] of inPlay(state, q)) {
       // "At the end of your opponent's next turn, put 6 damage counters on the Defending Pokémon."
       const doom = markOn(state, slot, "doom");
+      // "doomKo": "At the end of your opponent's next turn, the Defending Pokémon will be Knocked Out."
+      if (markOn(state, slot, "doomKo")) slot.damage = Math.max(slot.damage, maxHp(state, slot, defs));
       if (doom) {
         slot.damage += doom.n;
         events.push({ t: "damage", p: q, spot, n: doom.n, why: "doom" });
@@ -791,7 +794,7 @@ function deal(state, defs) {
 
 /* ---------- the turn ---------- */
 
-function win(state, winner, reason, events) {
+export function win(state, winner, reason, events) {
   state.phase = "over";
   state.winner = winner;
   state.reason = reason;
@@ -1820,7 +1823,8 @@ function applyPick(state, waiting, spot, defs, events) {
     let weak = false;
     let resist = false;
     // Weakness and Resistance count for the Active Pokémon only (unless the attack skips them: effect.noWeakness, noResistance).
-    if (spot === ACTIVE && effect.from) {
+    // `typed`: "Also apply Weakness and Resistance for Benched Pokémon."
+    if ((spot === ACTIVE || effect.typed) && effect.from) {
       const dealt = damageAfterTyping(n, defOf(state, effect.from, defs), defOf(state, slot.uid, defs), effect);
       ({ amount: n, weak, resist } = dealt);
     }
@@ -1945,7 +1949,8 @@ function applyPick(state, waiting, spot, defs, events) {
     const slot = slotAt(state, p, spot);
     const n = Math.min(effect.n, slot.damage);
     const to = effect.to === "foe" ? other(p) : p;
-    const spots = inPlay(state, to).map(([, s]) => s).filter((s) => (to !== p ? !warded(state, slotAt(state, to, s), { player: p, src: "ability" }, defs) : s !== spot));
+    // `only`: the one Pokémon they may go to ("to your opponent's Active Pokémon"); `src`: an attack's, not an Ability's.
+    const spots = inPlay(state, to).map(([, s]) => s).filter((s) => (effect.only == null || s === effect.only) && (to !== p ? !warded(state, slotAt(state, to, s), { player: p, src: effect.src || "ability" }, defs) : s !== spot));
     if (!n || !spots.length) return;
     follow(state, waiting, { player: p, side: to, spots, left: 1, effect: { op: "moveCountersTo", n, from: spot, fromSide: p } });
   } else if (effect.op === "moveCountersTo") {
