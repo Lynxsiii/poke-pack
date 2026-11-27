@@ -23,7 +23,9 @@
  *   ends), selfKo (this Pokémon is Knocked Out afterwards), need { first, lost, stadium, foePrizes }
  *   (terms: the first turn, a Knock Out last turn, a Stadium in play, their Prizes left).
  *   rise     { steps }: "when this Pokémon moves from your Bench to the Active Spot, you may ..."
- *   ko       { steps | toHand | counters, active }: when an opponent's attack Knocks it Out
+ *   ko       { steps | toHand | counters, active, untilTails }: when an opponent's attack Knocks it Out
+ *            (`untilTails`: `counters` for each heads of coins flipped until tails)
+ *   soften   n: coins flipped until tails as an attack would damage it, n less damage for each heads
  *   foeAttach n: damage when the other player attaches an Energy from their hand
  *   lock     { side: "foe" | "all", active, bench, stage, boxes, exceptBoxes, exceptRuleBox, damaged,
  *            except (an Ability name), kinds, selfKo }: whose Abilities stop (engine.js abilityOn)
@@ -119,7 +121,11 @@ const STANDING = [
   [/^This Pokémon can evolve during your first turn or the turn you play it\.$/, () => ({ early: "any" })],
   [/^As long as this Pokémon is in the Active Spot, it can evolve during your first turn or the turn you play it\.$/, () => ({ early: "active" })],
   [/^If you go second, this Pokémon can evolve during your first turn\.$/, () => ({ early: "second" })],
-  [/^At any time between turns, remove (\d+) damage counters? from this Pokémon\.$/, (m) => ({ mend: Number(m[1]) * 10 })],
+  [/^At any times? between turns, remove (\d+) damage counters? from this Pokémon\.$/, (m) => ({ mend: Number(m[1]) * 10 })],
+  // Armor Fossil's Armor Stone: coins until tails, each heads 10 less of the attack's damage.
+  [/^Whenever this Pokémon would be damaged by your opponent's attack, flip a coin until you get tails\. For each heads, reduce that damage by (\d+)\.$/, (m) => ({ soften: Number(m[1]) })],
+  // Skull Fossil's Skull Stone.
+  [/^During your opponent's turn, if this Pokémon would be Knocked Out by damage from an opponent's attack, flip a coin until you get tails\. For each heads, put (\d+) damage counters? on the Attacking Pokémon\.$/, (m) => ({ ko: { counters: Number(m[1]) * 10, untilTails: true } })],
   [/^As long as this Pokémon is Asleep, prevent all damage done to this Pokémon by attacks\.$/, () => ({ wall: { all: true, boxes: [], types: [], stage: "" }, when: { status: "asleep" } })],
   [/^Whenever you attach an Energy card from your hand to this Pokémon, remove all Special Conditions from it\.$/, () => ({ attachCure: true })],
   [/^Prevent all effects of (?:attacks (?:from|used by) your opponent's Pokémon done to this Pokémon\. \(Damage is not an effect\.\)|your opponent's attacks, except damage, done to this Pokémon\.)$/, () => ({ noEffects: true })],

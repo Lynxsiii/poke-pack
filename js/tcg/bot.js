@@ -17,7 +17,7 @@
  */
 
 import { trainerAim } from "./trainers.js";
-import { ACTIVE, apply, chooseBlock, damageAfterTyping, defOf, energyOf, hpLeft, inPlay, legalActions, other, retreatCost, statusOf, unpaid, usableAttacks } from "./engine.js";
+import { ACTIVE, apply, attacksOf, chooseBlock, damageAfterTyping, defOf, energyFits, energyOf, hpLeft, unitsOn, inPlay, legalActions, other, retreatCost, statusOf, unpaid, usableAttacks } from "./engine.js";
 
 /** How much an attack is worth against this defender, before any coin flip. */
 function attackWorth(attack, def, foeDef, foeHp) {
@@ -27,10 +27,9 @@ function attackWorth(attack, def, foeDef, foeHp) {
 
 /** A Pokémon's best attack and how many Energy it still needs for it. */
 function plan(state, slot, defs, extra = []) {
-  const def = defOf(state, slot.uid, defs);
   const units = [...energyOf(state, slot, defs), ...extra];
   let best = null;
-  for (const attack of def.attacks) {
+  for (const attack of attacksOf(state, slot, defs)) {
     const short = unpaid(attack.cost, units);
     const score = attack.damage / (1 + short);
     if (!best || score > best.score) best = { attack, short, score };
@@ -87,7 +86,7 @@ function hitNow(state, player, slot, defs, extra = []) {
   const foeDef = defOf(state, foe.uid, defs);
   const units = [...energyOf(state, slot, defs), ...extra];
   let most = 0;
-  for (const attack of def.attacks) if (unpaid(attack.cost, units) === 0) most = Math.max(most, damageAfterTyping(attack.damage, def, foeDef).amount);
+  for (const attack of attacksOf(state, slot, defs)) if (unpaid(attack.cost, units) === 0) most = Math.max(most, damageAfterTyping(attack.damage, def, foeDef).amount);
   return most;
 }
 
@@ -213,7 +212,7 @@ function energyWorth(state, uid, defs) {
   const units = energyOf(state, slot, defs);
   const rest = energyOf(state, { ...slot, energy: slot.energy.filter((u) => u !== uid) }, defs);
   let worth = def.basic ? 10 : 25;
-  for (const attack of mon.attacks) {
+  for (const attack of attacksOf(state, slot, defs)) {
     if (!unpaid(attack.cost, units) && unpaid(attack.cost, rest)) worth += 20 + attack.damage / 2;
     if ((def.provides || []).some((t) => attack.cost.includes(t))) worth += 5;
   }
@@ -352,6 +351,38 @@ export function botAction(state, player, defs) {
       });
       return actions[hits.indexOf(Math.max(...hits))];
     }
+    // Rock-Paper-Scissors: a throw that can't be read off the table (not the other player's, which it doesn't look at).
+    if (waiting.why === "rps") {
+      const h = Math.imul((state.rng ^ Math.imul(player + 1, 0x9e3779b1) ^ Math.imul(state.rps?.round || 0, 0x85ebca6b)) | 0, 0xc2b2ae35);
+      return actions[((h ^ (h >>> 16)) >>> 0) % actions.length];
+    }
+    // Sabrina's Psychic Control: the other side's discarded Trainer that does the plainest good, else none.
+    if (waiting.why === "borrow") {
+      const order = ["hammer", "energize", "evolve", "draw", "search", "recover", "heal", "cure", "tools"];
+      const rank = (steps) => {
+        if (!steps.length) return order.length;
+        const aim = trainerAim(defOf(state, steps[0].card, defs).fx);
+        if (aim === "hammer" && !inPlay(state, other(player)).some(([slot]) => slot.energy.length)) return order.length + 1;
+        return order.includes(aim) ? order.indexOf(aim) : order.length + 1;
+      };
+      return actions.slice().sort((a, b) => rank(waiting.options[a.index]) - rank(waiting.options[b.index]))[0];
+    }
+    // Lt. Surge's Bargain: a Prize card each, unless that would let them win (or tie) when it can't win itself.
+    if (waiting.why === "bargain") {
+      const mineLeft = side.prizes.length;
+      const theirsLeft = state.players[other(player)].prizes.length;
+      return actions[theirsLeft <= 1 && mineLeft > 1 ? 1 : 0];
+    }
+    // Trick Coin: flipped again when most of the attack's coins came up tails (on a copy, kept).
+    if (waiting.why === "trick") return simulating || !state.trick || state.trick.heads * 2 >= state.trick.flips ? actions[1] : actions[0];
+    // The other player's Challenge!: accepted when it can fill a Bench that needs it more than theirs does
+    // (declining only gives them 2 cards).
+    if (waiting.why === "challenge") {
+      const foeSide = state.players[other(player)];
+      const room = state.rules.bench - side.bench.length;
+      const basics = side.deck.filter((uid) => defOf(state, uid, defs).kind === "pokemon" && defOf(state, uid, defs).stage === "basic").length;
+      return actions[room > 0 && basics > 0 && side.bench.length <= Math.min(2, foeSide.bench.length) ? 0 : 1];
+    }
     // A Special Condition of its choosing: Paralyzed, which stops their next attack and retreat.
     if (waiting.why === "condition") return actions[waiting.labels.indexOf("Paralyzed")] || actions[0];
     // An attack's "you may": yes, except to take its own Pokémon out of play.
@@ -375,6 +406,16 @@ export function botAction(state, player, defs) {
         return picks.slice().sort((a, b) => spare(b) - spare(a))[0];
       }
       return actions.find((a) => a.spot == null) || picks[0];
+    }
+    // Pokémon Breeder Fields: the Pokémon with the most cards still unseen (deck and Prize cards) that evolve from it.
+    if (waiting.effect.op === "breedMark") {
+      const unseen = [...side.deck, ...side.prizes];
+      const count = (a) => {
+        const name = defOf(state, (a.spot === ACTIVE ? side.active : side.bench[a.spot]).uid, defs).name;
+        return unseen.filter((uid) => defOf(state, uid, defs).evolvesFrom === name).length;
+      };
+      const best = picks.slice().sort((a, b) => count(b) - count(a))[0];
+      return best && count(best) > 0 ? best : actions.find((a) => a.spot == null) || picks[0];
     }
     if (!picks.length || waiting.optional) return actions.find((a) => a.spot == null) || picks[0];
     const theirs = state.players[waiting.side];
@@ -407,6 +448,8 @@ export function botAction(state, player, defs) {
       }
       if (waiting.effect.op === "moveCountersFrom") return slot.damage + (a.spot === ACTIVE ? 5 : 0);
       if (waiting.effect.op === "moveCountersTo") return waiting.side === player ? left : (left <= waiting.effect.n ? 1000 : 0) - left;
+      // A Technical Machine goes on the Active Pokémon, which can use its attack now.
+      if (waiting.effect.op === "hold" && waiting.effect.mod?.tm) return a.spot === ACTIVE ? 1 : 0;
       if (waiting.effect.op === "heal") return Math.min(slot.damage, waiting.effect.n) + (a.spot === ACTIVE ? 5 : 0);
       if (waiting.effect.op === "discardEnergy") return slot.energy.length + (a.spot === ACTIVE ? 0.5 : 0);
       // "Knock Out 1 of your opponent's Pokémon": the one worth the most Prizes, then the one most built up.
@@ -430,10 +473,12 @@ export function botAction(state, player, defs) {
 
   // Bench: what evolves into something it holds first. One place stays free for later,
   // unless the evolution is already in hand or the Bench is empty.
-  const benches = actions.filter((a) => a.type === "bench");
+  // A Trainer played as a Basic Pokémon (a Fossil) is benched like one, but only when something it holds evolves from it.
+  const hand = side.hand.map((uid) => defOf(state, uid, defs));
+  const deck = side.deck.map((uid) => defOf(state, uid, defs));
+  const grows = (name) => hand.some((d) => d.evolvesFrom === name) || deck.some((d) => d.evolvesFrom === name);
+  const benches = actions.filter((a) => a.type === "bench" || (a.type === "play" && defOf(state, a.uid, defs).fossil && grows(defOf(state, a.uid, defs).name)));
   if (benches.length) {
-    const hand = side.hand.map((uid) => defOf(state, uid, defs));
-    const deck = side.deck.map((uid) => defOf(state, uid, defs));
     const score = (a) => {
       const def = defOf(state, a.uid, defs);
       return (hand.some((d) => d.evolvesFrom === def.name) ? 100 : 0) + (deck.some((d) => d.evolvesFrom === def.name) ? 40 : 0) + (def.ability?.use ? 30 : 0) + def.hp / 10;
@@ -442,9 +487,35 @@ export function botAction(state, player, defs) {
     if (side.bench.length < state.rules.bench - 1 || score(pick) >= 100 || !side.bench.length) return pick;
   }
 
+  // A Fossil in play that nothing it holds will evolve is dead weight: off the Bench, and out of the Active Spot
+  // once a Benched Pokémon can hit (it can't attack or retreat). One that will evolve stays.
+  for (const action of actions.filter((a) => a.type === "drop")) {
+    const slot = action.spot === ACTIVE ? side.active : side.bench[action.spot];
+    const name = defOf(state, slot.uid, defs).name;
+    if (action.spot === ACTIVE ? !hand.some((d) => d.evolvesFrom === name) && side.bench.some((mate) => hitNow(state, player, mate, defs) > 0) : !grows(name)) return action;
+  }
+
   // Trainers: card draw whenever it can, the rest only when it clearly helps.
   for (const action of actions.filter((a) => a.type === "play")) {
     const def = defOf(state, action.uid, defs);
+    if (def.fossil) continue;
+    // A Technical Machine: onto the Active Pokémon when it can use the attack this turn (one that stays: whenever it fits).
+    if (def.tm) {
+      const step = def.fx[0];
+      const front = side.active && defOf(state, side.active.uid, defs);
+      const fitsFront = front && (!step.only.evolved || front.stage === "evolution") && (!step.only.types || step.only.types.some((t) => front.types.includes(t))) && !(side.active.held || []).some((h) => h.tm);
+      if (fitsFront && state.turn > 1 && (!step.turn || def.attacks.some((at) => !unpaid(at.cost, energyOf(state, side.active, defs))))) return action;
+      continue;
+    }
+    // Sabrina's Psychic Control: only playable when the other discard pile holds a Trainer that would do something.
+    if (def.fx.some((s) => s.op === "psychic")) return action;
+    // Amarys: only from a hand so small the cards it draws stay under its limit.
+    const limit = def.fx.find((s) => s.op === "handLimit");
+    if (limit) {
+      const drawn = def.fx.find((s) => s.op === "draw")?.n || 0;
+      if (side.hand.length - 1 + drawn < limit.n && side.deck.length > drawn + 4) return action;
+      continue;
+    }
     const aim = trainerAim(def.fx);
     const heal = def.fx.find((s) => s.op === "heal");
     // A card that also discards the Stadium in play is not played over its own Stadium.
@@ -513,7 +584,13 @@ export function botAction(state, player, defs) {
     for (const action of attaches) {
       const slot = action.spot === ACTIVE ? side.active : side.bench[action.spot];
       const before = aimFor(state, player, slot, defs);
-      const after = aimFor(state, player, slot, defs, defOf(state, action.uid, defs).provides);
+      const card = defOf(state, action.uid, defs);
+      const holder = defOf(state, slot.uid, defs);
+      // What it gives on this Pokémon (Neo Upper Energy on a Stage 2: 2 of any type).
+      const gives = energyFits(card, holder) ? unitsOn(state, slot, card, holder, defs) : [];
+      const after = aimFor(state, player, slot, defs, gives);
+      // Ignition Energy is gone at the end of the turn: only onto the Active Pokémon, when it lets it attack now.
+      if (card.special?.burnOut && (action.spot !== ACTIVE || plan(state, slot, defs).short === 0 || plan(state, slot, defs, gives).short > 0 || state.turn === 1)) continue;
       const front = action.spot === ACTIVE ? (doomed && before.short === 0 ? -40 : 30) : 0;
       // Worth it when it brings an attack closer, toward what the Pokémon will become.
       const gain = (before.short - after.short) * 100 + after.score + front - (before.short === 0 ? 80 : 0) + slot.energy.length * 5;
@@ -539,7 +616,7 @@ export function botAction(state, player, defs) {
   if (side.active && foe && foeSide.bench.length) {
     const mine = defOf(state, side.active.uid, defs);
     const units = energyOf(state, side.active, defs);
-    const ready = mine.attacks.filter((at) => unpaid(at.cost, units) === 0);
+    const ready = attacksOf(state, side.active, defs).filter((at) => unpaid(at.cost, units) === 0);
     const kos = (slot) => ready.some((at) => damageAfterTyping(at.damage, mine, defOf(state, slot.uid, defs)).amount >= hpLeft(state, slot, defs));
     if (ready.length && !kos(foe) && foeSide.bench.some((slot) => kos(slot)) && usableAttacks(state, player, defs).length) {
       const gust = actions.find((a) => {
@@ -561,7 +638,7 @@ export function botAction(state, player, defs) {
     const foeHp = foe ? hpLeft(state, foe, defs) : 0;
     // The Knock Out first; between two that both do it, the one that costs its own side nothing.
     const worth = (a) => {
-      const attack = def.attacks[a.index];
+      const attack = attacksOf(state, side.active, defs)[a.index];
       const base = attackWorth(attack, def, foeDef, foeHp);
       return base - (costly(attack) ? (base >= 1000 ? 5 : 25) : 0);
     };

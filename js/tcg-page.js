@@ -23,7 +23,7 @@
  *   coinFaces()         { heads, tails } art of the equipped coin, or null for the house coin
  */
 
-import { ACTIVE, FORMATS, RuleError, abilityBlock, abilityOn, apply, canRetreat, conditionsOn, createGame, damageAfterTyping, defOf, energyOf, hpLeft, legalActions, markOn, marksOn, maxHp, other, retreatCost, shieldOn, stadiumBlock, toolOf, trainerBlock, usableAttacks } from "./tcg/engine.js";
+import { ACTIVE, FORMATS, RuleError, abilityBlock, abilityOn, apply, attacksOf, canRetreat, dropBlock, conditionsOn, createGame, damageAfterTyping, defOf, energyOf, hpLeft, legalActions, markOn, marksOn, maxHp, other, retreatCost, shieldOn, stadiumBlock, toolOf, trainerBlock, usableAttacks } from "./tcg/engine.js";
 import { ENERGY_TYPES, FREE_ENERGY, createDefs, isFreeEnergy } from "./tcg/cards.js";
 import { botAction } from "./tcg/bot.js";
 import { MAX_DECKS, buildBotDeck, buildDeck, checkDeck, deckList, deckSize, notLegal, roomFor, rulesOf } from "./tcg/decks.js";
@@ -630,6 +630,19 @@ export function initTcg(deps) {
   const usableNow = (state) => (match.online ? match.online.legal.filter((a) => a.type === "attack").map((a) => a.index) : usableAttacks(state, ME, defs));
   const canRetreatNow = (state) => (match.online ? serverLegal((a) => a.type === "retreat") : canRetreat(state, ME, defs));
   const abilityWhy = (state, spot) => (match.online ? (serverLegal((a) => a.type === "ability" && a.spot === spot) ? "" : "Can't be used right now.") : abilityBlock(state, ME, spot, defs));
+  const dropWhy = (state, spot) => (match.online ? (serverLegal((a) => a.type === "drop" && a.spot === spot) ? "" : "Can't be discarded right now.") : dropBlock(state, ME, spot, defs));
+  /** A Trainer played as a Pokémon (a Fossil): the key that discards it from play. */
+  function dropRowHtml(spot) {
+    const slot = slotOf(ME, spot);
+    const how = slot && d(slot.uid).fossil?.drop;
+    if (!how) return "";
+    const why = !myTurn() ? "Wait for your turn." : dropWhy(match.state, spot);
+    return `<div class="tg-abil">
+      <span class="tg-abil-top"><em>Trainer</em><b>${how === "bottom" ? "To the bottom of your deck" : "Discard from play"}</b><button type="button" class="solid sm" data-act="drop" data-spot="${spot}"${why ? " disabled" : ""}>${how === "bottom" ? "Put back" : "Discard"}</button></span>
+      <span class="tg-atk-text">${how === "bottom" ? "Its cards go to the discard pile and it goes to the bottom of your deck." : "It and its cards go to the discard pile. This isn't a Knock Out: no Prize card."}</span>
+      ${why ? `<span class="tg-atk-why">${esc(why)}</span>` : ""}
+    </div>`;
+  }
   const stadiumWhy = (state) => (match.online ? (serverLegal((a) => a.type === "stadium") ? "" : "Can't be used right now.") : stadiumBlock(state, ME, defs));
   const trainerWhy = (state, def) => (match.online ? "" : trainerBlock(state, ME, def, defs));
   /** Who sits across the table: the house bot, or the friend you're playing. */
@@ -664,7 +677,7 @@ export function initTcg(deps) {
       <b class="tg-hud-name">${esc(def.name)}</b>
       <span class="tg-pips">${energy.length ? pips(energy) : `<small>No Energy</small>`}</span>
       <span class="tg-hud-hp"><em>HP</em>${hpBar(left, maxHp(state, slot, defs))}<span class="num">${left}/${maxHp(state, slot, defs)}</span></span>
-      ${conditionsOn(slot).length || marksOn(state, slot).length || edge || slot.tool || def.ability ? `<span class="tg-conds">${edge}${def.ability ? `<i class="tg-cond" data-cond="ability"${abilityOn(state, slot, defs) ? "" : " data-off"}>${esc(def.ability.name)}</i>` : ""}${slot.tool ? `<i class="tg-cond" data-cond="tool">${esc(defOf(state, slot.tool, defs).name)}</i>` : ""}${conditionsOn(slot).map((c) => `<i class="tg-cond" data-cond="${c}">${COND_NAME[c]}</i>`).join("")}${marksOn(state, slot).map((m) => `<i class="tg-cond" data-cond="mark" data-mark="${m.kind}">${esc(markLabel(m))}</i>`).join("")}</span>` : ""}
+      ${conditionsOn(slot).length || marksOn(state, slot).length || edge || slot.tool || (slot.held || []).length || def.ability ? `<span class="tg-conds">${edge}${def.ability ? `<i class="tg-cond" data-cond="ability"${abilityOn(state, slot, defs) ? "" : " data-off"}>${esc(def.ability.name)}</i>` : ""}${slot.tool ? `<i class="tg-cond" data-cond="tool">${esc(defOf(state, slot.tool, defs).name)}</i>` : ""}${(slot.held || []).map((h) => `<i class="tg-cond" data-cond="tool">${esc(defOf(state, h.uid, defs).name)}</i>`).join("")}${conditionsOn(slot).map((c) => `<i class="tg-cond" data-cond="${c}">${COND_NAME[c]}</i>`).join("")}${marksOn(state, slot).map((m) => `<i class="tg-cond" data-cond="mark" data-mark="${m.kind}">${esc(markLabel(m))}</i>`).join("")}</span>` : ""}
     </div>`;
   }
 
@@ -714,6 +727,7 @@ export function initTcg(deps) {
         heal: () => (fx.flips ? "Choose one of your Pokémon, then the coins are flipped." : null),
       }[op]?.();
       if (op === "rearrangeFrom") return { text: `Choose a Pokémon to move ${fx.type ? `a ${fx.type}` : "an"} Energy from, or finish.`, keys: `<button type="button" class="ghost sm" data-act="pick-skip">Done</button>` };
+      if (op === "breedMark") return { text: waiting.optional ? "Choose a second Pokémon to flip a coin for, or finish." : "Choose a Pokémon to flip a coin for (you may then choose a second).", keys: waiting.optional ? `<button type="button" class="ghost sm" data-act="pick-skip">Done</button>` : "" };
       if (op === "gatherFrom") return { text: `Choose a Pokémon to move ${fx.type ? `a ${fx.type}` : "an"} Energy from, or finish.`, keys: `<button type="button" class="ghost sm" data-act="pick-skip">Done</button>` };
       if (moving) return { text: moving, keys: "" };
       if (op === "damage" && fx.counters) return { text: fx.n === 10 && waiting.again ? `Choose one of their Pokémon for a damage counter (${waiting.left} to place).` : `Choose one of their Pokémon for ${fx.n / 10} damage counters${waiting.left > 1 ? ` (${waiting.left} to choose)` : ""}.`, keys: "" };
@@ -865,6 +879,7 @@ export function initTcg(deps) {
         <div>
           <h3>${esc(def.name)}</h3>
           ${abilityRowHtml(match.sheetSpot)}
+          ${dropRowHtml(match.sheetSpot)}
           <div class="tg-sheet-keys"><button type="button" class="ghost sm" data-act="look-spot">View card</button><button type="button" class="ghost sm" data-act="cancel">Close</button></div>
         </div>
       </div>`;
@@ -929,14 +944,16 @@ export function initTcg(deps) {
       <div class="tg-sheet tg-attacks" role="dialog" aria-label="${esc(def.name)}">
         <header><h3>${esc(def.name)}</h3><span class="tg-pips">${units.length ? pips(units) : "<small>No Energy attached</small>"}</span></header>
         ${abilityRowHtml(ACTIVE)}
-        ${def.attacks.map((attack, i) => `<button type="button" class="tg-atk" data-attack="${i}"${usable.has(i) && myTurn() ? "" : " disabled"}>
+        ${dropRowHtml(ACTIVE)}
+        ${attacksOf(state, slot, defs).map((attack, i) => `<button type="button" class="tg-atk" data-attack="${i}"${usable.has(i) && myTurn() ? "" : " disabled"}>
           <span class="tg-atk-top"><span class="tg-pips">${attack.cost.length ? pips(attack.cost) : "<small>Free</small>"}</span><b>${esc(attack.name)}</b><em>${preview(attack).html}</em></span>
+          ${attack.lent ? `<span class="tg-atk-note">From ${esc(defs(attack.lent.card).name)}</span>` : ""}
           ${preview(attack).note}
           ${attack.text ? `<span class="tg-atk-text${attack.plain ? " off" : ""}">${attack.plain ? "Text not live yet: " : ""}${esc(attack.text)}</span>` : ""}
           ${usable.has(i) || !myTurn() ? "" : `<span class="tg-atk-why">${whyNot(attack)}</span>`}
         </button>`).join("")}
         <div class="tg-sheet-keys">
-          <button type="button" class="ghost sm" data-act="retreat"${retreat ? "" : " disabled"}>${markOn(state, slot, "noRetreat") ? "Can't retreat" : `Retreat ${retreatCost(state, slot, defs) ? pips(Array(retreatCost(state, slot, defs)).fill("Colorless")) : "(free)"}`}</button>
+          <button type="button" class="ghost sm" data-act="retreat"${retreat ? "" : " disabled"}>${markOn(state, slot, "noRetreat") || def.fossil?.noRetreat ? "Can't retreat" : `Retreat ${retreatCost(state, slot, defs) ? pips(Array(retreatCost(state, slot, defs)).fill("Colorless")) : "(free)"}`}</button>
           <button type="button" class="ghost sm" data-act="look-active">View card</button>
         </div>
       </div>`;
@@ -1066,6 +1083,7 @@ export function initTcg(deps) {
       : waiting.effect.op === "carryEnergy" ? "Choose the Energy to move"
       : waiting.effect.op === "fromDiscardTop" ? `Put ${many(max)} from your discard pile on top of your deck`
       : waiting.effect.op === "discard" ? `Discard ${min < max ? "up to " : ""}${many(min < max ? max : min)} from your hand`
+      : waiting.effect.op === "challengeHold" ? `Challenge!: put up to ${many(max)} face down onto your Bench`
       : waiting.effect.op === "toBench" ? `Choose ${max > 1 ? `up to ${many(max)}` : "a Basic Pokémon"} for your Bench`
       : waiting.effect.op === "attach" && waiting.zone !== "deck" ? `Attach ${max > 1 ? `up to ${many(max)}` : many(1)} from your ${waiting.zone === "hand" ? "hand" : "discard pile"}`
       : waiting.effect.op === "attach" ? `Attach ${max > 1 ? `up to ${many(max)}` : many(1)} from your ${waiting.top ? `top ${waiting.top} cards` : "deck"}`
@@ -1162,6 +1180,11 @@ export function initTcg(deps) {
       case "turn": return event.p === ME ? "Your turn." : `${foeName()}'s turn.`;
       case "draw": return event.p === ME ? `You drew ${event.uids.length === 1 ? name(event.uids[0]) : plural(event.uids.length, "card")}.` : `${foeName()} drew ${event.uids.length === 1 ? "a card" : plural(event.uids.length, "card")}.`;
       case "bench": return `${who(event.p)} benched ${name(event.uid)}.`;
+      case "rps": return `Rock-Paper-Scissors: ${event.p === ME ? "you" : foeName()} ${event.picks[0]}, ${event.p === ME ? foeName() : "you"} ${event.picks[1]}. ${event.won == null ? "A tie: again." : (event.won === (event.p === ME)) ? "You win." : `${foeName()} wins.`}`;
+      case "borrow": return `${who(event.p)} used ${name(event.uid)} from ${event.p === ME ? `${foeName()}'s` : "your"} discard pile.`;
+      case "trick-coin": return `Trick Coin: ${event.p === ME ? "you flip" : `${foeName()} flips`} the attack's coins again.`;
+      case "challenge-down": return `Challenge!: ${who(event.p)} put ${plural(event.n, "card")} face down.`;
+      case "drop": return `${who(event.p)} ${event.to === "deck" ? "put" : "discarded"} ${name(event.uid)} ${event.to === "deck" ? "on the bottom of the deck" : "from play"}.`;
       case "evolve": return `${who(event.p)} evolved into ${name(event.uid)}.`;
       case "attach": return `${who(event.p)} attached ${name(event.uid)}.`;
       case "stadium": return `${who(event.p)} played ${name(event.uid)}. It stays in play for both players.`;
@@ -1231,6 +1254,7 @@ export function initTcg(deps) {
         return `${who(event.p)} put ${name(event.uid)} back into ${event.p === ME ? "your" : "its"} hand.`;
       case "boost": return `${event.p === ME ? "Your" : "Their"} attacks can do ${event.n} more damage this turn.`;
       case "energy-to-hand": return `${plural(event.uids.length, "Energy card")} went back to ${event.p === ME ? "your" : "their"} hand.`;
+      case "energy-to-deck": return `${plural(event.uids.length, "Energy card")} shuffled into ${event.p === ME ? "your" : "their"} deck.`;
       case "stadium-gone": return `${name(event.uid)} was discarded.`;
       case "discard-tool": return `${name(event.uid)} was discarded from ${event.p === ME ? "your" : "their"} Pokémon.`;
       case "hand-to-deck": return `${who(event.p)} put ${plural(event.uids.length, "card")} from ${event.p === ME ? "your" : "its"} hand ${event.at === "top" ? "on top of" : event.at === "bottom" ? "on the bottom of" : "into"} the deck.`;
@@ -1556,8 +1580,9 @@ export function initTcg(deps) {
         // The attack is called out by name before it lands, so a bot's turn can be followed.
         const user = before.players[p].active;
         const used = user && defOf(before, user.uid, defs);
-        if (used?.attacks[action.index]) {
-          banner(used.attacks[action.index].name, p === ME ? "me" : "foe", used.name);
+        const called = user && attacksOf(before, user, defs)[action.index];
+        if (called) {
+          banner(called.name, p === ME ? "me" : "foe", used.name);
           await wait(430);
         }
         cue(`.tg-spot[data-p="${p}"] .tg-mon`, p === ME ? "lunge-up" : "lunge-down", 420);
@@ -2327,7 +2352,7 @@ export function initTcg(deps) {
         match.sheet = "attacks";
         return paintTable();
       }
-      if (spot !== ACTIVE && myTurn() && !sel && !waiting && d(slot.uid).ability?.use) {
+      if (spot !== ACTIVE && myTurn() && !sel && !waiting && (d(slot.uid).ability?.use || d(slot.uid).fossil?.drop)) {
         match.sheet = "ability";
         match.sheetSpot = spot;
         return paintTable();
@@ -2572,6 +2597,7 @@ export function initTcg(deps) {
       return paintTable();
     }
     if (act === "stadium-use") return run({ type: "stadium", player: ME });
+    if (act === "drop") return run({ type: "drop", player: ME, spot: match.sheet === "ability" ? match.sheetSpot : ACTIVE });
     if (act === "ability-use") return run({ type: "ability", player: ME, spot: match.sheet === "ability" ? match.sheetSpot : ACTIVE });
     if (act === "ability-yes") return run({ type: "pick", player: ME, spot: state.pending[0].spots[0] });
     if (act === "look-spot") return lookAtSlot(slotOf(ME, match.sheetSpot));
