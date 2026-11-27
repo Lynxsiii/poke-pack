@@ -135,7 +135,7 @@ export function reprintKeys(def) {
   const keys = [];
   const text = canonText(def?.text);
   if (text) keys.push(`t${hash(text)}`);
-  if (def?.playable && def.kind !== "pokemon") keys.push(`e${hash(JSON.stringify([def.kind, def.sub || "", def.fx || [], def.tool || null, def.stadium || null, def.special || null]))}`);
+  if (def?.playable && def.kind !== "pokemon") keys.push(`e${hash(JSON.stringify([def.kind, def.sub || "", def.fx || [], def.tool || null, def.stadium || null, def.special || null, ...(def.fossil ? [{ hp: def.hp, ...def.fossil, mon: def.fossil.mon.ability || null }] : [])]))}`);
   return keys;
 }
 

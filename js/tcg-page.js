@@ -23,7 +23,7 @@
  *   coinFaces()         { heads, tails } art of the equipped coin, or null for the house coin
  */
 
-import { ACTIVE, FORMATS, RuleError, abilityBlock, abilityOn, apply, canRetreat, conditionsOn, createGame, damageAfterTyping, defOf, energyOf, hpLeft, legalActions, markOn, marksOn, maxHp, other, retreatCost, shieldOn, stadiumBlock, toolOf, trainerBlock, usableAttacks } from "./tcg/engine.js";
+import { ACTIVE, FORMATS, RuleError, abilityBlock, abilityOn, apply, canRetreat, dropBlock, conditionsOn, createGame, damageAfterTyping, defOf, energyOf, hpLeft, legalActions, markOn, marksOn, maxHp, other, retreatCost, shieldOn, stadiumBlock, toolOf, trainerBlock, usableAttacks } from "./tcg/engine.js";
 import { ENERGY_TYPES, FREE_ENERGY, createDefs, isFreeEnergy } from "./tcg/cards.js";
 import { botAction } from "./tcg/bot.js";
 import { MAX_DECKS, buildBotDeck, buildDeck, checkDeck, deckList, deckSize, notLegal, roomFor, rulesOf } from "./tcg/decks.js";
@@ -630,6 +630,19 @@ export function initTcg(deps) {
   const usableNow = (state) => (match.online ? match.online.legal.filter((a) => a.type === "attack").map((a) => a.index) : usableAttacks(state, ME, defs));
   const canRetreatNow = (state) => (match.online ? serverLegal((a) => a.type === "retreat") : canRetreat(state, ME, defs));
   const abilityWhy = (state, spot) => (match.online ? (serverLegal((a) => a.type === "ability" && a.spot === spot) ? "" : "Can't be used right now.") : abilityBlock(state, ME, spot, defs));
+  const dropWhy = (state, spot) => (match.online ? (serverLegal((a) => a.type === "drop" && a.spot === spot) ? "" : "Can't be discarded right now.") : dropBlock(state, ME, spot, defs));
+  /** A Trainer played as a Pokémon (a Fossil): the key that discards it from play. */
+  function dropRowHtml(spot) {
+    const slot = slotOf(ME, spot);
+    const how = slot && d(slot.uid).fossil?.drop;
+    if (!how) return "";
+    const why = !myTurn() ? "Wait for your turn." : dropWhy(match.state, spot);
+    return `<div class="tg-abil">
+      <span class="tg-abil-top"><em>Trainer</em><b>${how === "bottom" ? "To the bottom of your deck" : "Discard from play"}</b><button type="button" class="solid sm" data-act="drop" data-spot="${spot}"${why ? " disabled" : ""}>${how === "bottom" ? "Put back" : "Discard"}</button></span>
+      <span class="tg-atk-text">${how === "bottom" ? "Its cards go to the discard pile and it goes to the bottom of your deck." : "It and its cards go to the discard pile. This isn't a Knock Out: no Prize card."}</span>
+      ${why ? `<span class="tg-atk-why">${esc(why)}</span>` : ""}
+    </div>`;
+  }
   const stadiumWhy = (state) => (match.online ? (serverLegal((a) => a.type === "stadium") ? "" : "Can't be used right now.") : stadiumBlock(state, ME, defs));
   const trainerWhy = (state, def) => (match.online ? "" : trainerBlock(state, ME, def, defs));
   /** Who sits across the table: the house bot, or the friend you're playing. */
@@ -865,6 +878,7 @@ export function initTcg(deps) {
         <div>
           <h3>${esc(def.name)}</h3>
           ${abilityRowHtml(match.sheetSpot)}
+          ${dropRowHtml(match.sheetSpot)}
           <div class="tg-sheet-keys"><button type="button" class="ghost sm" data-act="look-spot">View card</button><button type="button" class="ghost sm" data-act="cancel">Close</button></div>
         </div>
       </div>`;
@@ -929,6 +943,7 @@ export function initTcg(deps) {
       <div class="tg-sheet tg-attacks" role="dialog" aria-label="${esc(def.name)}">
         <header><h3>${esc(def.name)}</h3><span class="tg-pips">${units.length ? pips(units) : "<small>No Energy attached</small>"}</span></header>
         ${abilityRowHtml(ACTIVE)}
+        ${dropRowHtml(ACTIVE)}
         ${def.attacks.map((attack, i) => `<button type="button" class="tg-atk" data-attack="${i}"${usable.has(i) && myTurn() ? "" : " disabled"}>
           <span class="tg-atk-top"><span class="tg-pips">${attack.cost.length ? pips(attack.cost) : "<small>Free</small>"}</span><b>${esc(attack.name)}</b><em>${preview(attack).html}</em></span>
           ${preview(attack).note}
@@ -936,7 +951,7 @@ export function initTcg(deps) {
           ${usable.has(i) || !myTurn() ? "" : `<span class="tg-atk-why">${whyNot(attack)}</span>`}
         </button>`).join("")}
         <div class="tg-sheet-keys">
-          <button type="button" class="ghost sm" data-act="retreat"${retreat ? "" : " disabled"}>${markOn(state, slot, "noRetreat") ? "Can't retreat" : `Retreat ${retreatCost(state, slot, defs) ? pips(Array(retreatCost(state, slot, defs)).fill("Colorless")) : "(free)"}`}</button>
+          <button type="button" class="ghost sm" data-act="retreat"${retreat ? "" : " disabled"}>${markOn(state, slot, "noRetreat") || def.fossil?.noRetreat ? "Can't retreat" : `Retreat ${retreatCost(state, slot, defs) ? pips(Array(retreatCost(state, slot, defs)).fill("Colorless")) : "(free)"}`}</button>
           <button type="button" class="ghost sm" data-act="look-active">View card</button>
         </div>
       </div>`;
@@ -1162,6 +1177,7 @@ export function initTcg(deps) {
       case "turn": return event.p === ME ? "Your turn." : `${foeName()}'s turn.`;
       case "draw": return event.p === ME ? `You drew ${event.uids.length === 1 ? name(event.uids[0]) : plural(event.uids.length, "card")}.` : `${foeName()} drew ${event.uids.length === 1 ? "a card" : plural(event.uids.length, "card")}.`;
       case "bench": return `${who(event.p)} benched ${name(event.uid)}.`;
+      case "drop": return `${who(event.p)} ${event.to === "deck" ? "put" : "discarded"} ${name(event.uid)} ${event.to === "deck" ? "on the bottom of the deck" : "from play"}.`;
       case "evolve": return `${who(event.p)} evolved into ${name(event.uid)}.`;
       case "attach": return `${who(event.p)} attached ${name(event.uid)}.`;
       case "stadium": return `${who(event.p)} played ${name(event.uid)}. It stays in play for both players.`;
@@ -2327,7 +2343,7 @@ export function initTcg(deps) {
         match.sheet = "attacks";
         return paintTable();
       }
-      if (spot !== ACTIVE && myTurn() && !sel && !waiting && d(slot.uid).ability?.use) {
+      if (spot !== ACTIVE && myTurn() && !sel && !waiting && (d(slot.uid).ability?.use || d(slot.uid).fossil?.drop)) {
         match.sheet = "ability";
         match.sheetSpot = spot;
         return paintTable();
@@ -2572,6 +2588,7 @@ export function initTcg(deps) {
       return paintTable();
     }
     if (act === "stadium-use") return run({ type: "stadium", player: ME });
+    if (act === "drop") return run({ type: "drop", player: ME, spot: match.sheet === "ability" ? match.sheetSpot : ACTIVE });
     if (act === "ability-use") return run({ type: "ability", player: ME, spot: match.sheet === "ability" ? match.sheetSpot : ACTIVE });
     if (act === "ability-yes") return run({ type: "pick", player: ME, spot: state.pending[0].spots[0] });
     if (act === "look-spot") return lookAtSlot(slotOf(ME, match.sheetSpot));

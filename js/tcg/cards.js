@@ -109,6 +109,88 @@ function boxOf(card) {
 }
 
 /**
+ * Trainers played "as if it were a Basic Pokémon" (Clefairy Doll, Mysterious Fossil, Claw Fossil, Unidentified
+ * Fossil, the Antique Fossils): in the hand, the deck and the discard pile it is an Item card; in play it is the
+ * Pokémon `mon` (engine.js defOf). Every sentence of the text must be one read here, or the card waits.
+ *   mon      the Pokémon it is in play: its HP, Colorless or no type, no attacks, Weakness, Resistance or Retreat Cost
+ *   noKo     "If it is Knocked Out, it doesn't count as a Knocked Out Pokémon": no Prize card for it, and no Knock Out
+ *            for what asks about one; noPrize: no Prize card for it (Lillie's Poké Doll), and noKo's too
+ *   immune   the Special Conditions it can't have
+ *   drop     "At any time during your turn (before your attack), you may discard it from play": "discard";
+ *            Lillie's Poké Doll: "bottom" (its cards discarded, it goes to the bottom of the deck), as the Active only
+ */
+function compileFossil(text, card) {
+  const hp = Number(card.hp) || 0;
+  // (Some card files carry the rules text again as an "attack" named Item: that isn't one.)
+  if (!hp || !text || (card.attacks || []).some((a) => a.name !== "Item" || a.damage || (a.cost || []).length)) return null;
+  const name = card.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  // Its own name (or a misprint of it: "If Mysterious is Knocked Out") stands for "this card".
+  let t = ` ${text.replace(/\s+/g, " ").replace(/’/g, "'").replace(new RegExp(`\\b${name}\\b`, "g"), "this card").replace(/\bMysterious is\b/, "this card is")} `;
+  const out = { noKo: false, immune: [], drop: "", colorless: false, noRetreat: false, trainer: false };
+  const take = (re, fn = () => {}) => {
+    const m = t.match(re);
+    if (!m) return false;
+    fn(m);
+    t = t.replace(re, " ");
+    return true;
+  };
+  if (!take(/ Play this card as if it were a (?:(\d+)-HP )?(Colorless )?Basic (Colorless )?Pokémon\. /, (m) => {
+    if (m[1] && Number(m[1]) !== hp) out.bad = true;
+    out.colorless = Boolean(m[2] || m[3]);
+  })) return null;
+  take(/ While in play,? this card counts as a (Colorless )?Pokémon \((?:instead of|as well as) a Trainer card\)\. /, (m) => {
+    out.colorless ||= Boolean(m[1]);
+    out.trainer = /as well as/.test(m[0]);
+  });
+  take(/ \(this card counts as a Trainer card as well, but if this card is Knocked Out, this counts as a Knocked Out Pokémon\.\) /, () => (out.trainer = true));
+  take(/ this card has no attacks(?: of its own)?, can't retreat, and can't be (?:affected by (?:any )?Special Conditions|Asleep, Confused, Paralyzed, or Poisoned)\. /, (m) => {
+    out.noRetreat = true;
+    out.immune = /Special Conditions/.test(m[0]) ? ["all"] : ["asleep", "confused", "paralyzed", "poisoned"];
+  });
+  take(/ (?:T|t)his card can't be affected by any Special Conditions,? and (?:it )?can't retreat\. /, () => {
+    out.noRetreat = true;
+    out.immune = ["all"];
+  });
+  take(/ This card can't retreat\. /, () => (out.noRetreat = true));
+  take(/ If this card is Knocked Out, it doesn't count as a Knocked Out Pokémon\.(?: \(Discard it anyway\.\))? /, () => (out.noKo = true));
+  take(/ If this card is Knocked Out, your opponent can't take any Prize cards for it\. /, () => (out.noPrize = true));
+  take(/ At any time during your turn(?: \(before your attack\)| before your attack)?, you may discard this card(?: from play)?\.(?: \(This doesn't count as a Knocked Out Pokémon\.\))? /, () => (out.drop = "discard"));
+  take(/ At any time during your turn \(before your attack\), if this Pokémon is your Active Pokémon, you may discard all cards from it and put it on the bottom of your deck\. /, () => (out.drop = "bottom"));
+  take(/ You can put Pokémon that evolve from this card on this card\. /);
+  if (t.trim() || out.bad || !out.noRetreat || !out.drop) return null;
+  return { noKo: out.noKo, noPrize: out.noKo || Boolean(out.noPrize), noRetreat: true, immune: out.immune, drop: out.drop, colorless: out.colorless, trainer: out.trainer };
+}
+
+/** The Item card, carrying the Pokémon it is in play (`fossil.mon`). */
+function fossilDef(base, card, text, fossil) {
+  const printed = card.abilities || [];
+  const ability = printed.length === 1 ? compileAbility(printed[0], card.name) : null;
+  const notes = printed.length && !ability ? [`${printed[0].type || "Ability"} not live yet`] : [];
+  const mon = {
+    ...base,
+    kind: "pokemon",
+    stage: "basic",
+    evolvesFrom: "",
+    hp: Number(card.hp),
+    types: fossil.colorless ? ["Colorless"] : [],
+    attacks: [],
+    weakness: null,
+    resistance: null,
+    retreat: 0,
+    prizes: fossil.noPrize ? 0 : 1,
+    box: "",
+    rule: false,
+    ...(printed.length ? { abilityKind: printed[0].type || "Ability" } : {}),
+    ...(ability ? { ability } : {}),
+    fossil: { ...fossil },
+    playable: true,
+    why: "",
+    notes,
+  };
+  return { ...base, kind: "trainer", sub: "item", text, fx: [], fossil: { ...fossil, mon }, hp: mon.hp, notes, playable: true, why: "" };
+}
+
+/**
  * `row` is the card's entry in data/tcg/rules.json, or undefined when it has none.
  * `lines`: Stage 1 names to the names they evolve from (data/tcg/trainers.json `lines`), for Rare Candy.
  */
@@ -148,6 +230,8 @@ function defineRules(card, row, text, lines, print) {
   if (card.supertype !== "Pokémon") {
     const subs = card.subtypes || [];
     const sub = subs.includes("Supporter") ? "supporter" : subs.includes("Stadium") ? "stadium" : subs.some((x) => /Tool|Technical Machine/.test(x)) ? "tool" : "item";
+    const fossil = sub === "item" ? compileFossil(text, card) : null;
+    if (fossil) return fossilDef(base, card, text, fossil);
     const fx = sub === "item" || sub === "supporter" ? compileCard(text) : null;
     // A Tool is not played and discarded: it is attached, and its numbers ride on the Pokémon.
     const tool = sub === "tool" && subs.includes("Pokémon Tool") ? compileTool(text, card.name) : null;

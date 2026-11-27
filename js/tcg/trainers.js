@@ -202,9 +202,10 @@ export const T_OPS = {
    * of the deck). `paid`: cards just discarded to pay for this card, which it can't take back. `half`: Revive's damage.
    */
   recover: {
-    ready: (ctx, { what, to = "hand" }) => fitting(ctx, mine(ctx).discard, what).length > 0 && (to !== "bench" || mine(ctx).bench.length < ctx.state.rules.bench),
+    ready: (ctx, { what, to = "hand" }) => fitting(ctx, mine(ctx).discard, what).some((uid) => uid !== ctx.uid) && (to !== "bench" || mine(ctx).bench.length < ctx.state.rules.bench),
     run(ctx, { what, n = 1, upTo = false, to = "hand", paid = [], half = false }) {
-      const uids = fitting(ctx, mine(ctx).discard, what).filter((uid) => !paid.includes(uid));
+      // Not the card being played: it only reaches the discard pile once it is done.
+      const uids = fitting(ctx, mine(ctx).discard, what).filter((uid) => !paid.includes(uid) && uid !== ctx.uid);
       const max = to === "bench" ? Math.min(n, ctx.state.rules.bench - mine(ctx).bench.length) : n;
       if (uids.length && max > 0) askChoose(ctx.state, { player: ctx.player, zone: "discard", what, uids, min: upTo ? 0 : Math.min(max, uids.length), max, effect: { op: to === "bench" ? "toBench" : to === "top" ? "fromDiscardTop" : "toHand", ...(half ? { half } : {}) } });
     },
@@ -1320,6 +1321,11 @@ const PATTERNS = [
   [/^Discard an Energy card from your hand\. Then, draw (\d+) cards\.$/, (m) => [{ op: "cost", n: 1, what: "energy" }, { op: "draw", n: Number(m[1]) }]],
   [/^Discard a card from your hand in order to play this card\. (.+)$/, (m) => { const rest = compileTrainer(m[1]); return rest && [{ op: "cost", n: 1 }, ...rest]; }],
   [/^Discard a Team Plasma card from your (?:hand|card)\. \(if you can't discard a Team Plasma card, you can't play this card\.\) Draw (\d+) cards\.$/i, (m) => [{ op: "cost", n: 1, what: "any+Team Plasma" }, { op: "draw", n: Number(m[1]) }]],
+  // Fossil Excavator: the deck or the discard pile, the player's choice (only asked when the discard pile has one).
+  [/^Search your deck or discard pile for a Trainer card that has Fossil in its name or a Stage 1 or Stage 2 Evolution card that evolves from a Fossil\. Show it to your opponent and put it into your hand\. If you searched your deck, shuffle your deck afterward\.$/, () => {
+    const what = "trainer~Fossil|stage1<Fossil|stage2<Fossil";
+    return [{ op: "choice", prompt: "Search which?", options: [{ label: "Your deck", steps: [{ op: "search", what, n: 1 }] }, { label: "Your discard pile", steps: [{ op: "recover", what, n: 1 }] }] }];
+  }],
   // Choose 1.
   [/^Choose 1: • (.+?) • (.+)$/, (m) => options([m[1], m[2]])],
   [/^Choose 1 or both: • (.+?) • (.+)$/, (m) => options([m[1], m[2]], true)],

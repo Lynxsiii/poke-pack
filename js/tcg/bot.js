@@ -430,10 +430,12 @@ export function botAction(state, player, defs) {
 
   // Bench: what evolves into something it holds first. One place stays free for later,
   // unless the evolution is already in hand or the Bench is empty.
-  const benches = actions.filter((a) => a.type === "bench");
+  // A Trainer played as a Basic Pokémon (a Fossil) is benched like one, but only when something it holds evolves from it.
+  const hand = side.hand.map((uid) => defOf(state, uid, defs));
+  const deck = side.deck.map((uid) => defOf(state, uid, defs));
+  const grows = (name) => hand.some((d) => d.evolvesFrom === name) || deck.some((d) => d.evolvesFrom === name);
+  const benches = actions.filter((a) => a.type === "bench" || (a.type === "play" && defOf(state, a.uid, defs).fossil && grows(defOf(state, a.uid, defs).name)));
   if (benches.length) {
-    const hand = side.hand.map((uid) => defOf(state, uid, defs));
-    const deck = side.deck.map((uid) => defOf(state, uid, defs));
     const score = (a) => {
       const def = defOf(state, a.uid, defs);
       return (hand.some((d) => d.evolvesFrom === def.name) ? 100 : 0) + (deck.some((d) => d.evolvesFrom === def.name) ? 40 : 0) + (def.ability?.use ? 30 : 0) + def.hp / 10;
@@ -442,9 +444,18 @@ export function botAction(state, player, defs) {
     if (side.bench.length < state.rules.bench - 1 || score(pick) >= 100 || !side.bench.length) return pick;
   }
 
+  // A Fossil in play that nothing it holds will evolve is dead weight: off the Bench, and out of the Active Spot
+  // once a Benched Pokémon can hit (it can't attack or retreat). One that will evolve stays.
+  for (const action of actions.filter((a) => a.type === "drop")) {
+    const slot = action.spot === ACTIVE ? side.active : side.bench[action.spot];
+    const name = defOf(state, slot.uid, defs).name;
+    if (action.spot === ACTIVE ? !hand.some((d) => d.evolvesFrom === name) && side.bench.some((mate) => hitNow(state, player, mate, defs) > 0) : !grows(name)) return action;
+  }
+
   // Trainers: card draw whenever it can, the rest only when it clearly helps.
   for (const action of actions.filter((a) => a.type === "play")) {
     const def = defOf(state, action.uid, defs);
+    if (def.fossil) continue;
     const aim = trainerAim(def.fx);
     const heal = def.fx.find((s) => s.op === "heal");
     // A card that also discards the Stadium in play is not played over its own Stadium.

@@ -113,7 +113,17 @@ export function shuffle(state, list) {
 export const other = (player) => 1 - player;
 
 export function defOf(state, uid, defs) {
-  return defs(state.cards[uid]);
+  const def = defs(state.cards[uid]);
+  // A Trainer played as a Pokémon (Mysterious Fossil, Clefairy Doll) is that Pokémon while it is in play (cards.js compileFossil).
+  return def?.fossil && fossilInPlay(state, uid) ? def.fossil.mon : def;
+}
+
+/** Is this card in play as a Pokémon, or under one that evolved from it? */
+function fossilInPlay(state, uid) {
+  for (const side of state.players || []) {
+    for (const slot of [side.active, ...(side.bench || [])]) if (slot && (slot.uid === uid || (slot.under || []).includes(uid))) return true;
+  }
+  return false;
 }
 
 export function slotAt(state, player, spot) {
@@ -436,8 +446,8 @@ export function conditionsOn(slot) {
 /** Asleep, Confused and Paralyzed replace each other; Burned and Poisoned sit beside them. */
 export function addCondition(state, slot, kind, defs = null, { counters = 0 } = {}) {
   if (!slot || !CONDITIONS.includes(kind)) return false;
-  // An Ability can keep some or all of them off.
-  const immune = defs ? toolOf(state, slot, defs).immune || [] : [];
+  // An Ability can keep some or all of them off, and so does a Trainer played as a Pokémon ("can't be affected by any Special Conditions").
+  const immune = defs ? [...(toolOf(state, slot, defs).immune || []), ...(defOf(state, slot.uid, defs)?.fossil?.immune || [])] : [];
   if (immune.includes("all") || immune.includes(kind)) return false;
   const st = (slot.status ||= { ...NO_STATUS });
   if (kind === "poisoned") {
@@ -744,7 +754,7 @@ function tooEarly(state, player, attack, defs) {
 
 export function canRetreat(state, player, defs) {
   const side = state.players[player];
-  if (!side.active || side.retreated || !side.bench.length || stuckFor(state, side.active, defs) || markOn(state, side.active, "noRetreat")) return false;
+  if (!side.active || side.retreated || !side.bench.length || stuckFor(state, side.active, defs) || markOn(state, side.active, "noRetreat") || defOf(state, side.active.uid, defs).fossil?.noRetreat) return false;
   return balloonOn(state, side.active, defs) || energyOf(state, side.active, defs).length >= retreatCost(state, side.active, defs);
 }
 
@@ -938,8 +948,17 @@ export function resolveKnockOuts(state, defs, events, { between = false } = {}) 
       const attacker = state.players[other(p)].active;
       if (!ability?.ko.counters || !attacker || warded(state, attacker, { player: p, src: "ability" }, defs)) continue;
       events.push({ t: "ability", p, spot, uid: slot.uid, name: ability.name });
-      attacker.damage += ability.ko.counters;
-      events.push({ t: "damage", p: other(p), spot: ACTIVE, n: ability.ko.counters, why: "ability" });
+      let n = ability.ko.counters;
+      if (ability.ko.untilTails) {
+        const results = [];
+        do results.push(flip(state, p));
+        while (results[results.length - 1] && results.length < 60);
+        events.push({ t: "flip", p, results, why: "ability", name: ability.name });
+        n *= results.filter(Boolean).length;
+      }
+      if (!n) continue;
+      attacker.damage += n;
+      events.push({ t: "damage", p: other(p), spot: ACTIVE, n, why: "ability" });
     }
   }
   const after = [];
@@ -977,12 +996,15 @@ export function resolveKnockOuts(state, defs, events, { between = false } = {}) 
       } else discardSlot(state, p, slot, defs);
       if (ability?.ko.steps) after.push([p, spot, slot.uid, ability.name, ability.ko.steps]);
       if (ko?.steps) after.push([p, spot, slot.uid, defOf(state, slot.tool, defs).name, ko.steps]);
-      if (spot === ACTIVE && byAttack(slot, p) && basics.length) left.push([p, basics, ko?.baton || 0]);
+      // A Fossil whose Knock Out "doesn't count as a Knocked Out Pokémon" is only discarded: no Prize card, nothing that asks about a Knock Out.
+      const counts = !def.fossil?.noKo;
+      if (spot === ACTIVE && byAttack(slot, p) && basics.length && counts) left.push([p, basics, ko?.baton || 0]);
       if (spot === ACTIVE) side.active = null;
       else side.bench[spot] = null;
       // Expert Belt: one more Prize card.
       // "If your opponent's Pokémon is Knocked Out by damage from this attack, take 1 more Prize card."
-      took[other(p)] += (def.prizes || 1) + (tool?.prize || 0) + (byAttack(slot, p) ? markOn(state, slot, "bounty")?.n || 0 : 0);
+      if (!def.fossil?.noPrize) took[other(p)] += (def.prizes ?? 1) + (tool?.prize || 0) + (byAttack(slot, p) ? markOn(state, slot, "bounty")?.n || 0 : 0);
+      if (!counts) continue;
       // Remembered by turn for "if any of your Pokémon were Knocked Out during your opponent's last turn"
       // (the checkup between turns is no one's turn).
       if (state.current === other(p) && !between) side.lostOn = [...new Set([...(side.lostOn || []).filter((t) => t >= state.turn - 1), state.turn])];
@@ -1123,6 +1145,14 @@ export function strike(ctx) {
       guarded = heads;
     }
     let amount = guarded ? 0 : Math.max(0, dealt.amount - less);
+    // Armor Stone: coins until tails, less damage for each heads.
+    if (amount > 0 && power?.soften) {
+      const results = [];
+      do results.push(flip(state, foe));
+      while (results[results.length - 1] && results.length < 60);
+      events.push({ t: "flip", p: foe, results, why: "ability", name: power.name });
+      amount = Math.max(0, amount - power.soften * results.filter(Boolean).length);
+    }
     // "Prevent that attack's damage if that damage is 30 or less": judged on what would land.
     const harden = !hit.noEffects && markOn(state, target, "harden");
     if (harden && amount <= harden.n) amount = 0;
@@ -1262,6 +1292,15 @@ const HANDLERS = {
     const why = trainerBlock(state, player, def, defs);
     if (why) fail(why);
     takeFromHand(state, player, uid);
+    if (def.fossil) {
+      // "Play it as if it were a Basic Pokémon": onto the Bench, a Pokémon while it is in play.
+      side.played = [...(side.played || []), uid];
+      const slot = newSlot(state, uid);
+      side.bench.push(slot);
+      events.push({ t: "bench", p: player, uid, spot: side.bench.length - 1 });
+      if (benched(state, player, slot, defs, events, true)) resolveKnockOuts(state, defs, events);
+      return;
+    }
     if (def.sub === "stadium") {
       // It stays in play for both players; the one it replaces goes to its owner's discard pile.
       if (state.stadium) state.players[state.stadium.owner].discard.push(state.stadium.uid);
@@ -1406,6 +1445,7 @@ const HANDLERS = {
     const slot = side.active;
     if (stuckFor(state, slot, defs)) fail(statusOf(slot).main === "asleep" ? "An Asleep Pokémon can't retreat." : "A Paralyzed Pokémon can't retreat.");
     if (markOn(state, slot, "noRetreat")) fail("That Pokémon can't retreat this turn.");
+    if (defOf(state, slot.uid, defs).fossil?.noRetreat) fail(`${defOf(state, slot.uid, defs).name} can't retreat.`);
     const cost = retreatCost(state, slot, defs);
     const gone = [];
     if (balloonOn(state, slot, defs)) {
@@ -1777,6 +1817,28 @@ const HANDLERS = {
     if (!state.pending.length) resolveKnockOuts(state, defs, events);
   },
 
+  /**
+   * "At any time during your turn before your attack, you may discard it from play": a Trainer played as a Pokémon
+   * goes to the discard pile with all its cards (no Knock Out, no Prize card). Lillie's Poké Doll goes to the
+   * bottom of the deck instead, its cards to the discard pile. From the Active Spot, a new Active Pokémon comes up.
+   */
+  drop(state, { player, spot }, defs, events) {
+    const why = dropBlock(state, player, spot, defs);
+    if (why) fail(why);
+    const side = state.players[player];
+    const slot = slotAt(state, player, spot);
+    const how = defOf(state, slot.uid, defs).fossil.drop;
+    if (spot === ACTIVE) side.active = null;
+    else side.bench.splice(spot, 1);
+    if (how === "bottom") {
+      side.discard.push(...slot.under, ...slot.energy, ...heldOn(slot));
+      if (slot.tool) toolGone(state, player, slot.tool, defs);
+      side.deck.push(slot.uid);
+    } else discardSlot(state, player, slot, defs);
+    events.push({ t: "drop", p: player, spot, uid: slot.uid, ...(how === "bottom" ? { to: "deck" } : {}) });
+    if (!side.active) state.pending.push({ type: "promote", player });
+  },
+
   end(state) {
     state.ending = true;
   },
@@ -1829,7 +1891,20 @@ export function trainerBlock(state, player, def, defs) {
     if (state.stadium && defOf(state, state.stadium.uid, defs).name === def.name) return `${def.name} is already in play.`;
     return "";
   }
+  // Played as a Basic Pokémon: it needs a place on the Bench.
+  if (def.fossil) return side.bench.length >= state.rules.bench ? "Your Bench is full." : "";
   if (!trainerReady(def.fx, { state, defs, events: [], player, src: "trainer" })) return `${def.name} would do nothing right now.`;
+  return "";
+}
+
+/** Why the Trainer played as a Pokémon at `spot` can't be discarded from play now, or "" when it can. */
+export function dropBlock(state, player, spot, defs) {
+  const slot = slotAt(state, player, spot);
+  const how = slot && defOf(state, slot.uid, defs).fossil?.drop;
+  if (!how) return "That can't be discarded from play.";
+  if (how === "bottom" && spot !== ACTIVE) return "Only as your Active Pokémon.";
+  // The rules allow it, but it would leave no Pokémon in play and lose the match.
+  if (inPlay(state, player).length < 2) return "You'd have no Pokémon left in play.";
   return "";
 }
 
@@ -2387,6 +2462,7 @@ export function legalActions(state, player, defs) {
   }
   if (state.stadium && !stadiumBlock(state, player, defs)) out.push({ type: "stadium", player });
   for (const [, spot] of spots) if (!abilityBlock(state, player, spot, defs)) out.push({ type: "ability", player, spot });
+  for (const [, spot] of spots) if (!dropBlock(state, player, spot, defs)) out.push({ type: "drop", player, spot });
   if (canRetreat(state, player, defs)) side.bench.forEach((_, to) => out.push({ type: "retreat", player, to }));
   for (const index of usableAttacks(state, player, defs)) out.push({ type: "attack", player, index });
   out.push({ type: "end", player });
