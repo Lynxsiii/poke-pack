@@ -1,4 +1,5 @@
 import { BASEP_SET_ID, BP_SET_ID, BWP_SET_ID, dexId, DPP_SET_ID, homeSetId, HSP_SET_ID, isBoxPromoId, kitCopyCount, MEP_SET_ID, NP_SET_ID, PROMO_HOMES, promoHomeOf, XYP_SET_ID } from "./card-home.js";
+import { playerNote } from "./product-note.js";
 
 export const RARITY_ORDER = [
   "Energy",
@@ -375,7 +376,7 @@ export function promoOffers(products = []) {
       ...words,
       packs,
       ...(from ? { from } : {}),
-      ...(item.note ? { note: String(item.note) } : {}),
+      ...(playerNote(item.note) ? { note: playerNote(item.note) } : {}),
       special: item.special && typeof item.special === "object" ? item.special : {},
       promos,
       pick: promoPick(item),

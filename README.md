@@ -287,6 +287,17 @@ price, so quests count a box as 36 packs. The client deals the packs one at a
 time and can skip to a summary of every hit. `node scripts/test-sealed.mjs`
 runs these rules against the real Worker.
 
+Product photos (`assets/products/<set>/<id>.webp`) sit on the dark stage, so no
+white page may be left around them. `python3 scripts/check_product_photos.py`
+checks every photo in `data/products.json` and exits 1 when one keeps white
+page joined to its outline (it cuts by shape, so white box art is kept); a photo
+whose white edge is real product goes in `scripts/product_photo_ok.txt` after a
+look at `--sheet`. `build_products.py` warns about a new photo that fails it.
+The shop's line under a product is `playerNote(note)` (`js/product-note.js`):
+the research parts of a note (sources, confidence, prices) stay in the data
+for us and are left out for players, so write a note as contents first, then
+research in brackets or its own sentence.
+
 ## Shared binder pages
 
 Each binder page has a Display on profile toggle. Basic profiles may display four pages; the backend enforces the limit, validates page indices, and reads only the selected pages from the current saved binder. Removing a card or selling it changes the public display without publishing a copy. Empty pages cannot be newly selected. Existing empty selections remain removable.
