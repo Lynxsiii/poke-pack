@@ -21,7 +21,7 @@
  */
 
 /** Scarlet & Violet set and promo ids (sv1-, sv3pt5-, rsv10pt5-, zsv10pt5-, svp-; not me-). */
-const SV_ID = /^(?:[zr]?sv\d|svp-)/;
+const SV_ID = /^(?:[zrj]?sv\d|svp-)/;
 
 /** Prismatic Evolutions golds with traced line art (scripts/fam/sv-gold/make_pre_lines.py). */
 const PRE_LINES = new Set(["sv8pt5-176", "sv8pt5-177", "sv8pt5-178", "sv8pt5-179", "sv8pt5-180"]);

@@ -61,7 +61,8 @@ CACHE = ROOT / "scripts" / ".cache" / "prices"
 # Card and product ids -> TCGplayer product ids, for the Worker's daily cron.
 IDS = DATA / "tcgplayer-ids.json"
 
-TCGCSV = "https://tcgcsv.com/tcgplayer/3/{path}"
+# Category 3 is Pokémon; a Japanese set names 85 (Pokémon Japan) with "tcgplayerCategory" in data/sets/<id>.json.
+TCGCSV = "https://tcgcsv.com/tcgplayer/{category}/{path}"
 HISTORY_API = "https://infinite-api.tcgplayer.com/price/history/{pid}/detailed?range={span}"
 # TCGplayer buckets: month is daily, quarter is every 3 days, annual is weekly.
 SPANS = ("month", "quarter", "annual")
@@ -132,9 +133,9 @@ def prune_cache() -> None:
             shutil.rmtree(day, ignore_errors=True)
 
 
-def tcgcsv(path: str, refresh: bool) -> list[dict]:
-    name = "tcgcsv-" + path.replace("/", "-") + ".json"
-    return fetch_json(TCGCSV.format(path=path), CSV_HEADERS, name, refresh)["results"]
+def tcgcsv(path: str, refresh: bool, category: int = 3) -> list[dict]:
+    name = "tcgcsv-" + ("" if category == 3 else f"{category}-") + path.replace("/", "-") + ".json"
+    return fetch_json(TCGCSV.format(category=category, path=path), CSV_HEADERS, name, refresh)["results"]
 
 
 def history(pid: int, span: str, refresh: bool) -> list[dict]:
@@ -202,12 +203,12 @@ class Catalogue:
             self._groups = tcgcsv("groups", self.refresh)
         return self._groups
 
-    def load(self, group: int) -> None:
+    def load(self, group: int, category: int = 3) -> None:
         if group in self.products:
             return
-        self.products[group] = tcgcsv(f"{group}/products", self.refresh)
+        self.products[group] = tcgcsv(f"{group}/products", self.refresh, category)
         rows: dict[int, list[dict]] = {}
-        for row in tcgcsv(f"{group}/prices", self.refresh):
+        for row in tcgcsv(f"{group}/prices", self.refresh, category):
             rows.setdefault(row["productId"], []).append(row)
         self.prices[group] = rows
 
@@ -272,10 +273,14 @@ def targets_for(set_id: str, cat: Catalogue) -> tuple[dict, dict, list[str]]:
     cfg = json.loads((SETS / f"{set_id}.json").read_text(encoding="utf-8"))
     cards = json.loads((DATA / f"{set_id}.json").read_text(encoding="utf-8"))
     group = cat.set_group(cfg)
-    card_groups = [group, *cat.subsets(group)]
+    category = int(cfg.get("tcgplayerCategory") or 3)
+    # A Japanese group has no English sub-galleries (cat.subsets reads the English group list).
+    card_groups = [group, *(cat.subsets(group) if category == 3 else [])]
     extra = [s.get("tcgplayerGroup") for s in (cfg.get("promoSeries") or {}).values()]
     extra += [p.get("tcgplayerGroup") for p in cfg.get("products") or []]
-    for g in [*card_groups, *extra, BLISTER_EXCLUSIVES]:
+    for g in card_groups:
+        cat.load(int(g), category)
+    for g in [*extra, BLISTER_EXCLUSIVES]:
         if g:
             cat.load(int(g))
     products = [p for g in card_groups for p in cat.products[g]]
@@ -359,7 +364,10 @@ def save_ids(set_id: str, card_pids: dict, sealed_pids: dict, cat: Catalogue) ->
     """
     ids = json.loads(IDS.read_text(encoding="utf-8")).get("sets", {}) if IDS.exists() else {}
     groups = {cat.group_of(pid) for pid in [*card_pids.values(), *sealed_pids.values()]}
+    cfg = json.loads((SETS / f"{set_id}.json").read_text(encoding="utf-8"))
+    category = int(cfg.get("tcgplayerCategory") or 3)
     ids[set_id] = {
+        **({"category": category} if category != 3 else {}),
         "groups": sorted(g for g in groups if g),
         "cards": card_pids,
         "sealed": sealed_pids,

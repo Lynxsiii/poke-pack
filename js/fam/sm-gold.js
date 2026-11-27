@@ -15,7 +15,7 @@
  *   cure: true   the `.cure` span: TCG Live's etch ridges multiplied a step darker over the whole foil, so the
  *                fingerprint relief reads over bright gold too.
  */
-import { isSm, smPattern } from "../sm-foil.js?v=8";
+import { isSm, smPattern } from "../sm-foil.js?v=9";
 
 const has = (pattern, cls) => ` ${pattern || ""} `.includes(` ${cls} `);
 

@@ -339,6 +339,8 @@ async function singlesForSet(setId, cards) {
   const numbers = (cards || []).filter((c) => !c.promo && !c.energy).map((c) => c.number).filter((n) => n != null);
   // A promo set (SV Black Star Promos) has nothing else, so nothing to ask for.
   if (!numbers.length) throw new Error("no singles");
+  // Japanese sets are priced only by the Worker (tcgcsv category 85); pokemontcg.io and TCGdex's English API don't know them.
+  if (cards.some((c) => c.lang)) throw new Error("no singles");
   if (ptcgioOk) {
     try {
       return await singlesFromPtcgio(setId);

@@ -28,7 +28,7 @@
  */
 
 /** Scarlet & Violet set ids (sv1-, sv3pt5-, rsv10pt5-, zsv10pt5-): the faces foilExtras() marks `era-sv`. */
-const SV_ID = /^[zr]?sv\d/;
+const SV_ID = /^[zrj]?sv\d/;
 const DIR = "assets/foil/fam/sv-sir";
 
 /** Stellar Tera SIRs with a printed rainbow crystal frame (the rest have the plain silver one). */
@@ -49,7 +49,8 @@ export function claims(card, base) {
 
 /** The mask's path: `<set>/<number>` from the id (sv10-229-stamp -> sv10/229-stamp). */
 function maskPath(card) {
-  const id = String(card.id);
+  // A Japanese print of the same art (scripts/build_jp_set.py `foilTwin`) wears the English card's mask.
+  const id = String(card.foilTwin || card.id);
   const cut = id.indexOf("-");
   return `${DIR}/${id.slice(0, cut)}/${id.slice(cut + 1)}-map-v1.webp`;
 }

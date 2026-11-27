@@ -16,7 +16,7 @@
 
 /** A Sun & Moon era print: the numbered sets, Shiny Vault, Detective Pikachu, the promos. */
 export function isSm(card) {
-  return card?.era === "sm" || /^(sm\d|sma-|sma$|det1|smp|mcd1[789])/.test(String(card?.id || ""));
+  return card?.era === "sm" || /^(j?sm\d|sma-|sma$|det1|smp|mcd1[789])/.test(String(card?.id || ""));
 }
 
 /** Prints that are foil edge to edge; they take TCG Live's map or the all-white one. */
@@ -43,7 +43,7 @@ export const SM_ALT_ART = new Set([
  * from shattered rainbow to a soft satin sheen (photos in
  * texture-refs/f1-holo-reverse; css/holo/sm.css).
  */
-const SM_LATE = /^(sm8|sm9|sm10|sm11|sm115|sm12|det1|mcd19)-/;
+const SM_LATE = /^(sm8|sm9|sm10|sm11|sm115|sm12|jsm12a|det1|mcd19)-/;
 /** Black Star promos from SM120 on (2018-11 and later) are Lost Thunder era or after; holo promos before are early. */
 const SM_LATE_PROMO = 120;
 export function smLate(card) {

@@ -3,6 +3,8 @@
 export const SET_ACCENTS = {
   "me55": { a: "#e8b64a", b: "#ff8f6b" },
   "me6": { a: "#ff8a3d", b: "#47d68f" },
+  "jsv2a": { a: "#e13843", b: "#53b3d5" },
+  "jsm12a": { a: "#e0c539", b: "#9173e8" },
   "me5": { a: "#8b6cf0", b: "#3fc7d9" },
   "me4": { a: "#36b4ee", b: "#7cf0d2" },
   "me3": { a: "#7fd94a", b: "#f2d44b" },

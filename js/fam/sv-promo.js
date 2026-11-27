@@ -18,7 +18,7 @@
  * Research and what changed: .claude/skills/card-textures/reference/fam-sv-promo.md.
  */
 
-const SV_ID = /^(?:[zr]?sv\d|svp-)/;
+const SV_ID = /^(?:[zrj]?sv\d|svp-)/;
 const PIXEL = new Set(["sv2-svp023", "sv4-svp061", "sv6-svp119"]);
 /** Shipped maps that put the window's foil over the Pokémon; redrawn by scripts/fam/sv-promo/make_maps.py. */
 const OWN_MAP = new Set(["sv4-svp061", "sv4-svp063"]);

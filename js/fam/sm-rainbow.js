@@ -12,7 +12,7 @@
  *                   crests) at rest, and lit a warm-white specular pool that brightens the print and lights the crests.
  *                   No spectrum layer over the printed rainbow (Noah, 2026-10-02: too much "rainbow glare").
  */
-import { isSm, smPattern } from "../sm-foil.js?v=8";
+import { isSm, smPattern } from "../sm-foil.js?v=9";
 
 const has = (pattern, cls) => ` ${pattern || ""} `.includes(` ${cls} `);
 

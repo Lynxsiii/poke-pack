@@ -2350,6 +2350,133 @@ export const SV_151 = {
   ],
 };
 
+/**
+ * Japanese sets (lang "ja"). The cards keep English names and text from Scrydex's translation (scripts/build_jp_set.py)
+ * with `nameJa` and the Japanese scan; set ids start with "j" because Japan's codes reuse English ones. TCGplayer
+ * Japan (category 85) prices them, through the same daily cron as the English sets. Japanese packs carry no basic
+ * Energy, and The Pokémon Company Japan publishes no pull rates: the rates below are estimates, flagged as such
+ * on the set page. Sources in data/pullrates.json.
+ *
+ * Pokémon Card 151 (SV2a, June 2023): an enhanced expansion, 7 cards a pack and 20 packs a box (¥290 / ¥5,800,
+ * pokemon-card.com and SNKRDUNK), "2 holo cards guaranteed" on the wrapper. Every pack has a Poké Ball pattern
+ * mirror (a Master Ball mirror about once a box, the Japan-only finish) or an Art Rare in its place, and one holo
+ * Rare or better.
+ */
+export const JP_151 = {
+  id: "jsv2a",
+  tcgId: "jsv2a",
+  lang: "ja",
+  code: "SV2a",
+  name: "Pokémon Card 151",
+  edition: "Scarlet & Violet",
+  era: "Japanese",
+  released: "June 16, 2023",
+  live: true,
+  printedTotal: 165,
+  totalCount: 510,
+  packSize: 7,
+  cost: 16.21,
+  dataFile: "data/jsv2a.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Japanese, June 2023. Seven cards a pack, two of them foil, and a Master Ball mirror that only Japan printed.",
+  oddsLine: "RR 1/5 · AR 1/7 · SR 1/33 · SAR 1/67 · UR 1/133 · Master Ball 1/20 (estimates)",
+  lede: "The original 151 in Japanese: every pack holds a Poké Ball mirror or an Art Rare, and about one in twenty swaps the mirror for a Master Ball print.",
+  slots: [
+    { pool: "common", count: 3 },
+    { pool: "uncommon", count: 2 },
+    {
+      pool: "art-slot",
+      count: 1,
+      table: [
+        ["pokeball", 1 - 0.05 - 0.15],
+        ["masterball", 0.05],
+        ["ir", 0.15],
+      ],
+    },
+    {
+      pool: "rare-slot",
+      count: 1,
+      table: [
+        ["rare", 1 - 0.2 - 0.03 - 0.015 - 0.0075],
+        ["double", 0.2],
+        ["ultra", 0.03],
+        ["sir", 0.015],
+        ["hyper", 0.0075],
+      ],
+    },
+  ],
+  heroIds: ["jsv2a-201", "jsv2a-205", "jsv2a-202", "jsv2a-200"],
+  wrappers: [
+    {
+      id: "mew",
+      name: "Mew",
+      cardId: "jsv2a-151",
+      tag: "Japanese 151",
+      art: "assets/packs/jsv2a/mew.avif",
+      artFallback: "assets/packs/jsv2a/mew.png",
+    },
+  ],
+};
+
+/**
+ * TAG TEAM GX Tag All Stars (SM12a, October 2019): a Japanese high class pack with no English release. 11 cards a
+ * pack and "GX guaranteed" (the wrapper), 10 packs a box, ¥500 + tax (pokemon-card.com: "1パック11枚入り", "1BOXに
+ * SR以上のカードが1枚以上必ず入っている"; the box guarantee is not modelled, a pack here rolls on its own). Its
+ * commons carry no rarity mark; any of them may come as a mirror holo, and the Prism Rares sit in that mirror slot.
+ */
+export const JP_TAG_ALL_STARS = {
+  id: "jsm12a",
+  tcgId: "jsm12a",
+  lang: "ja",
+  code: "SM12a",
+  name: "Tag All Stars",
+  edition: "Sun & Moon",
+  era: "Japanese",
+  released: "October 4, 2019",
+  live: true,
+  printedTotal: 173,
+  totalCount: 226,
+  packSize: 11,
+  cost: 119.99,
+  dataFile: "data/jsm12a.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Japanese, October 2019. A high class pack never sold in English: eleven cards, a TAG TEAM or GX in every one.",
+  oddsLine: "GX every pack · SR 1/8 · HR 1/20 · UR 1/33 · Prism 1/5 (estimates)",
+  lede: "Every pack holds a GX, and the Super Rares include new art made only for this set, like Umbreon & Darkrai-GX.",
+  slots: [
+    { pool: "common", count: 9 },
+    {
+      pool: "reverse",
+      count: 1,
+      table: [
+        ["reverse", 0.8],
+        ["prismStar", 0.2],
+      ],
+    },
+    {
+      pool: "rare-slot",
+      count: 1,
+      table: [
+        ["gx", 1 - 0.13 - 0.05 - 0.03],
+        ["rareUltra", 0.13],
+        ["rainbow", 0.05],
+        ["secret", 0.03],
+      ],
+    },
+  ],
+  heroIds: ["jsm12a-182", "jsm12a-220", "jsm12a-222", "jsm12a-219"],
+  wrappers: [
+    {
+      id: "tag-all-stars",
+      name: "Tag All Stars",
+      cardId: "jsm12a-1",
+      tag: "Japan only",
+      art: "assets/packs/jsm12a/tag-all-stars.avif",
+      artFallback: "assets/packs/jsm12a/tag-all-stars.png",
+    },
+  ],
+};
+
 export const DESTINED_RIVALS = {
   id: "sv10",
   tcgId: "sv10",
@@ -6630,6 +6757,8 @@ export const PLAYABLE_SETS = [
   MEGA_EVOLUTION,
   MEP_PROMOS,
   MCDONALDS_2026,
+  JP_151,
+  JP_TAG_ALL_STARS,
   BLACK_BOLT,
   WHITE_FLARE,
   DESTINED_RIVALS,
@@ -6993,6 +7122,8 @@ export const ROADMAP = [
   // whose sets are all live keeps an empty `sets` list so it stays in its place;
   // `sets` holds the sets still on the way.
   { era: "Mega Evolution", sets: [] },
+  // Japanese sets (lang "ja"), one shelf of their own whatever their era.
+  { era: "Japanese", sets: [] },
   { era: "Scarlet & Violet", sets: [] },
   { era: "Sword & Shield", sets: [] },
   { era: "Sun & Moon", sets: [] },

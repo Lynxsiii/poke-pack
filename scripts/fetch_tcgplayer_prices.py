@@ -33,7 +33,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
 SEALED = DATA / "sealed.json"
-TCGCSV = "https://tcgcsv.com/tcgplayer/3/{group}/{what}"
+# Category 3 is Pokémon (English), 85 Pokémon Japan; a Japanese set names it with "tcgplayerCategory".
+TCGCSV = "https://tcgcsv.com/tcgplayer/{category}/{group}/{what}"
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) poke-pack.rip price refresh"
 
 # sealed.json key -> product-name test. Cases, displays, code cards, sleeved
@@ -56,8 +57,8 @@ PATTERN = re.compile(r"\s+\((Poke|Master) Ball Pattern\)$", re.I)
 PATTERN_SUFFIX = {"poke": "pb", "master": "mb"}
 
 
-def fetch(group: int, what: str) -> list[dict]:
-    req = urllib.request.Request(TCGCSV.format(group=group, what=what), headers={"User-Agent": UA})
+def fetch(group: int, what: str, category: int = 3) -> list[dict]:
+    req = urllib.request.Request(TCGCSV.format(category=category, group=group, what=what), headers={"User-Agent": UA})
     with urllib.request.urlopen(req, timeout=60) as resp:
         return json.loads(resp.read())["results"]
 
@@ -194,10 +195,16 @@ def price_singles(set_id: str, products: list[dict], prices: dict[int, list[dict
         if match:
             by_number[card["number"]] = match[0]
 
+    # A Japanese set's builder (scripts/build_jp_set.py) already stores each card's TCGplayer product id from
+    # Scrydex, so those cards are priced by id: TCGplayer Japan names some prints differently ("Heat Factory" for
+    # Heat Factory ◇) and the id is the stronger match anyway.
+    by_id = {p["productId"]: p for p in products}
+    pinned = {c["number"]: by_id[c["tcgplayerId"]] for c in cards if c.get("lang") and c.get("tcgplayerId") in by_id}
+    by_number.update(pinned)
     wrong = [
         (c["number"], c["name"], by_number[c["number"]]["name"])
         for c in cards
-        if not c.get("promo") and c["number"] in by_number
+        if not c.get("promo") and c["number"] in by_number and c["number"] not in pinned
         and norm(c["name"]) != norm(by_number[c["number"]]["name"])
     ]
     if wrong:
@@ -231,10 +238,46 @@ def price_singles(set_id: str, products: list[dict], prices: dict[int, list[dict
             priced += 1
         else:
             missing.append(card["number"])
+    if missing and any(c.get("lang") == "ja" for c in cards):
+        missing = cardmarket_fill(set_id, cards, missing)
     out = json.dumps(cards, ensure_ascii=False, indent=2) + "\n"
     if out != raw:
         path.write_text(out, encoding="utf-8", newline="\n")
     print(f"  singles  {priced}/{len(cards)} priced" + (f", no market price: {', '.join(missing)}" if missing else ""))
+
+
+EUR_USD = 1.08  # rough, for the Cardmarket fallback only
+
+
+def cardmarket_fill(set_id: str, cards: list[dict], missing: list[str]) -> list[str]:
+    """A Japanese card TCGplayer has no market price for (thin import listings: Tag All Stars' gold Reshiram &
+    Charizard-GX) takes Cardmarket's 30-day average from TCGdex, in dollars, so a top pull is not valued at a
+    common's floor. Returns the numbers still unpriced."""
+    cfg = json.loads((DATA / "sets" / f"{set_id}.json").read_text(encoding="utf-8"))
+    code = cfg.get("tcgdexId") or cfg.get("code")
+    if not code:
+        return missing
+    left = []
+    for card in cards:
+        if card.get("number") not in missing or card.get("pattern"):
+            if card.get("number") in missing:
+                left.append(card["number"])
+            continue
+        url = f"https://api.tcgdex.net/v2/ja/cards/{code}-{int(card['number']):03d}"
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": UA})
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                cm = (json.loads(resp.read()).get("pricing") or {}).get("cardmarket") or {}
+        except Exception:  # noqa: BLE001 - a miss stays unpriced
+            cm = {}
+        eur = cm.get("avg30") or cm.get("trend")
+        if eur:
+            card["market"] = round(float(eur) * EUR_USD, 2)
+            card["marketSource"] = "cardmarket"
+        else:
+            left.append(card["number"])
+    print(f"  cardmarket fallback {len(missing) - len(left)}/{len(missing)}")
+    return left
 
 
 def price_sealed(set_id: str, products: list[dict], prices: dict[int, list[dict]]) -> None:
@@ -262,19 +305,20 @@ def main(argv: list[str]) -> int:
             print(f"{set_id}: no tcgplayerGroup in data/sets/{set_id}.json", file=sys.stderr)
             return 2
         print(f"{set_id} (TCGplayer group {group}):")
-        products = fetch(group, "products")
+        category = int(cfg.get("tcgplayerCategory") or 3)
+        products = fetch(group, "products", category)
         prices: dict[int, list[dict]] = {}
-        for row in fetch(group, "prices"):
+        for row in fetch(group, "prices", category):
             prices.setdefault(row["productId"], []).append(row)
         # A sub-gallery (Trainer Gallery, Shiny Vault...) is its own TCGplayer
         # group; its singles join the set's, its sealed products do not exist.
         for sub in cfg.get("subsets") or []:
             if not sub.get("tcgplayerGroup"):
                 continue
-            for product in fetch(sub["tcgplayerGroup"], "products"):
+            for product in fetch(sub["tcgplayerGroup"], "products", category):
                 if not NOT_RETAIL.search(product["name"]):
                     products.append({**product, "_gallery": sub.get("gallery")})
-            for row in fetch(sub["tcgplayerGroup"], "prices"):
+            for row in fetch(sub["tcgplayerGroup"], "prices", category):
                 prices.setdefault(row["productId"], []).append(row)
         price_singles(set_id, products, prices)
         if not singles_only:

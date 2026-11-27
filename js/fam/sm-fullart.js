@@ -18,7 +18,7 @@
  *   smf-noetch      a print with no TCG Live etch (the data hands it the shared engraving tile): no etch drawn, since a
  *                   tile shared by every card is not the card's engraving.
  */
-import { isSm, smPattern } from "../sm-foil.js?v=8";
+import { isSm, smPattern } from "../sm-foil.js?v=9";
 
 const has = (pattern, cls) => ` ${pattern || ""} `.includes(` ${cls} `);
 

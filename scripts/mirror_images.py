@@ -537,6 +537,12 @@ def set_identities() -> list[tuple[str, str, str]]:
             symbol = f"https://images.pokemontcg.io/{set_id}/symbol.png"
         if set_id in pokesymbols:
             symbol = POKESYMBOLS.format(slug=pokesymbols[set_id])
+        # A Japanese set (data/sets/<id>.json "lang") takes scrydex's own logo and symbol for its expansion.
+        cfg_path = DATA / "sets" / f"{set_id}.json"
+        cfg = json.loads(cfg_path.read_text(encoding="utf-8")) if cfg_path.exists() else {}
+        if cfg.get("lang") and cfg.get("scrydexId"):
+            logo = f"https://images.scrydex.com/pokemon/{cfg['scrydexId']}-logo/logo"
+            symbol = f"https://images.scrydex.com/pokemon/{cfg['scrydexId']}-symbol/symbol"
         out.append((set_id, logo, symbol))
     # Sets that are only in the slug map (an era another branch is adding) get
     # a symbol too, so that branch can pick the file up rather than fetch its

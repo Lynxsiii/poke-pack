@@ -76,7 +76,7 @@ const priceFor = (base, pid) => Math.round((base + (pid % 97) / 100) * 100) / 10
 function tcgcsv(base, { down = [] } = {}) {
   const calls = [];
   const fetcher = async (url) => {
-    const group = Number(String(url).match(/\/3\/(\d+)\/prices$/)?.[1]);
+    const group = Number(String(url).match(/\/(?:3|85)\/(\d+)\/prices$/)?.[1]);
     calls.push(group);
     if (!group || down.includes(group)) return new Response("", { status: 503 });
     const results = [{ productId: 1, subTypeName: "Normal", marketPrice: 1 }];

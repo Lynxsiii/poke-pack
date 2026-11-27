@@ -3,6 +3,8 @@
    MASTERY_GIFTS: set id to the sleeve/coin its mastery gifts. CROWN_GIFTS: era slug to its crown gifts. */
 export const MASTERY_GIFTS = {
   "me6": [],
+  "jsv2a": [],
+  "jsm12a": [],
   "me55": [{"kind": "sleeve", "id": "me-upc-day-sleeves", "name": "Pikachu, Espeon and Mew sleeves"}, {"kind": "coin", "id": "me-upc-espeon-coin", "name": "Espeon coin"}],
   "me5": [{"kind": "sleeve", "id": "me-darkrai-etb-sleeves", "name": "Darkrai sleeves"}, {"kind": "coin", "id": "me-tepig-coin", "name": "Tepig coin"}],
   "me4": [{"kind": "sleeve", "id": "me-greninja-etb-sleeves", "name": "Greninja sleeves"}, {"kind": "coin", "id": "me-chikorita-coin", "name": "Chikorita coin"}],

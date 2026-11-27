@@ -14,7 +14,7 @@
  * Research and what changed: .claude/skills/card-textures/reference/fam-sv-acespec.md.
  */
 
-const SV_ID = /^(?:[zr]?sv\d|svp-)/;
+const SV_ID = /^(?:[zrj]?sv\d|svp-)/;
 const DIR = "assets/foil/fam/sv-acespec";
 /** Cards with a body mask (every ACE SPEC Rare in the data on 2026-11-23). */
 const BODY = new Set(`sv5-141 sv5-152 sv5-153 sv5-154 sv5-157 sv5-158 sv5-162 sv6-152 sv6-162 sv6-163 sv6-164 sv6-165

@@ -22,7 +22,7 @@
  * Shared with the card-textures lab so the lab draws what the site draws.
  */
 
-import { isSm, smGxMap, smPattern, smReverseFinish, smSafeMap, SM_FULL_ART, SM_ETCHED } from "./sm-foil.js?v=8";
+import { isSm, smGxMap, smPattern, smReverseFinish, smSafeMap, SM_FULL_ART, SM_ETCHED } from "./sm-foil.js?v=9";
 
 import { isXy, xyMap, xyPattern, xyReverseExtras, xyReverseFinish, XY_FULL_ART, XY_ETCHED } from "./xy-foil.js?v=5";
 
@@ -33,7 +33,7 @@ import { isDp, dpEtched, dpMap, dpPattern, dpReverseExtras, dpReverseFinish, DP_
 import { isEx, exEtched, exMap, exPattern, exReverseExtras, exReverseFinish, exReversePattern } from "./ex-foil.js?v=9";
 import { isWotc, wotcLegendaryExtras, wotcMap, wotcPattern, wotcReverseFinish, WOTC_FULL_ART } from "./wotc-foil.js?v=6";
 import { specialInk, specialReverseMap } from "./wotc-special.js?v=3";
-import { famExtras } from "./holo-fam.js?v=113";
+import { famExtras } from "./holo-fam.js?v=114";
 import { HIT_RARITIES } from "./engine.js";
 
 export { isSm, smPattern, isXy, xyPattern, isBw, bwPattern, isDp, dpPattern, isEx, exPattern, isWotc, wotcPattern };
@@ -398,7 +398,7 @@ export function eraFoilExtras(card, url, reverseKind) {
   // Scarlet & Violet prints (sv*, and Black Bolt / White Flare's zsv/rsv):
   // finishes the Mega Evolution era prints differently key off this, such as
   // the Double Rare streaks (css/holo/sv-double-rare.css).
-  if (/^[zr]?sv\d/.test(String(card.id || ""))) classes.push("era-sv");
+  if (/^[zrj]?sv\d/.test(String(card.id || ""))) classes.push("era-sv");
   // Mega Evolution prints (me1-me5, me2pt5; not the 30th Celebration, me55): the same finishes as
   // Scarlet & Violet's with their own retune (css/holo/me-finishes.css, sv-double-rare.css).
   if (/^me\d(pt5)?-/.test(String(card.id || ""))) classes.push("era-me");

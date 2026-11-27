@@ -13,7 +13,7 @@
  *                 separate colour bars (multiply, so its text stays black), the diamond is a dark mirror that flashes
  *                 silver near the light, and the black frame shows faint dark-rainbow streaks only when lit.
  */
-import { isSm, smPattern } from "../sm-foil.js?v=8";
+import { isSm, smPattern } from "../sm-foil.js?v=9";
 
 const has = (pattern, cls) => ` ${pattern || ""} `.includes(` ${cls} `);
 
