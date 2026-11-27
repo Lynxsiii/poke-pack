@@ -109,7 +109,8 @@
       "packs": 10,
       "promos": [
         "smp070"
-      ]
+      ],
+      "imageVersion": 2
     },
     {
       "id": "pikachu-pin-collection",
@@ -176,7 +177,8 @@
         "smp081",
         "smp082"
       ],
-      "note": "Sold outside North America."
+      "note": "Sold outside North America.",
+      "imageVersion": 2
     },
     {
       "id": "zoroark-gx-special-collection",
@@ -198,7 +200,8 @@
       "promos": [
         "smp090",
         "28h"
-      ]
+      ],
+      "imageVersion": 2
     },
     {
       "id": "collector-chest",
@@ -219,7 +222,8 @@
       "tcgplayerId": 161257,
       "packs": 4,
       "promos": [],
-      "note": "Its promo is Burning Shadows 88a, not an SM number."
+      "note": "Its promo is Burning Shadows 88a, not an SM number.",
+      "imageVersion": 2
     },
     {
       "id": "shiny-darkrai-gx-collection",
@@ -228,7 +232,8 @@
       "tcgplayerId": 600514,
       "packs": 4,
       "promos": [],
-      "note": "European version. Its promo is Burning Shadows 88a, not an SM number."
+      "note": "European version. Its promo is Burning Shadows 88a, not an SM number.",
+      "imageVersion": 2
     },
     {
       "id": "shiny-zygarde-gx-box",

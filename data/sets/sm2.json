@@ -47,7 +47,8 @@
         "smp021"
       ],
       "pick": 1,
-      "note": "Event kit; one promo per kit."
+      "note": "Event kit; one promo per kit.",
+      "imageVersion": 2
     },
     {
       "id": "lurantis-single-pack-blister",
@@ -171,7 +172,8 @@
       "promos": [
         "smp037"
       ],
-      "note": "Pack set/mix not documented; assumed own set."
+      "note": "Pack set/mix not documented; assumed own set.",
+      "imageVersion": 2
     },
     {
       "id": "incineroar-gx-premium-collection",
@@ -262,7 +264,8 @@
       "tcgplayerId": 218327,
       "packs": 2,
       "promos": [],
-      "note": "No SM number. Bulbapedia also lists a June 7 2019 Solgaleo-GX Challenge Box with a jumbo SM1 89; TCGplayer text matches the Walmart version."
+      "note": "No SM number. Bulbapedia also lists a June 7 2019 Solgaleo-GX Challenge Box with a jumbo SM1 89; TCGplayer text matches the Walmart version.",
+      "imageVersion": 2
     },
     {
       "id": "lunala-gx-challenge-box",
@@ -279,7 +282,8 @@
       "kind": "box",
       "tcgplayerId": 129888,
       "packs": 36,
-      "promos": []
+      "promos": [],
+      "imageVersion": 2
     },
     {
       "id": "theme-deck-steel-sun",

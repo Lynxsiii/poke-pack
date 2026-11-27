@@ -119,7 +119,8 @@
       "promos": [
         "smp060"
       ],
-      "note": "Pack set/mix not documented; assumed own set."
+      "note": "Pack set/mix not documented; assumed own set.",
+      "imageVersion": 2
     },
     {
       "id": "team-skull-pin-collection",
@@ -183,7 +184,8 @@
       "tcgplayerId": 218320,
       "packs": 2,
       "promos": [],
-      "note": "No SM number."
+      "note": "No SM number.",
+      "imageVersion": 2
     },
     {
       "id": "lycanroc-gx-challenge-box",
@@ -215,7 +217,8 @@
       ],
       "price": 9.31,
       "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
-      "note": "A 60-card theme deck featuring Lycanroc, no booster pack (Bulbapedia deck list, checked against a second list)."
+      "note": "A 60-card theme deck featuring Lycanroc, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "imageVersion": 2
     },
     {
       "id": "theme-deck-luminous-frost",
@@ -228,7 +231,8 @@
       ],
       "price": 12.71,
       "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
-      "note": "A 60-card theme deck featuring Alolan Ninetales, no booster pack (Bulbapedia deck list, checked against a second list)."
+      "note": "A 60-card theme deck featuring Alolan Ninetales, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "imageVersion": 2
     }
   ],
   "promoCards": {

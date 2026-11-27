@@ -157,7 +157,8 @@
       "kind": "etb",
       "tcgplayerId": 123447,
       "packs": 8,
-      "promos": []
+      "promos": [],
+      "imageVersion": 3
     },
     {
       "id": "etb-mega-blastoise",
@@ -165,7 +166,8 @@
       "kind": "etb",
       "tcgplayerId": 123448,
       "packs": 8,
-      "promos": []
+      "promos": [],
+      "imageVersion": 4
     },
     {
       "id": "prerelease-kit",
@@ -214,7 +216,8 @@
       "packs": 1,
       "promos": [
         "xyp163"
-      ]
+      ],
+      "imageVersion": 2
     },
     {
       "id": "mega-blastoise-pin-collection",
@@ -263,7 +266,8 @@
         "xy12": 2,
         "xy11": 1,
         "xy9": 1
-      }
+      },
+      "imageVersion": 2
     },
     {
       "id": "dragonite-ex-box",
@@ -363,7 +367,8 @@
         "xyp165",
         "xyp166"
       ],
-      "note": "Pack mix approximate: the real split isn't documented."
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "imageVersion": 2
     },
     {
       "id": "mythical-collection-volcanion",
@@ -379,7 +384,8 @@
         "xyp194",
         "xyp195"
       ],
-      "note": "Pack mix approximate: the real split isn't documented."
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "imageVersion": 2
     },
     {
       "id": "mythical-collection-magearna",

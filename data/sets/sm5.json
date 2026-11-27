@@ -158,7 +158,8 @@
         "smp121",
         "10a"
       ],
-      "note": "The pack mix is not documented; shown as Ultra Prism packs."
+      "note": "The pack mix is not documented; shown as Ultra Prism packs.",
+      "imageVersion": 2
     },
     {
       "id": "legends-of-johto-gx-collection",
@@ -178,7 +179,8 @@
       "kind": "bundle",
       "tcgplayerId": 232314,
       "packs": 3,
-      "promos": []
+      "promos": [],
+      "imageVersion": 2
     },
     {
       "id": "boosterBox",
@@ -199,7 +201,8 @@
       ],
       "price": 14.7,
       "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
-      "note": "A 60-card theme deck featuring Garchomp, no booster pack (Bulbapedia deck list, checked against a second list)."
+      "note": "A 60-card theme deck featuring Garchomp, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "imageVersion": 2
     },
     {
       "id": "theme-deck-imperial-command",
@@ -212,7 +215,8 @@
       ],
       "price": 10.2,
       "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
-      "note": "A 60-card theme deck featuring Empoleon, no booster pack (Bulbapedia deck list, checked against a second list)."
+      "note": "A 60-card theme deck featuring Empoleon, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "imageVersion": 2
     }
   ]
 }

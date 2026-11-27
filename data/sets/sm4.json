@@ -140,7 +140,8 @@
         "smp075"
       ],
       "pick": 1,
-      "note": "Event kit; one promo per kit."
+      "note": "Event kit; one promo per kit.",
+      "imageVersion": 2
     },
     {
       "id": "golisopod-single-pack-blister",
@@ -268,7 +269,8 @@
       "promos": [
         "smp099"
       ],
-      "note": "The pack mix is not documented; shown as Crimson Invasion packs."
+      "note": "The pack mix is not documented; shown as Crimson Invasion packs.",
+      "imageVersion": 2
     },
     {
       "id": "boosterBox",
@@ -289,7 +291,8 @@
       ],
       "price": 9.61,
       "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
-      "note": "A 60-card theme deck featuring Hydreigon, no booster pack (Bulbapedia deck list, checked against a second list)."
+      "note": "A 60-card theme deck featuring Hydreigon, no booster pack (Bulbapedia deck list, checked against a second list).",
+      "imageVersion": 2
     },
     {
       "id": "theme-deck-clanging-thunder",

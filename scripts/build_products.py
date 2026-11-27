@@ -564,7 +564,19 @@ def save_product_image(set_id: str, product: dict, refresh: bool) -> str | None:
         img = img.resize((PRODUCT_WIDTH, round(img.height * PRODUCT_WIDTH / img.width)), Image.LANCZOS)
     dest.parent.mkdir(parents=True, exist_ok=True)
     img.save(dest, "WEBP", quality=80, method=6, exact=True)
+    warn_white_page(rel)
     return rel
+
+
+def warn_white_page(rel: str) -> None:
+    """The convex hull keeps white page in a concave outline (a chest's handle, a kit's hanger tabs): say so loudly,
+    so a new photo never ships with a white wedge (Noah, 11-27). Fix with check_product_photos.py --fix."""
+    import check_product_photos as cpp
+    px = cpp.load(ROOT / rel)
+    rm, _ = cpp.paper(px)
+    s = cpp.share(px, rm)
+    if s > cpp.FLAG and rel not in cpp.ok_list():
+        print(f"    WARNING {rel}: {s:.1%} looks like white page. Run: python3 scripts/check_product_photos.py --fix {rel}")
 
 
 def promo_record(cfg: dict, number: str, spec: dict, cards: dict[str, dict], refresh: bool) -> tuple[dict, float | None, str]:
