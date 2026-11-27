@@ -132,6 +132,8 @@ export function fits(def, what) {
   if (!def) return false;
   if (what === "any") return true;
   if (what.includes("|")) return what.split("|").some((one) => fits(def, one));
+  // "a&&b": both ("Basic" and "named Duskull", for what goes onto the Bench).
+  if (what.includes("&&")) return what.split("&&").every((one) => fits(def, one));
   // Old wordings name cards by what they print: "with Dark in its name" (~Dark), a subtype (+Team Plasma),
   // "excluding Pokémon LV.X" (%Level-Up), "a Retreat Cost of 3 or more" (#r3), "except Trainers' Mail" (!=Trainers' Mail),
   // "evolves from a Fossil" (<Fossil).

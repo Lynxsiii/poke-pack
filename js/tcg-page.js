@@ -23,7 +23,7 @@
  *   coinFaces()         { heads, tails } art of the equipped coin, or null for the house coin
  */
 
-import { ACTIVE, FORMATS, RuleError, abilityBlock, abilityOn, apply, canRetreat, conditionsOn, createGame, damageAfterTyping, defOf, energyOf, hpLeft, legalActions, markOn, marksOn, maxHp, other, retreatCost, stadiumBlock, toolOf, trainerBlock, usableAttacks } from "./tcg/engine.js";
+import { ACTIVE, FORMATS, RuleError, abilityBlock, abilityOn, apply, canRetreat, conditionsOn, createGame, damageAfterTyping, defOf, energyOf, hpLeft, legalActions, markOn, marksOn, maxHp, other, retreatCost, shieldOn, stadiumBlock, toolOf, trainerBlock, usableAttacks } from "./tcg/engine.js";
 import { ENERGY_TYPES, FREE_ENERGY, createDefs, isFreeEnergy } from "./tcg/cards.js";
 import { botAction } from "./tcg/bot.js";
 import { MAX_DECKS, buildBotDeck, buildDeck, checkDeck, deckList, deckSize, notLegal, roomFor, rulesOf } from "./tcg/decks.js";
@@ -906,7 +906,7 @@ export function initTcg(deps) {
       const mine = toolOf(state, slot, defs);
       const theirs = toolOf(state, foeSlot, defs);
       const typed = damageAfterTyping(base + (mine.plus || 0), def, foeDef, { noWeakness: Boolean(theirs.noWeakness) });
-      const blocked = markOn(state, foeSlot, "shield") || markOn(state, foeSlot, "guard");
+      const blocked = shieldOn(state, foeSlot, def) || markOn(state, foeSlot, "guard");
       const less = (markOn(state, foeSlot, "less")?.n || 0) + (theirs.less || 0);
       const real = blocked ? 0 : Math.max(0, typed.amount - less);
       const notes = [];
@@ -1211,6 +1211,8 @@ export function initTcg(deps) {
           spite: event.mirror ? `${whose} Active Pokémon will put back as many damage counters as it takes next turn.` : `${whose} Active Pokémon will put ${event.n / 10} damage counters on whatever damages it next turn.`,
           noHeal: `${whose} Active Pokémon can't be healed next turn.`,
           doom: `${whose} Active Pokémon gets ${event.n / 10} damage counters at the end of next turn.`,
+          tails: `${event.p === ME ? "Your" : "Their"} coin flips next turn count as tails.`,
+          noGx: `${event.p === ME ? "You" : "They"} can't use GX attacks for the rest of the game.`,
         }[event.kind] || "";
       }
       case "lock": return `${event.p === ME ? "You" : "They"} can't play ${event.kinds.map((k) => ({ item: "Item", supporter: "Supporter", stadium: "Stadium", special: "Special Energy", trainer: "Trainer" })[k]).join(" or ")} cards next turn.`;
@@ -1220,7 +1222,8 @@ export function initTcg(deps) {
       case "lost": return `${plural(event.uids.length, "card")} put in ${event.p === ME ? "your" : "their"} Lost Zone.`;
       case "mill": return `${plural(event.uids.length, "card")} discarded from ${event.p === ME ? "your" : "their"} deck.`;
       case "recycle": return `${who(event.p)} shuffled ${plural(event.uids.length, "card")} from the discard pile into the deck.`;
-      case "bounce": return `${who(event.p)} put ${name(event.uid)} back into ${event.p === ME ? "your" : "its"} hand.`;
+      case "bounce": if (event.discard) return `${name(event.uid)} was discarded, with all cards attached to it.`;
+        return `${who(event.p)} put ${name(event.uid)} back into ${event.p === ME ? "your" : "its"} hand.`;
       case "boost": return `${event.p === ME ? "Your" : "Their"} attacks can do ${event.n} more damage this turn.`;
       case "energy-to-hand": return `${plural(event.uids.length, "Energy card")} went back to ${event.p === ME ? "your" : "their"} hand.`;
       case "stadium-gone": return `${name(event.uid)} was discarded.`;
@@ -1238,6 +1241,7 @@ export function initTcg(deps) {
       case "turn-ends": return `${event.name} ends the turn.`;
       case "ko": return `${name(event.uid)} was Knocked Out.`;
       case "ko-hand": return `${name(event.uid)} went back to ${event.p === ME ? "your" : "their"} hand.`;
+      case "to-prizes": return `${plural(event.n, "card")} went onto ${event.p === ME ? "your" : "their"} Prize cards.`;
       case "prize": return `${who(event.p)} took ${plural(event.uids.length, "prize card")}.`;
       case "switch": return `${event.p === ME ? "Your" : "Their"} Active Pokémon was switched out.`;
       case "promote": return `${who(event.p)} sent out ${name(state.players[event.p].active.uid)}.`;

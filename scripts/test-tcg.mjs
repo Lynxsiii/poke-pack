@@ -8,7 +8,7 @@
  */
 import { readFileSync, readdirSync } from "node:fs";
 import assert from "node:assert/strict";
-import { ACTIVE, FORMATS, RuleError, abilityOn, addCondition, addMark, apply, benchSafe, canRetreat, energyOf, toolOf, conditionsOn, createGame, damageAfterTyping, legalActions, maxHp, resolveKnockOuts, retreatCost, unpaid, usableAttacks, viewFor } from "../js/tcg/engine.js";
+import { ACTIVE, FORMATS, RuleError, abilityOn, addCondition, addMark, apply, benchSafe, canRetreat, energyOf, toolOf, conditionsOn, createGame, flip, damageAfterTyping, legalActions, maxHp, resolveKnockOuts, retreatCost, unpaid, usableAttacks, viewFor } from "../js/tcg/engine.js";
 import { createDefs, defineCard, FREE_ENERGY } from "../js/tcg/cards.js";
 import { boostOf, compileTrainer, fits, runTrainer, trainerAim, whatOf } from "../js/tcg/trainers.js";
 import { compileAttack } from "../js/tcg/effects.js";
@@ -3780,7 +3780,7 @@ byId.set("lab-wet", { id: "lab-wet", name: "Wet Lab", supertype: "Pokémon", sub
 test("the long-tail lab cards' text is all read, and a wording half understood is not", () => {
   for (const id of ["lab-t1", "lab-t2", "lab-t3"]) for (const a of defs(id).attacks) assert.ok(!a.plain, a.name);
   for (const text of [
-    "This attack does 10 damage to each of your opponent's Pokémon V.",
+    "This attack does 10 damage to each of your opponent's Pokémon V for each Energy attached to that Pokémon.",
     "Flip a coin. If heads, this attack does 30 more damage. If tails, this attack does nothing.",
     "If the Defending Pokémon has any damage counters on it, it is now Asleep.",
     "During your opponent's next turn, they can't play any Pokémon cards from their hand.",
@@ -5360,6 +5360,124 @@ test("a condition at the end of their next turn, their Items discarded, a Benche
   use(state, 0, "Brink");
   act(state, { type: "pick", player: 0, spot: ACTIVE });
   assert.equal(state.players[1].active.damage, 150);
+});
+
+/* ---------- batch 8 ---------- */
+
+lab("lab-m1", [
+  ["Erase", 0, "Discard 1 of your opponent's Pokémon and all cards attached to it. If this Pokémon has at least 3 extra Energy attached to it (in addition to this attack's cost), discard 2 of your opponent's Pokémon instead."],
+  ["Prize", 0, "Add the top 2 cards of your opponent's deck to their Prize cards."],
+  ["Double", 0, "Double the number of damage counters on each of your opponent's Pokémon."],
+  ["Hunt", 10, "During your next turn, this Pokémon's attacks do 30 more damage to the Defending Pokémon (before applying Weakness and Resistance)."],
+]);
+lab("lab-m2", [
+  ["Jinx", 0, "Whenever your opponent flips a coin during their next turn, treat it as tails."],
+  ["Bar", 0, "For the rest of this game, your opponent can't use any GX attacks."],
+  ["Hush", 0, "Your opponent can't play any cards from their hand during their next turn."],
+  ["Trim", 0, "Discard random cards from your opponent's hand until they have 3 cards in their hand."],
+]);
+lab("lab-m3", [
+  ["Daze", 0, "Your opponent's Active Pokémon is now Confused. Put 6 damage counters instead of 3 on that Pokémon for this Special Condition."],
+  ["Toxin", 0, "Your opponent's Active Pokémon is now Poisoned. It now takes 40 Poison damage instead of 10 after each player's turn (even if it was already Poisoned)."],
+  ["Wipe", 0, "Discard all Energy from both Active Pokémon."],
+  ["Refill", 0, "Each player draws cards until they have 6 cards in their hand."],
+]);
+
+test("batch 8 wordings are read, and the ones that can't be done right are not", () => {
+  for (const id of ["lab-m1", "lab-m2", "lab-m3"]) for (const a of defs(id).attacks) assert.ok(!a.plain, a.name);
+  const steps = (text, name) => compileAttack(text, name);
+  assert.deepEqual(steps("This attack does 30 more damage for each extra Fire Energy attached to this Pokémon (in addition to this attack's cost). You can't add more than 90 damage in this way.")[0], { op: "bonusPer", when: "before", n: 30, per: "spareEnergy", type: "Fire", cap: 90 });
+  assert.equal(steps("Put up to 2 Basic Pokémon from your discard pile onto your Bench.")[0].steps[0].what, "basic");
+  assert.equal(steps("If your opponent's Basic Pokémon is Knocked Out by damage from this attack, take 1 more Prize card.")[0].what, "basic");
+  assert.deepEqual(steps("Prevent all effects of attacks, including damage, done to this Pokémon by your opponent's Pokémon-ex during your opponent's next turn.")[0].from.startsWith("box:"), true);
+  assert.equal(steps("If your opponent has any Ultra Beasts in play, this attack can be used for Colorless.")[0].op, "costIf");
+  assert.deepEqual(steps("Flip 2 coins. If both are heads, your opponent's Active Pokémon is now Paralyzed.")[1].min, 2);
+  assert.deepEqual(steps("Flip 2 coins. If both are tails, your opponent's Active Pokémon is now Paralyzed.")[1].max, 0);
+  assert.equal(steps("This attack does 20 damage to 1 of your opponent's Benched Pokémon for each damage counter on that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)")[0].perCounter, true);
+  assert.deepEqual(steps("This attack does 100 damage to each of your opponent's Pokémon-GX and Pokémon-EX. This damage isn't affected by Weakness or Resistance.")[0].boxes, ["GX", "EX"]);
+  // Tests that hang on the damage itself are not read as if judged before it.
+  assert.equal(steps("If your opponent's Active Pokémon has any damage counters on it, this attack also does 30 damage to each of your opponent's Benched Pokémon."), null);
+  // Not read: Energy the attack itself attaches, counted as extra or not (Aero Unit-GX).
+  assert.equal(steps("Attach up to 2 basic Energy cards from your discard pile to this Pokémon. If this Pokémon has at least 1 extra Water Energy attached to it (in addition to this attack's cost), heal all damage from it."), null);
+});
+
+test("their Pokémon discarded (no Prize cards), Prize cards added, damage counters doubled, more damage to the Defending Pokémon", () => {
+  let state = labgame("lab-m1", "lab-2");
+  const foe = state.players[1];
+  const benched = foe.bench[0];
+  const gone = [benched.uid, ...benched.energy];
+  const prizes = state.players[0].prizes.length;
+  use(state, 0, "Erase");
+  act(state, { type: "pick", player: 0, spot: 0 });
+  for (const uid of gone) assert.ok(foe.discard.includes(uid), uid);
+  assert.ok(!foe.bench.some((s) => s.uid === benched.uid));
+  assert.equal(state.players[0].prizes.length, prizes, "no Prize cards for it");
+  state = labgame("lab-m1", "lab-2");
+  const had = state.players[1].prizes.length;
+  const top = state.players[1].deck.slice(0, 2);
+  use(state, 0, "Prize");
+  assert.equal(state.players[1].prizes.length, had + 2);
+  for (const uid of top) assert.ok(state.players[1].prizes.includes(uid));
+  state = labgame("lab-m1", "lab-2");
+  state.players[1].active.damage = 30;
+  state.players[1].bench[0].damage = 20;
+  use(state, 0, "Double");
+  assert.equal(state.players[1].active.damage, 60);
+  assert.equal(state.players[1].bench[0].damage, 40);
+  state = labgame("lab-m1", "lab-2");
+  use(state, 0, "Hunt");
+  assert.equal(state.players[1].active.damage, 10);
+  act(state, { type: "end", player: 1 });
+  use(state, 0, "Hunt");
+  assert.equal(state.players[1].active.damage, 50, "30 more on the Defending Pokémon");
+});
+
+test("their coins all tails, GX attacks barred, no cards from the hand, the hand cut down", () => {
+  let state = labgame("lab-m2", "lab-2");
+  use(state, 0, "Jinx");
+  for (let i = 0; i < 20; i += 1) assert.equal(flip(state, 1), false);
+  act(state, { type: "end", player: 1 });
+  let heads = 0;
+  for (let i = 0; i < 20; i += 1) heads += flip(state, 0) ? 1 : 0;
+  assert.ok(heads > 0, "only their coins, only that turn");
+  state = labgame("lab-m2", "lab-2");
+  use(state, 0, "Bar");
+  assert.ok(state.players[1].gxBarred);
+  state = labgame("lab-m2", "lab-2");
+  hold(state, 1, T.potion);
+  give(state, 1, "base1-46");
+  use(state, 0, "Hush");
+  const fromHand = legalActions(state, 1, defs).filter((a) => ["bench", "evolve", "attach", "play", "tool"].includes(a.type));
+  assert.deepEqual(fromHand, []);
+  act(state, { type: "end", player: 1 });
+  act(state, { type: "end", player: 0 });
+  assert.ok(legalActions(state, 1, defs).some((a) => ["bench", "play"].includes(a.type)), "only for that turn");
+  state = labgame("lab-m2", "lab-2");
+  for (let i = 0; i < 4; i += 1) hold(state, 1, T.potion);
+  use(state, 0, "Trim");
+  assert.equal(state.players[1].hand.length, 4, "3 left, then their draw");
+});
+
+test("Confusion and Poison that count for more, Energy off both, each player draws up to a number", () => {
+  let state = labgame("lab-m3", "lab-2");
+  use(state, 0, "Daze");
+  assert.deepEqual(conditionsOn(state.players[1].active), ["confused"]);
+  assert.equal(state.players[1].active.status.confuseN, 60);
+  state = labgame("lab-m3", "lab-2");
+  use(state, 0, "Toxin");
+  assert.equal(state.players[1].active.damage, 40, "Poison at the end of the turn: 40");
+  state = labgame("lab-m3", "lab-2");
+  state.players[1].active.energy.push(give(state, 1, F));
+  state.players[1].hand = state.players[1].hand.filter((u) => !state.players[1].active.energy.includes(u));
+  use(state, 0, "Wipe");
+  assert.deepEqual(state.players[0].active.energy, []);
+  assert.deepEqual(state.players[1].active.energy, []);
+  state = labgame("lab-m3", "lab-2");
+  state.players[0].hand = state.players[0].hand.slice(0, 2);
+  state.players[1].hand = state.players[1].hand.slice(0, 1);
+  use(state, 0, "Refill");
+  assert.equal(state.players[0].hand.length, 6);
+  assert.equal(state.players[1].hand.length, 7, "6, then their draw");
 });
 
 console.log(`${passed} checks passed${process.exitCode ? ", some failed" : ""}`);
