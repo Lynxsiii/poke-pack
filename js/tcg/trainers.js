@@ -518,6 +518,13 @@ export const T_OPS = {
       ctx.events.push({ t: "lock", p: other(ctx.player), what: "poisoned-retreat" });
     },
   },
+  /** Ogre's Mask: a Pokémon from the discard pile takes the place of one in play that fits `what` too. */
+  swapPlay: {
+    ready: (ctx, { what }) => fitting(ctx, mine(ctx).discard, what).length > 0 && inPlay(ctx.state, ctx.player).some(([slot]) => fits(defOf(ctx.state, slot.uid, ctx.defs), what)),
+    run(ctx, { what }) {
+      askChoose(ctx.state, { player: ctx.player, zone: "discard", what, uids: fitting(ctx, mine(ctx).discard, what), min: 1, max: 1, effect: { op: "swapPlay", what } });
+    },
+  },
   /** "Search your deck for a Pokémon Tool card and attach it to this Pokémon" (it has none yet; one that can't go on it isn't offered). */
   toolFetch: {
     ready: (ctx) => ctx.spot != null && hasDeck(ctx) && !slotAt(ctx.state, ctx.player, ctx.spot)?.tool,
@@ -1925,6 +1932,7 @@ const SHUFFLE_BOTH = "Each player shuffles (?:their|his or her) hand into (?:the
 /** [wording, steps]. */
 const TYPE_WORD = "Grass|Fire|Water|Lightning|Psychic|Fighting|Darkness|Metal|Fairy|Dragon|Colorless";
 const PATTERNS = [
+  [/^Choose a Pokémon ex in your discard pile that has "([A-Z][\w'é.-]*)" in its name, and switch it with 1 of your Pokémon ex in play that has "\1" in its name\. Any attached cards, damage counters, Special Conditions, turns in play, and any other effects remain on the new Pokémon\.$/, (m) => [{ op: "swapPlay", what: `box=ex~${m[1]}` }]],
   [/^During your opponent's next turn, their Poisoned Pokémon can't retreat\. \(This includes newly Poisoned Pokémon\.\)$/, () => [{ op: "poisonPin" }]],
   [new RegExp(`^Draw ${N} cards?\\.$`, "i"), (m) => [{ op: "draw", n: count(m[1]) }]],
   [/^Discard your hand and draw (\d+) cards\.$/, (m) => [{ op: "discardHand" }, { op: "draw", n: Number(m[1]) }]],
@@ -2638,6 +2646,12 @@ const TOOL_CLAUSES = [
   // Knocked Out.
   [/^When the Pokémon this card is attached to is Knocked Out, your opponent takes (\d+) more Prize cards?$/, (m) => ({ prize: Number(m[1]) })],
   [/^If the Pokémon this card is attached to is your Active Pokémon and is Knocked Out by damage from an opponent's attack, move up to (\d+) basic Energy cards from that Pokémon to 1 of your Benched Pokémon$/, (m) => ({ ko: { active: true, baton: Number(m[1]) } })],
+  // Heavy Baton.
+  [/^If the Pokémon this card is attached to has a Retreat Cost of exactly (\d+), is in the Active Spot, and is Knocked Out by damage from an attack from your opponent's Pokémon, move up to (\d+) Basic Energy cards from that Pokémon to your Benched Pokémon in any way you like$/, (m) => ({ ko: { active: true, baton: Number(m[2]), spread: true, retreat: Number(m[1]) } })],
+  // Tremendous Bomb.
+  [/^If the Pokémon this card is attached to isn't a Mega Evolution Pokémon ex, is in the Active Spot, and takes (\d+) or more damage from an attack from your opponent's Mega Evolution Pokémon ex \(even if this Pokémon is Knocked Out\), place (\d+) damage counters on the Attacking Pokémon\. If you placed any damage counters in this way, discard this card$/, (m) => ({ thorns: { n: Number(m[2]) * 10, spent: true, min: Number(m[1]), mega: true }, who: { notMega: true } })],
+  // Handheld Fan.
+  [/^If the Pokémon this card is attached to is in the Active Spot and is damaged by an attack from your opponent's Pokémon \(even if this Pokémon is Knocked Out\), move an Energy from the Attacking Pokémon to 1 of your opponent's Benched Pokémon$/, () => ({ thorns: { fan: true } })],
   [/^When your Active Pokémon is Knocked Out by damage from (?:an opponent's attack|an attack from your opponent's Pokémon), you may move (?:1|a) [Bb]asic Energy(?: card)?(?: that was attached to| from) that Pokémon to the Pokémon this card is attached to$/, () => ({ share: 1 })],
   [/^If the Pokémon this card is attached to is Knocked Out by damage from an opponent's attack, put all basic Energy attached to that Pokémon into your hand$/, () => ({ ko: { energyToHand: true } })],
   [/^If the Pokémon this card is attached to is Knocked Out by damage from an attack, put that Pokémon into your hand\. \(Discard all cards attached to that Pokémon\.\)$/, () => ({ ko: { toHand: true, any: true } })],

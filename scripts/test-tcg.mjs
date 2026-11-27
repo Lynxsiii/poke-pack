@@ -7559,4 +7559,65 @@ test("Meganium's Wild Growth, Technical Machine: Fluorite, Roxie's Performance, 
   assert.equal(maxHp(state, state.players[0].bench[0], defs), 400);
 });
 
+labMon("lab-mega", { subtypes: ["Basic", "MEGA", "ex"], name: "Mega Lab ex" }, [["Blast", 250, ""]]);
+labMon("lab-heavy", { name: "Lab heavy" }, [["Tap", 10, ""]]);
+
+test("Ogre's Mask, Heavy Baton, Handheld Fan, Tremendous Bomb", () => {
+  // Ogre's Mask: an Ogerpon ex from the discard pile takes the place of one in play, damage and Energy kept.
+  let state = scene({ front: "sv6-25" });
+  const front = state.players[0].active;
+  front.damage = 50;
+  energize(state, 0, front, G, 1);
+  const mask = handed(state, 0, "sv6-40");
+  state.players[0].hand.pop();
+  state.players[0].discard.push(mask);
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "sv6-159") });
+  act(state, { type: "choose", player: 0, uids: [mask] });
+  if (state.pending[0]?.type === "pick") act(state, { type: "pick", player: 0, spot: ACTIVE });
+  assert.equal(front.uid, mask);
+  assert.equal(front.damage, 50);
+  assert.equal(front.energy.length, 1);
+  assert.ok(state.players[0].discard.some((uid) => state.cards[uid] === "sv6-25"));
+  // Heavy Baton: Knocked Out with a Retreat Cost of exactly 4, up to 3 Basic Energy to the Bench in any way.
+  state = scene({ front: "lab-smash-ex" });
+  state.players[1].bench = [slotFor(state, 1, "base1-63"), slotFor(state, 1, "base1-63")];
+  const big = state.players[1].active;
+  state.cards[big.uid] = "sv7-110";
+  big.tool = handed(state, 1, "sv5-151");
+  state.players[1].hand.pop();
+  assert.equal(retreatCost(state, big, defs), 4);
+  {
+    const cards = energize(state, 1, big, "energy-metal", 3);
+    act(state, { type: "attack", player: 0, index: 0 });
+    act(state, { type: "choose", player: 1, uids: cards });
+    act(state, { type: "pick", player: 1, spot: 0 });
+    act(state, { type: "pick", player: 1, spot: 1 });
+    act(state, { type: "pick", player: 1, spot: 1 });
+    assert.equal(state.players[1].bench[0].energy.length, 1);
+    assert.equal(state.players[1].bench[1].energy.length, 2);
+  }
+  // Handheld Fan: an Energy from the Attacking Pokémon to one of its own Benched Pokémon.
+  state = scene({ front: "lab-tap", bench: ["base1-46"] });
+  state.players[1].active.tool = handed(state, 1, "sv6-150");
+  state.players[1].hand.pop();
+  const [moved] = energize(state, 0, state.players[0].active, F, 1);
+  act(state, { type: "attack", player: 0, index: 0 });
+  act(state, { type: "choose", player: 1, uids: [moved] });
+  act(state, { type: "pick", player: 1, spot: 0 });
+  assert.ok(state.players[0].bench[0].energy.includes(moved));
+  // Tremendous Bomb: 240 or more from a Mega Evolution Pokémon ex, 12 damage counters back.
+  state = scene({ front: "lab-mega" });
+  state.cards[state.players[1].active.uid] = "lab-heavy";
+  state.players[1].active.tool = handed(state, 1, "me5-82");
+  state.players[1].hand.pop();
+  act(state, { type: "attack", player: 0, index: 0 });
+  assert.equal(state.players[0].active.damage, 120);
+  state = scene({ front: "lab-smash-ex" });
+  state.cards[state.players[1].active.uid] = "lab-heavy";
+  state.players[1].active.tool = handed(state, 1, "me5-82");
+  state.players[1].hand.pop();
+  act(state, { type: "attack", player: 0, index: 0 });
+  assert.equal(state.players[0].active.damage, 0);
+});
+
 console.log(`${passed} checks passed${process.exitCode ? ", some failed" : ""}`);

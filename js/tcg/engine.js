@@ -1337,7 +1337,7 @@ export function resolveKnockOuts(state, defs, events, { between = false } = {}) 
   // A Tool that works as its Pokémon is Knocked Out by an attack (Rescue Scarf, Energy Pouch, Lucky Egg ...).
   const koTool = (slot, spot, p) => {
     const ko = toolOn(state, slot, defs)?.ko;
-    return ko && byAttack(slot, p) && (!ko.active || spot === ACTIVE) ? ko : null;
+    return ko && byAttack(slot, p) && (!ko.active || spot === ACTIVE) && (ko.retreat == null || retreatCost(state, slot, defs) === ko.retreat) ? ko : null;
   };
   // Damage counters on the Attacking Pokémon land first, so a Knock Out they cause is judged with this one.
   for (const p of [0, 1]) {
@@ -1409,7 +1409,7 @@ export function resolveKnockOuts(state, defs, events, { between = false } = {}) 
       if (ko?.steps) after.push([p, spot, slot.uid, defOf(state, slot.tool, defs).name, ko.steps]);
       // A Fossil whose Knock Out "doesn't count as a Knocked Out Pokémon" is only discarded: no Prize card, nothing that asks about a Knock Out.
       const counts = !def.fossil?.noKo;
-      if (spot === ACTIVE && byAttack(slot, p) && basics.length && counts) left.push([p, basics, ko?.baton || 0]);
+      if (spot === ACTIVE && byAttack(slot, p) && basics.length && counts) left.push([p, basics, ko?.baton || 0, false, Boolean(ko?.spread)]);
       // Miraidon's Photon Cord: up to 2 Basic Lightning Energy from it to 1 Benched Pokémon (asked as Wishful Baton is).
       const typed = ability?.ko.baton ? basics.filter((uid) => defOf(state, uid, defs).provides.includes(ability.ko.batonType)) : [];
       if (typed.length && counts) left.push([p, typed, ability.ko.baton, true]);
@@ -1474,10 +1474,10 @@ export function resolveKnockOuts(state, defs, events, { between = false } = {}) 
   }
   // The basic Energy it left in the discard pile: Wishful Baton moves up to n to 1 Benched Pokémon,
   // each Exp. Share on the Bench may take 1. Asked before a new Active Pokémon is chosen.
-  for (const [p, uids, baton, only] of left) {
+  for (const [p, uids, baton, only, spread] of left) {
     const side = state.players[p];
     if (!side.bench.length) continue;
-    if (baton) askChoose(state, { player: p, zone: "discard", what: "basicEnergy", uids, min: 0, max: baton, effect: { op: "baton" } });
+    if (baton) askChoose(state, { player: p, zone: "discard", what: "basicEnergy", uids, min: 0, max: baton, effect: { op: "baton", ...(spread ? { spread } : {}) } });
     if (only) continue;
     for (const [mate] of inPlay(state, p)) {
       if (toolOn(state, mate, defs)?.share) askChoose(state, { player: p, zone: "discard", what: "basicEnergy", uids, min: 0, max: toolOn(state, mate, defs).share, effect: { op: "share", to: mate.uid } });
@@ -1683,7 +1683,7 @@ export function strike(ctx) {
       const spikes = toolOn(state, target, defs)?.thorns;
       // Adversity Policy: only when the holder has Weakness to the attacker's type.
       const weakTo = defOf(state, target.uid, defs).weakness?.type;
-      if (spikes && (!spikes.weak || (weakTo && def.types.includes(weakTo)))) {
+      if (spikes && (!spikes.weak || (weakTo && def.types.includes(weakTo))) && (!spikes.min || amount >= spikes.min) && (!spikes.mega || (def.box === "ex" && /^Mega /.test(def.name)))) {
         events.push({ t: "tool-effect", p: foe, spot: ACTIVE, uid: target.tool });
         const heads = spikes.flip ? flip(state, foe) : true;
         if (spikes.flip) events.push({ t: "flip", p: foe, results: [heads], why: "tool" });
@@ -1692,6 +1692,7 @@ export function strike(ctx) {
           events.push({ t: "damage", p: player, spot: ACTIVE, n: spikes.n, self: true, why: "tool" });
         }
         if (spikes.draw) draw(state, foe, spikes.draw, events);
+        if (spikes.fan) (state.afterHit ||= []).push({ p: foe, uid: target.tool, name: defOf(state, target.tool, defs).name, thorns: { fan: true }, attacker: slot.uid, tool: true });
         // Team Rocket's Hypnotizer: the Attacking Pokémon is now Asleep.
         if (spikes.status && addCondition(state, slot, spikes.status, defs)) events.push({ t: "condition", p: player, kind: spikes.status });
         if (spikes.spent) dropTool(state, foe, ACTIVE, target, defs, events);
@@ -1772,7 +1773,13 @@ function afterHits(state, player, defs, events) {
       runTrainer(one.thorns.steps, ctx);
       continue;
     }
-    const attacker = inPlay(state, player).find(([s]) => s.uid === one.attacker)?.[0];
+    const hit = inPlay(state, player).find(([s]) => s.uid === one.attacker);
+    const attacker = hit?.[0];
+    if (one.thorns.fan) {
+      if (!attacker?.energy.length || !state.players[player].bench.length) continue;
+      askChoose(state, { player: one.p, owner: player, zone: "play", what: "energy", uids: attacker.energy.slice(), min: 1, max: 1, effect: { op: "fanEnergy", from: hit[1] } });
+      continue;
+    }
     if (!attacker?.energy.length || warded(state, attacker, { player: one.p, src: "ability" }, defs)) continue;
     events.push({ t: "ability", p: one.p, uid: one.uid, name: one.name });
     askChoose(state, { player: one.p, owner: player, zone: "play", what: "energy", uids: attacker.energy.slice(), min: 1, max: 1, effect: { op: "dropInPlay" } });
@@ -2189,7 +2196,9 @@ const HANDLERS = {
       // Then which Benched Pokémon takes them: asked next, ahead of anything already waiting (a new Active Pokémon).
       // They stay in the discard pile until then.
       pile.push(...present);
-      if (present.length) state.pending.splice(1, 0, { type: "pick", optional: false, player, side: player, spots: side.bench.map((_, i) => i), left: 1, effect: { op: "attachHeld", uids: present, zone: "discard", left: true } });
+      // Heavy Baton: "to your Benched Pokémon in any way you like": a pick for each card.
+      const groups = waiting.effect.spread ? present.map((uid) => [uid]) : present.length ? [present] : [];
+      groups.forEach((uids, i) => state.pending.splice(1 + i, 0, { type: "pick", optional: false, player, side: player, spots: side.bench.map((_, k) => k), left: 1, effect: { op: "attachHeld", uids, zone: "discard", left: true } }));
     } else if (op === "takeBack") {
       // Saffron City Gym: a basic Energy off one of your Pokémon, back to your hand (`owner`: theirs, to their hand).
       for (const uid of picked) {
@@ -2307,6 +2316,14 @@ const HANDLERS = {
         side.hand.push(...rest);
         if (rest.length) events.push({ t: "search", p: player, uids: rest, from: "deck", to: "hand" });
       }
+    } else if (op === "fanEnergy") {
+      // Handheld Fan: the Energy chosen goes to the Benched Pokémon its holder's opponent picks.
+      if (picked.length && side.bench.length) askPick(state, { player, side: owner, spots: side.bench.map((_, i) => i), left: 1, effect: { op: "moveEnergyTo", from: waiting.effect.from, uid: picked[0] } });
+    } else if (op === "swapPlay") {
+      // Ogre's Mask: the card chosen from the discard pile, then the Pokémon in play it takes the place of.
+      const spots = inPlay(state, player).filter(([slot]) => fits(defOf(state, slot.uid, defs), waiting.effect.what)).map(([, s]) => s);
+      if (picked.length && spots.length) askPick(state, { player, side: player, spots, left: 1, effect: { op: "swapPlay", uid: picked[0] } });
+      else pile.push(...picked);
     } else if (op === "toolOn") {
       // A Pokémon Tool from the deck onto the Pokémon the effect names (Farfetch'd's Impromptu Carrier).
       const slot = slotAt(state, player, waiting.effect.spot);
@@ -2945,6 +2962,12 @@ function applyPick(state, waiting, spot, defs, events) {
     // Only one place it can go (onto the Active Pokémon): no need to ask.
     if (spots.length === 1) return moveEnergy(state, p, spot, spots[0], uid, events);
     follow(state, waiting, { player: p, side: p, spots, left: 1, effect: { op: "moveEnergyTo", from: spot, uid } });
+  } else if (effect.op === "swapPlay") {
+    // "Any attached cards, damage counters, Special Conditions, turns in play, and any other effects remain on the new Pokémon."
+    const slot = slotAt(state, p, spot);
+    side.discard.push(slot.uid);
+    slot.uid = effect.uid;
+    events.push({ t: "form", p, uid: effect.uid, spot });
   } else if (effect.op === "moveEnergyTo") {
     moveEnergy(state, p, effect.from, spot, effect.uid, events);
   } else if (effect.op === "moveCountersFrom") {
