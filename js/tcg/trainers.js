@@ -501,11 +501,40 @@ export const T_OPS = {
     ready: (ctx, { to, where = null }) => hasDeck(ctx) && (to !== "self" || ctx.spot != null) && (where ? energySpots(ctx, where) : inPlay(ctx.state, ctx.player)).length > 0,
     // `rest` (with `top`): where the cards looked at and not taken go: "hand", "bottom", "discard", "shuffle" (back into the deck).
     // `rule`: what the cards taken together must keep ("a Basic Fire Energy card, a Basic Lightning Energy card, or 1 of each").
-    run(ctx, { what, n = 1, to, top = 0, where = null, mix = false, rest = "", rule = null }) {
+    run(ctx, { what, n = 1, to, top = 0, where = null, mix = false, rest = "", rule = null, hurt = 0 }) {
       const side = mine(ctx);
       const pool = top ? side.deck.slice(0, top) : side.deck;
       const after = !top ? {} : rest === "hand" ? { rest: "hand", top } : rest === "bottom" ? { restBottom: top } : rest === "discard" ? { restMill: top } : {};
-      askChoose(ctx.state, { player: ctx.player, zone: "deck", what, uids: fitting(ctx, pool, what), min: 0, max: n, effect: { op: "attach", to, spot: to === "self" ? ctx.spot : to === "active" ? ACTIVE : null, ...(where ? { spots: energySpots(ctx, where) } : {}) }, shuffle: !top || mix || rest === "shuffle", ...after, ...(rule ? { rule } : {}) });
+      askChoose(ctx.state, { player: ctx.player, zone: "deck", what, uids: fitting(ctx, pool, what), min: 0, max: n, effect: { op: "attach", to, spot: to === "self" ? ctx.spot : to === "active" ? ACTIVE : null, ...(where ? { spots: energySpots(ctx, where) } : {}), ...(hurt ? { hurt } : {}) }, shuffle: !top || mix || rest === "shuffle", ...after, ...(rule ? { rule } : {}) });
+    },
+  },
+  /** "Search your deck for a Pokémon Tool card and attach it to this Pokémon" (it has none yet; one that can't go on it isn't offered). */
+  toolFetch: {
+    ready: (ctx) => ctx.spot != null && hasDeck(ctx) && !slotAt(ctx.state, ctx.player, ctx.spot)?.tool,
+    run(ctx) {
+      const slot = slotAt(ctx.state, ctx.player, ctx.spot);
+      if (!slot || slot.tool) return;
+      const holder = defOf(ctx.state, slot.uid, ctx.defs);
+      const uids = mine(ctx).deck.filter((uid) => {
+        const def = defOf(ctx.state, uid, ctx.defs);
+        return def?.kind === "trainer" && def.sub === "tool" && def.playable && def.tool && toolFits(def.tool, holder);
+      });
+      askChoose(ctx.state, { player: ctx.player, zone: "deck", what: "tool", uids, min: 0, max: 1, effect: { op: "toolOn", spot: ctx.spot }, shuffle: true });
+    },
+  },
+  /** Ambipom's Wicked Tail: coins, and a random card from their hand into their deck for each heads. */
+  foeHandToDeck: {
+    ready: (ctx) => theirs(ctx).hand.length > 0,
+    run(ctx, { coins }) {
+      const results = Array.from({ length: coins }, () => flip(ctx.state, ctx.player));
+      ctx.events.push({ t: "flip", p: ctx.player, results, why: "ability" });
+      const side = theirs(ctx);
+      const gone = [];
+      for (let i = results.filter(Boolean).length; i > 0 && side.hand.length; i -= 1) gone.push(...side.hand.splice(Math.floor(rand(ctx.state) * side.hand.length), 1));
+      if (!gone.length) return;
+      side.deck.push(...gone);
+      shuffle(ctx.state, side.deck);
+      ctx.events.push({ t: "hand-to-deck", p: other(ctx.player), uids: gone, at: "into", random: true });
     },
   },
   /** "Search your deck for another Deoxys and switch it with Deoxys": the new card takes over the slot. */
@@ -2749,6 +2778,8 @@ const STADIUM_TEXTS = [
   [/^Ignore Weakness when a (Water) Pokémon does damage to a Pokémon with (Blaine) in its name\.$/, (m) => ({ field: [{ who: { named: m[2] }, mod: { noWeaknessVs: [m[1]] } }] })],
   [/^Whenever a Pokémon with (Giovanni) in its name evolves, its owner removes (\d+) damage counters from that Pokémon \(or 1 if it only has 1\)\.$/, (m) => ({ evolveHeal: { n: Number(m[2]) * 10, who: { named: m[1] } } })],
   [/^Each Pokémon in play with (Dark) in its name \(even your opponent's\) gets \+(\d+) HP\.$/, (m) => ({ field: [{ who: { named: m[1] }, mod: { hp: Number(m[2]) } }] })],
+  // Festival Grounds: while it has any Energy attached, a Pokémon has no Special Conditions (engine.js sweepConditions).
+  [/^Each Pokémon that has any Energy attached \(both yours and your opponent's\) recovers from all Special Conditions and can't be affected by any Special Conditions\.$/, () => ({ field: [{ who: { energized: true }, mod: { immune: ["all"] } }] })],
   [/^Each player's (Darkness) Pokémon can't be (Asleep), (Confused), or (Paralyzed)\.$/, (m) => ({ field: [{ who: { types: [m[1]] }, mod: { immune: [m[2], m[3], m[4]].map((w) => w.toLowerCase()) } }] })],
   [/^Each Pokémon that does not have (Team Aqua) in its name pays ((?:Colorless)+) more to retreat\.$/, (m) => ({ field: [{ who: { notNamed: m[1] }, mod: { retreat: -m[2].length / 9 } }] })],
   [/^Whenever any player puts a Basic non-(Darkness) Pokémon onto their Bench during their turn, place (\d+) damage counters on that Pokémon\.$/, (m) => ({ benchHurt: { n: Number(m[2]) * 10, who: { notTypes: [m[1]] } } })],

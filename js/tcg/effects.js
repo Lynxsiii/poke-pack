@@ -19,7 +19,7 @@
  *        shielded (the target takes no effects this turn) }
  */
 
-import { ACTIVE, abilityOn, noteShed, shieldOn, sideHit, addCondition, addMark, askChoose, askPick, benchSafe, canPay, conditionsOn, damageAfterTyping, defOf, devolveSlot, energyAlike, energyToDeck, energyFits, energyMod, energyOf, flip, healRoom, heldOn, hpLeft, inPlay, markOn, maxHp, other, rand, retreatCost, shedEnergy, shuffle, slotAt, strike, struck, switchActive, toLost, toolGone, unpaid, warded, win } from "./engine.js";
+import { ACTIVE, abilityOn, hitBack, typedDef, noteShed, shieldOn, sideHit, addCondition, addMark, askChoose, askPick, benchSafe, canPay, conditionsOn, damageAfterTyping, defOf, devolveSlot, energyAlike, energyToDeck, energyFits, energyMod, energyOf, flip, healRoom, heldOn, hpLeft, inPlay, markOn, maxHp, other, rand, retreatCost, shedEnergy, shuffle, slotAt, strike, struck, switchActive, toLost, toolGone, unpaid, warded, win } from "./engine.js";
 import { T_OPS, compileTrainer, fits, runTrainer, trainerReady, whatOf } from "./trainers.js";
 
 const WORDS = { a: 1, an: 1, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6 };
@@ -565,7 +565,7 @@ export const OPS = {
     // No choice to make: it lands on all of them now.
     for (const spot of spots) {
       const slot = spot === ACTIVE ? side.active : side.bench[spot];
-      const dealt = (spot === ACTIVE || typed) && from ? damageAfterTyping(n, defOf(state, from, ctx.defs), defOf(state, slot.uid, ctx.defs), typing) : { amount: n, weak: false, resist: false };
+      const dealt = (spot === ACTIVE || typed) && from ? damageAfterTyping(n, defOf(state, from, ctx.defs), typedDef(state, slot, ctx.defs), typing) : { amount: n, weak: false, resist: false };
       if (dealt.amount <= 0) continue;
       if (pierce ? defOf(state, slot.uid, ctx.defs).tera && spot !== ACTIVE : benchSafe(state, slot, spot, ctx.defs, p === player)) continue;
       if (p !== player && spot !== ACTIVE && shieldOn(state, slot, defIn(ctx, ctx.slot))) continue;
@@ -575,6 +575,8 @@ export const OPS = {
       slot.damage += amount;
       struck(state, slot, amount);
       events.push({ t: "damage", p, spot, n: amount, weak: dealt.weak, resist: dealt.resist });
+      // An Ability that answers attack damage (Orthworm ex's, wherever it is).
+      if (p !== player) hitBack(state, slot, p, ctx.slot, player, spot, ctx.defs, events);
     }
   },
   /** The attacker trades places with one of its Benched Pokémon (its player chooses). */

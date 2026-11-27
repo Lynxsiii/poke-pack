@@ -399,7 +399,9 @@ export function botAction(state, player, defs) {
       const spot = picks[0]?.spot;
       const ability = picks.length ? abilityOn(state, spot === ACTIVE ? side.active : side.bench[spot], defs) : null;
       const steps = (ability?.[waiting.effect.key || "enter"]?.steps || []).flatMap((s) => (s.op === "flip" ? s.heads || [] : [s]));
-      const unsure = steps.some((s) => s.op === "strip" || s.op === "selfCondition" || s.op === "selfShed") || ["move", "form"].includes(trainerAim(steps));
+      // Palafin's Zero to Hero (a form change as it reaches the Bench) is plainly good: its Pokémon ex comes back up later.
+      const hero = waiting.effect.key === "fall" && steps.some((s) => s.op === "formChange");
+      const unsure = !hero && (steps.some((s) => s.op === "strip" || s.op === "selfCondition" || s.op === "selfShed") || ["move", "form"].includes(trainerAim(steps)));
       return side.deck.length > 4 && !unsure ? picks[0] : actions.find((a) => a.spot == null);
     }
     // "Move any amount of Energy to it": keep taking while the Pokémon it goes to can't pay for its best attack.
@@ -563,6 +565,9 @@ export function botAction(state, player, defs) {
     }
     // An Ability that ends the turn waits until there is nothing to attack with.
     if (use.ends && usableAttacks(state, player, defs).length) continue;
+    // Damage counters on the Pokémon that takes the Energy (Toxtricity): not while one it could go to would be Knocked Out.
+    const hurt = steps.find((s) => s.hurt);
+    if (hurt && inPlay(state, player).some(([s, at]) => at !== ACTIVE && (!hurt.where?.whoType || defOf(state, s.uid, defs).types.includes(hurt.where.whoType)) && hpLeft(state, s, defs) <= hurt.hurt)) continue;
     if (aim === "form" || aim === "move" || aim === "gust") continue;
     if (aim === "energize" || aim === "counters" || aim === "cure") return action;
     if ((aim === "draw" || aim === "search" || aim === "recover") && side.deck.length > 8) return action;
