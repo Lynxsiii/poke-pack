@@ -7142,4 +7142,76 @@ test("more Scarlet & Violet and Mega Evolution Abilities", () => {
   assert.ok(state.players[1].discard.includes(theirs));
 });
 
+labMon("lab-spread", { name: "Lab spread" }, [["Spray", 10, "This attack also does 50 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"]]);
+labMon("lab-smash-ex", { subtypes: ["Basic", "ex"], name: "Lab Smash ex" }, [["Smash", 400, ""]]);
+labMon("lab-leaf2", { types: ["Grass"], name: "Lab leaf" }, [["Tap", 30, ""]]);
+
+test("Scarlet & Violet Abilities: the wordings read", () => {
+  for (const id of ["me1-61", "me4-64", "me6-85", "sv10-185", "sv4-5", "sv5-129", "sv6-5", "sv7-14", "sv8-74", "sv9-7", "sv9-164", "sv6pt5-42", "sv6-33", "mcd26-7"]) assert.ok(defs(id).ability && defs(id).playable, id);
+  assert.deepEqual(defs("me1-61").ability.prizes, { self: true, none: true, by: "box=ex" });
+  assert.deepEqual(defs("sv6pt5-42").ability.handBar, { kinds: ["stadium"] });
+});
+
+test("Jasmine's Gaze: Benched Pokémon take less damage too", () => {
+  assert.ok(defs("sv8-178").playable);
+  const state = scene({ bench: ["base1-46"] });
+  act(state, { type: "play", player: 0, uid: handed(state, 0, "sv8-178") });
+  act(state, { type: "end", player: 0 });
+  state.cards[state.players[1].active.uid] = "lab-spread";
+  act(state, { type: "attack", player: 1, index: 0 });
+  assert.equal(state.players[0].bench[0].damage, 20);
+});
+
+test("Shedinja: no Prize cards for it when a Pokémon ex Knocks it Out", () => {
+  const state = scene({ front: "lab-smash-ex", foeBench: ["base1-63"] });
+  state.cards[state.players[1].active.uid] = "me1-61";
+  const prizes = state.players[0].prizes.length;
+  act(state, { type: "attack", player: 0, index: 0 });
+  assert.equal(state.players[0].prizes.length, prizes);
+  // The same Knock Out by a Pokémon that isn't ex: a Prize card as usual.
+  const again = scene({ front: "lab-spread", foeBench: ["base1-63"] });
+  again.cards[again.players[1].active.uid] = "me1-61";
+  again.players[1].active.damage = 1000;
+  resolveKnockOuts(again, defs, []);
+  assert.ok(again.players[0].prizes.length <= prizes);
+});
+
+test("Lilligant: more damage for Grass Pokémon, and Copperajah keeps Stadiums in the hand", () => {
+  const hit = (bench) => {
+    const state = scene({ front: "lab-leaf2", bench });
+    const foe = state.players[1].active;
+    act(state, { type: "attack", player: 0, index: 0 });
+    return foe.damage;
+  };
+  assert.equal(hit(["sv9-7"]) - hit(["base1-46"]), 20);
+  const state = scene();
+  state.cards[state.players[1].active.uid] = "sv6pt5-42";
+  throws(() => act(state, { type: "play", player: 0, uid: handed(state, 0, "me3-77") }), /./);
+});
+
+test("Ariados: an Evolution Active Pokémon retreats for 1 more", () => {
+  const state = scene({ front: "base1-24" });
+  const before = retreatCost(state, state.players[0].active, defs);
+  state.players[1].bench = [slotFor(state, 1, "sv6-5")];
+  assert.equal(retreatCost(state, state.players[0].active, defs), before + 1);
+  state.cards[state.players[0].active.uid] = "base1-46";
+  assert.equal(retreatCost(state, state.players[0].active, defs), 1);
+});
+
+test("Dudunsparce: draw 3, then it goes back into the deck", () => {
+  const state = scene({ bench: ["sv5-129"] });
+  const side = state.players[0];
+  const hand = side.hand.length;
+  const deck = side.deck.length;
+  act(state, { type: "ability", player: 0, spot: 0 });
+  assert.equal(side.hand.length, hand + 3);
+  assert.equal(side.bench.length, 0);
+  assert.equal(side.deck.length, deck - 3 + 1);
+});
+
+test("Lillie's Ribombee: an on-play Ability the bot leaves alone", () => {
+  const ribombee = defs("sv9-164").ability.enter;
+  assert.equal(trainerAim(ribombee.steps), "move");
+});
+
 console.log(`${passed} checks passed${process.exitCode ? ", some failed" : ""}`);
