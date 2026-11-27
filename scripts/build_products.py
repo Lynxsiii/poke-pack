@@ -352,6 +352,10 @@ def cut_out(raw: bytes, hull: bool = True) -> Image.Image:
     img = Image.open(BytesIO(raw)).convert("RGB")
     if hull == "strips":
         return cut_out_strips(img)
+    if hull == "ortho":
+        return cut_out_ortho(img)
+    if hull == "ortho-fill":
+        return cut_out_ortho(img, body_fills=True)
     marked = img.copy()
     w, h = img.size
     sentinel = (255, 0, 254)
@@ -437,6 +441,98 @@ def cut_out_strips(img: Image.Image, bands: int = 14) -> Image.Image:
     return out.crop(box) if box else out
 
 
+def _run_min(a: np.ndarray, k: int, pad: float) -> np.ndarray:
+    from numpy.lib.stride_tricks import sliding_window_view
+
+    p = k // 2
+    return sliding_window_view(np.pad(a, (p, k - 1 - p), constant_values=pad), k).min(axis=1)
+
+
+def _run_max(a: np.ndarray, k: int, pad: float) -> np.ndarray:
+    from numpy.lib.stride_tricks import sliding_window_view
+
+    p = k // 2
+    return sliding_window_view(np.pad(a, (p, k - 1 - p), constant_values=pad), k).max(axis=1)
+
+
+def _straighten(prof: np.ndarray, has: np.ndarray, out: int, tol: float) -> np.ndarray:
+    """An edge profile (where the box starts on each row or column) as a few straight segments. The flood only ever
+    errs inward (it eats white box art), so each segment is pushed outward to cover nearly all of its points."""
+    idx = np.flatnonzero(has)
+    if len(idx) < 3:
+        return prof
+    y = idx.astype(float)
+    x = prof[idx].astype(float)
+    res = prof.astype(float).copy()
+
+    def split(a, b):
+        if b - a < 4:
+            return [(a, b)]
+        ys, xs = y[a:b + 1], x[a:b + 1]
+        line = xs[0] + (xs[-1] - xs[0]) * (ys - ys[0]) / max(ys[-1] - ys[0], 1)
+        d = np.abs(xs - line)
+        k = int(d.argmax())
+        if d[k] > tol and 0 < k < len(xs) - 1:
+            return split(a, a + k) + split(a + k, b)
+        return [(a, b)]
+
+    for a, b in split(0, len(y) - 1):
+        ys, xs = y[a:b + 1], x[a:b + 1]
+        fit = np.polyval(np.polyfit(ys, xs, 1), ys) if len(ys) > 1 else xs
+        shift = np.percentile((xs - fit) * out, 90)
+        res[idx[a:b + 1]] = fit + shift * out
+    return res
+
+
+def cut_out_ortho(img: Image.Image, body_fills: bool = False) -> Image.Image:
+    """`"hull": "ortho"`: a Japanese display box cut with no white left on it (Noah, 11-27: the strips hull left a
+    white wedge beside VSTAR Universe's lid and a pale rim on every edge, and 151's white lid art came out ragged).
+
+    The white is flooded in from the edges, which also eats white box art. Then the box's outline is rebuilt from
+    four edge profiles (left and right per row, top and bottom per column), each smoothed over a short run and
+    straightened into a few line segments pushed outward, since the flood only errs inward. A pixel is box when it
+    is inside both its row's and its column's span. The outline is pulled 1 px in and softened, so the photo's pale
+    anti-aliased rim is gone. `"bodyFills": true` is for a photo cropped to the box (Terastal Festival's white base
+    runs off the frame): every row from where the box first touches the left edge down is box, edge to edge."""
+    w, h = img.size
+    marked = img.copy()
+    sentinel = (255, 0, 254)
+    seeds = [(x, y) for x in range(0, w, 3) for y in (0, h - 1)] + [(x, y) for y in range(0, h, 3) for x in (0, w - 1)]
+    for seed in seeds:
+        r, g, b = marked.getpixel(seed)
+        if min(r, g, b) >= 231 and (r, g, b) != sentinel:
+            ImageDraw.floodfill(marked, seed, sentinel, thresh=24)
+    a = np.asarray(marked)
+    fg = ~((a[..., 0] == 255) & (a[..., 1] == 0) & (a[..., 2] == 254))
+    fg = np.asarray(Image.fromarray(fg.astype(np.uint8) * 255).filter(ImageFilter.MinFilter(3)).filter(ImageFilter.MaxFilter(3))) > 0
+    if not fg.any():
+        return img.convert("RGBA")
+    ix = np.arange(w)[None, :]
+    iy = np.arange(h)[:, None]
+    big = 10**9
+    rl = np.where(fg, ix, big).min(axis=1).astype(float)
+    rh = np.where(fg, ix, -1).max(axis=1).astype(float)
+    cl = np.where(fg, iy, big).min(axis=0).astype(float)
+    ch = np.where(fg, iy, -1).max(axis=0).astype(float)
+    has_r, has_c = rh >= 0, ch >= 0
+    win, tol = 13, 17
+    rl = _straighten(_run_min(rl, win, big), has_r, -1, tol)
+    rh = _straighten(_run_max(rh, win, -1), has_r, 1, tol)
+    cl = _straighten(_run_min(cl, win, big), has_c, -1, tol)
+    ch = _straighten(_run_max(ch, win, -1), has_c, 1, 45)
+    rl[~has_r], rh[~has_r], cl[~has_c], ch[~has_c] = big, -1, big, -1
+    m = (ix >= rl[:, None]) & (ix <= rh[:, None]) & (iy >= cl[None, :]) & (iy <= ch[None, :])
+    if body_fills:
+        touch = np.flatnonzero(fg[:, :3].any(axis=1))
+        if len(touch):
+            m[touch[0]:] = True
+    mask = Image.fromarray(m.astype(np.uint8) * 255).filter(ImageFilter.MinFilter(3)).filter(ImageFilter.GaussianBlur(0.7))
+    out = img.convert("RGBA")
+    out.putalpha(mask)
+    box = mask.point(lambda v: 255 if v > 8 else 0).getbbox()
+    return out.crop(box) if box else out
+
+
 def product_image_rel(set_id: str, product: dict) -> str:
     """Where a product's photo lives. A recut photo takes a new name (`"imageVersion": 2` -> <id>-v2.webp): files
     under assets/ are cached for a year, so an old name never changes."""
@@ -459,6 +555,11 @@ def save_product_image(set_id: str, product: dict, refresh: bool) -> str | None:
         print(f"    {product['id']}: no photo ({exc})")
         return None
     img = cut_out(raw, product.get("hull", True))
+    if str(product.get("hull", "")).startswith("ortho"):
+        # Japanese box photos are small already; keep every pixel and save finer, so they don't look soft (Noah, 11-27).
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        img.save(dest, "WEBP", quality=92, method=6, exact=True)
+        return rel
     if img.width > PRODUCT_WIDTH:
         img = img.resize((PRODUCT_WIDTH, round(img.height * PRODUCT_WIDTH / img.width)), Image.LANCZOS)
     dest.parent.mkdir(parents=True, exist_ok=True)
