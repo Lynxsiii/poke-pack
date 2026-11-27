@@ -408,7 +408,7 @@ export function botAction(state, player, defs) {
       if (waiting.effect.op === "heal") return Math.min(slot.damage, waiting.effect.n) + (a.spot === ACTIVE ? 5 : 0);
       if (waiting.effect.op === "discardEnergy") return slot.energy.length + (a.spot === ACTIVE ? 0.5 : 0);
       // "Knock Out 1 of your opponent's Pokémon": the one worth the most Prizes, then the one most built up.
-      if (waiting.effect.op === "knockOut") return defOf(state, slot.uid, defs).prizes * 1000 + slot.energy.length * 40 + left / 10;
+      if (waiting.effect.op === "knockOut" || waiting.effect.op === "discardMon") return defOf(state, slot.uid, defs).prizes * 1000 + slot.energy.length * 40 + left / 10;
       // Pulling one of theirs forward: one the Active Pokémon can Knock Out (more Prizes first), else the
       // one with the most Energy on it, else the one closest to a Knock Out. Bringing up its own: the readiest.
       if (waiting.side !== player) {
