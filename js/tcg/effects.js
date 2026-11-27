@@ -515,7 +515,7 @@ export const OPS = {
    * included, with Weakness and Resistance for it alone), "ownBench". `count` 0 is all of them;
    * otherwise the attacker chooses that many, when there are more than that to choose from.
    */
-  spread(ctx, { n, to = "bench", count = 0, noTyping = false, pierce = false, damaged = null, per = "", type = "", only = null, stage = "", boxes = null, typed = false, perCounter = false, energized = false }) {
+  spread(ctx, { n, to = "bench", count = 0, noTyping = false, pierce = false, damaged = null, per = "", type = "", only = null, stage = "", boxes = null, typed = false, perCounter = false, energized = false, ptype = "" }) {
     const { state, player, events } = ctx;
     // "for each Grass Energy attached to this Pokémon": that much for each (COUNTS).
     if (per) n *= COUNTS[per](ctx, type);
@@ -536,7 +536,7 @@ export const OPS = {
     // `only`: these spots (coins flipped for each); `stage`, `boxes`: only their Basic Pokémon, their Pokémon V ...
     const kind = (slot) => {
       const def = defOf(state, slot.uid, ctx.defs);
-      return (!stage || def.stage === stage) && (!boxes || boxes.includes(def.box));
+      return (!stage || def.stage === stage) && (!boxes || boxes.includes(def.box)) && (!ptype || def.types.includes(ptype));
     };
     const p = to === "ownBench" || to === "ownAny" ? player : other(player);
     const side = state.players[p];
@@ -1349,6 +1349,17 @@ export const OPS = {
   perHeads(ctx, { steps }) {
     runSteps(Array.from({ length: ctx.hit.heads || 0 }, () => steps).flat(), ctx);
   },
+  /**
+   * "If you do, move as many Energy cards attached to this Pokémon as you like to the new Active Pokémon": after it
+   * switched to the Bench, the player picks any of its Energy (`type`: of that type only) to go to the new Active one.
+   */
+  carryToActive(ctx, { type = "" }) {
+    const { state, player, defs, slot } = ctx;
+    const from = spotOf(ctx);
+    const uids = slot.energy.filter((uid) => !type || (defOf(state, uid, defs).provides || []).includes(type));
+    if (from == null || from === ACTIVE || !uids.length || !state.players[player].active) return;
+    askChoose(state, { player, zone: "play", what: "energy", uids, min: 0, max: uids.length, effect: { op: "carryEnergy", from, spots: [ACTIVE] } });
+  },
   /** After the damage: the steps once for each tails the coins before it came up (OPS.flipCount). */
   perTails(ctx, { steps }) {
     runSteps(Array.from({ length: (ctx.hit.coins || 0) - (ctx.hit.heads || 0) }, () => steps).flat(), ctx);
@@ -1913,6 +1924,9 @@ function moreTests(p) {
   if ((m = p.match(/^there are any (.+?) cards in your discard pile$/)) && whatOf(`${m[1]} card`)) return { test: "discardHas", what: whatOf(`${m[1]} card`) };
   if (/^you have less Prize cards left than your opponent$/.test(p)) return { test: "ahead" };
   if ((m = p.match(/^a Stadium that has "(\w+)" in its name is in play$/))) return { test: "stadiumNamed", word: m[1] };
+  if ((m = p.match(/^any Stadium card with (\w+) in its name is in play$/))) return { test: "stadiumNamed", word: m[1] };
+  // Stadiums the attacks name (Pokémon named this way are a different test, so only these).
+  if ((m = p.match(/^(Full Flame|Low Pressure System|High Pressure System|Phoebe's Stadium|Lysandre Labs) is in play$/))) return { test: "stadiumNamed", word: m[1] };
   if ((m = p.match(/^your Benched Pokémon have any ([A-Z][\w']*(?: [A-Z][\w']*)* Energy) attached$/))) return { test: "benchEnergyNamed", name: m[1] };
   if ((m = p.match(new RegExp(`^this Pokémon (?:isn't|is not) ${COND}$`)))) return { test: "selfStatusOf", kinds: [m[1].toLowerCase()], not: true };
   if (new RegExp(`^this Pokémon and ${OPP} have the same amount of Energy attached$`).test(p)) return { test: "sameEnergy" };
@@ -3148,7 +3162,7 @@ const BATCH10 = [
     return steps && [{ op: "flipCount", when: "before", coins: 0, per: c.per, ...(c.type ? { type: c.type } : {}) }, /For each/.test(m[0]) ? { op: "perHeads", when: "after", steps } : { op: "onHeads", when: "after", min: 1, steps }];
   }],
   // Damage times the heads, and more for each heads or tails after it.
-  [new RegExp(`^${COINS_BY} This attack does (\\d+) damage times the number of heads\\. (?:Then, for each heads, (.+)|Discard a number of (${TYPE}) Energy cards attached to this Pokémon equal to the number of heads\\.|Then,? this Pokémon does (\\d+) damage times the number of tails to itself\\.)$`), (m) => {
+  [new RegExp(`^${COINS_BY} This attack does (\\d+) damage times the number of heads\\. (?:Then, for each heads, (.+)|Discard a number of ${TYPE} Energy cards attached to this Pokémon equal to the number of heads\\.|Then,? this Pokémon does (\\d+) damage times the number of tails to itself\\.)$`), (m) => {
     const c = coinsOf(m[1]);
     const each = m[3] ? afterOnly(upper(m[3])) : m[4] ? [{ op: "discardEnergy", when: "after", n: 1, type: m[4] }] : null;
     if (!c || (m[3] && !each)) return null;
@@ -3172,7 +3186,8 @@ const BATCH10 = [
     return /^(name=|basic)/.test(what) && fromDeck([{ op: "search", what, n: "all", to: "bench" }]);
   }],
   // What their Defending Pokémon can't have done to it from the hand during their next turn (engine.js legalActions).
-  [/^(?:Your opponent can't attach Energy from (?:his or her|their) hand to the Defending Pokémon during (?:his or her|their) next turn|During your opponent's next turn, Energy can't be attached from your opponent's hand to the Defending Pokémon|Energy can't be attached to the Defending Pokémon from your opponent's hand during their next turn)\.$/, () => [mark("noEnergy", { on: "foe" })]],
+  [/^During your opponent's next turn, prevent all effects of attacks, including damage, done to this Pokémon by your opponent's Evolved Pokémon\.$/, () => [mark("shield", { from: "evolution" })]],
+  [/^(?:Your opponent can't attach Energy(?: cards)? from (?:his or her|their) hand to the Defending Pokémon during (?:his or her|their) next turn|During your opponent's next turn, Energy can't be attached from your opponent's hand to the Defending Pokémon|Energy can't be attached to the Defending Pokémon from your opponent's hand during their next turn)\.$/, () => [mark("noEnergy", { on: "foe" })]],
   [/^(?:Your opponent can't play any Pokémon from (?:his or her|their) hand to evolve the Defending Pokémon during (?:his or her|their) next turn|During your opponent's next turn, Pokémon can't be played from your opponent's hand to evolve the Defending Pokémon)\.$/, () => [mark("noEvolve", { on: "foe" })]],
   [/^During your opponent's next turn, if they attach an Energy card from their hand to the Defending Pokémon, their turn ends\.$/, () => [mark("attachEnds", { on: "foe" })]],
   [/^Choose 1 of the Defending Pokémon's attacks\. (?:That Pokémon can use only that attack during your opponent's next turn|During your opponent's next turn, that Pokémon can only use that attack)\.$/, () => [{ op: "lockFoeAttack", when: "after", only: true }]],
@@ -3191,6 +3206,19 @@ const BATCH10 = [
   [new RegExp(`^Discard all (?:${TYPE} )?Energy(?: cards)? attached to this Pokémon(?: in order to use this attack)?\\. (?:Flip a coin for each Energy card you discarded|Flip a number of coins equal to the number of (?:${TYPE} )?Energy cards you discarded)\\. This attack does (?:(\\d+) damage times the number of heads|\\d+ damage plus (\\d+) (?:more )?damage for each heads)\\.$`), (m) => {
     if (m[2] && m[1] !== m[2]) return null;
     return [{ op: "pay", when: "before", from: "self", energy: m[1] ? { type: m[1] } : {}, all: true }, { op: m[3] ? "flipTimes" : "flipBonusEach", when: "before", n: Number(m[3] || m[4]), per: "paid" }];
+  }],
+  [new RegExp(`^You may switch this Pokémon with 1 of your Benched Pokémon\\. If you do, (?:you may )?move (?:as many|any number of) (?:${TYPE} )?Energy cards attached to this Pokémon (?:as you like )?to the new Active Pokémon\\.$`), (m) => [{ op: "may", when: "after", steps: [{ op: "switchSelf", then: [{ op: "carryToActive", ...(m[1] ? { type: m[1] } : {}) }] }], prompt: "Switch this Pokémon with 1 of your Benched Pokémon (and move Energy to the new Active Pokémon)?" }]],
+  [/^Flip a coin\. If heads, (?:the Defending Pokémon is now (?:either )?((?:(?:Asleep|Burned|Confused|Paralyzed|Poisoned), )+)or (Asleep|Burned|Confused|Paralyzed|Poisoned) \(your choice\)|choose whether the Defending Pokémon becomes ((?:(?:Asleep|Burned|Confused|Paralyzed|Poisoned), )+)or (Asleep|Burned|Confused|Paralyzed|Poisoned))\.$/, (m) => {
+    const kinds = [...(m[1] || m[3]).split(", ").filter(Boolean), m[2] || m[4]];
+    return [{ op: "flip", when: "after", heads: [{ op: "chooseCondition", kinds }] }];
+  }],
+  [new RegExp(`^If ${FOE} already has any damage counters on it, (?:${FOE}|that Pokémon) is now ${COND} and ${COND}\\.$`, "i"), (m) => heldIf({ test: "foeDamaged" }, [cond(m[1]), cond(m[2])])],
+  [/^Before doing damage, choose 1 of your opponent's Benched Pokémon and switch it with (?:his or her|their) Active Pokémon\.$/, () => [{ op: "trainer", when: "before", steps: [{ op: "gust" }] }]],
+  [/^Flip a coin\. If tails, this attack does (?:nothing|no damage) to the Defending Pokémon and this Pokémon does (\d+) damage to itself\.$/, (m) => [{ op: "coin", when: "before", tails: [{ op: "setDamage", n: 0 }] }, { op: "onCoin", when: "after", tails: [{ op: "selfDamage", n: Number(m[1]) }] }]],
+  [/^If the Defending Pokémon (?:would be|is) Knocked Out by this attack, this Pokémon does (\d+) damage to itself\.$/, (m) => [{ op: "when", when: "after", test: "foeKo", steps: [{ op: "selfDamage", n: Number(m[1]) }] }]],
+  [/^Discard an? (.+?) from your hand\.$/, (m) => {
+    const what = whatOf(m[1]);
+    return what && what !== "any" && fromDeck([{ op: "toss", n: 1, what }]);
   }],
   // A card from the discard pile or the hand, and what comes of it only if there was one ("If you do, remove 2 damage counters").
   [/^Search your discard pile for an? (.+?) and attach it to this Pokémon\. If you do, (.+)$/, (m) => {
@@ -3217,6 +3245,11 @@ const BATCH10 = [
   }],
   // Evolving from the deck.
   [new RegExp(`^Search your deck for a card that evolves from (?:1|one) of your Pokémon and put it on(?:to)? that Pokémon\\. \\(This counts as evolving that Pokémon\\.\\) ${SHUFFLED}$`), () => fromDeck([{ op: "evolveDeck" }])],
+  // Only their Benched Pokémon of one type ("Does 10 damage to each Grass Pokémon on your opponent's Bench.").
+  [new RegExp(`^(?:This attack d|D)oes (\\d+) damage to each (?:of your opponent's Benched ${TYPE} Pokémon|${TYPE} Pokémon on your opponent's Bench)\\.(?: \\(Don't apply Weakness and Resistance for Benched Pokémon\\.\\))?$`), (m) =>
+    [{ op: "spread", when: "after", n: Number(m[1]), to: "bench", ptype: m[2] || m[3] }]],
+  // Both Active Pokémon: the Defending Pokémon as usual, and this one too (no Weakness or Resistance on your own).
+  [/^(?:This attack d|D)oes (\d+) damage to each Active Pokémon \(both yours and your opponent's\)\.$/, (m) => [{ op: "setDamage", when: "before", n: Number(m[1]) }, { op: "selfDamage", when: "after", n: Number(m[1]) }]],
 ];
 PATTERNS.push(...BATCH10);
 
@@ -3410,8 +3443,9 @@ function compileOne(clean) {
   if (trainer) return trainer;
   // Wordings read only when nothing else reads them: the same effect said the way it is read.
   for (const [from, to] of REWRITES) {
-    if (!from.test(clean)) continue;
-    const steps = compileOne(clean.replace(from, to));
+    const said = clean.replace(from, to);
+    if (said === clean) continue;
+    const steps = compileOne(said) || (said.split(". ").length > clean.split(". ").length ? compileText(said) : null);
     if (steps) return steps;
   }
   return null;
@@ -3428,8 +3462,52 @@ const REWRITES = [
   [/^Search your discard pile for ((?:up to )?(?:an?|\d+)) (.+?) and put (?:it|them) into your hand\.$/, "Put $1 $2 from your discard pile into your hand."],
   [/ and put (it|them) in your hand\./, " and put $1 into your hand."],
   [/^Remove all Special Conditions and (\d+|all) damage counters(?: \(all if there are less than \d+\))? from this Pokémon(?: \(all if there are less than \d+\))?\./, (all, n) => `Remove all Special Conditions from this Pokémon. Remove ${n} damage counters from this Pokémon.`],
+  [/^You(?:r)? opponent can't play (?:any |a )?(Trainer|Supporter|Item) [Cc]ards? from (?:his or her|their) hand (?:during (?:your opponent's|his or her|their) next turn|until the end of your opponent's next turn)\.$/, "Your opponent can't play $1 cards during their next turn."],
+  [/^Flip a coin\. If heads, (.+?\.) If tails, this attack does nothing\.$/, "Flip a coin. If tails, this attack does nothing. If heads, $1"],
+  [/^(?:Then, )?choose 1 of your Benched Pokémon and switch this Pokémon with it\.$/, "Switch this Pokémon with 1 of your Benched Pokémon."],
+  [/^(Put|Remove) a damage counter (on|from) /, "$1 1 damage counter $2 "],
+  [/^Discard 1 Energy card attached to the Defending Pokémon\.$/, "Discard an Energy card attached to the Defending Pokémon."],
+  [/^(Remove \d+ damage counters? from this Pokémon) \((?:all|remove all) if there (?:are|is) less than \d+\)\.$/, "$1."],
+  [/^(You may move|Move) an? (\w+) Energy(?: card)? attached to this Pokémon to 1 of your Pokémon\.$/, "$1 a $2 Energy attached to this Pokémon to 1 of your Benched Pokémon."],
+  [/^This Pokémon has no Weakness during your opponent's next turn\.$/, "During your opponent's next turn, this Pokémon has no Weakness."],
+  [/^The Defending Pokémon is now (Asleep|Burned|Confused|Paralyzed|Poisoned), and can't retreat (?:until the end of|during) your opponent's next turn\.$/, "The Defending Pokémon is now $1. The Defending Pokémon can't retreat during your opponent's next turn."],
+  [/^After doing damage, (flip|remove|discard|draw|switch)/, (all, verb) => upper(verb)],
+  [/^(Discard up to \d+ .+? from your hand)\. Then, draw (\d+) cards for each (?:Energy )?card you discarded\.$/, "$1. For each card you discarded, draw $2 cards."],
+  [/^Damage done to this Pokémon by an opponent's attack is reduced by (\d+) \(after applying Weakness and Resistance\) during your opponent's next turn\.$/, "During your opponent's next turn, any damage done to this Pokémon by attacks is reduced by $1 (after applying Weakness and Resistance)."],
+  [/^(During your opponent's next turn, any damage done to this Pokémon by attacks) in reduced by /, "$1 is reduced by "],
+  [/^(This attack's damage isn't affected by Weakness, Resistance, )Poké-Power(, Poké-Bodies,) (?:and|or) any other effects on the Defending Pokémon\.$/, "$1Poké-Powers$2 or any other effects on the Defending Pokémon."],
+  [/^(This attack's damage isn't affected by Weakness, Resistance, Poké-Powers, Poké-Bodies,) and any other effects on the Defending Pokémon\.$/, "$1 or any other effects on the Defending Pokémon."],
+  [/^Choose (\d+) of your opponent's Pokémon (?:in|is) play\.$/, "Choose $1 of your opponent's Pokémon."],
+  [/prevent all damage done by attacks to this Pokémon during your opponent's next turn/, "prevent all damage done to this Pokémon by attacks during your opponent's next turn"],
+  [/^During your opponent's next turn, prevent all effects, including damage, done to this Pokémon by attacks from your opponent's Pokémon-ex\.$/, "Prevent all effects of attacks, including damage, done to this Pokémon by your opponent's Pokémon-ex during your opponent's next turn."],
+  [/^Prevent all effects of (?:an attack|attack), including damage, done to this Pokémon by /, "Prevent all effects of attacks, including damage, done to this Pokémon by "],
+  [/^Remove (\d+|all) damage counters? and all Special Conditions from this Pokémon\.$/, (all, n) => `Remove ${n} damage counter${n === "1" ? "" : "s"} from this Pokémon. Remove all Special Conditions from this Pokémon.`],
+  [/^Search your deck for 1 card and put it into your hand\./, "Search your deck for a card and put it into your hand."],
+  [/^(Search your discard pile for|Search your deck for) (up to \d+|an?) (.+?) and attach (?:them|it) to (your Pokémon in any way you like|1 of your Pokémon|this Pokémon)\.(.*)$/, (all, where, n, what, to, rest) => (where === "Search your discard pile for" ? `Attach ${n} ${what} from your discard pile to ${to}.${rest}` : all)],
+  [/^(Search your deck for an? .+?)\. Show that card to your opponent, then put it into your hand\./, "$1 and put it into your hand."],
+  [/ is affected by any Special Conditions?, /, " is affected by a Special Condition, "],
+  [/\(yours and your opponent's\)/, "(both yours and your opponent's)"],
+  [/^Do (\d+) damage to each Benched Pokémon \(/, "This attack does $1 damage to each Benched Pokémon ("],
+  [/^If there is (?:a|any) Stadium card in play, (?:discard it|(you may) discard it)\.$/, (all, may) => (may ? "You may discard a Stadium in play." : "Discard a Stadium in play.")],
+  [/^If your opponent has any Benched Pokémon, this attack does (\d+) damage to each of them\./, "This attack does $1 damage to each of your opponent's Benched Pokémon."],
+  [/^Your opponent discards the top card (?:from|of) (?:his or her|their) deck\.$/, "Discard the top card of your opponent's deck."],
+  [/^(Discard .+? from your hand)\. \(If you can't discard (?:a card|(\d+) cards) from your hand, this attack does nothing\.\)$/, (all, first, n) => `${first}. If you can't discard ${n ? `${n} cards in this way` : "a card"}, this attack does nothing.`],
+  [/^Take ((?:up to )?(?:an?|\d+)) (.+?) from your discard pile and attach (?:it|them) to this Pokémon\.$/, "Attach $1 $2 from your discard pile to this Pokémon."],
+  [/^(Discard an? .+? attached to this Pokémon) and (draw (?:a card|\d+ cards))\.$/, (all, first, then) => `${first}. ${upper(then)}.`],
+  [/(can't play any Trainer cards) or Stadium cards /, "$1 "],
+  [/^Flip a coin\. If heads,? and if your opponent has any Benched Pokémon, choose 1 of them and this attack does (\d+) damage to it\./, "If your opponent has any Benched Pokémon, flip a coin. If heads, choose 1 of them and this attack does $1 damage to it."],
+  [/^Choose 1 of your opponent's Benched Pokémon and flip a coin\. If heads, this attack does (\d+) damage to that Pokémon\./, "If your opponent has any Benched Pokémon, choose 1 of them and flip a coin. If heads, this attack does $1 damage to that Pokémon."],
   [/^Choose 1 of the Defending Pokémon's attack\. /, "Choose 1 of the Defending Pokémon's attacks. "],
   [/^(Choose 1 of the Defending Pokémon's attacks\.) The Pokémon can't/, "$1 That Pokémon can't"],
+  // Misprints that drop or swap a word.
+  [/^Does (\d+) more for each damage counter on /, "Does $1 more damage for each damage counter on "],
+  [/^Recover (\d+) damage from /, "Heal $1 damage from "],
+  [/\. \(All if there are less than (\d+)\.\)$/, " (all if there are less than $1)."],
+  [/\b(remove \d+ damage counters?) on /, "$1 from "],
+  [/ \.$/, "."],
+  [/ more damage for each (\w+) Pokémon in play\.$/, " more damage for each $1 Pokémon in play (both yours and your opponent's)."],
+  [/^(Remove \d+ damage counters? from each of your Pokémon), including [^.,]+\.$/, "$1."],
+  [/^Does (\d+) more damage if (you have [^,.]+)\.$/, (all, n, cond) => `If ${cond}, this attack does ${n} more damage.`],
 ];
 
 /**
@@ -3496,14 +3574,42 @@ function tidy(text) {
     .replace(/(^|\. )You switch (this Pokémon|[A-Z][\w.' é-]*?) with 1 of your Benched Pokémon\./, "$1Switch $2 with 1 of your Benched Pokémon.")
     // Misprints that say what the usual wording says.
     .replace(/\bIf heads the /g, "If heads, the ")
+    .replace(/\bIf head, /g, "If heads, ")
+    .replace(/(\d+) Damage to /g, "$1 damage to ")
+    // A doubles-era wording: in a game with one Active Pokémon a side, each Defending Pokémon is the Defending Pokémon.
+    .replace(/\bcounters on each Defending Pokémon\./g, "counters on the Defending Pokémon.")
+    .replace(/\bIf (heads|tails) (put|discard|switch|draw|search|remove|attach) /g, "If $1, $2 ")
+    .replace(/^Flip a coin, if heads /, "Flip a coin. If heads, ")
+    .replace(/^Seach /, "Search ")
+    .replace(/, an put /g, ", and put ")
     .replace(/\bPoisined\b/g, "Poisoned")
-    .replace(/(^|\. |, )This Defending Pokémon\b/g, "$1The Defending Pokémon")
+    .replace(/(^|\. |, )[Tt]his Defending Pokémon\b/g, (all, at) => `${at}${at === ", " ? "the" : "The"} Defending Pokémon`)
     .replace(/(^|\. )Flip a coin\. If heads, the Defending Pokémon is (Asleep|Burned|Confused|Paralyzed|Poisoned)\./g, "$1Flip a coin. If heads, the Defending Pokémon is now $2.")
     .replace(/\(after applying weakness and resistance\)/g, "(after applying Weakness and Resistance)")
     .replace(/next turn ,any /g, "next turn, any ")
     .replace(/any damage to this Pokémon by attacks/g, "any damage done to this Pokémon by attacks")
     .replace(/(^|\. )This attack damage isn't/g, "$1This attack's damage isn't")
     .replace(/would be be /g, "would be ")
+    .replace(/\bIf (heads|tails) this attack /g, "If $1, this attack ")
+    .replace(/(^|\. )The, /g, "$1Then, ")
+    .replace(/(\d+) damgae\b/g, "$1 damage")
+    .replace(/\bopponetn's\b/g, "opponent's")
+    .replace(/Weakness and reistance/g, "Weakness and Resistance")
+    .replace(/\band attack it to this Pokémon\b/g, "and attach it to this Pokémon")
+    .replace(/ Energy attaches, /g, " Energy attached, ")
+    .replace(/(\d+) damage damage times\b/g, "$1 damage times")
+    .replace(/ is now (asleep|burned|confused|paralyzed|poisoned)\./g, (all, c) => ` is now ${upper(c)}.`)
+    // "If it has fewer damage counters than that, remove all of them" after a heal: no heal takes off more than there is.
+    .replace(/(remove \d+ damage counters? from [^.(]+?\.) If (?:it|this Pokémon|[A-Z][^.]*?) has fewer damage counters than that, remove all of them\./gi, "$1")
+    .replace(/(\d+) damange\b/g, "$1 damage")
+    .replace(/(\d+) damages times\b/g, "$1 damage times")
+    .replace(/(\d+) Damage to\b/g, "$1 damage to")
+    .replace(/\bShuffe your deck\b/g, "Shuffle your deck")
+    .replace(/(damage counters?) fro /g, "$1 from ")
+    .replace(/\band attached it to\b/g, "and attach it to")
+    .replace(/ and put it into your hand, Shuffle your deck afterward\./g, " and put it into your hand. Shuffle your deck afterward.")
+    .replace(/^(Does \d+ damage plus \d+) more for each /, "$1 more damage for each ")
+    .replace(/(^|\. )Choose 1 of your opponent's Benched Pokémon and switch the Defending Pokémon with it\./, "$1Switch 1 of your opponent's Benched Pokémon with the Defending Pokémon.")
     .replace(/ to that Pokémon \(Don't apply Weakness and Resistance for Benched Pokémon\.\)$/, " to that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)")
     .replace(/times the number heads\./g, "times the number of heads.")
     .replace(/times then number of heads\./g, "times the number of heads.")
