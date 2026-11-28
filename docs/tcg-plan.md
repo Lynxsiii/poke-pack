@@ -288,7 +288,7 @@ wordings the engine can't read. Work down that list:
    used from the hand or on a coin flip while retreating.
    Calls made without asking: Huntail's "may" happens automatically, Bother-Bot
    turns a random Prize face up, Prizes are still taken from the front.
-   Still open: about 160 Standard attacks with extra text do printed damage only.
+   Every Standard attack text is read too (#496 #498 #499 #500 #501, 2026-11-28).
 
 Rules for this work: one op per mechanic in `OPS`, wordings mapped to it in
 `PATTERNS`, a test per op. Text that isn't fully read stays "not live" rather
