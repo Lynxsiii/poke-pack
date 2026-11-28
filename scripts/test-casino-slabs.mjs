@@ -86,11 +86,13 @@ const rid = () => crypto.randomUUID();
 
 // Forced randomness: a coinflip's winner is one Uint8 bit, a jackpot's draw is a 53-bit fraction of the pot.
 const rig = { coin: null, fraction: null };
-Object.defineProperty(globalThis.crypto, 'getRandomValues', { configurable: true, writable: true, value(array) {
-  if (rig.coin && array instanceof Uint8Array && array.length === 1) { array[0] = rig.coin === 'host' ? 1 : 0; return array; }
-  if (rig.fraction != null && array instanceof Uint32Array && array.length === 2) { array[0] = Math.min(0xffffffff, Math.floor(rig.fraction * 2 ** 32)); array[1] = 0; return array; }
-  return randomFillSync(array);
-} });
+// Draws come from the provably fair stream (js/fair.js), rigged through its test hook: a flip is int(2) (0 = host),
+// a jackpot's ticket is int(total cents).
+globalThis.__fairRig = (n) => {
+  if (rig.coin && n === 2) return rig.coin === 'host' ? 0 : 1;
+  if (rig.fraction != null && n > 2) return Math.min(n - 1, Math.floor(rig.fraction * n));
+  return undefined;
+};
 /** Make the next jackpot draw land in `seat`, for entries given as [[seat, value]] in seat order. */
 const rigSeat = (pairs, seat) => {
   const total = pairs.reduce((n, [, v]) => n + v, 0); let before = 0;

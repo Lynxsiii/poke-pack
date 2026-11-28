@@ -36,8 +36,8 @@ import { uuid, slabTileHTML } from "./casino-kit.js";
 import { gateLock, gateNoticeHTML, gateRefusal, roomLine } from "./gate-notice.js";
 import { esc, coins, coinTag as defaultCoinTag } from "./battle-kit.js";
 import { ALL_SETS, sellValue } from "./catalog.js";
-import { COIN_I as COIN_IMG } from "./money.js?v=2";
-import { initAutoRegrade } from "./grading-auto.js?v=1";
+import { COIN_I as COIN_IMG } from "./money.js?v=4";
+import { initAutoRegrade } from "./grading-auto.js?v=3";
 import { slabViewerHTML, attachSlabViewers, flipSlab, openSlabFullscreen } from "./slab-viewer.js?v=2";
 
 /** The paths this page answers. app.js uses it to route and to allow navigate(). */
@@ -666,7 +666,7 @@ export function initGrading(deps) {
       <header class="gd-head gd-head-row">
         <div>
           <h1 class="page-title">Grading</h1>
-          <p class="gd-lede">Send a card from your collection. It comes back sealed in a slab, with a grade on the label and a value to match.</p>
+          <p class="gd-lede">Send a card from your collection and it comes back sealed in a slab with a grade on the label.</p>
         </div>
         ${certForm("", "is-head")}
       </header>

@@ -1,6 +1,6 @@
 /* The BETA TESTING casino games: the numbers the page and the Worker share (worker/beta.js settles everything).
 
-   Every game is solo against the house (Rocket shares one round between everyone), stakes play coins only,
+   Every game is solo against the house, stakes play coins only,
    and pays at most 95% of the stake back on average (Mystery Tins 65% to 94% by shelf). Amounts in the Worker are cents. */
 
 export const BETA_RULES = {
@@ -17,7 +17,6 @@ export const BETA_ADMINS = ["polar"];
 
 export const BETA_GAMES = [
   { key: "grass", href: "/casino/grass", title: "Tall Grass", line: "Clear the patch, dodge the Voltorb." },
-  { key: "rocket", href: "/casino/rocket", title: "Rayquaza", line: "Cash out before it flies off." },
   { key: "tins", href: "/casino/tins", title: "Mystery Tins", line: "Crack a themed tin of cards." },
 ];
 
@@ -49,21 +48,6 @@ export function grassMultiplier(mines, safe) {
   const fair = choose(GRASS.tiles, safe) / choose(GRASS.tiles - mines, safe);
   return Math.floor(BETA_RULES.edge * fair * 100 + 1e-9) / 100;
 }
-
-// ---- Rocket -------------------------------------------------------------------
-export const ROCKET = {
-  betMs: 7000, // the betting window before launch
-  afterMs: 3500, // the pop stays on screen
-  rate: 0.11, // the multiplier is e^(rate * seconds)
-  maxMult: 100,
-  minAuto: 1.01,
-};
-/** The multiplier `ms` after launch, floored to two decimals. */
-export const rocketAt = (ms) => Math.floor(Math.exp((ROCKET.rate * Math.max(0, ms)) / 1000) * 100 + 1e-9) / 100;
-/** How long after launch the multiplier reaches `mult`. */
-export const rocketMsFor = (mult) => (Math.log(Math.max(1, mult)) / ROCKET.rate) * 1000;
-/** The pop point from a uniform draw u in [0,1): P(crash >= m) = 0.95 / m, capped at 100. */
-export const rocketCrash = (u) => Math.min(ROCKET.maxMult, Math.max(1, Math.floor((BETA_RULES.edge / (1 - u)) * 100) / 100));
 
 // ---- Mystery Tins -------------------------------------------------------------
 /* A tin is never about a set (anyone can just open that set). It is a Pokémon, an evolution line, a type or a kind

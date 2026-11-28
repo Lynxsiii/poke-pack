@@ -98,6 +98,7 @@ const DOCS = {
         <li>What you write: global chat messages, DMs, profile comments, and your friends list.</li>
         <li>When you were last online, and when you agreed to the Terms.</li>
         <li>For Account, Security: the devices you're signed in on (browser and system, read from your browser), a rough place for each (city and country, guessed from the network; we don't keep your IP address), and your last 40 sign-ins and security changes, including wrong passwords. If you turn on two-step sign-in we keep the key your authenticator app shares with us.</li>
+        <li>The free first pack: if you rip it before making an account we keep that pack for up to seven days so it can go onto the account you make, with a scrambled form of your network address for up to a day so a reload gives you the same pack. No name and no cookie goes with it.</li>
         <li>If you link Discord: your Discord ID, username, display name and picture. We don't keep anything that lets us act on your Discord account. Unlinking deletes them.</li>
       </ul>
       <p>Without an account, your game stays in your own browser's storage and isn't sent to us, unless you make an account and choose to bring it with you.</p>
@@ -144,7 +145,7 @@ const DOCS = {
 
   legal: {
     title: "Legal",
-    lede: "Who's behind poke-pack.rip, what it isn't, and how to reach us.",
+    lede: "Who runs poke-pack.rip and how to reach us.",
     body: `
       <h2>A fan project</h2>
       <p>${FAN_LINE}</p>
