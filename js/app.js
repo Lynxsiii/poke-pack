@@ -142,7 +142,7 @@ import { THEMES, canUseTheme, resolveLook } from "./themes.js?v=2";
 import { equippedCoin, gearItem, normalizeGear } from "./gear.js?v=3";
 import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=21";
 import { initBattles } from "./battles.js?v=12";
-import { initCasino } from "./casino.js?v=37";
+import { initCasino } from "./casino.js?v=38";
 import { coinOf } from "./coin.js?v=9";
 // grading
 import { initGrading, GRADING_ROUTE, CERT_ROUTE } from "./grading-page.js?v=23";
@@ -5544,6 +5544,8 @@ const SETTING_GROUPS = [
   {
     title: "Look",
     rows: [
+      { type: "themes" },
+      // Only Rotom comes in light and dark, so this row shows only while Rotom is picked (syncLightDarkRow).
       {
         key: "theme",
         type: "choice",
@@ -5555,7 +5557,6 @@ const SETTING_GROUPS = [
           ["device", "Device"],
         ],
       },
-      { type: "themes" },
     ],
   },
   {
@@ -5680,10 +5681,16 @@ function themeRow() {
   return `<div class="set-row look-row">
       <span class="set-copy">
         <b>Colours</b>
-        <small>Rotom follows Light or dark above. Every other theme is light or dark by itself.</small>
+        <small>Rotom comes in light and dark. Every other theme is one or the other.</small>
       </span>
       <div class="look-tiles" role="group" aria-label="Colours">${tiles}</div>
     </div>`;
+}
+
+/** The Light or dark row means something only on Rotom: on any other theme a lit "Light" over a dark page reads as a bug. */
+function syncLightDarkRow() {
+  const row = els.settingsBody?.querySelector('[data-choice="theme"]')?.closest(".set-row");
+  if (row) row.hidden = resolveLook(state.settings, { unlocked: unlockedThemes() }).theme.id !== "rotom";
 }
 
 /** Theme ids this player has unlocked. Nothing is locked yet, so nothing is stored. */
@@ -5762,6 +5769,7 @@ function renderSettings() {
       <button class="tlink" id="reset-settings" type="button" ${changed ? "" : "disabled"}>Restore defaults</button>
     </div>
     <div class="set-groups">${groups}${community}${progress}</div>`;
+  syncLightDarkRow();
 }
 
 // The look: light or dark, and the colour theme. The choice is mirrored to
@@ -6101,6 +6109,30 @@ function keepRailOpen() {
   if (more) more.open = railQuery.matches;
 }
 railQuery.addEventListener?.("change", keepRailOpen);
+
+// The bar's places: hover drops a place's pages on a computer with a mouse. On a touch screen the
+// first tap on a place opens its list and the second goes there. "More" has no page, so it only opens.
+const barNav = document.querySelector(".site-header .nav");
+const noHover = window.matchMedia("(hover: none)");
+function closeBarGroups(except) {
+  barNav?.querySelectorAll(".nav-grp.is-open").forEach((grp) => { if (grp !== except) grp.classList.remove("is-open"); });
+}
+barNav?.addEventListener("click", (e) => {
+  if (!railQuery.matches) return;
+  const head = e.target.closest(".nav-grp > .nav-area");
+  if (!head) { closeBarGroups(); return; }
+  const grp = head.parentElement;
+  const isMore = head.classList.contains("nav-grp-more");
+  if (isMore) { closeBarGroups(grp); grp.classList.toggle("is-open"); return; }
+  if (noHover.matches && !grp.classList.contains("is-open")) {
+    e.preventDefault(); e.stopPropagation();
+    closeBarGroups(grp); grp.classList.add("is-open");
+    return;
+  }
+  closeBarGroups();
+}, true);
+document.addEventListener("click", (e) => { if (!e.target.closest?.(".site-header .nav-grp")) closeBarGroups(); });
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeBarGroups(); });
 
 function paintNav(current) {
   const navView =
@@ -8956,6 +8988,7 @@ els.settingsBody.addEventListener("click", (e) => {
       btn.classList.toggle("on", on);
       btn.setAttribute("aria-pressed", String(on));
     });
+    syncLightDarkRow();
     updateSettingsSummary();
     return;
   }
@@ -10845,7 +10878,7 @@ let tcgLoading = null;
 function showTcg() {
   if (tcgPage) return tcgPage.show(tcgPath);
   els.viewTcg.innerHTML = `<div class="tg-page"><div class="rt-skel tg-loading">Loading</div></div>`;
-  tcgLoading ||= import("./tcg-page.js?v=46")
+  tcgLoading ||= import("./tcg-page.js?v=47")
     .then(({ initTcg }) => {
       tcgPage = initTcg({
         root: els.viewTcg,
