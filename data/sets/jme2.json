@@ -1,0 +1,39 @@
+{
+  "id": "jme2",
+  "name": "Inferno X",
+  "lang": "ja",
+  "code": "M2",
+  "series": "mega-evolution",
+  "slug": "inferno-x",
+  "scrydexId": "m2_ja",
+  "era": "me",
+  "tcgplayerCategory": 85,
+  "tcgplayerGroup": 24459,
+  "englishTwin": "me2",
+  "rarityMap": {
+    "C": "Common",
+    "U": "Uncommon",
+    "R": "Rare",
+    "RR": "Double Rare",
+    "ACE": "ACE SPEC Rare",
+    "AR": "Illustration Rare",
+    "SR": "Ultra Rare",
+    "SAR": "Special Illustration Rare",
+    "UR": "Hyper Rare",
+    "MUR": "Mega Hyper Rare",
+    "PROMO": "Promo"
+  },
+  "printedTotal": 80,
+  "products": [
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 655968,
+      "packs": 30,
+      "promos": [],
+      "hull": "ortho",
+      "imageVersion": 3
+    }
+  ]
+}

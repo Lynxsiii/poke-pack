@@ -21792,5 +21792,41 @@
       "tcgplayerId": 674449,
       "image": "assets/products/jme3/boosterBox-v3.webp"
     }
+  ],
+  "jme1l": [
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 30,
+      "promos": [],
+      "price": 73.02,
+      "tcgplayerId": 647500,
+      "image": "assets/products/jme1l/boosterBox-v3.webp"
+    }
+  ],
+  "jme1s": [
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 30,
+      "promos": [],
+      "price": 76.01,
+      "tcgplayerId": 647501,
+      "image": "assets/products/jme1s/boosterBox-v3.webp"
+    }
+  ],
+  "jme2": [
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 30,
+      "promos": [],
+      "price": 120.25,
+      "tcgplayerId": 655968,
+      "image": "assets/products/jme2/boosterBox-v3.webp"
+    }
   ]
 }
