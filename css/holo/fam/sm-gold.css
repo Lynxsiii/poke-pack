@@ -30,12 +30,14 @@
 /* ---- Tokens ------------------------------------------------------------------------------------------------- */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold {
   --smg-etch: var(--etch-map, linear-gradient(transparent, transparent));
-  /* the light pool the dodge lifts: warm and small, nothing from 52% out */
+  /* the light pool the dodge lifts: small, nothing from 52% out. 2026-11-28: was strongly warm (84, 56, 26), which
+     turned white and silver items sepia under the light (Tag Switch, Great Catcher's dish, Metal Energy); gold stays
+     amber under a near-neutral light because the print is gold. */
   --smg-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    rgb(84, 56, 26) 0%, rgb(40, 26, 12) 15%, rgb(10, 6, 3) 34%, #000 52%);
+    rgb(66, 56, 40) 0%, rgb(32, 27, 19) 15%, rgb(8, 7, 5) 34%, #000 52%);
   /* what lights the ridges in the dodge: warm, full at the pointer, faint far away */
   --smg-lamp: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    rgb(255, 214, 150) 0%, rgb(170, 140, 98) 14%, rgb(66, 54, 36) 36%, rgb(22, 18, 12) 70%, rgb(16, 13, 9) 100%);
+    rgb(250, 232, 200) 0%, rgb(166, 152, 128) 14%, rgb(64, 58, 48) 36%, rgb(22, 20, 16) 70%, rgb(16, 14, 11) 100%);
   --smg-etch-veil: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55));
   --smg-floor: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
   /* the header band (TRAINER / ENERGY, a GX's name line: silver or grey ink on gold) at 45% */
