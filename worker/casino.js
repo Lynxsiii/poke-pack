@@ -1,3 +1,4 @@
+import { binderLocks, LOCKED_MESSAGE } from './binder-lock.js';
 import { takeRoll, gameSeed, gameRoll, clientSeedOf, fairOf } from './fair.js';
 import { flipWinner } from '../js/fair.js';
 import { PLAYABLE_SETS, ALL_SETS, money, sellValue } from '../js/catalog.js';
@@ -92,6 +93,7 @@ export async function buildStake(env, request, helpers, userId, rawCards, rules 
   if (!cardList.length && !slabList.length) error('Put up at least one card.');
   if (cardList.length > rules.maxCards) error(`Put up at most ${rules.maxCards} different cards.`);
   const { collection, reverses } = await helpers.inventoryMap(env, userId);
+  const locks = await binderLocks(env, userId, collection);
   const seen = new Set(); const stake = []; let copies = 0; let value = 0;
   for (const row of cardList) {
     const id = String(row?.id || ''); const qty = Number(row?.qty);
@@ -100,6 +102,9 @@ export async function buildStake(env, request, helpers, userId, rawCards, rules 
     seen.add(id);
     const have = collection[id] || 0;
     if (have < qty) error(`You only have ${have} of ${id}.`, 409);
+    // Copies in binder pockets stay home (worker/binder-lock.js).
+    const free = locks.freeRaw(id, have);
+    if (free < qty) error(free ? `Only ${free} of ${id} can go. The rest are locked in your binder.` : LOCKED_MESSAGE, 409);
     // Keep your reverse holos: stake the plain copies first.
     const rev = Math.max(0, qty - (have - (reverses[id] || 0)));
     const card = await helpers.findCatalogCard(env, request, id);
@@ -111,6 +116,13 @@ export async function buildStake(env, request, helpers, userId, rawCards, rules 
   }
   if (copies > rules.maxCopies) error(`Put up at most ${rules.maxCopies} cards in total.`);
   const held = await buildSlabs(env, request, helpers, userId, slabList, rules);
+  const leaving = {};
+  for (const slab of held.slabs) {
+    leaving[slab.cardId] = (leaving[slab.cardId] || 0) + 1;
+    // A slab can fill a pocket too: the raw copies staked alongside count against the same pockets.
+    const rawLeft = (collection[slab.cardId] || 0) - (stake.find((s) => s.id === slab.cardId)?.qty || 0);
+    if (leaving[slab.cardId] > locks.freeSlabs(slab.cardId, rawLeft)) error(LOCKED_MESSAGE, 409);
+  }
   value += held.value;
   if (value < rules.minCents) error(`${/^[aeiou]/i.test(noun) ? 'An' : 'A'} ${noun} needs at least ${money(rules.minCents / 100)} coins of cards.`);
   return { stake, slabs: held.slabs, value, collection };
