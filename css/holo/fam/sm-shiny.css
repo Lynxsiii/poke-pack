@@ -58,6 +58,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-shin
    luminance, the luminance taken of the scan squared): pale and white ink flash, saturated and dark ink take next to nothing. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.has-foil-map.sms-shining {
   --sms-etch-x: var(--sms-etch, var(--etch-map, linear-gradient(transparent, transparent)));
+  /* 2026-11-28: the shared etch shine ran at its defaults here (0.45 spectrum, 0.6 glitter) and the Pokémon is the
+     foil: a purple-green glitter grain over Shining Rayquaza's black body, grain over Genesect and Celebi. */
+  --shine-glit: 0;
+  --shine-line: 0.12;
   /* 2026-11-25: wider, more saturated bands with a warm stop; the pastel set read as no foil at phone size */
   --sms-bands: repeating-linear-gradient(118deg, #fff 0%, #fff 2%, hsl(190, 90%, 62%) 4%, hsl(225, 90%, 68%) 6%,
     hsl(270, 80%, 70%) 8%, hsl(320, 80%, 72%) 10%, hsl(40, 90%, 70%) 12%, #fff 14%, #fff 17%);
