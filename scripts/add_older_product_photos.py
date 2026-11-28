@@ -8,7 +8,12 @@ one. Each photo is cut out with build_products.cut_out (convex hull; every
 product here is a convex box or tin), saved as assets/products/<set>/<id>.webp
 and recorded as `image` in data/products.json.
 
-    python3 scripts/add_older_product_photos.py
+    python3 scripts/add_older_product_photos.py               # every photo below
+    python3 scripts/add_older_product_photos.py xy11/elite-trainer-box   # just these
+
+assets/ is cached for a year, so a photo that already exists is never
+overwritten: the new cut takes the next -vN name and `imageVersion` in
+data/sets/<set>.json, which build_products.py keeps.
 """
 from __future__ import annotations
 
@@ -21,7 +26,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import build_products as bp  # noqa: E402
 from PIL import Image  # noqa: E402
 
-# (set, product id): (PriceCharting console slug, listing title)
+# (set, product id): (PriceCharting console slug, listing title), or ("url", a photo on white) where PriceCharting has none
 # Left out: PriceCharting's Lucario and Dialga LV.X tin photos are shot on grey and beige, so the cut-out leaves a ragged edge.
 PHOTOS: dict[tuple[str, str], tuple[str, str]] = {
     ("hgss1", "legendary-beast-tin-raikou"): ("pokemon-heartgold-&-soulsilver", "Raikou Tin"),
@@ -37,6 +42,10 @@ PHOTOS: dict[tuple[str, str], tuple[str, str]] = {
     ("ecard1", "booster-box"): ("pokemon-expedition", "Booster Box"),
     ("ecard2", "booster-box"): ("pokemon-aquapolis", "Booster Box"),
     ("ecard3", "booster-box"): ("pokemon-skyridge", "Booster Box"),
+    # TCGplayer's listing photo for this box is the Steam Siege logo (11-28).
+    ("xy11", "elite-trainer-box"): ("pokemon-steam-siege", "Elite Trainer Box"),
+    # TCGplayer's photo for the kit is the logo too, and PriceCharting doesn't list it: a retailer's studio shot on white.
+    ("xy11", "prerelease-kit"): ("url", "https://cdn.shopify.com/s/files/1/0515/0189/1783/products/f9465df9-cd04-50e4-a292-1b9070b7c7c0.jpg"),
 }
 
 
@@ -52,21 +61,34 @@ def listing_images(slug: str) -> dict[str, str]:
 
 
 def main() -> int:
+    import check_product_photos as cpp
+    only = set(sys.argv[1:])
     products = json.loads(bp.OUT.read_text(encoding="utf-8"))
     status = 0
     for (set_id, pid), (slug, title) in PHOTOS.items():
+        if only and f"{set_id}/{pid}" not in only:
+            continue
         entry = next((p for p in products.get(set_id, []) if p["id"] == pid), None)
-        thumb = listing_images(slug).get(title)
+        thumb = title if slug == "url" else listing_images(slug).get(title)
         if not entry or not thumb:
             print(f"{set_id} {pid}: not found ({'entry' if not entry else 'listing'})")
             status = 1
             continue
         rel = f"assets/products/{set_id}/{pid}.webp"
-        raw = bp.fetch(thumb.rsplit("/", 1)[0] + "/1600.jpg", f"pc-{set_id}-{pid}.jpg")
+        src = thumb if slug == "url" else thumb.rsplit("/", 1)[0] + "/1600.jpg"
+        raw = bp.fetch(src, f"pc-{set_id}-{pid}.jpg")
         img = bp.cut_out(raw)
         if img.width > bp.PRODUCT_WIDTH:
             img = img.resize((bp.PRODUCT_WIDTH, round(img.height * bp.PRODUCT_WIDTH / img.width)), Image.LANCZOS)
         (bp.ROOT / rel).parent.mkdir(parents=True, exist_ok=True)
+        if (bp.ROOT / rel).exists():
+            rel = cpp.next_name(rel)
+            cfg_path = bp.SETS / f"{set_id}.json"
+            cfg = json.loads(cfg_path.read_text(encoding="utf-8"))
+            for p in cfg.get("products", []):
+                if p.get("id") == pid:
+                    p["imageVersion"] = int(rel.rsplit("-v", 1)[1].split(".")[0])
+            cfg_path.write_text(json.dumps(cfg, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
         img.save(bp.ROOT / rel, "WEBP", quality=80, method=6, exact=True)
         entry["image"] = rel
         print(f"{set_id} {pid}: {img.size}")

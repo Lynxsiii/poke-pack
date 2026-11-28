@@ -84,7 +84,8 @@
       "kind": "etb",
       "tcgplayerId": 120697,
       "packs": 8,
-      "promos": []
+      "promos": [],
+      "imageVersion": 2
     },
     {
       "id": "prerelease-kit",
@@ -99,7 +100,8 @@
         "xyp147"
       ],
       "pick": 1,
-      "note": "One of four foil prerelease promos, picked at random. The real kit also held a 23-card prerelease pack, which isn't simulated."
+      "note": "One of four foil prerelease promos, picked at random. The real kit also held a 23-card prerelease pack, which isn't simulated.",
+      "imageVersion": 2
     },
     {
       "id": "lucario-single-pack-blister",
