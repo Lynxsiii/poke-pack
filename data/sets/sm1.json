@@ -44,7 +44,8 @@
       "tcgplayerId": 126089,
       "packs": 8,
       "promos": [],
-      "note": "Two art variants (Solgaleo 126089, Lunala 126091), same contents."
+      "note": "Two art variants (Solgaleo 126089, Lunala 126091), same contents.",
+      "imageVersion": 2
     },
     {
       "id": "lunala-elite-trainer-box",
@@ -216,7 +217,7 @@
       "packs": 2,
       "promos": [],
       "note": "No SM number.",
-      "imageVersion": 2
+      "imageVersion": 3
     },
     {
       "id": "decidueye-gx-challenge-box-2020",
@@ -234,7 +235,8 @@
       "tcgplayerId": 656996,
       "packs": 2,
       "promos": [],
-      "note": "No SM number."
+      "note": "No SM number.",
+      "imageVersion": 2
     },
     {
       "id": "boosterBox",
@@ -242,7 +244,8 @@
       "kind": "box",
       "tcgplayerId": 126048,
       "packs": 36,
-      "promos": []
+      "promos": [],
+      "imageVersion": 2
     },
     {
       "id": "theme-deck-forest-shadow",

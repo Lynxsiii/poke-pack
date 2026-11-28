@@ -217,6 +217,9 @@
 .cslot .slot-mark .rarity-ico { width: 10px; height: 10px; filter: none; opacity: 0.75; }
 .cslot .slot-vl { flex: none; color: var(--k-2); font: 600 13px var(--font-h); white-space: nowrap; }
 .cslot .slot-vl.is-miss { color: var(--k-3); }
+/* every copy is in a binder pocket (js/app.js renderCollection) */
+.cslot .slot-vl.is-locked { display: inline-flex; align-items: center; gap: 4px; }
+.cslot .slot-vl.is-locked .lock-glyph { width: 11px; height: 11px; color: var(--k); }
 /* Copies you hold: a small ink tag on the card's corner. */
 .slot-qty {
   position: absolute; z-index: 3; left: -4px; bottom: 7px; padding: 1px 7px 2px 6px;

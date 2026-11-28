@@ -37,7 +37,7 @@
 }
 .rk-me p { margin: 0; color: var(--k); font-size: 15px; line-height: 1.45; }
 .rk-me-out, .rk-me-none {
-  flex-wrap: wrap; gap: 12px 16px; padding: 16px 18px; border-style: dashed; border-color: var(--rule-2); background: rgb(var(--box-rgb) / 0.88);
+  flex-wrap: wrap; gap: 12px 16px; min-height: 0; padding: 0; border: 0; background: none; overflow: visible;
 }
 .rk-me-out p, .rk-me-none p { flex: 1 1 220px; color: var(--k-2); }
 .rk-me-out .ghost { flex: none; min-width: 0; }
@@ -154,10 +154,12 @@
 
 /* Nothing yet, or still loading. */
 .rk-empty { margin: 0; color: var(--k-2); font-size: 15px; }
+/* House style: an empty board is a plain line under a rule, no dashed box and no ball. */
 .rk-empty-box {
-  display: flex; align-items: center; gap: 14px; margin-top: 18px; padding: 18px 16px;
-  border: var(--line-w) dashed var(--rule-2); border-radius: var(--r); background: rgb(var(--box-rgb) / 0.88);
+  display: block; margin-top: 18px; padding: 16px 0 0;
+  border: 0; border-top: var(--line-w) solid var(--rule);
 }
+.rk-empty-box .rk-ball, .rk-me-none .rk-ball, .rk-me-out .rk-ball { display: none; }
 .rk-empty-box p { margin: 0; line-height: 1.45; }
 .rk-ghosts { display: grid; gap: 8px; }
 /* Loading: dashed places with the cyan band crossing them (rotom.css .rt-skel). */

@@ -11,7 +11,8 @@ in every English set of the same era, compares the art (the scans' top 55%, grey
 cross-correlation; the frame and text differ between the languages, the painting does not) and takes the best match
 over --min-corr. It copies foilMap, etchMap (Live's only: a drawn English etch belongs to the English scan) and sets
 foilTwin. Full arts are not touched: their Japanese text sits elsewhere, so an English etch would ghost English text;
-they take a drawn etch of their own (make_card_etch.py).
+they take a drawn etch of their own (make_card_etch.py), and since 2026-11-28 the twin's foil map (FULL below), which
+must then go through --clean-text.
 
     python3 jp_twin_maps.py            # report
     python3 jp_twin_maps.py --write    # and write data/<jp set>.json
@@ -32,6 +33,13 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", "..", "..", ".."))
 MAPPED = {"Double Rare", "Shiny Rare", "Shiny Ultra Rare", "ACE SPEC Rare", "Rare", "Rare Holo", "Rare Prism Star",
           "Illustration Rare", "Rare Holo GX", "Rare Holo V", "Radiant Rare"}
+# Full arts and the other prints whose Japanese text sits elsewhere: since --clean-text paints the English lettering out
+# of a twin's map (2026-11-27), they take the twin's foil map too, but keep their own drawn etch. Without one they wore
+# the all-white map, so the whole face was foil: skin and faces took the bands' tint and the Supporters' diagonal
+# streaks (per-card review 2026-11-28: Professor Burnet js8b-265, Volo js12a-245, Bea js8b-261).
+FULL = {"Rare Ultra", "Rare Secret", "Rare Rainbow", "Rare Rainbow Alt", "Rare Holo VMAX", "Rare Holo VSTAR",
+        "Rare Holo V", "Trainer Gallery Rare Holo", "Rare Shiny", "Rare Shiny GX", "Special Illustration Rare",
+        "Hyper Rare", "Ultra Rare", "Illustration Rare"}
 ERA_SETS = {"sv": r"^(sv\d|sv\d+pt5|svp)", "sm": r"^(sm\d|smp)", "swsh": r"^(swsh|cel25|pgo)"}
 
 
@@ -69,7 +77,8 @@ def main():
         cards = json.load(open(p, encoding="utf-8"))
         changed = 0
         for c in cards:
-            if c.get("foilMap") or c.get("rarity") not in MAPPED or not c.get("image") or c.get("pattern"):
+            full = c.get("rarity") not in MAPPED
+            if c.get("foilMap") or (full and c.get("rarity") not in FULL) or not c.get("image") or c.get("pattern"):
                 continue
             mine = art(c["image"])
             best = None
@@ -79,7 +88,13 @@ def main():
                 for e in ecards:
                     if e.get("name") != c.get("name") or not e.get("foilMap") or not e.get("image"):
                         continue
-                    if e.get("rarity") != c.get("rarity") and not (c["rarity"].startswith("Shiny") and e.get("rarity") == "Promo"):
+                    if full:
+                        if e.get("rarity") not in FULL and e.get("rarity") != "Promo":
+                            continue
+                    elif e.get("rarity") != c.get("rarity") and not (
+                            e.get("rarity") == "Promo" and (c["rarity"].startswith("Shiny") or c["rarity"] == "Double Rare")):
+                        # a Double Rare too: Terastal Festival's nine ex with new art are the English SVP promos
+                        # (2026-11-28: they had no map and wore the whole-face foil-ex wash)
                         continue
                     try:
                         corr = float((mine * art(e["image"])).mean())
@@ -91,11 +106,13 @@ def main():
                 print(f"  {c['id']:14} {c['name']:24} {c['rarity']:18} no English card of that name with a map")
                 continue
             corr, e = best
-            ok = corr >= a.min_corr
+            ok = corr >= (max(a.min_corr, 0.65) if full else a.min_corr)
             print(f"{'ok' if ok else '  '} {c['id']:14} {c['name']:24} {c['rarity']:18} <- {e['id']:14} art corr {corr:.2f}")
             if ok and a.write:
                 c["foilMap"] = e["foilMap"]
-                if e.get("etchMap") and not e.get("etchDrawn"):
+                if full:
+                    pass  # the Japanese print's own drawn etch stays; --clean-text --only takes the English words out
+                elif e.get("etchMap") and not e.get("etchDrawn"):
                     c["etchMap"] = e["etchMap"]
                 c["foilTwin"] = e["id"]
                 changed += 1
@@ -161,7 +178,11 @@ def clean_text(write, only=None):
                 continue
             if not twin or not twin.get("image"):
                 continue
+            # only maps that came from the twin: a full art's own drawn etch (no etchDrawn flag on some) is left alone;
+            # foil_align.py --fix renames the twin's etch to -etch-a1, which is still the twin's (2026-11-28: Pidgeot ex
+            # jsv3-136 showed "Quick Search" through the foil because its aligned etch was skipped)
             keys = [k for k in ("foilMap", "etchMap") if c.get(k) and not (k == "etchMap" and c.get("etchDrawn"))
+                    and not (k == "etchMap" and re.sub(r"(-a\d+)+\.webp$", ".webp", c[k]) != twin.get("etchMap"))
                     and not re.search(r"-t\d+\.webp$", c[k])]
             if not keys:
                 continue

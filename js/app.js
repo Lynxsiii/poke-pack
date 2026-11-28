@@ -2,7 +2,7 @@ import { createCardMotion } from "./card-motion.js?v=4";
 import {
   foilExtras, foilClass as finishClass, foilLayout as finishLayout, foilLook as finishLook, foilPattern as finishPattern,
   reverseKindOf as finishReverseKind, dataFinish,
-} from "./foil-maps.js?v=147";
+} from "./foil-maps.js?v=153";
 import { initFx } from "./fx.js";
 import { PROFILE_PAGE_LIMIT } from "./profile-pages.js";
 import * as profileView from "./profile-view.js"; // the public profile page: hero, sections, room
@@ -142,12 +142,12 @@ import { THEMES, canUseTheme, resolveLook } from "./themes.js?v=2";
 import { equippedCoin, gearItem, normalizeGear } from "./gear.js?v=3";
 import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=21";
 import { initBattles } from "./battles.js?v=12";
-import { initCasino } from "./casino.js?v=37";
+import { initCasino } from "./casino.js?v=38";
 import { coinOf } from "./coin.js?v=9";
 // grading
 import { initGrading, GRADING_ROUTE, CERT_ROUTE } from "./grading-page.js?v=23";
 // trades
-import { initTrades, TRADES_ROUTE } from "./trades-page.js?v=9";
+import { initTrades, TRADES_ROUTE } from "./trades-page.js?v=10";
 import { coinTag } from "./battle-kit.js";
 import { coinText, coinAmount, COIN_I } from "./money.js?v=4";
 import { receiptHtml, pullRow } from "./receipt.js?v=4";
@@ -165,12 +165,12 @@ import { initSecurity, securityTabHtml, resetSecurity, securityChanged, finishDi
 import { createShareSheet, pullUrl } from "./share-pull.js?v=5";
 // binder looks: the /binder cover, the customiser and the owner's look on a profile
 import { binderObjectHtml, applyBinderLook } from "./binder-object.js";
-import { watchBinderFx } from "./binder-editions.js";
+import { watchBinderFx, binderFxHtml } from "./binder-editions.js";
 import { normalizeBinderLook, resolveBinderLook, COLOR_FROM_CARDS } from "./binder-looks.js";
 import { hexToHsl, hslToHex, mixHex } from "./card-accent.js";
 import { cachedCardAccents, sampleCardAccents } from "./card-art-accent.js?v=1";
 import { initBinderEditor } from "./binder-editor.js?v=6";
-import { renderNotesPage } from "./notes-page.js?v=3";
+import { renderNotesPage } from "./notes-page.js?v=4";
 import { renderLegalPage, LEGAL_TITLES } from "./legal-page.js?v=9";
 import { ageFieldsHtml, agreeRowHtml, readAgeFields, ageBlocked, blockAge, UNDERAGE_HTML, syncTermsSheet } from "./terms-sheet.js?v=1";
 
@@ -2309,6 +2309,24 @@ function heldId(cardId) {
   const ids = dexIds(cardId);
   return [...ids.slice(1), ids[0]].find((id) => (state.collection[id] || 0) > 0) || ids[0];
 }
+/* Binder lock (worker/binder-lock.js): a card in a binder pocket can't be sold, staked or traded
+   until it comes out. Slabs fill pockets first, then raw copies; the rest are free to go. */
+const BINDER_LOCKED_TEXT = "That card is locked in your binder. Take it out of the binder first.";
+function pocketedQty(cardId) {
+  return dexIds(cardId).reduce((n, id) => n + binderHeld(state, id), 0);
+}
+/** Raw copies the binder holds back. */
+function lockedRawQty(cardId) {
+  return Math.min(rawQty(cardId), Math.max(0, pocketedQty(cardId) - slabsOf(cardId).length));
+}
+/** Raw copies that may be sold, staked or traded. */
+function freeRawQty(cardId) {
+  return rawQty(cardId) - lockedRawQty(cardId);
+}
+/** Slabs of a card the binder holds back. */
+function lockedSlabQty(cardId) {
+  return Math.min(slabsOf(cardId).length, Math.max(0, pocketedQty(cardId) - rawQty(cardId)));
+}
 /** Raw copies plus graded ones: what "owned" means everywhere but sell and stake. */
 function ownedQty(cardId) {
   return rawQty(cardId) + slabsOf(cardId).length;
@@ -2339,12 +2357,17 @@ function gradeBadge(slabs) {
   return `<span class="grade-badge grade-${best}" title="${title}"><i>RIP</i>${best}</span>`;
 }
 
+/** Copies Sell duplicates would sell: all but one of each, or all but what the binder holds back. */
 function spareCopies(set = liveSet) {
   let n = 0;
   for (const [id, count] of Object.entries(state.collection || {})) {
-    if (homeSetId(id) === set.id && count > 1) n += count - 1;
+    if (homeSetId(id) === set.id && count > 1) n += count - duplicateKeep(id, count);
   }
   return n;
+}
+function duplicateKeep(id, count) {
+  const locked = Math.min(count, Math.max(0, binderHeld(state, id) - gradedSlabs(id).length));
+  return Math.min(count, Math.max(1, locked));
 }
 
 function eraCountLabel(block) {
@@ -2727,9 +2750,11 @@ function renderCollection({ refreshSets = true } = {}) {
         : `<button type="button" class="slot-face" data-face="${i}" ${inspectAttrs(faces[i])} aria-label="${esc(card.name)}, ${said}"></button>${gradeBadge(slabs)}${
             raw > 1 ? `<span class="slot-qty" title="${raw} copies">×${raw}</span>` : ""
           }`;
+      // Every copy sits in a binder pocket: a small padlock by the value (never on the art).
+      const locked = !missing && pocketedQty(card.id) >= count;
       const value = missing
         ? `<span class="slot-vl is-miss">Missing</span>`
-        : `<span class="slot-vl">${coin(sellValue(card))}<span class="sr-only"> coins</span></span>`;
+        : `<span class="slot-vl${locked ? " is-locked" : ""}"${locked ? ' title="Locked in your binder"' : ""}>${locked ? LOCK_GLYPH : ""}${coin(sellValue(card))}<span class="sr-only"> coins${locked ? ", locked in your binder" : ""}</span></span>`;
       // The heart sits on every card you're still missing, and on any card already hearted.
       const wish = missing || wishlist.has(card.id) ? wishlist.heart(card.id, card.name, { cls: "slot-wish" }) : "";
       return `<article class="cslot bulk-card${missing ? " missing" : ""}${card.id === foundCardId ? " is-found" : ""}"${i < 12 ? ` style="--i:${i}"` : ""}>
@@ -3128,8 +3153,8 @@ function renderBinder() {
   if (nameEl) nameEl.textContent = lookName || "Binder";
   if (els.binderCount) {
     els.binderCount.innerHTML = shown
-      ? `<b>${num(shown)}</b> card${shown === 1 ? "" : "s"} on show, worth <b class="binder-worth">${coinAmount(worth)}</b>`
-      : "Tap an empty pocket to put a card on show.";
+      ? `<b>${num(shown)}</b> card${shown === 1 ? "" : "s"} on show, worth <b class="binder-worth">${coinAmount(worth)}</b><span class="binder-lock-line">${LOCK_GLYPH}<span>Cards in here can't be sold, staked or traded.</span></span>`
+      : "Tap an empty pocket to put a card on show. Cards in the binder are locked until you take them out.";
   }
   els.viewBinder?.classList.toggle("is-arranging", binderArranging);
   const arrangeKey = document.getElementById("binder-arrange");
@@ -3159,12 +3184,13 @@ function renderBinder() {
   const hint = binderArranging
     ? binderHolding != null
       ? "Now tap the pocket it should go in."
-      : "Tap a card to pick it up, × to take it out, an empty pocket to add one."
+      : "Tap a card to pick it up, × takes it out and unlocks it, an empty pocket adds one."
     : closed
       ? "Tap the cover to open your binder."
       : wide ? "Use the keys to turn the page. Click a card to look closer." : "Swipe to turn the page. Tap a card to look closer.";
   const trainerName = activeTrainer()?.name || "";
   const front = `<button type="button" class="binder-page binder-front" data-goto="0" aria-label="Open your binder">
+      <span class="binder-cover bf-skin" aria-hidden="true"><span class="binder-fx">${binderFxHtml(binderLookNow().edition)}</span></span>
       <span class="bf-size" aria-hidden="true"><span class="binder-page-toolbar"><span>&nbsp;</span></span><span class="binder-pockets">${'<i class="pocket"></i>'.repeat(BINDER_PAGE)}</span></span>
       <span class="bf-band" aria-hidden="true"></span>
       <span class="bf-plate"><em>Binder</em><b>${esc(lookName || trainerName || "My binder")}</b></span>
@@ -5544,6 +5570,8 @@ const SETTING_GROUPS = [
   {
     title: "Look",
     rows: [
+      { type: "themes" },
+      // Only Rotom comes in light and dark, so this row shows only while Rotom is picked (syncLightDarkRow).
       {
         key: "theme",
         type: "choice",
@@ -5555,7 +5583,6 @@ const SETTING_GROUPS = [
           ["device", "Device"],
         ],
       },
-      { type: "themes" },
     ],
   },
   {
@@ -5680,10 +5707,16 @@ function themeRow() {
   return `<div class="set-row look-row">
       <span class="set-copy">
         <b>Colours</b>
-        <small>Rotom follows Light or dark above. Every other theme is light or dark by itself.</small>
+        <small>Rotom comes in light and dark. Every other theme is one or the other.</small>
       </span>
       <div class="look-tiles" role="group" aria-label="Colours">${tiles}</div>
     </div>`;
+}
+
+/** The Light or dark row means something only on Rotom: on any other theme a lit "Light" over a dark page reads as a bug. */
+function syncLightDarkRow() {
+  const row = els.settingsBody?.querySelector('[data-choice="theme"]')?.closest(".set-row");
+  if (row) row.hidden = resolveLook(state.settings, { unlocked: unlockedThemes() }).theme.id !== "rotom";
 }
 
 /** Theme ids this player has unlocked. Nothing is locked yet, so nothing is stored. */
@@ -5762,6 +5795,7 @@ function renderSettings() {
       <button class="tlink" id="reset-settings" type="button" ${changed ? "" : "disabled"}>Restore defaults</button>
     </div>
     <div class="set-groups">${groups}${community}${progress}</div>`;
+  syncLightDarkRow();
 }
 
 // The look: light or dark, and the colour theme. The choice is mirrored to
@@ -6101,6 +6135,30 @@ function keepRailOpen() {
   if (more) more.open = railQuery.matches;
 }
 railQuery.addEventListener?.("change", keepRailOpen);
+
+// The bar's places: hover drops a place's pages on a computer with a mouse. On a touch screen the
+// first tap on a place opens its list and the second goes there. "More" has no page, so it only opens.
+const barNav = document.querySelector(".site-header .nav");
+const noHover = window.matchMedia("(hover: none)");
+function closeBarGroups(except) {
+  barNav?.querySelectorAll(".nav-grp.is-open").forEach((grp) => { if (grp !== except) grp.classList.remove("is-open"); });
+}
+barNav?.addEventListener("click", (e) => {
+  if (!railQuery.matches) return;
+  const head = e.target.closest(".nav-grp > .nav-area");
+  if (!head) { closeBarGroups(); return; }
+  const grp = head.parentElement;
+  const isMore = head.classList.contains("nav-grp-more");
+  if (isMore) { closeBarGroups(grp); grp.classList.toggle("is-open"); return; }
+  if (noHover.matches && !grp.classList.contains("is-open")) {
+    e.preventDefault(); e.stopPropagation();
+    closeBarGroups(grp); grp.classList.add("is-open");
+    return;
+  }
+  closeBarGroups();
+}, true);
+document.addEventListener("click", (e) => { if (!e.target.closest?.(".site-header .nav-grp")) closeBarGroups(); });
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeBarGroups(); });
 
 function paintNav(current) {
   const navView =
@@ -8318,16 +8376,30 @@ function inspectSellRow(card) {
     ? `You own ${slabs.length === 1 ? "one graded copy" : `${num(slabs.length)} graded copies`} and no raw copy.`
     : `You own ${count === 1 ? "one copy" : `${num(count)} copies`}${gradedNote}.`;
   const gradeHref = `/grading/send/${encodeURIComponent(heldId(card.id))}${card.reverse ? "?reverse=1" : ""}`;
-  return `<div class="pc-sell">
-    <span class="pc-own">${own}</span>
+  const pocketed = pocketedQty(card.id);
+  const free = freeRawQty(card.id);
+  // Every raw copy pocketed: a plate stands where the Sell key was and says it all. Otherwise one line above the keys.
+  const allLocked = count > 0 && free < 1;
+  const lockNote = pocketed && !allLocked ? binderLockNote(pocketed, count + slabs.length) : "";
+  return `<div class="pc-sell${pocketed ? " is-pocketed" : ""}">
+    <span class="pc-own">${own}</span>${lockNote}
     <span class="pc-actions">
-      ${count > 0 ? `<button type="button" class="solid pc-sell-btn" data-inspect-sell="${esc(heldId(card.id))}">
+      ${count > 0 ? `${free > 0 ? `<button type="button" class="solid pc-sell-btn" data-inspect-sell="${esc(heldId(card.id))}">
         Sell one for <span class="pc-sell-value">${coinAmount(value)}</span>
-      </button>
+      </button>` : `<span class="pc-locked" role="note"><i class="pc-locked-mark">${LOCK_GLYPH}</i><span class="pc-locked-words"><b>Locked in your binder</b><small><a href="/binder">Take ${count === 1 ? "it" : "one"} out</a> to sell, stake or trade it.</small></span></span>`}
       <a class="ghost pc-grade-btn" href="${esc(gradeHref)}">Send for grading</a>` : ""}
       ${inspectShowcaseBtn(card)}
     </span>
   </div>${inspectGradedRow(card, slabs)}`;
+}
+
+const LOCK_GLYPH = `<svg class="lock-glyph" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 7V5.2a3.5 3.5 0 0 1 7 0V7" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 7h10v7H3z" fill="currentColor"/></svg>`;
+/** "1 is locked in your binder", worded for how many of the copies the pockets hold. */
+function binderLockNote(pocketed, owned) {
+  const n = Math.min(pocketed, owned);
+  const words = n >= owned ? (owned === 1 ? "It's in your binder, so it's locked" : "They're all in your binder, so they're locked")
+    : `${num(n)} ${n === 1 ? "is" : "are"} in your binder, so ${n === 1 ? "it's" : "they're"} locked`;
+  return `<span class="pc-lock-note">${LOCK_GLYPH}<span>${words}. <a href="/binder">Take ${n === 1 ? "it" : "them"} out</a> to sell, stake or trade.</span></span>`;
 }
 
 /** The player's slabs of this card, as small cases that open on the grading page. */
@@ -8369,13 +8441,17 @@ async function sellOwnedCard(card, { extra = false } = {}) {
     return false;
   }
   if (!card) return false;
+  if (freeRawQty(card.id) < 1 && rawQty(card.id) > 0) {
+    toast(BINDER_LOCKED_TEXT);
+    return false;
+  }
   const value = sellValue(card);
   const last = rawQty(card.id) <= 1;
   if (
     (state.settings.confirmSell || last) &&
     !confirm(
       last
-        ? `Sell your only ${card.name} for ${coin(value)} coins? It leaves the binder.`
+        ? `Sell your only ${card.name} for ${coin(value)} coins?`
         : `Sell a ${extra ? "spare " : ""}${card.name} for ${coin(value)} coins?`
     )
   ) {
@@ -8486,12 +8562,16 @@ async function sellSetDuplicates() {
   const count = spareCopies();
   if (!count) return;
   let estimate = 0;
+  let pocketed = false;
   for (const [id, qty] of Object.entries(state.collection || {})) {
     if (homeSetId(id) !== setId || qty < 2) continue;
+    const keep = duplicateKeep(id, qty);
+    if (keep > 1) pocketed = true;
     const card = findCard(id);
-    if (card) estimate += (qty - 1) * sellValue(card);
+    if (card) estimate += (qty - keep) * sellValue(card);
   }
-  if (!confirm(`Sell ${count} duplicate${count === 1 ? "" : "s"} from ${liveSet.name} for about ${coin(estimate)} coins? You'll keep one copy of every card.`)) return;
+  const kept = pocketed ? "You'll keep one copy of every card, and every copy in your binder." : "You'll keep one copy of every card.";
+  if (!confirm(`Sell ${count} duplicate${count === 1 ? "" : "s"} from ${liveSet.name} for about ${coin(estimate)} coins? ${kept}`)) return;
   els.sellDuplicates.disabled = true;
   try {
     const data = await api("/api/cards/sell-duplicates", {
@@ -8956,6 +9036,7 @@ els.settingsBody.addEventListener("click", (e) => {
       btn.classList.toggle("on", on);
       btn.setAttribute("aria-pressed", String(on));
     });
+    syncLightDarkRow();
     updateSettingsSummary();
     return;
   }
@@ -10511,6 +10592,8 @@ els.dexGrid.addEventListener("click", (e) => {
 
 els.inspectClose.addEventListener("click", () => closeDialog(els.inspect));
 els.inspect.addEventListener("click", (e) => {
+  // The lock note's "Take it out" link: the binder is under this sheet, so the sheet closes and the link carries on.
+  if (e.target.closest('.pc-sell a[href="/binder"]')) { closeDialog(els.inspect); return; }
   if (e.target !== els.inspect) return;
   if (Date.now() - inspectOpenedAt < 500) return;
   closeDialog(els.inspect);
@@ -10845,7 +10928,7 @@ let tcgLoading = null;
 function showTcg() {
   if (tcgPage) return tcgPage.show(tcgPath);
   els.viewTcg.innerHTML = `<div class="tg-page"><div class="rt-skel tg-loading">Loading</div></div>`;
-  tcgLoading ||= import("./tcg-page.js?v=46")
+  tcgLoading ||= import("./tcg-page.js?v=52")
     .then(({ initTcg }) => {
       tcgPage = initTcg({
         root: els.viewTcg,
@@ -10954,7 +11037,10 @@ async function casinoOwnedCards() {
   await Promise.all([refreshSession().catch(() => null), ...PLAYABLE_SETS.map((set) => loadSetData(set).catch(() => null))]);
   renderHeader();
   const out = [];
-  for (const [id, owned] of Object.entries(state.collection || {})) {
+  for (const [id, held] of Object.entries(state.collection || {})) {
+    if (!(held > 0)) continue;
+    // Copies in binder pockets stay out of games (worker/binder-lock.js).
+    const owned = held - Math.min(held, Math.max(0, binderHeld(state, id) - gradedSlabs(id).length));
     if (!(owned > 0)) continue;
     const card = findCard(id);
     if (!card?.image) continue;
@@ -10981,7 +11067,17 @@ async function casinoOwnedSlabs() {
   const sets = new Set(slabs.filter((s) => !findCard(s.cardId)).map((s) => setForCardId(s.cardId)).filter(Boolean));
   await Promise.all([...sets].map((set) => loadSetData(set).catch(() => null)));
   const out = [];
+  // Slabs filling binder pockets stay out of games (worker/binder-lock.js): the best grades are the ones held back.
+  const held = new Map();
+  for (const slab of [...slabs].sort((a, b) => (b.grade || 0) - (a.grade || 0))) {
+    const raw = state.collection?.[slab.cardId] || 0;
+    const room = Math.max(0, binderHeld(state, slab.cardId) - raw);
+    const taken = held.get(slab.cardId) || [];
+    if (taken.length < room) held.set(slab.cardId, [...taken, slab.id]);
+  }
+  const lockedIds = new Set([...held.values()].flat());
   for (const slab of slabs) {
+    if (lockedIds.has(slab.id)) continue;
     const card = findCard(slab.cardId);
     if (!card?.image) continue;
     const value = Number(slab.value) > 0 ? Number(slab.value) : gradedValue(card, slab.grade, setForCardId(slab.cardId), Boolean(slab.blackLabel));

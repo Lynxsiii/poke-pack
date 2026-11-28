@@ -668,7 +668,9 @@
     "market": 1.01,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-12/large",
     "etchMap": "assets/foil/maps/js12a/12-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/14-t1.webp",
+    "foilTwin": "swsh12pt5-14"
   },
   {
     "id": "js12a-13",
@@ -802,7 +804,9 @@
     "market": 4.5,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-14/large",
     "etchMap": "assets/foil/maps/js12a/14-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh9/18-t1.webp",
+    "foilTwin": "swsh9-18"
   },
   {
     "id": "js12a-15",
@@ -1225,7 +1229,9 @@
     "market": 0.36,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-21/large",
     "etchMap": "assets/foil/maps/js12a/21-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/23-t1.webp",
+    "foilTwin": "swsh12pt5-23"
   },
   {
     "id": "js12a-22",
@@ -1638,7 +1644,9 @@
     "market": 0.56,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-28/large",
     "etchMap": "assets/foil/maps/js12a/28-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swshp/swshp254-t1.webp",
+    "foilTwin": "swshp-swshp254"
   },
   {
     "id": "js12a-29",
@@ -2397,7 +2405,9 @@
     "market": 0.83,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-41/large",
     "etchMap": "assets/foil/maps/js12a/41-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/54-t1.webp",
+    "foilTwin": "swsh12pt5-54"
   },
   {
     "id": "js12a-42",
@@ -2460,7 +2470,9 @@
     "market": 0.49,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-42/large",
     "etchMap": "assets/foil/maps/js12a/42-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/55-t1.webp",
+    "foilTwin": "swsh12pt5-55"
   },
   {
     "id": "js12a-43",
@@ -3004,7 +3016,9 @@
     "market": 2.46,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-51/large",
     "etchMap": "assets/foil/maps/js12a/51-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/pgo/31-t1.webp",
+    "foilTwin": "pgo-31"
   },
   {
     "id": "js12a-52",
@@ -3198,7 +3212,9 @@
     "market": 5.81,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-54/large",
     "etchMap": "assets/foil/maps/js12a/54-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh8/114-t1.webp",
+    "foilTwin": "swsh8-114"
   },
   {
     "id": "js12a-55",
@@ -3921,7 +3937,9 @@
     "market": 0.57,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-66/large",
     "etchMap": "assets/foil/maps/js12a/66-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/66-t1.webp",
+    "foilTwin": "swsh12pt5-66"
   },
   {
     "id": "js12a-67",
@@ -4280,7 +4298,9 @@
     "market": 1.0,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-72/large",
     "etchMap": "assets/foil/maps/js12a/72-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh10/73-t1.webp",
+    "foilTwin": "swsh10-73"
   },
   {
     "id": "js12a-73",
@@ -5147,7 +5167,9 @@
     "market": 0.48,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-87/large",
     "etchMap": "assets/foil/maps/js12a/87-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh10/102-t1.webp",
+    "foilTwin": "swsh10-102"
   },
   {
     "id": "js12a-88",
@@ -5969,7 +5991,9 @@
     "market": 0.71,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-101/large",
     "etchMap": "assets/foil/maps/js12a/101-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swshp/swshp256-t1.webp",
+    "foilTwin": "swshp-swshp256"
   },
   {
     "id": "js12a-102",
@@ -6374,7 +6398,9 @@
     "market": 5.8,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-108/large",
     "etchMap": "assets/foil/maps/js12a/108-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh7/111-t1.webp",
+    "foilTwin": "swsh7-111"
   },
   {
     "id": "js12a-109",
@@ -6546,7 +6572,9 @@
     "market": 0.83,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-111/large",
     "etchMap": "assets/foil/maps/js12a/111-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh11/131-t1.webp",
+    "foilTwin": "swsh11-131"
   },
   {
     "id": "js12a-112",
@@ -7323,7 +7351,9 @@
     "market": 0.57,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-125/large",
     "etchMap": "assets/foil/maps/js12a/125-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/114-t1.webp",
+    "foilTwin": "swsh12pt5-114"
   },
   {
     "id": "js12a-126",
@@ -7451,7 +7481,9 @@
     "market": 0.85,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-127/large",
     "etchMap": "assets/foil/maps/js12a/127-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh9/123-t1.webp",
+    "foilTwin": "swsh9-123"
   },
   {
     "id": "js12a-128",
@@ -7574,7 +7606,9 @@
     "market": 0.57,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-129/large",
     "etchMap": "assets/foil/maps/js12a/129-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swshp/swshp298-t1.webp",
+    "foilTwin": "swshp-swshp298"
   },
   {
     "id": "js12a-130",
@@ -8792,7 +8826,9 @@
     "market": 1.69,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-173/large",
     "etchMap": "assets/foil/maps/js12a/173-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG01-t1.webp",
+    "foilTwin": "swsh12pt5-GG01"
   },
   {
     "id": "js12a-174",
@@ -8850,7 +8886,9 @@
     "market": 3.72,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-174/large",
     "etchMap": "assets/foil/maps/js12a/174-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG02-t1.webp",
+    "foilTwin": "swsh12pt5-GG02"
   },
   {
     "id": "js12a-175",
@@ -8913,7 +8951,9 @@
     "market": 3.38,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-175/large",
     "etchMap": "assets/foil/maps/js12a/175-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG03-t1.webp",
+    "foilTwin": "swsh12pt5-GG03"
   },
   {
     "id": "js12a-176",
@@ -9023,7 +9063,9 @@
     "market": 6.69,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-177/large",
     "etchMap": "assets/foil/maps/js12a/177-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG05-t1.webp",
+    "foilTwin": "swsh12pt5-GG05"
   },
   {
     "id": "js12a-178",
@@ -9079,7 +9121,9 @@
     "market": 4.36,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-178/large",
     "etchMap": "assets/foil/maps/js12a/178-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG06-t1.webp",
+    "foilTwin": "swsh12pt5-GG06"
   },
   {
     "id": "js12a-179",
@@ -9137,7 +9181,9 @@
     "market": 5.58,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-179/large",
     "etchMap": "assets/foil/maps/js12a/179-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG07-t1.webp",
+    "foilTwin": "swsh12pt5-GG07"
   },
   {
     "id": "js12a-180",
@@ -9199,7 +9245,9 @@
     "market": 3.03,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-180/large",
     "etchMap": "assets/foil/maps/js12a/180-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG08-t1.webp",
+    "foilTwin": "swsh12pt5-GG08"
   },
   {
     "id": "js12a-181",
@@ -9260,7 +9308,9 @@
     "market": 1.92,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-181/large",
     "etchMap": "assets/foil/maps/js12a/181-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG09-t1.webp",
+    "foilTwin": "swsh12pt5-GG09"
   },
   {
     "id": "js12a-182",
@@ -9325,7 +9375,9 @@
     "market": 2.83,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-182/large",
     "etchMap": "assets/foil/maps/js12a/182-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/swshp282-t1.webp",
+    "foilTwin": "swsh12pt5-swshp282"
   },
   {
     "id": "js12a-183",
@@ -9388,7 +9440,9 @@
     "market": 40.13,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-183/large",
     "etchMap": "assets/foil/maps/js12a/183-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG10-t1.webp",
+    "foilTwin": "swsh12pt5-GG10"
   },
   {
     "id": "js12a-184",
@@ -9453,7 +9507,9 @@
     "market": 3.87,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-184/large",
     "etchMap": "assets/foil/maps/js12a/184-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG11-t1.webp",
+    "foilTwin": "swsh12pt5-GG11"
   },
   {
     "id": "js12a-185",
@@ -9513,7 +9569,9 @@
     "market": 8.04,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-185/large",
     "etchMap": "assets/foil/maps/js12a/185-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG12-t1.webp",
+    "foilTwin": "swsh12pt5-GG12"
   },
   {
     "id": "js12a-186",
@@ -9569,7 +9627,9 @@
     "market": 3.14,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-186/large",
     "etchMap": "assets/foil/maps/js12a/186-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG13-t1.webp",
+    "foilTwin": "swsh12pt5-GG13"
   },
   {
     "id": "js12a-187",
@@ -9626,7 +9686,9 @@
     "market": 1.46,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-187/large",
     "etchMap": "assets/foil/maps/js12a/187-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG14-t1.webp",
+    "foilTwin": "swsh12pt5-GG14"
   },
   {
     "id": "js12a-188",
@@ -9681,7 +9743,9 @@
     "market": 2.03,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-188/large",
     "etchMap": "assets/foil/maps/js12a/188-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/swshp283-t1.webp",
+    "foilTwin": "swsh12pt5-swshp283"
   },
   {
     "id": "js12a-189",
@@ -9738,7 +9802,9 @@
     "market": 3.68,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-189/large",
     "etchMap": "assets/foil/maps/js12a/189-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG15-t1.webp",
+    "foilTwin": "swsh12pt5-GG15"
   },
   {
     "id": "js12a-190",
@@ -9797,7 +9863,9 @@
     "market": 8.35,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-190/large",
     "etchMap": "assets/foil/maps/js12a/190-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/swshp284-t1.webp",
+    "foilTwin": "swsh12pt5-swshp284"
   },
   {
     "id": "js12a-191",
@@ -9855,7 +9923,9 @@
     "market": 3.77,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-191/large",
     "etchMap": "assets/foil/maps/js12a/191-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG16-t1.webp",
+    "foilTwin": "swsh12pt5-GG16"
   },
   {
     "id": "js12a-192",
@@ -9914,7 +9984,9 @@
     "market": 1.52,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-192/large",
     "etchMap": "assets/foil/maps/js12a/192-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG17-t1.webp",
+    "foilTwin": "swsh12pt5-GG17"
   },
   {
     "id": "js12a-193",
@@ -9980,7 +10052,9 @@
     "market": 1.78,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-193/large",
     "etchMap": "assets/foil/maps/js12a/193-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG18-t1.webp",
+    "foilTwin": "swsh12pt5-GG18"
   },
   {
     "id": "js12a-194",
@@ -10029,7 +10103,9 @@
     "market": 5.39,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-194/large",
     "etchMap": "assets/foil/maps/js12a/194-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG19-t1.webp",
+    "foilTwin": "swsh12pt5-GG19"
   },
   {
     "id": "js12a-195",
@@ -10082,7 +10158,9 @@
     "market": 7.88,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-195/large",
     "etchMap": "assets/foil/maps/js12a/195-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG20-t1.webp",
+    "foilTwin": "swsh12pt5-GG20"
   },
   {
     "id": "js12a-196",
@@ -10137,7 +10215,9 @@
     "market": 2.09,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-196/large",
     "etchMap": "assets/foil/maps/js12a/196-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG21-t1.webp",
+    "foilTwin": "swsh12pt5-GG21"
   },
   {
     "id": "js12a-197",
@@ -10183,7 +10263,9 @@
     "market": 5.37,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-197/large",
     "etchMap": "assets/foil/maps/js12a/197-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG22-t1.webp",
+    "foilTwin": "swsh12pt5-GG22"
   },
   {
     "id": "js12a-198",
@@ -10240,7 +10322,9 @@
     "market": 2.31,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-198/large",
     "etchMap": "assets/foil/maps/js12a/198-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG23-t1.webp",
+    "foilTwin": "swsh12pt5-GG23"
   },
   {
     "id": "js12a-199",
@@ -10298,7 +10382,9 @@
     "market": 4.55,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-199/large",
     "etchMap": "assets/foil/maps/js12a/199-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG24-t1.webp",
+    "foilTwin": "swsh12pt5-GG24"
   },
   {
     "id": "js12a-200",
@@ -10358,7 +10444,9 @@
     "market": 2.15,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-200/large",
     "etchMap": "assets/foil/maps/js12a/200-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG25-t1.webp",
+    "foilTwin": "swsh12pt5-GG25"
   },
   {
     "id": "js12a-201",
@@ -10408,7 +10496,9 @@
     "market": 20.88,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-201/large",
     "etchMap": "assets/foil/maps/js12a/201-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG26-t1.webp",
+    "foilTwin": "swsh12pt5-GG26"
   },
   {
     "id": "js12a-202",
@@ -10463,7 +10553,9 @@
     "market": 13.82,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-202/large",
     "etchMap": "assets/foil/maps/js12a/202-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG27-t1.webp",
+    "foilTwin": "swsh12pt5-GG27"
   },
   {
     "id": "js12a-203",
@@ -10518,7 +10610,9 @@
     "market": 12.2,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-203/large",
     "etchMap": "assets/foil/maps/js12a/203-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG28-t1.webp",
+    "foilTwin": "swsh12pt5-GG28"
   },
   {
     "id": "js12a-204",
@@ -10633,7 +10727,9 @@
     "market": 238.6,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-205/large",
     "etchMap": "assets/foil/maps/js12a/205-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG30-t1.webp",
+    "foilTwin": "swsh12pt5-GG30"
   },
   {
     "id": "js12a-206",
@@ -10742,7 +10838,9 @@
     "market": 20.81,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-207/large",
     "etchMap": "assets/foil/maps/js12a/207-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG32-t1.webp",
+    "foilTwin": "swsh12pt5-GG32"
   },
   {
     "id": "js12a-208",
@@ -10800,7 +10898,9 @@
     "market": 14.54,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-208/large",
     "etchMap": "assets/foil/maps/js12a/208-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG33-t1.webp",
+    "foilTwin": "swsh12pt5-GG33"
   },
   {
     "id": "js12a-209",
@@ -10858,7 +10958,9 @@
     "market": 17.48,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-209/large",
     "etchMap": "assets/foil/maps/js12a/209-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG34-t1.webp",
+    "foilTwin": "swsh12pt5-GG34"
   },
   {
     "id": "js12a-210",
@@ -10921,7 +11023,9 @@
     "market": 48.13,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-210/large",
     "etchMap": "assets/foil/maps/js12a/210-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG35-t1.webp",
+    "foilTwin": "swsh12pt5-GG35"
   },
   {
     "id": "js12a-211",
@@ -10988,7 +11092,9 @@
     "market": 44.51,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-211/large",
     "etchMap": "assets/foil/maps/js12a/211-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swshp/swshp260-t1.webp",
+    "foilTwin": "swshp-swshp260"
   },
   {
     "id": "js12a-212",
@@ -11055,7 +11161,9 @@
     "market": 84.87,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-212/large",
     "etchMap": "assets/foil/maps/js12a/212-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swshp/swshp262-t1.webp",
+    "foilTwin": "swshp-swshp262"
   },
   {
     "id": "js12a-213",
@@ -11118,7 +11226,9 @@
     "market": 28.02,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-213/large",
     "etchMap": "assets/foil/maps/js12a/213-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG36-t1.webp",
+    "foilTwin": "swsh12pt5-GG36"
   },
   {
     "id": "js12a-214",
@@ -11182,7 +11292,9 @@
     "market": 31.26,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-214/large",
     "etchMap": "assets/foil/maps/js12a/214-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG37-t1.webp",
+    "foilTwin": "swsh12pt5-GG37"
   },
   {
     "id": "js12a-215",
@@ -11244,7 +11356,9 @@
     "market": 37.08,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-215/large",
     "etchMap": "assets/foil/maps/js12a/215-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG38-t1.webp",
+    "foilTwin": "swsh12pt5-GG38"
   },
   {
     "id": "js12a-216",
@@ -11306,7 +11420,9 @@
     "market": 14.42,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-216/large",
     "etchMap": "assets/foil/maps/js12a/216-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG39-t1.webp",
+    "foilTwin": "swsh12pt5-GG39"
   },
   {
     "id": "js12a-217",
@@ -11372,7 +11488,9 @@
     "market": 41.13,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-217/large",
     "etchMap": "assets/foil/maps/js12a/217-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG40-t1.webp",
+    "foilTwin": "swsh12pt5-GG40"
   },
   {
     "id": "js12a-218",
@@ -11433,7 +11551,9 @@
     "market": 29.29,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-218/large",
     "etchMap": "assets/foil/maps/js12a/218-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG41-t1.webp",
+    "foilTwin": "swsh12pt5-GG41"
   },
   {
     "id": "js12a-219",
@@ -11498,7 +11618,9 @@
     "market": 19.96,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-219/large",
     "etchMap": "assets/foil/maps/js12a/219-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG42-t1.webp",
+    "foilTwin": "swsh12pt5-GG42"
   },
   {
     "id": "js12a-220",
@@ -11561,7 +11683,9 @@
     "market": 16.73,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-220/large",
     "etchMap": "assets/foil/maps/js12a/220-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG43-t1.webp",
+    "foilTwin": "swsh12pt5-GG43"
   },
   {
     "id": "js12a-221",
@@ -11631,7 +11755,9 @@
     "market": 108.09,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-221/large",
     "etchMap": "assets/foil/maps/js12a/221-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG44-t1.webp",
+    "foilTwin": "swsh12pt5-GG44"
   },
   {
     "id": "js12a-222",
@@ -11701,7 +11827,9 @@
     "market": 18.94,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-222/large",
     "etchMap": "assets/foil/maps/js12a/222-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG45-t1.webp",
+    "foilTwin": "swsh12pt5-GG45"
   },
   {
     "id": "js12a-223",
@@ -11771,7 +11899,9 @@
     "market": 26.58,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-223/large",
     "etchMap": "assets/foil/maps/js12a/223-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG46-t1.webp",
+    "foilTwin": "swsh12pt5-GG46"
   },
   {
     "id": "js12a-224",
@@ -11840,7 +11970,9 @@
     "market": 5.62,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-224/large",
     "etchMap": "assets/foil/maps/js12a/224-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG47-t1.webp",
+    "foilTwin": "swsh12pt5-GG47"
   },
   {
     "id": "js12a-225",
@@ -11968,7 +12100,9 @@
     "market": 17.78,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-226/large",
     "etchMap": "assets/foil/maps/js12a/226-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/swshp291-t1.webp",
+    "foilTwin": "swsh12pt5-swshp291"
   },
   {
     "id": "js12a-227",
@@ -12032,7 +12166,9 @@
     "market": 6.97,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-227/large",
     "etchMap": "assets/foil/maps/js12a/227-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG49-t1.webp",
+    "foilTwin": "swsh12pt5-GG49"
   },
   {
     "id": "js12a-228",
@@ -12094,7 +12230,9 @@
     "market": 39.59,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-228/large",
     "etchMap": "assets/foil/maps/js12a/228-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG50-t1.webp",
+    "foilTwin": "swsh12pt5-GG50"
   },
   {
     "id": "js12a-229",
@@ -12158,7 +12296,9 @@
     "market": 11.24,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-229/large",
     "etchMap": "assets/foil/maps/js12a/229-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG51-t1.webp",
+    "foilTwin": "swsh12pt5-GG51"
   },
   {
     "id": "js12a-230",
@@ -12220,7 +12360,9 @@
     "market": 8.87,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-230/large",
     "etchMap": "assets/foil/maps/js12a/230-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG52-t1.webp",
+    "foilTwin": "swsh12pt5-GG52"
   },
   {
     "id": "js12a-231",
@@ -12284,7 +12426,9 @@
     "market": 8.18,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-231/large",
     "etchMap": "assets/foil/maps/js12a/231-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG53-t1.webp",
+    "foilTwin": "swsh12pt5-GG53"
   },
   {
     "id": "js12a-232",
@@ -12353,7 +12497,9 @@
     "market": 11.33,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-232/large",
     "etchMap": "assets/foil/maps/js12a/232-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG54-t1.webp",
+    "foilTwin": "swsh12pt5-GG54"
   },
   {
     "id": "js12a-233",
@@ -12418,7 +12564,9 @@
     "market": 14.16,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-233/large",
     "etchMap": "assets/foil/maps/js12a/233-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG55-t1.webp",
+    "foilTwin": "swsh12pt5-GG55"
   },
   {
     "id": "js12a-234",
@@ -12480,7 +12628,9 @@
     "market": 32.82,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-234/large",
     "etchMap": "assets/foil/maps/js12a/234-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG56-t1.webp",
+    "foilTwin": "swsh12pt5-GG56"
   },
   {
     "id": "js12a-235",
@@ -12507,7 +12657,9 @@
     "market": 2.95,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-235/large",
     "etchMap": "assets/foil/maps/js12a/235-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG59-t1.webp",
+    "foilTwin": "swsh12pt5-GG59"
   },
   {
     "id": "js12a-236",
@@ -12534,7 +12686,9 @@
     "market": 17.17,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-236/large",
     "etchMap": "assets/foil/maps/js12a/236-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG63-t1.webp",
+    "foilTwin": "swsh12pt5-GG63"
   },
   {
     "id": "js12a-237",
@@ -12561,7 +12715,9 @@
     "market": 4.81,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-237/large",
     "etchMap": "assets/foil/maps/js12a/237-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG65-t1.webp",
+    "foilTwin": "swsh12pt5-GG65"
   },
   {
     "id": "js12a-238",
@@ -12588,7 +12744,9 @@
     "market": 2.26,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-238/large",
     "etchMap": "assets/foil/maps/js12a/238-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG62-t1.webp",
+    "foilTwin": "swsh12pt5-GG62"
   },
   {
     "id": "js12a-239",
@@ -12615,7 +12773,9 @@
     "market": 31.72,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-239/large",
     "etchMap": "assets/foil/maps/js12a/239-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG60-t1.webp",
+    "foilTwin": "swsh12pt5-GG60"
   },
   {
     "id": "js12a-240",
@@ -12642,7 +12802,9 @@
     "market": 6.98,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-240/large",
     "etchMap": "assets/foil/maps/js12a/240-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG57-t1.webp",
+    "foilTwin": "swsh12pt5-GG57"
   },
   {
     "id": "js12a-241",
@@ -12669,7 +12831,9 @@
     "market": 5.89,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-241/large",
     "etchMap": "assets/foil/maps/js12a/241-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG58-t1.webp",
+    "foilTwin": "swsh12pt5-GG58"
   },
   {
     "id": "js12a-242",
@@ -12696,7 +12860,9 @@
     "market": 6.82,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-242/large",
     "etchMap": "assets/foil/maps/js12a/242-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG66-t1.webp",
+    "foilTwin": "swsh12pt5-GG66"
   },
   {
     "id": "js12a-243",
@@ -12750,7 +12916,9 @@
     "market": 7.7,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-244/large",
     "etchMap": "assets/foil/maps/js12a/244-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG64-t1.webp",
+    "foilTwin": "swsh12pt5-GG64"
   },
   {
     "id": "js12a-245",
@@ -12777,7 +12945,9 @@
     "market": 1.19,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-245/large",
     "etchMap": "assets/foil/maps/js12a/245-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/151-t1.webp",
+    "foilTwin": "swsh12pt5-151"
   },
   {
     "id": "js12a-246",
@@ -12805,7 +12975,9 @@
     "market": 16.13,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-246/large",
     "etchMap": "assets/foil/maps/js12a/246-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/147-t1.webp",
+    "foilTwin": "swsh12pt5-147"
   },
   {
     "id": "js12a-247",
@@ -12832,7 +13004,9 @@
     "market": 6.8,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-247/large",
     "etchMap": "assets/foil/maps/js12a/247-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/149-t1.webp",
+    "foilTwin": "swsh12pt5-149"
   },
   {
     "id": "js12a-248",
@@ -12859,7 +13033,9 @@
     "market": 1.04,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-248/large",
     "etchMap": "assets/foil/maps/js12a/248-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/150-t1.webp",
+    "foilTwin": "swsh12pt5-150"
   },
   {
     "id": "js12a-249",
@@ -12886,7 +13062,9 @@
     "market": 4.77,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-249/large",
     "etchMap": "assets/foil/maps/js12a/249-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/148-t1.webp",
+    "foilTwin": "swsh12pt5-148"
   },
   {
     "id": "js12a-250",
@@ -13119,7 +13297,9 @@
     "market": 84.92,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-259/large",
     "etchMap": "assets/foil/maps/js12a/259-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG67-t1.webp",
+    "foilTwin": "swsh12pt5-GG67"
   },
   {
     "id": "js12a-260",
@@ -13192,7 +13372,9 @@
     "market": 86.33,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-260/large",
     "etchMap": "assets/foil/maps/js12a/260-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG68-t1.webp",
+    "foilTwin": "swsh12pt5-GG68"
   },
   {
     "id": "js12a-261",
@@ -13251,7 +13433,9 @@
     "market": 295.07,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-261/large",
     "etchMap": "assets/foil/maps/js12a/261-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG69-t1.webp",
+    "foilTwin": "swsh12pt5-GG69"
   },
   {
     "id": "js12a-262",
@@ -13314,6 +13498,8 @@
     "market": 168.52,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12a_ja-262/large",
     "etchMap": "assets/foil/maps/js12a/262-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh12pt5/GG70-t1.webp",
+    "foilTwin": "swsh12pt5-GG70"
   }
 ]

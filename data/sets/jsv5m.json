@@ -1,0 +1,37 @@
+{
+  "id": "jsv5m",
+  "name": "Cyber Judge",
+  "lang": "ja",
+  "code": "SV5M",
+  "series": "scarlet-violet",
+  "slug": "cyber-judge",
+  "scrydexId": "sv5m_ja",
+  "era": "sv",
+  "tcgplayerCategory": 85,
+  "tcgplayerGroup": 23613,
+  "englishTwin": "sv5",
+  "rarityMap": {
+    "C": "Common",
+    "U": "Uncommon",
+    "R": "Rare",
+    "RR": "Double Rare",
+    "ACE": "ACE SPEC Rare",
+    "AR": "Illustration Rare",
+    "SR": "Ultra Rare",
+    "SAR": "Special Illustration Rare",
+    "UR": "Hyper Rare"
+  },
+  "printedTotal": 71,
+  "products": [
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 565222,
+      "packs": 30,
+      "promos": [],
+      "hull": "ortho",
+      "imageVersion": 3
+    }
+  ]
+}

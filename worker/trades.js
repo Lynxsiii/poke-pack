@@ -17,6 +17,7 @@
      POST /api/trades/<id>/accept | decline | cancel
 
    A side is { cards: [{ id, qty, reverse? }], slabs: [graded_cards id], coins }. */
+import { binderLocks, isBinderLocked, withoutPocketed } from "./binder-lock.js";
 import { sellValue } from "../js/catalog.js";
 import { gradedValue, certNumber, GRADING_LIMITS } from "../js/grading-rules.js";
 import { GATES, gateMessage } from "../js/levels.js";
@@ -128,7 +129,10 @@ const activeSlabs = async (env, userId) =>
  */
 async function buildSide(env, request, h, owner, side, mine) {
   const { collection, reverses } = await h.inventoryMap(env, owner.id);
+  // Copies in binder pockets can't be traded away (worker/binder-lock.js).
+  const locks = await binderLocks(env, owner.id, collection);
   const who = mine ? "You" : `@${owner.handle}`;
+  const lockedWord = (name) => mine ? `${name} is locked in your binder. Take it out of the binder to trade it.` : `@${owner.handle} keeps that ${name} in their binder.`;
   const cards = [];
   let value = 0;
   for (const [id, { qty, rev }] of side.cards) {
@@ -138,6 +142,7 @@ async function buildSide(env, request, h, owner, side, mine) {
     if (!card) fail("Unknown card.");
     if (rev > haveRev) fail(`${who} only ${mine ? "have" : "has"} ${haveRev} reverse holo ${card.name}.`, 409);
     if (qty - rev > have - haveRev) fail(`${who} only ${mine ? "have" : "has"} ${have - haveRev} ${haveRev ? "plain " : ""}${card.name}.`, 409);
+    if (qty > locks.freeRaw(id, have)) fail(lockedWord(card.name), 409);
     const v = Math.round(sellValue(card) * 100);
     value += v * qty;
     cards.push({ id, qty, rev, name: card.name, number: card.number, rarity: card.rarity, image: card.image, small: card.imageSmall || card.image, v });
@@ -145,11 +150,15 @@ async function buildSide(env, request, h, owner, side, mine) {
   const slabs = [];
   if (side.slabs.length) {
     const rows = new Map((await activeSlabs(env, owner.id)).map((row) => [row.id, row]));
+    const leaving = {};
     for (const id of side.slabs) {
       const row = rows.get(id);
       if (!row) fail(mine ? "You no longer have one of those slabs." : `@${owner.handle} no longer has one of those slabs.`, 409);
       const card = await h.findCatalogCard(env, request, row.card_id);
       if (!card) fail("That slab has no price right now.", 409);
+      leaving[row.card_id] = (leaving[row.card_id] || 0) + 1;
+      const rawLeft = (collection[row.card_id] || 0) - (side.cards.get?.(row.card_id)?.qty || 0);
+      if (leaving[row.card_id] > locks.freeSlabs(row.card_id, rawLeft)) fail(lockedWord(card.name), 409);
       const v = slabCents(card, row);
       value += v;
       slabs.push({ id, cardId: row.card_id, grade: row.grade, reverse: row.reverse ? 1 : 0, bl: row.black_label ? 1 : 0,
@@ -459,9 +468,11 @@ async function partner(env, request, h, me, rawHandle) {
     }
     return list;
   };
+  // Binder copies are locked (worker/binder-lock.js): neither side's list offers them.
   const inventory = await h.inventoryMap(env, them.id);
-  out.their = { collection: inventory.collection, reverses: inventory.reverses, slabs: await slabsOf(them.id) };
-  out.mine = { slabs: await slabsOf(me.id) };
+  const theirLocks = await binderLocks(env, them.id, inventory.collection);
+  out.their = withoutPocketed(theirLocks, inventory.collection, inventory.reverses, await slabsOf(them.id));
+  out.mine = { slabs: withoutPocketed(await binderLocks(env, me.id), {}, {}, await slabsOf(me.id)).slabs };
   return out;
 }
 
@@ -634,6 +645,7 @@ async function closeTrade(env, request, h, me, id, action) {
        WHERE id = ? AND to_id = ? AND status = 'open'`
     ).bind(now, giveNow, takeNow, verdict.gap, verdict.giver, verdict.getter, verdict.capGive, verdict.capGet, id, me.id).run();
   } catch (err) {
+    if (isBinderLocked(err)) fail(`A card in this trade went into a binder since it was offered, so it can't be traded now.`, 409, { code: "binder" });
     const code = String(err?.message || err).match(/trade:([a-z-]+)/)?.[1];
     if (!code) throw err;
     fail(swapRefusal(code, from), 409, { code });

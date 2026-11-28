@@ -131,7 +131,8 @@
       "kind": "box",
       "tcgplayerId": 216853,
       "packs": 36,
-      "promos": []
+      "promos": [],
+      "imageVersion": 2
     },
     {
       "id": "eliteTrainerBox",
@@ -153,7 +154,7 @@
       "price": 8.23,
       "priceSource": "Sum of the deck's 60 cards at TCGplayer market: the sealed deck has no market price.",
       "note": "A 60-card theme deck featuring Galarian Darmanitan, no booster pack (Bulbapedia deck list, checked against a second list).",
-      "imageVersion": 2
+      "imageVersion": 3
     },
     {
       "id": "theme-deck-galarian-sirfetch-d",

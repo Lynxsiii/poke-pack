@@ -342,6 +342,15 @@ def convex_hull(points: np.ndarray) -> list[tuple[float, float]]:
 
 
 def cut_out(raw: bytes, hull: bool = True) -> Image.Image:
+    """A product photo on white, as RGBA with the background removed and the white halo along its outline faded
+    (check_product_photos.defringe), so no product shows a light rim on the dark stage (Noah, 11-28)."""
+    import check_product_photos as cpp
+    img = _cut_out(raw, hull)
+    out, _ = cpp.defringe(np.asarray(img.convert("RGBA")))
+    return Image.fromarray(out)
+
+
+def _cut_out(raw: bytes, hull: bool = True) -> Image.Image:
     """A product photo on white, as RGBA with the background removed.
 
     Flood-fills the white in from the edges, then keeps the convex hull of
@@ -577,6 +586,13 @@ def warn_white_page(rel: str) -> None:
     s = cpp.share(px, rm)
     if s > cpp.FLAG and rel not in cpp.ok_list():
         print(f"    WARNING {rel}: {s:.1%} looks like white page. Run: python3 scripts/check_product_photos.py --fix {rel}")
+    # Off-white page (a faint watermark, JPEG grey) and gaps shut inside a spread of items escape the check above:
+    # the Evolutions Elite Trainer Boxes shipped with both (11-28). Look at the photo on the dark stage: --fix --wide
+    # cuts off-white page, and --holes the gaps listed in scripts/product_photo_holes.json.
+    rm, _ = cpp.paper(px, 240)
+    w = cpp.share(px, rm)
+    if w > cpp.FLAG and rel not in cpp.ok_list():
+        print(f"    CHECK {rel}: {w:.1%} is off-white. Open it on the dark stage; if it is page, run check_product_photos.py --fix --wide {rel}")
 
 
 def promo_record(cfg: dict, number: str, spec: dict, cards: dict[str, dict], refresh: bool) -> tuple[dict, float | None, str]:

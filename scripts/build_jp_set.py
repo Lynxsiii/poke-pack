@@ -229,7 +229,10 @@ def patterns(cfg: dict, card: dict, raw: dict) -> list[dict]:
         pid = product_id(raw, (variant,))
         if not pid:
             continue
-        ball = {k: v for k, v in card.items() if k not in ("tcgplayerId", "market", "rarity", "id", "number")}
+        # A mirror print's foil is its ball pattern, not the holo Rare's map (the per-card review of 2026-11-28: a borrowed
+        # holo map put the Rare's line screen on the mirror's matte art box and hid the pattern).
+        ball = {k: v for k, v in card.items() if k not in ("tcgplayerId", "market", "rarity", "id", "number", "foilMap",
+                                                           "etchMap", "foilTwin", "foilMapSource", "etchDrawn")}
         ball.update({
             "id": f"{card['id']}-{suffix}",
             "number": f"{card['number']}-{suffix}",

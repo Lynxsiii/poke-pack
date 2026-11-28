@@ -22,7 +22,7 @@
  *   cure: true   the `.cure` span: the silver frame (a multiplied grey with the swirl engraving in it).
  */
 
-const ME_ID = /^me\d(pt5)?-/;
+const ME_ID = /^j?me\d(pt5)?[a-z]?-/;
 const DIR = "assets/foil/fam/me-sir";
 
 /** Prints whose frame is printed as a rainbow, not silver (frame chroma over 0.4 in the scan; the only one of the 55 on

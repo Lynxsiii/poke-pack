@@ -9644,7 +9644,7 @@
     "foilAs": "Rare",
     "promo": true,
     "market": 2.07,
-    "foilMap": "assets/foil/maps/sv4/svp058.webp"
+    "foilMap": "assets/foil/maps/sv4/svp058-fg1.webp"
   },
   {
     "id": "sv4-svp059",
@@ -9733,7 +9733,7 @@
     "foilAs": "Rare",
     "promo": true,
     "market": 1.38,
-    "foilMap": "assets/foil/maps/sv4/svp060.webp"
+    "foilMap": "assets/foil/maps/sv4/svp060-fg1.webp"
   },
   {
     "id": "sv4-svp061",
@@ -9769,7 +9769,7 @@
     "foilAs": "Cosmos",
     "promo": true,
     "market": 0.31,
-    "foilMap": "assets/foil/maps/sv4/svp061-v2.webp"
+    "foilMap": "assets/foil/maps/sv4/svp061-v2-fg1.webp"
   },
   {
     "id": "sv4-svp062",
@@ -9804,7 +9804,7 @@
     "foilAs": "Cosmos",
     "promo": true,
     "market": 0.41,
-    "foilMap": "assets/foil/maps/sv4/svp062-v2.webp"
+    "foilMap": "assets/foil/maps/sv4/svp062-v2-fg1.webp"
   },
   {
     "id": "sv4-svp063",
@@ -9850,7 +9850,7 @@
     "foilAs": "Cosmos",
     "promo": true,
     "market": 1.02,
-    "foilMap": "assets/foil/maps/sv4/svp063-v2.webp"
+    "foilMap": "assets/foil/maps/sv4/svp063-v2-fg1.webp"
   },
   {
     "id": "sv4-svp064",
@@ -9897,7 +9897,7 @@
     "foilAs": "Cosmos",
     "promo": true,
     "market": 1.02,
-    "foilMap": "assets/foil/maps/sv4/svp064-v2.webp"
+    "foilMap": "assets/foil/maps/sv4/svp064-v2-fg1.webp"
   },
   {
     "id": "sv4-svp065",
@@ -10096,6 +10096,7 @@
     ],
     "hp": "230",
     "artist": "takuyoa",
+    "foilMap": "assets/foil/maps/sv4/svp067-fg1.webp",
     "image": "assets/cards/sv4/svp067.webp",
     "imageSmall": "assets/cards/sv4/svp067-sm.webp",
     "attacks": [
@@ -10141,6 +10142,7 @@
     ],
     "hp": "220",
     "artist": "aky CG Works",
+    "foilMap": "assets/foil/maps/sv4/svp068-fg1.webp",
     "image": "assets/cards/sv4/svp068.webp",
     "imageSmall": "assets/cards/sv4/svp068-sm.webp",
     "attacks": [

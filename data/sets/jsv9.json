@@ -1,0 +1,37 @@
+{
+  "id": "jsv9",
+  "name": "Battle Partners",
+  "lang": "ja",
+  "code": "SV9",
+  "series": "scarlet-violet",
+  "slug": "battle-partners",
+  "scrydexId": "sv9_ja",
+  "era": "sv",
+  "tcgplayerCategory": 85,
+  "tcgplayerGroup": 24173,
+  "englishTwin": "sv9",
+  "rarityMap": {
+    "C": "Common",
+    "U": "Uncommon",
+    "R": "Rare",
+    "RR": "Double Rare",
+    "ACE": "ACE SPEC Rare",
+    "AR": "Illustration Rare",
+    "SR": "Ultra Rare",
+    "SAR": "Special Illustration Rare",
+    "UR": "Hyper Rare"
+  },
+  "printedTotal": 100,
+  "products": [
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 614707,
+      "packs": 30,
+      "promos": [],
+      "hull": "ortho",
+      "imageVersion": 3
+    }
+  ]
+}
