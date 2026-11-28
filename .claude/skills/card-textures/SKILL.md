@@ -245,6 +245,7 @@ cure"). The surface gloss throws a soft highlight.
 
 ## Pitfalls
 
+- Light that must not grey dark ink goes on in `overlay` (or a dodge), never `hard-light`, `screen` or a normal-blend white: those lift black to grey/pastel ("haze", "grain over the darks", "milky wash"). Overlay scales with the ink under it. Same for glitter tiles and rainbow sweeps; cap a colour-dodge layer's brightness under 0.5. A set whose finish falls to a shared recipe (me55 IR/SIR, ME Ultra Rares) is fixed by widening the owning family module's id regex, not by a new recipe (2026-11-28).
 - **Glitter belongs on the engraving, not spread over the foil.** Noah, 2026-11-28: "the sparkles or dots on the holo
   take away from the texture as i dont see the texture too much". The shared `.shine::after` fleck tile was masked by
   art x foil map only, so on every face whose map covers the Pokémon (shiny vault cards, Japanese twins) a uniform
