@@ -178,9 +178,11 @@ def clean_text(write, only=None):
                 continue
             if not twin or not twin.get("image"):
                 continue
-            # only maps that came from the twin: a full art's own drawn etch (no etchDrawn flag on some) is left alone
+            # only maps that came from the twin: a full art's own drawn etch (no etchDrawn flag on some) is left alone;
+            # foil_align.py --fix renames the twin's etch to -etch-a1, which is still the twin's (2026-11-28: Pidgeot ex
+            # jsv3-136 showed "Quick Search" through the foil because its aligned etch was skipped)
             keys = [k for k in ("foilMap", "etchMap") if c.get(k) and not (k == "etchMap" and c.get("etchDrawn"))
-                    and not (k == "etchMap" and c[k] != twin.get("etchMap"))
+                    and not (k == "etchMap" and re.sub(r"(-a\d+)+\.webp$", ".webp", c[k]) != twin.get("etchMap"))
                     and not re.search(r"-t\d+\.webp$", c[k])]
             if not keys:
                 continue
