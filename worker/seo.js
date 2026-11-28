@@ -23,7 +23,7 @@ import { GRADE_WORDS } from "../js/grading-rules.js";
 
 export const SITE = "https://poke-pack.rip";
 const SITE_NAME = "poke-pack.rip";
-const DEFAULT_IMAGE = `${SITE}/assets/og-v2.jpg`;
+const DEFAULT_IMAGE = `${SITE}/assets/og-v3.jpg`;
 const DEFAULT_IMAGE_ALT = "Five Pokémon TCG chase cards fanned out under the poke-pack.rip wordmark";
 const HOME_TITLE = "poke-pack.rip | rip packs, fill the binder";
 const HOME_DESCRIPTION =
@@ -153,9 +153,9 @@ export function manifestJson() {
       background_color: "#eef2f3",
       theme_color: "#eef2f3",
       icons: [
-        { src: "/assets/icon-192-v2.png", sizes: "192x192", type: "image/png" },
-        { src: "/assets/icon-512-v2.png", sizes: "512x512", type: "image/png" },
-        { src: "/assets/icon-512-maskable-v2.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
+        { src: "/assets/icon-192-v3.png", sizes: "192x192", type: "image/png" },
+        { src: "/assets/icon-512-v3.png", sizes: "512x512", type: "image/png" },
+        { src: "/assets/icon-512-maskable-v3.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
       ],
     },
     null,

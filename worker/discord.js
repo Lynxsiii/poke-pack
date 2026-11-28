@@ -242,7 +242,7 @@ async function post(hook, message, fetcher) {
       headers: { "content-type": "application/json" },
       body: JSON.stringify({
         username: "poke-pack.rip",
-        avatar_url: `${SITE}/assets/avatar-round-v2.png`,
+        avatar_url: `${SITE}/assets/avatar-round-v3.png`,
         allowed_mentions: { parse: [] },
         ...message,
       }),

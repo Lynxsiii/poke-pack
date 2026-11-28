@@ -1073,7 +1073,7 @@ function paintHud(trainer) {
     face.classList.toggle("pixel", Boolean(trainer) && avatarPixel(trainer.avatarStyle));
     face.innerHTML = trainer
       ? `<img src="${esc(avatarSrc(trainer.avatar, trainer.avatarStyle, { still: true }))}" alt="" />`
-      : `<img src="assets/mark-v2.png" alt="" />`;
+      : `<img src="assets/mark-v3.png" alt="" />`;
     if (trainer) face.style.setProperty("--avatar", avatarColor(trainer.color).hex);
   }
   if (lv) {
@@ -1134,7 +1134,7 @@ function paintMeMenus(trainer) {
   const xp = trainer && state.xp ? levelUi.xpOf(state) : null;
   const face = trainer
     ? `<img src="${esc(avatarSrc(trainer.avatar, trainer.avatarStyle, { still: true }))}" alt="" />`
-    : `<img src="assets/mark-v2.png" alt="" />`;
+    : `<img src="assets/mark-v3.png" alt="" />`;
   const pixel = Boolean(trainer) && avatarPixel(trainer.avatarStyle);
   const set = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; };
   for (const id of ["me-face", "menu-me-face"]) {
@@ -4190,7 +4190,7 @@ async function hydrateAfterAccountChange() {
 /** The sign-in screen's hero: the set on show, its wrappers fanned on the cyan slab (decoration only). */
 function authHeroHtml() {
   const wraps = (liveSet?.wrappers || []).slice(0, 3);
-  if (!wraps.length) return `<div class="au-hero is-mark" aria-hidden="true"><span class="au-slab"></span><img class="au-pack" src="assets/mark-v2.png" alt="" /></div>`;
+  if (!wraps.length) return `<div class="au-hero is-mark" aria-hidden="true"><span class="au-slab"></span><img class="au-pack" src="assets/mark-v3.png" alt="" /></div>`;
   const order = wraps.length === 3 ? [wraps[1], wraps[2], wraps[0]] : wraps.length === 2 ? [wraps[1], wraps[0]] : wraps;
   return `<div class="au-hero n${wraps.length}" aria-hidden="true"><span class="au-slab"></span>${order
     .map((w, i) => `<span class="au-pack p${order.length - i}">${packPicture(w, " ", liveSet).replace(/ alt="[^"]*"/, ' alt=""')}</span>`)
@@ -4270,7 +4270,7 @@ function renderAuth() {
     <div class="auth-page is-signin is-twostep">
       ${authHeroHtml()}
       <div class="auth-copy">
-        <p class="au-kicker"><img class="auth-mark" src="assets/mark-v2.png" width="256" height="256" alt="" /><span class="au-plate">Two-step</span></p>
+        <p class="au-kicker"><img class="auth-mark" src="assets/mark-v3.png" width="256" height="256" alt="" /><span class="au-plate">Two-step</span></p>
         <h1>One more step</h1>
         <p class="lede">Signing in as @${esc(twoStepHandle())}.</p>
       </div>
@@ -4351,7 +4351,7 @@ function renderAuth() {
     <div class="auth-page ${recover ? "is-recover" : signin ? "is-signin" : "is-signup"}">
       ${authHeroHtml()}
       <div class="auth-copy">
-        <p class="au-kicker"><img class="auth-mark" src="assets/mark-v2.png" width="256" height="256" alt="" /><span class="au-plate">${recover ? "Recovery" : signin ? "Continue" : "New game"}</span></p>
+        <p class="au-kicker"><img class="auth-mark" src="assets/mark-v3.png" width="256" height="256" alt="" /><span class="au-plate">${recover ? "Recovery" : signin ? "Continue" : "New game"}</span></p>
         <h1>${recover ? "Reset your password" : signin ? "Welcome back" : "Make a trainer"}</h1>
         <p class="lede">${
           recover
@@ -4576,7 +4576,7 @@ function signedOutAccount() {
     <header class="tcard signed-out">
       <div class="tcard-band"></div>
       <div class="tcard-id">
-        <img class="brand-logo lg" src="assets/mark-v2.png" width="256" height="256" alt="" />
+        <img class="brand-logo lg" src="assets/mark-v3.png" width="256" height="256" alt="" />
         <div class="tcard-who">
           <h1 class="tcard-name">Make a trainer</h1>
           <p class="tcard-idno"><span><small>ID No.</small> <b>Not issued yet</b></span></p>
@@ -11169,7 +11169,7 @@ function sharePull(card, { pulled = false } = {}) {
     id: card.id,
     image: `/${String(card.image || card.imageSmall || "").replace(/^\//, "")}`,
     coin: "/assets/coins/pp-coin-v1.svg",
-    mark: "/assets/mark-v2.png",
+    mark: "/assets/mark-v3.png",
     name: card.name,
     line: [rarity, no === "Energy" ? "" : no].filter(Boolean).join(", "),
     rarity,
