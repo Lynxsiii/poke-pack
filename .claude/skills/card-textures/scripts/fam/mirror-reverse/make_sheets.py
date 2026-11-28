@@ -200,6 +200,8 @@ FAMILIES = {
             (".foil-energy", MASK_WINDOW.format(var="--win-holo-energy", clip="none")),
             (".foil-energy.mx-basic", MASK_ART.format(clip="inset(2.6% 3.6% 2.6% 3.6% round 3%)")),
         ],
+        # a basic Energy is foil edge to edge, picture included: the hue pool is held back so it does not tint the symbol
+        extra_vars=[(".mx-basic", "--mr-tint: 0.5;")],
     ),
     "sm-reverse": dict(
         head="""Holo family sm-reverse (reverse round, 2026-11-28): the Sun & Moon reverses of Fighting and Colorless Pokemon
@@ -264,6 +266,8 @@ def sheet(name, spec):
     out.append(RECIPE.format(S=sel, spectrum=SPECTRUM, pos=SPECTRUM_POS, **rest, **{k: spec[k] for k in ("floor", "tint", "dark", "glare")}))
     if tex:
         out.append(f"{sel} {{\n  --mr-tex-veil: {spec['tex_veil']};\n}}")
+    for extra, decl in spec.get("extra_vars", []):
+        out.append(f"{sel}{extra} {{\n  {decl}\n}}")
     out.append("/* ---- Masks: the same area for every layer ---- */")
     for extra, body in spec["masks"]:
         out.append(f"{sel}{extra} :is(.foil, .glare) {{\n{body}\n}}")

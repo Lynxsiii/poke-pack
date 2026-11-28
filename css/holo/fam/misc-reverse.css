@@ -82,6 +82,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse.fam-misc-reverse.fam-misc-reverse
   opacity: calc(var(--mr-glare) * var(--card-opacity));
 }
 
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse.fam-misc-reverse.fam-misc-reverse.fam-misc-reverse.fam-misc-reverse.fam-misc-reverse.fam-misc-reverse.fam-misc-reverse.fam-misc-reverse.mx-basic {
+  --mr-tint: 0.5;
+}
 /* ---- Masks: the same area for every layer ---- */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse.fam-misc-reverse.fam-misc-reverse.fam-misc-reverse.fam-misc-reverse.fam-misc-reverse.fam-misc-reverse.fam-misc-reverse.fam-misc-reverse :is(.foil, .glare) {
   -webkit-mask-image: var(--art), var(--win-holo);
