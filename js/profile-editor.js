@@ -134,7 +134,7 @@ function showcaseTiles() {
 }
 
 const CHEVRON = (up) =>
-  `<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="${up ? "M6 15l6-6 6 6" : "M6 9l6 6 6-6"}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/></svg>`;
+  `<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="${up ? "M6 15l6-6 6 6" : "M6 9l6 6 6-6"}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
 function sectionRows() {
   const last = draft.sections.length - 1;

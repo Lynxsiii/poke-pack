@@ -12,7 +12,7 @@
   font: 700 14px var(--font);
 }
 .search-open:hover { color: var(--cy-2); background: none; }
-.search-open svg, .search-bar svg { width: 22px; height: 22px; flex: none; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: square; stroke-linejoin: miter; }
+.search-open svg, .search-bar svg { width: 22px; height: 22px; flex: none; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 .search-open-label { display: none; white-space: nowrap; }
 @media (min-width: 1500px) {
   .search-open { width: 250px; justify-content: flex-start; padding: 0 12px; border: var(--line-w) solid var(--k); background: var(--box); color: var(--k-2); }

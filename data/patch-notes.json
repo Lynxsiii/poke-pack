@@ -1,14 +1,26 @@
 [
   {
-    "id": "2026-11-28-new-icons",
+    "id": "2026-11-28-japanese-mega-brave-symphonia-inferno-x",
     "date": "2026-11-28",
-    "kind": "better",
-    "title": "New icons everywhere",
-    "summary": "Every icon in the menu, the tab bar and the buttons has been redrawn for this site.",
+    "kind": "new",
+    "big": 2,
+    "title": "Three more Japanese Mega Evolution sets",
+    "summary": "Mega Brave, Mega Symphonia and Inferno X, each with its 30-pack Japanese box.",
     "items": [
-      "The menu, tab bar and top bar have a new icon set drawn for the site: packs with crimped ends, a slab for Grading, a toploader and coin for Sleeves and coins, trainers in caps for Account and Friends.",
-      "Each icon is one thick line with one solid block, and the block takes your theme's colour in the menus.",
-      "The small icons on buttons across the casino, battles, trades and your account have the same flat ends and sharp corners."
+      "Mega Brave (M1L): Mega Lucario ex as the Mega Hyper Rare, with Lillie's Determination among the Special Art Rares.",
+      "Mega Symphonia (M1S): Mega Gardevoir ex as the Mega Hyper Rare, with Mega Kangaskhan ex and Acerola's Mischief.",
+      "Inferno X (M2): Mega Charizard X ex as both a Special Art Rare and the Mega Hyper Rare."
+    ]
+  },
+  {
+    "id": "2026-11-28-product-photo-edges",
+    "date": "2026-11-28",
+    "kind": "fix",
+    "title": "Cleaner product photos",
+    "summary": "No more white patches or pale rims around sealed products in the shop.",
+    "items": [
+      "The XY Evolutions and BREAKthrough Elite Trainer Boxes lost the white patch and watermark between their contents.",
+      "127 product photos lost the pale white rim along their edges, so they sit cleanly on the dark shop tiles."
     ]
   },
   {

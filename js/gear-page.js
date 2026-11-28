@@ -435,7 +435,7 @@ export function initGear(deps) {
     dlg.innerHTML = `
       <div class="gear-sheet-body">
         <button type="button" class="gear-sheet-close" data-gear-close aria-label="Close">
-          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="m6 6 12 12M18 6 6 18"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"/></svg>
         </button>
         <div class="gear-stage ${kind} ${owned ? "" : "missing"}">
           <span class="gear-stage-slab" aria-hidden="true"></span>

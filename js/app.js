@@ -41,11 +41,11 @@ import {
   SET_CATEGORIES,
 } from "./catalog.js";
 import { dexId, dexIds, foldCopies, homeSetId, isBoxPromoId, promoHomeOf } from "./card-home.js";
-import { createCardPicker } from "./card-picker.js?v=4";
+import { createCardPicker } from "./card-picker.js?v=3";
 import { HIT_RARITIES, canPullReverse, isHit, tallyRarity } from "./engine.js";
-import { initRadio } from "./radio.js?v=6";
+import { initRadio } from "./radio.js?v=5";
 import { createTear } from "./tear.js?v=2";
-import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends, paintLounge } from "./social.js?v=8";
+import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends, paintLounge } from "./social.js?v=7";
 import { hubHeadHtml, socialTabFromPath, showEventsTab } from "./social-hub.js?v=4";
 import { renderEvents, eventsMayShow } from "./events-page.js?v=1";
 import { renderRankings, standingLine } from "./rankings.js?v=9";
@@ -99,7 +99,7 @@ function paintSetSlab(viewId, set) {
 }
 import { bannerBlockHtml } from "./mastery-banner.js";
 import { masteryShelfProfileHtml } from "./mastery-shelf.js";
-import * as questArea from "./quest-area.js?v=13";
+import * as questArea from "./quest-area.js?v=12";
 import * as levelUi from "./level-ui.js";
 import { rollFigures, growBars, flyCoins, markPicks, landPreview } from "./acct-motion.js";
 import { avatarPickerHtml, initAvatarPicker, resetAvatarPicker } from "./avatar-picker.js";
@@ -140,14 +140,14 @@ import {
 import { api, ApiError } from "./api.js";
 import { THEMES, canUseTheme, resolveLook } from "./themes.js?v=2";
 import { equippedCoin, gearItem, normalizeGear } from "./gear.js?v=3";
-import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=22";
+import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=21";
 import { initBattles } from "./battles.js?v=12";
 import { initCasino } from "./casino.js?v=38";
 import { coinOf } from "./coin.js?v=9";
 // grading
-import { initGrading, GRADING_ROUTE, CERT_ROUTE } from "./grading-page.js?v=24";
+import { initGrading, GRADING_ROUTE, CERT_ROUTE } from "./grading-page.js?v=23";
 // trades
-import { initTrades, TRADES_ROUTE } from "./trades-page.js?v=10";
+import { initTrades, TRADES_ROUTE } from "./trades-page.js?v=9";
 import { coinTag } from "./battle-kit.js";
 import { coinText, coinAmount, COIN_I } from "./money.js?v=4";
 import { receiptHtml, pullRow } from "./receipt.js?v=4";
@@ -160,12 +160,12 @@ import { initVault } from "./vault-page.js?v=11";
 import { initBatchOpen } from "./batch-open.js?v=8";
 import { cartEligible } from "./orders-rules.js?v=1";
 import { initSearch } from "./search.js?v=9";
-import { initWishlist } from "./wishlist.js?v=5";
-import { initSecurity, securityTabHtml, resetSecurity, securityChanged, finishDiscordReturn, startTwoStep, inTwoStep, endTwoStep, twoStepAuthHtml, twoStepHandle } from "./account-security.js?v=2";
+import { initWishlist } from "./wishlist.js?v=4";
+import { initSecurity, securityTabHtml, resetSecurity, securityChanged, finishDiscordReturn, startTwoStep, inTwoStep, endTwoStep, twoStepAuthHtml, twoStepHandle } from "./account-security.js?v=1";
 import { createShareSheet, pullUrl } from "./share-pull.js?v=5";
 // binder looks: the /binder cover, the customiser and the owner's look on a profile
 import { binderObjectHtml, applyBinderLook } from "./binder-object.js";
-import { watchBinderFx } from "./binder-editions.js";
+import { watchBinderFx, binderFxHtml } from "./binder-editions.js";
 import { normalizeBinderLook, resolveBinderLook, COLOR_FROM_CARDS } from "./binder-looks.js";
 import { hexToHsl, hslToHex, mixHex } from "./card-accent.js";
 import { cachedCardAccents, sampleCardAccents } from "./card-art-accent.js?v=1";
@@ -3165,6 +3165,7 @@ function renderBinder() {
       : wide ? "Use the keys to turn the page. Click a card to look closer." : "Swipe to turn the page. Tap a card to look closer.";
   const trainerName = activeTrainer()?.name || "";
   const front = `<button type="button" class="binder-page binder-front" data-goto="0" aria-label="Open your binder">
+      <span class="binder-cover bf-skin" aria-hidden="true"><span class="binder-fx">${binderFxHtml(binderLookNow().edition)}</span></span>
       <span class="bf-size" aria-hidden="true"><span class="binder-page-toolbar"><span>&nbsp;</span></span><span class="binder-pockets">${'<i class="pocket"></i>'.repeat(BINDER_PAGE)}</span></span>
       <span class="bf-band" aria-hidden="true"></span>
       <span class="bf-plate"><em>Binder</em><b>${esc(lookName || trainerName || "My binder")}</b></span>
