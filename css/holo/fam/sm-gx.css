@@ -140,7 +140,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm
 }
 /* ---- .cure (held): the light gain with the facet glints, colour-dodged ---------------------------------------- */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx .cure {
-  background-color: rgb(66, 66, 70);
+  /* 2026-11-28: gain x1.35 (grey 66) to x1.25 (grey 52), hot spot 94 to 78: a pale Pokémon inside the map's soft
+     edge went milky beside the light (Venomoth sm10 12, Dedenne sm10 57, Wigglytuff sm115 42). */
+  background-color: rgb(52, 52, 55);
   /* the frame takes only a small gain (it stays mid-grey silver), its glints the rainbow flecks */
   /* 2026-11-28: the coloured flake tile (--sgx-glint) is gone from here. At phone size it read as coarse confetti
      over the art (per-card review, 13 of 19 cards); the real foil is a fine grain under a smooth sheen. The slot
@@ -149,7 +151,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm
     linear-gradient(#000, #000),
     var(--sgx-ring-dim), var(--sgx-ring-dim), var(--sgx-ring-dim), var(--sgx-ring-dim),
     radial-gradient(ellipse 34% 25% at var(--pointer-x) var(--pointer-y),
-      rgb(94, 92, 88) 0%, rgba(84, 83, 80, 0.7) 45%, rgba(66, 66, 70, 0) 100%);
+      rgb(78, 76, 72) 0%, rgba(68, 67, 64, 0.7) 45%, rgba(52, 52, 55, 0) 100%);
   background-size: 30% auto, var(--sgx-ring-size), 100% 100%;
   background-position: var(--sgx-seed), var(--sgx-ring-pos), center;
   background-repeat: repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
