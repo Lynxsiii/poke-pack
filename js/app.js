@@ -2,7 +2,7 @@ import { createCardMotion } from "./card-motion.js?v=4";
 import {
   foilExtras, foilClass as finishClass, foilLayout as finishLayout, foilLook as finishLook, foilPattern as finishPattern,
   reverseKindOf as finishReverseKind, dataFinish,
-} from "./foil-maps.js?v=147";
+} from "./foil-maps.js?v=148";
 import { initFx } from "./fx.js";
 import { PROFILE_PAGE_LIMIT } from "./profile-pages.js";
 import * as profileView from "./profile-view.js"; // the public profile page: hero, sections, room
