@@ -85,7 +85,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full
   opacity: calc((0.22 + var(--card-opacity) * 0.78) * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art:not(.xyf-silver).has-foil-map:not(.lit):not(.settling) .foil {
-  opacity: calc(0.22 * var(--foil-strength, 1));
+  /* 0.22 -> 0.18: the resting sheen greyed dark art a little (Steven 95/98, Darkrai-EX 118/122) */
+  opacity: calc(0.18 * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art:not(.xyf-silver).has-foil-map .foil::before,
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art:not(.xyf-silver).has-foil-map .foil::after,

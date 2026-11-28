@@ -262,3 +262,12 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-m
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.xm-pale .cure {
   opacity: calc(var(--card-opacity) * 0.3 * var(--xm-lift));
 }
+
+/* ---- Double Crisis EX (`xy-dc`: Team Aqua's Kyogre-EX 6/34, Team Magma's Groudon-EX 15/34; 2026-11-28 round 2) ----------
+   Their Live map is the whole face, so a bar ran the card's full height straight over the painting: "rainbow stripe
+   down left edge / on name bar" (per-card review). The bars here are cut to the lamp's pool, a short soft flare of colour
+   near the light instead of a stripe from edge to edge, and at two thirds strength. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.fam-xy-ex-mega.xy-dc {
+  --xm-near: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    rgba(0, 0, 0, 0.66) 0%, rgba(0, 0, 0, 0.5) 14%, rgba(0, 0, 0, 0.2) 32%, rgba(0, 0, 0, 0.04) 52%, transparent 70%);
+}
