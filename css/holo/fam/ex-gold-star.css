@@ -214,7 +214,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refracto
   --gsr-warm: hsl(6, 92%, 50%), hsl(22, 96%, 52%), hsl(40, 96%, 52%), hsl(58, 92%, 50%), hsl(84, 78%, 44%), hsl(58, 92%, 50%), hsl(40, 96%, 52%),
     hsl(22, 96%, 52%), hsl(6, 92%, 50%), hsl(22, 96%, 52%), hsl(40, 96%, 52%), hsl(58, 92%, 50%), hsl(84, 78%, 44%), hsl(58, 92%, 50%),
     hsl(40, 96%, 52%), hsl(22, 96%, 52%), hsl(6, 92%, 50%);
-  --gsr-gain: 0.72;
+  --gsr-gain: 0.56;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor.gsr-dark .foil {
   background-color: hsl(0, 0%, 100%);
@@ -274,9 +274,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refracto
   background-image:
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
       hsla(0, 0%, 100%, 0.3) 0%, hsla(200, 25%, 90%, 0.14) 20%, hsla(0, 0%, 100%, 0) 42%),
-    linear-gradient(125deg, hsla(205, 30%, 96%, 0) 22%, hsla(205, 30%, 96%, 0.42) 40%, hsla(200, 25%, 98%, 0.5) 50%,
-      hsla(205, 30%, 96%, 0.42) 60%, hsla(205, 30%, 96%, 0) 78%),
-    linear-gradient(hsla(205, 25%, 94%, 0.22), hsla(205, 25%, 94%, 0.22)),
+    linear-gradient(125deg, hsla(205, 30%, 96%, 0) 22%, hsla(205, 30%, 96%, 0.24) 40%, hsla(200, 25%, 98%, 0.5) 50%,
+      hsla(205, 30%, 96%, 0.24) 60%, hsla(205, 30%, 96%, 0) 78%),
+    linear-gradient(hsla(205, 25%, 94%, 0.08), hsla(205, 25%, 94%, 0.08)),
     linear-gradient(112deg, var(--gsr-spectrum));
   background-size: 100% 100%, 200% 200%, 100% 100%, 220% 220%;
   background-position:
@@ -298,7 +298,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refracto
 /* the pale prints: the spectrum by overlay, so pink, yellow, green and blue stay readable on light ink */
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor.gsr-pale .foil {
   mix-blend-mode: overlay;
-  opacity: calc((0.7 + var(--card-opacity) * 0.25) * var(--foil-strength, 1));
+  /* 0.95 repainted the cyan Mew pink from edge to edge (2026-11-28 review); at 0.6 the ink leads and the hues ride on it */
+  opacity: calc((0.4 + var(--card-opacity) * 0.2) * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor.gsr-pale:not(.lit):not(.settling) .foil {
   mix-blend-mode: screen;
