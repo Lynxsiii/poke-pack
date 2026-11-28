@@ -173,7 +173,11 @@ function controlsHtml(user) {
         )
         .join("")}</div>`
     : "";
-  return `<div class="rk-boards" role="group" aria-label="Board">${words}</div>
+  // Phones show the boards as one picker (css/pages/phone.css); it presses the matching word.
+  const picker = `<label class="rk-pick"><span>Board</span><select data-rk-pick aria-label="Board">${BOARD_ORDER.map(
+    (key) => `<option value="${key}"${key === pick.board ? " selected" : ""}>${esc(BOARDS[key].label)}</option>`
+  ).join("")}</select></label>`;
+  return `<div class="rk-boards" role="group" aria-label="Board">${words}</div>${picker}
     ${periods || scope ? `<div class="rk-controls">${periods}${scope}</div>` : ""}
     <p class="rk-blurb">${esc(board.blurb)}</p>`;
 }
@@ -326,6 +330,10 @@ export async function renderRankings(root, deps) {
 }
 
 function bind(root, deps) {
+  root.addEventListener("change", (e) => {
+    const sel = e.target.closest("[data-rk-pick]");
+    if (sel) root.querySelector(`[data-rk-board="${sel.value}"]`)?.click();
+  });
   root.addEventListener("click", (e) => {
     const board = e.target.closest("[data-rk-board]");
     const period = e.target.closest("[data-rk-period]");

@@ -1,0 +1,180 @@
+/* ==========================================================================
+   Phone layout (2026-11-28). Loaded after every page sheet, rotom.css and
+   themes.css. One rule: the packs, cards or games come first and the controls
+   take one row. Everything here is inside a phone-width query except the
+   parts that must be hidden on wider screens. js/phone-layout.js moves the
+   Collection filters into the sheet and Sell duplicates beside the count.
+   Theme tokens only (DESIGN.md).
+   ========================================================================== */
+
+/* Phone-only parts stay out of the way everywhere else. */
+.coll-filter-key, .rk-pick, .cs-free-foot, .ph-sheet, .ph-dim { display: none; }
+
+@media (max-width: 640px) {
+  /* ---- Collection: a tight set box, one row of tools, then the cards --------- */
+  /* The tab and the bar below already say where you are: the title is for screen readers only. */
+  #view-collection .coll-title { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  #view-collection .coll-head { margin: 10px 0 0; }
+  #view-collection .coll-hud { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 2px 10px; padding: 6px 10px 8px; }
+  #view-collection .coll-hud-top { display: contents; }
+  #view-collection .coll-setno > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  #view-collection .bulk-pulse { grid-column: 1 / -1; margin: 0; }
+  #view-collection .coll-hp em { display: none; }
+  #view-collection .coll-hp .rt-track { height: 10px; }
+  #view-collection .coll-worth { grid-column: 1 / -1; margin-top: 3px; font-size: 12.5px; }
+  #view-collection .coll-count b, #view-collection .coll-value .price { font-size: 15px; }
+  #view-collection .coll-filters { margin-top: 8px; gap: 0; }
+  #view-collection .coll-tools { margin-top: 0; }
+  #view-collection .coll-sort { flex: none; width: 48px; min-width: 0; padding: 0; justify-content: center; }
+  #view-collection .coll-sort span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .coll-filter-key {
+    flex: none; display: inline-flex; align-items: center; gap: 7px; min-height: 44px; padding: 0 13px;
+    border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); color: var(--k); cursor: pointer;
+    font: 700 15px var(--font-h); -webkit-tap-highlight-color: transparent;
+  }
+  .coll-filter-key[hidden] { display: none; }
+  .coll-filter-key:active { transform: translateY(1px); }
+  .coll-filter-key i { min-width: 20px; padding: 0 5px; border-radius: 3px; background: var(--yel); color: var(--k0); font: 700 13px/20px var(--font-h); font-style: normal; text-align: center; font-variant-numeric: tabular-nums; }
+  .coll-filter-key i:empty { display: none; }
+  /* The count and Sell duplicates share a line. */
+  .coll-noterow { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 32px; margin: 4px 0; }
+  #view-collection .coll-noterow .bulk-result { flex: 1 1 0; min-width: 0; margin: 0; }
+  .coll-noterow .coll-hud-foot { flex: none; margin: 0; padding: 0; border: 0; }
+  .coll-noterow .coll-hud-foot .tlink { white-space: nowrap; }
+
+  /* The filter sheet: every choice visible at once. */
+  .ph-dim { display: block; position: fixed; inset: 0; z-index: 44; background: rgb(0 0 0 / 0.55); animation: ph-dim 0.2s ease; }
+  .ph-sheet {
+    display: block; position: fixed; left: 0; right: 0; bottom: 0; z-index: 45; max-height: 86%; overflow-y: auto; overscroll-behavior: contain;
+    padding: 8px var(--gutter, 20px) calc(18px + env(safe-area-inset-bottom, 0px));
+    border-top: var(--line-w) solid var(--k); background: var(--box); color: var(--k); outline: none;
+    animation: ph-rise 0.24s var(--ease-out);
+  }
+  .ph-dim[hidden], .ph-sheet[hidden] { display: none; }
+  .ph-sheet-grab { display: block; width: 44px; height: 5px; margin: 0 auto 2px; border-radius: 3px; background: var(--rule-2); }
+  .ph-sheet h3 { margin: 12px 0 4px; font: italic 800 20px/1.1 var(--font-xc); letter-spacing: -0.02em; }
+  .ph-sheet h3:has(+ .coll-words[hidden]) { display: none; }
+  .ph-sheet .coll-words { flex-wrap: wrap; gap: 4px 2px; margin: 0; padding: 2px 0; overflow: visible; -webkit-mask-image: none; mask-image: none; }
+  .ph-sheet .coll-words[hidden] { display: none; }
+  .ph-sheet .coll-rarities { margin-top: 6px; padding-top: 8px; border-top: 1.5px solid var(--rule); }
+  .ph-sheet .coll-word { min-height: 40px; }
+  .ph-sheet-done { display: flex; width: calc(100% - 12px); margin: 18px 6px 0; }
+  html.ph-locked { overflow: hidden; }
+
+  /* ---- Casino hub: the games first, the free-play line under them ------------- */
+  .casino-bar .cs-free { display: none; }
+  .casino-bar:not([hidden]) ~ .cs-free-foot { display: block; margin: 26px 0 0; }
+  .cs-free-foot a { color: var(--k); font-weight: 700; text-decoration: underline; text-decoration-color: var(--cy-2); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+  /* Each game is one wide row: its object, its name, the cursor. */
+  .casino-page-hub .hub-head .page-title { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .casino-page-hub .hub-head { margin: 0; }
+  .casino-page-hub .hub-head .hub-primary { display: none; }
+  .casino-page-hub .hub-games { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .casino-page-hub .hub-game { flex-direction: row; align-items: stretch; height: 92px; }
+  .casino-page-hub .hub-game-art { flex: 0 0 112px; height: auto; border-bottom: 0; border-right: var(--line-w) solid var(--k); }
+  .casino-page-hub .hub-game-art .cs-art { transform: scale(0.72); }
+  .casino-page-hub .hub-game-copy { justify-content: center; gap: 4px; padding: 6px 40px 8px 14px; }
+  .casino-page-hub .hub-game-copy b { font-size: 25px; }
+  .casino-page-hub .hub-game-copy span { padding-right: 0; }
+  .casino-page-hub .hub-game-fig { top: 7px; left: auto; right: 9px; font-size: 12px; }
+  .casino-page-hub .hub-game-go { bottom: 50%; margin-bottom: -8px; }
+
+  /* ---- Rankings: the boards are one picker, beside Everyone or Friends -------- */
+  .rk-top { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; }
+  .rk-top .rk-boards { display: none; }
+  .rk-pick {
+    position: relative; flex: 1 1 150px; display: grid; align-content: center; min-width: 0; min-height: 46px; padding: 4px 34px 5px 12px;
+    border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); color: var(--k);
+  }
+  .rk-pick span { color: var(--k-3); font: 700 11.5px/1.1 var(--font); }
+  .rk-pick select {
+    width: 100%; min-width: 0; margin: 0; padding: 0; border: 0; border-radius: 0; background: none; color: var(--k); outline: none;
+    font: 700 16px/1.2 var(--font-h); -webkit-appearance: none; appearance: none; text-overflow: ellipsis;
+  }
+  .rk-pick select::after { content: none; }
+  .rk-pick::after {
+    content: ""; position: absolute; right: 13px; top: 50%; width: 9px; height: 9px; margin-top: -8px; pointer-events: none;
+    border-right: 2.6px solid var(--k); border-bottom: 2.6px solid var(--k); transform: rotate(45deg);
+  }
+  .rk-pick:focus-within { box-shadow: 0 0 0 3px var(--cy); }
+  .rk-top .rk-controls { flex: none; margin: 0; }
+  /* A period and a scope together take their own line. */
+  .rk-top .rk-controls:has(.rk-seg + .rk-seg) { flex: 1 1 100%; gap: 6px 8px; }
+  .rk-top .rk-blurb { flex: 1 1 100%; margin: 2px 0 0; }
+
+  /* ---- Packs: a line that repeats the tab goes; the eras sit under the tabs --- */
+  main #view-catalog .catalog-summary.is-plain { display: none; }
+  /* Each era is a shelf of big packs you swipe sideways; the shelf bleeds to the screen's edges. */
+  main #view-catalog .cat-grid {
+    display: flex; gap: 10px; margin: 0 calc(-1 * var(--gutter, 20px)); padding: 4px var(--gutter, 20px) 12px;
+    overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; scroll-snap-type: x proximity;
+  }
+  main #view-catalog .cat-grid::-webkit-scrollbar { display: none; }
+  main #view-catalog .cat-tile { flex: 0 0 134px; scroll-snap-align: start; scroll-margin-left: var(--gutter, 20px); }
+  main #view-catalog .cat-art { height: 158px; padding: 12px 8px 9px; }
+  main #view-catalog .cat-copy { gap: 5px; padding: 9px 10px 11px; }
+  main #view-catalog .cat-name { font-size: 16px; }
+  main #view-catalog .cat-meta { font-size: 12.5px; }
+  main #view-catalog .cat-price { font-size: 16px; }
+  main #view-catalog .era-block { margin-top: 0; padding-top: 18px; contain-intrinsic-size: auto 350px; }
+  main #view-catalog .era-head { margin-bottom: 6px; }
+
+  /* ---- Home: the pack in the middle, its art choices in a strip under it, then
+     the key, then the chase cards as a row you flick through ------------------ */
+  #view-home .home-hero.has-party { grid-template-columns: minmax(0, 1fr); grid-template-areas: "head" "stage" "party" "info"; column-gap: 0; }
+  #view-home .home-hero.has-party .hh-head { padding-bottom: 4px; }
+  #view-home .home-hero.has-party .hh-stage { height: 236px; margin-top: 10px; }
+  #view-home .home-hero.has-party .hh-pack img { height: 232px; }
+  #view-home .home-hero.has-party .hh-slab { top: -8px; bottom: -10px; left: 24%; right: 24%; }
+  #view-home .hh-party { flex-direction: row; justify-content: center; gap: 10px; margin-top: 16px; padding: 0; }
+  #view-home .hh-slot { flex: 0 0 56px; width: 56px; height: 56px; }
+  #view-home .hh-slot[aria-pressed="true"] { transform: translateY(-4px); }
+  #view-home .hh-slot:active { transform: translateY(1px); }
+  #view-home .hh-slot-in { justify-content: center; padding: 0; }
+  #view-home .hh-slot b { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  #view-home .hh-slot img { height: 46px; max-width: 30px; }
+  #view-home .hh-info { display: flex; flex-direction: column; }
+  #view-home .hh-info .home-cta { display: contents; }
+  #view-home .hh-info .hh-go { order: 1; margin-top: 12px; }
+  #view-home .hh-chase-h {
+    order: 2; position: static; width: auto; height: auto; margin: 24px 0 0; overflow: visible; clip: auto;
+    color: var(--k); font: italic 800 22px/1.1 var(--font-xc); letter-spacing: -0.02em;
+  }
+  #view-home .hh-chase-h[hidden] { display: none; }
+  #view-home .hh-chase {
+    order: 3; display: flex; gap: 10px; margin: 6px calc(-1 * var(--gutter, 20px)) 0; padding: 4px var(--gutter, 20px) 10px;
+    overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none;
+  }
+  #view-home .hh-chase[hidden] { display: none; }
+  #view-home .hh-chase::-webkit-scrollbar { display: none; }
+  #view-home .hh-links { order: 4; }
+  #view-home .hh-row, #view-home .hh-row:nth-child(n + 2) {
+    display: flex; flex: 0 0 104px; flex-direction: column; align-items: stretch; width: 104px; height: auto; min-height: 0; overflow: hidden;
+    border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  }
+  #view-home .hh-row .rt-row-lab, #view-home .hh-row .rt-row-name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  #view-home .hh-row .hh-thumb { width: auto; margin: 8px 10px 4px; }
+  #view-home .hh-row .hh-thumb .tcg { width: 100%; }
+  #view-home .hh-row .rt-row-val { justify-content: center; padding: 2px 0 8px; font-size: 15px; }
+  #view-home .hh-row .rt-row-val .coin-i { width: 15px; height: 15px; }
+
+  /* ---- Section tabs stay with you while the page scrolls ---------------------- */
+  #collection-tabs, main:has(.casino-page-hub) > .casino-bar {
+    position: sticky; top: var(--ph-head, 64px); z-index: 5;
+  }
+  body.rt-scrolled #collection-tabs::before, body.rt-scrolled main:has(.casino-page-hub) > .casino-bar::before {
+    content: ""; position: absolute; z-index: -1; inset: 0 calc(-1 * var(--gutter, 20px)) -5px;
+    border-bottom: var(--line-w) solid var(--k); background: var(--bg);
+  }
+}
+
+/* Short phones (iPhone SE with Safari's bars): the pack and its art strip stay above the tab bar. */
+@media (max-width: 640px) and (max-height: 600px) {
+  #view-home .home-hero.has-party .hh-stage { height: 190px; margin-top: 6px; }
+  #view-home .home-hero.has-party .hh-pack img { height: 186px; }
+}
+
+@keyframes ph-rise { from { transform: translateY(100%); } }
+@keyframes ph-dim { from { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .ph-sheet, .ph-dim { animation: none; } }
+body.no-motion .ph-sheet, body.no-motion .ph-dim { animation: none; }
