@@ -111,7 +111,7 @@ export async function pullFeedStmts(env, userId, live, packs, promos = [], boxCa
       .first();
     if ((recent?.n || 0) >= POSTS_PER_HOUR) return [];
     const best = [...found.values()].sort((a, b) => b.price - a.price).slice(0, CARDS_PER_POST);
-    const payload = { name: user.name, handle: user.handle, cards: best, more: found.size - best.length };
+    const payload = { name: user.name, handle: user.handle, cards: best, more: found.size - best.length, discordId: await linkedDiscordId(env, userId) };
     return [
       env.DB.prepare("INSERT INTO discord_feed (kind, user_id, payload, created_at) VALUES ('pulls', ?, ?, ?)").bind(
         userId,
@@ -136,6 +136,7 @@ export async function queueBlackLabel(env, user, card, set, now = Date.now()) {
       name: row.name,
       handle: row.handle,
       card: { ...cardRef(card, set), slab: money(gradedValue(card, 10, set, true)) },
+      discordId: await linkedDiscordId(env, user.id),
     };
     await env.DB.prepare("INSERT INTO discord_feed (kind, user_id, payload, created_at) VALUES ('blacklabel', ?, ?, ?)")
       .bind(user.id, JSON.stringify(payload), now)
@@ -167,7 +168,22 @@ export function pullMessage(payload) {
   if (payload.more > 0) {
     embeds[embeds.length - 1].footer = { text: `and ${payload.more} more big pull${payload.more === 1 ? "" : "s"}` };
   }
-  return { embeds };
+  return { embeds, ...mention(payload) };
+}
+
+/** A trainer who linked Discord (Account, Security) is pinged by name on their own big pull, and nobody else is. */
+function mention(payload) {
+  const id = String(payload.discordId || "");
+  return /^\d{5,25}$/.test(id) ? { content: `<@${id}>`, allowed_mentions: { users: [id] } } : {};
+}
+
+async function linkedDiscordId(env, userId) {
+  try {
+    const row = await env.DB.prepare("SELECT discord_id FROM user_discord WHERE user_id = ?").bind(userId).first();
+    return row?.discord_id || "";
+  } catch {
+    return ""; // no table yet: nobody has linked
+  }
 }
 
 export function blackLabelMessage(payload) {
@@ -180,7 +196,7 @@ export function blackLabelMessage(payload) {
     description: `All four subgrades are 10.\n${card.rarity}${card.set ? ` from ${card.set}` : ""}\n**${usd(card.slab)}** as a slab`,
   };
   if (image) embed.image = { url: image };
-  return { embeds: [embed] };
+  return { embeds: [embed], ...mention(payload) };
 }
 
 export function noteMessage(entry) {
@@ -226,7 +242,7 @@ async function post(hook, message, fetcher) {
       headers: { "content-type": "application/json" },
       body: JSON.stringify({
         username: "poke-pack.rip",
-        avatar_url: `${SITE}/assets/avatar-round-v2.png`,
+        avatar_url: `${SITE}/assets/avatar-round-v3.png`,
         allowed_mentions: { parse: [] },
         ...message,
       }),

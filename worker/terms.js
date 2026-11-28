@@ -124,6 +124,13 @@ const PERSONAL_TABLES = [
   ["discord_feed", "user_id"],
   ["coin_restores", "user_id"],
   ["recovery_codes", "user_id"],
+  // Account security (worker/security.js).
+  ["user_email", "user_id"],
+  ["reset_codes", "user_id"],
+  ["user_totp", "user_id"],
+  ["signin_tickets", "user_id"],
+  ["security_events", "user_id"],
+  ["user_discord", "user_id"],
   ["upgrades", "user_id"],
   ["casino_sales", "user_id"],
   // trades: offers a deleted account made or was sent, and its setting (worker/trades.js).

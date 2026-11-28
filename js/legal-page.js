@@ -33,7 +33,7 @@ const DOCS = {
       <p>You must be at least 13 to make an account. If you're under 18, check with a parent or guardian before you sign up. If we learn an account belongs to someone under 13, we delete it.</p>
 
       <h2>Your account</h2>
-      <p>Pick a trainer name and handle that don't pretend to be someone else and aren't rude. We may change or remove ones that are. Keep your password to yourself: we don't ask for an email, so we can't send a reset link if you lose it. A recovery code you make under Account, Security is the only way to reset it, so keep that safe too. You're responsible for what happens on your account.</p>
+      <p>Pick a trainer name and handle that don't pretend to be someone else and aren't rude. We may change or remove ones that are. Keep your password to yourself: we don't ask for an email, so we can't send a reset link if you lose it. A recovery code you make under Account, Security is the only way to reset it, so keep that safe too. You can also turn on two-step sign-in there. You're responsible for what happens on your account.</p>
 
       <h2>Coins, cards and other items</h2>
       <p>Everything you collect or win here is virtual. It belongs to the game, not to you, and we let you use it while you play.</p>
@@ -97,6 +97,8 @@ const DOCS = {
         <li>Your profile choices: avatar, banner, frame, bio, colours and layout.</li>
         <li>What you write: global chat messages, DMs, profile comments, and your friends list.</li>
         <li>When you were last online, and when you agreed to the Terms.</li>
+        <li>For Account, Security: the devices you're signed in on (browser and system, read from your browser), a rough place for each (city and country, guessed from the network; we don't keep your IP address), and your last 40 sign-ins and security changes, including wrong passwords. If you turn on two-step sign-in we keep the key your authenticator app shares with us.</li>
+        <li>If you link Discord: your Discord ID, username, display name and picture. We don't keep anything that lets us act on your Discord account. Unlinking deletes them.</li>
       </ul>
       <p>Without an account, your game stays in your own browser's storage and isn't sent to us, unless you make an account and choose to bring it with you.</p>
 
@@ -108,10 +110,11 @@ const DOCS = {
         <li>Anyone can see your trainer name, handle, avatar, bio, title, level, public profile and binder, whether you're online, your global chat messages and your profile comments.</li>
         <li>DMs are seen by you and the person you message. They aren't end-to-end encrypted: whoever runs the site can read the database to deal with reports and fix bugs.</li>
         <li>Your password and birth month are never shown.</li>
+        <li>Your linked Discord shows on your profile only if you switch that on. Your devices and sign-in history are seen only by you.</li>
       </ul>
 
       <h2>Our Discord feed</h2>
-      <p>Big pulls (worth $100 or more, a Special Illustration Rare or better, or a Black Label 10) are posted in our Discord server with your trainer name, handle and the card. You can turn this off in Settings, Community. Posts already made stay on Discord unless you ask us to remove them.</p>
+      <p>Big pulls (worth $100 or more, a Special Illustration Rare or better, or a Black Label 10) are posted in our Discord server with your trainer name, handle and the card. If you've linked Discord, the post mentions you there. You can turn this off in Settings, Community. Posts already made stay on Discord unless you ask us to remove them.</p>
 
       <h2>Services we use</h2>
       <ul>

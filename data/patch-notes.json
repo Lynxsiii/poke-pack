@@ -15,6 +15,115 @@
     ]
   },
   {
+    "id": "2026-11-28-picture-alignment",
+    "date": "2026-11-28",
+    "title": "Pixel and animated pictures sit in the middle",
+    "summary": "Sprites are now centred and sized the same in every round picture.",
+    "groups": [
+      {
+        "title": "Fixes",
+        "items": [
+          "Pixel and animated profile pictures could sit low or to one side and get cut off by the circle. Each of the 1,307 pictures is now measured, centred on the Pokémon itself and sized to fill the circle the same way.",
+          "This applies everywhere a picture shows: the header, your trainer card, profiles, lists, chat and battle seats."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "2026-11-28-loading-screen",
+    "date": "2026-11-28",
+    "title": "New loading screen",
+    "summary": "The three logo cards flip over to spell RIP, with a real loading percentage.",
+    "items": [
+      "While the site loads, three face-down cards turn over one by one to spell R, I, P, then get dealt off the top.",
+      "The percentage under them is real. It follows the site's files as they arrive and each step of start-up.",
+      "It takes the colours of your theme, and it stays still with Lite on, motion off, or Reduce Motion set on your device."
+    ]
+  },
+  {
+    "id": "2026-11-28-rip-logo",
+    "date": "2026-11-28",
+    "title": "New logo",
+    "summary": "Three red cards that spell RIP, for the .rip in the address.",
+    "items": [
+      "The logo is now three cards of our own, lettered R, I and P.",
+      "It is in the top bar, the loading screen, the browser tab, the home screen icon and link previews."
+    ]
+  },
+  {
+    "id": "2026-11-28-earned-shinies",
+    "date": "2026-11-28",
+    "title": "Shiny profile pictures, earned",
+    "summary": "A Black Label unlocks that Pokémon's shiny, and every mastered set gives you one shiny pick.",
+    "groups": [
+      {
+        "title": "Shiny pictures",
+        "items": [
+          "Grade a Black Label of any card of a Pokémon and its shiny picture unlocks. A Black Label you already have counts.",
+          "Every set you master gives one shiny pick from the Pokémon in that set. A pick cannot be changed, so it asks you to confirm.",
+          "A shiny you unlock is yours for good, even if the slab is later sold, cracked or lost in the casino. It covers that Pokémon's Mega and regional forms too.",
+          "Turn on Shiny in Account, Edit profile, Picture to see them all. Locked ones show a lock, and yours are kept under My shinies.",
+          "Shinies come in all three styles: Art, Pixel and Animated."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "2026-11-28-profile-pictures-account",
+    "date": "2026-11-28",
+    "title": "Every Pokémon as your picture, and a simpler account page",
+    "summary": "Pick from 1,307 pictures in three styles, and edit your whole look on one screen.",
+    "groups": [
+      {
+        "title": "Profile pictures",
+        "items": [
+          "Your picture can now be any Pokémon, 1,025 of them, plus Megas, regional forms and other forms. That is 1,307 pictures, up from 200.",
+          "Shiny pictures are earned, see the note above this one.",
+          "Three styles: Art, Pixel and Animated. Animated pictures move on your profile and trainer card and hold still in lists and chat. They also hold still if you turned motion off.",
+          "Pictures are sorted by generation, with groups for Mega, Regional and Forms, and you can search by name or Pokédex number.",
+          "Fixed: picking a picture threw the page and the list back to the top. Now only the picture changes."
+        ]
+      },
+      {
+        "title": "Account page",
+        "items": [
+          "The account page has one row of five tabs: Overview, Levels, Quests, Badges and Mastery.",
+          "Profile, Look and Layout are now one Edit profile screen with a tab each for Picture, Frame, Banner, Name and Page. Your trainer card stays in view while you pick.",
+          "Security has its own screen, reached from your trainer card.",
+          "Edit profile is in the menu under your name.",
+          "Removed Surprise me, Swap banner colours and the extra Copy link buttons.",
+          "Fixed the picture turning egg shaped in the Page preview when you wear a frame."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "2026-11-28-account-security",
+    "date": "2026-11-28",
+    "title": "Account security: two-step sign-in, your devices, and Discord linking",
+    "summary": "Account, Security is now a short checklist with a safety meter, and it has new ways to keep your trainer safe.",
+    "items": [
+      "Two-step sign-in: turn it on with any authenticator app (Google Authenticator, 1Password, Authy). After your password you enter the 6-digit code it shows. A recovery code works too if you lose your phone.",
+      "Devices: see every browser you're signed in on, roughly where, and when it was last used. Sign one out, or sign out everywhere else in one tap.",
+      "Recent sign-ins: your last sign-ins and security changes, with wrong passwords shown in red, so you can spot anyone who isn't you.",
+      "Link Discord: your own big pulls in our server's feed now mention you, and you can show your Discord name on your profile if you like.",
+      "Changing your password now signs you out on your other devices, and too many wrong passwords in a row make the site wait a few minutes before trying again."
+    ]
+  },
+  {
+    "id": "2026-11-28-binder-flip-book",
+    "date": "2026-11-28",
+    "title": "The binder is a flip book now",
+    "summary": "Your binder starts closed on its cover, opens to real page turns, and all the editing moved into one Arrange mode.",
+    "items": [
+      "The binder starts closed, showing its cover with your card count and worth. Tap it to open.",
+      "On a phone one page fills the screen. Swipe or use Back and Next and the page swings over on its ring edge, with a band of light crossing the cards as the next page lands. On a computer two pages face each other and turn across the spine.",
+      "The top of the page is one short line instead of a tall header, so your cards start much higher on a phone.",
+      "Arrange holds all the editing. Tap a card, then tap another pocket to move it or swap two cards. The × to take a card out, the profile link on each page, Customise and Add page all live there. Outside Arrange your cards are clean.",
+      "Your cover look carries over: materials, colours and animated covers all work with the new binder."
+    ]
+  },
+  {
     "id": "2026-11-28-coin-shine",
     "date": "2026-11-28",
     "title": "Coins shine like the real ones",
