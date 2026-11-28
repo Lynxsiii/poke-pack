@@ -19,7 +19,7 @@
  *        shielded (the target takes no effects this turn) }
  */
 
-import { ACTIVE, abilityOn, hitBack, typedDef, noteShed, shieldOn, sideHit, addCondition, addMark, askChoose, askPick, benchSafe, canPay, conditionsOn, damageAfterTyping, defOf, devolveSlot, energyAlike, energyToDeck, energyFits, energyMod, energyOf, flip, healRoom, heldOn, hpLeft, inPlay, markOn, maxHp, other, rand, retreatCost, shedEnergy, shuffle, slotAt, strike, struck, switchActive, toLost, toolGone, unpaid, warded, win } from "./engine.js";
+import { ACTIVE, abilityOn, hitBack, typedDef, noteShed, shieldOn, sideHit, addCondition, addMark, askChoose, askPick, benchSafe, canPay, conditionsOn, damageAfterTyping, defOf, devolveSlot, energyAlike, energyToDeck, energyFits, energyMod, energyOf, flip, healMore, healRoom, heldOn, hpLeft, inPlay, markOn, maxHp, other, rand, retreatCost, shedEnergy, shuffle, slotAt, strike, struck, switchActive, toLost, takeTool, takeTools, toolGone, toolsIn, unpaid, warded, win } from "./engine.js";
 import { T_OPS, compileTrainer, fits, runTrainer, trainerReady, whatOf } from "./trainers.js";
 
 const WORDS = { a: 1, an: 1, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6 };
@@ -92,7 +92,7 @@ const COUNTS = {
   ownHand: (ctx) => sideOf(ctx, true).hand.length,
   foeConditions: (ctx) => conditionsOn(ctx.target).length,
   ownDamaged: (ctx) => slotsOf(sideOf(ctx, true)).filter((s) => s.damage > 0).length,
-  ownTools: (ctx) => slotsOf(sideOf(ctx, true)).filter((s) => s.tool).length,
+  ownTools: (ctx) => slotsOf(sideOf(ctx, true)).reduce((n, s) => n + toolsIn(s).length, 0),
   // "that much more damage": what attacks did to it during the opponent's last turn (engine.js struck).
   struck: (ctx) => (ctx.slot.struckOn === ctx.state.turn - 1 ? ctx.slot.struckFor || 0 : 0),
   benchCounters: (ctx, who) => sideOf(ctx, true).bench.filter((s) => !who || fits(defIn(ctx, s), who)).reduce((n, s) => n + s.damage / 10, 0),
@@ -350,7 +350,7 @@ export const OPS = {
     ctx.hit.damage = ctx.hit.heads * n;
   },
   healSelf(ctx, { n }) {
-    const healed = Math.min(n, healRoom(ctx.state, ctx.slot));
+    const healed = Math.min(healMore(ctx.state, n), healRoom(ctx.state, ctx.slot));
     if (!healed) return;
     ctx.slot.damage -= healed;
     ctx.slot.healedOn = ctx.state.turn;
@@ -466,7 +466,7 @@ export const OPS = {
       return;
     }
     if (from === "tools") {
-      const uids = inPlay(state, player).map(([slot]) => slot.tool).filter(Boolean);
+      const uids = inPlay(state, player).flatMap(([slot]) => toolsIn(slot));
       if (uids.length) askChoose(state, { player, zone: "play", what: "tool", uids, min: 0, max: uids.length, effect: { op: "payFor" } });
       return;
     }
@@ -772,8 +772,7 @@ export const OPS = {
     const slot = state.players[foe].active;
     if (!slot?.tool || warded(state, slot, { player, src: "attack" }, defs)) return;
     const uid = slot.tool;
-    delete slot.tool;
-    delete slot.toolOn;
+    takeTool(slot, uid);
     toolGone(state, foe, uid, defs);
     events.push({ t: "discard-tool", p: foe, spot: ACTIVE, uid });
   },
@@ -784,7 +783,8 @@ export const OPS = {
     if (spot == null || hpLeft(state, slot, defs) <= 0) return;
     if (optional && to === "deck") return askPick(state, { player, side: player, spots: [spot], left: 1, optional: true, effect: { op: "shuffleIn" } });
     const side = state.players[player];
-    const cards = [slot.uid, ...slot.under, ...slot.energy, ...(slot.tool ? [slot.tool] : []), ...heldOn(slot)];
+    const tools = toolsIn(slot);
+    const cards = [slot.uid, ...slot.under, ...slot.energy, ...tools, ...heldOn(slot)];
     if (spot === ACTIVE) side.active = null;
     else side.bench.splice(spot, 1);
     // "Put this Pokémon and all cards attached to it in the Lost Zone" (`to: "lost"`); "You may put this Pokémon into your
@@ -793,17 +793,17 @@ export const OPS = {
       toLost(state, player, cards, events);
       events.push({ t: "bounce", p: player, spot, uid: slot.uid, lost: true });
     } else if (to === "handBare") {
-      if (slot.tool) toolGone(state, player, slot.tool, defs);
+      for (const uid of tools) toolGone(state, player, uid, defs);
       side.hand.push(slot.uid);
-      side.discard.push(...cards.filter((uid) => uid !== slot.uid && uid !== slot.tool));
+      side.discard.push(...cards.filter((uid) => uid !== slot.uid && !tools.includes(uid)));
       events.push({ t: "bounce", p: player, spot, uid: slot.uid });
     } else if (to === "hand") {
       side.hand.push(...cards);
       events.push({ t: "bounce", p: player, spot, uid: slot.uid });
     } else if (to === "discard") {
       // "Discard this Pokémon and all attached cards": it isn't Knocked Out (no Prize card for it).
-      if (slot.tool) toolGone(state, player, slot.tool, defs);
-      side.discard.push(...cards.filter((uid) => uid !== slot.tool));
+      for (const uid of tools) toolGone(state, player, uid, defs);
+      side.discard.push(...cards.filter((uid) => !tools.includes(uid)));
       events.push({ t: "bounce", p: player, spot, uid: slot.uid, discard: true });
     } else {
       side.deck.push(...cards);
@@ -1084,7 +1084,7 @@ export const OPS = {
   /** "... for each Basic Water Energy card in your discard pile. Then, shuffle those cards into your deck": all of them, no choice. */
   discardToDeck(ctx, { what }) {
     const side = ctx.state.players[ctx.player];
-    const uids = side.discard.filter((uid) => fits(defOf(ctx.state, uid, ctx.defs), what));
+    const uids = side.discard.filter((uid) => fits(defOf(ctx.state, uid, ctx.defs), what) && !defOf(ctx.state, uid, ctx.defs).noRecover);
     if (!uids.length) return;
     side.discard = side.discard.filter((uid) => !uids.includes(uid));
     side.deck.push(...uids);
@@ -1115,7 +1115,7 @@ export const OPS = {
     for (const p of [...(own ? [player] : []), ...(foe ? [other(player)] : [])]) {
       for (const [slot, spot] of inPlay(state, p)) {
         if (tera && !defOf(state, slot.uid, ctx.defs)?.tera) continue;
-        const healed = Math.min(n, healRoom(state, slot));
+        const healed = Math.min(healMore(state, n), healRoom(state, slot));
         if (!healed) continue;
         slot.damage -= healed;
         slot.healedOn = state.turn;
@@ -1204,8 +1204,8 @@ export const OPS = {
     if (!slot || ctx.shielded || warded(state, slot, { player, src: "attack" }, defs)) return;
     // `to`: "deck" (shuffled in), "hand", "discard", "lost" (the Lost Zone). It isn't Knocked Out: no Prize cards for it.
     // The Tool goes with it (to the discard pile the way any Tool does: one that says so goes back to the hand).
-    const cards = [slot.uid, ...slot.under, ...slot.energy, ...(slot.tool && to !== "discard" ? [slot.tool] : []), ...heldOn(slot)];
-    if (slot.tool && to === "discard") toolGone(state, foe, slot.tool, defs);
+    const cards = [slot.uid, ...slot.under, ...slot.energy, ...(to !== "discard" ? toolsIn(slot) : []), ...heldOn(slot)];
+    if (to === "discard") for (const uid of toolsIn(slot)) toolGone(state, foe, uid, defs);
     side.active = null;
     if (to === "lost") toLost(state, foe, cards, events);
     else if (to === "hand") side.hand.push(...cards);
@@ -1318,7 +1318,7 @@ export const OPS = {
     const { state, player, events } = ctx;
     for (const [slot, spot] of inPlay(state, player)) {
       if (!unitsOf(ctx, slot, type)) continue;
-      const healed = Math.min(n, healRoom(state, slot));
+      const healed = Math.min(healMore(state, n), healRoom(state, slot));
       if (!healed) continue;
       slot.damage -= healed;
       slot.healedOn = state.turn;
@@ -1330,7 +1330,7 @@ export const OPS = {
     OPS.healSelf(ctx, { n });
     const target = sideOf(ctx).active;
     if (!target || ctx.shielded) return;
-    const healed = Math.min(n, healRoom(ctx.state, target));
+    const healed = Math.min(healMore(ctx.state, n), healRoom(ctx.state, target));
     if (!healed) return;
     target.damage -= healed;
     target.healedOn = ctx.state.turn;
@@ -1589,11 +1589,10 @@ export const OPS = {
     for (const [slot, spot] of inPlay(state, foe)) {
       if ((active && spot !== ACTIVE) || (spot === ACTIVE && ctx.shielded) || warded(state, slot, { player, src: "attack" }, defs)) continue;
       if (slot.tool && tools) {
-        const uid = slot.tool;
-        delete slot.tool;
-        delete slot.toolOn;
-        toolGone(state, foe, uid, defs);
-        events.push({ t: "discard-tool", p: foe, spot, uid });
+        for (const uid of takeTools(slot)) {
+          toolGone(state, foe, uid, defs);
+          events.push({ t: "discard-tool", p: foe, spot, uid });
+        }
       }
       const gone = special ? slot.energy.filter((uid) => !defOf(state, uid, defs).basic) : [];
       if (!gone.length) continue;
@@ -1653,7 +1652,7 @@ export const OPS = {
     if (!each) return askPick(state, { player, side: player, spots, left: 1, effect: { op: "heal", n } });
     for (const spot of spots) {
       const slot = slotAt(state, player, spot);
-      const healed = Math.min(n, healRoom(state, slot));
+      const healed = Math.min(healMore(state, n), healRoom(state, slot));
       slot.damage -= healed;
       slot.healedOn = state.turn;
       events.push({ t: "heal", p: player, spot, n: healed });

@@ -17,7 +17,7 @@
  */
 
 import { trainerAim } from "./trainers.js";
-import { ACTIVE, abilityOn, apply, attacksOf, chooseBlock, damageAfterTyping, defOf, energyFits, energyOf, hpLeft, unitsOn, inPlay, legalActions, other, retreatCost, statusOf, unpaid, usableAttacks } from "./engine.js";
+import { ACTIVE, abilityOn, apply, attacksOf, chooseBlock, damageAfterTyping, defOf, energyFits, energyOf, hpLeft, unitsOn, inPlay, legalActions, other, retreatCost, statusOf, toolsIn, unpaid, usableAttacks } from "./engine.js";
 
 /** How much an attack is worth against this defender, before any coin flip. */
 function attackWorth(attack, def, foeDef, foeHp) {
@@ -336,7 +336,7 @@ function thinkAction(state, player, defs) {
     // Tools, Special Energy or the Stadium in play: only the other side's, the ones worth most to them first;
     // its own Energy when it must (an attack's price): the ones worth least to it.
     if (waiting.effect.op === "dropInPlay" || (waiting.effect.op === "takeBack" && waiting.zone === "play")) {
-      const foeOwns = new Set(inPlay(state, other(player)).flatMap(([slot]) => [slot.tool, ...slot.energy].filter(Boolean)));
+      const foeOwns = new Set(inPlay(state, other(player)).flatMap(([slot]) => [...toolsIn(slot), ...slot.energy]));
       if (state.stadium && state.stadium.owner !== player) foeOwns.add(state.stadium.uid);
       const theirs = waiting.uids.filter((u) => foeOwns.has(u)).sort((x, y) => energyWorth(state, y, defs) - energyWorth(state, x, defs));
       const mine = waiting.uids.filter((u) => !foeOwns.has(u)).sort((x, y) => energyWorth(state, x, defs) - energyWorth(state, y, defs));
