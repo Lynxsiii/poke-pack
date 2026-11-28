@@ -19,7 +19,7 @@
  *        shielded (the target takes no effects this turn) }
  */
 
-import { ACTIVE, abilityOn, benchMax, caged, countersStay, keptInPlay, hitBack, typedDef, noteShed, shieldOn, sideHit, addCondition, addMark, askChoose, askPick, benchSafe, canPay, conditionsOn, damageAfterTyping, defOf, devolveSlot, energyAlike, energyToDeck, energyFits, energyMod, energyOf, flip, healMore, healRoom, heldOn, hpLeft, inPlay, markOn, maxHp, other, rand, retreatCost, shedEnergy, shuffle, slotAt, strike, struck, switchActive, toLost, takeTool, takeTools, toolGone, toolsIn, unpaid, warded, win } from "./engine.js";
+import { ACTIVE, abilityOn, benchMax, evolveSpots, caged, countersStay, keptInPlay, hitBack, typedDef, noteShed, shieldOn, sideHit, addCondition, addMark, askChoose, askPick, benchSafe, canPay, conditionsOn, damageAfterTyping, defOf, devolveSlot, energyAlike, energyToDeck, energyFits, energyMod, energyOf, flip, healMore, healRoom, heldOn, hpLeft, inPlay, markOn, maxHp, other, rand, retreatCost, shedEnergy, shuffle, slotAt, strike, struck, switchActive, toLost, takeTool, takeTools, toolGone, toolsIn, unpaid, warded, win } from "./engine.js";
 import { T_OPS, compileTrainer, fits, runTrainer, trainerReady, whatOf } from "./trainers.js";
 
 const WORDS = { a: 1, an: 1, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6 };
@@ -97,6 +97,7 @@ const COUNTS = {
   struck: (ctx) => (ctx.slot.struckOn === ctx.state.turn - 1 ? ctx.slot.struckFor || 0 : 0),
   benchCounters: (ctx, who) => sideOf(ctx, true).bench.filter((s) => !who || fits(defIn(ctx, s), who)).reduce((n, s) => n + s.damage / 10, 0),
   // "for each card you discarded in this way" (OPS.pay keeps them in hit.paid); `type` here is a card kind (trainers.js fits).
+  paidTypes: (ctx) => new Set((ctx.hit.paid || []).flatMap((uid) => defOf(ctx.state, uid, ctx.defs).types || [])).size,
   paid: (ctx, what) => (ctx.hit.paid || []).filter((uid) => !what || fits(defOf(ctx.state, uid, ctx.defs), what)).length,
   // "for each Pokémon in your discard pile / of your Pokémon in play / of your Benched Pokémon that has the Round attack":
   // Pokémon whose attacks include one of that name (`type` is the name).
@@ -461,7 +462,7 @@ export const OPS = {
    * { basic, type }), "hand" (cards that fit `what`), "deck" (the top n), "decks" (the top n of each player's).
    * `all`: every card that fits, no choice; otherwise the attacker chooses any number up to n (0: as many as fit).
    */
-  pay(ctx, { from, energy = {}, what = "any", n = 0, all = false, exact = false, oneKind = false, lost = false }) {
+  pay(ctx, { from, energy = {}, what = "any", n = 0, all = false, exact = false, oneKind = false, lost = false, per = "" }) {
     const { state, player, defs, events } = ctx;
     const side = state.players[player];
     const paid = (gone) => (ctx.hit.paid = [...(ctx.hit.paid || []), ...gone]);
@@ -480,6 +481,12 @@ export const OPS = {
         events.push({ t: "mill", p, uids: gone });
         paid(gone);
       }
+      return;
+    }
+    if (from === "bench") {
+      const uids = side.bench.map((slot) => slot.uid);
+      const max = Math.min(uids.length, per ? COUNTS[per](ctx, "") : n);
+      if (max > 0) askChoose(state, { player, zone: "play", what: "pokemon", uids, min: 0, max, effect: pick });
       return;
     }
     if (from === "hand") {
@@ -550,8 +557,10 @@ export const OPS = {
    * included, with Weakness and Resistance for it alone), "ownBench". `count` 0 is all of them;
    * otherwise the attacker chooses that many, when there are more than that to choose from.
    */
-  spread(ctx, { n, to = "bench", count = 0, noTyping = false, pierce = false, damaged = null, per = "", type = "", only = null, stage = "", boxes = null, typed = false, perCounter = false, energized = false, ptype = "", special = false, notSelf = false, who = "" }) {
+  spread(ctx, { n, to = "bench", count = 0, noTyping = false, pierce = false, damaged = null, per = "", type = "", only = null, stage = "", boxes = null, typed = false, perCounter = false, energized = false, ptype = "", special = false, notSelf = false, who = "", countPer = "", countType = "", again = false }) {
     const { state, player, events } = ctx;
+    // `countPer`: how many Pokémon it may hit is counted ("for each Dreepy you discarded in this way, choose 1 of your opponent's Pokémon").
+    if (countPer && (count = COUNTS[countPer](ctx, countType)) <= 0) return;
     // "for each Grass Energy attached to this Pokémon": that much for each (COUNTS).
     if (per) n *= COUNTS[per](ctx, type);
     // `perCounter`: "... to 1 of your opponent's Benched Pokémon for each damage counter on that Pokémon" (counted on the one picked).
@@ -583,6 +592,8 @@ export const OPS = {
     // "This attack's damage isn't affected by Weakness or Resistance" holds for this damage too.
     // `pierce`: nor by effects on that Pokémon (an Ability that keeps Benched Pokémon safe).
     const typing = { ...(noTyping || ctx.hit.noWeakness ? { noWeakness: true } : {}), ...(noTyping || ctx.hit.noResistance ? { noResistance: true } : {}), ...(pierce ? { pierce } : {}) };
+    // `again`: "Choose 1 of your opponent's Pokémon 6 times. (You can choose the same Pokémon more than once.)"
+    if (again) return askPick(state, { player, side: p, spots, left: count, again: true, effect: { op: "damage", n, from, attack: true, ...typing } });
     if (count && spots.length > count) return askPick(state, { player, side: p, spots, left: count, effect: { op: "damage", n, from, attack: true, ...typing, ...(typed ? { typed } : {}) } });
     // No choice to make: it lands on all of them now.
     for (const spot of spots) {
@@ -913,11 +924,167 @@ export const OPS = {
     events.push({ t: "prize-up", p: player, uid });
   },
   /** "Before doing damage, you may attach any number of Basic Water Energy cards from your hand to this Pokémon." */
-  attachHand(ctx, { what }) {
+  attachHand(ctx, { what, n = 0 }) {
     const { state, player, defs } = ctx;
     const uids = state.players[player].hand.filter((uid) => fits(defOf(state, uid, defs), what));
     const spot = spotOf(ctx);
-    if (uids.length && spot != null) askChoose(state, { player, zone: "hand", what, uids, min: 0, max: uids.length, effect: { op: "attach", to: "self", spot } });
+    if (uids.length && spot != null) askChoose(state, { player, zone: "hand", what, uids, min: 0, max: n ? Math.min(n, uids.length) : uids.length, effect: { op: "attach", to: "self", spot } });
+  },
+  /** Surprisingly Transform (heads): a Pokémon from the deck takes this one's place, all on it kept; this card goes into the deck. */
+  dittoSwap(ctx) {
+    const { state, player, defs } = ctx;
+    const side = state.players[player];
+    const uids = side.deck.filter((uid) => fits(defOf(state, uid, defs), "pokemon"));
+    if (!uids.length) return void shuffle(state, side.deck);
+    askChoose(state, { player, zone: "deck", what: "pokemon", uids, min: 0, max: 1, effect: { op: "swapSelf", uid: ctx.slot.uid }, shuffle: true });
+  },
+  /** Inviting Kiss: a Basic Pokémon from the deck onto the Bench; if one came, an Energy from this Pokémon moves to it. */
+  inviteBench(ctx) {
+    const { state, player } = ctx;
+    const before = state.players[player].bench.map((slot) => slot.uid);
+    const had = state.pending.length;
+    OPS.trainer(ctx, { steps: [{ op: "search", what: "basic", n: 1, to: "bench" }] });
+    if (state.pending.length > had) state.pending[state.pending.length - 1].then = [{ op: "fx", uid: ctx.slot.uid, steps: [{ op: "feedNew", before }] }];
+  },
+  feedNew(ctx, { before }) {
+    const { state, player } = ctx;
+    const side = state.players[player];
+    const spot = side.bench.findIndex((slot) => !before.includes(slot.uid));
+    const from = spotOf(ctx);
+    if (spot < 0 || from == null || !ctx.slot.energy.length) return;
+    askChoose(state, { player, zone: "play", what: "energy", uids: ctx.slot.energy.slice(), min: 1, max: 1, effect: { op: "carryEnergy", from, spots: [spot] } });
+  },
+  /**
+   * Bug Out ("Reveal the bottom 7 cards of your deck ... 50 damage for each Pokémon you find there that has the Bug Out
+   * attack"), Destructo-Press ("70 damage for each Future card you find there"): the cards are shown, the damage is
+   * counted from them, then `back` ("pokemon": the Pokémon; "rest": what wasn't counted) is shuffled in and the rest discarded.
+   */
+  deckReveal(ctx, { from = "top", n, per, attack = "", what = "", back = "pokemon" }) {
+    const { state, player, defs, events } = ctx;
+    const side = state.players[player];
+    const shown = from === "bottom" ? side.deck.splice(Math.max(0, side.deck.length - n)) : side.deck.splice(0, n);
+    ctx.hit.damage = 0;
+    if (!shown.length) return;
+    events.push({ t: "reveal-deck", p: player, uids: shown.slice() });
+    const counted = (uid) => {
+      const def = defOf(state, uid, defs);
+      return attack ? def.kind === "pokemon" && (def.attacks || []).some((a) => a.name === attack) : fits(def, what);
+    };
+    ctx.hit.damage = shown.filter(counted).length * per;
+    const keep = shown.filter((uid) => (back === "pokemon" ? fits(defOf(state, uid, defs), "pokemon") : !counted(uid)));
+    const gone = shown.filter((uid) => !keep.includes(uid));
+    side.deck.push(...keep);
+    shuffle(state, side.deck);
+    side.discard.push(...gone);
+    if (gone.length) events.push({ t: "mill", p: player, uids: gone });
+  },
+  /** "Reveal any number of Honedge, Doublade, and Aegislash from your hand": the cards shown stay in the hand, the attack counts them (hit.paid). */
+  showHand(ctx, { what }) {
+    const { state, player, defs } = ctx;
+    const uids = state.players[player].hand.filter((uid) => fits(defOf(state, uid, defs), what));
+    if (uids.length) askChoose(state, { player, zone: "hand", what, uids, min: 0, max: uids.length, effect: { op: "revealFor" } });
+  },
+  /** "Look at 1 of your opponent's face-down Prize cards." Face down, so any one of them. */
+  peekPrize(ctx) {
+    const { state, player } = ctx;
+    const side = sideOf(ctx);
+    const down = side.prizes.filter((uid) => !(side.prizesUp || []).includes(uid));
+    if (!down.length) return;
+    const uid = down[Math.floor(rand(state) * down.length)];
+    askChoose(state, { player, owner: other(player), zone: "prizes", what: "any", uids: [uid], min: 0, max: 0, effect: { op: "look" } });
+  },
+  /**
+   * "You may move any number of damage counters from your opponent's Benched Pokémon to their Active Pokémon" (`toActive`),
+   * "... from your opponent's Pokémon to their other Pokémon in any way you like": one counter at a time, until the
+   * attacker is done. `left`: no more moves than there were counters to begin with.
+   */
+  shiftCounters(ctx, { toActive = false, left = null }) {
+    const { state, player, defs } = ctx;
+    const foe = other(player);
+    if (countersStay(state)) return;
+    const open = inPlay(state, foe).filter(([slot, spot]) => !(spot === ACTIVE && ctx.shielded) && !warded(state, slot, { player, src: "attack" }, defs));
+    const budget = left ?? open.reduce((sum, [slot]) => sum + Math.floor(slot.damage / 10), 0);
+    if (budget <= 0) return;
+    const moves = [];
+    for (const [from, a] of open) {
+      if (from.damage < 10 || (toActive && a === ACTIVE)) continue;
+      for (const [to, b] of open) if (to !== from && (!toActive || b === ACTIVE)) moves.push([from, to]);
+    }
+    if (!moves.length) return;
+    // The Pokémon nearest to being Knocked Out first: what the attacker most likely wants.
+    moves.sort((x, y) => hpLeft(state, x[1], defs) - hpLeft(state, y[1], defs));
+    const name = (slot) => `${slot === state.players[foe].active ? "Active" : "Benched"} ${defOf(state, slot.uid, defs).name}`;
+    const go = (move) => [{ op: "fx", uid: ctx.slot.uid, steps: [{ op: "counterStep", from: move[0].uid, to: move[1].uid }, { op: "shiftCounters", toActive, left: budget - 1 }] }];
+    state.pending.push({ type: "option", player, why: "shift", prompt: "Move a damage counter on their Pokémon?", labels: [...moves.map(([from, to]) => `${name(from)} to ${name(to)}`), "Done"], options: [...moves.map(go), []] });
+  },
+  counterStep(ctx, { from, to }) {
+    const { state, player, events } = ctx;
+    const foe = other(player);
+    const at = (uid) => inPlay(state, foe).find(([slot]) => slot.uid === uid);
+    const [a, b] = [at(from), at(to)];
+    if (!a || !b || a[0].damage < 10) return;
+    a[0].damage -= 10;
+    events.push({ t: "heal", p: foe, spot: a[1], n: 10, why: "move" });
+    b[0].damage += 10;
+    events.push({ t: "damage", p: foe, spot: b[1], n: 10, why: "move" });
+  },
+  /** Spiritual End: "choose 2 of your opponent's Pokémon and quadruple the number of damage counters on each of them." */
+  timesCounters(ctx, { count, times }) {
+    const { state, player, defs } = ctx;
+    const foe = other(player);
+    const spots = inPlay(state, foe).filter(([slot, spot]) => slot.damage > 0 && !(spot === ACTIVE && ctx.shielded) && !warded(state, slot, { player, src: "attack" }, defs)).map(([, spot]) => spot);
+    if (spots.length) askPick(state, { player, side: foe, spots, left: Math.min(count, spots.length), effect: { op: "timesCounters", times } });
+  },
+  /** Mischievous Painting: "Attach up to 3 Energy cards from your opponent's discard pile to their Pokémon in any way you like." */
+  foeDiscardAttach(ctx, { n }) {
+    const { state, player, defs } = ctx;
+    const foe = other(player);
+    const uids = state.players[foe].discard.filter((uid) => fits(defOf(state, uid, defs), "energy"));
+    const spots = inPlay(state, foe).filter(([slot]) => !warded(state, slot, { player, src: "attack" }, defs)).map(([, spot]) => spot);
+    if (uids.length && spots.length) askChoose(state, { player, owner: foe, zone: "discard", what: "energy", uids, min: 0, max: n, effect: { op: "attach", to: "spread", spots } });
+  },
+  /** Slight Shift: "Move an Energy from 1 of your opponent's Pokémon to another of their Pokémon." */
+  shiftFoeEnergy(ctx) {
+    const { state, player, defs } = ctx;
+    const foe = other(player);
+    const open = inPlay(state, foe).filter(([slot, spot]) => !(spot === ACTIVE && ctx.shielded) && !warded(state, slot, { player, src: "attack" }, defs));
+    if (open.length < 2) return;
+    const from = open.filter(([slot]) => slot.energy.length).map(([, spot]) => spot);
+    if (from.length) askPick(state, { player, side: foe, spots: from, left: 1, effect: { op: "moveEnergyFrom", n: 1, to: "any" } });
+  },
+  /** Pleasing Present: "Each player may attach up to 3 Basic Energy cards from their hand to their Pokémon in any way they like. Your opponent does this first." */
+  bothAttach(ctx, { n, what = "basicEnergy" }) {
+    const { state, player, defs } = ctx;
+    for (const p of [other(player), player]) {
+      const uids = state.players[p].hand.filter((uid) => fits(defOf(state, uid, defs), what));
+      if (uids.length && inPlay(state, p).length) askChoose(state, { player: p, zone: "hand", what, uids, min: 0, max: n, effect: { op: "attach", to: "spread" } });
+    }
+  },
+  /** Dark Awakening: "Choose up to 2 of your Darkness Pokémon. For each of those Pokémon, search your deck for a card that evolves from that Pokémon": one at a time. */
+  evolveSome(ctx, { n, type = "", done = [] }) {
+    const { state, player, defs } = ctx;
+    const side = state.players[player];
+    if (n <= 0 || !side.deck.length) return;
+    const can = inPlay(state, player).filter(([slot, spot]) => !done.includes(slot.uid) && (!type || defOf(state, slot.uid, defs).types.includes(type)) && side.deck.some((uid) => evolveSpots(state, player, defOf(state, uid, defs), defs, {}, "").includes(spot)));
+    if (!can.length) return;
+    const go = ([slot]) => [{ op: "fx", uid: ctx.slot.uid, steps: [{ op: "trainer", steps: [{ op: "evolveDeck", uid: slot.uid }] }, { op: "evolveSome", n: n - 1, type, done: [...done, slot.uid] }] }];
+    state.pending.push({ type: "option", player, why: "evolveSome", prompt: "Evolve which Pokémon from your deck?", labels: [...can.map(([slot, spot]) => `${spot === ACTIVE ? "Active" : "Benched"} ${defOf(state, slot.uid, defs).name}`), "Done"], options: [...can.map(go), []] });
+  },
+  /** Expelling Tornado: "Choose 3 of your opponent's Benched Pokémon. If you do, shuffle all of ... that you didn't choose ... into their deck." */
+  shuffleFoeAllBut(ctx, { keep }) {
+    const n = sideOf(ctx).bench.length - keep;
+    if (n > 0) OPS.shuffleFoeOne(ctx, { where: "bench", n });
+  },
+  /** Colorful Confection: Pokémon of the types of the Basic Energy attached to this Pokémon, from the deck. */
+  searchEnergyTypes(ctx, { n }) {
+    const { state, defs } = ctx;
+    const types = [...new Set(ctx.slot.energy.map((uid) => defOf(state, uid, defs)).filter((def) => def.basic).flatMap((def) => def.provides))];
+    if (types.length) OPS.trainer(ctx, { steps: [{ op: "search", what: types.map((t) => `pokemon:${t}`).join("|"), n }] });
+  },
+  /** Tail Generator: Basic Lightning Energy from the discard pile, as many as all of their Pokémon have attached. */
+  discardAttachPer(ctx, { what, per, whoType = "" }) {
+    const n = COUNTS[per](ctx, "");
+    if (n > 0) OPS.trainer(ctx, { steps: [{ op: "attachPick", zone: "discard", what, to: "any", whoType, n, upTo: true, spread: true }] });
   },
   /** Inteleon's Bring Down: of every Pokémon in play but this one, the one with the least HP left is Knocked Out (a choice when tied). */
   koLeast(ctx) {
@@ -3678,6 +3845,39 @@ const BATCH_STD4 = [
   [/^Devolve 1 of your opponent's evolved Pokémon by putting the highest Stage Evolution card on it into your opponent's hand\.$/, () => [{ op: "devolveFoeAny", when: "after" }]],
 ];
 PATTERNS.push(...BATCH_STD4);
+
+/** The last Standard attacks, batch 5: the odd ones. */
+const BATCH_STD5 = [
+  [/^Discard a number of your Benched Pokémon up to the number of your opponent's Pokémon in play\. Then, for each ([A-Z][\w'.é-]*) you discarded in this way, choose 1 of your opponent's Pokémon and do (\d+) damage to it\. You can't choose the same Pokémon more than once\. This damage isn't affected by Weakness or Resistance\.$/, (m) => [{ op: "pay", when: "before", from: "bench", per: "foeInPlay" }, { op: "spread", when: "after", n: Number(m[2]), to: "any", countPer: "paid", countType: `name=${m[1]}`, noTyping: true }]],
+  [new RegExp(`^Choose Basic ${TYPE} Energy cards from your discard pile up to the amount of Energy attached to all of your opponent's Pokémon and attach them to your ${POKE_TYPE} Pokémon in any way you like\\.$`), (m) => [{ op: "discardAttachPer", when: "after", what: `basicEnergy:${m[1]}`, per: "foeAllEnergy", whoType: m[2] }]],
+  [/^Reveal any number of (.+?) from your hand, and this attack does (\d+) damage for each card you revealed in this way\.$/, (m) => {
+    const names = m[1].split(/, (?:and )?| and /).filter(Boolean);
+    return names.every((n) => /^[A-Z][\w'.é-]*$/.test(n)) && [{ op: "showHand", when: "before", what: names.map((n) => `name=${n}`).join("|") }, { op: "bonusPer", when: "before", how: "times", n: Number(m[2]), per: "paid" }];
+  }],
+  [/^Reveal any number of Pokémon from your hand, and this attack does (\d+) damage for each different type of Pokémon you revealed in this way\.$/, (m) => [{ op: "showHand", when: "before", what: "pokemon" }, { op: "bonusPer", when: "before", how: "times", n: Number(m[1]), per: "paidTypes" }]],
+  [/^Each player may attach up to (\d+) Basic Energy cards from their hand to their Pokémon in any way they like\. Your opponent does this first\.$/, (m) => [{ op: "bothAttach", when: "after", n: Number(m[1]) }]],
+  [/^Reveal the bottom (\d+) cards of your deck, and this attack does (\d+) damage for each Pokémon you find there that has the (.+?) attack\. Then, shuffle any revealed Pokémon back into your deck\. Discard the other cards\.$/, (m) => [{ op: "deckReveal", when: "before", from: "bottom", n: Number(m[1]), per: Number(m[2]), attack: m[3], back: "pokemon" }]],
+  [/^Reveal the top (\d+) cards of your deck\. This attack does (\d+) damage for each (Ancient|Future) card you find there\. Then, discard those \3 cards and shuffle the other cards back into your deck\.$/, (m) => [{ op: "deckReveal", when: "before", from: "top", n: Number(m[1]), per: Number(m[2]), what: `+${m[3]}`, back: "rest" }]],
+  [/^If (.+?), choose (\d+) of your opponent's Pokémon and quadruple the number of damage counters on each of them\.$/, (m) => {
+    const t = testOf(m[1]);
+    return t && [{ op: "when", when: "after", ...t, steps: [{ op: "timesCounters", count: Number(m[2]), times: 4 }] }];
+  }],
+  [/^Flip a coin\. If heads, search your deck for a Pokémon and switch it with this Pokémon\. Any attached cards, damage counters, Special Conditions, turns in play, and any other effects remain on the new Pokémon\. If you switched a Pokémon in this way, put this card into your deck\. Then, shuffle your deck\.$/, () => [{ op: "flip", when: "after", heads: [{ op: "dittoSwap" }] }]],
+  [/^Reveal the top (\d+) cards of your opponent's deck\. You may choose any number of Basic Pokémon you find there and put those Pokémon onto their Bench\. Your opponent shuffles the other cards back into their deck\.$/, (m) => fromDeck([{ op: "foeTopBench", n: Number(m[1]) }])],
+  [/^Look at 1 of your opponent's face-down Prize cards\.$/, () => [{ op: "peekPrize", when: "after" }]],
+  [/^Choose 1 of your opponent's Pokémon (\d+) times\. \(You can choose the same Pokémon more than once\.\) For each time you chose a Pokémon, do (\d+) damage to it\. This damage isn't affected by Weakness or Resistance\.$/, (m) => [{ op: "spread", when: "after", n: Number(m[2]), to: "any", count: Number(m[1]), again: true, noTyping: true }]],
+  [new RegExp(`^Choose up to (\\d+) of your ${POKE_TYPE} Pokémon\\. For each of those Pokémon, search your deck for a card that evolves from that Pokémon and put it onto that Pokémon to evolve it\\. Then, shuffle your deck\\.$`), (m) => [{ op: "evolveSome", when: "after", n: Number(m[1]), type: m[2] }]],
+  [/^Choose (\d+) of your opponent's Benched Pokémon\. If you do, shuffle all of your opponent's Benched Pokémon that you didn't choose, and all cards attached to those Pokémon, into their deck\.$/, (m) => [{ op: "shuffleFoeAllBut", when: "after", keep: Number(m[1]) }]],
+  [/^You may move any number of damage counters from your opponent's Benched Pokémon to their Active Pokémon\.$/, () => [{ op: "shiftCounters", when: "after", toActive: true }]],
+  [/^You may move any number of damage counters from your opponent's Pokémon to their other Pokémon in any way you like\.$/, () => [{ op: "shiftCounters", when: "after" }]],
+  [/^Search your deck for a Basic Pokémon and put it onto your Bench\. Then, shuffle your deck\. If you put any Pokémon onto your Bench in this way, move an Energy from this Pokémon to the new Benched Pokémon\.$/, () => [{ op: "inviteBench", when: "after" }]],
+  [/^Put this Pokémon and all attached cards into your deck\. If you do, search your deck for up to (\d+) cards and put them into your hand\. Then, shuffle your deck\.$/, (m) => [{ op: "selfAway", when: "after" }, ...fromDeck([{ op: "search", what: "any", n: Number(m[1]) }])]],
+  [/^Search your deck for up to (\d+) Pokémon that are the same type as any Basic Energy attached to this Pokémon, reveal them, and put them into your hand\. Then, shuffle your deck\.$/, (m) => [{ op: "searchEnergyTypes", when: "after", n: Number(m[1]) }]],
+  [new RegExp(`^Switch this Pokémon with 1 of your Benched Pokémon\\. If you do, attach up to (\\d+) Basic ${TYPE} Energy cards from your hand to this Pokémon\\.$`), (m) => [{ op: "switchSelf", when: "after", then: [{ op: "attachHand", what: `basicEnergy:${m[2]}`, n: Number(m[1]) }] }]],
+  [/^Attach up to (\d+) Energy cards from your opponent's discard pile to their Pokémon in any way you like\.$/, (m) => [{ op: "foeDiscardAttach", when: "after", n: Number(m[1]) }]],
+  [/^Move an Energy from 1 of your opponent's Pokémon to another of their Pokémon\.$/, () => [{ op: "shiftFoeEnergy", when: "after" }]],
+];
+PATTERNS.push(...BATCH_STD5);
 
 /** Basic Pokémon an old search puts onto the Bench, as trainers.js fits reads them, or "". */
 function benchWhat(words) {

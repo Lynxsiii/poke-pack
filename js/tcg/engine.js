@@ -2523,26 +2523,26 @@ const HANDLERS = {
       // A Trainer may name which Pokémon can take it (`spots`), and the zone it comes from (hand, discard pile).
       const to = waiting.effect.to;
       const heal = { ...(waiting.effect.heal ? { heal: waiting.effect.heal, ...(waiting.effect.each ? { each: true } : {}) } : {}), ...(waiting.effect.poison ? { poison: true } : {}), ...(waiting.effect.hurt ? { hurt: waiting.effect.hurt } : {}) };
-      const spots = (waiting.effect.spots || inPlay(state, player).map(([, s]) => s)).filter((s) => slotAt(state, player, s));
+      const spots = (waiting.effect.spots || inPlay(state, owner).map(([, s]) => s)).filter((s) => slotAt(state, owner, s));
       // "Attach up to 2 ... If you do": none attached, nothing after.
       if (!picked.length && waiting.effect.need) waiting.then = null;
       if (picked.length && !spots.length && waiting.effect.spot == null) pile.push(...picked);
-      else if (picked.length && waiting.effect.spot != null && slotAt(state, player, waiting.effect.spot)) {
-        const slot = slotAt(state, player, waiting.effect.spot);
+      else if (picked.length && waiting.effect.spot != null && slotAt(state, owner, waiting.effect.spot)) {
+        const slot = slotAt(state, owner, waiting.effect.spot);
         slot.energy.push(...picked);
-        for (const uid of picked) events.push({ t: "attach", p: player, uid, spot: waiting.effect.spot, from: "deck" });
-        if (heal.heal) healAt(state, player, waiting.effect.spot, heal.each ? heal.heal * picked.length : heal.heal, events);
+        for (const uid of picked) events.push({ t: "attach", p: owner, uid, spot: waiting.effect.spot, from: "deck" });
+        if (heal.heal) healAt(state, owner, waiting.effect.spot, heal.each ? heal.heal * picked.length : heal.heal, events);
         // "If you attached Energy to a Pokémon in this way, this Pokémon is now Poisoned."
-        if (heal.poison && addCondition(state, slot, "poisoned", defs)) events.push({ t: "condition", p: player, spot: waiting.effect.spot, kind: "poisoned" });
+        if (heal.poison && addCondition(state, slot, "poisoned", defs)) events.push({ t: "condition", p: owner, spot: waiting.effect.spot, kind: "poisoned" });
       } else if (picked.length && to === "each") {
         // "For each of your Benched Pokémon, ... attach it to that Pokémon": a different Pokémon for each card, one pick at a time.
-        askPick(state, { player, side: player, spots, left: 1, effect: { op: "attachHeld", uids: [picked[0]], chain: picked.slice(1), ...(waiting.zone !== "deck" ? { zone: waiting.zone } : {}), ...heal }, ...(waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) });
+        askPick(state, { player, side: owner, spots, left: 1, effect: { op: "attachHeld", uids: [picked[0]], chain: picked.slice(1), ...(waiting.zone !== "deck" ? { zone: waiting.zone } : {}), ...heal }, ...(waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) });
         waiting.then = null;
       } else if (picked.length && to === "spread") {
-        picked.forEach((uid, i) => askPick(state, { player, side: player, spots, left: 1, effect: { op: "attachHeld", uids: [uid], ...(waiting.zone !== "deck" ? { zone: waiting.zone } : {}), ...heal }, ...(i === picked.length - 1 && waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) }));
+        picked.forEach((uid, i) => askPick(state, { player, side: owner, spots, left: 1, effect: { op: "attachHeld", uids: [uid], ...(waiting.zone !== "deck" ? { zone: waiting.zone } : {}), ...heal }, ...(i === picked.length - 1 && waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) }));
         waiting.then = null;
       } else if (picked.length) {
-        askPick(state, { player, side: player, spots, left: 1, effect: { op: "attachHeld", uids: picked, ...(waiting.zone !== "deck" ? { zone: waiting.zone } : {}), ...heal }, ...(waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) });
+        askPick(state, { player, side: owner, spots, left: 1, effect: { op: "attachHeld", uids: picked, ...(waiting.zone !== "deck" ? { zone: waiting.zone } : {}), ...heal }, ...(waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) });
         waiting.then = null;
       } else if (!picked.length && waiting.zone === "deck") events.push({ t: "search", p: player, uids: [], from: waiting.zone, to: "hand" });
       // Cards looked at from the top and not taken go to the hand (the Ability says so), else the deck is shuffled.
@@ -2554,6 +2554,20 @@ const HANDLERS = {
     } else if (op === "fanEnergy") {
       // Handheld Fan: the Energy chosen goes to the Benched Pokémon its holder's opponent picks.
       if (picked.length && side.bench.length) askPick(state, { player, side: owner, spots: side.bench.map((_, i) => i), left: 1, effect: { op: "moveEnergyTo", from: waiting.effect.from, uid: picked[0] } });
+    } else if (op === "swapSelf") {
+      // Ditto's Surprisingly Transform: the Pokémon from the deck takes this one's place, all on it kept; this card goes into the deck.
+      const at = inPlay(state, player).find(([slot]) => slot.uid === waiting.effect.uid);
+      if (present.length && at) {
+        side.deck.push(at[0].uid);
+        at[0].uid = present[0];
+        events.push({ t: "form", p: player, uid: present[0], spot: at[1] });
+      } else pile.push(...present);
+    } else if (op === "revealFor") {
+      // "Reveal any number of ... from your hand, and this attack does 60 damage for each card you revealed": shown, kept, counted.
+      side.hand.push(...present);
+      if (picked.length) events.push({ t: "reveal-hand", p: owner, uids: picked });
+      const fx = (waiting.then || []).find((step) => step.op === "fx" && step.hit);
+      if (fx) fx.hit = { ...fx.hit, paid: [...(fx.hit.paid || []), ...picked] };
     } else if (op === "swapPlay") {
       // Ogre's Mask: the card chosen from the discard pile, then the Pokémon in play it takes the place of.
       const spots = inPlay(state, player).filter(([slot]) => fits(defOf(state, slot.uid, defs), waiting.effect.what)).map(([, s]) => s);
@@ -2641,6 +2655,14 @@ const HANDLERS = {
         if (waiting.zone === "hand" || waiting.zone === "discard") {
           if (lost) toLost(state, player, [uid], events);
           else side.discard.push(uid);
+          continue;
+        }
+        // Dragon Launcher: "Discard a number of your Benched Pokémon": the Pokémon and all attached to it.
+        const mon = side.bench.findIndex((slot) => slot.uid === uid);
+        if (mon >= 0) {
+          discardSlot(state, player, side.bench[mon], defs);
+          side.bench.splice(mon, 1);
+          events.push({ t: "bounce", p: player, spot: mon, uid, discard: true });
           continue;
         }
         const at = inPlay(state, player).find(([slot]) => slot.energy.includes(uid) || toolsIn(slot).includes(uid));
@@ -3201,6 +3223,13 @@ function applyPick(state, waiting, spot, defs, events) {
     if (spot === ACTIVE) side.active = null;
     else side.bench.splice(spot, 1);
     events.push({ t: "bounce", p, spot, uid: slot.uid });
+  } else if (effect.op === "timesCounters") {
+    // Spiritual End: "quadruple the number of damage counters on each of them".
+    const slot = slotAt(state, p, spot);
+    if (countersStay(state) || !slot.damage) return;
+    const n = slot.damage * (effect.times - 1);
+    slot.damage += n;
+    events.push({ t: "damage", p, spot, n, why: "counters" });
   } else if (effect.op === "discardMon") {
     // "Discard 1 of your opponent's Pokémon and all cards attached to it": not Knocked Out, so no Prize cards for it.
     const slot = slotAt(state, p, spot);
@@ -3232,7 +3261,7 @@ function applyPick(state, waiting, spot, defs, events) {
     if (!energyAlike(state, cards, defs)) return void ask(state, waiting, { player: waiting.player, owner: p, zone: "play", what: "energy", uids: cards, min: 1, max: 1, effect: { op: "carryEnergy", from: spot, spots } });
     // Only one place it can go (onto the Active Pokémon): no need to ask.
     if (spots.length === 1) return moveEnergy(state, p, spot, spots[0], uid, events);
-    follow(state, waiting, { player: p, side: p, spots, left: 1, effect: { op: "moveEnergyTo", from: spot, uid } });
+    follow(state, waiting, { player: waiting.player, side: p, spots, left: 1, effect: { op: "moveEnergyTo", from: spot, uid } });
   } else if (effect.op === "swapPlay") {
     // "Any attached cards, damage counters, Special Conditions, turns in play, and any other effects remain on the new Pokémon."
     const slot = slotAt(state, p, spot);
