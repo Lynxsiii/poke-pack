@@ -880,7 +880,7 @@ export function initGrading(deps) {
       </header>
       ${gateNoticeHTML(lock())}
       <div class="gd-pick-tools">
-        <label class="gd-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg><input type="search" inputmode="search" placeholder="Search your cards" aria-label="Search your cards" autocomplete="off" enterkeyhint="search" value="${esc(pickQuery)}" data-gd-search /></label>
+        <label class="gd-search"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-search"/></svg><input type="search" inputmode="search" placeholder="Search your cards" aria-label="Search your cards" autocomplete="off" enterkeyhint="search" value="${esc(pickQuery)}" data-gd-search /></label>
         <span class="gd-words" role="group" aria-label="Sort">
           <button type="button" data-gd-sort="value" class="rt-word ${pickSort === "value" ? "on" : ""}">Highest value</button>
           <button type="button" data-gd-sort="name" class="rt-word ${pickSort === "name" ? "on" : ""}">Name</button>
@@ -1556,7 +1556,7 @@ export function initGrading(deps) {
       let answered = false;
       dlg.innerHTML = `<div class="gear-sheet-body gd-sheet-body">
         <button type="button" class="gear-sheet-close" data-gd-close aria-label="Close">
-          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="m6 6 12 12M18 6 6 18"/></svg>
         </button>
         <h2>${title}</h2>
         <p class="gd-sheet-copy">${body}</p>
