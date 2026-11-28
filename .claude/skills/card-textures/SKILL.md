@@ -245,6 +245,17 @@ cure"). The surface gloss throws a soft highlight.
 
 ## Pitfalls
 
+- **A Scarlet & Violet foil must not recolour the picture, and a TCG Live map is not zero over the Pokémon.** The SV holo
+  rare, Illustration Rare and Double Rare recipes laid a saturated spectrum with `hard-light`, `color-dodge` or `multiply`
+  over the whole map: a rainbow tint over the art box, wide rainbow bars, sparkle stars on the Pokémon (2026-11-28 site
+  review). Two causes. One: the spectrum had no neutral value, so it changed every pixel. Build the layer so that it is
+  50% grey away from the light (`background-blend-mode: screen, multiply, …` over [grey, a pool that ends in black, the
+  pattern, a pale spectrum]) and blend it with `overlay`: grey is overlay's identity, so nothing moves outside the pool.
+  Two: Live maps carry about 13% alpha over the Pokémon and the text box; list `var(--foil-map)` two or three times in
+  the mask (`intersect`) to square or cube it, which takes that floor to 2% or less and keeps the foil areas.
+  The cosmos promos had a third fault: glitter dust is not cosmos. Cosmos is round planets of several sizes in the art
+  background (`make_cosmos_orbs.py`), and the Pokémon is cut out of the map (`make_cosmos_figure_maps.py`,
+  `make_sv_ex_promo_maps.py` for an ex promo Live has no map for).
 - **A window holo lights round the lamp, not over the window.** The WotC Team Rocket, Legendary Collection, Gym and promo
   recipes screened a spectrum, a silver floor and a 0.55 rest sheen over the whole foil map, so every black or navy
   background read as a blue-lavender or grey haze, at rest too (2026-11-28 site review: 30 of 40 bad). A real WotC holo
