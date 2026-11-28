@@ -132,6 +132,7 @@
     <link rel="stylesheet" href="css/pages/wishlist.css?v=1" />
     <link rel="stylesheet" href="css/rotom.css?v=13" />
     <link rel="stylesheet" href="css/themes.css?v=3" />
+    <link rel="stylesheet" href="css/pages/phone.css?v=1" />
     <!-- Holofoil, derived from pokemon-cards-css (GPL-3). Loaded after app.css
          so its body.fx-holo rules win; Settings → Card effects switches to
          body.fx-classic, which leaves the original system painting. -->
@@ -297,6 +298,7 @@
     <link rel="modulepreload" href="js/money.js?v=2" />
     <link rel="modulepreload" href="js/cosmetics.js" />
     <link rel="modulepreload" href="js/palette.js" />
+    <link rel="modulepreload" href="js/avatar-fit.js" />
     <link rel="modulepreload" href="js/profile-editor.js" />
     <link rel="modulepreload" href="js/card-picker.js?v=3" />
     <link rel="modulepreload" href="js/card-picker-rules.js?v=1" />
@@ -314,7 +316,7 @@
     <link rel="modulepreload" href="js/mastery-banner.js" />
     <link rel="modulepreload" href="js/set-chase.js" />
     <link rel="modulepreload" href="js/social-hub.js?v=3" />
-    <link rel="modulepreload" href="js/rankings.js?v=6" />
+    <link rel="modulepreload" href="js/rankings.js?v=7" />
     <link rel="modulepreload" href="js/rankings-rules.js" />
     <link rel="modulepreload" href="js/gate-notice.js" />
     <link rel="modulepreload" href="js/slab.js?v=3" />
@@ -739,7 +741,7 @@
 
       <!-- The collection (js/app.js renderCollection): the Cards | Sealed | Binder strip, the title, the set's HUD box (the set name opens the set picker; the Found bar, the count, the worth), the show and rarity words, search and sort, then every card in a slot -->
       <section id="view-collection" class="hidden bulk-page">
-        <div id="collection-tabs"></div>
+        <div id="collection-tabs" class="rt-still"></div>
         <header class="coll-head">
           <div class="coll-title">
             <h1>Collection</h1>
@@ -871,6 +873,8 @@
         </div>
         <div id="settings-body"></div>
       </section>
+      <!-- On phones the casino's free-play line sits under the games (css/pages/phone.css). -->
+      <p class="cs-free cs-free-foot">Free play with virtual coins. Nothing here costs real money, can be cashed out or wins a prize. <a href="/terms">Terms</a></p>
     </main>
 
     <div class="overlay hidden rt-dark" id="overlay" role="dialog" aria-modal="true" aria-label="Opening a booster pack">
@@ -1050,7 +1054,8 @@
       </nav>
     </footer>
     <script type="module" src="js/etch.js?v=1"></script>
-    <script type="module" src="js/app.js?v=416"></script>
+    <script type="module" src="js/app.js?v=417"></script>
     <script type="module" src="js/rotom.js?v=3"></script>
+    <script type="module" src="js/phone-layout.js?v=1"></script>
   </body>
 </html>

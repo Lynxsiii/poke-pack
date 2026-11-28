@@ -47,7 +47,7 @@ import { initRadio } from "./radio.js?v=5";
 import { createTear } from "./tear.js?v=2";
 import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends, paintLounge } from "./social.js?v=7";
 import { hubHeadHtml, socialTabFromPath } from "./social-hub.js?v=3";
-import { renderRankings, standingLine } from "./rankings.js?v=6";
+import { renderRankings, standingLine } from "./rankings.js?v=7";
 import { frameHtml, levelBadgeHtml, framePicksHtml, userFrame } from "./level-badge.js";
 import { BANNER_MOTION_LEVELS, BANNER_MOTION_NAMES, frameInfo } from "./levels.js";
 import { roomLine } from "./gate-notice.js";
@@ -3269,7 +3269,7 @@ function renderCatalog() {
       : "";
     top.innerHTML = `${back}
       <div class="cat-tabs" role="tablist" aria-label="Kinds of packs">${tabs}</div>
-      <p class="catalog-summary">${esc(cat.note)}${cat.id === "booster" || cat.id === "japanese" ? "" : " Extras have a collection page and no mastery."}</p>
+      <p class="catalog-summary${cat.id === "booster" || cat.id === "japanese" ? " is-plain" : ""}">${esc(cat.note)}${cat.id === "booster" || cat.id === "japanese" ? "" : " Extras have a collection page and no mastery."}</p>
       ${jumps}`;
   }
   els.catalogEras.innerHTML = blocks;
