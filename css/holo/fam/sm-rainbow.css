@@ -121,7 +121,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-rain
    overlaid (dark ink and text keep), on the etch's crests only (the etch twice in the mask: lines, not a milk). */
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-rainbow.fam-sm-rainbow.fam-sm-rainbow.fam-sm-rainbow.foil-ir .glare {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.8) 18%, rgba(255, 255, 255, 0.3) 42%, rgba(255, 255, 255, 0) 68%);
+    rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.7) 15%, rgba(255, 255, 255, 0.2) 36%, rgba(255, 255, 255, 0) 56%);
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -140,11 +140,20 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-rain
   mask-position: center, center, var(--smr-etch-pos), var(--smr-etch-pos);
   -webkit-mask-repeat: no-repeat, no-repeat, var(--smr-etch-repeat), var(--smr-etch-repeat);
   mask-repeat: no-repeat, no-repeat, var(--smr-etch-repeat), var(--smr-etch-repeat);
-  opacity: calc(var(--card-opacity) * 0.62);
+  opacity: calc(var(--card-opacity) * var(--smrb-glint, 0.48));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-rainbow.fam-sm-rainbow.fam-sm-rainbow.fam-sm-rainbow.foil-ir .glare::after {
   background: none;
   -webkit-mask-image: none;
   mask-image: none;
   opacity: 0;
+}
+
+/* ---- A photographed print (the Japanese scans, `smrb-photo`): the photo already shows the foil's grain, so the
+   relief and the glint on top doubled it into a speckle (holo_check: fine grain x1.7). Quieter. ---------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-rainbow.fam-sm-rainbow.fam-sm-rainbow.fam-sm-rainbow.foil-ir.smrb-photo {
+  --smrb-rest: 0.3;
+  --smrb-lit: 0.55;
+  --smrb-glint: 0.2;
+  --shine-glit: 0.1;
 }
