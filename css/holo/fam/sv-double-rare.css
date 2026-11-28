@@ -139,8 +139,11 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-double-rare.fam-sv-double-rare.fam-sv-d
   background-repeat: repeat;
   background-blend-mode: normal;
   filter: hue-rotate(calc((var(--pointer-from-left) * 1.3 + var(--pointer-from-top) * 0.9) * 360deg))
-    brightness(calc(1 + var(--pointer-from-center) * 0.5)) saturate(1.8);
-  opacity: calc(var(--card-opacity) * var(--foil-strength, 1));
+    brightness(calc(1 + var(--pointer-from-center) * 0.5)) saturate(1);
+  /* 2026-11-28: was full opacity, saturate 1.8, two thirds strength across the whole card: coloured stars sat on every
+     Pokémon's face (per-card review, 39 of 39 Japanese Double Rares; Noah: "the sparkles or dots on the holo take away
+     from the texture"). Now a clear coat that catches the light near the lamp only. */
+  opacity: calc(var(--card-opacity) * 0.5 * var(--foil-strength, 1));
   --svdr-patches:
     radial-gradient(circle at calc(18% + var(--seed-x, 0.5) * 30%) calc(22% + var(--seed-y, 0.5) * 20%),
       #000 0%, #000 9%, transparent 14%),
@@ -150,11 +153,11 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-double-rare.fam-sv-double-rare.fam-sv-d
       #000 0%, #000 4%, transparent 9%),
     linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
   -webkit-mask-image: var(--art),
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.9) 35%, rgba(0, 0, 0, 0.35) 90%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.6) 22%, rgba(0, 0, 0, 0) 55%),
     var(--svdr-patches);
   -webkit-mask-composite: source-in, source-in, source-over, source-over, source-over, source-over;
   mask-image: var(--art),
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.9) 35%, rgba(0, 0, 0, 0.35) 90%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.6) 22%, rgba(0, 0, 0, 0) 55%),
     var(--svdr-patches);
   mask-composite: intersect, intersect, add, add, add, add;
   -webkit-mask-size: contain, cover, cover, cover, cover, cover;
