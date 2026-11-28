@@ -1,0 +1,266 @@
+/* FAIRNESS (js/fair-page.js) and the "Odds and fairness" sheet every game shows (js/fair-sheet.js).
+   Rotom look, theme tokens only (DESIGN.md): boxes hold facts, slanted words are the tabs, the one yellow key rotates.
+   Seeds and hashes are the only monospace on the site: 64 hex characters have to line up to be compared by eye.
+   Motion is transform and opacity only. */
+
+.fr-page, .fr-sheet {
+  --fr-mono: ui-monospace, "SF Mono", "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+}
+.fr-page { max-width: 760px; }
+
+/* ---- Tabs ------------------------------------------------------------------------ */
+.fr-tabs { display: flex; gap: 4px; margin: 0 0 18px -4px; }
+.fr-tabs .rt-word { min-height: 40px; padding: 4px 16px 5px; font-size: 17px; white-space: nowrap; }
+.fr-tabs .rt-word:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 2px; }
+
+.fr-panel { display: grid; gap: 16px; min-width: 0; }
+.fr-panel > * { min-width: 0; margin: 0; }
+.fr-panel.is-fresh > * { animation: fr-rise 0.36s var(--ease-out) backwards; }
+.fr-panel.is-fresh > :nth-child(2) { animation-delay: 0.05s; }
+.fr-panel.is-fresh > :nth-child(3) { animation-delay: 0.1s; }
+.fr-panel.is-fresh > :nth-child(n + 4) { animation-delay: 0.15s; }
+@keyframes fr-rise { from { opacity: 0; transform: translateY(12px); } }
+
+/* ---- Words ----------------------------------------------------------------------- */
+.fr-box { display: grid; gap: 14px; padding: 16px; }
+.fr-box > * { min-width: 0; margin: 0; }
+.fr-h { margin: 0; color: var(--k); font: italic 800 22px/1.05 var(--font-xc); letter-spacing: -0.015em; }
+.fr-lede { margin: 0; max-width: 62ch; color: var(--k-2); font-size: 14.5px; font-weight: 500; line-height: 1.5; }
+.fr-fine { margin: 0; max-width: 62ch; color: var(--k-2); font-size: 13.5px; font-weight: 500; line-height: 1.45; }
+.fr-k { color: var(--k-2); font: 700 13px/1.3 var(--font-h); }
+.fr-inline { color: var(--k); font: 600 13px var(--fr-mono); word-break: break-all; }
+.fr-link {
+  justify-self: start; display: inline-flex; align-items: center; min-height: 32px; padding: 0; border: 0; background: none;
+  color: var(--k); font: 700 14.5px/1.25 var(--font-h); text-align: left; cursor: pointer;
+  text-decoration: underline; text-decoration-color: var(--cy-2); text-decoration-thickness: 2px; text-underline-offset: 3px;
+}
+.casino-page a.fr-link { text-decoration: underline; text-decoration-color: var(--cy-2); text-decoration-thickness: 2px; }
+.fr-link:hover { color: var(--cy-2); }
+.fr-link:focus-visible, .fr-copy:focus-visible, .fr-x:focus-visible, .fr-open:focus-visible, .fr-step-keys button:focus-visible {
+  outline: 3px solid var(--cy-2); outline-offset: 2px; border-radius: 4px;
+}
+
+/* ---- A seed or a hash: its name, the value, a copy key ----------------------------- */
+.fr-seed {
+  display: grid; grid-template-columns: minmax(0, 1fr) 40px; column-gap: 8px; row-gap: 3px; align-items: start;
+  padding-top: 12px; border-top: 2px solid var(--rule);
+}
+.fr-seed .fr-k { grid-column: 1; }
+.fr-hex {
+  grid-column: 1; color: var(--k); font: 500 13px/1.5 var(--fr-mono); letter-spacing: 0;
+  word-break: break-all; overflow-wrap: anywhere; user-select: all; -webkit-user-select: all;
+}
+.fr-hex.is-text { font-weight: 700; font-size: 15px; }
+.fr-seed.is-fig { grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; }
+.fr-seed.is-fig b { font: 700 20px/1 var(--font-h); font-variant-numeric: tabular-nums; }
+.fr-copy {
+  grid-column: 2; grid-row: 1 / span 2; align-self: center; display: grid; place-items: center; width: 40px; height: 40px; padding: 0;
+  border: 0; border-radius: 6px; background: none; color: var(--k-2); cursor: pointer;
+  transition: transform 0.1s var(--ease-out), color 0.12s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.fr-copy .bt-icon { width: 21px; height: 21px; stroke-width: 2; }
+.fr-copy:hover { color: var(--k); }
+.fr-copy:active { transform: scale(0.88); }
+.fr-copy.is-done { color: var(--k); }
+.fr-copy.is-done .bt-icon { stroke-width: 3; animation: fr-pop 0.26s var(--ease-pop); }
+@keyframes fr-pop { from { transform: scale(0.4); opacity: 0; } }
+
+/* ---- Rotate ---------------------------------------------------------------------- */
+.fr-rotate { display: grid; gap: 10px; padding-top: 14px; border-top: var(--line-w) solid var(--k); }
+.fr-rotate .solid { justify-self: stretch; }
+.fr-field { display: grid; gap: 6px; min-width: 0; }
+.fr-input {
+  width: 100%; min-width: 0; height: 46px; margin: 0; padding: 0 12px; border: var(--line-w) solid var(--k); border-radius: 6px;
+  background: var(--box); color: var(--k); font: 600 16px var(--font-h); font-variant-numeric: tabular-nums;
+  -webkit-appearance: none; appearance: none;
+}
+.fr-input::placeholder { color: var(--k-3); font-weight: 500; opacity: 1; }
+.fr-input:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 2px; }
+.fr-input[aria-invalid="true"] { border-color: var(--hp-low); }
+.fr-area { height: auto; min-height: 66px; padding: 9px 12px; line-height: 1.45; resize: vertical; }
+/* 16px keeps a phone from zooming into the field; the seed still wraps in two lines. */
+.fr-mono { font: 500 16px/1.45 var(--fr-mono); letter-spacing: -0.02em; word-break: break-all; }
+.fr-msg { margin: 0; color: var(--k); font-size: 14px; font-weight: 700; line-height: 1.4; }
+.fr-msg:empty { display: none; }
+.fr-msg::before {
+  content: ""; display: inline-block; width: 10px; height: 10px; margin-right: 8px; border: 2px solid var(--k); border-radius: 2px;
+  background: var(--hp-low); vertical-align: 0;
+}
+
+/* The seed a rotation just revealed: the page's news, on the yellow edge. */
+.fr-box.fr-revealed { border-left: 10px solid var(--yel); }
+.fr-revealed .fr-seed { padding-top: 0; border-top: 0; }
+.fr-panel.is-fresh > .fr-revealed { animation: fr-land 0.42s var(--ease-pop) backwards; }
+@keyframes fr-land { from { opacity: 0; transform: translateY(-10px) scale(0.97); } }
+
+/* ---- Checks: a green tick or a red cross, then a full sentence --------------------- */
+.fr-checks { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.fr-checks li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 10px; align-items: start; color: var(--k); font-size: 14.5px; font-weight: 700; line-height: 1.4; }
+.fr-checks .bt-icon {
+  width: 22px; height: 22px; margin-top: -1px; padding: 3px; border: 2px solid var(--k0); border-radius: 4px;
+  background: var(--hp); color: var(--k0); stroke-width: 3.2;
+}
+.fr-checks .is-bad .bt-icon { background: var(--hp-low); color: var(--w0); }
+.fr-checks .is-note { color: var(--k-2); font-weight: 500; }
+.fr-checks .is-note .bt-icon { border-color: var(--rule-2); background: none; color: var(--k-3); }
+
+/* ---- Past seeds and the games' odds: lists that open ------------------------------- */
+.fr-pasts .cs-h { padding-top: 12px; }
+.fr-past-list, .fr-games { display: grid; gap: 8px; }
+.fr-past, .fr-game { border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); color: var(--k); }
+.fr-past summary, .fr-game summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 58px; padding: 8px 16px;
+  cursor: pointer; list-style: none; -webkit-tap-highlight-color: transparent;
+}
+.fr-past summary::-webkit-details-marker, .fr-game summary::-webkit-details-marker { display: none; }
+.fr-past summary::after, .fr-game summary::after {
+  content: ""; flex: none; width: 10px; height: 10px; margin-right: 2px;
+  border-right: 3px solid var(--k); border-bottom: 3px solid var(--k); transform: translateY(-3px) rotate(45deg);
+  transition: transform 0.2s var(--ease-out);
+}
+.fr-past[open] summary::after, .fr-game[open] summary::after { transform: translateY(3px) rotate(-135deg); }
+.fr-past summary:focus-visible, .fr-game summary:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 2px; border-radius: 4px; }
+.fr-past-main { display: grid; gap: 2px; min-width: 0; }
+.fr-past-main b { font: 600 17px/1.2 var(--font-h); }
+.fr-game .fr-past-main b { font: italic 800 20px/1.1 var(--font-xc); letter-spacing: -0.015em; }
+.fr-past-main small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--k-2); font: 700 12.5px/1.3 var(--font); }
+.fr-past-body, .fr-game-body { display: grid; gap: 12px; padding: 0 16px 14px; }
+.fr-past-body > *, .fr-game-body > * { min-width: 0; }
+.fr-past[open] .fr-past-body, .fr-game[open] .fr-game-body { animation: fr-rise 0.26s var(--ease-out); }
+.fr-game-body { padding-top: 14px; border-top: 2px solid var(--rule); }
+
+/* ---- Bets -------------------------------------------------------------------------- */
+.fr-bets-note { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; }
+.fr-roll { border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); overflow: hidden; }
+.fr-roll[data-new] { animation: fr-rise 0.34s var(--ease-out) backwards; animation-delay: calc(var(--i, 0) * 0.03s); }
+.fr-roll > .fr-roll-row { min-height: 60px; border: 0; border-radius: 0; background: none; }
+.fr-roll-row .rt-row-lab { width: 94px; min-width: 0; }
+.fr-roll-row .rt-row-name { padding: 8px 0; font-size: 15.5px; line-height: 1.2; overflow-wrap: anywhere; }
+.fr-roll-row .rt-row-name small { font-size: 12.5px; }
+.fr-roll-row .rt-row-val { padding: 0 10px 0 8px; }
+.fr-roll-row .ghost.sm { min-width: 76px; }
+.fr-sealed { justify-self: end; max-width: 78px; min-height: 40px; color: var(--k-2); font-size: 13px; text-align: right; }
+.fr-proof { display: grid; gap: 12px; padding: 14px 14px 12px; border-top: 2px solid var(--rule); animation: fr-rise 0.26s var(--ease-out); }
+
+/* The 25 tiles, small: where the Voltorb were. */
+.fr-board { display: grid; grid-template-columns: repeat(5, 22px); gap: 3px; width: max-content; }
+.fr-board i { display: block; width: 22px; height: 22px; border: 2px solid var(--rule-2); border-radius: 3px; }
+.fr-board i.is-volt {
+  border-color: var(--k0);
+  background: radial-gradient(circle at 50% 50%, var(--w0) 0 2.5px, var(--k0) 2.5px 4px, transparent 4px), linear-gradient(var(--hp-low) 0 50%, var(--w0) 50%);
+}
+
+/* ---- The verify tool ---------------------------------------------------------------- */
+.fr-loaded.rt-skel { height: 64px; }
+.fr-loaded-note b { color: var(--k); font-weight: 800; }
+.fr-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 12px; align-items: end; }
+.fr-cols .is-wide { grid-column: 1 / -1; }
+.fr-select { position: relative; display: block; }
+.fr-select select { padding-right: 40px; cursor: pointer; }
+.fr-select::after {
+  content: ""; position: absolute; right: 17px; top: 50%; width: 9px; height: 9px; pointer-events: none;
+  border-right: 3px solid var(--k); border-bottom: 3px solid var(--k); transform: translateY(-70%) rotate(45deg);
+}
+.fr-select option { background: var(--box); color: var(--k); }
+.fr-out { display: grid; gap: 12px; padding-top: 14px; border-top: var(--line-w) solid var(--k); }
+.fr-out > * { min-width: 0; margin: 0; }
+.fr-out-fig { color: var(--k); font: italic 800 26px/1.1 var(--font-xc); letter-spacing: -0.02em; overflow-wrap: anywhere; }
+.fr-wait { color: var(--k-2); }
+.fr-out .fr-seed { padding-top: 12px; }
+
+/* ---- Odds --------------------------------------------------------------------------- */
+.fr-odds { display: grid; gap: 14px; min-width: 0; }
+.fr-odds > * { min-width: 0; margin: 0; }
+.fr-how { color: var(--k); font-size: 14.5px; font-weight: 500; line-height: 1.5; max-width: 62ch; }
+.fr-facts { display: grid; margin: 0; }
+.fr-facts > div { display: flex; align-items: baseline; justify-content: space-between; gap: 6px 16px; padding: 9px 0; border-top: 2px solid var(--rule); }
+.fr-facts > .is-wide { display: grid; justify-content: stretch; }
+.fr-facts dt { flex: none; color: var(--k-2); font: 700 13px/1.3 var(--font-h); }
+.fr-facts dd { margin: 0; min-width: 0; color: var(--k); font: 600 15.5px/1.3 var(--font-h); text-align: right; font-variant-numeric: tabular-nums; }
+.fr-facts > .is-wide dd { font: 500 14.5px/1.5 var(--font); text-align: left; }
+
+.fr-grass { display: grid; gap: 10px; min-width: 0; }
+.fr-step { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 12px; border-top: 2px solid var(--rule); }
+.fr-step-lab { font: 700 15px/1.2 var(--font-h); color: var(--k); }
+.fr-step-keys { display: flex; align-items: center; gap: 4px; }
+.fr-step-keys b { min-width: 40px; text-align: center; font: 700 22px/1 var(--font-h); font-variant-numeric: tabular-nums; }
+.fr-step-keys button {
+  display: grid; place-items: center; width: 44px; height: 40px; padding: 0; border: var(--line-w) solid var(--k); border-bottom-width: 4.5px; border-radius: 6px;
+  background: var(--box); color: var(--k); cursor: pointer; transition: transform 0.1s var(--ease-out);
+  -webkit-tap-highlight-color: transparent;
+}
+.fr-step-keys button .bt-icon { width: 20px; height: 20px; stroke-width: 3; }
+.fr-step-keys button:active:not(:disabled) { transform: translateY(2px); }
+.fr-step-keys button:disabled { border-color: var(--rule-2); color: var(--k-3); cursor: default; }
+.fr-grass-rows { display: grid; gap: 6px; min-width: 0; }
+
+.fr-table { width: 100%; border-collapse: collapse; table-layout: fixed; font-variant-numeric: tabular-nums; }
+.fr-table th, .fr-table td { padding: 7px 0; border-top: 2px solid var(--rule); text-align: right; vertical-align: middle; }
+.fr-table thead th { padding: 0 0 6px; border-top: 0; color: var(--k-2); font: 700 12.5px/1.3 var(--font-h); }
+.fr-table th:first-child { width: 26%; text-align: left; }
+.fr-table tbody th { color: var(--k); font: 700 16px/1.2 var(--font-h); }
+.fr-table td { color: var(--k); font: 600 15px/1.2 var(--font-h); overflow-wrap: anywhere; }
+.fr-table td:nth-child(2) { width: 46%; white-space: nowrap; }
+/* How likely, as a short HP bar beside the figure: an ink track, the fill scaled from the left. */
+.fr-bar { display: inline-block; width: 46px; height: 10px; margin-left: 8px; padding: 2px; border-radius: 5px; background: var(--k); vertical-align: 0; overflow: hidden; }
+.fr-bar i { display: block; height: 100%; border-radius: 3px; background: var(--hp); transform: scaleX(var(--f, 0)); transform-origin: 0 50%; transition: transform 0.3s var(--ease-out); }
+
+/* ---- The button each game shows, and its sheet -------------------------------------- */
+.fr-open {
+  display: inline-flex; align-items: center; gap: 7px; min-height: 40px; padding: 0 4px 0 0; border: 0; background: none;
+  color: var(--k); font: 700 14.5px/1.2 var(--font-h); cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.fr-open span { text-decoration: underline; text-decoration-color: var(--cy-2); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+.fr-open .bt-icon { flex: none; width: 20px; height: 20px; color: var(--k); transition: transform 0.16s var(--ease-pop); }
+.fr-open:hover span { color: var(--cy-2); }
+.fr-open:hover .bt-icon { transform: scale(1.12) rotate(-6deg); }
+
+dialog.fr-sheet {
+  position: fixed; inset: auto 0 0 0; width: 100%; max-width: none; max-height: min(86vh, 86dvh); margin: 0; padding: 0;
+  border-bottom: 0 !important; border-radius: 10px 10px 0 0 !important; box-shadow: none;
+  background: var(--box); color: var(--k); overflow: hidden;
+}
+dialog.fr-sheet[open] { display: flex; flex-direction: column; animation: fr-sheet-in 0.26s var(--ease-out); }
+dialog.fr-sheet::backdrop { background: rgb(20 23 27 / 0.62); animation: fr-fade 0.2s ease; }
+@keyframes fr-sheet-in { from { transform: translateY(40px); opacity: 0; } }
+@keyframes fr-fade { from { opacity: 0; } }
+.fr-sheet-head { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 12px 12px 18px; border-bottom: var(--line-w) solid var(--k); }
+.fr-sheet-head h2 { margin: 0; font: italic 800 26px/1 var(--font-xc); letter-spacing: -0.02em; }
+.fr-x {
+  display: grid; place-items: center; flex: none; width: 44px; height: 44px; padding: 0;
+  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); color: var(--k); cursor: pointer;
+  transition: transform 0.1s var(--ease-out);
+}
+.fr-x .bt-icon { width: 22px; height: 22px; stroke-width: 2.6; }
+.fr-x:active { transform: scale(0.92); }
+.fr-sheet-body { flex: 1 1 auto; min-height: 0; display: grid; gap: 14px; align-content: start; padding: 16px 18px 18px; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+.fr-sheet-body > * { min-width: 0; margin: 0; }
+.fr-seedline { padding-top: 12px; border-top: 2px solid var(--rule); color: var(--k-2); font-size: 13.5px; font-weight: 500; line-height: 1.45; }
+.fr-sheet-foot { flex: none; display: grid; padding: 12px 18px calc(14px + env(safe-area-inset-bottom)); border-top: var(--line-w) solid var(--k); background: var(--box); }
+.fr-sheet-foot .ghost { text-decoration: none; }
+@media (min-width: 720px) {
+  dialog.fr-sheet { inset: 0; width: min(520px, calc(100% - 40px)); max-height: min(84vh, 760px); margin: auto; border-bottom: var(--line-w) solid var(--k) !important; border-radius: 10px !important; box-shadow: var(--drop); }
+}
+
+/* ---- Wider screens ------------------------------------------------------------------- */
+@media (min-width: 720px) {
+  .fr-box { padding: 20px; }
+  .fr-rotate { grid-template-columns: minmax(0, 1fr) auto; align-items: end; }
+  .fr-rotate .fr-msg { grid-column: 1 / -1; grid-row: 2; }
+  .fr-rotate .solid { grid-column: 2; grid-row: 1; }
+  .fr-hex { font-size: 14px; }
+  .fr-sealed { max-width: none; }
+}
+/* The smallest phones: the label column gives the words more room. */
+@media (max-width: 380px) {
+  .fr-tabs .rt-word { padding-inline: 13px; }
+  .fr-roll-row .rt-row-lab { width: 86px; padding-left: 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fr-panel.is-fresh > *, .fr-roll[data-new], .fr-proof, .fr-past-body, .fr-game-body, dialog.fr-sheet[open], dialog.fr-sheet::backdrop, .fr-copy.is-done .bt-icon { animation: none !important; }
+  .fr-bar i, .fr-open .bt-icon { transition: none; }
+}
+body.no-motion .fr-panel.is-fresh > *, body.no-motion .fr-roll[data-new], body.no-motion .fr-proof, body.no-motion .fr-past-body, body.no-motion .fr-game-body,
+body.no-motion dialog.fr-sheet[open], body.no-motion dialog.fr-sheet::backdrop, body.no-motion .fr-copy.is-done .bt-icon { animation: none !important; }

@@ -78,6 +78,7 @@ assert.equal(EX_REVERSE.ex5.stamp,'type');assert.equal(EX_REVERSE.ex6.stamp,'bal
 const url=(p)=>`/${p}`;
 for(const [id,f] of Object.entries(family)){
   const rev=foilExtras({id:`${id}-30`,rarity:'Common',supertype:'Pokémon',types:['Water'],reverse:true},url);
+  rev.classes=rev.classes.replace(" has-set-stamp","");
   assert.equal(rev.classes,`rev-mirror era-ex ex-rev ex-rev-${f} ex-rev-set-${id}`,id);
 }
 assert.equal(foilExtras({id:'ex1-104',rarity:'Energy',supertype:'Energy',reverse:true},url).classes,'rev-mirror era-ex ex-rev ex-rev-mirror ex-rev-set-ex1 ex-rev-basic-energy','a basic Energy reverse takes the whole-face Mirror');

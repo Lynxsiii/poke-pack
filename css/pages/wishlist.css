@@ -95,8 +95,8 @@
 .wish-text b { overflow-wrap: anywhere; font: 600 16.5px/1.15 var(--font-h); }
 .wish-meta { color: var(--k-2); font-size: 13.5px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.3; }
 .wish-where { color: var(--k-3); font-size: 12.5px; font-weight: 700; line-height: 1.3; }
-.wish-own { padding: 1px 7px 2px 6px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k); font: italic 700 12px/1.3 var(--font-h); white-space: nowrap; }
-.wish-miss { color: var(--k-3); font: italic 700 12.5px/1.3 var(--font-h); white-space: nowrap; }
+.wish-own { padding: 1px 7px 2px 6px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k); font: 700 12px/1.3 var(--font-h); white-space: nowrap; }
+.wish-miss { color: var(--k-3); font: 700 12.5px/1.3 var(--font-h); white-space: nowrap; }
 .wish-row .wish-row-heart { position: absolute; top: 50%; right: 8px; transform: translateY(-50%); }
 
 .wish-empty { display: grid; justify-items: start; gap: 12px; margin-top: 8px; padding: 22px 18px; border-radius: var(--r); }

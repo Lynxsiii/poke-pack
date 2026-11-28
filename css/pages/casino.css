@@ -53,7 +53,7 @@ body.on-battle-table .casino-bar { display: none; }
 }
 .cs-h span, .cs-tag {
   display: inline-block; padding: 2px 9px 3px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k);
-  font: italic 700 13px/1.3 var(--font-h); letter-spacing: 0; font-variant-numeric: tabular-nums;
+  font: 700 13px/1.3 var(--font-h); letter-spacing: 0; font-variant-numeric: tabular-nums;
 }
 .cs-empty { margin: 0; padding: 14px 0 6px; max-width: 46ch; color: var(--k-2); font-size: 15px; line-height: 1.45; }
 /* An empty list: a dashed place, a hollow ball, one line and maybe a key. */
@@ -189,7 +189,7 @@ a.cs-row-lab:hover { color: var(--on-k); }
 .cs-stack.is-lg > :first-child { margin-left: 0; }
 .cs-stack-more {
   align-self: center; margin-left: 6px; padding: 1px 6px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k);
-  font: italic 700 12.5px/1.4 var(--font-h); font-variant-numeric: tabular-nums;
+  font: 700 12.5px/1.4 var(--font-h); font-variant-numeric: tabular-nums;
 }
 
 /* A receipt: rows of Kanit figures; the win is the yellow row. */
@@ -315,7 +315,7 @@ a.cs-row-lab:hover { color: var(--on-k); }
 /* The live figure: a small ink tag in the well's corner. */
 .hub-game-fig {
   position: absolute; z-index: 2; top: 9px; left: 9px; padding: 2px 9px 3px; border-radius: var(--r-tag);
-  background: var(--k); color: var(--on-k); font: italic 700 13px/1.3 var(--font-h); font-variant-numeric: tabular-nums;
+  background: var(--k); color: var(--on-k); font: 700 13px/1.3 var(--font-h); font-variant-numeric: tabular-nums;
 }
 .hub-game-fig.is-bump, .cs-h span.is-bump { animation: cs-bump 0.4s var(--ease-pop); }
 @keyframes cs-bump { from { transform: translateY(-6px) scale(1.2); } }
@@ -494,7 +494,7 @@ a.cs-row-lab:hover { color: var(--on-k); }
 .cf-half .cs-player-copy b { font-size: 15.5px; }
 .cf-face-tag {
   display: inline-block; padding: 1px 9px 2px; border-radius: var(--r-tag); background: var(--k); color: var(--yel-k);
-  font: italic 800 12.5px/1.4 var(--font-xc);
+  font: 700 12.5px/1.4 var(--font-h);
 }
 .cf-half-pile { display: flex; min-height: 50px; align-items: center; }
 .cf-half.is-guest .cf-half-pile { justify-content: flex-end; }
@@ -616,7 +616,7 @@ a.cs-row-lab:hover { color: var(--on-k); }
 .cs-card-qty {
   position: absolute; top: -5px; right: -5px; max-width: calc(100% - 8px); padding: 2px 7px; white-space: nowrap; overflow: hidden;
   border-radius: var(--r-tag); background: var(--k); color: var(--on-k);
-  font: italic 700 13px/1.3 var(--font-h); font-variant-numeric: tabular-nums;
+  font: 700 13px/1.3 var(--font-h); font-variant-numeric: tabular-nums;
 }
 .cs-card-value { display: block; margin-top: 7px; }
 .cs-card-value .price-tag { font: 700 15px var(--font-h); }
@@ -909,7 +909,7 @@ body.cs-locked { overflow: hidden; }
   transform: translateX(-50%) skewX(var(--skew));
 }
 .jp-head-copy { display: flex; flex-direction: column; align-items: center; min-width: 0; }
-.jp-kicker { padding: 1px 9px 2px; border-radius: var(--r-tag); background: var(--k); color: var(--yel-k); font: italic 800 13px/1.4 var(--font-xc); }
+.jp-kicker { padding: 1px 9px 2px; border-radius: var(--r-tag); background: var(--k); color: var(--yel-k); font: 700 13px/1.4 var(--font-h); }
 .jp-total { margin: 6px 0 0; line-height: 1; }
 .jp-total .bt-coins {
   display: inline-flex; align-items: center; gap: 0.14em; color: var(--k);
@@ -939,7 +939,7 @@ body.cs-locked { overflow: hidden; }
 .jp-share { grid-area: share; display: flex; align-items: center; gap: 8px; min-width: 0; }
 .jp-odds {
   flex: none; min-width: 54px; padding: 1px 7px; border-radius: var(--r-tag); background: var(--k); color: var(--yel-k); text-align: center;
-  font: italic 800 13px/1.5 var(--font-xc); font-variant-numeric: tabular-nums;
+  font: 700 13px/1.5 var(--font-h); font-variant-numeric: tabular-nums;
 }
 .jp-bar { position: relative; flex: 1; display: block; height: 14px; padding: 3px; border-radius: var(--r); background: var(--k); overflow: hidden; }
 .jp-bar b { position: relative; display: block; height: 100%; border-radius: var(--r-tag); background: var(--hp); transform-origin: 0 50%; }

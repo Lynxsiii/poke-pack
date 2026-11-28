@@ -17,7 +17,7 @@
 }
 .lvl-read.hidden { display: none; }
 .lvl-read-top { display: flex; align-items: baseline; justify-content: center; gap: 3px; line-height: 1; }
-.lvl-read-top small { color: var(--k-2); font: italic 700 12px var(--font-h); }
+.lvl-read-top small { color: var(--k-2); font: 700 12px var(--font-h); }
 .lvl-read-top b { font: 700 17px var(--font-h); font-variant-numeric: tabular-nums; }
 .lvl-read-line { display: block; height: 7px; padding: 1.5px; border-radius: var(--r-tag); background: var(--k); overflow: hidden; }
 .lvl-read-line u { display: block; height: 100%; border-radius: var(--r-tag); background: var(--hp); text-decoration: none; }
@@ -75,7 +75,7 @@
 }
 .lv-punch::before {
   content: "XP"; position: absolute; left: -40px; top: 50%; transform: translateY(-50%);
-  padding: 1px 7px; border-radius: var(--r-tag); background: var(--k); color: var(--yel-k); font: italic 800 12px/1.5 var(--font-xc);
+  padding: 1px 7px; border-radius: var(--r-tag); background: var(--k); color: var(--yel-k); font: 700 12px/1.5 var(--font-h);
 }
 .lv-punch i { position: relative; display: block; height: 100%; background: transparent; overflow: hidden; }
 .lv-punch i:first-of-type { border-radius: var(--r-tag) 0 0 var(--r-tag); }
@@ -219,7 +219,7 @@
 .lv-stop-head:has(em) { position: relative; padding-top: 24px; }
 .lv-stop-head em {
   position: absolute; left: 0; top: 0; margin: 0; padding: 1px 7px; border-radius: var(--r-tag);
-  background: var(--k); color: var(--yel-k); font: italic 800 12px/1.5 var(--font-xc); text-decoration: none;
+  background: var(--k); color: var(--yel-k); font: 700 12px/1.5 var(--font-h); text-decoration: none;
 }
 .lv-stop-name { font: 600 19px/1.2 var(--font-h); }
 .is-locked .lv-stop-name { color: var(--k-2); }
@@ -243,7 +243,7 @@
 }
 .lv-tile-copy b { display: block; font: 600 15px/1.25 var(--font-h); }
 .lv-tile-copy small { display: block; margin-top: 2px; color: var(--k-2); font-size: 12.5px; font-weight: 700; line-height: 1.35; }
-.lv-tile-state { color: var(--k-2); font: italic 700 13px var(--font-h); white-space: nowrap; }
+.lv-tile-state { color: var(--k-2); font: 700 13px var(--font-h); white-space: nowrap; }
 .lv-tile.is-won .lv-tile-state { display: inline-flex; align-items: center; gap: 6px; padding: 1px 8px 1px 7px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k); }
 .lv-tile.is-won .lv-tile-state::before {
   content: ""; width: 9px; height: 5px; border-left: 2px solid var(--hp); border-bottom: 2px solid var(--hp); transform: rotate(-45deg) translateY(-2px);
@@ -299,7 +299,7 @@
 }
 .xp-toast-line { font-size: 14.5px; font-weight: 700; line-height: 1.35; }
 .xp-toast-line b { font-family: var(--font-h); }
-.xp-toast-lv { font: italic 700 13px var(--font-h); white-space: nowrap; font-variant-numeric: tabular-nums; opacity: 0.8; }
+.xp-toast-lv { font: 700 13px var(--font-h); white-space: nowrap; font-variant-numeric: tabular-nums; opacity: 0.8; }
 .xp-toast-lv small { font-size: inherit; }
 .xp-toast-bar { position: absolute; left: 10px; right: 10px; bottom: 6px; height: 7px; padding: 1.5px; border-radius: var(--r-tag); background: var(--k); box-shadow: 0 0 0 1.5px rgb(255 255 255 / 0.3); }
 .xp-toast-bar i { display: block; height: 100%; border-radius: var(--r-tag); background: var(--hp); }

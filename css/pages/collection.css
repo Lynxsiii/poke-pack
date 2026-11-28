@@ -221,7 +221,7 @@
 .slot-qty {
   position: absolute; z-index: 3; left: -4px; bottom: 7px; padding: 1px 7px 2px 6px;
   border-radius: var(--r-tag); background: var(--k); color: var(--on-k);
-  font: italic 700 12px/1.3 var(--font-h); pointer-events: none;
+  font: 700 12px/1.3 var(--font-h); pointer-events: none;
 }
 
 .bulk-empty {
@@ -261,7 +261,7 @@ body.no-motion :is(.coll-hp .rt-track > i, .coll-ball, .slot-ghost) { transition
   border: 2px solid var(--k); border-radius: var(--r-tag); background: var(--box); color: var(--k);
   font: 700 12px/1.2 var(--font-h); font-variant-numeric: tabular-nums; pointer-events: none;
 }
-.grade-badge i { padding: 0 3px; border-radius: var(--r-tag); background: var(--k); color: var(--yel-k); font: italic 800 9px/1.5 var(--font-xc); }
+.grade-badge i { padding: 0 3px; border-radius: var(--r-tag); background: var(--k); color: var(--yel-k); font: 700 9px/1.5 var(--font-h); }
 .grade-badge.grade-10 { background: var(--yel); }
 .grade-badge.grade-9 { background: var(--graphite); }
 

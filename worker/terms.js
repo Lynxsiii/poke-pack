@@ -124,6 +124,11 @@ const PERSONAL_TABLES = [
   ["discord_feed", "user_id"],
   ["coin_restores", "user_id"],
   ["recovery_codes", "user_id"],
+  // The free first pack this account took (worker/first-rip.js).
+  ["first_rips", "user_id"],
+  ["fair_seeds", "user_id"],
+  ["fair_seed_history", "user_id"],
+  ["fair_rolls", "user_id"],
   // Account security (worker/security.js).
   ["user_email", "user_id"],
   ["reset_codes", "user_id"],
