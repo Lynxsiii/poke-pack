@@ -415,7 +415,7 @@ dialog::backdrop { background: rgb(20 23 27 / 0.62); }
 .rt-type[data-ty="holo"] { --ty: var(--ty-holo); } .rt-type[data-ty="double"] { --ty: var(--ty-double); }
 .rt-type[data-ty="ultra"] { --ty: var(--ty-ultra); } .rt-type[data-ty="illus"] { --ty: var(--ty-illus); }
 .rt-type[data-ty="sir"] { --ty: var(--ty-sir); } .rt-type[data-ty="hyper"] { --ty: var(--ty-hyper); }
-.rt-type[data-ty="promo"] { --ty: var(--ty-promo); } .rt-type[data-ty="secret"] { --ty: var(--ty-secret); }
+.rt-type[data-ty="promo"] { --ty: var(--ty-promo); } .rt-type[data-ty="secret"] { --ty: var(--ty-secret); color: var(--on-k, var(--w0)); }
 /* A Poké Ball pip: one step of a count. .e is a step not reached, .now the current one. */
 .rt-ball {
   display: inline-block; flex: none; width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--k);
