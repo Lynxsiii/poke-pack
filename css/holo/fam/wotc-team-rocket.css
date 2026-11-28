@@ -90,7 +90,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
   background-size: 100% 100%;
   background-position: center;
   background-blend-mode: normal;
-  opacity: calc(0.42 * var(--foil-strength, 1));
+  /* 0.42 lifted the black skies to a brown haze at rest (2026-11-28: Dark Charizard, Rocket's Sneak Attack) */
+  opacity: calc(0.2 * var(--foil-strength, 1));
 }
 
 /* ---- the glitter: two halves, each lit by its own sliding band and the pointer's pool -------------------------------- */
@@ -184,5 +185,5 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-team-rocket.fam-wotc-team-rocket.fam-wotc-team-rocket.fam-wotc-team-rocket.tr-mapped.tr-raichu:not(.lit):not(.settling) .foil {
   background-image: linear-gradient(118deg, hsl(222, 20%, 8%) 0%, hsl(210, 18%, 18%) 24%, hsl(40, 16%, 34%) 38%, hsl(222, 20%, 14%) 56%, hsl(210, 20%, 22%) 84%, hsl(222, 20%, 10%) 100%);
-  opacity: calc(0.4 * var(--foil-strength, 1));
+  opacity: calc(0.2 * var(--foil-strength, 1));
 }

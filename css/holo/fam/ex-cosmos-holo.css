@@ -167,9 +167,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-cosm
   background-position: center;
   background-repeat: no-repeat;
   background-blend-mode: normal;
-  mix-blend-mode: screen;
+  /* overlay, not screen (2026-11-28: "grey haze lifts blacks on Houndoom's body"): the lamp's core scales with the ink under it */
+  mix-blend-mode: overlay;
   filter: none;
-  opacity: calc(var(--card-opacity) * 0.8);
+  opacity: calc(var(--card-opacity) * 0.75);
 }
 
 /* ---- Rare Secret only: the real card throws one hue at a time ------------------------------------------------------

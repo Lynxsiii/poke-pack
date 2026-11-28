@@ -245,6 +245,18 @@ cure"). The surface gloss throws a soft highlight.
 
 ## Pitfalls
 
+- **A mirror under ink: dodge the light in, never screen it on.** The Gold Stars, Pokémon-ex, EX refractor holos and sheen
+  Energies screened grey or white light over the map: strong enough to see, it lifted every black to fog; turned down, the
+  card showed nothing lit (2026-11-28 site review 2: Gold Stars 0 of 25 good). Give the `.foil` a black `background-color`
+  and `mix-blend-mode: color-dodge`, with the light multiplied by a radial pool at the pointer that ends in black: blacks
+  stay black, the print's own light dots blow out first (a flash), and the sheet falls off away from the lamp. Keep the
+  dodge grey near 50% where the map is background only and near 30% where it covers the Pokémon (higher bleaches pale ink
+  and turns saturated ink neon). The lamp core on top is `overlay`, not `screen`.
+- **A hand-hinted matte goes stale when the scan is replaced.** Neo Discovery's mattes were drawn from hints on older scans
+  and sat 30 to 60 px off the print (a ghost silhouette beside the Pokémon); it was not a placement fault. Cut the Pokémon
+  from the shipped scan itself (`make_figure_masks.figure_mask` with SAM; `scripts/cut_figure_from_maps.py` multiplies the
+  cut into existing maps under a new version), view every preview, and keep the old map where the cut is wrong.
+
 - **A window holo lights round the lamp, not over the window.** The WotC Team Rocket, Legendary Collection, Gym and promo
   recipes screened a spectrum, a silver floor and a 0.55 rest sheen over the whole foil map, so every black or navy
   background read as a blue-lavender or grey haze, at rest too (2026-11-28 site review: 30 of 40 bad). A real WotC holo

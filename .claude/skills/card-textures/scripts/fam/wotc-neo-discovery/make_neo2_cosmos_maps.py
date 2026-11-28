@@ -39,7 +39,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[5]
 BOX = (61, 94, 539, 430)  # the window crop, same as scripts/make_wotc_spark_maps.py BOXES["pokemon"]
 STAGE = {1, 2, 4, 6, 8, 9, 10, 12, 13, 15}  # Stage 1 and Stage 2: the evolution badge's swoosh reaches into the window
-VERSION = "v1"
+VERSION = "v2"
 
 
 def load_crop(n):
@@ -193,11 +193,27 @@ def fleck_colours(alpha, lab, k, n):
     return col
 
 
-def build(n, hints, win):
+def sam_matte(n, win, sam):
+    """The matte from the scan itself (v2, 2026-11-28): the hand hints were drawn on an earlier scan of each card and sat
+    30-60 px off the print the site ships now, so half of each Pokemon was lit as foil beside an unlit copy of its shape
+    (the review's "ghost silhouette"). make_figure_masks.figure_mask() cuts the figure by the foil's grain and SAM2."""
+    full = np.asarray(Image.open(ROOT / f"assets/cards/neo2/{n}.webp").convert("RGB").resize((600, 838), Image.LANCZOS))
+    wfull = np.zeros((838, 600), np.float32)
+    x0, y0, x1, y1 = BOX
+    wfull[y0:y1, x0:x1] = win
+    m, info = FIG.figure_mask(full, BOX, wfull, False, sam)
+    return m[y0:y1, x0:x1] > 0.5, info
+
+
+def build(n, hints, win, sam=None):
     rgb = load_crop(n)
     hint = hints.get(str(n), {})
     seed_alpha, _, _ = flecks(rgb, win > 0.5)
-    matte = segment(rgb, win, hint, seed_alpha > 0.35)
+    if sam is not None:
+        matte, info = sam_matte(n, win, sam)
+        print(f"neo2-{n}: figure {info}")
+    else:
+        matte = segment(rgb, win, hint, seed_alpha > 0.35)
     # grow the matte 1 px and feather 1 px so no foil rims the Pokemon's outline
     dist = ndi.distance_transform_edt(~matte)
     open_ = np.clip(dist - 1.0, 0, 1)
@@ -241,12 +257,21 @@ def main():
     ap.add_argument("--out", default=str(ROOT / "assets/foil/fam/wotc-neo-discovery"))
     ap.add_argument("--check", default="")
     ap.add_argument("--no-write", action="store_true")
+    ap.add_argument("--sam", default="", help="SAM2 ONNX model dir (see make_figure_masks.py): cut the matte from the scan "
+                    "instead of the hand hints (v2; the hints were drawn on an older scan)")
     a = ap.parse_args()
+    sam = None
+    if a.sam:
+        import sys
+        global FIG
+        sys.path.insert(0, str(HERE.parents[1]))
+        import make_figure_masks as FIG
+        sam = FIG.Sam(a.sam)
     hints = json.load(open(HERE / "neo2_matte_hints.json"))
     win = load_window()
     tiles = []
     for n in [int(s) for s in a.cards.split(",") if s]:
-        rgb, matte, bg, col, alpha, k = build(n, hints, win)
+        rgb, matte, bg, col, alpha, k = build(n, hints, win, sam)
         print(f"neo2-{n}: matte {matte.mean() * 100:.1f}% of the crop, foil {bg.mean() * 100:.1f}%, {k} flecks")
         if not a.no_write:
             save(n, bg, col, Path(a.out))
