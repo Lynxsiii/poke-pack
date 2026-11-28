@@ -18,6 +18,8 @@ bare (a transparent hard-light layer changes nothing).
 Deterministic (fixed table below). Paste the output into the vars rule as `--xm-bars`.
 """
 
+import math
+
 # (centre in layer %, width in layer %, strength 0..1). Only about 34-66 % of the layer is ever on the card (the
 # columns move by 0.35 / 0.07 of --background-x/-y, whose range is 37-63 %); the rest keeps the edges of a sweep filled.
 BARS = [
@@ -32,6 +34,10 @@ SPEC = [
 ]
 
 
+WIDEN = 1.9   # each bar's width x this: a beam about 8-10 % of the card wide, feathered to nothing at both sides
+PEAK = 0.62   # strength at the middle of a bar
+
+
 def fmt(v: float) -> str:
     return f"{v:.3f}".rstrip("0").rstrip(".")
 
@@ -39,10 +45,15 @@ def fmt(v: float) -> str:
 def main() -> None:
     stops = ["hsla(0, 0%, 0%, 0) 0%"]
     for c, w, s in BARS:
+        w *= WIDEN
         left = c - w / 2
         stops.append(f"hsla(350, 100%, 60%, 0) {fmt(left)}%")
         for f, h, sa, li in SPEC:
-            stops.append(f"hsla({h}, {sa}%, {li}%, {fmt(s)}) {fmt(left + f * w)}%")
+            # feathered (2026-11-28): the strength follows a bell across the bar, so a bar is a soft beam with no hard
+            # edge. The hard-edged bars read as a rendering glitch at phone size (holo check: "hard vertical rainbow
+            # stripe over art" on 14 of 18 cards).
+            bell = math.sin(math.pi * f) ** 1.5
+            stops.append(f"hsla({h}, {sa}%, {li}%, {fmt(s * PEAK * bell)}) {fmt(left + f * w)}%")
         stops.append(f"hsla(285, 95%, 66%, 0) {fmt(left + w)}%")
     stops.append("hsla(0, 0%, 0%, 0) 100%")
     print("  --xm-bars: linear-gradient(90deg,")

@@ -368,13 +368,32 @@ def find_dots(rgb, ground):
     return out
 
 
-def draw(card, win, debug_dir):
+def sam_segment(rgb, z, sam):
+    """The Pokémon from SAM2 prompted with a box over the art window (the figure is the salient object in it), the candidate
+    with the highest predicted IoU. Added 2026-11-28 for the POP 5 stars: GrabCut seeded from the cosmos dots lost Umbreon's
+    dark body in the dark smoke behind it; the box prompt finds it with no hand hints."""
+    zz = z > 0.5
+    ys, xs = np.nonzero(zz)
+    y0, y1, x0, x1 = ys.min(), ys.max() + 1, xs.min(), xs.max() + 1
+    crop = np.ascontiguousarray(np.clip(rgb[y0:y1, x0:x1], 0, 255).astype(np.uint8))
+    h, w = crop.shape[:2]
+    state = sam.encode(crop)
+    best = max(sam.decode(state, [[w * 0.06, h * 0.02], [w * 0.94, h * 0.99]], [2, 3]), key=lambda t: t[1])
+    fg = np.zeros(zz.shape, bool)
+    fg[y0:y1, x0:x1] = best[0]
+    return fg & zz
+
+
+def draw(card, win, debug_dir, sam=None):
     rgb, calpha = exmaps.load(card)
     z = np.clip(win * calpha, 0, 1)
     cid = card["id"]
     rng = np.random.default_rng(zlib.crc32(cid.encode()))
     shard = shards(rgb, z)
-    fg = segment(rgb, z, np.zeros_like(shard) if cid in NO_SHARD_SEED else shard, cid)
+    if sam is not None:
+        fg = sam_segment(rgb, z, sam)
+    else:
+        fg = segment(rgb, z, np.zeros_like(shard) if cid in NO_SHARD_SEED else shard, cid)
     # ALPHA: the window minus the Pokémon, ending on its printed outline (grown 1 px so the black line stays matte), feathered 0.6
     pk = ndi.gaussian_filter(ndi.binary_dilation(fg, iterations=1).astype(np.float32), 0.6)
     ground = np.clip(z * (1.0 - np.clip(pk * 2.0 - 0.5, 0, 1)), 0, 1)
@@ -469,7 +488,14 @@ def main():
     ap.add_argument("--cards", required=True)
     ap.add_argument("--only", default="")
     ap.add_argument("--debug-dir", default="")
+    ap.add_argument("--sam", default="", help="SAM2 ONNX model dir (see make_figure_masks.py): cut the Pokémon with a box prompt "
+                    "instead of the dot-seeded GrabCut")
     args = ap.parse_args()
+    sam = None
+    if args.sam:
+        sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+        from make_figure_masks import Sam
+        sam = Sam(args.sam)
     cards = [c for c in json.load(open(args.cards)) if not c.get("refractor")]
     only = set(filter(None, args.only.split(",")))
     os.makedirs(OUT_DIR, exist_ok=True)
@@ -479,7 +505,7 @@ def main():
     for c in cards:
         if only and c["id"] not in only:
             continue
-        nd, nc, npn, cover = draw(c, win, args.debug_dir)
+        nd, nc, npn, cover = draw(c, win, args.debug_dir, sam)
         print(f"{c['id']} {c['name']}: {nd} dots, {nc} discs, {npn} pinpoints, ground covers {cover:.2f} of the window", flush=True)
 
 

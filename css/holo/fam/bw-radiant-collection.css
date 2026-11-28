@@ -146,6 +146,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-radi
   background-position: var(--rcf-hue-pos), var(--rcf-tex-pos), var(--rcf-sweep-pos);
   background-repeat: repeat, repeat, repeat;
   background-blend-mode: screen, difference, normal;
+  /* 2026-11-28: the flashes at 0.6 (the full-site check: "confetti glitter dots" on 14 of 15 Confetti faces); the zone
+     map also holds them off the Pokemon now (map-rc<N>-fig-v2.webp) */
+  opacity: calc(0.6 * min(1, var(--foil-strength, 1)));
   -webkit-mask-image: var(--rcf-pool), var(--art), var(--foil-map), var(--rcf-mask), var(--art), linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75));
   -webkit-mask-composite: source-in, source-in, source-in, source-in, source-over, source-over;
   mask-image: var(--rcf-pool), var(--art), var(--foil-map), var(--rcf-mask), var(--art), linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75));
@@ -220,7 +223,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-radi
   background-repeat: no-repeat;
   filter: none;
   mix-blend-mode: multiply;
-  opacity: min(1, var(--foil-strength, 1));
+  /* x0.5 (2026-11-28): at full strength the motifs were dark maroon and olive stamps that buried the attack text (holo
+     check, RC3, RC4, RC6, RC7); in the photos (RC7 in hand, RC10) they sit only a shade under the box's own colour */
+  opacity: calc(0.5 * min(1, var(--foil-strength, 1)));
   -webkit-mask-image: none;
   mask-image: none;
 }

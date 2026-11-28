@@ -23,7 +23,7 @@ const set = (card) => String(card?.id || "").split("-")[0];
 const num = (card) => String(card?.id || "").split("-")[1] || "";
 const has = (pattern, cls) => ` ${pattern || ""} `.includes(` ${cls} `);
 const DIR = "assets/foil/fam/wotc-neo-revelation/";
-const MAPS = { 1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1, 10: 1, 11: 1, 12: 1, 13: 1, 14: 1 };
+const MAPS = { 1: 1, 2: 1, 3: 1, 4: 2, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1, 10: 2, 11: 1, 12: 2, 13: 1, 14: 1 };
 
 /** Whether a card face is this family's: the fourteen neo3 Rare Holo faces with maps. */
 export function claims(card) {

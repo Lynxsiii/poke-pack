@@ -55,9 +55,15 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.f
   --svm-pos-a: calc(100% - var(--background-x)) var(--background-y);
   --svm-pos-b: var(--background-x) calc(100% - var(--background-y));
   --svm-break-size: 150% 150%;
-  --svm-band: clamp(0, calc(0.35 + var(--pointer-from-center) * 1.1), 1);
-  --svm-etch-lit: linear-gradient(rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.42));
-  --svm-etch-rest: linear-gradient(rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.62));
+  /* 2026-11-28: capped at 0.8 and the shared flecks at a third: a pale Pokémon (Lycanroc VMAX) washed white-purple */
+  --svm-band: clamp(0, calc(0.3 + var(--pointer-from-center) * 0.9), 0.8);
+  /* 2026-11-28 (per-card review): the shared flecks and spectrum off (glitter grain on Cinderace VMAX, tinted lines),
+     and the dodged relief held back, at rest most: on the promos' blurred etch it was a mottled speckle over the whole
+     art, on Ditto VMAX a line screen, on TG20 heavy wavy lines */
+  --shine-glit: 0;
+  --shine-line: 0;
+  --svm-etch-lit: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
+  --svm-etch-rest: linear-gradient(rgba(0, 0, 0, 0.84), rgba(0, 0, 0, 0.84));
   /* where the colour is: round the pointer only, so two or three soft bands cross a large Pokémon with print between
      (an even repeat across the card read as a ruler pattern, Flying Pikachu VMAX cel25-7, Togekiss VMAX swsh4-141) */
   --svm-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
@@ -66,7 +72,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.f
     rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 15%, rgba(255, 255, 255, 0.55) 40%, rgba(255, 255, 255, 0.85) 75%, #fff 100%);
   /* the silver lift the dodge gives the mid-tones round the light (white and black ink do not move) */
   --svm-hot: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    rgb(44, 44, 44) 0%, rgb(28, 28, 28) 25%, rgb(12, 12, 12) 55%, #000 80%);
+    rgb(34, 34, 34) 0%, rgb(21, 21, 21) 25%, rgb(8, 8, 8) 52%, #000 76%);
   /* the whole face is foil: a floor under Live's map */
   --svm-whole: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
   /* the bands ride the ridges: the etch at full, this much of the band between ridges */
@@ -82,6 +88,23 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.f
 /* The gallery alt arts: the bands and tint held back over the painting. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-vmax.fam-swsh-vmax.fam-swsh-vmax.fam-swsh-vmax.foil-ultra.has-foil-map.svm-alt {
   --svm-band: clamp(0, calc(0.2 + var(--pointer-from-center) * 0.7), 0.65);
+}
+
+/* The blurred -etch-v3 maps (promos): blotches, not ridges. Dodged they were a mottled speckle over the whole art, at
+   rest too (Eevee VMAX SWSH087, Dragapult VMAX SWSH097, Alcremie VMAX SWSH099; 2026-11-28). The relief nearly off. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-vmax.fam-swsh-vmax.fam-swsh-vmax.fam-swsh-vmax.foil-ultra.has-foil-map.svm-soft {
+  --svm-etch-lit: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9));
+  --svm-etch-rest: linear-gradient(rgba(0, 0, 0, 0.97), rgba(0, 0, 0, 0.97));
+  --svm-floor: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8));
+  --svm-tint-floor: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75));
+  --relief: 0.08;
+  /* the bands a touch lower too: over a flat yellow Pikachu VMAX (SWSH062) they read green */
+  --svm-band: clamp(0, calc(0.2 + var(--pointer-from-center) * 0.6), 0.55);
+}
+/* The gallery alt arts' relief: quieter over the painting (Glaceon VSTAR GG40: "streak hatch over art"). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-vmax.fam-swsh-vmax.fam-swsh-vmax.fam-swsh-vmax.foil-ultra.has-foil-map.svm-alt {
+  --svm-etch-lit: linear-gradient(rgba(0, 0, 0, 0.74), rgba(0, 0, 0, 0.74));
+  --relief: 0.15;
 }
 
 /* ---- .foil: the relief, dodged; lit, the light pool -------------------------------------------------------------- */

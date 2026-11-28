@@ -30,6 +30,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-shin
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.has-foil-map.sms-window {
   --pf-a: 0.4;
   --pf-screen: 0.22;
+  /* the shared fleck layer paints by Live's map, which holds the Pokémon: specks on dark bodies (Voltorb, Frogadier) */
+  --shine-glit: 0.08;
+  --shine-line: 0.25;
   --sm-lamp: 95%;
   --sm-mid: 90%;
   --pf-lo: 84%;
@@ -42,6 +45,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-shin
 /* ---- Shiny GX: stronger rays, a softer rainbow (Chromium drew it hard) ------------------------------------------- */
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.fam-sm-shiny.has-foil-map.sms-gx {
   --sm-ray-a: 0.45;
+  --shine-glit: 0.08;
+  --shine-line: 0.25;
   --pf-a: 0.45;
   --pf-screen: 0.32;
 }

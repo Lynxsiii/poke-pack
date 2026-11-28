@@ -43,5 +43,7 @@ export function famExtras(card, url, base) {
   const classes = ["fam-swsh-vmax"];
   if (kind === "vstar") classes.push("svm-vstar");
   if (card.gallery === "tg" || card.gallery === "gg" || /-(TG|GG)\d/.test(String(card.id || ""))) classes.push("svm-alt");
+  // a blurred -etch-v3 map (the promos: no native Live etch shipped) is blotches, not ridges: the relief nearly off
+  if (/-etch-v3\.webp$/.test(String(card.etchMap || ""))) classes.push("svm-soft");
   return { classes: classes.join(" "), style: "", cure: false };
 }

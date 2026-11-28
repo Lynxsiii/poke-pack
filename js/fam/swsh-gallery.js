@@ -38,5 +38,7 @@ export function claims(card) {
 export function famExtras(card, url, base) {
   if (!claims(card, base)) return null;
   const style = `--sgl-grain:url('${url(`${DIR}/grain-v1.webp`)}')`;
-  return { classes: "fam-swsh-gallery", style, cure: false };
+  // The Japanese scans are photos of the foil print (the rainbow bands are in the picture already): a quieter recipe.
+  const photo = /^j/.test(String(card.id || "")) ? " sgl-photo" : "";
+  return { classes: `fam-swsh-gallery${photo}`, style, cure: false };
 }

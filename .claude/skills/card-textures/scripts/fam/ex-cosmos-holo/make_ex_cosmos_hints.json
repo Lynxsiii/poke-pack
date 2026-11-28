@@ -82,16 +82,48 @@
   "mirror": false
  },
  "np-np016": {
-  "skip": true
+  "synth": true
  },
  "np-np017": {
-  "skip": true
+  "synth": true
  },
  "np-np018": {
-  "skip": true
+  "synth": true,
+  "fig": [
+   [
+    450,
+    264
+   ],
+   [
+    217,
+    219
+   ],
+   [
+    308,
+    298
+   ],
+   [
+    323,
+    167
+   ]
+  ]
  },
  "np-np019": {
-  "skip": true
+  "synth": true,
+  "fig": [
+   [
+    228,
+    156
+   ],
+   [
+    371,
+    167
+   ],
+   [
+    297,
+    253
+   ]
+  ]
  },
  "ex9-101": {
   "area": "window"

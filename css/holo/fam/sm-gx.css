@@ -122,7 +122,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm
     var(--sgx-pebble),
     var(--sgx-cloud),
     var(--sgx-bands);
-  background-size: var(--sgx-ring-size), 100% 100%, 30% auto, 90% auto, 260% 260%;
+  background-size: var(--sgx-ring-size), 100% 100%, 17% auto, 90% auto, 260% 260%;
   background-position: var(--sgx-ring-pos), center, var(--sgx-seed),
     calc(var(--background-x, 50%) * 0.6) calc(var(--background-y, 50%) * 0.6), var(--sgx-band-pos);
   background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, repeat, repeat, no-repeat;
@@ -134,11 +134,14 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx .cure {
   background-color: rgb(66, 66, 70);
   /* the frame takes only a small gain (it stays mid-grey silver), its glints the rainbow flecks */
+  /* 2026-11-28: the coloured flake tile (--sgx-glint) is gone from here. At phone size it read as coarse confetti
+     over the art (per-card review, 13 of 19 cards); the real foil is a fine grain under a smooth sheen. The slot
+     holds black (screen: no change) so the layer lists below keep their order. */
   background-image:
-    var(--sgx-glint),
+    linear-gradient(#000, #000),
     var(--sgx-ring-dim), var(--sgx-ring-dim), var(--sgx-ring-dim), var(--sgx-ring-dim),
     radial-gradient(ellipse 34% 25% at var(--pointer-x) var(--pointer-y),
-      rgb(124, 116, 98) 0%, rgba(100, 96, 88, 0.7) 45%, rgba(66, 66, 70, 0) 100%);
+      rgb(94, 92, 88) 0%, rgba(84, 83, 80, 0.7) 45%, rgba(66, 66, 70, 0) 100%);
   background-size: 30% auto, var(--sgx-ring-size), 100% 100%;
   background-position: var(--sgx-seed), var(--sgx-ring-pos), center;
   background-repeat: repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;

@@ -60,7 +60,7 @@ REVIEW_PER = 6
 
 # Floors on the art box, lit. Tuned on the 2026-11-27 run (see SKILL.md); a real holo adds light and texture but
 # keeps the drawing: its darks stay dark, its contrast holds, its own detail stays put, and it carries no cast.
-FLOORS = {"haze": 9.0, "con": 0.72, "keep": 0.55, "tint": 9.0, "rest_haze": 6.0, "rest_keep": 0.75}
+FLOORS = {"speck": 0.45, "haze": 9.0, "con": 0.72, "keep": 0.55, "tint": 9.0, "rest_haze": 6.0, "rest_keep": 0.75}
 FULL_ART = re.compile(r"foil-(sir|ir|ultra|gold|future)|swsh-(alt|tfa|vfa|rainbow|gold)|sm-(fa|tfa|rainbow|gold)|"
                       r"full-art|fullart|foil-bwr")
 
@@ -86,9 +86,9 @@ def to_lab(rgb):
     return np.stack([116 * f[..., 1] - 16, 500 * (f[..., 0] - f[..., 1]), 200 * (f[..., 1] - f[..., 2])], -1)
 
 
-def highpass(L):
+def highpass(L, r=3):
     im = Image.fromarray(np.clip(L * 2.55, 0, 255).astype(np.uint8))
-    return L - np.asarray(im.filter(ImageFilter.GaussianBlur(3)), dtype=np.float32) / 2.55
+    return L - np.asarray(im.filter(ImageFilter.GaussianBlur(r)), dtype=np.float32) / 2.55
 
 
 def measure(on, off):
@@ -97,13 +97,17 @@ def measure(on, off):
     dark = Lo <= np.percentile(Lo, 25)
     ha, ho = highpass(La).ravel(), highpass(Lo).ravel()
     keep = float(np.corrcoef(ha, ho)[0, 1]) if ho.std() > 0.3 and ha.std() > 0.3 else 1.0
+    # speck: fine grain (a pixel or two at 3x) the foil adds, as a ratio of the print's own. Glitter and dots over the
+    # art push it up (Noah, 2026-11-28: "the sparkles or dots on the holo take away from the texture")
+    fa, fo = highpass(La, 1.2), highpass(Lo, 1.2)
+    speck = float(np.sqrt(max(fa.var() - fo.var(), 0)) / max(fo.std(), 0.5))
     # medians, so a light band crossing the box (a real foil's highlight) does not count as a wash over it
     da, db = float(np.median(a[..., 1] - o[..., 1])), float(np.median(a[..., 2] - o[..., 2]))
     ca, co = np.hypot(a[..., 1], a[..., 2]).mean(), np.hypot(o[..., 1], o[..., 2]).mean()
     return {
         "dL": float(np.median(La - Lo)), "haze": float(np.percentile(La[dark] - Lo[dark], 65)),
         "wash": float(((La - Lo) > 6).mean()),
-        "con": float(La.std() / max(Lo.std(), 1e-3)), "keep": keep,
+        "con": float(La.std() / max(Lo.std(), 1e-3)), "keep": keep, "speck": speck,
         "tint": float(np.hypot(da, db)), "hue": float(np.degrees(np.arctan2(db, da)) % 360),
         "sat": float(ca / max(co, 1e-3)),
     }
@@ -262,6 +266,8 @@ def flag(rows):
                 why.append(f"art flattened: contrast x{a['con']:.2f}")
             if a["keep"] < FLOORS["keep"]:
                 why.append(f"art buried: detail kept {a['keep']:.2f}")
+            if a.get("speck", 0) > FLOORS["speck"]:
+                why.append(f"glitter over the art: fine grain x{1 + a['speck']:.1f}")
             if a["tint"] > FLOORS["tint"]:
                 why.append(f"art tinted {a['tint']:.1f} at hue {a['hue']:.0f}")
             if rest["haze"] > FLOORS["rest_haze"]:
@@ -278,7 +284,8 @@ def flag(rows):
                         why.append(f"outlier in family on {k} (z {z:.1f})")
             r["flags"] = why
             r["severity"] = (max(0, a["haze"] - 4) + max(0, (1 - a["con"]) * 20) + max(0, (0.9 - a["keep"]) * 30)
-                             + max(0, a["tint"] - 4) + max(0, rest["haze"] - 3) * 1.5 + len(why) * 2)
+                             + max(0, a["tint"] - 4) + max(0, rest["haze"] - 3) * 1.5 + max(0, a.get("speck", 0) - 0.5) * 8
+                             + len(why) * 2)
     return rows
 
 
@@ -337,10 +344,17 @@ def main():
     by_key = {face_key(f): f for f in selected}
     jobs = plan(selected)
     print(f"{len(by_key)} faces in {len(jobs)} renders", file=sys.stderr)
-    if not args.score_only:
-        render(jobs, args)
-    with ThreadPoolExecutor(max_workers=4) as pool:
-        rows = [r for part in pool.map(lambda j: score_job(j, by_key, args), jobs) for r in part]
+    # Render and score in rounds of BATCH renders: each full-page render pair is about 90 MB, and a whole-site run
+    # rendered first and scored after filled a 37 GB disk (2026-11-28). Scoring deletes a round's renders.
+    BATCH = 60
+    rows = []
+    for start in range(0, len(jobs), BATCH):
+        part = jobs[start:start + BATCH]
+        if not args.score_only:
+            render(part, args)
+        with ThreadPoolExecutor(max_workers=4) as pool:
+            rows += [r for got in pool.map(lambda j: score_job(j, by_key, args), part) for r in got]
+        print(f"scored {min(start + BATCH, len(jobs))}/{len(jobs)} renders", file=sys.stderr)
     old = os.path.join(args.out, "check.json")
     if os.path.exists(old):  # merge with earlier scored parts of a resumed run
         seen = {r["key"] for r in rows}
@@ -371,7 +385,7 @@ def sheets(rows, args):
                   open(os.path.join(args.out, "review", f"batch-{n:03d}.json"), "w"), indent=1)
     for r in flagged[:40]:
         a = r["art"]
-        print(f"{r['id']:16} {r['family'][:26]:26} haze {a['haze']:5.1f} con {a['con']:.2f} keep {a['keep']:.2f} "
+        print(f"{r['id']:16} {r['family'][:26]:26} speck {a.get('speck', 0):4.2f} haze {a['haze']:5.1f} con {a['con']:.2f} keep {a['keep']:.2f} "
               f"tint {a['tint']:4.1f} rest-haze {r['rest']['haze']:4.1f} | {'; '.join(r['flags'])}")
     print(f"{len(flagged)} of {len(rows)} faces flagged; {args.out}/sheets and review/ for the vision step",
           file=sys.stderr)

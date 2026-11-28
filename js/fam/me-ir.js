@@ -42,7 +42,9 @@ const LIVE_MAP = new Set([
 /** Whether a card face is this family's. */
 export function claims(card) {
   if (!card || card.reverse || card.pattern) return false;
-  if (!/^me\d(pt5)?-/.test(String(card.id || ""))) return false;
+  // me55 too since 2026-11-28: celebration.css's dodged sun-pillar washed the 30th Celebration IRs white under the lamp
+  if (!/^me(\d(pt5)?|55)-/.test(String(card.id || ""))) return false;
+  if (String(card.id).startsWith("me55-") && !card.foilMap) return false;
   return card.rarity === "Illustration Rare";
 }
 

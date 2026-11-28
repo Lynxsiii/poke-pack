@@ -56,15 +56,19 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gol
   /* the darkened ridges (.cure, multiplied): about x0.86 on bright gold, under dark_specks.py's 40-level drop */
   --smg-ridge: rgb(196, 168, 128);
   --smg-ridge-a: 0.62;
-  --smg-prism-a: 0.8;
+  /* 2026-11-28: was 0.8 (0.32 on the GX): with the `color` blend that repainted the gold green, cyan and purple
+     (per-card review, 6 of 13). Gold stays gold: a hint of hue on the ridges near the light, no more. */
+  --smg-prism-a: 0.2;
+  --shine-line: 0.06;
 }
 /* the gold Pokémon-GX: the dense etch covers the field, so the rainbow is held to a tint (Tapu Koko SV93: amber gold,
    a green-cyan tint near the GX bar) */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.smg-gx {
-  --smg-prism-a: 0.32;
+  --smg-prism-a: 0.12;
 }
 /* the gold Energies: the stipple field turns cool, the rainbow biased to teal/green/yellow */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.smg-energy {
+  --smg-prism-a: 0.1;
   --smg-prism: linear-gradient(112deg,
     rgb(60, 200, 160) 0%, rgb(40, 190, 231) 8%, rgb(140, 220, 90) 15%, rgb(231, 220, 70) 21%, rgb(60, 210, 190) 29%,
     rgb(50, 160, 240) 36%, rgb(110, 224, 120) 44%, rgb(220, 210, 79) 50%, rgb(60, 200, 200) 58%, rgb(60, 150, 240) 66%,

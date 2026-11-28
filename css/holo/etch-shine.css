@@ -63,13 +63,16 @@ body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map:is(.lit, .settling) .shine::after
   background-blend-mode: multiply, normal;
   filter: brightness(1.9);
   mix-blend-mode: screen;
-  -webkit-mask-image: var(--art), var(--foil-map, linear-gradient(#000, #000));
-  mask-image: var(--art), var(--foil-map, linear-gradient(#000, #000));
-  -webkit-mask-composite: source-in, source-over;
-  mask-composite: intersect, add;
-  -webkit-mask-size: contain, 100% 100%;
-  mask-size: contain, 100% 100%;
-  opacity: calc(var(--card-opacity, 0) * var(--shine-glit, 1) * min(1, var(--foil-strength, 1)));
+  /* Glitter only where the engraving is (art x foil map x etch map): flecks spread evenly over the foil read as dots
+     on top of the card and hid the texture (Noah, 2026-11-28: "the sparkles or dots on the holo take away from the
+     texture as i dont see the texture too much"). On the ridges they catch the light as part of the engraving. */
+  -webkit-mask-image: var(--art), var(--foil-map, linear-gradient(#000, #000)), var(--shine-etch, var(--etch-map));
+  mask-image: var(--art), var(--foil-map, linear-gradient(#000, #000)), var(--shine-etch, var(--etch-map));
+  -webkit-mask-composite: source-in, source-in, source-over;
+  mask-composite: intersect, intersect, add;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
+  opacity: calc(var(--card-opacity, 0) * var(--shine-glit, 0.6) * min(1, var(--foil-strength, 1)));
 }
 body.fx-holo.fx-holo.fx-holo.no-shine .tcg.tcg .shine {
   display: none;

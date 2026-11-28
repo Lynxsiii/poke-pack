@@ -48,12 +48,10 @@ export function swshFullArt(card) {
 }
 
 /** Outliers the audit could not confirm a finish for: left on the era's recipe (see the header). */
-const KEEP = new Set([
-  "swsh12pt5-152", "swsh12pt5-153", "swsh12pt5-154", "swsh12pt5-155", "swsh12pt5-156", "swsh12pt5-157",
-  "swsh12pt5-158", "swsh12pt5-159", "swsh12pt5-swshp282", "swsh12pt5-swshp283", "swsh12pt5-swshp284",
-  "swshp-swshp076", "swshp-swshp077", "swsh12pt5-swshp287", "swsh12pt5-swshp288", "swsh12pt5-swshp289",
-  "swsh12pt5-swshp290",
-]);
+const KEEP = new Set([]);
+// 2026-11-28: the seventeen outliers that sat here (Crown Zenith's textured Energies 152-159, the Galarian bird promos
+// SWSH282-284, the Morpeko V-UNION quarters SWSH287-290, SWSH076-077) drew the era's sun-pillar stack: a rainbow wash,
+// a dense rainbow glitter and the shared hatch tile (per-card review). They take the family recipe now.
 
 /**
  * Alternate arts: the second print of a V in its set's secret run (a painted scene, not the flat-colour full art on a
@@ -99,6 +97,10 @@ export function famExtras(card, url, base) {
     return { classes: classes.join(" "), style: "", cure: false };
   }
   classes.push(kind === "tfa" ? "sfa-t" : "sfa-v");
+  // The Japanese scans are photos of the foil print (its bands and line screen are in the picture): a quieter recipe.
+  if (/^j/.test(id)) classes.push("sfa-photo");
+  // a full-art basic Energy is pale grey or flat colour: every tint shows, so the bands are a touch only
+  if (card.supertype === "Energy") classes.push("sfa-energy");
   // the painted gallery V (Trainer Gallery TG, Galarian Gallery GG) and the alternate arts
   if (kind === "vfa" && (ALT.has(id) || card.gallery === "tg" || card.gallery === "gg" || /-(TG|GG)\d/.test(id))) {
     classes.push("sfa-alt");

@@ -108,7 +108,8 @@ const REDRAWN = new Map([["xy9-xyp095", "xy9-xyp095-v2"]]);
  * and Salamence XY59 followed the same night: their photos show the same, the foil a shade darker than the print with the
  * sparkle bright on it (refs/regirock-xy49/, fearow-xy57/, salamence-xy59/). Blissey XY56 and Ditto XY40 are on dark or
  * saturated art, where the plain Cosmos look already shows. */
-const PALE = new Set(["xy9-xyp095", "xy6-xyp049", "xy7-xyp057", "xy7-xyp059"]);
+// Snorlax xy12-xyp179 (2026-11-28): cream and pale blue art, the screened dots vanished on it ("barely any foil at rest or lit").
+const PALE = new Set(["xy9-xyp095", "xy6-xyp049", "xy7-xyp057", "xy7-xyp059", "xy12-xyp179"]);
 
 /** Cosmos promos held on the era look (none since Pikachu xy9-xyp095 was redrawn, 2026-10-02). */
 const HELD = new Set([]);
@@ -127,7 +128,8 @@ export function claims(card) {
 export function famExtras(card, url, base) {
   if (!claims(card)) return null;
   const id = String(card.id || "");
-  const finish = COSMOS.has(id) ? (PALE.has(id) ? "xysh-cosmos xysh-pale" : "xysh-cosmos") : "xysh-sheen";
+  // the theme-deck "-cracked-ice" reprints are Cracked Ice, not Sheen (2026-11-28)
+  const finish = /-cracked-ice$/.test(id) ? "xysh-ice" : COSMOS.has(id) ? (PALE.has(id) ? "xysh-cosmos xysh-pale" : "xysh-cosmos") : "xysh-sheen";
   const map = DRAWN.has(id) ? `assets/foil/fam/xy-sheen-holo/win/${REDRAWN.get(id) || id}.webp` : !card.foilMap && LIVE_MAP.get(id);
   const style = map ? `--foil-map:url('${url(map)}')` : "";
   return { classes: `fam-xy-sheen-holo ${finish}`, style, cure: true };

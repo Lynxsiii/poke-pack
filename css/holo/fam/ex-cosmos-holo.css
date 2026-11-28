@@ -39,9 +39,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-cosm
   mask-mode: alpha;
   background-image:
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsla(0, 0%, 66%, 0.95) 0%, hsla(0, 0%, 54%, 0.85) 10%, hsla(0, 0%, 40%, 0.55) 24%, hsla(0, 0%, 26%, 0.2) 40%, hsla(0, 0%, 0%, 0) 58%),
-    linear-gradient(118deg, hsla(0, 0%, 0%, 0) 30%, hsla(0, 0%, 44%, 0.5) 44%, hsla(0, 0%, 52%, 0.6) 50%,
-      hsla(0, 0%, 44%, 0.5) 56%, hsla(0, 0%, 0%, 0) 70%);
+      hsla(0, 0%, 46%, 0.95) 0%, hsla(0, 0%, 39%, 0.85) 10%, hsla(0, 0%, 29%, 0.55) 22%, hsla(0, 0%, 20%, 0.2) 36%, hsla(0, 0%, 0%, 0) 52%),
+    linear-gradient(118deg, hsla(0, 0%, 0%, 0) 30%, hsla(0, 0%, 36%, 0.5) 44%, hsla(0, 0%, 42%, 0.6) 50%,
+      hsla(0, 0%, 36%, 0.5) 56%, hsla(0, 0%, 0%, 0) 70%);
   background-size: 100% 100%, 260% 260%;
   background-position:
     center,
@@ -162,14 +162,15 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-cosm
   mask-composite: subtract, add, add;
   mask-mode: alpha;
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(0, 0%, 100%, 0.55) 0%, hsla(0, 0%, 100%, 0.3) 9%, hsla(0, 0%, 100%, 0.08) 22%, hsla(0, 0%, 100%, 0) 36%);
+    hsla(0, 0%, 100%, 0.34) 0%, hsla(0, 0%, 100%, 0.18) 9%, hsla(0, 0%, 100%, 0.05) 22%, hsla(0, 0%, 100%, 0) 36%);
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
   background-blend-mode: normal;
-  mix-blend-mode: screen;
+  /* overlay, not screen (2026-11-28: "grey haze lifts blacks on Houndoom's body"): the lamp's core scales with the ink under it */
+  mix-blend-mode: overlay;
   filter: none;
-  opacity: calc(var(--card-opacity) * 0.8);
+  opacity: calc(var(--card-opacity) * 0.75);
 }
 
 /* ---- Rare Secret only: the real card throws one hue at a time ------------------------------------------------------
