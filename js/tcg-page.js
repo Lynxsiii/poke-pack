@@ -29,7 +29,7 @@ import { botAction } from "./tcg/bot.js";
 import { MAX_DECKS, buildBotDeck, buildDeck, checkDeck, deckList, deckSize, notLegal, roomFor, rulesOf } from "./tcg/decks.js";
 import { BOT_FALLBACK, DECK_FORMATS, FORMAT_NOTES } from "./tcg/formats.js";
 import { LESSON, LESSON_CARDS, LESSON_SET, createLesson } from "./tcg/tutorial.js";
-import { coinStageHTML, flipCoin } from "./coin.js?v=7";
+import { coinStageHTML, flipCoin } from "./coin.js?v=9";
 import { api } from "./api.js";
 import { XP_WEIGHTS } from "./xp.js";
 

@@ -106,7 +106,7 @@ body.no-motion .mm-glint::before { animation: none; transform: translate3d(90%, 
 .qm-state {
   grid-column: 3; grid-row: 1 / span 2; align-self: center; justify-self: end; margin: 8px 0 0;
   padding: 2px 9px 3px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k);
-  font: italic 700 12.5px/1.35 var(--font-h); white-space: nowrap;
+  font: 700 12.5px/1.35 var(--font-h); white-space: nowrap;
 }
 .qm-set.is-new .qm-state { background: none; color: var(--k-3); box-shadow: inset 0 0 0 1.5px var(--rule-2); }
 /* A shelf of untouched sets would be a wall of identical tags: the dashed row and its 0 already say it, so the
@@ -187,7 +187,7 @@ body.no-motion .mm-glint::before { animation: none; transform: translate3d(90%, 
 .qm-art-banner { display: block; width: 76px; line-height: 0; }
 .qm-reward-copy b { display: block; font: 600 15px/1.3 var(--font-h); }
 .qm-reward-copy small { display: block; margin-top: 2px; color: var(--k-2); font-size: 12.5px; font-weight: 700; line-height: 1.4; }
-.qm-reward-state { display: inline-flex; align-items: center; gap: 5px; color: var(--k-2); font: italic 700 13px var(--font-h); white-space: nowrap; }
+.qm-reward-state { display: inline-flex; align-items: center; gap: 5px; color: var(--k-2); font: 700 13px var(--font-h); white-space: nowrap; }
 .qm-reward.is-earned .qm-glyph { color: var(--k); box-shadow: inset 0 0 0 2px var(--k); }
 .qm-reward.is-earned .qm-reward-state { padding: 1px 8px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k); }
 .qm-reward.is-locked .qm-reward-art > * { opacity: 0.55; }

@@ -149,7 +149,7 @@ body.hl-in-hall::after { display: none; }
 #view-battles .hl-kicker {
   position: absolute; left: 0; top: 0; z-index: 3;
   padding: 2px 12px 3px 10px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k);
-  font: italic 700 13px/1.4 var(--font-h);
+  font: 700 13px/1.4 var(--font-h);
 }
 /* A small slanted white key. */
 #view-battles .hl-change, #view-battles .hl-arrow {
@@ -254,7 +254,7 @@ body.hl-in-hall::after { display: none; }
   margin: 16px 0 18px; border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); overflow: hidden;
 }
 #view-battles .hl-field { display: grid; align-content: center; gap: 6px; padding: 10px 12px 12px; }
-#view-battles .hl-field > span, #view-battles .hl-entry > span { color: var(--k-2); font: italic 700 13px/1 var(--font-h); }
+#view-battles .hl-field > span, #view-battles .hl-entry > span { color: var(--k-2); font: 700 13px/1 var(--font-h); }
 #view-battles .hl-field .hl-seg { gap: 6px; padding-left: 4px; }
 #view-battles .hl-field .hl-seg button { min-width: 46px; }
 #view-battles .hl-entry {
@@ -346,19 +346,19 @@ body.hl-in-hall::after { display: none; }
 /* One meta line joined with commas (DESIGN.md, Copy); it wraps like text. */
 #view-battles .hl-row-rules { display: block; color: var(--k-2); font-size: 12.5px; font-weight: 700; line-height: 1.4; }
 #view-battles .hl-row-rules::first-letter { text-transform: uppercase; }
-#view-battles .hl-flag { display: inline-flex; align-items: center; gap: 2px; margin-left: 2px; padding: 0 6px 0 4px; vertical-align: 1px; border-radius: var(--r-tag); background: var(--k); color: var(--yel-k); font: italic 700 12px/1.5 var(--font-h); }
+#view-battles .hl-flag { display: inline-flex; align-items: center; gap: 2px; margin-left: 2px; padding: 0 6px 0 4px; vertical-align: 1px; border-radius: var(--r-tag); background: var(--k); color: var(--yel-k); font: 700 12px/1.5 var(--font-h); }
 #view-battles .hl-flag .bt-icon { width: 12px; height: 12px; fill: currentColor; stroke: none; }
 #view-battles .hl-row-rounds { white-space: nowrap; }
 #view-battles .hl-row-rounds::before { content: ", "; white-space: normal; }
 #view-battles .hl-row-side { display: grid; justify-items: end; align-content: center; gap: 8px; text-align: right; }
 #view-battles .hl-pot { display: grid; justify-items: end; gap: 1px; }
 #view-battles .hl-pot .bt-coins { font-size: 21px; letter-spacing: -0.01em; }
-#view-battles .hl-pot small, #view-battles .hl-row-side > small { color: var(--k-2); font: italic 700 11.5px/1 var(--font-h); white-space: nowrap; }
+#view-battles .hl-pot small, #view-battles .hl-row-side > small { color: var(--k-2); font: 700 11.5px/1 var(--font-h); white-space: nowrap; }
 #view-battles .hl-faces { display: inline-flex; align-items: center; }
 #view-battles .hl-row-main > .hl-faces, #view-battles .hl-winner { margin-top: 3px; }
 #view-battles .hl-face { --size: 30px; }
 #view-battles .hl-faces > .hl-face + .hl-face { margin-left: -6px; }
-#view-battles .hl-vs { margin: 0 6px; color: var(--k); font: italic 800 13px var(--font-xc); }
+#view-battles .hl-vs { margin: 0 6px; color: var(--k); font: 700 13px var(--font-h); }
 #view-battles .hl-seated { margin-left: 8px; color: var(--k-2); font: 600 12.5px var(--font-h); font-variant-numeric: tabular-nums; white-space: nowrap; }
 #view-battles .hl-row.is-open .hl-row-main { grid-template-columns: auto 1fr; }
 #view-battles .hl-row.is-open .hl-row-title, #view-battles .hl-row.is-open .hl-row-rules { grid-column: 1 / -1; }
@@ -438,7 +438,7 @@ body.hl-in-hall::after { display: none; }
 #view-battles .hl-how li::before {
   content: counter(hl-how); position: absolute; left: 14px; top: 11px; display: grid; place-items: center;
   width: 26px; height: 22px; border-radius: var(--r-tag); background: var(--k); color: var(--yel-k);
-  font: italic 800 13px/1 var(--font-xc); transform: skewX(var(--skew));
+  font: 700 13px/1 var(--font-h); transform: skewX(var(--skew));
 }
 
 /* ---- The builder ---------------------------------------------------------- */
@@ -585,7 +585,7 @@ body.hl-in-hall::after { display: none; }
 #view-battles .hl-tray-stack .hl-stack { --h: 54px; }
 #view-battles .hl-tray-copy { display: grid; gap: 2px; min-width: 0; }
 #view-battles .hl-tray-entry { display: grid; gap: 1px; white-space: nowrap; line-height: 1; }
-#view-battles .hl-tray-entry small { color: var(--k-2); font: italic 700 12px/1 var(--font-h); }
+#view-battles .hl-tray-entry small { color: var(--k-2); font: 700 12px/1 var(--font-h); }
 #view-battles .hl-tray-entry .bt-coins { font-size: 28px; letter-spacing: -0.02em; }
 #view-battles .hl-tray-entry .bt-coins .coin-i { width: 0.8em; height: 0.8em; }
 #view-battles .hl-tray-count { display: flex; align-items: baseline; gap: 8px; min-width: 0; color: var(--k-2); font-size: 12.5px; font-weight: 700; white-space: nowrap; }
@@ -630,7 +630,7 @@ body.hl-in-hall::after { display: none; }
   display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 6px 16px;
   margin: 12px 0 0; padding: 0 2px; color: var(--k-2); font-size: 13px; font-weight: 700;
 }
-#view-battles .hl-lineup-total > span:last-child { display: grid; justify-items: end; gap: 2px; font: italic 700 12.5px/1 var(--font-h); }
+#view-battles .hl-lineup-total > span:last-child { display: grid; justify-items: end; gap: 2px; font: 700 12.5px/1 var(--font-h); }
 #view-battles .hl-lineup-total .bt-coins { color: var(--k); font: normal 700 32px/1 var(--font-h); letter-spacing: -0.02em; }
 #view-battles .hl-lineup-total .bt-coins .coin-i { width: 0.8em; height: 0.8em; }
 #view-battles .hl-rules { min-width: 0; order: -1; border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); overflow: hidden; }

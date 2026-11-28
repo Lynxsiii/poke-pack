@@ -99,7 +99,7 @@
 }
 .search-eg::before {
   content: "Try"; align-self: stretch; flex: none; display: flex; align-items: center; min-width: 58px; padding: 0 18px 0 12px;
-  background: var(--k); color: var(--on-k); font: italic 700 13px var(--font-h);
+  background: var(--k); color: var(--on-k); font: 700 13px var(--font-h);
   clip-path: polygon(0 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
 }
 .search-eg b { font: 600 16px/1.1 var(--font-h); }
@@ -140,7 +140,7 @@
 @media (hover: hover) { .search-card:hover::after { transform: none; } }
 .search-thumb { display: block; width: 50px; height: 70px; overflow: hidden; border-radius: var(--r-tag); background: var(--box-2); }
 .search-thumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
-.search-owned { padding: 1px 7px 2px 6px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k); font: italic 700 12px/1.3 var(--font-h); white-space: nowrap; }
+.search-owned { padding: 1px 7px 2px 6px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k); font: 700 12px/1.3 var(--font-h); white-space: nowrap; }
 
 /* A sealed product: its photo, what it is, what it costs; the cart and the shop page beside it. */
 .search-prod {

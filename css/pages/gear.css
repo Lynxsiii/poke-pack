@@ -93,7 +93,7 @@ body[data-view="gear"]::after { display: none; }
 .gear-hero .gsleeve-standard.hero { width: min(46vw, 200px); border-radius: 4.5% / 3.2%; transform: rotate(4deg); filter: drop-shadow(10px 12px 0 rgb(0 40 50 / 0.26)); }
 .gear-hero-hint {
   position: absolute; z-index: 2; right: 8%; bottom: 10px; padding: 1px 8px; border-radius: var(--r-tag);
-  background: var(--k); color: var(--on-k); font: italic 700 12px/1.5 var(--font-h); pointer-events: none;
+  background: var(--k); color: var(--on-k); font: 700 12px/1.5 var(--font-h); pointer-events: none;
 }
 .gear-hero-info { position: relative; z-index: 2; min-width: 0; }
 .gear-hero-kicker { display: flex; align-items: center; gap: 10px; margin: 6px 0 0; color: var(--k-2); font: italic 700 14px var(--font-h); }
@@ -119,7 +119,7 @@ body[data-view="gear"]::after { display: none; }
 /* The equipped mark: an ink tag. */
 .gear-eq-tag {
   display: inline-flex; align-items: center; gap: 6px; flex: none; padding: 1px 9px 2px 8px; border-radius: var(--r-tag);
-  background: var(--k); color: var(--on-k); font: italic 700 13px/1.45 var(--font-h); white-space: nowrap;
+  background: var(--k); color: var(--on-k); font: 700 13px/1.45 var(--font-h); white-space: nowrap;
 }
 .gear-eq-tag::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--hp); }
 
@@ -168,7 +168,7 @@ body[data-view="gear"]::after { display: none; }
 .gear-price .coin-i { width: 17px; height: 17px; margin: 0; }
 .gear-price.is-big { font-size: 24px; gap: 6px; }
 .gear-price.is-big .coin-i { width: 24px; height: 24px; }
-.gear-own { color: var(--k-2); font: italic 700 13.5px var(--font-h); white-space: nowrap; }
+.gear-own { color: var(--k-2); font: 700 13.5px var(--font-h); white-space: nowrap; }
 .gear-own.is-quiet { color: var(--k-3); font-style: normal; font-weight: 600; }
 .gear-key.ghost.sm { flex: none; min-height: 34px; padding: 2px 12px 5px; font-size: 14px; }
 
@@ -205,7 +205,7 @@ body[data-view="gear"]::after { display: none; }
 .gear-flip { padding: 0; border: 0; background: none; cursor: pointer; }
 .gear-hint {
   position: absolute; left: 12px; bottom: 10px; padding: 1px 8px; border-radius: var(--r-tag);
-  background: var(--k); color: var(--on-k); font: italic 700 12px/1.5 var(--font-h); pointer-events: none;
+  background: var(--k); color: var(--on-k); font: 700 12px/1.5 var(--font-h); pointer-events: none;
 }
 .gear-sheet-tags { display: flex; align-items: center; gap: 8px; min-height: 28px; margin: 4px 0 0; }
 .gear-sheet-tags:empty { display: none; }
@@ -213,7 +213,7 @@ body[data-view="gear"]::after { display: none; }
 .gear-sheet-note { margin: 0; color: var(--k-2); font-size: 14.5px; font-weight: 700; }
 .gear-sheet-blurb { margin: 0; color: var(--k); font-size: 14.5px; line-height: 1.5; }
 .gear-found { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 16px; margin-top: 2px; }
-.gear-found small { flex: 1 0 100%; color: var(--k-3); font: italic 700 13px var(--font-h); }
+.gear-found small { flex: 1 0 100%; color: var(--k-3); font: 700 13px var(--font-h); }
 .gear-found a { display: inline-flex; align-items: center; min-height: 36px; color: var(--k); font: 600 15px var(--font-h); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--cy-2); text-decoration-thickness: 2px; }
 .gear-found a:hover { color: var(--cy-2); }
 /* The key stays in reach at the foot of a sheet taller than the screen (a long blurb on a phone). */
@@ -235,7 +235,7 @@ body[data-view="gear"]::after { display: none; }
   border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); color: var(--k);
 }
 .gift-art { position: relative; flex: none; display: grid; place-items: center; width: 60px; }
-.gift-art .chip.new { position: absolute; top: -6px; right: -8px; padding: 1px 7px; border-radius: var(--r-tag); background: var(--hp-low); color: var(--w0); font: italic 700 12px/1.4 var(--font-h); }
+.gift-art .chip.new { position: absolute; top: -6px; right: -8px; padding: 1px 7px; border-radius: var(--r-tag); background: var(--hp-low); color: var(--w0); font: 700 12px/1.4 var(--font-h); }
 .gift-copy { display: grid; flex: 1; min-width: 0; gap: 1px; }
 .gift-copy b { font: 600 15px/1.2 var(--font-h); }
 .gift-copy span { color: var(--k-2); font-size: 12.5px; font-weight: 700; }

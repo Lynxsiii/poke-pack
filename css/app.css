@@ -2330,7 +2330,7 @@ a.solid { color: var(--on-rip); }
 .pc-now { display: flex; flex-direction: column; gap: 2px; }
 .pc-label {
   color: var(--k-2);
-  font: italic 700 12.5px var(--font-h);
+  font: 700 12.5px var(--font-h);
 }
 .pc-now b {
   font: 700 30px/1.05 var(--font-h);
@@ -2500,7 +2500,7 @@ html body .price-card .pc-svg .pc-stop-a { stop-color: var(--cy); stop-opacity: 
 html body .price-card .pc-svg .pc-stop-b { stop-color: var(--cy); stop-opacity: 0.06; }
 html body .price-card .pc-svg .pc-cross { stroke: var(--k-2); stroke-dasharray: 3 4; }
 html body .price-card .pc-svg .pc-marker { fill: var(--yel); stroke: var(--k); stroke-width: 2.5; }
-html body .price-card .pc-label { color: var(--k-2); font: italic 700 13px var(--font-h); }
+html body .price-card .pc-label { color: var(--k-2); font: 700 13px var(--font-h); }
 html body .price-card .pc-now b { color: var(--k); font-family: var(--font-h); font-weight: 700; }
 html body .price-card .pc-delta { color: var(--k-2); font-weight: 700; }
 html body .price-card .pc-delta.up { color: var(--ok); }

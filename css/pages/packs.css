@@ -205,7 +205,7 @@ body[data-view="shop"]::after { display: none; }
 #view-shop .chase-th { flex: none; display: block; width: auto; height: 46px; margin-left: 6px; border-radius: var(--r-tag); }
 #view-shop .chase-row .rt-row-name { overflow: hidden; }
 #view-shop .chase-row .rt-row-name, #view-shop .chase-row .rt-row-name small { white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
-#view-shop .chase-own { margin-left: 4px; padding: 0 6px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k); font: italic 700 11px/1.5 var(--font-h); }
+#view-shop .chase-own { margin-left: 4px; padding: 0 6px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k); font: 700 11px/1.5 var(--font-h); }
 #view-shop .chase-row .rt-row-val { font-size: 18px; }
 #view-shop .chase-row .rt-row-val .coin-i { width: 18px; height: 18px; }
 #view-shop .chase-row:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 2px; }
@@ -314,7 +314,7 @@ body.rt-enter #view-shop .chase-grid > li { animation: rt-rise 0.34s var(--ease-
 #view-shop .promo-product.no-box .promo-fan.count-1 .promo-face { width: 84px; transform: rotate(3deg); }
 #view-shop .promo-note {
   position: absolute; z-index: 2; left: 8px; top: 8px; padding: 2px 9px; border-radius: var(--r-tag);
-  background: var(--hp-low); color: var(--w0); font: italic 700 12px/1.4 var(--font-h);
+  background: var(--hp-low); color: var(--w0); font: 700 12px/1.4 var(--font-h);
 }
 #view-shop .promo-kind-head { grid-column: 1 / -1; margin: 18px 0 0; color: var(--k); font: italic 800 22px/1 var(--font-xc); letter-spacing: -0.015em; }
 #view-shop .promo-kind-head:first-child { margin-top: 0; }
@@ -383,7 +383,7 @@ body.rt-enter #view-shop .chase-grid > li { animation: rt-rise 0.34s var(--ease-
 #view-shop .rail-set-copy { display: flex; flex-direction: column; gap: 1px; min-width: 0; flex: 1; }
 #view-shop .rail-set-copy b { overflow: hidden; color: var(--k); font: 600 15px var(--font-h); text-overflow: ellipsis; white-space: nowrap; }
 #view-shop .rail-set-copy small { color: var(--k-2); font: 700 12px var(--font); }
-#view-shop .rail-set .soon { flex: none; padding: 0; border: 0; background: none; color: var(--k-3); font: italic 700 12px var(--font-h); }
+#view-shop .rail-set .soon { flex: none; padding: 0; border: 0; background: none; color: var(--k-3); font: 700 12px var(--font-h); }
 
 /* ---- A computer: the stage on the left, the name and the key on the right -- */
 @media (min-width: 961px) {
@@ -501,7 +501,7 @@ main #view-catalog .era-block { margin: 34px 0 0; content-visibility: auto; cont
 main #view-catalog .era-head { display: block; margin: 0 0 14px; }
 main #view-catalog .era-head h3 { margin: 0; color: var(--k); font: italic 800 30px/1 var(--font-xc); letter-spacing: -0.02em; text-transform: none; }
 main #view-catalog .era-head p { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; margin: 8px 0 0; color: var(--k); font-size: 13.5px; font-weight: 700; }
-main #view-catalog .era-head .era-span { padding: 1px 8px; border-radius: var(--r-tag); background: var(--k); color: var(--yel-k); font: italic 800 12.5px/1.5 var(--font-xc); }
+main #view-catalog .era-head .era-span { padding: 1px 8px; border-radius: var(--r-tag); background: var(--k); color: var(--yel-k); font: 700 12.5px/1.5 var(--font-h); }
 main #view-catalog .era-head .era-count, main #view-catalog .era-head .era-found { color: var(--k); font-variant-numeric: tabular-nums; }
 main #view-catalog .cat-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 8px; }
 main #view-catalog .cat-tile {
