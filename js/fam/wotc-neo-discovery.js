@@ -26,7 +26,10 @@ const has = (pattern, cls) => ` ${pattern || ""} `.includes(` ${cls} `);
 const DIR = "assets/foil/fam/wotc-neo-discovery/";
 /** Pale-ink windows (Espeon's teal watercolour): a dodge would bleach them, so their sheen is held low. */
 const PALE = new Set(["1"]);
-const MAPS = { 1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1, 10: 1, 11: 1, 12: 1, 13: 1, 14: 1, 15: 1, 16: 1, 17: 1 };
+/** v2 (2026-11-28): the matte cut from the card's own scan by make_neo2_cosmos_maps.py --sam. The v1 hand hints were drawn on
+ * an earlier scan and sat 30-60 px off the print, so an unlit copy of the Pokémon's shape lay beside it. The cards whose SAM
+ * cut was wrong (Houndour 5, Tyranitar 12) or whose v1 was judged fine keep v1. */
+const MAPS = { 1: 1, 2: 1, 3: 1, 4: 2, 5: 2, 6: 2, 7: 2, 8: 1, 9: 2, 10: 2, 11: 1, 12: 1, 13: 2, 14: 1, 15: 2, 16: 2, 17: 2 };
 
 /** Whether a card face is this family's: the neo2 Rare Holo faces that have maps. */
 export function claims(card) {

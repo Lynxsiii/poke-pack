@@ -34,12 +34,23 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.f
     hsl(0, 95%, 55%) 55%, hsl(40, 100%, 55%) 62%, hsl(70, 100%, 48%) 69%, hsl(150, 85%, 45%) 77%,
     hsl(195, 95%, 50%) 85%, hsl(250, 85%, 62%) 93%, hsl(0, 95%, 55%) 100%);
   --sgl-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    rgb(165, 165, 165) 0%, rgb(130, 130, 130) 18%, rgb(72, 72, 72) 42%, rgb(24, 24, 24) 70%, rgb(6, 6, 6) 100%);
+    rgb(88, 88, 88) 0%, rgb(66, 66, 66) 18%, rgb(30, 30, 30) 42%, rgb(8, 8, 8) 64%, #000 84%);
+  /* 2026-11-28: pool 132 to 88 and black from 88% out, sand 0.45 to 0.25 (milky / tinted wash on GG06-GG32, TG01) */
+  --sgl-gain: 0.9;
+  --sgl-sand: 0.25;
   --sgl-grain-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     #000 0%, rgba(0, 0, 0, 0.8) 30%, rgba(0, 0, 0, 0.35) 60%, rgba(0, 0, 0, 0.15) 100%);
   --sgl-size: 30% auto;
   --sgl-pos: calc(var(--seed-x, 0.5) * 100% + (var(--pointer-from-left, 0.5) - 0.5) * 3px)
     calc(var(--seed-y, 0.5) * 100% + (var(--pointer-from-top, 0.5) - 0.5) * 3px);
+}
+/* A photographed print (the Japanese scans, `sgl-photo`): the photo already shows the foil's rainbow bands, so the
+   added rainbow is a touch only and the sand barely there. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-gallery.fam-swsh-gallery.fam-swsh-gallery.fam-swsh-gallery.foil-ex.has-foil-map.sgl-photo {
+  --sgl-gain: 0.4;
+  --sgl-sand: 0.12;
+  --shine-line: 0.2;
+  --shine-glit: 0.2;
 }
 
 /* ---- .foil: the rainbow round the light, dodged; at rest the grain, faint --------------------------------------- */
@@ -63,7 +74,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.f
   mask-position: center;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-  opacity: calc(clamp(0, calc(0.55 + var(--pointer-from-center) * 0.6), 1) * min(1, var(--foil-strength, 1)));
+  opacity: calc(var(--sgl-gain) * clamp(0, calc(0.55 + var(--pointer-from-center) * 0.6), 1) * min(1, var(--foil-strength, 1)));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-gallery.fam-swsh-gallery.fam-swsh-gallery.fam-swsh-gallery.foil-ex.has-foil-map:not(.lit):not(.settling) .foil {
   background-image: var(--sgl-grain);
@@ -72,7 +83,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.f
   background-repeat: repeat;
   background-blend-mode: normal;
   filter: none;
-  opacity: calc(0.4 * min(1, var(--foil-strength, 1)));
+  opacity: calc(0.22 * min(1, var(--foil-strength, 1)));
 }
 
 /* ---- .foil::before: the sand grain near the light ------------------------------------------------------------------ */
@@ -92,7 +103,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.f
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   clip-path: none;
-  opacity: 0.9;
+  /* 2026-11-28: 0.9 read as a red-blue glitter field over dark art (Comfey GG14) */
+  opacity: var(--sgl-sand);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-gallery.fam-swsh-gallery.fam-swsh-gallery.fam-swsh-gallery.foil-ex.has-foil-map .foil::after {
   background-image: none;

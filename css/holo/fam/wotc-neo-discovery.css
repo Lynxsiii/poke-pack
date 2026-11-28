@@ -63,7 +63,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
      stays coloured instead of burning to white */
   background-image:
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsl(0, 0%, 86%) 0%, hsl(0, 0%, 66%) 16%, hsl(0, 0%, 40%) 42%, hsl(0, 0%, 20%) 72%, hsl(0, 0%, 12%) 100%),
+      /* site review 2: 86% at the core burned a light ground (Smeargle 11) to a silver wash; 64% keeps its ink */
+      hsl(0, 0%, 64%) 0%, hsl(0, 0%, 52%) 16%, hsl(0, 0%, 34%) 42%, hsl(0, 0%, 16%) 72%, hsl(0, 0%, 8%) 100%),
     linear-gradient(118deg, hsl(196, 70%, 74%), hsl(228, 70%, 80%), hsl(276, 60%, 80%), hsl(326, 65%, 78%), hsl(26, 80%, 74%),
       hsl(52, 80%, 70%), hsl(140, 55%, 70%), hsl(196, 70%, 74%));
   background-size: 100% 100%, 300% 300%;
@@ -92,7 +93,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
   background-image:
     var(--foil-map-fleck),
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsl(0, 0%, 100%) 0%, hsl(0, 0%, 90%) 30%, hsl(0, 0%, 70%) 65%, hsl(0, 0%, 54%) 100%),
+      hsl(0, 0%, 100%) 0%, hsl(0, 0%, 84%) 30%, hsl(0, 0%, 52%) 65%, hsl(0, 0%, 30%) 100%),
     linear-gradient(64deg, hsl(190, 100%, 70%), hsl(225, 100%, 74%), hsl(285, 95%, 76%), hsl(330, 100%, 74%), hsl(30, 100%, 68%),
       hsl(55, 100%, 64%), hsl(140, 95%, 62%), hsl(190, 100%, 70%));
   background-size: var(--wotc-map-size), 100% 100%, 240% 240%;

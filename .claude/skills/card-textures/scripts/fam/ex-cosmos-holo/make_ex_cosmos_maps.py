@@ -220,6 +220,7 @@ def foil_area(med, win, cen, sal, seeds, rng, p=P):
 
 # ---- salient-object maps (U2-Net) -------------------------------------------------------------------------------
 _sessions = {}
+_synth_fig = {}
 SAL_MODELS = {"u2p": ("u2netp.onnx", (0.485, 0.456, 0.406), (0.229, 0.224, 0.225), 320),
               "u2net": ("u2net.onnx", (0.485, 0.456, 0.406), (0.229, 0.224, 0.225), 320)}
 # a third opinion for the cards both U2-Nets miss (hint "isnet": true): ISNet general use, the max of all three
@@ -228,6 +229,14 @@ SAL_ISNET = ("isnet-general-use.onnx", (0.485, 0.456, 0.406), (1.0, 1.0, 1.0), 1
 
 def saliency(cid, rgb, win, args, isnet=False):
     """max(u2netp, u2net[, isnet]) over the art window's tight crop, 0..1, full-card array, cached as PNGs."""
+    if getattr(args, "sam", ""):  # no u2net models at hand: the Pokemon cut by SAM2 (make_figure_masks.py) stands in
+        sys.path.insert(0, os.path.join(HERE, "..", ".."))
+        import make_figure_masks as FIG
+        if "sam" not in _sessions: _sessions["sam"] = FIG.Sam(args.sam)
+        y0, y1, x0, x1 = bbox(win > 0.5, pad=0)
+        fig, info = FIG.figure_mask(np.clip(rgb, 0, 255).astype(np.uint8), (x0, y0, x1, y1), win, False, _sessions["sam"])
+        print(cid, info, flush=True)
+        return fig.astype(np.float32)
     maps = []
     models = dict(SAL_MODELS)
     if isnet:
@@ -287,10 +296,38 @@ def make(c, args, hints):
         blab, bcen, ninl = borrowed_dots(c, rgb, win, os.path.join(args.refs, h["borrow"]), p)
         lab, cen = blab[y0:y1, x0:x1], bcen - np.array([x0, y0])
         note = f"borrowed {len(cen)} shapes ({ninl} inliers)"
-    sal = saliency(cid, rgb, win, args, bool(h.get("isnet")))[y0:y1, x0:x1]
+    if h.get("synth") and getattr(args, "sam", ""):
+        # no foil grain to go by on a plain print: SAM is prompted on the Pokemon (hint `fig`: scan points on it; default
+        # the window's centre), the window's corners as background; the best-scored mask of a sane size wins
+        sys.path.insert(0, os.path.join(HERE, "..", ".."))
+        import make_figure_masks as FIG
+        if "sam" not in _sessions: _sessions["sam"] = FIG.Sam(args.sam)
+        st = _sessions["sam"].encode(np.clip(sub, 0, 255).astype(np.uint8))
+        hh, ww = sw.shape
+        pos = [(x - x0, y - y0) for x, y in h.get("fig", [])] or [(ww / 2, hh / 2)]
+        neg = [(8, 8), (ww - 8, 8), (8, hh - 8), (ww - 8, hh - 8)]
+        cands = [(iou, mk) for mk, iou in _sessions["sam"].decode(st, pos + neg, [1] * len(pos) + [0] * 4) if 0.06 < mk.mean() < 0.6]
+        figm = max(cands, key=lambda t: t[0])[1] if cands else np.zeros((hh, ww), bool)
+        figm = ndi.binary_fill_holes(figm)
+        print(cid, "sam figure cover", round(float(figm.mean()), 3), flush=True)
+        _synth_fig[cid] = figm
+    if h.get("synth"):
+        # a scan of the plain print shows no cosmos at all: seeded shapes stand in (pinpoints, dots, a few discs), and the
+        # whole background the Pokemon leaves is the foil area
+        hh, ww = sw.shape
+        n = int(h.get("synth_n", 300))
+        cen = np.stack([rng.uniform(4, ww - 4, n), rng.uniform(4, hh - 4, n)], 1)
+        rad = np.where(rng.random(n) < 0.08, rng.uniform(6, 10, n), np.where(rng.random(n) < 0.35, rng.uniform(2.5, 4.5, n), rng.uniform(1.2, 2.2, n)))
+        lab = np.zeros((hh, ww), np.int32)
+        for i, ((cx, cy), r) in enumerate(zip(cen, rad)):
+            cv2.circle(lab, (int(round(cx)), int(round(cy))), int(round(r)), i + 1, -1)
+        note = f"synthetic {n} shapes"
+    sal = _synth_fig[cid].astype(np.float32) if cid in _synth_fig else saliency(cid, rgb, win, args, bool(h.get("isnet")))[y0:y1, x0:x1]
     seeds = {k: [(int(x) - x0, int(y) - y0) for x, y in h.get(k, [])] for k in ("foil", "matte")}
     if h.get("area") == "window":
         m, ref = sw > 0.5, 0.0
+    elif h.get("synth"):
+        m, ref = (sw > 0.5) & (ndi.binary_dilation(sal > 0.5, iterations=2) == 0), 0.0
     else:
         # shapes on the salient subject are the Pokemon's own texture, not foil: they do not vote for foil
         sc0 = np.nan_to_num(ndi.mean(sal, lab, index=np.arange(len(cen) + 1)))[1:] if len(cen) else np.zeros(0)
@@ -368,6 +405,7 @@ def main():
     ap.add_argument("--sal-cache", default="", help="folder of cached salient-object PNGs")
     ap.add_argument("--models", default="", help="folder holding u2net.onnx and u2netp.onnx")
     ap.add_argument("--pylib", default="", help="extra sys.path entry for onnxruntime")
+    ap.add_argument("--sam", default="", help="folder of SAM2 ONNX models: cut the Pokemon with SAM instead of u2net saliency")
     args = ap.parse_args()
     cv2.setRNGSeed(7)
     cards = json.load(open(args.list))

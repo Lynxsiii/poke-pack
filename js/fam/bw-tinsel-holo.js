@@ -68,7 +68,9 @@ export function claims(card) {
 
 /** The real finish of a claimed face (see the list above). */
 export function finishOf(card) {
-  return FINISH.get(card.id) || (set(card) === "dv1" ? "vault" : "tinsel");
+  // every theme-deck "-cracked-ice" print is Cracked Ice (14 of them were added after the list above and drew as Tinsel
+  // over the whole card, 2026-11-28)
+  return FINISH.get(card.id) || (/-cracked-ice$/.test(String(card.id)) ? "ice" : set(card) === "dv1" ? "vault" : "tinsel");
 }
 
 /* The finishes that light a second, colour-dodged layer while the card is held (the `.cure` span). */
@@ -116,6 +118,8 @@ export function famExtras(card, url, base) {
   const map = FULL_MAP.has(finish) ? fullMap(card)
     : finish === "rev-cross" ? `assets/foil/fam/bw-tinsel-holo/maps/bwp/${card.id.split("-")[1]}-cross-v1.webp` : "";
   const style = [];
+  // a Cracked Ice print the data has no map for: the shared window (Pokemon included, as on the card)
+  if (finish === "ice" && !card.foilMap) style.push(`--foil-map:url('${url("assets/foil/bw-promo/window-evo-v1.webp")}')`);
   if (map) style.push(`--foil-map:url('${url(map)}')`);
   if (WASH.has(card.id)) style.push(`--bwt-silver:${WASH.get(card.id)}`);
   if (VIVID.has(card.id)) style.push(VIVID.get(card.id));

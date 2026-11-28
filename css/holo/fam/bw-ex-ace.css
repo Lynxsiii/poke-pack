@@ -105,7 +105,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-ex-a
   /* where the main pillar stands, as a share of the card's width: about the pointer, offset per card, and sliding a
      little faster than the pointer (a diffraction band runs ahead of the tilt), so at a strong tilt it reaches the
      side border, where the real cards throw it (Kyogre-EX's left border, Keldeo-EX's right frame) */
-  --bxa-x: calc(0.5 + (var(--pointer-from-left) - 0.5) * 1.3 + var(--bxa-seed) * 0.3);
+  /* 2026-11-28: held between 24 % and 76 % of the width. At the side border the pillar had only the silver frame to
+     light (the Pokemon fills the rest), and every checker read it as a rainbow stripe stuck to the card's edge
+     (Keldeo-EX 49, Darkrai-EX BW46 and 88, Mewtwo-EX 14 ...). */
+  --bxa-x: clamp(0.24, 0.5 + (var(--pointer-from-left) - 0.5) * 1.3 + var(--bxa-seed) * 0.3, 0.76);
   --bxa-y: var(--pointer-from-top);
   /* the hue (one spectrum per card height, two in the images) slides down with the pointer and a little with the
      sideways tilt: about one spectrum for a full sweep, position 5..90% */
@@ -131,9 +134,16 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-ex-a
    card's own pillar mask, --bxa-pmask) added to itself three times while lit (1 - (1 - a)^3: the half-alpha inked ground
    reads 0.875, the heavily inked speed lines about 0.4, the matte zero stays zero) and the map twice at rest. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-ex-ace.fam-bw-ex-ace.fam-bw-ex-ace.fam-bw-ex-ace.bw-ex .foil {
-  background-image: var(--bxa-fan), linear-gradient(#8c8c8c, #8c8c8c);
-  background-size: 46% 200%, 100% 100%;
-  background-position: var(--bxa-fan-pos), center;
+  /* 2026-11-28 (holo check: "no sheen/texture; only rainbow blip at edge" on 5 of 6 EX): under the fan, a broad soft
+     pastel sheen either side of the pillar (a card and a third wide, fading out) and a silver pool at the lamp, so the
+     foil of the frame and the ground reads as lit foil wherever the lamp is, not only where the one pillar stands */
+  background-image: var(--bxa-fan),
+    linear-gradient(90deg, hsla(200, 70%, 72%, 0) 34%, hsla(200, 70%, 68%, 0.22) 41%, hsla(150, 60%, 68%, 0.26) 45.5%,
+      hsla(55, 75%, 70%, 0.28) 50%, hsla(20, 80%, 70%, 0.26) 54.5%, hsla(320, 65%, 70%, 0.22) 59%, hsla(320, 65%, 74%, 0) 66%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsl(0, 0%, 58%) 0%, hsl(0, 0%, 56%) 35%, hsl(0, 0%, 55%) 75%);
+  background-size: 46% 200%, 300% 100%, 100% 100%;
+  background-position: var(--bxa-fan-pos), var(--bxa-band-pos), center;
   background-repeat: no-repeat;
   background-blend-mode: normal;
   -webkit-mask-image: var(--art), var(--bxa-namefade), var(--bxa-vlines), var(--bxa-pmask), var(--bxa-pmask), var(--bxa-pmask);
@@ -150,13 +160,16 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-ex-a
   /* contrast pivots on 50% grey, so it strengthens the colour without touching the neutral */
   filter: contrast(calc(1.1 + var(--pointer-from-center) * 0.25)) saturate(1.2);
   mix-blend-mode: hard-light;
-  opacity: calc((0.3 + var(--card-opacity) * (0.5 + var(--pointer-from-center) * 0.2)) * var(--foil-strength, 1));
+  /* round 3 (2026-11-28): 0.5/0.2 to 0.36/0.14. In hard-light a 70 % top adds 0.4 to black ink, so the fan stood as
+     rainbow streaks with lifted blacks on the two Darkrai (bw5-63, bw11-88) */
+  opacity: calc((0.3 + var(--card-opacity) * (0.36 + var(--pointer-from-center) * 0.14)) * var(--foil-strength, 1));
 }
 /* At rest (diffuse light): no colour at all, the grey lifted, so the vertical line grain reads as a silver sheen. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-ex-ace.fam-bw-ex-ace.fam-bw-ex-ace.fam-bw-ex-ace.bw-ex:not(.lit):not(.settling) .foil {
   background-image: linear-gradient(#a6a6a6, #a6a6a6);
   background-size: 100% 100%;
   background-position: center;
+  background-repeat: no-repeat;
   /* the map added to itself only twice at rest (the lit rule takes it three times, so the light reaches the heavily
      inked grounds): the diffuse sheen stays as the audit measured it right */
   -webkit-mask-image: var(--art), var(--bxa-namefade), var(--bxa-vlines), var(--foil-map), var(--foil-map);
@@ -185,7 +198,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-ex-a
   background-repeat: repeat, no-repeat, no-repeat;
   mix-blend-mode: screen;
   filter: brightness(1.15) contrast(1.3);
-  opacity: min(1, calc((0.4 + var(--pointer-from-center) * 0.35) * max(1, var(--foil-strength, 1))));
+  opacity: min(1, calc((0.28 + var(--pointer-from-center) * 0.25) * max(1, var(--foil-strength, 1))));
 }
 /* The pillar, while held. .glare is hard-light over the card, masked by the foil only (the art, the name band faded and
    --bxa-pmask added to itself four times: 1 - (1 - a)^4, so the half-inked ground takes nearly all of it and a heavily
@@ -214,7 +227,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-ex-a
   -webkit-mask-size: contain, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
   mask-size: contain, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
   mix-blend-mode: hard-light;
-  opacity: var(--card-opacity);
+  /* x0.7 and the flecks toned down (2026-11-28): at full strength the pillar read as a pasted RGB smear over a dark
+     ground (holo check, Darkrai-EX 88/113) */
+  filter: saturate(0.6);
+  opacity: calc(var(--card-opacity) * 0.36);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-ex-ace.fam-bw-ex-ace.fam-bw-ex-ace.fam-bw-ex-ace.bw-ex .glare::after {
   background-image: var(--bxa-pillar);
@@ -233,7 +249,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-ex-a
   mask-repeat: no-repeat;
   /* round 4: the flecks keep the column's hue (round 3's brightness(1.6) saturate(0.8) turned them white: "pale green
      and white" at native size) */
-  filter: brightness(1.35) saturate(1.3);
+  filter: brightness(1.2) saturate(0.9);
   opacity: min(1, calc((0.9 + var(--pointer-from-center) * 0.3) * max(1, var(--foil-strength, 1))));
 }
 
@@ -262,9 +278,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-ex-a
      channels to about 0.37, so under hard-light a blue or violet dash never darkens the silver border into a dark
      speck (light only adds); the dash stays a clear hue */
   background-image:
-    linear-gradient(hsla(0, 0%, 100%, 0.3), hsla(0, 0%, 100%, 0.3)),
+    linear-gradient(hsla(0, 0%, 100%, 0.5), hsla(0, 0%, 100%, 0.5)),
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsla(0, 0%, 68%, 0) 0%, hsla(0, 0%, 68%, 0) 55%, hsla(0, 0%, 68%, 0.45) 85%, hsla(0, 0%, 68%, 0.6) 100%),
+      hsla(0, 0%, 68%, 0) 0%, hsla(0, 0%, 68%, 0.3) 30%, hsla(0, 0%, 68%, 0.7) 65%, hsla(0, 0%, 68%, 0.85) 100%),
     var(--bxa-dash), var(--bxa-dash);
   background-size: 100% 100%;
   background-position: center;
@@ -284,9 +300,13 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-ex-a
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   /* every dash changes colour as the card turns: half a turn of hue for a full sweep */
-  filter: hue-rotate(calc(var(--pointer-from-top) * 120deg + var(--pointer-from-left) * 60deg)) saturate(1.5);
+  /* 2026-11-28: saturate 1.5 -> 0.45 and the veil 0.3 -> 0.5. At phone size the dashes are 1-2 px, and a dash in
+     its full hue beside a neighbour in another read as RGB scanline noise on the grey frame (holo check, all four ACE
+     SPEC); the real frame reads silver first, the colour a pastel glint on the dashes nearest the lamp */
+  filter: hue-rotate(calc(var(--pointer-from-top) * 120deg + var(--pointer-from-left) * 60deg)) saturate(0.45);
   mix-blend-mode: hard-light;
-  opacity: min(1, calc((0.4 + var(--card-opacity) * 0.7) * var(--foil-strength, 1)));
+  /* 2026-11-28: 0.85 -> 0.6 held (Life Dew and Rock Guard: "heavy horizontal line screen on the frame") */
+  opacity: min(1, calc((0.3 + var(--card-opacity) * 0.16) * var(--foil-strength, 1)));
 }
 /* At rest (room light): neutral silver lines only, no hue (the dash mask twice, as before the light). */
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-ex-ace.fam-bw-ex-ace.fam-bw-ex-ace.fam-bw-ex-ace.bw-ace:not(.lit):not(.settling) .foil {

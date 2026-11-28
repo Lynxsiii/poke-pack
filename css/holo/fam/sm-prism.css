@@ -41,7 +41,11 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-pris
   /* the light's reach, painted as a cover that fades the layer under it to that blend's no-op far from the pointer
      (gradient masks composited with the map are dropped by WebKit) */
   --pp-fade-grey: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    rgba(128, 128, 128, 0) 0%, rgba(128, 128, 128, 0.04) 25%, rgba(128, 128, 128, 0.38) 50%, rgba(128, 128, 128, 0.75) 75%, rgba(128, 128, 128, 0.92) 100%);
+    rgba(128, 128, 128, 0) 0%, rgba(128, 128, 128, 0.02) 25%, rgba(128, 128, 128, 0.24) 50%, rgba(128, 128, 128, 0.58) 75%, rgba(128, 128, 128, 0.86) 100%);
+  /* the diamond is a mirror: it flashes a long way from the light (2026-11-28: the real ◇ throws a bright prismatic
+     rainbow, the old pastel bars under the window's fade never reached it with the light on the art) */
+  --pp-fade-dia: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    rgba(128, 128, 128, 0) 0%, rgba(128, 128, 128, 0) 45%, rgba(128, 128, 128, 0.3) 80%, rgba(128, 128, 128, 0.5) 100%);
   --pp-fade-white: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 25%, rgba(255, 255, 255, 0.3) 55%, rgba(255, 255, 255, 0.6) 85%, rgba(255, 255, 255, 0.7) 100%);
   /* soft diagonal lines rising right (gradient at 140deg), period 2.4 px: overlay-neutral grey +- a little */
@@ -61,9 +65,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-pris
     #fff 47%, hsl(48, 90%, 56%) 49%, #fff 51%, #fff 56%);
   /* the diamond's flash: silver-white bars (overlay: 2 x base) fading into pastel, 60deg-ish rising right */
   --pp-flash: repeating-linear-gradient(120deg,
-    rgb(128, 128, 128) 0%, rgb(128, 128, 128) 8%, rgb(250, 226, 236) 12%, rgb(255, 255, 255) 15%,
-    rgb(214, 232, 255) 18%, rgb(128, 128, 128) 22%, rgb(128, 128, 128) 29%, rgb(255, 238, 210) 33%,
-    rgb(255, 255, 255) 35.5%, rgb(226, 214, 255) 38.5%, rgb(128, 128, 128) 43%, rgb(128, 128, 128) 60%);
+    rgb(128, 128, 128) 0%, rgb(255, 120, 170) 5%, rgb(255, 196, 96) 9%, rgb(255, 255, 255) 12%,
+    rgb(150, 240, 150) 15%, rgb(96, 214, 255) 19%, rgb(160, 140, 255) 23%, rgb(128, 128, 128) 28%,
+    rgb(128, 128, 128) 32%, rgb(96, 220, 255) 36%, rgb(255, 255, 255) 39%, rgb(255, 232, 120) 42%,
+    rgb(255, 140, 110) 46%, rgb(232, 120, 255) 50%, rgb(128, 128, 128) 55%, rgb(128, 128, 128) 60%);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-prism.fam-sm-prism.fam-sm-prism.fam-sm-prism.sm-prism.has-foil-map.foil-trainer {
   --pp-top: 44%;
@@ -75,10 +80,13 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-pris
 }
 
 /* ---- .foil: a multiply group: the diamond's dark mirror (at rest too), the strip's bars as a child -------------- */
+/* 2026-11-28: the far end was rgb(98, 94, 116): the diamond read as a dark grey slab and muddied the attack name and
+   rules text printed over it (per-card review, 13 of 14 Japanese Prism Stars; jsm12a-77). A mid grey-violet keeps the
+   mirror's off-angle darkening without burying the print. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-prism.fam-sm-prism.fam-sm-prism.fam-sm-prism.sm-prism.has-foil-map .foil {
   background-image: linear-gradient(to bottom, #fff 0%, #fff var(--pp-bot), rgba(255, 255, 255, 0) var(--pp-bot)),
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    rgb(255, 255, 255) 0%, rgb(230, 226, 238) 14%, rgb(156, 150, 172) 32%, rgb(110, 106, 128) 52%, rgb(98, 94, 116) 100%);
+    rgb(255, 255, 255) 0%, rgb(234, 230, 242) 14%, rgb(186, 180, 200) 32%, rgb(158, 152, 174) 52%, rgb(148, 142, 164) 100%);
   background-size: 100% 100%, 100% 100%;
   background-position: center, center;
   background-repeat: no-repeat, no-repeat;
@@ -160,7 +168,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-pris
 }
 /* the diamond (and the frame beside and under it): broad silver-white and pastel bars */
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-prism.fam-sm-prism.fam-sm-prism.fam-sm-prism.sm-prism.has-foil-map .glare::after {
-  background-image: var(--pp-fade-grey), var(--pp-flash);
+  background-image: var(--pp-fade-dia), var(--pp-flash);
   background-size: 100% 100%, 200% 200%;
   background-position: center, var(--pp-slide-b);
   background-repeat: no-repeat, repeat;

@@ -41,16 +41,22 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
 body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-gym.fam-wotc-gym.fam-wotc-gym.fam-wotc-gym.gym-mapped .foil {
   background-image:
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsla(210, 25%, 92%, 0.62) 0%, hsla(200, 30%, 72%, 0.22) 30%, hsla(240, 20%, 60%, 0) 55%),
+      hsla(210, 25%, 92%, 0.28) 0%, hsla(200, 30%, 72%, 0.09) 16%, hsla(240, 20%, 60%, 0) 34%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      #fff 0%, hsl(0, 0%, 60%) 15%, hsl(0, 0%, 16%) 32%, #000 50%),
     linear-gradient(118deg,
       hsl(48, 80%, 40%) 0%, hsl(90, 70%, 36%) 14%, hsl(150, 70%, 34%) 28%, hsl(190, 80%, 38%) 42%,
       hsl(225, 80%, 44%) 56%, hsl(275, 70%, 42%) 70%, hsl(320, 70%, 40%) 82%, hsl(48, 80%, 40%) 100%);
-  background-size: 100% 100%, 170% 170%;
+  background-size: 100% 100%, 100% 100%, 170% 170%;
   background-position:
     center,
+    center,
     calc(50% + (var(--background-x) - 50%) * -1.6) calc(50% + (var(--background-y) - 50%) * -1.6);
-  background-repeat: no-repeat, no-repeat;
-  background-blend-mode: normal, normal;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  /* the spectrum is multiplied by a pool round the light and the white pool screened on top: the foil only adds light where
+     the lamp hits, and the rest of the window keeps the print's own deep blacks (2026-11-28: the whole-window spectrum read as
+     a blue-lavender haze over every dark background) */
+  background-blend-mode: screen, multiply, normal;
   mix-blend-mode: screen;
   filter: saturate(1.08);
   clip-path: none;
@@ -68,14 +74,15 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
   mask-repeat: no-repeat;
   opacity: calc((0.08 + var(--card-opacity) * 0.24) * var(--foil-strength, 1));
 }
-/* at rest: a soft diagonal sheen, brightest on one silver-gold band, so a binder page still reads as foil (and a dark sky is lifted, never darkened) */
+/* at rest: a soft diagonal sheen, brightest on one silver-gold band, so a binder page still reads as foil (one narrow band on black: the dark sky keeps its blacks) */
 body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-gym.fam-wotc-gym.fam-wotc-gym.fam-wotc-gym.gym-mapped:not(.lit):not(.settling) .foil {
   background-image: linear-gradient(118deg,
-    hsl(222, 25%, 10%) 0%, hsl(210, 22%, 22%) 20%, hsl(46, 30%, 46%) 36%, hsl(270, 20%, 24%) 52%,
-    hsl(220, 25%, 10%) 68%, hsl(195, 25%, 32%) 86%, hsl(230, 25%, 12%) 100%);
+    #000 0%, #000 24%, hsl(46, 30%, 40%) 37%, hsl(270, 20%, 12%) 50%,
+    #000 60%, #000 78%, hsl(195, 25%, 22%) 88%, #000 98%);
   background-size: 100% 100%;
   background-position: center;
-  opacity: calc(0.55 * var(--foil-strength, 1));
+  background-blend-mode: normal;
+  opacity: calc(0.42 * var(--foil-strength, 1));
 }
 
 /* ---- the glitter: two halves, each lit by its own sliding band and the pointer's pool -------------------------------- */
@@ -92,10 +99,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
   border-radius: 0;
   -webkit-mask-image:
     linear-gradient(104deg, rgba(0, 0, 0, 0.2) 8%, #000 20%, #000 27%, rgba(0, 0, 0, 0.2) 40%, rgba(0, 0, 0, 0.2) 56%, #000 68%, #000 74%, rgba(0, 0, 0, 0.2) 88%),
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.5) 90%);
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.42) 18%, rgba(0, 0, 0, 0.08) 40%, rgba(0, 0, 0, 0.02) 100%);
   mask-image:
     linear-gradient(104deg, rgba(0, 0, 0, 0.2) 8%, #000 20%, #000 27%, rgba(0, 0, 0, 0.2) 40%, rgba(0, 0, 0, 0.2) 56%, #000 68%, #000 74%, rgba(0, 0, 0, 0.2) 88%),
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.5) 90%);
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.42) 18%, rgba(0, 0, 0, 0.08) 40%, rgba(0, 0, 0, 0.02) 100%);
   -webkit-mask-composite: source-in, source-over;
   mask-composite: intersect, add;
   mask-mode: alpha, alpha;
@@ -111,10 +118,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
   background-image: var(--gym-glitter-b);
   -webkit-mask-image:
     linear-gradient(66deg, rgba(0, 0, 0, 0.2) 6%, #000 18%, #000 25%, rgba(0, 0, 0, 0.2) 38%, rgba(0, 0, 0, 0.2) 54%, #000 66%, #000 72%, rgba(0, 0, 0, 0.2) 86%),
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.5) 90%);
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.42) 18%, rgba(0, 0, 0, 0.08) 40%, rgba(0, 0, 0, 0.02) 100%);
   mask-image:
     linear-gradient(66deg, rgba(0, 0, 0, 0.2) 6%, #000 18%, #000 25%, rgba(0, 0, 0, 0.2) 38%, rgba(0, 0, 0, 0.2) 54%, #000 66%, #000 72%, rgba(0, 0, 0, 0.2) 86%),
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.5) 90%);
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.42) 18%, rgba(0, 0, 0, 0.08) 40%, rgba(0, 0, 0, 0.02) 100%);
   -webkit-mask-position: calc(50% + (var(--background-x) - 50%) * -3.5) calc(50% + (var(--background-y) - 50%) * 3.5), center;
   mask-position: calc(50% + (var(--background-x) - 50%) * -3.5) calc(50% + (var(--background-y) - 50%) * 3.5), center;
 }
@@ -123,15 +130,18 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
 body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-gym.fam-wotc-gym.fam-wotc-gym.fam-wotc-gym.gym-mapped .glare {
   background-image:
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsla(210, 40%, 98%, 0.55) 0%, hsla(200, 60%, 80%, 0.2) 24%, transparent 55%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #fff 0%, hsl(0, 0%, 66%) 16%, hsl(0, 0%, 18%) 36%, hsl(0, 0%, 4%) 60%),
     linear-gradient(118deg,
       hsl(48, 100%, 62%) 0%, hsl(100, 90%, 58%) 14%, hsl(165, 95%, 58%) 28%, hsl(200, 100%, 64%) 42%,
       hsl(240, 100%, 74%) 56%, hsl(290, 95%, 68%) 70%, hsl(335, 100%, 66%) 82%, hsl(48, 100%, 62%) 100%);
-  background-size: 100% 100%, 170% 170%;
+  background-size: 100% 100%, 100% 100%, 170% 170%;
   background-position:
     center,
+    center,
     calc(50% + (var(--background-x) - 50%) * -1.6) calc(50% + (var(--background-y) - 50%) * -1.6);
-  background-repeat: no-repeat, no-repeat;
-  background-blend-mode: normal, normal;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  /* the dots light up round the lamp and fade away from it (they were one flat cyan over the whole window) */
+  background-blend-mode: screen, multiply, normal;
   mix-blend-mode: screen;
   filter: none;
   clip-path: none;

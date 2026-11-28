@@ -245,6 +245,120 @@ cure"). The surface gloss throws a soft highlight.
 
 ## Pitfalls
 
+- **A mirror under ink: dodge the light in, never screen it on.** The Gold Stars, Pokémon-ex, EX refractor holos and sheen
+  Energies screened grey or white light over the map: strong enough to see, it lifted every black to fog; turned down, the
+  card showed nothing lit (2026-11-28 site review 2: Gold Stars 0 of 25 good). Give the `.foil` a black `background-color`
+  and `mix-blend-mode: color-dodge`, with the light multiplied by a radial pool at the pointer that ends in black: blacks
+  stay black, the print's own light dots blow out first (a flash), and the sheet falls off away from the lamp. Keep the
+  dodge grey near 50% where the map is background only and near 30% where it covers the Pokémon (higher bleaches pale ink
+  and turns saturated ink neon). The lamp core on top is `overlay`, not `screen`.
+- **A hand-hinted matte goes stale when the scan is replaced.** Neo Discovery's mattes were drawn from hints on older scans
+  and sat 30 to 60 px off the print (a ghost silhouette beside the Pokémon); it was not a placement fault. Cut the Pokémon
+  from the shipped scan itself (`make_figure_masks.figure_mask` with SAM; `scripts/cut_figure_from_maps.py` multiplies the
+  cut into existing maps under a new version), view every preview, and keep the old map where the cut is wrong.
+- **A layer multiplied by an RGBA map leaks through the map's soft edge.** The DP cosmos families drew their flecks as
+  `background-image: <white pool>, var(--foil-map)` with `background-blend-mode: multiply`, masked by the same map's
+  alpha. Where the map is transparent the pool has nothing to multiply with and paints itself, white; the mask hides it
+  where alpha is 0, but at alpha a the layer shows a x (1 - a) of the white pool, which peaks at the half-transparent
+  rim: a pale halo tracing the Pokemon's cut-out, and a wash wherever the alpha is deliberately partial (2026-11-28
+  round 2: about 80 DP holos). Always put an opaque black layer under the map
+  (`..., var(--foil-map), linear-gradient(#000, #000)`, blend modes `multiply, normal, normal`).
+- **A sheen under a pool wider than the art window is a tint, not a highlight.** One saturated hue screened over the
+  whole window read as a "purple cast"; cutting it to nothing read as "holo shows nothing when lit". What passes: a pool
+  about half the window wide, pastel colours (lightness 72-80%), the whole spectrum fitted to about the card
+  (`background-size: 120%`) so the pool spans several hues, screened at 0.3-0.4. A fleck map drawn only from the scan's
+  grain is empty on a clean scan (Call of Legends, HGSS): give it a minimum cover (`make_cosmos_flecks.py`, MIN_COVER).
+
+- **A Scarlet & Violet foil must not recolour the picture, and a TCG Live map is not zero over the Pokémon.** The SV holo
+  rare, Illustration Rare and Double Rare recipes laid a saturated spectrum with `hard-light`, `color-dodge` or `multiply`
+  over the whole map: a rainbow tint over the art box, wide rainbow bars, sparkle stars on the Pokémon (2026-11-28 site
+  review). Two causes. One: the spectrum had no neutral value, so it changed every pixel. Build the layer so that it is
+  50% grey away from the light (`background-blend-mode: screen, multiply, …` over [grey, a pool that ends in black, the
+  pattern, a pale spectrum]) and blend it with `overlay`: grey is overlay's identity, so nothing moves outside the pool.
+  Two: Live maps carry about 13% alpha over the Pokémon and the text box; list `var(--foil-map)` two or three times in
+  the mask (`intersect`) to square or cube it, which takes that floor to 2% or less and keeps the foil areas.
+  The cosmos promos had a third fault: glitter dust is not cosmos. Cosmos is round planets of several sizes in the art
+  background (`make_cosmos_orbs.py`), and the Pokémon is cut out of the map (`make_cosmos_figure_maps.py`,
+  `make_sv_ex_promo_maps.py` for an ex promo Live has no map for).
+- **A full-art etch map is not all lines** (2026-11-28, the card-by-card review of the Scarlet & Violet full arts).
+  Live's etch is solid white over a trainer's face and clothes and over a shiny's Pokémon, so any layer that paints
+  "white through the etch map" (the Ultra Rares' `.glare::after`, the shared `.relief`) is a white fill there: the
+  milky wash and the dark skin turned pale. Keep such layers faint and in a pool round the light, and turn
+  `--relief` down per family. On the Paldean Fates shinies Live's foil map is 1.0 on bare silver and 0.6-0.75 under the
+  Pokémon's ink: cut the map at about 0.9 (`scripts/fam/sv-shiny/make_shiny_masks.py`) so no layer lands on the
+  Pokémon. A stamped tile (the Japanese ball mirrors) is a mask for an overlay, never paint: drawn in normal blend its
+  outlines cut the attack text.
+  cut into existing maps under a new version), view every preview, and keep the old map where the cut is wrong. Where the grain cut
+  fails (a plain-print scan, a dark figure on a dark sky), prompt SAM on the figure itself: `make_figure_masks.point_mask`,
+  `cut_figure_from_maps.py --points "x,y;x,y"`.
+
+- **A window holo lights round the lamp, not over the window.** The WotC Team Rocket, Legendary Collection, Gym and promo
+  recipes screened a spectrum, a silver floor and a 0.55 rest sheen over the whole foil map, so every black or navy
+  background read as a blue-lavender or grey haze, at rest too (2026-11-28 site review: 30 of 40 bad). A real WotC holo
+  keeps its deep blacks and only adds light where the lamp hits. Multiply the spectrum by a pool at the pointer
+  (`background-blend-mode: screen, multiply, normal` over [white pool, black-edged radial, spectrum]), or give the whole
+  foil group a radial mask layer (Expedition), keep the rest sheen one narrow band on black, and let glitter and star
+  flares fade to nearly nothing 40-50% of the way from the light. A band's width is its share of the oversized layer
+  times the layer's size: 20% of a 300% layer is 60% of the card (Neo Genesis, the Shining band). Colour-dodge floors
+  stay under about 40% grey or a red or magenta ink floods flat (Base Set Charizard, Clefairy).
+- **Before blaming a family recipe for a hue wash, hide `.shine`** (`foil_probe.mjs --css ".tcg .shine{display:none!important}"`).
+  The shared etch shine overlays a full spectrum on every `has-etch-map` face; on flat Black & White full arts it
+  re-coloured the print (N's grey cap pink) while the family's own stripes were innocent. A family turns it down
+  in its own sheet with `--shine-line` / `--shine-glit` on its `.tcg` selector; no shared edit is needed.
+- **Deck variants ride on an id suffix.** `<id>-cracked-ice` prints have no rarity or foil map of their own, so they
+  fell into the parent holo family and drew its tinsel, sheen or stars over the whole card. Route them by suffix in
+  the family module and give a window mask where `card.foilMap` is empty.
+- **An opaque painted sheet buries the print.** XY BREAK's grey checker replaced the white lightning background;
+  multiplied over the scan it keeps the ink. Likewise a spectrum finer than about 10% of the card per cycle, or
+  hard-edged prism bars, read as a comb of stripes at phone size: feather the bars and widen the cycle.
+- Light that must not grey dark ink goes on in `overlay` (or a dodge), never `hard-light`, `screen` or a normal-blend white: those lift black to grey/pastel ("haze", "grain over the darks", "milky wash"). Overlay scales with the ink under it. Same for glitter tiles and rainbow sweeps; cap a colour-dodge layer's brightness under 0.5. A set whose finish falls to a shared recipe (me55 IR/SIR, ME Ultra Rares) is fixed by widening the owning family module's id regex, not by a new recipe (2026-11-28).
+- **A holo's light is local, its dots are the scan's, and its Pokémon is cut from the scan.** The 2026-11-28 site review
+  failed the whole DP cosmos generation three ways. (1) LV.X wore the era frame map, a rectangle window, so every layer
+  sat on the Pokémon; `make_figure_masks.py` now cuts the figure from each scan (the foil shows as small round dots in a
+  holo scan, matte ink is smooth; that grain scores SAM2's candidates, grows the pick by further candidates and GrabCut,
+  and falls back on SAM's most confident salient object when the grain is no guide). It is generic (`--family/--sets/
+  --cards`, `--window`, `--zone`, `--spill`); about 3 in 4 LV.X come out whole, the rest lose a limb, so
+  `make_cosmos_flecks.py` also puts no glitter where the scan shows no grain. (2) The fleck maps pasted synthetic
+  pixel-grid discs over the dots the scan already shows, and painted them at rest: the flecks are now the scan's own dots
+  plus a sparse sprinkle of soft round ones, shown lit only. (3) Every sheen was a colour-dodged spectrum over the whole
+  window with a closing `contrast(0.8)` (a wash, a magenta flood on LEGENDs): multiply the sheen and the flecks by a
+  radial pool at the pointer that ends in black and `screen` them, so nothing changes away from the light. Check that
+  the result is still visible; the first screened pool at 0.34 could not be seen at phone size.
+- **Glitter belongs on the engraving, not spread over the foil.** Noah, 2026-11-28: "the sparkles or dots on the holo
+  take away from the texture as i dont see the texture too much". The shared `.shine::after` fleck tile was masked by
+  art x foil map only, so on every face whose map covers the Pokémon (shiny vault cards, Japanese twins) a uniform
+  grain sat over the figure; the Scarlet & Violet Double Rare star coat (`cure-stars`) ran at full strength and
+  saturation edge to edge, coloured stars on every face. Now the flecks are masked by the etch too (they catch the
+  light on the ridges) at `--shine-glit` 0.6 by default, and the star coat is a clear coat that fades out 55% of the
+  way from the light. `holo_check.py` reports `speck` (fine grain the foil adds over the art, as a ratio of the
+  print's own) and flags it over 0.45: watch it after touching any glitter, fleck or sparkle layer.
+- **Pick the streak's blend by what the ink under it can show (BW Tinsel, 2026-11-28).** One hard-light streak texture
+  cannot serve every window: coloured streaks in hard-light were rainbow static over dark art, pale pastels were
+  invisible on pale art, and any evenly pitched ridge list reads as a CRT line screen at phone size. Scatter the streaks
+  (random heights, lengths, strengths, in patches) and split the light three ways, all inside one pool at the lamp:
+  `overlay` for the colour (it scales with the ink, black stays black), a low desaturated hard-light for dark windows,
+  and hard-light tints whose strongest channel is the neutral 0.5 (they can only darken a channel) for pale windows.
+  A light that must stay off the border (the BW EX pillar) is clamped to the middle of the card: on the frame, with the
+  Pokemon filling the rest, it reads as a rainbow stripe stuck to the card's edge. Crisp 2 % spectral lines (flat BW
+  full arts) get a `filter: blur()` of about 1.4 % of the card so they read as bands.
+- **The shared etch shine is a saturated spectrum in `overlay`: it olive-tints dark ink and blotches a blurred etch.**
+  The 2026-11-28 full-site review of Sword & Shield traced four "different" faults to `.shine` (etch-shine.css) riding
+  on every `has-etch-map` face: black coats and hair gone olive/brown on full-art Supporters (overlay doubles two
+  channels of a dark grey and zeroes the third), a uniform diagonal rainbow stripe on their silver frames, cloud
+  blotches over every Radiant (their etch is a blurred `-etch-v3` map) and tinted wavy lines on Amazing Rares and VMAX.
+  A family that draws its own colour sets `--shine-line: 0; --shine-glit: 0` (and a small `--relief`) on its own
+  selector. Also: a periodic line strip, however band-limited, reads as a line screen at phone size (the SWSH Rare Holo:
+  use `scripts/fam/swsh-holo/make_grain.py`, noise with no period); a dodged etch needs the map squared and a low
+  opacity or its grey ground is a milky wash and its maze/diamond fields show white (rainbow rares); a `-etch-v3`
+  map is blotches, never ridges: give those faces a `-soft` class and nearly no relief; gold gets no glitter tile at
+  all, and lit etch lines multiplied by the scan (`var(--art)` as the top background layer, `multiply`) leave black
+  ink black.
+- **A Japanese full art with no map is foil edge to edge.** With no foilMap a full art gets the white `full.webp`, so
+  skin and faces take every band and tint (Supporter full arts read as a diagonal hatch over the face). Since the
+  English lettering can be painted out (`jp_twin_maps.py --clean-text`), full arts take their English twin's foil
+  map too (`FULL` in jp_twin_maps.py) and keep their own drawn etch; run `--write` then `--clean-text --write
+  --only=<ids>` after adding any Japanese set, then `make_sir_masks.py --ids` for any face that turns sv-sir.
+
 - **A refractor mask that covers the window lights the sky.** Holon Phantoms Rayquaza δ 016/110's silhouette was set to
   the whole art window on purpose ("its coils fill the window"), so the refractor's screened rainbow and rest sheen sat
   over the matte blue sky too, and on Noah's graded slab (2026-11-27) the art read as a blue-purple haze. The real card
@@ -628,6 +742,24 @@ cure"). The surface gloss throws a soft highlight.
   spectral gradient goes on a card, find a tilted photo or video of
   that card that shows the colours. Without one, light the texture
   white or in the foil's own tint.
+- **A photographed scan already carries its foil.** The Japanese scans (`j…` ids) are photos of foil prints: bands,
+  silver and sparkle are in the picture. A full recipe on top doubles them (pastel wash near the light, glitter on
+  the figure). Give such faces a `-photo` class from the family module (`/^j/` on the id) and run band, tint and
+  sparkle at roughly a third (`sfs-photo`, `sgl-photo`, `sfa-photo`, `smf-photo`).
+- **`has-etch-drawn` raises `--shine-line` to 0.6 over everything.** etch-shine.css's rule out-ranks a gold or shiny
+  family's quieter value, so a gold with a drawn etch gets a rainbow sweep. Set `--shine-line` / `--shine-glit` /
+  `--relief` in the family sheet's own (longer) selector rather than trusting the shared default.
+- **A shiny-vault map covers the Pokémon; the card does not.** Build a background-only map per card from the scan
+  (`scripts/fam/swsh-sf-shiny/make_bg_maps.py`: Live map × scan whiteness × edge-connected regions) and mask the
+  foil with it; keep sparkle off the figure.
+
+- **A lamp pool that only falls to 40-46 % is a wash (XY round 2, 2026-11-28).** A colour-dodge or screen layer
+  whose pointer pool stays near half strength at the far corner lifts and tints the whole face ("milky / pastel
+  wash", 40 XY full arts, the Sheen holos, the Radiant Collection). Let the pool fall to about 20 % and mask
+  stripes, sparkle and shard flashes by the same pool; give the rest state a flat ground of its own (the pointer
+  rests at the centre, so a lit pool would draw a bright middle). The shared `.shine` / `.relief` also need turning
+  down per family (`--shine-glit`, `--relief`) or they re-add the wash. A hard-light field under 30 % grey is a
+  multiply by half: it turned Evolutions' light backgrounds dark; keep a metal field within 10 % of mid grey.
 
 ## What has shipped, set by set
 

@@ -339,3 +339,18 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-full
   border-radius: 0;
   opacity: var(--smf-ring-sparkle-a);
 }
+
+/* ---- A photographed print (the Japanese scans, `smf-photo`): the photo already shows the foil's bands and its pale
+   sheen, so a full recipe on top washes the pale art pastel near the light. Quieter band, tint and sparkle; the
+   dodge is halved so the highlight stays a local lift round the light. ---------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.foil-ultra.has-foil-map.smf-photo:is(.smf-gx, .smf-t, .smf-alt) {
+  --smf-band: clamp(0, calc(0.12 + var(--pointer-from-center) * 0.4), 0.4);
+  --smf-tint-a: 0.4;
+  --smf-sparkle-a: calc(0.06 + var(--pointer-from-center) * 0.1);
+  --smf-ring-sparkle-a: 0.3;
+  --shine-line: 0.15;
+  --shine-glit: 0.1;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.foil-ultra.has-foil-map.smf-photo:is(.smf-gx, .smf-t, .smf-alt) .foil {
+  opacity: calc(min(1, var(--foil-strength, 1)) * 0.5);
+}

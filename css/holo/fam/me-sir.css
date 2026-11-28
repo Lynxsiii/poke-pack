@@ -41,8 +41,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-me-sir.fam-me-sir.fam-me-sir.foil-sir.has-
   clip-path: none;
   border-radius: 0;
   background-color: transparent;
-  background-image: var(--mesir-specks);
-  background-size: var(--mesir-tile) auto;
+  /* the grain as a trace under the etch sheen (it was the first thing seen, 2026-11-28) */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), var(--mesir-specks);
+  background-size: 100% 100%, var(--mesir-tile) auto;
   background-position: var(--seed-pos, center);
   background-repeat: repeat;
   background-blend-mode: normal;
@@ -59,10 +60,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-me-sir.fam-me-sir.fam-me-sir.foil-sir.has-
   mask-position: center, center;
   -webkit-mask-repeat: no-repeat, no-repeat;
   mask-repeat: no-repeat, no-repeat;
-  opacity: calc(0.6 * var(--foil-strength, 1));
+  opacity: calc(0.28 * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.fam-me-sir.fam-me-sir.fam-me-sir.foil-sir.has-foil-map:not(.lit):not(.settling) .foil {
-  opacity: calc(0.6 * var(--foil-strength, 1));
+  opacity: calc(0.28 * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.fam-me-sir.fam-me-sir.fam-me-sir.foil-sir.has-foil-map .foil::before {
   content: none;
@@ -172,38 +173,33 @@ body.fx-holo.fx-holo.fx-holo .tcg.art-missing.fam-me-sir.fam-me-sir.fam-me-sir.f
   display: none;
 }
 
-/* ---- .glare: the sparkle under the light, the pool and the spectral band ---------- */
-/* Hard-light on a neutral 50% grey: the grey draws nothing, a speck only adds light in its own hue. Two copies of the
-   tile drift against each other with the tilt and turn hue with it (the specks twinkle); masked by the art, the pool
-   (full within about a quarter of the card's diagonal of the pointer, 0.3 beyond) and the mask over itself. */
+/* ---- .glare: the engraving under the light ------------------------------------------
+   2026-11-28 (Noah: "the sparkles or dots on the holo take away from the texture as I don't see the texture too
+   much"; the per-card review: "grain speckle, etch invisible" on 13 of 16). The glare was two hard-lit glint tiles:
+   hard-light screens a speck onto black ink as a grey dot, so dark paintings (Mega Darkrai ex, Mega Sharpedo ex)
+   wore a sand of sparks and the etch never read. The glints are gone. The glare is now the lamp on Live's etch: a
+   white pool, brightest round the pointer and still there across the face, OVERLAID through the etch squared (the
+   ridges, not the slopes). Overlay scales the light by the ink under it, so the fine lines following the drawing
+   light up over mid and pale ink and the frame, and black ink stays black. */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-me-sir.fam-me-sir.fam-me-sir.foil-sir.has-foil-map .glare {
-  --shift: 3px;
-  --mesir-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    #000 0%, #000 24%, rgba(0, 0, 0, 0.3) 55%, rgba(0, 0, 0, 0.3) 100%);
   clip-path: none;
   border-radius: 0;
-  background-color: hsl(0, 0%, 50%);
-  background-image:
-    var(--mesir-glints),
-    var(--mesir-glints),
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsla(0, 0%, 100%, 0.12) 0%, hsla(0, 0%, 100%, 0.04) 20%, hsla(0, 0%, 100%, 0) 40%);
-  background-size: var(--mesir-tile) auto, var(--mesir-tile) auto, 100% 100%;
-  background-position:
-    calc(31% + var(--pointer-from-left) * var(--shift)) calc(67% + var(--pointer-from-top) * var(--shift)),
-    calc(73% - var(--pointer-from-left) * var(--shift)) calc(19% - var(--pointer-from-top) * var(--shift)),
-    center;
-  background-repeat: repeat, repeat, no-repeat;
+  background-color: transparent;
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    rgba(255, 255, 255, 0.52) 0%, rgba(255, 255, 255, 0.4) 24%, rgba(255, 255, 255, 0.24) 58%, rgba(255, 255, 255, 0.14) 100%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
   background-blend-mode: normal;
-  mix-blend-mode: hard-light;
-  filter: hue-rotate(calc(var(--rotate-x) * 5 + var(--rotate-y) * 3));
-  -webkit-mask-image: var(--art), var(--mesir-pool), var(--mesir-mask), var(--mesir-mask);
-  -webkit-mask-composite: source-in, source-in, source-over, source-over;
-  mask-image: var(--art), var(--mesir-pool), var(--mesir-mask), var(--mesir-mask);
-  mask-composite: intersect, intersect, add, add;
+  mix-blend-mode: overlay;
+  filter: none;
+  -webkit-mask-image: var(--art), var(--shine-etch, var(--etch-map)), var(--shine-etch, var(--etch-map));
+  -webkit-mask-composite: source-in, source-in, source-over;
+  mask-image: var(--art), var(--shine-etch, var(--etch-map)), var(--shine-etch, var(--etch-map));
+  mask-composite: intersect, intersect, add;
   mask-mode: alpha;
-  -webkit-mask-size: contain, 100% 100%, 100% 100%, 100% 100%;
-  mask-size: contain, 100% 100%, 100% 100%, 100% 100%;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
   -webkit-mask-position: center;
   mask-position: center;
   -webkit-mask-repeat: no-repeat;
@@ -246,5 +242,11 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-me-sir.fam-me-sir.fam-me-sir.foil-sir.has-
 /* 2026-11-23, Noah: "a lot of cards lost their etched art". The etch sheen above was too dim to see on a phone, so
    under the light the dodge group runs near full and Live's etch lines read across the whole painting. */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-me-sir.fam-me-sir.fam-me-sir.foil-sir.has-foil-map:is(.lit, .settling) .foil {
-  opacity: calc((0.6 + var(--card-opacity) * 0.4) * var(--foil-strength, 1));
+  opacity: calc((0.28 + var(--card-opacity) * 0.5) * var(--foil-strength, 1));
+}
+/* The shared fleck glitter off and the shared rainbow hatch to a trace: the engraving leads (2026-11-28). */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me-sir.fam-me-sir.fam-me-sir.foil-sir.has-foil-map {
+  --shine-glit: 0;
+  --shine-line: 0.3;
+  --relief: 1;
 }

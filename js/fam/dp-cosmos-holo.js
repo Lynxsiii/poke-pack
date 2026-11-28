@@ -29,6 +29,8 @@ export function famExtras(card, url, base) {
   if (!claims(card)) return null;
   const id = String(card.id);
   const cut = id.indexOf("-");
-  const map = `assets/foil/fam/dp-cosmos-holo/${id.slice(0, cut)}/${id.slice(cut + 1)}.webp`;
+  // -f3 (2026-11-28 round 2, scripts/make_cosmos_flecks.py): the same foil area, the flecks redrawn from the scan as soft round
+  // dots, topped up to a minimum share on the clean scans (Call of Legends, HGSS) that showed nothing when lit
+  const map = `assets/foil/fam/dp-cosmos-holo/${id.slice(0, cut)}/${id.slice(cut + 1)}-f3.webp`;
   return { classes: "fam-dp-cosmos-holo has-foil-map", style: `--foil-map:url('${url(map)}')`, cure: true };
 }

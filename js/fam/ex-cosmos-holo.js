@@ -46,14 +46,15 @@ const MAPPED = new Set(
     "extk1b:2",
     "extk2a:6",
     "extk2b:6",
-    "np:np005 np035 np040",
+    "np:np005 np016 np017 np018 np019 np035 np040",
   ].flatMap((row) => {
     const [s, nums] = row.split(":");
     return nums.split(" ").map((n) => `${s}-${n}`);
   }),
 );
 /** A map redrawn after it shipped lives under a new name (assets are cached as immutable): id -> version. */
-const VERSION = { "ex10-O": 2 };
+/** v2 (site review 2) for five cards: the Pokémon cut out of all three panels from the scan (cut_figure_from_maps.py --panels 3). */
+const VERSION = { "ex10-O": 2, "ex1-12": 2, "ex4-9": 2, "ex4-11": 2, "ex5-11": 2, "ex12-11": 2 };
 
 /** Whether a card face is this family's. */
 export function claims(card) {

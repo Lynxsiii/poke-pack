@@ -176,9 +176,14 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-hol
   background-image:
     radial-gradient(ellipse 26% 19% at var(--pointer-x) var(--pointer-y),
       rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.3) 45%, rgba(255, 255, 255, 0) 100%),
+    /* 2026-11-28: the colour gathers round the light and fades to white (no tint) away from it. Without this the
+       bands tinted the whole window at every pose: a pink/cyan/green wash on the promos, whose maps hold the whole
+       window (per-card review, 10 of 19). */
+    radial-gradient(ellipse 70% 56% at var(--pointer-x) var(--pointer-y),
+      rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.4) 35%, rgba(255, 255, 255, 0.8) 75%, rgba(255, 255, 255, 0.9) 100%),
     var(--smh-bands);
-  background-size: 100% 100%, 280% 280%;
-  background-position: center, var(--smh-band-pos);
+  background-size: 100% 100%, 100% 100%, 280% 280%;
+  background-position: center, center, var(--smh-band-pos);
   background-repeat: no-repeat;
   mix-blend-mode: multiply;
   opacity: var(--smh-hold);
@@ -234,7 +239,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-hol
   background-size: 280% 280%;
   background-position: 50% 50%;
   mix-blend-mode: soft-light;
-  opacity: calc(0.42 * var(--foil-strength, 1));
+  opacity: calc(0.26 * var(--foil-strength, 1));
 }
 
 /* ---- Confetti holo (smh-confetti) ---------------------------------------------------------------------------- */

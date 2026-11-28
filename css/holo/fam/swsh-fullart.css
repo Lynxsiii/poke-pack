@@ -74,7 +74,16 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.f
   /* the bands slide against the tilt, inside 0..100% (the pointer drives --background-x over 37..63%) */
   --sfa-pos: calc(100% - var(--background-x)) var(--background-y);
   /* some colour at any lit angle, full toward grazing angles (--pointer-from-center 0.56-0.64 at the probe's poses) */
-  --sfa-band: clamp(0, calc(0.3 + var(--pointer-from-center) * 1.2), 1);
+  /* 2026-11-28: x --sfa-gain. At full the bands read as a rainbow wash over the Pokémon (Rillaboom V, Eldegoss V) */
+  --sfa-gain: 0.45;
+  /* 2026-11-28 (per-card review, ~80 bad): the shared etch shine overlays a saturated spectrum on every engraved line.
+     Overlay doubles two channels of a dark grey and zeroes the third, so black coats, capes and hair went olive or
+     brown under the light, and the Supporters' silver frame wore a uniform diagonal rainbow stripe. Off: the family's
+     own bands carry the colour. */
+  --shine-line: 0;
+  --sfa-band: calc(var(--sfa-gain) * clamp(0, calc(0.3 + var(--pointer-from-center) * 1.2), 1));
+  /* the shared fleck layer lay over hair and skin as speckle (Schoolboy, Schoolgirl): the family's own sparkle is enough */
+  --shine-glit: 0;
   /* where the light is: full round the pointer, a good part of it across the card */
   --sfa-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     #000 0%, #000 24%, rgba(0, 0, 0, 0.6) 60%, rgba(0, 0, 0, 0.42) 100%);
@@ -111,6 +120,21 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.f
   --sfa-break-tint: repeating-linear-gradient(30deg,
     #000 0%, #000 7%, rgb(195, 195, 195) 8.5%, rgb(195, 195, 195) 10%, #000 11.5%, #000 15%, rgb(165, 165, 165) 16.5%,
     rgb(165, 165, 165) 19%, #000 20.5%, #000 29%, rgb(205, 205, 205) 30.5%, rgb(205, 205, 205) 32%, #000 33.5%, #000 37%);
+}
+/* A photographed print (the Japanese scans, `sfa-photo`): the photo already shows the foil's diagonal bands and line
+   screen, so the added bands are a touch only (per-card review: "uniform diagonal stripe bands over art, washed"). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-fullart.fam-swsh-fullart.fam-swsh-fullart.fam-swsh-fullart.foil-ultra.has-foil-map.sfa-photo:is(.sfa-v, .sfa-t) {
+  --sfa-gain: 0.3;
+  --shine-line: 0;
+  /* the photo is already lit: half the dodge pool (the Japanese Energies bleached lemon and lost the silver disc) */
+  --sfa-hot: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    rgb(16, 16, 16) 0%, rgb(9, 9, 9) 22%, rgb(3, 3, 3) 50%, #000 75%);
+  --sfa-ring-lit: linear-gradient(rgb(40, 40, 42), rgb(40, 40, 42));
+}
+/* The full-art basic Energies (`sfa-energy`): the art is pale grey or one flat colour, so the bands at the family's
+   strength read as a pastel wash over it (per-card review, Metal Energy 159 and its Japanese print). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-fullart.fam-swsh-fullart.fam-swsh-fullart.fam-swsh-fullart.foil-ultra.has-foil-map.sfa-energy.sfa-energy:is(.sfa-v, .sfa-t) {
+  --sfa-gain: 0.18;
 }
 /* The alternate arts: one broad band. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-fullart.fam-swsh-fullart.fam-swsh-fullart.fam-swsh-fullart.foil-ultra.has-foil-map.sfa-v.sfa-alt {
@@ -154,7 +178,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.f
     var(--art),
     linear-gradient(#000, #000),
     var(--sfa-ring-l), var(--sfa-ring-r), var(--sfa-ring-t), var(--sfa-ring-b),
-    linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    linear-gradient(rgba(0, 0, 0, 0.82), rgba(0, 0, 0, 0.82)),
     var(--fa-etch, linear-gradient(transparent, transparent)),
     linear-gradient(#000, #000);
   filter: none;
@@ -238,7 +262,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.f
   background-position: calc(var(--seed-x, 0.5) * 100% + var(--pointer-from-left) * 4px) calc(var(--seed-y, 0.5) * 100% + var(--pointer-from-top) * 4px), center, var(--fa-etch-pos, center), center;
   background-repeat: repeat, no-repeat, var(--fa-etch-repeat, no-repeat), no-repeat;
   background-blend-mode: multiply, multiply, normal, normal;
-  opacity: calc(0.35 + var(--pointer-from-center) * 0.5);
+  opacity: calc(0.2 + var(--pointer-from-center) * 0.3);
 }
 
 /* ---- .glare: the bands' tint, multiplied through the inverted scan ------------------------------------------------- */
@@ -250,12 +274,13 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.f
   background-blend-mode: normal, screen, screen, difference, luminosity, normal;
   mix-blend-mode: multiply;
   filter: none;
-  -webkit-mask-image: var(--art), var(--foil-map);
-  -webkit-mask-composite: source-in, source-over;
-  mask-image: var(--art), var(--foil-map);
-  mask-composite: intersect, add;
-  -webkit-mask-size: contain, 100% 100%;
-  mask-size: contain, 100% 100%;
+  /* the map twice: the tint lands on the bare foil in full and on an inked figure (map about half) at a quarter */
+  -webkit-mask-image: var(--art), var(--foil-map), var(--foil-map);
+  -webkit-mask-composite: source-in, source-in, source-over;
+  mask-image: var(--art), var(--foil-map), var(--foil-map);
+  mask-composite: intersect, intersect, add;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
   -webkit-mask-position: center;
   mask-position: center;
   -webkit-mask-repeat: no-repeat;

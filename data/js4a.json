@@ -554,7 +554,9 @@
     "market": 0.66,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh4a_ja-10/large",
     "etchMap": "assets/foil/maps/js4a/10-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh2/18-t1.webp",
+    "foilTwin": "swsh2-18"
   },
   {
     "id": "js4a-11",
@@ -1554,7 +1556,9 @@
     "market": 0.55,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh4a_ja-28/large",
     "etchMap": "assets/foil/maps/js4a/28-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh3/34-t1.webp",
+    "foilTwin": "swsh3-34"
   },
   {
     "id": "js4a-29",
@@ -1784,7 +1788,9 @@
     "market": 1.56,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh4a_ja-32/large",
     "etchMap": "assets/foil/maps/js4a/32-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh1/50-t1.webp",
+    "foilTwin": "swsh1-50"
   },
   {
     "id": "js4a-33",
@@ -3354,7 +3360,9 @@
     "market": 1.05,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh4a_ja-60/large",
     "etchMap": "assets/foil/maps/js4a/60-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh2/71-t1.webp",
+    "foilTwin": "swsh2-71"
   },
   {
     "id": "js4a-61",
@@ -5060,7 +5068,9 @@
     "market": 1.05,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh4a_ja-89/large",
     "etchMap": "assets/foil/maps/js4a/89-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh2/93-t1.webp",
+    "foilTwin": "swsh2-93"
   },
   {
     "id": "js4a-90",
@@ -7083,7 +7093,9 @@
     "market": 1.04,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh4a_ja-125/large",
     "etchMap": "assets/foil/maps/js4a/125-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh3/117-t1.webp",
+    "foilTwin": "swsh3-117"
   },
   {
     "id": "js4a-126",
@@ -9934,7 +9946,9 @@
     "market": 54.19,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh4a_ja-198/large",
     "etchMap": "assets/foil/maps/js4a/198-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swshp/swshp121-t1.webp",
+    "foilTwin": "swshp-swshp121"
   },
   {
     "id": "js4a-199",
@@ -17202,7 +17216,9 @@
     "market": 3.63,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh4a_ja-318/large",
     "etchMap": "assets/foil/maps/js4a/318-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh45/swshp097-t1.webp",
+    "foilTwin": "swsh45-swshp097"
   },
   {
     "id": "js4a-319",
@@ -17326,7 +17342,9 @@
     "market": 4.63,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh4a_ja-320/large",
     "etchMap": "assets/foil/maps/js4a/320-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh45/swshp099-t1.webp",
+    "foilTwin": "swsh45-swshp099"
   },
   {
     "id": "js4a-321",
@@ -17728,7 +17746,9 @@
     "market": 9.59,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh4a_ja-327/large",
     "etchMap": "assets/foil/maps/js4a/327-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh45/SV121-t1.webp",
+    "foilTwin": "swsh45-SV121"
   },
   {
     "id": "js4a-328",
@@ -17776,7 +17796,9 @@
     "market": 8.09,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh4a_ja-328/large",
     "etchMap": "assets/foil/maps/js4a/328-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swsh45/SV122-t1.webp",
+    "foilTwin": "swsh45-SV122"
   },
   {
     "id": "js4a-329",
@@ -17829,7 +17851,9 @@
     "market": 10.04,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh4a_ja-329/large",
     "etchMap": "assets/foil/maps/js4a/329-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swshp/swshp076-t1.webp",
+    "foilTwin": "swshp-swshp076"
   },
   {
     "id": "js4a-330",
@@ -17882,6 +17906,8 @@
     "market": 9.49,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh4a_ja-330/large",
     "etchMap": "assets/foil/maps/js4a/330-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/swshp/swshp077-t1.webp",
+    "foilTwin": "swshp-swshp077"
   }
 ]

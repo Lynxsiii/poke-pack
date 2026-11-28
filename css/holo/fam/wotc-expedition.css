@@ -200,11 +200,11 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
 body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.exp-holo .foil {
   background-image:
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsla(0, 0%, 100%, 0.34) 0%, hsla(0, 0%, 100%, 0.14) 16%, hsla(0, 0%, 100%, 0) 40%),
+      hsla(0, 0%, 100%, 0.2) 0%, hsla(0, 0%, 100%, 0.08) 16%, hsla(0, 0%, 100%, 0) 36%),
     repeating-linear-gradient(112deg, hsla(158, 100%, 52%, 0) 0%, hsla(158, 100%, 52%, 0.62) 7%, hsla(195, 100%, 58%, 0.7) 13%,
       hsla(255, 100%, 66%, 0.7) 19%, hsla(330, 100%, 62%, 0.72) 25%, hsla(25, 100%, 58%, 0.66) 31%, hsla(60, 100%, 52%, 0.5) 36%,
       hsla(60, 100%, 52%, 0) 44%, hsla(158, 100%, 52%, 0) 60%),
-    linear-gradient(hsla(212, 30%, 50%, 0.16), hsla(212, 30%, 50%, 0.16));
+    linear-gradient(hsla(212, 30%, 50%, 0.04), hsla(212, 30%, 50%, 0.04));
   background-size: 100% 100%, 280% 280%, 100% 100%;
   background-position:
     center,
@@ -212,24 +212,28 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
     center;
   background-repeat: no-repeat, no-repeat, no-repeat;
   background-blend-mode: normal, normal, normal;
-  background-color: transparent;
-  mix-blend-mode: screen;
+  background-color: #000;
+  /* site review 2: screened, the band and pool lay a grey fog on the thinned-ink grounds (Venusaur 30, Vileplume 31, Cloyster 8).
+     Dodged over black the light goes into the print: bare foil and pale ink flash, dark ink and the drawing stay. */
+  mix-blend-mode: color-dodge;
   filter: none;
   opacity: min(1, calc((0.35 + var(--card-opacity) * 0.65) * max(1, var(--foil-strength, 1))));
   transform: none;
   clip-path: none;
   border-radius: 0;
-  -webkit-mask-image: var(--art), var(--foil-map);
-  mask-image: var(--art), var(--foil-map);
-  -webkit-mask-composite: source-in, source-over;
-  mask-composite: intersect, add;
-  mask-mode: alpha, alpha;
-  -webkit-mask-size: contain, 100% 100%;
-  mask-size: contain, 100% 100%;
-  -webkit-mask-position: center, center;
-  mask-position: center, center;
-  -webkit-mask-repeat: no-repeat, no-repeat;
-  mask-repeat: no-repeat, no-repeat;
+  /* third mask layer: a pool round the lamp. The foil only adds light where the lamp hits, the far side of the window keeps the
+     print's own darks (2026-11-28: the hue band and silver floor over the whole window read as a teal-grey wash) */
+  -webkit-mask-image: var(--art), var(--foil-map), radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.62) 18%, rgba(0, 0, 0, 0.2) 40%, rgba(0, 0, 0, 0.1) 100%);
+  mask-image: var(--art), var(--foil-map), radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.62) 18%, rgba(0, 0, 0, 0.2) 40%, rgba(0, 0, 0, 0.1) 100%);
+  -webkit-mask-composite: source-in, source-in, source-over;
+  mask-composite: intersect, intersect, add;
+  mask-mode: alpha, alpha, alpha;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
+  -webkit-mask-position: center, center, center;
+  mask-position: center, center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat, no-repeat;
 }
 /* at rest: the bare foil reads as metal (a soft silver-violet sheen), the printed cosmos a touch brighter */
 body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.exp-holo:not(.lit):not(.settling) .foil {
@@ -240,7 +244,11 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
   background-position: center, center;
   background-repeat: no-repeat, no-repeat;
   background-blend-mode: screen, normal;
-  opacity: calc(0.32 * var(--foil-strength, 1));
+  -webkit-mask-image: var(--art), var(--foil-map), linear-gradient(118deg, rgba(0, 0, 0, 0.25) 0%, #000 36%, rgba(0, 0, 0, 0.25) 62%, rgba(0, 0, 0, 0.5) 100%);
+  mask-image: var(--art), var(--foil-map), linear-gradient(118deg, rgba(0, 0, 0, 0.25) 0%, #000 36%, rgba(0, 0, 0, 0.25) 62%, rgba(0, 0, 0, 0.5) 100%);
+  background-color: transparent;
+  mix-blend-mode: screen;
+  opacity: calc(0.3 * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.exp-holo .foil::before,
 body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.exp-holo .foil::after {
@@ -288,7 +296,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
 /* `.glare`: a small hot spot, on the foil only */
 body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.exp-holo .glare {
   background-image: radial-gradient(circle at var(--pointer-x) var(--pointer-y),
-    hsla(190, 60%, 96%, 0.55) 0%, hsla(200, 50%, 90%, 0.22) 14%, hsla(210, 40%, 80%, 0) 34%);
+    hsla(190, 60%, 96%, 0.32) 0%, hsla(200, 50%, 90%, 0.12) 12%, hsla(210, 40%, 80%, 0) 28%);
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;

@@ -11128,7 +11128,9 @@
     "market": 201.06,
     "imageRemote": "https://images.scrydex.com/pokemon/sv2a_ja-205/large",
     "etchMap": "assets/foil/maps/jsv2a/205-etch.webp",
-    "etchDrawn": true
+    "etchDrawn": true,
+    "foilMap": "assets/foil/maps/sv3pt5/svp053-t1.webp",
+    "foilTwin": "sv3pt5-svp053"
   },
   {
     "id": "jsv2a-206",

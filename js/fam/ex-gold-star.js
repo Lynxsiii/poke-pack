@@ -39,6 +39,7 @@ const MAPPED = new Set(
     "ex13:103 104",
     "ex14:100 99",
     "ex16:100 101 102",
+    "pop5:16 17",
   ].flatMap((row) => {
     const [s, nums] = row.split(":");
     return nums.split(" ").map((n) => `${s}-${n}`);
@@ -70,14 +71,14 @@ const GOLD_CORE = "hsla(42, 45%, 84%, 0.85)";
 const GOLD_WASH = "hsla(38, 95%, 52%, 0.95)";
 const TUNE = {
   "ex7-107": { sheen: 0.6 },
-  "ex7-108": { sheen: 1, pastel: 0.6 },
+  "ex7-108": { sheen: 0.8, pastel: 0.6 },
   "ex7-109": { sheen: 0.35 },
   "ex8-105": { sheen: 1, pastel: 1 },
   "ex8-106": { sheen: 0.6 },
   "ex8-107": { sheen: 1, pastel: 0.6 },
   "ex10-113": { sheen: 0.6 },
   "ex10-114": { sheen: 0.5 },
-  "ex10-115": { sheen: 1, core: GOLD_CORE },
+  "ex10-115": { sheen: 0.8, core: GOLD_CORE },
   "ex11-111": { sheen: 0.7 },
   "ex11-112": { sheen: 0.7 },
   "ex11-113": { sheen: 0.6 },
@@ -88,9 +89,11 @@ const TUNE = {
   "ex13-104": { sheen: 0.7 },
   "ex14-99": { sheen: 0.6, dots: 1.25 },
   "ex14-100": { sheen: 0.5, dots: 1.25 },
-  "ex16-100": { sheen: 0.7 },
+  "ex16-100": { sheen: 0.6 },
   "ex16-101": { sheen: 0.9 },
   "ex16-102": { sheen: 0.6, core: GOLD_CORE },
+  "pop5-16": { sheen: 0.55 },
+  "pop5-17": { sheen: 0.65 },
 };
 const tuneStyle = (id) => {
   const t = TUNE[id] || {};
@@ -140,7 +143,9 @@ const PALE = new Set(["ex13-102", "ex15-101"]);
  * and washed its ink out (review r1); the tilted photo shows green, cyan, blue and violet with the ink still reading. */
 const DARK = new Set(["ex15-100"]);
 /** Gyarados takes a pastel cycle on its two-level map: the saturated one recoloured the red body (review r2). */
-const PASTEL = new Set(["ex13-102"]);
+const PASTEL = new Set(["ex13-102", "ex15-101"]);
+/** Gyarados' map holds its red body at 0.3, so its fins need the pastel cycle at full strength to read at all. */
+const GAIN = { "ex13-102": 1.6 };
 
 export function famExtras(card, url, base) {
   if (Boolean(card) && !card.reverse && REFRACTOR.has(card.id) && isEx(card) && has(exPattern(card), "ex-refractor")) {
@@ -148,7 +153,7 @@ export function famExtras(card, url, base) {
       classes: `fam-ex-gold-star-refractor${PALE.has(card.id) ? " gsr-pale" : ""}${DARK.has(card.id) ? " gsr-dark" : ""}${PASTEL.has(card.id) ? " gsr-pastel" : ""}`,
       style: `--foil-map:url('${url(`assets/foil/fam/ex-gold-star/${card.id}-refractor-v${VR[card.id]}.webp`)}')${
         FLAME[card.id] ? `;--gsr-flame:url('${url(FLAME[card.id])}')` : ""
-      }`,
+      }${GAIN[card.id] ? `;--gsr-gain:${GAIN[card.id]}` : ""}`,
       cure: false,
     };
   }

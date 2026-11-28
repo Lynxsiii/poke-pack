@@ -41,6 +41,7 @@ export function claims(card) {
 export function famExtras(card, url, base) {
   if (!claims(card)) return null;
   const id = String(card.id);
-  const map = `assets/foil/fam/dp-sp/${FILE[id] || id}.webp`;
+  // -f2 (2026-11-28, scripts/make_cosmos_flecks.py): the foil area of the file named above (FILE), the flecks redrawn as soft round dots
+  const map = `assets/foil/fam/dp-sp/${id}-f2.webp`;
   return { classes: "fam-dp-sp has-foil-map", style: `--foil-map:url('${url(map)}')`, cure: true };
 }
