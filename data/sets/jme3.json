@@ -1,0 +1,39 @@
+{
+  "id": "jme3",
+  "name": "Nihil Zero",
+  "lang": "ja",
+  "code": "M3",
+  "series": "mega-evolution",
+  "slug": "nihil-zero",
+  "scrydexId": "m3_ja",
+  "era": "me",
+  "tcgplayerCategory": 85,
+  "tcgplayerGroup": 24600,
+  "englishTwin": "me3",
+  "rarityMap": {
+    "C": "Common",
+    "U": "Uncommon",
+    "R": "Rare",
+    "RR": "Double Rare",
+    "ACE": "ACE SPEC Rare",
+    "AR": "Illustration Rare",
+    "SR": "Ultra Rare",
+    "SAR": "Special Illustration Rare",
+    "UR": "Hyper Rare",
+    "MUR": "Mega Hyper Rare",
+    "PROMO": "Promo"
+  },
+  "printedTotal": 80,
+  "products": [
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 674449,
+      "packs": 30,
+      "promos": [],
+      "hull": "ortho",
+      "imageVersion": 3
+    }
+  ]
+}

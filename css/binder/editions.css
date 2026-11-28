@@ -1,6 +1,6 @@
 /* Animated binder covers: aurora, tide, ember, starfield, prism, holo.
    Loads after css/binder/materials.css. Markup comes from js/binder-editions.js:
-   .binder-object[data-edition] > .binder-cover > .binder-fx > i.fx-a|b|c.
+   .binder-object[data-edition] .binder-cover > .binder-fx > i.fx-a|b|c.
 
    Each edition is a printed or finished surface drawn over whatever material
    and colour the cover has: it reads --b-main / --b-light / --b-deep /

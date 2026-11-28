@@ -18,6 +18,7 @@
  * what is worn is the `guard` column of each active slab, so a free unit is
  * owned minus worn.
  */
+import { binderLocks, LOCKED_MESSAGE } from "./binder-lock.js";
 import { ALL_SETS, money } from "../js/catalog.js";
 import {
   GRADING_LIMITS,
@@ -413,9 +414,7 @@ async function submit(env, request, helpers, user, body) {
       `UPDATE profiles SET coins = coins - ?1 WHERE user_id = ?3 AND coins >= ?1 AND ${copyExists}
        AND (SELECT COUNT(*) FROM graded_cards WHERE user_id = ?3 AND status = '${ACTIVE}') < ?2`
     ).bind(feeCents / 100, GRADING_LIMITS.maxSlabs, user.id, cardId),
-    env.DB.prepare(
-      "UPDATE cards SET qty = qty - 1, reverse_qty = reverse_qty - ? WHERE user_id = ? AND card_id = ? AND changes() = 1"
-    ).bind(reverse ? 1 : 0, user.id, cardId),
+    // The slab goes in before the raw copy comes out, so a binder pocket holding this card is filled the whole time (worker/binder-lock.js).
     env.DB.prepare(
       `INSERT INTO graded_cards (user_id, card_id, reverse, grade, band, fee_cents, request_id, status, created_at, black_label, regrade_of)
        SELECT ?1, ?2, ?3, ?4, ?5, ?6, ?7, '${ACTIVE}', ?8, ?9,
@@ -423,6 +422,9 @@ async function submit(env, request, helpers, user, body) {
             AND NOT EXISTS (SELECT 1 FROM graded_cards s WHERE s.regrade_of = p.id))
        WHERE changes() = 1`
     ).bind(user.id, cardId, reverse ? 1 : 0, grade, band.id, feeCents, requestId, now, blackLabel ? 1 : 0, regradeOf),
+    env.DB.prepare(
+      "UPDATE cards SET qty = qty - 1, reverse_qty = reverse_qty - ? WHERE user_id = ? AND card_id = ? AND changes() = 1"
+    ).bind(reverse ? 1 : 0, user.id, cardId),
     env.DB.prepare("DELETE FROM cards WHERE user_id = ? AND card_id = ? AND qty = 0").bind(user.id, cardId),
   ];
   let results;
@@ -436,7 +438,7 @@ async function submit(env, request, helpers, user, body) {
     }
     throw err;
   }
-  if (!results[2]?.meta?.changes) {
+  if (!results[1]?.meta?.changes) {
     // Nothing moved. Say which check failed, in the order a player would fix them.
     const copy = await env.DB.prepare("SELECT qty, reverse_qty FROM cards WHERE user_id = ? AND card_id = ?").bind(user.id, cardId).first();
     const have = copy ? (reverse ? Math.min(copy.qty, copy.reverse_qty) : copy.qty - copy.reverse_qty) : 0;
@@ -481,6 +483,7 @@ async function sell(env, request, helpers, user, body) {
   if (row.status === "sold" && row.sell_request_id === requestId) return { row, cents: row.sold_cents || 0, repeat: true };
   if (row.status !== ACTIVE) error(row.status === "sold" ? "That slab was already sold." : "That slab was cracked.", 409);
   if (row.locked) error(IN_GAME, 409);
+  if ((await binderLocks(env, user.id)).freeSlabs(row.card_id) < 1) error(LOCKED_MESSAGE, 409);
   const card = await helpers.findCatalogCard(env, request, row.card_id);
   if (!card) error("That card has no price right now.", 409);
   const cents = Math.round(gradedValue(card, row.grade, setForCard(row.card_id), Boolean(row.black_label)) * 100);

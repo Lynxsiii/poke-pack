@@ -305,14 +305,17 @@ assert.equal((await api(`/api/casino/jackpots/${soon.jackpot.id}`, 'GET', undefi
 await maintainJackpots(env, now); assert.equal(snapshot('p1'), pre2.p1, 'maintenance twice returns nothing twice');
 assert.equal(ledger(), expected);
 
-// ---- Binder slots follow the cards out ------------------------------------------------------------------------------------------------------
+// ---- Binder cards are locked (worker/binder-lock.js) ----------------------------------------------------------------------------------------
 db.prepare('UPDATE profiles SET binder = ? WHERE user_id = ?').run(JSON.stringify([{ id: 'me5-87', reverse: false }, { id: 'me5-1', reverse: false }, ...Array(16).fill(null)]), 'host');
 mint('host', 'me5-87', 1);
-const binderPot = await create([{ id: 'me5-87', qty: qtyOf('host', 'me5-87') }], 'host', { players: 3 }); // every copy: the slot has nothing left to show
-assert.equal(binderPot.status, 200, JSON.stringify(binderPot));
+const pocketedQty = qtyOf('host', 'me5-87');
+const binderPot = await create([{ id: 'me5-87', qty: pocketedQty }], 'host', { players: 3 }); // every copy, the pocketed one too
+assert.equal(binderPot.status, 409, JSON.stringify(binderPot));
+assert.match(binderPot.error, /binder/);
+assert.equal(qtyOf('host', 'me5-87'), pocketedQty, 'nothing moved');
 const binder = JSON.parse(db.prepare('SELECT binder FROM profiles WHERE user_id = ?').get('host').binder);
-assert.equal(binder[0], null, 'the staked card left the binder'); assert.equal(binder[1]?.id, 'me5-1', 'other slots stay');
-assert.equal((await cancel(binderPot.jackpot.id)).status, 200);
+assert.equal(binder[0]?.id, 'me5-87', 'the pocket keeps its card'); assert.equal(binder[1]?.id, 'me5-1', 'other slots stay');
+db.prepare('UPDATE profiles SET binder = ? WHERE user_id = ?').run('[]', 'host');
 
 // ---- Account safety ----------------------------------------------------------------------------------------------------------------------------------
 const heldPot = await create(ONE, 'host', { players: 4 });

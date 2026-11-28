@@ -38,6 +38,203 @@
     ]
   },
   {
+    "id": "2026-11-28-binder-lock",
+    "date": "2026-11-28",
+    "kind": "new",
+    "big": 2,
+    "title": "Cards in your binder are locked",
+    "summary": "Put a card in your binder and it stays yours: it can't be sold, staked or traded until you take it out.",
+    "items": [
+      "Selling, Sell duplicates, Sell bulk, coin flips, jackpots, the Upgrader, sell all winnings and trades all leave binder cards alone.",
+      "Spare copies are still free to go. With three copies and one in the binder, two can be sold.",
+      "Grading a binder card is fine: the slab keeps the pocket filled. A slab in a pocket is locked the same way.",
+      "Cards already in your binder are locked now. Take a card out in Arrange to unlock it."
+    ]
+  },
+  {
+    "id": "2026-11-28-steam-siege-photos",
+    "date": "2026-11-28",
+    "kind": "fix",
+    "title": "Real photos for two Steam Siege products",
+    "summary": "Two Steam Siege products showed the set logo instead of the box.",
+    "items": [
+      "The Elite Trainer Box now shows the Volcanion box, and the Prerelease Kit its box."
+    ]
+  },
+  {
+    "id": "2026-11-28-japanese-mega-brave-symphonia-inferno-x",
+    "date": "2026-11-28",
+    "kind": "new",
+    "big": 2,
+    "title": "Three more Japanese Mega Evolution sets",
+    "summary": "Mega Brave, Mega Symphonia and Inferno X, each with its 30-pack Japanese box.",
+    "items": [
+      "Mega Brave (M1L): Mega Lucario ex as the Mega Hyper Rare, with Lillie's Determination among the Special Art Rares.",
+      "Mega Symphonia (M1S): Mega Gardevoir ex as the Mega Hyper Rare, with Mega Kangaskhan ex and Acerola's Mischief.",
+      "Inferno X (M2): Mega Charizard X ex as both a Special Art Rare and the Mega Hyper Rare."
+    ]
+  },
+  {
+    "id": "2026-11-28-product-photo-edges",
+    "date": "2026-11-28",
+    "kind": "fix",
+    "title": "Cleaner product photos",
+    "summary": "No more white patches or pale rims around sealed products in the shop.",
+    "items": [
+      "The XY Evolutions and BREAKthrough Elite Trainer Boxes lost the white patch and watermark between their contents.",
+      "127 product photos lost the pale white rim along their edges, so they sit cleanly on the dark shop tiles."
+    ]
+  },
+  {
+    "id": "2026-11-28-japanese-nihil-zero",
+    "date": "2026-11-28",
+    "kind": "new",
+    "big": 2,
+    "title": "The first Japanese Mega Evolution set",
+    "summary": "Nihil Zero, with its 30-pack Japanese box.",
+    "items": [
+      "Nihil Zero (M3): Mega Zygarde ex as the Mega Hyper Rare, with Meowth ex, Rosa's Encouragement and Mega Clefable ex among the Special Art Rares."
+    ]
+  },
+  {
+    "id": "2026-11-28-japanese-batch-8",
+    "date": "2026-11-28",
+    "kind": "new",
+    "big": 2,
+    "title": "Five more Japanese Scarlet & Violet sets",
+    "summary": "Ruler of the Black Flame, Ancient Roar, Future Flash, Wild Force and Cyber Judge, each with its 30-pack Japanese box.",
+    "items": [
+      "Ruler of the Black Flame (SV3): Tera Charizard ex, with Pidgeot ex, Geeta and Poppy.",
+      "Ancient Roar (SV4K): Roaring Moon ex, with Professor Sada's Vitality and Mela.",
+      "Future Flash (SV4M): Iron Valiant ex and Iron Hands ex, with Professor Turo's Scenario and Tulip.",
+      "Wild Force (SV5K): Walking Wake ex, Gouging Fire ex and Raging Bolt ex, with Eri and Morty's Conviction.",
+      "Cyber Judge (SV5M): Iron Leaves ex, Iron Crown ex and Iron Boulder ex, with Salvatore and Bianca's Devotion."
+    ]
+  },
+  {
+    "id": "2026-11-28-japanese-batch-7",
+    "date": "2026-11-28",
+    "kind": "new",
+    "big": 2,
+    "title": "The first Japanese Scarlet & Violet sets",
+    "summary": "Scarlet ex, Violet ex, Snow Hazard and Clay Burst, each with its 30-pack Japanese box.",
+    "items": [
+      "Scarlet ex (SV1S): Koraidon ex, with Gardevoir ex, Jacq and Penny among the Special Art Rares.",
+      "Violet ex (SV1V): Miraidon ex, with Arven and Miriam as Special Art Trainers.",
+      "Snow Hazard (SV2P): Chien-Pao ex and Wo-Chien ex, with Grusha and Giacomo.",
+      "Clay Burst (SV2D): Iono's Special Art Rare, with Ting-Lu ex, Chi-Yu ex and Tinkaton ex."
+    ]
+  },
+  {
+    "id": "2026-11-28-holo-realism",
+    "date": "2026-11-28",
+    "kind": "better",
+    "big": 2,
+    "title": "Holos closer to the real cards",
+    "summary": "Every holo card on the site was checked one by one, and about 50 kinds of foil were redone to look like the real card.",
+    "items": [
+      "The foil now lights up around where the light hits, instead of putting a milky film over the whole picture.",
+      "Glitter only shows where the real card has it. It no longer covers the Pokémon on LV.X, cosmos holos, Shining Fates shinies and many others.",
+      "Fewer sparkles on Double Rares and etched cards, so you can see the etched texture.",
+      "Straight rainbow stripes and TV-like lines are gone from Black & White holos, XY Mega EX and more.",
+      "Japanese full arts use the real foil pattern with no English writing showing through, and Prism Star diamonds shine instead of looking dark."
+    ]
+  },
+  {
+    "id": "2026-11-28-japanese-batch-6",
+    "date": "2026-11-28",
+    "kind": "new",
+    "big": 2,
+    "title": "Four more Japanese sets, round three",
+    "summary": "Triplet Beat, Raging Surf, Transformation Mask and Heat Wave Arena, each with its 30-pack Japanese box.",
+    "items": [
+      "Triplet Beat (SV1a): Meowscarada ex, Skeledirge ex and Quaquaval ex, and the Magikarp Art Rare.",
+      "Raging Surf (SV3a): Garchomp ex and Gholdengo ex, with Parasol Lady and Rika as Special Art Trainers.",
+      "Transformation Mask (SV6): all four Ogerpon ex as Special Art Rares, with Carmine and Kieran.",
+      "Heat Wave Arena (SV9a): Ethan's Ho-Oh ex and Cynthia's Garchomp ex lead the Trainers' Pokémon."
+    ]
+  },
+  {
+    "id": "2026-11-28-japanese-batch-5",
+    "date": "2026-11-28",
+    "kind": "new",
+    "big": 2,
+    "title": "Four more Japanese sets, round two",
+    "summary": "Crimson Haze, Night Wanderer, Stellar Miracle and Super Electric Breaker, each with its 30-pack Japanese box.",
+    "items": [
+      "Crimson Haze (SV5a): Bloodmoon Ursaluna ex leads, with Greninja ex and Perrin among the Special Art Rares.",
+      "Night Wanderer (SV6a): Pecharunt and the Loyal Three, with Cassiopeia as the Trainer to chase.",
+      "Stellar Miracle (SV7): Stellar Terapagos ex, with Lacey and Briar as Special Art Trainers.",
+      "Super Electric Breaker (SV8): the crystal Pikachu ex Special Art Rare and its gold Hyper Rare.",
+      "Five cards a pack, real Japanese pack and box pictures. Pull rates are estimates, since Japan publishes none."
+    ]
+  },
+  {
+    "id": "2026-11-28-japanese-batch-4",
+    "date": "2026-11-28",
+    "kind": "new",
+    "big": 2,
+    "title": "Four more Japanese sets",
+    "summary": "Battle Partners, The Glory of Team Rocket, Black Bolt and White Flare, each with its Japanese booster box.",
+    "items": [
+      "Battle Partners (SV9): five cards a pack, the Trainers' own Pokémon, with Iono's Bellibolt, N's Zoroark and Hop's Zacian as Special Art Rares. 30-pack box.",
+      "The Glory of Team Rocket (SV10): Giovanni's crew, with Team Rocket's Mewtwo ex as the chase. 30-pack box.",
+      "Black Bolt (SV11B) and White Flare (SV11W): seven cards a pack with two holos, a Poké Ball or Master Ball mirror in every pack, and the Zekrom and Reshiram Black White Rares. 20-pack boxes.",
+      "Pack and box pictures are Pokémon Center's own. Pull rates are estimates, since Japan publishes none."
+    ]
+  },
+  {
+    "id": "2026-11-28-settings-light-dark",
+    "date": "2026-11-28",
+    "kind": "fix",
+    "title": "Settings no longer says Light on a dark theme",
+    "summary": "The Light or dark choice shows only on Rotom, the one theme that has both.",
+    "items": [
+      "Colours comes first in Settings. Pick Rotom and Light, Dark and Device appear under it.",
+      "Rankings: the signed-out line lost its ball too."
+    ]
+  },
+  {
+    "id": "2026-11-28-rankings-plain",
+    "date": "2026-11-28",
+    "kind": "better",
+    "title": "Quieter Rankings and casino lobby",
+    "summary": "An empty board is a plain line now, and the lobby stops counting zero.",
+    "items": [
+      "Rankings: the dashed boxes with a ball are gone. An empty board just says so.",
+      "Casino: a game shows how many tables are open only when there are some."
+    ]
+  },
+  {
+    "id": "2026-11-28-top-bar",
+    "date": "2026-11-28",
+    "kind": "better",
+    "big": 1,
+    "title": "A top bar on computers",
+    "summary": "The long side menu is gone. Five places sit in one bar across the top.",
+    "items": [
+      "Home, Packs, Collection, Casino and Community run along the top. Point at one and its other pages drop down.",
+      "Settings, Radio and Updates are under More.",
+      "Pages get the full width of the window back.",
+      "On a tablet the first tap on a place opens its list and the second goes there."
+    ]
+  },
+  {
+    "id": "2026-11-28-first-pack-free",
+    "date": "2026-11-28",
+    "kind": "new",
+    "big": 2,
+    "title": "Your first pack is free",
+    "summary": "New here? Rip a pack before you make an account, then keep the cards.",
+    "items": [
+      "A visitor can tear one pack open straight from Home. No account, no coins.",
+      "Make a trainer afterwards and those cards go into your collection, on top of the 25 coins every account starts with.",
+      "Signed up without ripping first? Your first pack costs nothing.",
+      "It's one free pack per account, on packs up to 25 coins.",
+      "The tour is gone. The first pack tells you where your cards went and where coins come from."
+    ]
+  },
+  {
     "id": "2026-11-28-set-colours",
     "date": "2026-11-28",
     "kind": "better",

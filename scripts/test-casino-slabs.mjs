@@ -896,7 +896,7 @@ await check('winnings: slab-only winnings sell at the graded value, once; the lo
   assert.equal((await winnings.sell('coinflip', id, loserUser)).status, 403); assert.equal((await winnings.sell('coinflip', id, 'c')).status, 403);
   assert.equal((await winnings.info('coinflip', id, null)).status, 401);
   const info = await winnings.info('coinflip', id, 'a');
-  assert.deepEqual({ ...info, status: undefined, serverNow: undefined }, { eligible: true, cards: 0, slabs: 1, coins: 7.97, soldCoins: 0, sold: false, more: false, status: undefined, serverNow: undefined });
+  assert.deepEqual({ ...info, status: undefined, serverNow: undefined }, { eligible: true, locked: 0, cards: 0, slabs: 1, coins: 7.97, soldCoins: 0, sold: false, more: false, status: undefined, serverNow: undefined });
   // slabs:false with only slabs to sell: a clean 409, nothing moves
   const frozen = dump();
   const keep = await winnings.sell('coinflip', id, 'a', { slabs: false }); assert.equal(keep.status, 409); assert.match(keep.error, /Only slabs are left/); assert.equal(dump(), frozen);
@@ -1029,24 +1029,30 @@ await check('winnings: a bot-flip win sells the bot\'s cards AND the slabs minte
   audit('after bot winnings');
 });
 
-await check('binder: a staked slab drops the pocket of a card it was the only copy of; a card with another copy keeps its pocket; selling a won slab drops it too', async () => {
-  const only = mint('b', 'me5-90', 9); const twin1 = mint('b', 'me5-97', 9); mint('b', 'me5-97', 9);
+await check('binder: a slab filling a pocket cannot be staked or sold through the winnings; a spare slab can (worker/binder-lock.js)', async () => {
+  const only = mint('b', 'me5-90', 9); const twin1 = mint('b', 'me5-97', 9); mint('b', 'me5-97', 9); mint('b', 'me5-97', 9);
   db.prepare('DELETE FROM cards WHERE user_id = ? AND card_id IN (?, ?)').run('b', 'me5-90', 'me5-97');
   const slots = [{ id: 'me5-90', reverse: false }, { id: 'me5-97', reverse: false }, { id: 'me5-97', reverse: false }, ...Array(15).fill(null)];
   db.prepare('UPDATE profiles SET binder = ? WHERE user_id = ?').run(JSON.stringify(slots), 'b');
-  const f = await cf.create('b', { slabs: [only, twin1] }); assert.equal(f.status, 200, JSON.stringify(f));
+  const frozen = dump();
+  const refused = await cf.create('b', { slabs: [only, twin1] }); assert.equal(refused.status, 409, JSON.stringify(refused)); assert.match(refused.error, /binder/);
+  assert.equal(dump(), frozen, 'a refused stake moves nothing');
+  const f = await cf.create('b', { slabs: [twin1] }); assert.equal(f.status, 200, JSON.stringify(f));
   const binder = JSON.parse(db.prepare('SELECT binder FROM profiles WHERE user_id = ?').get('b').binder);
-  assert.equal(binder[0], null, 'the only copy of me5-90 left, so did its pocket');
-  assert.equal(binder[1]?.id, 'me5-97', 'one me5-97 slab is still owned: one pocket stays'); assert.equal(binder[2], null, 'the second pocket had no copy left');
+  assert.deepEqual(binder.slice(0, 3).map(x => x?.id), ['me5-90', 'me5-97', 'me5-97'], 'every pocket keeps its card');
   assert.equal((await cf.cancel(f.flip.id, 'b')).status, 200);
-  // Winning a slab and selling it through the winnings drops its pocket.
+  // A won slab put in the binder stays when the winnings are sold, until it comes out.
   addUser('g'); addUser('h'); // no other copies of anything: the won slab is the only me5-98 g has
   const mine = mint('g', 'me5-87', 9); const theirs = mint('h', 'me5-98', 9);
   const { id } = await wonFlip({ hostUser: 'g', guestUser: 'h', hostSlabs: [mine], guestSlabs: [theirs], winner: 'host' });
   db.prepare('UPDATE profiles SET binder = ? WHERE user_id = ?').run(JSON.stringify([{ id: 'me5-98', reverse: false }, { id: 'me5-87', reverse: false }, ...Array(16).fill(null)]), 'g');
+  const info = await winnings.info('coinflip', id, 'g'); assert.equal(info.locked, 1, 'the won slab is pocketed'); assert.equal(info.slabs, 0);
+  const sold = await winnings.sell('coinflip', id, 'g'); assert.equal(sold.status, 409); assert.match(sold.error, /binder/);
+  db.prepare('UPDATE profiles SET binder = ? WHERE user_id = ?').run(JSON.stringify([{ id: 'me5-87', reverse: false }, ...Array(17).fill(null)]), 'g');
   assert.equal((await winnings.sell('coinflip', id, 'g')).status, 200);
   const after = JSON.parse(db.prepare('SELECT binder FROM profiles WHERE user_id = ?').get('g').binder);
-  assert.equal(after[0], null, 'the sold slab took its pocket'); assert.equal(after[1]?.id, 'me5-87', 'the slab they kept keeps its pocket');
+  assert.equal(after[0]?.id, 'me5-87', 'the pocketed slab stayed with its pocket');
+  assert.equal(slab(mine).status, 'slabbed'); assert.equal(slab(theirs).status, 'sold');
   audit('after binder');
 });
 

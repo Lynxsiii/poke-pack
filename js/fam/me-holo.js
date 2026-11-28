@@ -22,7 +22,7 @@
  * Research and what changed: .claude/skills/card-textures/reference/fam-me-holo.md.
  */
 
-const ME_ID = /^me\d(pt5)?-/;
+const ME_ID = /^j?me\d(pt5)?[a-z]?-/;
 const COSMOS_DIR = "assets/foil/fam/me-holo/cosmos/";
 
 /* Pixel cosmos maps (scripts/fam/me-holo/cosmos_maps.py): drawn map min the plain print's TCG Live map where one exists

@@ -66,6 +66,21 @@ function slideThumb(keys, from) {
 
 const SWAP_ICON = '<svg class="tr-swap" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14M15.5 4.5 19 8l-3.5 3.5M19 16H5M8.5 12.5 5 16l3.5 3.5"/></svg>';
 
+/** Your cards you can offer: binder pockets hold copies back (worker/binder-lock.js), slabs filling them first. */
+function freeHoldings(save) {
+  const held = {};
+  for (const slot of Array.isArray(save.binder) ? save.binder : []) if (slot?.id) held[slot.id] = (held[slot.id] || 0) + 1;
+  const slabs = {};
+  for (const slab of Array.isArray(save.graded) ? save.graded : []) if (slab?.cardId) slabs[slab.cardId] = (slabs[slab.cardId] || 0) + 1;
+  const collection = {}; const reverses = {};
+  for (const [id, n] of Object.entries(save.collection || {})) {
+    const free = n - Math.min(n, Math.max(0, (held[id] || 0) - (slabs[id] || 0)));
+    if (free > 0) collection[id] = free;
+    if (free > 0 && save.reverses?.[id] > 0) reverses[id] = Math.min(free, save.reverses[id]);
+  }
+  return { collection, reverses };
+}
+
 export function initTrades(deps) {
   const root = deps.root;
   if (!root) return { show() {}, hide() {}, count: () => 0 };
@@ -624,7 +639,7 @@ export function initTrades(deps) {
       if (mine !== token || route.kind !== "new" || route.handle !== handle) return;
       const save = deps.getSave?.() || {};
       const [myCards, theirCards] = data.can.ok
-        ? await Promise.all([deps.cardEntries(save.collection || {}, save.reverses || {}), deps.cardEntries(data.their.collection, data.their.reverses)])
+        ? await Promise.all([deps.cardEntries(freeHoldings(save).collection, freeHoldings(save).reverses), deps.cardEntries(data.their.collection, data.their.reverses)])
         : [[], []];
       if (mine !== token) return;
       build = {

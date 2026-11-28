@@ -139,7 +139,8 @@ export function initCasino(deps = {}) {
   let hubSeen = null; // row keys on the last paint with data; null until the first one
   let hubFigs = {};
   const game = ({ href, key, title, line, n, word, art }) => {
-    const fig = n == null ? "" : `${Number(n).toLocaleString("en-US")} ${word}`;
+    // A count of nothing is not a fact worth a tag: the tile shows a figure only when there is one.
+    const fig = !n ? "" : `${Number(n).toLocaleString("en-US")} ${word}`;
     const bump = n != null && hubFigs[key] != null && hubFigs[key] !== n;
     if (n != null) hubFigs[key] = n;
     return `<li class="hub-tile" data-game="${key}">
@@ -300,7 +301,7 @@ export function initCasino(deps = {}) {
       </header>
       ${ageShut ? gateNoticeHTML(ageLock) : ""}
       <ul class="hub-games" aria-label="The games">${tiles.join("")}</ul>
-      <a class="rt-box hub-beta" href="/casino/beta" data-hub-link><span class="hub-beta-art" aria-hidden="true">${BETA_ART.grass}</span><span class="hub-beta-copy"><b>Beta testing <span class="rt-tag">Beta</span></b><span>New games for invited testers: Tall Grass and Mystery Tins.</span></span><i class="hub-game-go" aria-hidden="true"></i></a>
+      <a class="rt-box hub-beta" href="/casino/beta" data-hub-link><span class="hub-beta-art" aria-hidden="true">${BETA_ART.grass}</span><span class="hub-beta-copy"><b>Beta testing</b><span>New games for invited testers: Tall Grass and Mystery Tins.</span></span><i class="hub-game-go" aria-hidden="true"></i></a>
       <div class="cs-cols hub-live">${live}</div>
       ${recordHTML}
     </div>`;

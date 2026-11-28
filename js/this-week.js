@@ -67,8 +67,6 @@ export function weekOf(notes, today = Date.now()) {
   };
 }
 
-const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
-
 export function initThisWeek(deps) {
   const { root, esc, coinAmount, coinText, toCoins, openCard, loadMovers, notes } = deps;
   let movers = null; // null until asked for, then { up, down, day, since } (empty lists when it failed)
@@ -100,13 +98,8 @@ export function initThisWeek(deps) {
       )
       .join("");
 
-  const tailHtml = (week) => {
-    const parts = [];
-    if (week.added) parts.push(plural(week.added, "more update", "more updates"));
-    if (week.fixes) parts.push(plural(week.fixes, "fix", "fixes"));
-    const line = parts.length ? `${parts.join(" and ")} this week.` : "";
-    return `<p class="wk-tail">${line ? `<span>${esc(line)}</span> ` : ""}<a class="tlink" href="/notes">All patch notes</a></p>`;
-  };
+  // No tally of the week's smaller changes: the notes page has them, and a count reads as machine output.
+  const tailHtml = () => `<p class="wk-tail"><a class="tlink" href="/notes">All patch notes</a></p>`;
 
   const moverHtml = (card, i) => {
     const up = card.pct >= 0;

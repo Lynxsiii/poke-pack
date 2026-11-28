@@ -1,0 +1,37 @@
+{
+  "id": "jsv10",
+  "name": "The Glory of Team Rocket",
+  "lang": "ja",
+  "code": "SV10",
+  "series": "scarlet-violet",
+  "slug": "glory-of-team-rocket",
+  "scrydexId": "sv10_ja",
+  "era": "sv",
+  "tcgplayerCategory": 85,
+  "tcgplayerGroup": 24310,
+  "englishTwin": "sv10",
+  "rarityMap": {
+    "C": "Common",
+    "U": "Uncommon",
+    "R": "Rare",
+    "RR": "Double Rare",
+    "ACE": "ACE SPEC Rare",
+    "AR": "Illustration Rare",
+    "SR": "Ultra Rare",
+    "SAR": "Special Illustration Rare",
+    "UR": "Hyper Rare"
+  },
+  "printedTotal": 98,
+  "products": [
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 629197,
+      "packs": 30,
+      "promos": [],
+      "hull": "ortho",
+      "imageVersion": 3
+    }
+  ]
+}

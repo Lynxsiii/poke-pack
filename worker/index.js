@@ -61,6 +61,7 @@ import { productGear, rollGear } from "../js/gear.js";
 import { handleCasino, maintainCoinflips } from "./casino.js";
 import { ensureBetaSchema } from "./beta.js";
 import { handleFair, takeRoll } from "./fair.js";
+import { ensureBinderLock, isBinderLocked, LOCKED_MESSAGE, binderLocks } from "./binder-lock.js";
 import { ensureGradingSchema, gradedCounts, gradedSlabs, gradedTotal, handleCert, handleGrading, shownSlabs } from "./grading.js";
 import { handleBinderLook, lookColumns, resetEditionStmts, trainerLookFields } from "./binder-look.js";
 import { bestHistory, rollSealedProduct, tallyOpened } from "./sealed-roll.js";
@@ -71,6 +72,7 @@ import { handleTrades } from "./trades.js";
 import { handleTcg, maintainTcg } from "./tcg.js";
 import { seoResponse } from "./seo.js";
 import { handleWishlist, wishlistFor } from "./wishlist.js";
+import { claimFirstRip, firstRipOpen, handleFirstRip } from "./first-rip.js";
 import { DISCORD_URL, ensureFeedSchema, flushFeed, postNewPatchNotes, pullFeedStmts, sharesFeed } from "./discord.js";
 import { claimLevels, clearXpStmts, ensureXpSchema, loadXpCounters, prestigeUp, readXpRow, syncXp } from "./xp.js";
 import { hourlyBonus } from "../js/levels.js";
@@ -159,9 +161,10 @@ export default {
       }
       return response;
     } catch (err) {
-      const message = err?.message || "Server error.";
+      // A write the binder lock refused (worker/binder-lock.js) that no page check caught first, such as a race.
+      const message = isBinderLocked(err) ? LOCKED_MESSAGE : err?.message || "Server error.";
       const status = err.status && Number.isInteger(err.status) ? err.status
-        : /(active battles|open coin flips|open jackpots) before (deleting|resetting)/.test(message) ? 409 : 500;
+        : isBinderLocked(err) || /(active battles|open coin flips|open jackpots) before (deleting|resetting)/.test(message) ? 409 : 500;
       if (status >= 500) console.error(err);
       return json({ error: status >= 500 ? "Server error." : message }, status);
     }
@@ -202,6 +205,8 @@ export async function handleApi(request, env, url) {
   const path = url.pathname.replace(/\/+$/, "") || "/";
   const method = request.method.toUpperCase();
   await ensureTesterSchema(env);
+  // Cards in a binder pocket can't leave the account (worker/binder-lock.js): the triggers go in before any write.
+  if (method !== "GET" && method !== "HEAD") await ensureBinderLock(env, ensureGradingSchema);
   if (path.startsWith('/api/battles')) {
     return handleBattles(path, method, request, env, {
       json, requireUser, readJson, loadSave, loadSetCards, loadSealed, loadProducts, packCost, ensureSocialSchema,
@@ -335,6 +340,9 @@ export async function handleApi(request, env, url) {
   }
   if (path === "/api/packs/rip" && method === "POST") {
     return rip(request, env);
+  }
+  if (path === "/api/packs/first" && method === "POST") {
+    return handleFirstRip(request, env, { json, readJson, requireUser, loadSetCards, packCost, openPacks, takeRoll, withRandom });
   }
   if (path === "/api/sealed/open" && method === "POST") {
     return openSealed(request, env);
@@ -477,11 +485,13 @@ async function signup(request, env) {
     const claimed = Object.values(claim?.collection || {}).reduce((sum, n) => sum + (Number(n) || 0), 0);
     if (claimed > 0) await setStatStmt(env, id, CLAIM_STAT, claimed).run();
   }
+  // The free pack ripped before signing up goes onto the account (worker/first-rip.js).
+  const firstRipCards = body.firstRip ? await claimFirstRip(env, request, id, body.firstRip, { loadSetCards, openPacks }) : 0;
   const token = await createSession(env, id, now, request);
   await logEvent(env, request, id, "signup");
   const user = await env.DB.prepare("SELECT * FROM users WHERE id = ?").bind(id).first();
   const save = await loadSave(env, id);
-  return json({ user: await trainerUser(env, user, save), save }, 201, sessionCookie(request, token));
+  return json({ user: await trainerUser(env, user, save), save, firstRipCards }, 201, sessionCookie(request, token));
 }
 
 async function signin(request, env) {
@@ -1271,6 +1281,7 @@ async function sell(request, env) {
     .bind(auth.user.id, cardId)
     .first();
   if (!owned || owned.qty < 1) return json({ error: "You don't own that card." }, 400);
+  if ((await binderLocks(env, auth.user.id)).freeRaw(cardId, owned.qty) < 1) return json({ error: LOCKED_MESSAGE, locked: true }, 409);
 
   const card = await findCatalogCard(env, request, cardId);
   if (!card) return json({ error: "Unknown card." }, 400);
@@ -1322,13 +1333,19 @@ async function sellDuplicates(request, env) {
   if (!owned.length) return json({ error: "No duplicates to sell in this set." }, 400);
 
   const catalog = new Map((await loadSetCards(env, request, set)).map(card => [card.id, card]));
-  const rows = owned.filter(row => catalog.has(row.card_id));
-  if (!rows.length) return json({ error: "No priced duplicates to sell." }, 400);
-  const value = money(rows.reduce((sum, row) => sum + (row.qty - 1) * sellValue(catalog.get(row.card_id)), 0));
-  const copies = rows.reduce((sum, row) => sum + row.qty - 1, 0);
-  const ids = rows.map(row => row.card_id);
+  // Keep one of each, or more when the binder holds more pockets of it than slabs fill (worker/binder-lock.js).
+  const locks = await binderLocks(env, auth.user.id);
+  const rows = owned.filter(row => catalog.has(row.card_id))
+    .map(row => ({ ...row, keep: Math.max(1, row.qty - locks.freeRaw(row.card_id, row.qty)) }))
+    .filter(row => row.qty > row.keep);
+  if (!rows.length) {
+    const pocketed = owned.some(row => catalog.has(row.card_id));
+    return json({ error: pocketed ? "Every duplicate in this set is locked in your binder." : "No priced duplicates to sell." }, pocketed ? 409 : 400);
+  }
+  const value = money(rows.reduce((sum, row) => sum + (row.qty - row.keep) * sellValue(catalog.get(row.card_id)), 0));
+  const copies = rows.reduce((sum, row) => sum + row.qty - row.keep, 0);
   const collection = (await inventoryMap(env, auth.user.id)).collection;
-  for (const id of ids) collection[id] = 1;
+  for (const row of rows) collection[row.card_id] = row.keep;
   const profile = await env.DB.prepare("SELECT binder FROM profiles WHERE user_id = ?")
     .bind(auth.user.id).first();
   const binder = reconcileBinder(parseJson(profile?.binder, emptyBinder()), await ownedWithSlabs(env, auth.user.id, collection));
@@ -1344,9 +1361,11 @@ async function sellDuplicates(request, env) {
            OR c.reverse_qty != json_extract(s.value, '$.reverse_qty'))`
     ).bind(value, profile?.binder ?? null, JSON.stringify(binder), auth.user.id, snapshot, auth.user.id),
     env.DB.prepare(
-      `UPDATE cards SET qty = 1, reverse_qty = MIN(reverse_qty, 1)
-       WHERE user_id = ? AND card_id IN (SELECT json_extract(value, '$.card_id') FROM json_each(?))
-         AND qty > 1 AND changes() = 1`
+      `UPDATE cards SET
+         qty = (SELECT json_extract(s.value, '$.keep') FROM json_each(?2) s WHERE json_extract(s.value, '$.card_id') = cards.card_id),
+         reverse_qty = MIN(reverse_qty, (SELECT json_extract(s.value, '$.keep') FROM json_each(?2) s WHERE json_extract(s.value, '$.card_id') = cards.card_id))
+       WHERE user_id = ?1 AND card_id IN (SELECT json_extract(value, '$.card_id') FROM json_each(?2))
+         AND qty > (SELECT json_extract(s.value, '$.keep') FROM json_each(?2) s WHERE json_extract(s.value, '$.card_id') = cards.card_id) AND changes() = 1`
     ).bind(auth.user.id, snapshot),
   ]);
   if (!results[0]?.meta?.changes) return json({ error: "Collection changed. Try again." }, 409);
@@ -1835,7 +1854,9 @@ function reconcileBinder(binder, collection) {
 async function trainerUser(env, row, save, levelHint = null) {
   const fromSave = save?.xp ? { level: save.xp.level, prestige: save.xp.prestige || 0, peak: save.xp.peak || save.xp.level } : null;
   const base = { ...withLevel(publicUser(row), save), ...(await levelFields(env, row, levelHint ?? fromSave)) };
-  return { ...base, ...(await trainerLookFields(env, row)), feedShare: sharesFeed(row), ...termsFields(row) };
+  // A new account's free first pack, until it is opened (worker/first-rip.js).
+  const firstRip = (await firstRipOpen(env, row)) ? { firstRip: true } : {};
+  return { ...base, ...(await trainerLookFields(env, row)), feedShare: sharesFeed(row), ...termsFields(row), ...firstRip };
 }
 
 function withLevel(user, save) {

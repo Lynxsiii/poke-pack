@@ -135,15 +135,15 @@ export function renderNotesPage(body, notes, factEl, state = {}) {
   if (factEl) {
     const oldest = dayParts(notes[notes.length - 1].date);
     const newest = dayParts(notes[0].date);
-    const since = fresh.size ? ` ${fresh.size} since your last visit.` : "";
-    factEl.textContent = `${notes.length} updates since ${oldest.full || oldest.day}. The latest is from ${newest.full || newest.day}.${since}`;
+    // No running total: a count in the hundreds reads as machine output, and the dates say enough.
+    const since = fresh.size ? ` ${fresh.size} new since your last visit.` : "";
+    factEl.textContent = `Every change since ${oldest.full || oldest.day}. The latest is from ${newest.full || newest.day}.${since}`;
   }
 
   const month = months.some((m) => m.key === state.month) ? state.month : "all";
   state.month = month;
   const kind = KINDS.some((k) => k.key === state.kind) ? state.kind : "all";
   state.kind = kind;
-  const kindCount = (key) => notes.filter((note) => kindOf(note) === key).length;
 
   // The week's big updates first, as rows that jump to their entry.
   const week = weekOf(notes);
@@ -168,7 +168,7 @@ export function renderNotesPage(body, notes, factEl, state = {}) {
         <button type="button" class="nt-pick rt-word${kind === "all" ? " on" : ""}" data-kind="all" aria-pressed="${kind === "all"}">All</button>
         ${KINDS.map(
           (k) =>
-            `<button type="button" class="nt-pick rt-word${kind === k.key ? " on" : ""}" data-kind="${k.key}" aria-pressed="${kind === k.key}">${k.word}<small>${kindCount(k.key)}</small></button>`
+            `<button type="button" class="nt-pick rt-word${kind === k.key ? " on" : ""}" data-kind="${k.key}" aria-pressed="${kind === k.key}">${k.word}</button>`
         ).join("")}
       </div>
       <div class="nt-tools">

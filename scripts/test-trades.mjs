@@ -393,16 +393,28 @@ await check('limits on what one offer and one player may hold', async () => {
   assert.equal((await offer('tom', 'uma', cards([A1, 1]), cards([B1, 1]))).status, 429);
 });
 
-await check('a binder pocket holding a card that was traded away is emptied', async () => {
+await check('binder cards are locked: they cannot be offered, and a trade whose card went into a binder cannot be accepted', async () => {
   player('vic'); player('wes');
   give('vic', A1, 1); give('wes', B1, 1);
   const binder = Array.from({ length: 18 }, () => null); binder[0] = { id: A1, reverse: false }; binder[1] = { id: 'me1-1', reverse: false };
   give('vic', 'me1-1', 1);
   db.prepare('UPDATE profiles SET binder = ? WHERE user_id = ?').run(JSON.stringify(binder), 'vic');
+  const refused = await offer('vic', 'wes', cards([A1, 1]), cards([B1, 1]));
+  assert.equal(refused.status, 409, JSON.stringify(refused.body)); assert.match(refused.body.error, /binder/);
+  const asked = await offer('wes', 'vic', cards([B1, 1]), cards([A1, 1]));
+  assert.equal(asked.status, 409, 'nobody can ask for a card in your binder either'); assert.match(asked.body.error, /binder/);
+  // Offered while loose, then put in the binder: the accept is refused and nothing moves.
+  db.prepare('UPDATE profiles SET binder = ? WHERE user_id = ?').run('[]', 'vic');
   const made = await offer('vic', 'wes', cards([A1, 1]), cards([B1, 1]));
-  assert.equal((await accept('wes', made.body.trade.id)).status, 200);
-  const after = JSON.parse(db.prepare("SELECT binder FROM profiles WHERE user_id = 'vic'").get().binder);
-  assert.equal(after[0], null); assert.equal(after[1].id, 'me1-1');
+  assert.equal(made.status, 201, JSON.stringify(made.body));
+  db.prepare('UPDATE profiles SET binder = ? WHERE user_id = ?').run(JSON.stringify(binder), 'vic');
+  await conserved(async () => {
+    const late = await accept('wes', made.body.trade.id);
+    assert.equal(late.status, 409, JSON.stringify(late.body)); assert.match(late.body.error, /binder/);
+  });
+  assert.equal(qty('vic', A1), 1); assert.equal(qty('wes', B1), 1);
+  const kept = JSON.parse(db.prepare("SELECT binder FROM profiles WHERE user_id = 'vic'").get().binder);
+  assert.equal(kept[0].id, A1); assert.equal(kept[1].id, 'me1-1');
 });
 
 await check('the partner view shows what they hold and both daily limits', async () => {

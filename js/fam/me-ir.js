@@ -42,7 +42,7 @@ const LIVE_MAP = new Set([
 /** Whether a card face is this family's. */
 export function claims(card) {
   if (!card || card.reverse || card.pattern) return false;
-  if (!/^me\d(pt5)?-/.test(String(card.id || ""))) return false;
+  if (!/^j?me\d(pt5)?[a-z]?-/.test(String(card.id || ""))) return false;
   return card.rarity === "Illustration Rare";
 }
 

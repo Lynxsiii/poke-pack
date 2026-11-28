@@ -1,0 +1,43 @@
+{
+  "id": "jsv11w",
+  "name": "White Flare",
+  "lang": "ja",
+  "code": "SV11W",
+  "series": "scarlet-violet",
+  "slug": "white-flare",
+  "scrydexId": "sv11w_ja",
+  "era": "sv",
+  "tcgplayerCategory": 85,
+  "tcgplayerGroup": 24350,
+  "englishTwin": "rsv10pt5",
+  "rarityMap": {
+    "C": "Common",
+    "U": "Uncommon",
+    "R": "Rare",
+    "RR": "Double Rare",
+    "ACE": "ACE SPEC Rare",
+    "AR": "Illustration Rare",
+    "SR": "Ultra Rare",
+    "SAR": "Special Illustration Rare",
+    "UR": "Hyper Rare",
+    "BWR": "Black White Rare"
+  },
+  "printedTotal": 86,
+  "products": [
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 637386,
+      "packs": 20,
+      "promos": [],
+      "hull": "ortho",
+      "imageVersion": 3,
+      "imageNote": "Pokémon Center Online official render, cut with scripts/cut_box_render.py --mirror"
+    }
+  ],
+  "patternPrints": [
+    "pokeball",
+    "masterball"
+  ]
+}

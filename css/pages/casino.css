@@ -1002,6 +1002,9 @@ body.cs-locked { overflow: hidden; }
 .cs-winnings small { color: var(--k-2); font-size: 13.5px; font-weight: 500; }
 .cs-winnings .cs-sell-cards { align-self: center; min-height: 44px; }
 .cs-sold { margin: 0; color: var(--k); font-size: 15px; font-weight: 700; }
+/* Won cards sitting in the binder are left out of the sale (worker/binder-lock.js). */
+.cs-kept { margin: 0; color: var(--k-2); font-size: 13.5px; font-weight: 700; line-height: 1.4; }
+.cs-kept .lock-glyph { width: 13px; height: 13px; margin-right: 6px; color: var(--k); vertical-align: -1.5px; }
 .tb-result .cs-winnings { align-items: flex-start; width: auto; margin-top: 14px; text-align: left; }
 @media (max-width: 720px) { .tb-result .cs-winnings { align-items: stretch; text-align: center; } }
 

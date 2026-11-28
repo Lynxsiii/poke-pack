@@ -1,0 +1,7 @@
+{
+  "_doc": "Page shut inside a product photo, cut by check_product_photos.py --fix --holes. Key: <set>/<product id>; value: [x, y] points (in the photo's own pixels) inside each gap, picked by eye on the dark stage. A gap looks exactly like white art, so only list points you have looked at.",
+  "xy12/etb-mega-charizard-y": [[134, 199], [250, 209]],
+  "xy12/etb-mega-blastoise": [[134, 199], [250, 209]],
+  "xy8/etb-mewtwo-x": [[91, 98]],
+  "xy8/etb-mewtwo-y": [[91, 97]]
+}
