@@ -245,6 +245,18 @@ cure"). The surface gloss throws a soft highlight.
 
 ## Pitfalls
 
+- **A holo's light is local, its dots are the scan's, and its Pokémon is cut from the scan.** The 2026-11-28 site review
+  failed the whole DP cosmos generation three ways. (1) LV.X wore the era frame map, a rectangle window, so every layer
+  sat on the Pokémon; `make_figure_masks.py` now cuts the figure from each scan (the foil shows as small round dots in a
+  holo scan, matte ink is smooth; that grain scores SAM2's candidates, grows the pick by further candidates and GrabCut,
+  and falls back on SAM's most confident salient object when the grain is no guide). It is generic (`--family/--sets/
+  --cards`, `--window`, `--zone`, `--spill`); about 3 in 4 LV.X come out whole, the rest lose a limb, so
+  `make_cosmos_flecks.py` also puts no glitter where the scan shows no grain. (2) The fleck maps pasted synthetic
+  pixel-grid discs over the dots the scan already shows, and painted them at rest: the flecks are now the scan's own dots
+  plus a sparse sprinkle of soft round ones, shown lit only. (3) Every sheen was a colour-dodged spectrum over the whole
+  window with a closing `contrast(0.8)` (a wash, a magenta flood on LEGENDs): multiply the sheen and the flecks by a
+  radial pool at the pointer that ends in black and `screen` them, so nothing changes away from the light. Check that
+  the result is still visible; the first screened pool at 0.34 could not be seen at phone size.
 - **Glitter belongs on the engraving, not spread over the foil.** Noah, 2026-11-28: "the sparkles or dots on the holo
   take away from the texture as i dont see the texture too much". The shared `.shine::after` fleck tile was masked by
   art x foil map only, so on every face whose map covers the Pokémon (shiny vault cards, Japanese twins) a uniform
