@@ -30,99 +30,119 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-ir.foil-ir.has-foil-map {
   --svir-clip: inset(2.4% 3.6% 2.4% 3.6% round 1.6%);
 }
 
-/* ---- The streaks: thin light lines, one hue each, over neutral grey ---------------------------------------------
- * Built in one background-blend chain, bottom to top:
- *   three streak layers (black with thin soft white lines; periods 9.1%, 13.3% and 19.7% of a 200% box, angles 133-139deg,
- *   each moved at its own rate) lightened together: irregular spacing and widths, no ruler pattern;
- *   a hue ramp (150deg, a 160% box, a cycle about every three lines) multiplied in: each line takes the one hue under it, the next line another, and
- *   the hues slide with tilt at their own rate; light pastel stops (lightness 82-93%), so the line's core is near white
- *   on pale ink and a saturated colour on dark ink (hard-light of a light colour on black = the colour's saturated
- *   form);
- *   a 50% grey lightened on top: every gap (and every channel under half) becomes neutral grey, which hard-light leaves
- *   untouched. So the print between the lines is plain print, and nothing ever darkens. */
+/* ---- Round 2 (2026-11-28; per-card review of all 471 faces: about 150 "saturated diagonal rainbow bars across the
+ * art, ignoring the drawing", some at rest) -------------------------------------------------------------------------
+ * The streaks were hard-lit at full strength: on dark ink (Bellibolt 201's cave, Cleffa 202's night sky) a hard-lit
+ * pastel is the colour's saturated form, so each line was a neon bar from edge to edge of the lit half. The real
+ * card's light pillars are soft, pale, narrow and grainy. So now, one background-blend chain, bottom to top:
+ *   two streak layers (black with thin soft grey lines, different periods and angles, each moving at its own rate),
+ *   lightened together;
+ *   a PALE hue ramp multiplied in (lightness 88-93%: a tint of the light, not a colour);
+ *   the foil grain, soft-lit over it, so a pillar is a grainy shimmer and not an airbrushed bar;
+ *   a pool round the light that ends in black, multiplied: three or four pillars show near the lamp and none far off;
+ *   50% grey screened on top: the result runs from neutral grey (no light) to a pale tint (a pillar's core).
+ * `.foil` then OVERLAYS it: overlay scales with the ink under it, so dark ink takes a faint glint and the pale
+ * background a soft pastel band; nothing darkens and nothing is recoloured. */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-ir.foil-ir.has-foil-map .foil {
   background-image:
     linear-gradient(#808080, #808080),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      #fff 0%, #dcdcdc 14%, #8c8c8c 32%, #3c3c3c 50%, #000 66%),
+    url("/assets/foil/grain.png"),
     repeating-linear-gradient(150deg,
-      hsl(24, 100%, 82%) 0%, hsl(24, 100%, 82%) 3%, hsl(48, 100%, 93%) 6%, hsl(140, 100%, 82%) 10%,
-      hsl(140, 100%, 82%) 12%, hsl(195, 100%, 84%) 15%, hsl(265, 100%, 86%) 19%, hsl(265, 100%, 86%) 22%,
-      hsl(330, 100%, 85%) 25%, hsl(24, 100%, 82%) 28%),
+      hsl(24, 80%, 90%) 0%, hsl(48, 80%, 93%) 6%, hsl(140, 60%, 90%) 11%, hsl(195, 75%, 90%) 15%,
+      hsl(265, 70%, 92%) 20%, hsl(330, 70%, 91%) 25%, hsl(24, 80%, 90%) 28%),
     repeating-linear-gradient(136deg,
-      #000 0%, #000 6.6%, #f2f2f2 8.1%, #000 9.6%, #000 13.3%),
-    repeating-linear-gradient(139deg,
-      #000 0%, #000 15.3%, #d0d0d0 16.6%, #000 17.9%, #000 19.7%),
+      #000 0%, #000 6.9%, #b4b4b4 8.1%, #000 9.3%, #000 13.3%),
     repeating-linear-gradient(133deg,
-      #000 0%, #000 3%, #fff 4.6%, #000 6.2%, #000 9.1%);
-  background-size: 100% 100%, 160% 160%, 200% 200%, 200% 200%, 200% 200%;
+      #000 0%, #000 3.6%, #dcdcdc 4.6%, #000 5.6%, #000 9.1%);
+  background-size: 100% 100%, 100% 100%, 96px 96px, 160% 160%, 200% 200%, 200% 200%;
   background-position:
     center,
+    center,
+    var(--svir-seed),
     calc(((50% - var(--background-x)) * 2.2) + 50%) calc(((50% - var(--background-y)) * 1.6) + 50%),
     calc(((50% - var(--background-x)) * 0.8) + 37%) calc(((50% - var(--background-y)) * 0.6) + 61%),
-    calc(((50% - var(--background-x)) * 0.6) + 71%) calc(((50% - var(--background-y)) * 0.45) + 29%),
     calc(((50% - var(--background-x)) * 1) + 50%) calc(((50% - var(--background-y)) * 0.7) + 50%);
-  background-repeat: no-repeat;
-  background-blend-mode: lighten, multiply, lighten, lighten, normal;
+  background-repeat: no-repeat, no-repeat, repeat, no-repeat, no-repeat, no-repeat;
+  background-blend-mode: screen, multiply, soft-light, multiply, lighten, normal;
   filter: none;
-  mix-blend-mode: hard-light;
+  mix-blend-mode: overlay;
   clip-path: var(--svir-clip);
-  opacity: calc((0.12 + var(--card-opacity) * 0.88) * var(--svir-a));
+  opacity: calc((0.1 + var(--card-opacity) * 0.62) * var(--svir-a));
 }
+/* Resting: nothing but a faint even gloss; no pillar shows on a card lying flat. */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-ir.foil-ir.has-foil-map:not(.lit):not(.settling) .foil {
-  filter: saturate(0.75);
-  opacity: calc(0.07 * var(--foil-strength, 1));
-}
-
-/* ---- The light: a neutral veil with a small hole under the light, so only the lines near it are lit (3-5 at once)
- * and the far side of the card stays plain print. Grey is neutral under the parent's hard-light. */
-body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-ir.foil-ir.has-foil-map .foil::after {
-  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(0, 0%, 50%, 0) 0%, hsla(0, 0%, 50%, 0.04) 26%, hsla(0, 0%, 50%, 0.34) 48%, hsla(0, 0%, 50%, 0.62) 72%,
-    hsla(0, 0%, 50%, 0.74) 100%);
+  background-image: linear-gradient(125deg, #808080 0%, #808080 30%, #a8a8a8 42%, #808080 54%, #808080 100%);
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
   background-blend-mode: normal;
-  mix-blend-mode: normal;
   filter: none;
-  -webkit-mask-image: none;
-  mask-image: none;
-  clip-path: none;
-  opacity: 1;
+  opacity: calc(0.35 * var(--foil-strength, 1));
 }
 
-/* ---- The sand: fine isotropic flecks at about 1 CSS px, screened, brightest under the light --------------------- */
+/* The old neutral veil: the pool is in the chain now. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-ir.foil-ir.has-foil-map .foil::after {
+  background-image: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  clip-path: none;
+  opacity: 0;
+}
+
+/* ---- The sand: fine flecks round the light only, overlaid inside the group (they glint on the print's own
+ * brightness and cannot grey dark ink) -------------------------------------------------------------------------- */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-ir.foil-ir.has-foil-map .foil::before {
-  background-image: url("/assets/foil/glitter-fine.webp"), url("/assets/foil/glitter-flecks.webp");
-  background-size: 70% auto, 50% auto;
-  background-position: var(--svir-seed), calc(var(--seed-x, 0.5) * -100%) calc(var(--seed-y, 0.5) * 100%);
+  background-image: url("/assets/foil/glitter-fine.webp");
+  background-size: 70% auto;
+  background-position: var(--svir-seed);
   background-repeat: repeat;
-  background-blend-mode: screen, normal;
-  filter: saturate(0.5) brightness(1.3);
+  background-blend-mode: normal;
+  filter: saturate(0.3);
   mix-blend-mode: screen;
   -webkit-mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    #000 0%, hsla(0, 0%, 0%, 0.6) 45%, hsla(0, 0%, 0%, 0.35) 100%);
+    #000 0%, hsla(0, 0%, 0%, 0.5) 28%, hsla(0, 0%, 0%, 0) 52%);
   mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    #000 0%, hsla(0, 0%, 0%, 0.6) 45%, hsla(0, 0%, 0%, 0.35) 100%);
+    #000 0%, hsla(0, 0%, 0%, 0.5) 28%, hsla(0, 0%, 0%, 0) 52%);
   -webkit-mask-size: 100% 100%;
   mask-size: 100% 100%;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   clip-path: none;
-  opacity: 0.24;
+  opacity: 0.12;
 }
 
-/* ---- The gloss: a soft specular pool under the light, on the foil only, no dark far end ------------------------- */
+/* ---- Dark ink: the same pillars screened very faintly, so a night sky or a cave still shows them (overlay alone
+ * leaves black black); the pool ends in black, so nothing is lifted away from the light ------------------------- */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-ir.foil-ir.has-foil-map .glare {
-  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(0, 0%, 100%, 0.45) 0%, hsla(0, 0%, 100%, 0.16) 22%, hsla(0, 0%, 100%, 0) 45%);
-  background-size: 100% 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-  mix-blend-mode: soft-light;
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      #fff 0%, #dcdcdc 14%, #8c8c8c 32%, #3c3c3c 50%, #000 66%),
+    url("/assets/foil/grain.png"),
+    repeating-linear-gradient(150deg,
+      hsl(24, 80%, 86%) 0%, hsl(48, 80%, 90%) 6%, hsl(140, 60%, 86%) 11%, hsl(195, 75%, 86%) 15%,
+      hsl(265, 70%, 88%) 20%, hsl(330, 70%, 87%) 25%, hsl(24, 80%, 86%) 28%),
+    repeating-linear-gradient(136deg,
+      #000 0%, #000 6.9%, #b4b4b4 8.1%, #000 9.3%, #000 13.3%),
+    repeating-linear-gradient(133deg,
+      #000 0%, #000 3.6%, #dcdcdc 4.6%, #000 5.6%, #000 9.1%);
+  background-size: 100% 100%, 96px 96px, 160% 160%, 200% 200%, 200% 200%;
+  background-position:
+    center,
+    var(--svir-seed),
+    calc(((50% - var(--background-x)) * 2.2) + 50%) calc(((50% - var(--background-y)) * 1.6) + 50%),
+    calc(((50% - var(--background-x)) * 0.8) + 37%) calc(((50% - var(--background-y)) * 0.6) + 61%),
+    calc(((50% - var(--background-x)) * 1) + 50%) calc(((50% - var(--background-y)) * 0.7) + 50%);
+  background-repeat: no-repeat, repeat, no-repeat, no-repeat, no-repeat;
+  background-blend-mode: multiply, soft-light, multiply, lighten, normal;
+  mix-blend-mode: screen;
   filter: none;
   clip-path: var(--svir-clip);
   border-radius: 0;
-  opacity: calc(var(--card-opacity) * 0.5);
+  opacity: calc(var(--card-opacity) * 0.12);
   -webkit-mask-image: var(--art), var(--foil-map);
   -webkit-mask-composite: source-in, source-over;
   mask-image: var(--art), var(--foil-map);
