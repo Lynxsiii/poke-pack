@@ -18,9 +18,14 @@ import { createUpgrader } from "./upgrader.js?v=12";
 import { chanceText } from "./upgrader-rules.js?v=3";
 import { gateLock, gateNoticeHTML } from "./gate-notice.js";
 import { createBetaPages, BETA_KEYS, BETA_ART } from "./beta.js?v=11";
+import { createFairPage } from "./fair-page.js?v=1";
+import { mountFairButton } from "./fair-sheet.js?v=1";
+
+/** The game whose odds the bar's "Odds and fairness" button opens, by page. */
+const FAIR_KEY = { coinflip: "coinflip", jackpot: "jackpot", upgrader: "upgrader", battles: "battle", grass: "grass", tins: "tins" };
 
 const HUB_POLL_MS = 8000;
-const ROUTE = /^\/casino(?:\/(coinflip|jackpot|upgrader|beta|grass|rocket|tins)(?:\/([a-zA-Z0-9-]{1,80}))?)?$/;
+const ROUTE = /^\/casino(?:\/(coinflip|jackpot|upgrader|beta|grass|rocket|tins|fair)(?:\/([a-zA-Z0-9-]{1,80}))?)?$/;
 
 /** Where each game lives, in the order the sub-nav shows them. */
 export const CASINO_LINKS = [
@@ -30,6 +35,7 @@ export const CASINO_LINKS = [
   { key: "upgrader", href: "/casino/upgrader", label: "Upgrader" },
   { key: "battles", href: "/battles", label: "Battles" },
   { key: "beta", href: "/casino/beta", label: "Beta" },
+  { key: "fair", href: "/casino/fair", label: "Fairness" },
 ];
 /** The beta games light up the Beta word in the sub-nav. */
 const BAR_KEY = { grass: "beta", tins: "beta" };
@@ -68,6 +74,7 @@ export function initCasino(deps = {}) {
     coinflip: document.createElement("div"),
     jackpot: document.createElement("div"),
     upgrader: document.createElement("div"),
+    fair: document.createElement("div"),
     ...Object.fromEntries(BETA_KEYS.map((k) => [k, document.createElement("div")])),
   };
   for (const [key, el] of Object.entries(pages)) {
@@ -77,7 +84,8 @@ export function initCasino(deps = {}) {
   const coinflip = createCoinflip({ ...ctx, root: pages.coinflip });
   const jackpot = createJackpot({ ...ctx, root: pages.jackpot });
   const upgrader = createUpgrader({ ...ctx, root: pages.upgrader });
-  const games = { coinflip, jackpot, upgrader, ...createBetaPages(ctx, pages) };
+  const fair = createFairPage({ ...ctx, root: pages.fair });
+  const games = { coinflip, jackpot, upgrader, fair, ...createBetaPages(ctx, pages) };
 
   let visible = false;
   let current = "";
@@ -88,14 +96,17 @@ export function initCasino(deps = {}) {
   let upgradeData = null;
 
   // ---- The sub-nav --------------------------------------------------------
-  function paintBar(active) {
+  function paintBar(active, page = active) {
     if (!bar) return;
     bar.hidden = !active;
     if (!active) return;
+    const fairKey = FAIR_KEY[page] || "";
     bar.innerHTML = `<div class="cs-words" role="navigation" aria-label="Casino">${CASINO_LINKS.map(
       (l) => `<a class="cs-word rt-word${l.key === active ? " on" : ""}" href="${l.href}" data-casino-link${l.key === active ? ' aria-current="page"' : ""}>${esc(l.label)}</a>`
     ).join("")}</div>
-    <p class="cs-free">Free play with virtual coins. Nothing here costs real money, can be cashed out or wins a prize. <a href="/terms" data-casino-terms>Terms</a></p>`;
+    <p class="cs-free">Free play with virtual coins. Nothing here costs real money, can be cashed out or wins a prize. <a href="/terms" data-casino-terms>Terms</a></p>${fairKey ? '<div class="cs-fair" data-cs-fair></div>' : ""}`;
+    const fairSlot = bar.querySelector("[data-cs-fair]");
+    if (fairSlot) mountFairButton(fairSlot, fairKey, navigate);
     // A phone scrolls the words sideways: keep the chosen one in view, and fade whichever edge has more.
     const words = bar.querySelector(".cs-words");
     const on = words?.querySelector(".on");
@@ -336,7 +347,7 @@ export function initCasino(deps = {}) {
     }
     current = game;
     for (const [key, el] of Object.entries(pages)) el.classList.toggle("hidden", key !== game);
-    paintBar(BAR_KEY[game] || game);
+    paintBar(BAR_KEY[game] || game, game);
     if (games[game]) games[game].show(id);
     else {
       paintHub();
@@ -353,6 +364,7 @@ export function initCasino(deps = {}) {
     coinflip.hide();
     jackpot.hide();
     upgrader.hide();
+    fair.hide();
     for (const k of BETA_KEYS) games[k].hide();
     picker.close();
   }

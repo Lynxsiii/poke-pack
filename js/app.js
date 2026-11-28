@@ -130,7 +130,7 @@ import { THEMES, canUseTheme, resolveLook } from "./themes.js?v=2";
 import { equippedCoin, gearItem, normalizeGear } from "./gear.js?v=2";
 import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=19";
 import { initBattles } from "./battles.js?v=12";
-import { initCasino } from "./casino.js?v=36";
+import { initCasino } from "./casino.js?v=37";
 import { coinOf } from "./coin.js?v=7";
 // grading
 import { initGrading, GRADING_ROUTE, CERT_ROUTE } from "./grading-page.js?v=23";
@@ -10876,7 +10876,7 @@ const casino = initCasino({
   },
   navigate: (path) => {
     // A won sealed product waits in the Sealed collection.
-    if (path === "/bulk/sealed") return navigateTo(path);
+    if (path === "/bulk/sealed" || path === "/packs") return navigateTo(path);
     if (!/^\/casino(?:\/[a-z]+(?:\/[a-zA-Z0-9-]+)?)?$/.test(path) && !/^\/battles(?:\/[a-zA-Z0-9_-]+)?$/.test(path)) return;
     if (path.startsWith("/battles")) {
       battlePath = path;

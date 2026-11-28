@@ -6,6 +6,8 @@ import {
 import { GRADING_LIMITS, bandFor, gradedValueOf } from '../js/grading-rules.js';
 import { ensureGradingSchema } from './grading.js';
 import { gateResponse } from './gates.js';
+import { takeRoll } from './fair.js';
+import { grassBoard, tinPicks } from '../js/fair.js';
 
 /* BETA TESTING (/api/casino/beta/...): invite codes, the tester flag, and the games against the house.
 
@@ -114,7 +116,7 @@ const byRequest = (env, userId, requestId) => env.DB.prepare('SELECT * FROM beta
 const getRun = (env, id, userId) => env.DB.prepare('SELECT * FROM beta_runs WHERE id = ? AND user_id = ?').bind(id, userId).first();
 
 /** Start a run: stake off, row in, and (for one-shot games) the payout and a card, all in one batch. */
-async function startRun(env, helpers, user, game, requestId, stake, data, { state = 'open', payout = 0, mult = 0, card = null } = {}) {
+async function startRun(env, helpers, user, game, requestId, stake, data, { state = 'open', payout = 0, mult = 0, card = null, extra = null } = {}) {
   const existing = await byRequest(env, user.id, requestId);
   if (existing) return existing;
   const id = newId();
@@ -130,6 +132,8 @@ async function startRun(env, helpers, user, game, requestId, stake, data, { stat
       ON CONFLICT(user_id, card_id) DO UPDATE SET qty = cards.qty + 1`).bind(user.id, card));
   }
   if (payout > 0) sts.push(payIfChanged(env, payout, user.id));
+  // Rows that land only with the run (the fair log): guarded on the run existing.
+  if (extra) sts.push(...extra(id));
   let results;
   try {
     results = await env.DB.batch(sts);
@@ -175,10 +179,13 @@ async function grass(env, helpers, user, action, body, method) {
     if (open) error('Finish the patch you are in first.', 409);
     const stake = await readStake(body);
     const requestId = readRequestId(body);
-    const tiles = [...Array(GRASS.tiles).keys()];
-    for (let i = tiles.length - 1; i > 0; i--) { const j = randInt(i + 1); [tiles[i], tiles[j]] = [tiles[j], tiles[i]]; }
-    const board = tiles.slice(0, mines).sort((a, b) => a - b);
-    const row = await startRun(env, helpers, user, 'grass', requestId, stake, { mines, board, open: [] });
+    const again = await byRequest(env, user.id, requestId);
+    if (again) return respond(helpers, env, user, { run: viewGrass(again) });
+    // The board is the next nonce of the player's seeds (worker/fair.js), drawn before the first tap.
+    const fair = await takeRoll(env, user.id);
+    const board = grassBoard(fair.stream, GRASS.tiles, mines);
+    const row = await startRun(env, helpers, user, 'grass', requestId, stake, { mines, board, open: [] }, {
+      extra: (id) => [fair.log('grass', id, { mines }, { board }, Date.now(), { sql: 'EXISTS(SELECT 1 FROM beta_runs WHERE id = ?)', args: [id] })] });
     return respond(helpers, env, user, { run: viewGrass(row) });
   }
   const run = await getRun(env, String(body?.id || ''), user.id);
@@ -318,10 +325,12 @@ async function tins(env, helpers, user, action, body, method, request) {
   if (!rows.length) {
     const now = Date.now();
     const sts = [takeStake(env, tin.price * count, user.id)];
-    for (const rid of ids) {
-      let u = randUnit();
-      let pick = tin.cards[tin.cards.length - 1];
-      for (const c of tin.cards) { if (u < c.odds) { pick = c; break; } u -= c.odds; }
+    // One nonce of the player's seeds for the whole opening, one draw per tin in order (worker/fair.js).
+    const fair = await takeRoll(env, user.id);
+    const odds = tin.cards.map((c) => c.odds);
+    const picks = tinPicks(fair.stream, odds, count);
+    ids.forEach((rid, t) => {
+      const pick = tin.cards[picks[t]];
       const { cents, odds, band, ...card } = pick;
       // Each statement runs only if the one before it changed a row, so nothing lands unless the payment did.
       sts.push(env.DB.prepare(`INSERT INTO beta_runs (id, user_id, game, request_id, stake, state, data, mult, payout, created_at, ended_at)
@@ -333,7 +342,10 @@ async function tins(env, helpers, user, action, body, method, request) {
         SELECT ?, ?, 0, ?, ?, 0, ?, NULL, 'slabbed', ?, 0, NULL, 0 WHERE changes() = 1`).bind(user.id, card.id, card.grade, band, `casino:tins:${rid}:0`, now));
       else sts.push(env.DB.prepare(`INSERT INTO cards (user_id, card_id, qty, reverse_qty) SELECT ?, ?, 1, 0 WHERE changes() = 1
         ON CONFLICT(user_id, card_id) DO UPDATE SET qty = cards.qty + 1`).bind(user.id, card.id));
-    }
+    });
+    // Last, and only if the payment landed (the run rows exist).
+    sts.push(fair.log('tins', requestId, { tin: tin.id, odds, count }, { picks, cards: picks.map((i) => tin.cards[i].name) }, now,
+      { sql: 'EXISTS(SELECT 1 FROM beta_runs WHERE user_id = ? AND request_id = ?)', args: [user.id, requestId] }));
     try {
       await env.DB.batch(sts);
     } catch (err) {
