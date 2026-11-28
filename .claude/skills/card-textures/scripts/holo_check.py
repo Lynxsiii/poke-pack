@@ -104,7 +104,13 @@ def measure(on, off):
     # medians, so a light band crossing the box (a real foil's highlight) does not count as a wash over it
     da, db = float(np.median(a[..., 1] - o[..., 1])), float(np.median(a[..., 2] - o[..., 2]))
     ca, co = np.hypot(a[..., 1], a[..., 2]).mean(), np.hypot(o[..., 1], o[..., 2]).mean()
+    # shine: how much the foil changes the print at all (mean colour difference, CIE76), and texadd: how much
+    # structure it adds (high-passed difference). shine_gate.py fails a card whose numbers fall against a baseline
+    # (Noah, 2026-11-28: round 2 passed every fault check while most cards went flat)
+    dE = np.sqrt(((a - o) ** 2).sum(-1))
+    texadd = float(highpass(La - Lo).std())
     return {
+        "shine": float(dE.mean()), "texadd": texadd,
         "dL": float(np.median(La - Lo)), "haze": float(np.percentile(La[dark] - Lo[dark], 65)),
         "wash": float(((La - Lo) > 6).mean()),
         "con": float(La.std() / max(Lo.std(), 1e-3)), "keep": keep, "speck": speck,
