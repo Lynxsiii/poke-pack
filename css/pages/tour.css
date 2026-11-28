@@ -23,7 +23,7 @@
 .tour-card[data-side="above"].is-in { animation-name: tour-card-up; }
 @keyframes tour-card { from { opacity: 0; transform: translateY(-10px); } }
 @keyframes tour-card-up { from { opacity: 0; transform: translateY(10px); } }
-.tour-step { display: flex; align-items: center; gap: 10px; margin: 0; color: var(--k-2); font: italic 700 13px var(--font-h); }
+.tour-step { display: flex; align-items: center; gap: 10px; margin: 0; color: var(--k-2); font: 700 13px var(--font-h); }
 .tour-pips { display: inline-flex; gap: 5px; }
 .tour-pips .rt-ball { width: 15px; height: 15px; }
 .tour-pips .rt-ball.now { animation: tour-ball 0.34s var(--ease-pop); }

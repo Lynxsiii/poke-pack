@@ -127,11 +127,11 @@ import {
 } from "./accounts.js";
 import { api, ApiError } from "./api.js";
 import { THEMES, canUseTheme, resolveLook } from "./themes.js?v=2";
-import { equippedCoin, gearItem, normalizeGear } from "./gear.js?v=2";
-import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=19";
+import { equippedCoin, gearItem, normalizeGear } from "./gear.js?v=3";
+import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=21";
 import { initBattles } from "./battles.js?v=12";
 import { initCasino } from "./casino.js?v=37";
-import { coinOf } from "./coin.js?v=7";
+import { coinOf } from "./coin.js?v=9";
 // grading
 import { initGrading, GRADING_ROUTE, CERT_ROUTE } from "./grading-page.js?v=23";
 // trades
@@ -10647,7 +10647,7 @@ let tcgLoading = null;
 function showTcg() {
   if (tcgPage) return tcgPage.show(tcgPath);
   els.viewTcg.innerHTML = `<div class="tg-page"><div class="rt-skel tg-loading">Loading</div></div>`;
-  tcgLoading ||= import("./tcg-page.js?v=43")
+  tcgLoading ||= import("./tcg-page.js?v=45")
     .then(({ initTcg }) => {
       tcgPage = initTcg({
         root: els.viewTcg,

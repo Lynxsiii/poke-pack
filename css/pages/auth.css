@@ -186,7 +186,7 @@ body.no-motion :is(#view-auth, .terms-sheet) .check-row input:checked { animatio
 }
 #view-auth .auth-points li::before {
   content: "Open"; position: absolute; left: 0; top: 0; bottom: 0; display: flex; align-items: center; width: 80px; padding: 0 0 0 12px;
-  background: var(--k); color: var(--on-k); font: italic 700 13px var(--font-h);
+  background: var(--k); color: var(--on-k); font: 700 13px var(--font-h);
   clip-path: polygon(0 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
 }
 #view-auth .auth-points li + li::before { content: "Account"; background: var(--k); color: var(--yel-k); }
@@ -201,7 +201,7 @@ body.no-motion :is(#view-auth, .terms-sheet) .check-row input:checked { animatio
 #view-auth .welcome-actions .solid { width: 100%; min-height: 58px; font-size: 21px; }
 #view-auth .welcome-facts { display: grid; gap: 8px; width: 100%; margin: 0; padding: 0; border: 0; }
 #view-auth .welcome-facts > .rt-row { display: flex; grid-template-columns: none; gap: 0; padding: 0; min-height: 54px; border-bottom: var(--line-w) solid var(--k); }
-#view-auth .welcome-facts .rt-row-lab { min-width: 96px; color: var(--on-k); font: italic 700 13px/1.05 var(--font-h); }
+#view-auth .welcome-facts .rt-row-lab { min-width: 96px; color: var(--on-k); font: 700 13px/1.05 var(--font-h); }
 #view-auth .welcome-facts .rt-row-name { margin: 0; padding: 8px 12px; color: var(--k); font: 500 14px/1.45 var(--font); overflow-wrap: anywhere; }
 #view-auth .welcome-facts dd .text-btn {
   display: inline; min-height: 0; padding: 0; margin: 0; border: 0; background: none; box-shadow: none;
