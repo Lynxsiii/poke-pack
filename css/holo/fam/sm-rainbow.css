@@ -28,17 +28,21 @@
 /* ---- Shared ---------------------------------------------------------------------------------------------------- */
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-rainbow.fam-sm-rainbow.fam-sm-rainbow.fam-sm-rainbow.foil-ir {
   /* the groove depth: the grey the etch sits on (soft-light: under 128 darkens) */
-  --smrb-groove: rgb(30, 30, 30);
+  --smrb-groove: rgb(92, 92, 92);
   /* holds the crests below white at rest, so the light has headroom to lift them */
-  --smrb-veil: rgba(30, 30, 30, 0.3);
+  --smrb-veil: rgba(92, 92, 92, 0.45);
   /* the crests' light: bright warm white at the pointer, gone by 60% of the card */
   --smrb-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    rgb(255, 246, 214) 0%, rgb(220, 212, 186) 12%, rgb(120, 116, 102) 30%, rgb(40, 38, 34) 48%, #000 62%);
+    rgb(210, 208, 200) 0%, rgb(170, 168, 160) 12%, rgb(96, 95, 90) 30%, rgb(34, 34, 32) 48%, #000 62%);
   /* the hot spot under it: a soft warm lift, grooves included, so the area near the lamp reads brighter */
   --smrb-spot: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    rgb(96, 90, 70) 0%, rgb(70, 66, 52) 10%, rgb(30, 28, 22) 26%, #000 42%);
-  --smrb-rest: 0.85;
-  --smrb-lit: 1;
+    rgb(48, 47, 42) 0%, rgb(34, 33, 30) 10%, rgb(14, 14, 12) 26%, #000 42%);
+  --smrb-rest: 0.35;
+  --smrb-lit: 0.72;
+  /* the shared etch shine: the print already carries the rainbow, so a faint colour on the lines and little glitter */
+  --shine-line: 0.15;
+  --shine-glit: 0.3;
+  --relief: 0.4;
 }
 
 /* ---- .foil: the etch as relief (at rest too) ---------------------------------------------------------------------- */
