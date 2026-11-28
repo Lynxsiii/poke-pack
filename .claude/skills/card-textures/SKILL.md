@@ -245,6 +245,15 @@ cure"). The surface gloss throws a soft highlight.
 
 ## Pitfalls
 
+- **A window holo lights round the lamp, not over the window.** The WotC Team Rocket, Legendary Collection, Gym and promo
+  recipes screened a spectrum, a silver floor and a 0.55 rest sheen over the whole foil map, so every black or navy
+  background read as a blue-lavender or grey haze, at rest too (2026-11-28 site review: 30 of 40 bad). A real WotC holo
+  keeps its deep blacks and only adds light where the lamp hits. Multiply the spectrum by a pool at the pointer
+  (`background-blend-mode: screen, multiply, normal` over [white pool, black-edged radial, spectrum]), or give the whole
+  foil group a radial mask layer (Expedition), keep the rest sheen one narrow band on black, and let glitter and star
+  flares fade to nearly nothing 40-50% of the way from the light. A band's width is its share of the oversized layer
+  times the layer's size: 20% of a 300% layer is 60% of the card (Neo Genesis, the Shining band). Colour-dodge floors
+  stay under about 40% grey or a red or magenta ink floods flat (Base Set Charizard, Clefairy).
 - **Glitter belongs on the engraving, not spread over the foil.** Noah, 2026-11-28: "the sparkles or dots on the holo
   take away from the texture as i dont see the texture too much". The shared `.shine::after` fleck tile was masked by
   art x foil map only, so on every face whose map covers the Pokémon (shiny vault cards, Japanese twins) a uniform
