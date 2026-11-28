@@ -131,6 +131,11 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.f
     rgb(16, 16, 16) 0%, rgb(9, 9, 9) 22%, rgb(3, 3, 3) 50%, #000 75%);
   --sfa-ring-lit: linear-gradient(rgb(40, 40, 42), rgb(40, 40, 42));
 }
+/* The full-art basic Energies (`sfa-energy`): the art is pale grey or one flat colour, so the bands at the family's
+   strength read as a pastel wash over it (per-card review, Metal Energy 159 and its Japanese print). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-fullart.fam-swsh-fullart.fam-swsh-fullart.fam-swsh-fullart.foil-ultra.has-foil-map.sfa-energy.sfa-energy:is(.sfa-v, .sfa-t) {
+  --sfa-gain: 0.18;
+}
 /* The alternate arts: one broad band. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-fullart.fam-swsh-fullart.fam-swsh-fullart.fam-swsh-fullart.foil-ultra.has-foil-map.sfa-v.sfa-alt {
   --sfa-light: var(--sfa-a-light);

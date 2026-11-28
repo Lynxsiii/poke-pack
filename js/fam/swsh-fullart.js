@@ -99,6 +99,8 @@ export function famExtras(card, url, base) {
   classes.push(kind === "tfa" ? "sfa-t" : "sfa-v");
   // The Japanese scans are photos of the foil print (its bands and line screen are in the picture): a quieter recipe.
   if (/^j/.test(id)) classes.push("sfa-photo");
+  // a full-art basic Energy is pale grey or flat colour: every tint shows, so the bands are a touch only
+  if (card.supertype === "Energy") classes.push("sfa-energy");
   // the painted gallery V (Trainer Gallery TG, Galarian Gallery GG) and the alternate arts
   if (kind === "vfa" && (ALT.has(id) || card.gallery === "tg" || card.gallery === "gg" || /-(TG|GG)\d/.test(id))) {
     classes.push("sfa-alt");

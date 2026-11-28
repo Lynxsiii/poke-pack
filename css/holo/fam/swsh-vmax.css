@@ -98,6 +98,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.f
   --svm-floor: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8));
   --svm-tint-floor: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75));
   --relief: 0.08;
+  /* the bands a touch lower too: over a flat yellow Pikachu VMAX (SWSH062) they read green */
+  --svm-band: clamp(0, calc(0.2 + var(--pointer-from-center) * 0.6), 0.55);
 }
 /* The gallery alt arts' relief: quieter over the painting (Glaceon VSTAR GG40: "streak hatch over art"). */
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-vmax.fam-swsh-vmax.fam-swsh-vmax.fam-swsh-vmax.foil-ultra.has-foil-map.svm-alt {
