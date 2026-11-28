@@ -1612,7 +1612,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/me-mega-gardevoir-coin-m11.webp"
+    "look": "rainbow",
+    "map": "assets/coins/foil/me-mega-gardevoir-coin-m12.webp"
    }
   },
   "me-mega-lucario-coin": {
@@ -1633,7 +1634,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/me-mega-lucario-coin-m11.webp"
+    "look": "rainbow",
+    "map": "assets/coins/foil/me-mega-lucario-coin-m12.webp"
    }
   },
   "me-me1-blister-coin": {
@@ -1659,6 +1661,7 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
+    "look": "struck",
     "map": "assets/coins/foil/me-me1-blister-coin-m31.webp"
    }
   },
@@ -1680,6 +1683,7 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
+    "look": "struck",
     "map": "assets/coins/foil/me-raikou-coin-m11.webp"
    }
   },
@@ -1702,6 +1706,7 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
+    "look": "gloss",
     "map": "assets/coins/foil/me-mega-charizard-x-etb-coin-m11.webp"
    }
   },
@@ -1723,7 +1728,8 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
-    "map": "assets/coins/foil/me-mega-charizard-x-upc-coin-m11.webp"
+    "look": "rainbow",
+    "map": "assets/coins/foil/me-mega-charizard-x-upc-coin-m12.webp"
    }
   },
   "me-mega-gengar-deck-coin": {
@@ -1744,7 +1750,8 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
-    "map": "assets/coins/foil/me-mega-gengar-deck-coin-m11.webp"
+    "look": "mirror",
+    "map": "assets/coins/foil/me-mega-gengar-deck-coin-m12.webp"
    }
   },
   "me-mega-diancie-deck-coin": {
@@ -1765,7 +1772,8 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
-    "map": "assets/coins/foil/me-mega-diancie-deck-coin-m11.webp"
+    "look": "mirror",
+    "map": "assets/coins/foil/me-mega-diancie-deck-coin-m12.webp"
    }
   },
   "me-pf-blister-coin": {
@@ -1790,6 +1798,7 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
+    "look": "struck",
     "map": "assets/coins/foil/me-pf-blister-coin-m31.webp"
    }
   },
@@ -1812,6 +1821,7 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
+    "look": "struck",
     "map": "assets/coins/foil/me-pf-checklane-gold-coin-m31.webp"
    }
   },
@@ -1833,6 +1843,7 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
+    "look": "struck",
     "map": "assets/coins/foil/me-pokemon-day-2026-coin-m11.webp"
    }
   },
@@ -1855,7 +1866,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/me-dragonite-coin-m21.webp"
+    "look": "rainbow",
+    "map": "assets/coins/foil/me-dragonite-coin-m22.webp"
    }
   },
   "me-erika-coin": {
@@ -1876,7 +1888,8 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
-    "map": "assets/coins/foil/me-erika-coin-m31.webp"
+    "look": "glitter",
+    "map": "assets/coins/foil/me-erika-coin-m32.webp"
    }
   },
   "me-larry-coin": {
@@ -1897,7 +1910,8 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
-    "map": "assets/coins/foil/me-larry-coin-m21.webp"
+    "look": "glitter",
+    "map": "assets/coins/foil/me-larry-coin-m22.webp"
    }
   },
   "me-zygarde-coin": {
@@ -1919,7 +1933,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/me-zygarde-coin-m11.webp"
+    "look": "mirror",
+    "map": "assets/coins/foil/me-zygarde-coin-m12.webp"
    }
   },
   "me-snorlax-bronze-coin": {
@@ -1944,6 +1959,7 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
+    "look": "struck",
     "map": "assets/coins/foil/me-snorlax-bronze-coin-m21.webp"
    }
   },
@@ -1966,7 +1982,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/me-froakie-coin-m11.webp"
+    "look": "glitter",
+    "map": "assets/coins/foil/me-froakie-coin-m12.webp"
    }
   },
   "me-chikorita-coin": {
@@ -1991,6 +2008,7 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
+    "look": "struck",
     "map": "assets/coins/foil/me-chikorita-coin-m21.webp"
    }
   },
@@ -2013,6 +2031,7 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
+    "look": "pearl",
     "map": "assets/coins/foil/me-darkrai-coin-m11.webp"
    }
   },
@@ -2038,6 +2057,7 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
+    "look": "struck",
     "map": "assets/coins/foil/me-tepig-coin-m11.webp"
    }
   },
@@ -2059,6 +2079,7 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
+    "look": "struck",
     "map": "assets/coins/foil/me-snorlax-silver-coin-m21.webp"
    }
   },
@@ -2080,7 +2101,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/me-mega-gengar-silver-coin-m11.webp"
+    "look": "mirror",
+    "map": "assets/coins/foil/me-mega-gengar-silver-coin-m12.webp"
    }
   },
   "me-pikachu-30-etb-coin": {
@@ -2102,7 +2124,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/me-pikachu-30-etb-coin-m21.webp"
+    "look": "glitter",
+    "map": "assets/coins/foil/me-pikachu-30-etb-coin-m22.webp"
    }
   },
   "me-pikachu-30-orange-coin": {
@@ -2123,7 +2146,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/me-pikachu-30-orange-coin-m11.webp"
+    "look": "mirror",
+    "map": "assets/coins/foil/me-pikachu-30-orange-coin-m12.webp"
    }
   },
   "me-upc-espeon-coin": {
@@ -2144,7 +2168,8 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
-    "map": "assets/coins/foil/me-upc-espeon-coin-m11.webp"
+    "look": "rainbow",
+    "map": "assets/coins/foil/me-upc-espeon-coin-m12.webp"
    }
   },
   "me-upc-umbreon-coin": {
@@ -2165,7 +2190,8 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
-    "map": "assets/coins/foil/me-upc-umbreon-coin-m11.webp"
+    "look": "rainbow",
+    "map": "assets/coins/foil/me-upc-umbreon-coin-m12.webp"
    }
   },
   "me-deck-espeon-coin": {
@@ -2186,6 +2212,7 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
+    "look": "gloss",
     "map": "assets/coins/foil/me-deck-espeon-coin-m11.webp"
    }
   },
@@ -2207,7 +2234,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/me-deck-umbreon-coin-m11.webp"
+    "look": "glitter",
+    "map": "assets/coins/foil/me-deck-umbreon-coin-m12.webp"
    }
   },
   "psv-pikachu-25-coin-gold": {
@@ -2228,6 +2256,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "rainbow",
     "map": "assets/coins/foil/psv-pikachu-25-coin-gold-m11.webp"
    }
   },
@@ -2250,6 +2279,7 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
+    "look": "struck",
     "map": "assets/coins/foil/psv-pikachu-25-coin-silver-m21.webp"
    }
   },
@@ -2272,6 +2302,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "rainbow",
     "map": "assets/coins/foil/psv-mewtwo-go-coin-m21.webp"
    }
   },
@@ -2293,6 +2324,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "glitter",
     "map": "assets/coins/foil/psv-charizard-celebrations-coin-m21.webp"
    }
   },
@@ -2315,6 +2347,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "rainbow",
     "map": "assets/coins/foil/psv-melmetal-go-coin-m11.webp"
    }
   },
@@ -2336,6 +2369,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "glitter",
     "map": "assets/coins/foil/psv-iono-coin-m11.webp"
    }
   },
@@ -2357,6 +2391,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "glitter",
     "map": "assets/coins/foil/psv-battle-academy-2024-coin-m11.webp"
    }
   },
@@ -2381,6 +2416,7 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
+    "look": "struck",
     "map": "assets/coins/foil/psv-ex-coin-silver-m11.webp"
    }
   },
@@ -2405,6 +2441,7 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
+    "look": "struck",
     "map": "assets/coins/foil/psv-ex-coin-green-m11.webp"
    }
   },
@@ -2426,6 +2463,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "rainbow",
     "map": "assets/coins/foil/sm-alola-partners-chest-coin-m11.webp"
    }
   },
@@ -2447,6 +2485,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "mirror",
     "map": "assets/coins/foil/sm-zoroark-spooky-coin-m11.webp"
    }
   },
@@ -2468,6 +2507,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "ice",
     "map": "assets/coins/foil/sm-decidueye-coin-m11.webp"
    }
   },
@@ -2489,6 +2529,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "ice",
     "map": "assets/coins/foil/sm-incineroar-coin-m11.webp"
    }
   },
@@ -2510,6 +2551,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "rainbow",
     "map": "assets/coins/foil/sm-espeon-coin-m11.webp"
    }
   },
@@ -2531,6 +2573,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "rainbow",
     "map": "assets/coins/foil/sm-umbreon-coin-m11.webp"
    }
   },
@@ -2557,6 +2600,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "rainbow",
     "map": "assets/coins/foil/sm-lucario-blister-coin-m11.webp"
    }
   },
@@ -2579,6 +2623,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "rainbow",
     "map": "assets/coins/foil/sm-metagross-blister-coin-m11.webp"
    }
   },
@@ -2600,6 +2645,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "mirror",
     "map": "assets/coins/foil/sm-charizard-coin-m11.webp"
    }
   },
@@ -2621,6 +2667,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "rainbow",
     "map": "assets/coins/foil/sm-zoroark-coin-m11.webp"
    }
   },
@@ -2642,6 +2689,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "glitter",
     "map": "assets/coins/foil/sm-raichu-coin-m11.webp"
    }
   },
@@ -2663,6 +2711,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "rainbow",
     "map": "assets/coins/foil/sm-pheromosa-coin-m11.webp"
    }
   },
@@ -2684,6 +2733,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "mirror",
     "map": "assets/coins/foil/sm-buzzwole-coin-m11.webp"
    }
   },
@@ -2705,6 +2755,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "rainbow",
     "map": "assets/coins/foil/sm-suicune-coin-m11.webp"
    }
   },
@@ -2726,6 +2777,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "mirror",
     "map": "assets/coins/foil/sm-landorus-coin-m11.webp"
    }
   },
@@ -2748,6 +2800,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "mirror",
     "map": "assets/coins/foil/sm-groudon-coin-m11.webp"
    }
   },
@@ -2769,6 +2822,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "mirror",
     "map": "assets/coins/foil/sm-salamence-coin-m11.webp"
    }
   },
@@ -2790,6 +2844,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "mirror",
     "map": "assets/coins/foil/sm-white-kyurem-coin-m11.webp"
    }
   },
@@ -2812,6 +2867,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "ice",
     "map": "assets/coins/foil/sm-lugia-coin-m11.webp"
    }
   },
@@ -2833,6 +2889,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "mirror",
     "map": "assets/coins/foil/sm-tapu-lele-coin-m11.webp"
    }
   },
@@ -2854,6 +2911,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "rainbow",
     "map": "assets/coins/foil/sm-tapu-fini-coin-m11.webp"
    }
   },
@@ -2876,6 +2934,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "ice",
     "map": "assets/coins/foil/sm-litten-coin-m11.webp"
    }
   },
@@ -2898,6 +2957,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "mirror",
     "map": "assets/coins/foil/sm-hydreigon-coin-m11.webp"
    }
   },
@@ -2920,6 +2980,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "ice",
     "map": "assets/coins/foil/sm-popplio-coin-m11.webp"
    }
   },
@@ -2942,6 +3003,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "mirror",
     "map": "assets/coins/foil/sm-alolan-exeggutor-coin-m11.webp"
    }
   },
@@ -2963,6 +3025,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "mirror",
     "map": "assets/coins/foil/sm-blastoise-coin-m11.webp"
    }
   },
@@ -2985,6 +3048,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "ice",
     "map": "assets/coins/foil/sm-rowlet-coin-m11.webp"
    }
   },
@@ -3007,6 +3071,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "rainbow",
     "map": "assets/coins/foil/sm-empoleon-coin-m11.webp"
    }
   },
@@ -3028,6 +3093,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "mirror",
     "map": "assets/coins/foil/sm-kommo-o-coin-m11.webp"
    }
   },
@@ -3049,6 +3115,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "ice",
     "map": "assets/coins/foil/sm-charizard-braixen-coin-m11.webp"
    }
   },
@@ -3070,6 +3137,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "rainbow",
     "map": "assets/coins/foil/sm-mew-chest-coin-m11.webp"
    }
   },
@@ -3091,6 +3159,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "mirror",
     "map": "assets/coins/foil/sm-togepi-cleffa-igglybuff-coin-m11.webp"
    }
   },
@@ -3112,6 +3181,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "glitter",
     "map": "assets/coins/foil/sm-pixel-eevee-coin-m11.webp"
    }
   },
@@ -3133,6 +3203,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "rainbow",
     "map": "assets/coins/foil/sm-rotom-dex-coin-m11.webp"
    }
   },
@@ -3155,7 +3226,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/sva-fuecoco-coin-m21.webp"
+    "look": "struck",
+    "map": "assets/coins/foil/sva-fuecoco-coin-m22.webp"
    }
   },
   "sva-quaxly-coin": {
@@ -3177,7 +3249,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/sva-quaxly-coin-m21.webp"
+    "look": "struck",
+    "map": "assets/coins/foil/sva-quaxly-coin-m22.webp"
    }
   },
   "sva-sprigatito-coin": {
@@ -3199,7 +3272,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/sva-sprigatito-coin-m21.webp"
+    "look": "struck",
+    "map": "assets/coins/foil/sva-sprigatito-coin-m22.webp"
    }
   },
   "sva-pikachu-coin-sv4": {
@@ -3221,7 +3295,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/sva-pikachu-coin-sv4-m21.webp"
+    "look": "struck",
+    "map": "assets/coins/foil/sva-pikachu-coin-sv4-m22.webp"
    }
   },
   "sva-mew-coin": {
@@ -3242,7 +3317,8 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
-    "map": "assets/coins/foil/sva-mew-coin-m21.webp"
+    "look": "glitter",
+    "map": "assets/coins/foil/sva-mew-coin-m22.webp"
    }
   },
   "sva-151-grass-energy-coin": {
@@ -3265,7 +3341,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/sva-151-grass-energy-coin-m11.webp"
+    "look": "struck",
+    "map": "assets/coins/foil/sva-151-grass-energy-coin-m12.webp"
    }
   },
   "sva-151-fire-energy-coin": {
@@ -3288,7 +3365,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/sva-151-fire-energy-coin-m11.webp"
+    "look": "struck",
+    "map": "assets/coins/foil/sva-151-fire-energy-coin-m12.webp"
    }
   },
   "sva-151-water-energy-coin": {
@@ -3311,7 +3389,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/sva-151-water-energy-coin-m11.webp"
+    "look": "struck",
+    "map": "assets/coins/foil/sva-151-water-energy-coin-m12.webp"
    }
   },
   "sva-151-lightning-energy-coin": {
@@ -3334,7 +3413,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/sva-151-lightning-energy-coin-m11.webp"
+    "look": "struck",
+    "map": "assets/coins/foil/sva-151-lightning-energy-coin-m12.webp"
    }
   },
   "sva-151-psychic-energy-coin": {
@@ -3357,7 +3437,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/sva-151-psychic-energy-coin-m11.webp"
+    "look": "struck",
+    "map": "assets/coins/foil/sva-151-psychic-energy-coin-m12.webp"
    }
   },
   "sva-151-fighting-energy-coin": {
@@ -3380,7 +3461,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/sva-151-fighting-energy-coin-m11.webp"
+    "look": "struck",
+    "map": "assets/coins/foil/sva-151-fighting-energy-coin-m12.webp"
    }
   },
   "sva-151-darkness-energy-coin": {
@@ -3403,7 +3485,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/sva-151-darkness-energy-coin-m11.webp"
+    "look": "struck",
+    "map": "assets/coins/foil/sva-151-darkness-energy-coin-m12.webp"
    }
   },
   "sva-151-metal-energy-coin": {
@@ -3426,7 +3509,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/sva-151-metal-energy-coin-m11.webp"
+    "look": "struck",
+    "map": "assets/coins/foil/sva-151-metal-energy-coin-m12.webp"
    }
   },
   "sva-151-dragon-energy-coin": {
@@ -3449,7 +3533,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/sva-151-dragon-energy-coin-m11.webp"
+    "look": "struck",
+    "map": "assets/coins/foil/sva-151-dragon-energy-coin-m12.webp"
    }
   },
   "sva-151-colorless-energy-coin": {
@@ -3472,7 +3557,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/sva-151-colorless-energy-coin-m11.webp"
+    "look": "struck",
+    "map": "assets/coins/foil/sva-151-colorless-energy-coin-m12.webp"
    }
   },
   "svb-moltres-fire-energy-coin": {
@@ -3493,7 +3579,8 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
-    "map": "assets/coins/foil/svb-moltres-fire-energy-coin-m21.webp"
+    "look": "glitter",
+    "map": "assets/coins/foil/svb-moltres-fire-energy-coin-m22.webp"
    }
   },
   "svb-fidough-coin": {
@@ -3515,6 +3602,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "mirror",
     "map": "assets/coins/foil/svb-fidough-coin-m21.webp"
    }
   },
@@ -3537,6 +3625,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "mirror",
     "map": "assets/coins/foil/svb-pawmi-coin-m21.webp"
    }
   },
@@ -3559,6 +3648,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "mirror",
     "map": "assets/coins/foil/svb-lechonk-coin-m21.webp"
    }
   },
@@ -3580,7 +3670,8 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
-    "map": "assets/coins/foil/svb-stellar-crown-terapagos-coin-m21.webp"
+    "look": "pearl",
+    "map": "assets/coins/foil/svb-stellar-crown-terapagos-coin-m22.webp"
    }
   },
   "svb-dragonite-coin": {
@@ -3602,6 +3693,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "mirror",
     "map": "assets/coins/foil/svb-dragonite-coin-m21.webp"
    }
   },
@@ -3624,6 +3716,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "mirror",
     "map": "assets/coins/foil/svb-fuecoco-coin-m11.webp"
    }
   },
@@ -3645,6 +3738,7 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
+    "look": "struck",
     "map": "assets/coins/foil/svb-prismatic-eevee-coin-m21.webp"
    }
   },
@@ -3666,7 +3760,8 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
-    "map": "assets/coins/foil/svb-lillie-coin-m21.webp"
+    "look": "glitter",
+    "map": "assets/coins/foil/svb-lillie-coin-m22.webp"
    }
   },
   "svb-greedent-coin": {
@@ -3688,6 +3783,7 @@
    "drawn": false,
    "foil": {
     "finish": "foil",
+    "look": "mirror",
     "map": "assets/coins/foil/svb-greedent-coin-m21.webp"
    }
   },
@@ -3710,7 +3806,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/swsha-swsh1-1pack-coin-m21.webp"
+    "look": "mirror",
+    "map": "assets/coins/foil/swsha-swsh1-1pack-coin-m22.webp"
    }
   },
   "swsha-swsh1-3pack-coin": {
@@ -3731,7 +3828,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/swsha-swsh1-3pack-coin-m31.webp"
+    "look": "mirror",
+    "map": "assets/coins/foil/swsha-swsh1-3pack-coin-m32.webp"
    }
   },
   "swsha-swsh2-1pack-coin": {
@@ -3752,7 +3850,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/swsha-swsh2-1pack-coin-m21.webp"
+    "look": "mirror",
+    "map": "assets/coins/foil/swsha-swsh2-1pack-coin-m22.webp"
    }
   },
   "swsha-swsh2-3pack-coin": {
@@ -3774,7 +3873,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/swsha-swsh2-3pack-coin-m21.webp"
+    "look": "mirror",
+    "map": "assets/coins/foil/swsha-swsh2-3pack-coin-m22.webp"
    }
   },
   "swsha-swsh3-1pack-coin": {
@@ -3796,7 +3896,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/swsha-swsh3-1pack-coin-m21.webp"
+    "look": "rainbow",
+    "map": "assets/coins/foil/swsha-swsh3-1pack-coin-m22.webp"
    }
   },
   "swsha-swsh3-3pack-coin": {
@@ -3818,7 +3919,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/swsha-swsh3-3pack-coin-m21.webp"
+    "look": "rainbow",
+    "map": "assets/coins/foil/swsha-swsh3-3pack-coin-m22.webp"
    }
   },
   "swsha-swsh4-1pack-coin": {
@@ -3840,7 +3942,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/swsha-swsh4-1pack-coin-m21.webp"
+    "look": "sheen",
+    "map": "assets/coins/foil/swsha-swsh4-1pack-coin-m22.webp"
    }
   },
   "swsha-swsh4-3pack-coin": {
@@ -3862,7 +3965,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/swsha-swsh4-3pack-coin-m21.webp"
+    "look": "ice",
+    "map": "assets/coins/foil/swsha-swsh4-3pack-coin-m22.webp"
    }
   },
   "swsha-swsh5-1pack-coin": {
@@ -3887,7 +3991,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/swsha-swsh5-1pack-coin-m21.webp"
+    "look": "rainbow",
+    "map": "assets/coins/foil/swsha-swsh5-1pack-coin-m22.webp"
    }
   },
   "swsha-swsh5-3pack-coin": {
@@ -3909,7 +4014,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/swsha-swsh5-3pack-coin-m21.webp"
+    "look": "rainbow",
+    "map": "assets/coins/foil/swsha-swsh5-3pack-coin-m22.webp"
    }
   },
   "swsha-swsh6-1pack-coin": {
@@ -3933,7 +4039,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/swsha-swsh6-1pack-coin-m31.webp"
+    "look": "rainbow",
+    "map": "assets/coins/foil/swsha-swsh6-1pack-coin-m32.webp"
    }
   },
   "swsha-swsh6-3pack-coin": {
@@ -3955,7 +4062,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/swsha-swsh6-3pack-coin-m21.webp"
+    "look": "rainbow",
+    "map": "assets/coins/foil/swsha-swsh6-3pack-coin-m22.webp"
    }
   },
   "swsha-ice-rider-calyrex-coin": {
@@ -3976,7 +4084,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/swsha-ice-rider-calyrex-coin-m21.webp"
+    "look": "ice",
+    "map": "assets/coins/foil/swsha-ice-rider-calyrex-coin-m22.webp"
    }
   },
   "swsha-shiny-dragapult-coin": {
@@ -3997,7 +4106,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/swsha-shiny-dragapult-coin-m21.webp"
+    "look": "ice",
+    "map": "assets/coins/foil/swsha-shiny-dragapult-coin-m22.webp"
    }
   },
   "swsha-shiny-crobat-coin": {
@@ -4018,7 +4128,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/swsha-shiny-crobat-coin-m21.webp"
+    "look": "ice",
+    "map": "assets/coins/foil/swsha-shiny-crobat-coin-m22.webp"
    }
   },
   "swsha-blue-lucario-coin": {
@@ -4040,7 +4151,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/swsha-blue-lucario-coin-m11.webp"
+    "look": "rainbow",
+    "map": "assets/coins/foil/swsha-blue-lucario-coin-m12.webp"
    }
   },
   "swsha-green-sceptile-coin": {
@@ -4061,7 +4173,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/swsha-green-sceptile-coin-m11.webp"
+    "look": "rainbow",
+    "map": "assets/coins/foil/swsha-green-sceptile-coin-m12.webp"
    }
   },
   "swsha-orange-lycanroc-coin": {
@@ -4084,6 +4197,7 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
+    "look": "pearl",
     "map": "assets/coins/foil/swsha-orange-lycanroc-coin-m11.webp"
    }
   },
@@ -4106,7 +4220,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/swsha-purple-espeon-coin-m11.webp"
+    "look": "rainbow",
+    "map": "assets/coins/foil/swsha-purple-espeon-coin-m12.webp"
    }
   },
   "swsha-gray-umbreon-coin": {
@@ -4128,7 +4243,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/swsha-gray-umbreon-coin-m11.webp"
+    "look": "rainbow",
+    "map": "assets/coins/foil/swsha-gray-umbreon-coin-m12.webp"
    }
   },
   "swsha-purple-mewtwo-coin": {
@@ -4150,7 +4266,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/swsha-purple-mewtwo-coin-m11.webp"
+    "look": "mirror",
+    "map": "assets/coins/foil/swsha-purple-mewtwo-coin-m12.webp"
    }
   },
   "swsha-gold-zeraora-coin": {
@@ -4172,7 +4289,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/swsha-gold-zeraora-coin-m11.webp"
+    "look": "mirror",
+    "map": "assets/coins/foil/swsha-gold-zeraora-coin-m12.webp"
    }
   },
   "swsha-gold-raichu-coin": {
@@ -4200,7 +4318,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/swsha-gold-raichu-coin-m11.webp"
+    "look": "ice",
+    "map": "assets/coins/foil/swsha-gold-raichu-coin-m12.webp"
    }
   },
   "swsha-silver-lugia-coin": {
@@ -4222,7 +4341,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/swsha-silver-lugia-coin-m11.webp"
+    "look": "ice",
+    "map": "assets/coins/foil/swsha-silver-lugia-coin-m12.webp"
    }
   },
   "swsha-cracked-ice-mewtwo-coin": {
@@ -4244,7 +4364,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/swsha-cracked-ice-mewtwo-coin-m11.webp"
+    "look": "ice",
+    "map": "assets/coins/foil/swsha-cracked-ice-mewtwo-coin-m12.webp"
    }
   },
   "swsha-green-rayquaza-coin": {
@@ -4268,7 +4389,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/swsha-green-rayquaza-coin-m11.webp"
+    "look": "sheen",
+    "map": "assets/coins/foil/swsha-green-rayquaza-coin-m12.webp"
    }
   },
   "swsha-silver-lucario-coin": {
@@ -4289,7 +4411,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/swsha-silver-lucario-coin-m11.webp"
+    "look": "rainbow",
+    "map": "assets/coins/foil/swsha-silver-lucario-coin-m12.webp"
    }
   },
   "swshb-es-pc-eeveelutions-coin": {
@@ -4310,7 +4433,8 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
-    "map": "assets/coins/foil/swshb-es-pc-eeveelutions-coin-m21.webp"
+    "look": "rainbow",
+    "map": "assets/coins/foil/swshb-es-pc-eeveelutions-coin-m22.webp"
    }
   },
   "swshb-fs-pc-mew-coin": {
@@ -4331,7 +4455,8 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
-    "map": "assets/coins/foil/swshb-fs-pc-mew-coin-m31.webp"
+    "look": "rainbow",
+    "map": "assets/coins/foil/swshb-fs-pc-mew-coin-m32.webp"
    }
   },
   "swshb-bs-pc-arceus-coin": {
@@ -4352,7 +4477,8 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
-    "map": "assets/coins/foil/swshb-bs-pc-arceus-coin-m31.webp"
+    "look": "rainbow",
+    "map": "assets/coins/foil/swshb-bs-pc-arceus-coin-m32.webp"
    }
   },
   "swshb-ar-pc-darkrai-coin": {
@@ -4373,7 +4499,8 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
-    "map": "assets/coins/foil/swshb-ar-pc-darkrai-coin-m31.webp"
+    "look": "mirror",
+    "map": "assets/coins/foil/swshb-ar-pc-darkrai-coin-m32.webp"
    }
   },
   "swshb-lo-pc-giratina-coin": {
@@ -4394,7 +4521,8 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
-    "map": "assets/coins/foil/swshb-lo-pc-giratina-coin-m31.webp"
+    "look": "rainbow",
+    "map": "assets/coins/foil/swshb-lo-pc-giratina-coin-m32.webp"
    }
   },
   "swshb-st-pc-alolan-vulpix-coin": {
@@ -4415,7 +4543,8 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
-    "map": "assets/coins/foil/swshb-st-pc-alolan-vulpix-coin-m21.webp"
+    "look": "pearl",
+    "map": "assets/coins/foil/swshb-st-pc-alolan-vulpix-coin-m22.webp"
    }
   },
   "swshb-cz-pc-lucario-coin": {
@@ -4436,6 +4565,7 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
+    "look": "struck",
     "map": "assets/coins/foil/swshb-cz-pc-lucario-coin-m31.webp"
    }
   },
@@ -4457,6 +4587,7 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
+    "look": "struck",
     "map": "assets/coins/foil/swshb-cz-lugia-coin-m21.webp"
    }
   },
@@ -4479,7 +4610,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/swshb-es-dragonite-blister-coin-m21.webp"
+    "look": "struck",
+    "map": "assets/coins/foil/swshb-es-dragonite-blister-coin-m22.webp"
    }
   },
   "swshb-ar-eevee-blister-coin": {
@@ -4501,6 +4633,7 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
+    "look": "struck",
     "map": "assets/coins/foil/swshb-ar-eevee-blister-coin-m21.webp"
    }
   },
@@ -4523,6 +4656,7 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
+    "look": "struck",
     "map": "assets/coins/foil/swshb-st-pikachu-blister-coin-m21.webp"
    }
   },
@@ -4544,7 +4678,8 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
-    "map": "assets/coins/foil/swshb-eternatus-vmax-coin-m21.webp"
+    "look": "mirror",
+    "map": "assets/coins/foil/swshb-eternatus-vmax-coin-m22.webp"
    }
   },
   "swshb-zacian-etb-plus-coin": {
@@ -4565,6 +4700,7 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
+    "look": "struck",
     "map": "assets/coins/foil/swshb-zacian-etb-plus-coin-m21.webp"
    }
   },
@@ -4586,6 +4722,7 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
+    "look": "struck",
     "map": "assets/coins/foil/swshb-zamazenta-etb-plus-coin-m21.webp"
    }
   },
@@ -4607,7 +4744,8 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
-    "map": "assets/coins/foil/swshb-marnie-coin-m21.webp"
+    "look": "ice",
+    "map": "assets/coins/foil/swshb-marnie-coin-m22.webp"
    }
   },
   "swshb-victini-battle-deck-coin": {
@@ -4628,7 +4766,8 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
-    "map": "assets/coins/foil/swshb-victini-battle-deck-coin-m21.webp"
+    "look": "mirror",
+    "map": "assets/coins/foil/swshb-victini-battle-deck-coin-m22.webp"
    }
   },
   "swshb-gardevoir-battle-deck-coin": {
@@ -4649,7 +4788,8 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
-    "map": "assets/coins/foil/swshb-gardevoir-battle-deck-coin-m21.webp"
+    "look": "mirror",
+    "map": "assets/coins/foil/swshb-gardevoir-battle-deck-coin-m22.webp"
    }
   },
   "swshb-lucario-vstar-coin": {
@@ -4670,7 +4810,8 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
-    "map": "assets/coins/foil/swshb-lucario-vstar-coin-m21.webp"
+    "look": "rainbow",
+    "map": "assets/coins/foil/swshb-lucario-vstar-coin-m22.webp"
    }
   },
   "swshb-spring-2022-chest-arceus-coin": {
@@ -4691,7 +4832,8 @@
    "drawn": false,
    "foil": {
     "finish": "plastic",
-    "map": "assets/coins/foil/swshb-spring-2022-chest-arceus-coin-m21.webp"
+    "look": "glitter",
+    "map": "assets/coins/foil/swshb-spring-2022-chest-arceus-coin-m22.webp"
    }
   },
   "swshb-kleavor-vstar-coin": {
@@ -4712,7 +4854,8 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
-    "map": "assets/coins/foil/swshb-kleavor-vstar-coin-m21.webp"
+    "look": "rainbow",
+    "map": "assets/coins/foil/swshb-kleavor-vstar-coin-m22.webp"
    }
   },
   "swshb-origin-dialga-coin": {
@@ -4733,7 +4876,8 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
-    "map": "assets/coins/foil/swshb-origin-dialga-coin-m21.webp"
+    "look": "rainbow",
+    "map": "assets/coins/foil/swshb-origin-dialga-coin-m22.webp"
    }
   },
   "swshb-origin-palkia-coin": {
@@ -4754,7 +4898,8 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
-    "map": "assets/coins/foil/swshb-origin-palkia-coin-m21.webp"
+    "look": "rainbow",
+    "map": "assets/coins/foil/swshb-origin-palkia-coin-m22.webp"
    }
   },
   "swshb-hisuian-zoroark-coin": {
@@ -4775,7 +4920,8 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
-    "map": "assets/coins/foil/swshb-hisuian-zoroark-coin-m21.webp"
+    "look": "glitter",
+    "map": "assets/coins/foil/swshb-hisuian-zoroark-coin-m22.webp"
    }
   },
   "swshb-charizard-upc-coin": {
@@ -4796,6 +4942,7 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
+    "look": "struck",
     "map": "assets/coins/foil/swshb-charizard-upc-coin-m21.webp"
    }
   },
@@ -4818,6 +4965,7 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
+    "look": "struck",
     "map": "assets/coins/foil/swshb-bs-blastoise-blister-coin-m11.webp"
    }
   },
@@ -4840,6 +4988,7 @@
    "drawn": false,
    "foil": {
     "finish": "metal",
+    "look": "struck",
     "map": "assets/coins/foil/swshb-lo-charizard-blister-coin-m11.webp"
    }
   }
