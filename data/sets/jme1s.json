@@ -1,0 +1,39 @@
+{
+  "id": "jme1s",
+  "name": "Mega Symphonia",
+  "lang": "ja",
+  "code": "M1S",
+  "series": "mega-evolution",
+  "slug": "mega-symphonia",
+  "scrydexId": "m1s_ja",
+  "era": "me",
+  "tcgplayerCategory": 85,
+  "tcgplayerGroup": 24400,
+  "englishTwin": "me1",
+  "rarityMap": {
+    "C": "Common",
+    "U": "Uncommon",
+    "R": "Rare",
+    "RR": "Double Rare",
+    "ACE": "ACE SPEC Rare",
+    "AR": "Illustration Rare",
+    "SR": "Ultra Rare",
+    "SAR": "Special Illustration Rare",
+    "UR": "Hyper Rare",
+    "MUR": "Mega Hyper Rare",
+    "PROMO": "Promo"
+  },
+  "printedTotal": 63,
+  "products": [
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 647501,
+      "packs": 30,
+      "promos": [],
+      "hull": "ortho",
+      "imageVersion": 3
+    }
+  ]
+}
