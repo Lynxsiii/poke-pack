@@ -1,5 +1,16 @@
 [
   {
+    "id": "2026-11-28-product-photo-edges",
+    "date": "2026-11-28",
+    "kind": "fix",
+    "title": "Cleaner product photos",
+    "summary": "No more white patches or pale rims around sealed products in the shop.",
+    "items": [
+      "The XY Evolutions and BREAKthrough Elite Trainer Boxes lost the white patch and watermark between their contents.",
+      "127 product photos lost the pale white rim along their edges, so they sit cleanly on the dark shop tiles."
+    ]
+  },
+  {
     "id": "2026-11-28-japanese-nihil-zero",
     "date": "2026-11-28",
     "kind": "new",

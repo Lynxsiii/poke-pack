@@ -32,7 +32,8 @@
       "kind": "etb",
       "tcgplayerId": 129890,
       "packs": 8,
-      "promos": []
+      "promos": [],
+      "imageVersion": 2
     },
     {
       "id": "prerelease-kit",
@@ -48,7 +49,7 @@
       ],
       "pick": 1,
       "note": "Event kit; one promo per kit.",
-      "imageVersion": 2
+      "imageVersion": 3
     },
     {
       "id": "lurantis-single-pack-blister",
@@ -128,7 +129,8 @@
       "promos": [
         "smp031"
       ],
-      "note": "Pack set/mix not documented; assumed own set."
+      "note": "Pack set/mix not documented; assumed own set.",
+      "imageVersion": 2
     },
     {
       "id": "island-guardians-tin-tapu-koko",
@@ -139,7 +141,8 @@
       "promos": [
         "smp033"
       ],
-      "note": "Pack set/mix not documented; assumed own set."
+      "note": "Pack set/mix not documented; assumed own set.",
+      "imageVersion": 2
     },
     {
       "id": "island-guardians-tin-tapu-bulu",
@@ -228,7 +231,8 @@
       "promos": [
         "smp050"
       ],
-      "note": "Pack set/mix not documented; assumed own set."
+      "note": "Pack set/mix not documented; assumed own set.",
+      "imageVersion": 2
     },
     {
       "id": "triple-effect-tin-flareon",
