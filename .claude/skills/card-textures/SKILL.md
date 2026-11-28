@@ -280,6 +280,15 @@ cure"). The surface gloss throws a soft highlight.
   The cosmos promos had a third fault: glitter dust is not cosmos. Cosmos is round planets of several sizes in the art
   background (`make_cosmos_orbs.py`), and the Pokémon is cut out of the map (`make_cosmos_figure_maps.py`,
   `make_sv_ex_promo_maps.py` for an ex promo Live has no map for).
+- **A full-art etch map is not all lines** (2026-11-28, the card-by-card review of the Scarlet & Violet full arts).
+  Live's etch is solid white over a trainer's face and clothes and over a shiny's Pokémon, so any layer that paints
+  "white through the etch map" (the Ultra Rares' `.glare::after`, the shared `.relief`) is a white fill there: the
+  milky wash and the dark skin turned pale. Keep such layers faint and in a pool round the light, and turn
+  `--relief` down per family. On the Paldean Fates shinies Live's foil map is 1.0 on bare silver and 0.6-0.75 under the
+  Pokémon's ink: cut the map at about 0.9 (`scripts/fam/sv-shiny/make_shiny_masks.py`) so no layer lands on the
+  Pokémon. A stamped tile (the Japanese ball mirrors) is a mask for an overlay, never paint: drawn in normal blend its
+  outlines cut the attack text.
+
 - **A window holo lights round the lamp, not over the window.** The WotC Team Rocket, Legendary Collection, Gym and promo
   recipes screened a spectrum, a silver floor and a 0.55 rest sheen over the whole foil map, so every black or navy
   background read as a blue-lavender or grey haze, at rest too (2026-11-28 site review: 30 of 40 bad). A real WotC holo

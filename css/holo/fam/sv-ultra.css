@@ -40,7 +40,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-ultra.fam-sv-ultra.foil-ultra.has-foil-
   /* 2026-11-28 per-card review: the shared rainbow hatch and fleck grain led over the engraving and greyed dark bodies */
   --shine-line: 0.14;
   --shine-glit: 0.18;
-  --relief: 0.5;
+  /* the relief nearly off: with the etch solid over faces and bodies it was the other half of the wash (soft-light
+     white over Tyme's skin); the dodged etch in .foil and the bands carry the texture */
+  --relief: 0.06;
   --svu-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     #000 0%, #000 22%, rgba(0, 0, 0, 0.6) 60%, rgba(0, 0, 0, 0.4) 100%);
 }
@@ -142,7 +144,11 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-ultra.fam-sv-ultra.foil-ultra.has-foil-
 /* ---- The glare: silver near the lamp, duller silver away from it, never dark grey ---------------------------------- */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-ultra.fam-sv-ultra.foil-ultra.has-foil-map:not(.foil-tera):not(.foil-classic) .glare {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsl(0, 0%, 64%) 0%, hsl(0, 0%, 56%) 22%, hsl(200, 4%, 50%) 55%, hsl(220, 6%, 48%) 150%);
+    hsl(0, 0%, 66%) 0%, hsl(0, 0%, 58%) 16%, hsl(0, 0%, 51.5%) 38%, hsl(0, 0%, 50%) 58%, hsl(0, 0%, 50%) 150%);
+  /* 2026-11-28, the card-by-card review (55 of 171 bad, nearly all "milky wash over the whole art, blacks lifted,
+     skin turned pale"): the gradient ran 56% to 48% grey over the whole face and the etch lines carried 12-36% white
+     to the far corner, so the overlay lifted every mid tone on the card. Now the light is a pool: 50% grey (nothing
+     in an overlay) from a little over half the card away, and the lines fade out with it. */
   background-size: 120% 150%;
   background-position: center;
   background-repeat: no-repeat;
@@ -194,7 +200,11 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-ultra.fam-sv-ultra.foil-ultra.has-foil-
    the face is line), so the lines near the lamp stay under half white: brighter, they washed the art round the pointer. */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-ultra.fam-sv-ultra.foil-ultra.has-foil-map:is(.has-etch-map, .has-etch-tile):not(.foil-tera):not(.foil-classic) .glare::after {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(0, 0%, 100%, 0.62) 0%, hsla(0, 0%, 100%, 0.36) 25%, hsla(0, 0%, 100%, 0.2) 60%, hsla(0, 0%, 100%, 0.12) 100%);
+    hsla(0, 0%, 100%, 0.12) 0%, hsla(0, 0%, 100%, 0.07) 20%, hsla(0, 0%, 100%, 0.03) 46%, hsla(0, 0%, 100%, 0.01) 70%,
+    hsla(0, 0%, 100%, 0) 100%);
+  /* 0.12 at the lamp, was 0.62 (2026-11-28): Live's etch is solid white over a trainer's face and clothes, so this
+     layer was a white fill there, the "milky wash, dark skin turned pale" of the review (hiding it alone cured Tyme
+     sv8pt5-143) */
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
