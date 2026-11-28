@@ -75,10 +75,13 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-pris
 }
 
 /* ---- .foil: a multiply group: the diamond's dark mirror (at rest too), the strip's bars as a child -------------- */
+/* 2026-11-28: the far end was rgb(98, 94, 116): the diamond read as a dark grey slab and muddied the attack name and
+   rules text printed over it (per-card review, 13 of 14 Japanese Prism Stars; jsm12a-77). A mid grey-violet keeps the
+   mirror's off-angle darkening without burying the print. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-prism.fam-sm-prism.fam-sm-prism.fam-sm-prism.sm-prism.has-foil-map .foil {
   background-image: linear-gradient(to bottom, #fff 0%, #fff var(--pp-bot), rgba(255, 255, 255, 0) var(--pp-bot)),
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    rgb(255, 255, 255) 0%, rgb(230, 226, 238) 14%, rgb(156, 150, 172) 32%, rgb(110, 106, 128) 52%, rgb(98, 94, 116) 100%);
+    rgb(255, 255, 255) 0%, rgb(234, 230, 242) 14%, rgb(186, 180, 200) 32%, rgb(158, 152, 174) 52%, rgb(148, 142, 164) 100%);
   background-size: 100% 100%, 100% 100%;
   background-position: center, center;
   background-repeat: no-repeat, no-repeat;
