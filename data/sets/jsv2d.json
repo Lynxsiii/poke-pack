@@ -1,0 +1,37 @@
+{
+  "id": "jsv2d",
+  "name": "Clay Burst",
+  "lang": "ja",
+  "code": "SV2D",
+  "series": "scarlet-violet",
+  "slug": "clay-burst",
+  "scrydexId": "sv2d_ja",
+  "era": "sv",
+  "tcgplayerCategory": 85,
+  "tcgplayerGroup": 23608,
+  "englishTwin": "sv2",
+  "rarityMap": {
+    "C": "Common",
+    "U": "Uncommon",
+    "R": "Rare",
+    "RR": "Double Rare",
+    "ACE": "ACE SPEC Rare",
+    "AR": "Illustration Rare",
+    "SR": "Ultra Rare",
+    "SAR": "Special Illustration Rare",
+    "UR": "Hyper Rare"
+  },
+  "printedTotal": 71,
+  "products": [
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 565240,
+      "packs": 30,
+      "promos": [],
+      "hull": "ortho",
+      "imageVersion": 3
+    }
+  ]
+}
