@@ -217,7 +217,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tins
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo:is(.bwt-tinsel, .bwt-vault) {
   --bwt-streaks: url("/assets/foil/fam/bw-tinsel-holo/tinsel-streak-v4.webp");
   --bwt-hot: url("/assets/foil/fam/bw-tinsel-holo/tinsel-hot-v4.webp");
-  --bwt-rest: 0.4;
+  --bwt-rest: 0.28;
   --bwt-silver-k: 0.9;
   --bwt-pw: 62%;
   --bwt-ph: 30%;
@@ -273,7 +273,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tins
   background-blend-mode: normal, normal;
   mix-blend-mode: overlay;
   filter: none;
-  opacity: calc(var(--card-opacity) * min(1, 0.9 * var(--bwt-lit)));
+  opacity: calc(var(--card-opacity) * min(1, 0.72 * var(--bwt-lit)));
   -webkit-mask-image: var(--art), var(--foil-map),
     radial-gradient(ellipse calc(var(--bwt-pw) + var(--pointer-from-center, 0) * 16%) calc(var(--bwt-ph) + var(--pointer-from-center, 0) * 8%)
       at var(--pointer-x) var(--bwt-sheen-y),
@@ -289,7 +289,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tins
 }
 /* The Dragon Vault: the same Tinsel, stronger. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-vault {
-  --bwt-rest: 0.5;
+  --bwt-rest: 0.36;
   --bwt-silver-k: 1;
   --bwt-pw: 80%;
   --bwt-ph: 38%;

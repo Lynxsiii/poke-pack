@@ -285,6 +285,15 @@ cure"). The surface gloss throws a soft highlight.
   light on the ridges) at `--shine-glit` 0.6 by default, and the star coat is a clear coat that fades out 55% of the
   way from the light. `holo_check.py` reports `speck` (fine grain the foil adds over the art, as a ratio of the
   print's own) and flags it over 0.45: watch it after touching any glitter, fleck or sparkle layer.
+- **Pick the streak's blend by what the ink under it can show (BW Tinsel, 2026-11-28).** One hard-light streak texture
+  cannot serve every window: coloured streaks in hard-light were rainbow static over dark art, pale pastels were
+  invisible on pale art, and any evenly pitched ridge list reads as a CRT line screen at phone size. Scatter the streaks
+  (random heights, lengths, strengths, in patches) and split the light three ways, all inside one pool at the lamp:
+  `overlay` for the colour (it scales with the ink, black stays black), a low desaturated hard-light for dark windows,
+  and hard-light tints whose strongest channel is the neutral 0.5 (they can only darken a channel) for pale windows.
+  A light that must stay off the border (the BW EX pillar) is clamped to the middle of the card: on the frame, with the
+  Pokemon filling the rest, it reads as a rainbow stripe stuck to the card's edge. Crisp 2 % spectral lines (flat BW
+  full arts) get a `filter: blur()` of about 1.4 % of the card so they read as bands.
 - **A Japanese full art with no map is foil edge to edge.** With no foilMap a full art gets the white `full.webp`, so
   skin and faces take every band and tint (Supporter full arts read as a diagonal hatch over the face). Since the
   English lettering can be painted out (`jp_twin_maps.py --clean-text`), full arts take their English twin's foil
