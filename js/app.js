@@ -5138,6 +5138,7 @@ initAvatarPicker({
   trainer: activeTrainer,
   esc,
   toast,
+  api,
   save: async (patch) => {
     const data = await api("/api/me", { method: "PATCH", body: JSON.stringify(patch) });
     cloudUser = data.user;
