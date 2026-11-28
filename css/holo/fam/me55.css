@@ -88,8 +88,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-common .foil {
     calc((0.1 + var(--px, 0.5) * 0.8) * 100%) 50%;
   background-repeat: no-repeat;
   background-blend-mode: normal;
-  filter: none;
-  mix-blend-mode: hard-light;
+  /* overlay at a lower saturation (2026-11-28 per-card review: "saturated rainbow flood and neon border" on the
+     commons): the sweep tints pale art softly and leaves dark ink alone */
+  filter: saturate(0.7);
+  mix-blend-mode: overlay;
   -webkit-mask-image: var(--art), var(--foil-map);
   -webkit-mask-composite: source-in, source-over;
   mask-image: var(--art), var(--foil-map);
@@ -100,7 +102,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-common .foil {
   mask-position: center;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-  opacity: calc((0.3 + var(--card-opacity) * 0.7) * var(--foil-strength, 1));
+  opacity: calc((0.25 + var(--card-opacity) * 0.5) * var(--foil-strength, 1));
 }
 /* At rest (soft light): the border's rainbow alone, the window only faintly (0.3 of the map). */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-common:not(.lit):not(.settling) .foil {
@@ -116,7 +118,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-common:not(.lit
   mask-composite: intersect, intersect, subtract, add;
   -webkit-mask-size: contain, 100% 100%, 100% 100%, var(--m55-inner-size);
   mask-size: contain, 100% 100%, 100% 100%, var(--m55-inner-size);
-  opacity: calc(0.42 * var(--foil-strength, 1));
+  opacity: calc(0.26 * var(--foil-strength, 1));
 }
 /* Lit: the border's rainbow, turning with the tilt (about half a spectrum past a point over a full sweep), with
    the fine sandy grain screened into it. Only the border: the card minus the inner rectangle. */
@@ -141,7 +143,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-common .foil::b
   mask-position: center;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-  opacity: 0.9;
+  /* the border's rainbow at half: at 0.9 it was a neon frame */
+  filter: saturate(0.75);
+  opacity: 0.5;
 }
 /* Lit: a few sparkles in the window, brightest under the light; on pale art they add nothing, on dark art
    (Chandelure's night) they read as the real card's glints. Screened, so they only add light. */
@@ -373,7 +377,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-classic:not(.li
     var(--m55-stars),
     var(--m55-flecks),
     linear-gradient(hsl(40, 32%, 40%), hsl(40, 32%, 40%));
-  background-size: 40% auto, 20% auto, cover;
+  background-size: 62% auto, 20% auto, cover;
   background-position: calc(var(--seed-y, 0.5) * 100%) calc(var(--seed-x, 0.5) * 100%), var(--seed-pos, center), center;
   background-repeat: repeat, repeat, no-repeat;
   background-blend-mode: lighten, lighten, normal;
@@ -395,7 +399,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-classic .foil::
     var(--m55-flecks),
     var(--m55-flecks),
     linear-gradient(hsl(40, 32%, 40%), hsl(40, 32%, 40%));
-  background-size: 40% auto, cover, 20% auto, 24% auto, cover;
+  background-size: 62% auto, cover, 20% auto, 24% auto, cover;
   background-position:
     calc(var(--seed-y, 0.5) * 100%) calc(var(--seed-x, 0.5) * 100%),
     center,
@@ -428,7 +432,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-classic .foil::
     repeating-linear-gradient(0deg,
       hsl(340, 100%, 76%) 0%, hsl(30, 100%, 74%) 6%, hsl(52, 100%, 74%) 12%, hsl(120, 100%, 77%) 18%,
       hsl(45, 100%, 72%) 24%, hsl(195, 100%, 76%) 30%, hsl(300, 100%, 82%) 36%, hsl(340, 100%, 76%) 40%);
-  background-size: 38% auto, 19% auto, 100% 250%;
+  /* the dots at 1.6x (2026-11-28: at 19% a dot was a device pixel or two and the field read as dither noise, not
+     round confetti) */
+  background-size: 38% auto, 30% auto, 100% 250%;
   background-position:
     calc(var(--seed-y, 0.5) * 100% - (var(--pointer-from-left, 0.5) - 0.5) * 4px) calc(var(--seed-x, 0.5) * 100% - (var(--pointer-from-top, 0.5) - 0.5) * 4px),
     calc(var(--seed-y, 0.5) * 100% - (var(--pointer-from-left, 0.5) - 0.5) * 9px) calc(var(--seed-x, 0.5) * 100% - (var(--pointer-from-top, 0.5) - 0.5) * 9px),
@@ -444,13 +450,13 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-classic .foil::
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.6) 40%, rgba(0, 0, 0, 0.3) 90%),
     var(--m55-full), var(--m55-border);
   mask-composite: intersect, intersect, subtract, add;
-  -webkit-mask-size: 19% auto, 100% 100%, 100% 100%, 100% 100%;
-  mask-size: 19% auto, 100% 100%, 100% 100%, 100% 100%;
+  -webkit-mask-size: 30% auto, 100% 100%, 100% 100%, 100% 100%;
+  mask-size: 30% auto, 100% 100%, 100% 100%, 100% 100%;
   -webkit-mask-position: calc(var(--seed-x, 0.5) * 100% + (var(--pointer-from-left, 0.5) - 0.5) * 5px) calc(var(--seed-y, 0.5) * 100% + (var(--pointer-from-top, 0.5) - 0.5) * 5px), center, center, center;
   mask-position: calc(var(--seed-x, 0.5) * 100% + (var(--pointer-from-left, 0.5) - 0.5) * 5px) calc(var(--seed-y, 0.5) * 100% + (var(--pointer-from-top, 0.5) - 0.5) * 5px), center, center, center;
   -webkit-mask-repeat: repeat, no-repeat, no-repeat, no-repeat;
   mask-repeat: repeat, no-repeat, no-repeat, no-repeat;
-  opacity: 1;
+  opacity: 0.6;
 }
 /* The gloss: capped (the old warm white 0.9 bleached Lugia and the window). */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-classic .glare {
