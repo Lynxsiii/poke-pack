@@ -55,7 +55,7 @@ export function initLiveRips(deps) {
     }
     const first = !root.querySelector(".lr-row");
     root.hidden = false;
-    root.innerHTML = `<header class="lr-head"><h2 id="home-rips-h"><i class="lr-dot" aria-hidden="true"></i>Live rips</h2><span class="lr-note">Big pulls from other trainers</span></header>
+    root.innerHTML = `<header class="lr-head"><h2 id="home-rips-h"><i class="lr-dot" aria-hidden="true"></i>Live rips</h2></header>
       <div class="lr-row" role="group" aria-labelledby="home-rips-h">${rips.map((rip, i) => tileHtml(rip, i, !first && !seen.has(rip.id))).join("")}</div>`;
     seen = new Set(rips.map((rip) => rip.id));
   }

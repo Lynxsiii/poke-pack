@@ -20,7 +20,7 @@ body[data-view="shop"]::after { display: none; }
   transition: color 0.12s ease;
 }
 #view-shop .st::before {
-  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 4px; background: var(--k);
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: var(--r-tag); background: var(--k);
   transform: skewX(var(--skew)) scaleX(0.6); opacity: 0;
   transition: transform 0.2s var(--ease-out), opacity 0.14s ease;
 }
@@ -78,18 +78,18 @@ body[data-view="shop"]::after { display: none; }
   -webkit-tap-highlight-color: transparent; transition: color 0.12s ease, transform 0.14s var(--ease-out);
 }
 #view-shop .wr-pack::before {
-  content: ""; position: absolute; inset: 0; z-index: -1; border: var(--line-w) solid var(--k); border-radius: 6px;
+  content: ""; position: absolute; inset: 0; z-index: -1; border: var(--line-w) solid var(--k); border-radius: var(--r);
   background: var(--box); transform: skewX(var(--skew)); transform-origin: 0 50%;
   transition: transform 0.22s var(--ease-pop), background-color 0.12s ease;
 }
 #view-shop .wr-pack::after {
-  content: ""; position: absolute; top: -2px; bottom: -2px; left: -3px; z-index: 0; width: 8px; border-radius: 3px 0 0 3px;
+  content: ""; position: absolute; top: -2px; bottom: -2px; left: -3px; z-index: 0; width: 8px; border-radius: var(--r-tag) 0 0 var(--r-tag);
   background: var(--yel); transform: skewX(var(--skew)) scaleY(0); transform-origin: 50% 100%;
   transition: transform 0.2s var(--ease-out);
 }
 #view-shop .wr-th { flex: none; display: block; height: 52px; }
 #view-shop .wr-th picture { display: contents; }
-#view-shop .wr-th img { display: block; width: auto; height: 100%; border-radius: 2px; }
+#view-shop .wr-th img { display: block; width: auto; height: 100%; border-radius: var(--r-tag); }
 #view-shop .wr-name { min-width: 0; overflow-wrap: normal; word-break: normal; hyphens: manual; letter-spacing: -0.015em; }
 #view-shop .wr-pack:focus-visible { outline: 0; }
 #view-shop .dbox-input:checked + .wr-pack { color: var(--on-k); cursor: default; }
@@ -110,7 +110,7 @@ body[data-view="shop"]::after { display: none; }
 }
 #view-shop .stage-slab::before {
   content: ""; position: absolute; top: 0; bottom: 0; left: 0; right: -200px;
-  background-color: var(--cy); background-image: var(--dots-light); background-size: 14px 14px;
+  background-color: var(--set-a, var(--cy)); background-image: var(--dots-light); background-size: 14px 14px;
   transform: skewX(var(--skew)); transform-origin: 0 100%;
 }
 #view-shop .stage-img { position: relative; display: block; transform: rotate(5deg); }
@@ -202,10 +202,10 @@ body[data-view="shop"]::after { display: none; }
 #view-shop .chase-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; margin: 0; padding: 0; list-style: none; }
 #view-shop .chase-row { width: 100%; padding: 0; text-align: left; font: inherit; cursor: pointer; }
 #view-shop .chase-row .rt-row-lab { min-width: 74px; padding-right: 18px; font-size: 13px; font-variant-numeric: tabular-nums; }
-#view-shop .chase-th { flex: none; display: block; width: auto; height: 46px; margin-left: 6px; border-radius: 3px; }
+#view-shop .chase-th { flex: none; display: block; width: auto; height: 46px; margin-left: 6px; border-radius: var(--r-tag); }
 #view-shop .chase-row .rt-row-name { overflow: hidden; }
 #view-shop .chase-row .rt-row-name, #view-shop .chase-row .rt-row-name small { white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
-#view-shop .chase-own { margin-left: 4px; padding: 0 6px; border-radius: 3px; background: var(--k); color: var(--on-k); font: italic 700 11px/1.5 var(--font-h); }
+#view-shop .chase-own { margin-left: 4px; padding: 0 6px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k); font: 700 11px/1.5 var(--font-h); }
 #view-shop .chase-row .rt-row-val { font-size: 18px; }
 #view-shop .chase-row .rt-row-val .coin-i { width: 18px; height: 18px; }
 #view-shop .chase-row:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 2px; }
@@ -222,14 +222,14 @@ body.rt-enter #view-shop .chase-grid > li { animation: rt-rise 0.34s var(--ease-
 #view-shop .goods-shelf { display: grid; grid-template-columns: repeat(var(--goods-cols, 2), minmax(0, 1fr)); gap: 14px 12px; }
 #view-shop .good {
   position: relative; display: flex; flex-direction: column; min-width: 0; padding: 0 0 12px;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box);
   transition: transform 0.18s var(--ease-out);
 }
 @media (hover: hover) { #view-shop .good:hover { transform: translateY(-4px); } }
 #view-shop .good-stand {
   position: relative; display: flex; align-items: center; justify-content: center;
   height: 150px; margin: 0; padding: 12px 10px 10px; border-bottom: var(--line-w) solid var(--k);
-  border-radius: 4px 4px 0 0; overflow: hidden; background-color: var(--cy-3); background-image: var(--dots); background-size: 14px 14px;
+  border-radius: var(--r-tag) var(--r-tag) 0 0; overflow: hidden; background-color: var(--cy-3); background-image: var(--dots); background-size: 14px 14px;
 }
 #view-shop .good-img {
   position: relative; display: block; width: auto; height: auto; max-width: 100%; max-height: 100%;
@@ -243,12 +243,12 @@ body.rt-enter #view-shop .chase-grid > li { animation: rt-rise 0.34s var(--ease-
 /* The price: a small yellow sticker on the photo's corner. */
 #view-shop .good-price {
   position: absolute; z-index: 2; top: 8px; right: 8px; display: inline-flex; align-items: center; gap: 4px; margin: 0;
-  padding: 2px 8px 2px 5px; border: 2px solid var(--k); border-radius: 4px; background: var(--yel); color: var(--k0);
+  padding: 2px 8px 2px 5px; border: 2px solid var(--k); border-radius: var(--r-tag); background: var(--yel); color: var(--k0);
   font: 700 16px/1.2 var(--font-h); font-variant-numeric: tabular-nums; transform: rotate(-3deg);
 }
 #view-shop .good-price::before {
   content: ""; flex: none; width: 16px; height: 16px;
-  background: url("../../assets/coins/pp-coin-v1.svg") center / contain no-repeat;
+  background: url("../../assets/coins/pp-coin-v2.svg") center / contain no-repeat;
 }
 #view-shop .good-acts { display: flex; flex-direction: column; align-items: stretch; gap: 8px; margin-top: auto; padding: 12px 12px 0 14px; }
 #view-shop .good-acts .product-open, #view-shop .good-acts .cart-add {
@@ -265,12 +265,12 @@ body.rt-enter #view-shop .chase-grid > li { animation: rt-rise 0.34s var(--ease-
 /* A product with no photo: a plain carton drawn in ink with the set's logo. */
 :is(#view-shop, #price-dialog) .drawn-box { position: relative; z-index: 1; display: block; margin-right: 12px; filter: drop-shadow(var(--drop-sm)); }
 :is(#view-shop, #price-dialog) .drawn-top {
-  display: block; height: 14px; margin-left: 11px; border: 2px solid var(--k); border-bottom: 0; border-radius: 2px 2px 0 0;
+  display: block; height: 14px; margin-left: 11px; border: 2px solid var(--k); border-bottom: 0; border-radius: var(--r-tag) var(--r-tag) 0 0;
   background: var(--box-2); transform: skewX(-38deg); transform-origin: bottom left;
 }
 :is(#view-shop, #price-dialog) .drawn-face {
   position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
-  border: 2px solid var(--k); border-radius: 0 0 2px 2px; background: var(--box); overflow: hidden;
+  border: 2px solid var(--k); border-radius: 0 0 var(--r-tag) var(--r-tag); background: var(--box); overflow: hidden;
 }
 :is(#view-shop, #price-dialog) .drawn-face img { display: block; width: 72%; height: auto; max-height: 56%; object-fit: contain; }
 :is(#view-shop, #price-dialog) .drawn-face span { color: var(--k); font: 600 11px var(--font-h); }
@@ -297,7 +297,7 @@ body.rt-enter #view-shop .chase-grid > li { animation: rt-rise 0.34s var(--ease-
   cursor: zoom-in; transform-origin: bottom center;
 }
 #view-shop .promo-face:empty { border-radius: 3.97% / 2.84%; background: rgb(20 23 27 / 0.08); }
-#view-shop .promo-face:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 3px; border-radius: 4px; }
+#view-shop .promo-face:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 3px; border-radius: var(--r-tag); }
 #view-shop .promo-fan.count-1 .promo-face { width: 64px; transform: rotate(5deg); }
 #view-shop .promo-fan.count-2 .promo-face:nth-child(1) { transform: rotate(-5deg) translateX(14px); }
 #view-shop .promo-fan.count-2 .promo-face:nth-child(2) { transform: rotate(6deg); z-index: 1; }
@@ -313,8 +313,8 @@ body.rt-enter #view-shop .chase-grid > li { animation: rt-rise 0.34s var(--ease-
 #view-shop .promo-product.no-box .promo-fan { left: 0; right: 0; justify-content: center; }
 #view-shop .promo-product.no-box .promo-fan.count-1 .promo-face { width: 84px; transform: rotate(3deg); }
 #view-shop .promo-note {
-  position: absolute; z-index: 2; left: 8px; top: 8px; padding: 2px 9px; border-radius: 3px;
-  background: var(--hp-low); color: var(--w0); font: italic 700 12px/1.4 var(--font-h);
+  position: absolute; z-index: 2; left: 8px; top: 8px; padding: 2px 9px; border-radius: var(--r-tag);
+  background: var(--hp-low); color: var(--w0); font: 700 12px/1.4 var(--font-h);
 }
 #view-shop .promo-kind-head { grid-column: 1 / -1; margin: 18px 0 0; color: var(--k); font: italic 800 22px/1 var(--font-xc); letter-spacing: -0.015em; }
 #view-shop .promo-kind-head:first-child { margin-top: 0; }
@@ -323,7 +323,7 @@ body.rt-enter #view-shop .chase-grid > li { animation: rt-rise 0.34s var(--ease-
 /* ---- The set notice: a box that says why the link didn't open -------------- */
 #view-shop .set-notice {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px;
-  margin: 0 0 18px; padding: 12px 14px 14px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  margin: 0 0 18px; padding: 12px 14px 14px; border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box);
   animation: rt-pop 0.24s var(--ease-out);
 }
 #view-shop .set-notice.hidden { display: none; }
@@ -345,7 +345,7 @@ body.rt-enter #view-shop .chase-grid > li { animation: rt-rise 0.34s var(--ease-
 #view-shop .rail-era[open] { background: none; }
 #view-shop .rail-era summary {
   display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px; padding: 8px 14px;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); cursor: pointer; list-style: none;
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); cursor: pointer; list-style: none;
   transition: transform 0.14s var(--ease-out);
 }
 @media (hover: hover) { #view-shop .rail-era summary:hover { transform: translateX(4px); } }
@@ -367,7 +367,7 @@ body.rt-enter #view-shop .chase-grid > li { animation: rt-rise 0.34s var(--ease-
 #view-shop .rail-era[open] .rail-sets { animation: rt-rise 0.26s var(--ease-out); }
 #view-shop .rail-set {
   position: relative; display: flex; align-items: center; gap: 10px; width: 100%; min-height: 50px; padding: 4px 12px;
-  border: 2px solid var(--rule-2); border-radius: 6px; background: var(--box); color: var(--k); text-align: left; cursor: pointer;
+  border: 2px solid var(--rule-2); border-radius: var(--r); background: var(--box); color: var(--k); text-align: left; cursor: pointer;
   transition: transform 0.14s var(--ease-out), border-color 0.12s ease;
 }
 @media (hover: hover) { #view-shop .rail-set:not(.is-queued, :disabled, .active):hover { border-color: var(--k); transform: translateX(4px); } }
@@ -378,12 +378,12 @@ body.rt-enter #view-shop .chase-grid > li { animation: rt-rise 0.34s var(--ease-
 #view-shop .rail-set.is-queued { cursor: default; border-style: dashed; background: rgb(var(--box-rgb) / 0.5); }
 #view-shop .rail-set:disabled { opacity: 0.5; cursor: default; }
 #view-shop .rail-symbol-slot { flex: none; display: flex; align-items: center; justify-content: center; width: 28px; height: 22px; }
-#view-shop .rail-set.active .rail-symbol-slot { padding: 1px; border-radius: 3px; background: #fff; }
+#view-shop .rail-set.active .rail-symbol-slot { padding: 1px; border-radius: var(--r-tag); background: #fff; }
 #view-shop .rail-symbol { width: 100%; height: 100%; object-fit: contain; }
 #view-shop .rail-set-copy { display: flex; flex-direction: column; gap: 1px; min-width: 0; flex: 1; }
 #view-shop .rail-set-copy b { overflow: hidden; color: var(--k); font: 600 15px var(--font-h); text-overflow: ellipsis; white-space: nowrap; }
 #view-shop .rail-set-copy small { color: var(--k-2); font: 700 12px var(--font); }
-#view-shop .rail-set .soon { flex: none; padding: 0; border: 0; background: none; color: var(--k-3); font: italic 700 12px var(--font-h); }
+#view-shop .rail-set .soon { flex: none; padding: 0; border: 0; background: none; color: var(--k-3); font: 700 12px var(--font-h); }
 
 /* ---- A computer: the stage on the left, the name and the key on the right -- */
 @media (min-width: 961px) {
@@ -501,12 +501,12 @@ main #view-catalog .era-block { margin: 34px 0 0; content-visibility: auto; cont
 main #view-catalog .era-head { display: block; margin: 0 0 14px; }
 main #view-catalog .era-head h3 { margin: 0; color: var(--k); font: italic 800 30px/1 var(--font-xc); letter-spacing: -0.02em; text-transform: none; }
 main #view-catalog .era-head p { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; margin: 8px 0 0; color: var(--k); font-size: 13.5px; font-weight: 700; }
-main #view-catalog .era-head .era-span { padding: 1px 8px; border-radius: 3px; background: var(--k); color: var(--yel-k); font: italic 800 12.5px/1.5 var(--font-xc); }
+main #view-catalog .era-head .era-span { padding: 1px 8px; border-radius: var(--r-tag); background: var(--k); color: var(--yel-k); font: 700 12.5px/1.5 var(--font-h); }
 main #view-catalog .era-head .era-count, main #view-catalog .era-head .era-found { color: var(--k); font-variant-numeric: tabular-nums; }
 main #view-catalog .cat-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 8px; }
 main #view-catalog .cat-tile {
   position: relative; display: flex; flex-direction: column; min-width: 0; overflow: hidden;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); color: var(--k); text-decoration: none;
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); color: var(--k); text-decoration: none;
   transition: transform 0.16s var(--ease-out);
 }
 @media (hover: hover) { main #view-catalog a.cat-tile:hover { transform: translateY(-4px); } }
@@ -528,8 +528,8 @@ main #view-catalog .cat-sym { flex: none; width: auto; height: 13px; max-width: 
 main #view-catalog .cat-price { margin-left: auto; color: var(--k); font-size: 14px; }
 main #view-catalog .cat-price .coin-i { width: 13px; height: 13px; }
 main #view-catalog .cat-hp { display: flex; align-items: center; gap: 6px; margin-top: 3px; }
-main #view-catalog .cat-hp .rt-track { flex: 1; height: 10px; padding: 2px; border-radius: 5px; background: var(--k); overflow: hidden; }
-main #view-catalog .cat-hp .rt-track > i { display: block; height: 100%; min-width: 0; border-radius: 3px; background: var(--hp); }
+main #view-catalog .cat-hp .rt-track { flex: 1; height: 10px; padding: 2px; border-radius: var(--r-tag); background: var(--k); overflow: hidden; }
+main #view-catalog .cat-hp .rt-track > i { display: block; height: 100%; min-width: 0; border-radius: var(--r-tag); background: var(--hp); }
 main #view-catalog .cat-hp small { flex: none; color: var(--k-2); font: 700 11px var(--font-h); font-variant-numeric: tabular-nums; }
 main #view-catalog .cat-tile.is-soon { border-style: dashed; border-color: var(--rule-2); background: rgb(var(--box-rgb) / 0.5); color: var(--k-3); }
 main #view-catalog .cat-tile.is-soon .cat-art { border-bottom-color: var(--rule-2); background-color: transparent; }
@@ -584,7 +584,7 @@ main #view-catalog .cat-tab {
 }
 main #view-catalog .cat-tab small { margin-left: 2px; color: inherit; font: 700 12px var(--font); font-style: normal; font-variant-numeric: tabular-nums; opacity: 0.75; }
 main #view-catalog .cat-tab::before {
-  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 4px; background: var(--k);
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: var(--r-tag); background: var(--k);
   transform: skewX(var(--skew)) scaleX(0.6); opacity: 0;
   transition: transform 0.2s var(--ease-out), opacity 0.14s ease;
 }
@@ -626,7 +626,7 @@ body.no-motion main #view-catalog .cat-tab::before { transition: none; }
 #view-shop .box-strip::-webkit-scrollbar { display: none; }
 #view-shop .box-strip > li { flex: none; width: 92px; }
 #view-shop .box-card { display: block; width: 100%; margin: 0; padding: 0; border: 0; background: none; color: var(--k); text-align: left; cursor: pointer; }
-#view-shop .box-card img { display: block; width: 100%; aspect-ratio: 5 / 7; object-fit: cover; border-radius: 4px; filter: grayscale(1) opacity(0.55); transition: transform 0.16s var(--ease-out); }
+#view-shop .box-card img { display: block; width: 100%; aspect-ratio: 5 / 7; object-fit: cover; border-radius: var(--r-tag); filter: grayscale(1) opacity(0.55); transition: transform 0.16s var(--ease-out); }
 #view-shop .box-card.is-owned img { filter: drop-shadow(var(--drop-sm)); }
 @media (hover: hover) { #view-shop .box-card:hover img { transform: translateY(-3px); } }
 #view-shop .box-card:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 3px; }
@@ -636,7 +636,7 @@ body.no-motion main #view-catalog .cat-tab::before { transition: none; }
 #view-shop .shop-steps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
 #view-shop .shop-step {
   display: flex; flex-direction: column; justify-content: center; gap: 2px; min-height: 58px; padding: 8px 12px;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); color: var(--k); text-decoration: none;
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); color: var(--k); text-decoration: none;
   transition: transform 0.14s var(--ease-out);
 }
 #view-shop .shop-step:last-child { text-align: right; }
@@ -664,7 +664,7 @@ main #view-catalog .cat-tab:not(.active) { color: var(--k); }
 #view-shop .kit-halves[hidden] { display: none; }
 #view-shop .kit-half {
   flex: 1 1 0; min-width: 0; min-height: 48px; margin: 0; padding: 6px 12px;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); color: var(--k);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); color: var(--k);
   font: 600 14.5px/1.15 var(--font-h); text-align: left; cursor: pointer; transition: transform 0.14s var(--ease-out);
 }
 #view-shop .kit-half small { display: block; margin-top: 2px; color: var(--k-2); font: 700 12px var(--font); font-variant-numeric: tabular-nums; }

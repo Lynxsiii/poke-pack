@@ -10,7 +10,7 @@ export const coinText = (value) => {
 };
 
 /** The house coin as an inline mark. Decorative, so the amount carries the word "coins" for screen readers. */
-export const COIN_I = '<img class="coin-i" src="assets/coins/pp-coin-v1.svg" alt="" width="16" height="16" aria-hidden="true">';
+export const COIN_I = '<img class="coin-i" src="assets/coins/pp-coin-v2.svg" alt="" width="16" height="16" aria-hidden="true">';
 
 /** The coin mark, the amount, and a visually hidden "coins". For plain-text places write `${coinText(n)} coins`. */
 export const coinAmount = (value) => `${COIN_I}${coinText(value)}<span class="sr-only"> coins</span>`;

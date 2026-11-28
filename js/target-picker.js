@@ -19,7 +19,7 @@ import { esc, coins, icon, plural, slabTileHTML } from "./casino-kit.js";
 import { wrapperArt } from "./battle-kit.js";
 import { RARITY_LABEL, ALL_SETS } from "./catalog.js";
 import { isHit } from "./engine.js";
-import { coinAmount } from "./money.js?v=2";
+import { coinAmount } from "./money.js?v=4";
 import { GRADES } from "./grading-rules.js";
 import { upgradeChance, chanceText, multiplierText, slabTargetValue } from "./upgrader-rules.js?v=3";
 

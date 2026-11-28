@@ -38,6 +38,92 @@
     ]
   },
   {
+    "id": "2026-11-28-set-colours",
+    "date": "2026-11-28",
+    "kind": "better",
+    "big": 1,
+    "title": "Every set brings its own colour",
+    "summary": "The slab behind the pack on Home and on a set's page is now that set's colour.",
+    "items": [
+      "Pitch Black sits on purple, Delta Reign on orange, Chaos Rising on blue, and so on for every set.",
+      "Menu and tab icons have square corners to match the rest of the site.",
+      "Legal, Patch notes and Settings lost the slab in the corner."
+    ]
+  },
+  {
+    "id": "2026-11-28-provably-fair",
+    "date": "2026-11-28",
+    "kind": "new",
+    "big": 2,
+    "title": "Provably fair seeds and odds for the casino",
+    "summary": "Every casino result and every pack you open now comes from seeds you can check, and every game shows its odds and payback.",
+    "items": [
+      "You have a server seed (shown only as its hash until you change it), a client seed you can set to anything, and a nonce that counts your bets. Each result is HMAC-SHA256 of those, so it was fixed before you played.",
+      "Rotate your seeds any time from the new Fairness page in the casino. The old server seed is revealed, so you can check every bet you made with it.",
+      "Coinflips against players, jackpots and pack battles get their own seed when they open, shown as a hash in the lobby and revealed when the game is over. Both players' client seeds go into it.",
+      "The Fairness page has a verify tool and the odds and payback of every game: Coinflip, Jackpot, Pack battles, Upgrader, Tall Grass, Mystery Tins and opening packs.",
+      "No odds or payouts changed."
+    ]
+  },
+  {
+    "id": "2026-11-28-rayquaza-removed",
+    "date": "2026-11-28",
+    "kind": "better",
+    "title": "Rayquaza has left the beta games",
+    "summary": "The Rayquaza cash-out game is gone from the casino. Tall Grass and Mystery Tins stay.",
+    "items": [
+      "Rayquaza is no longer in Beta testing, and old links to it open the Beta page.",
+      "Coins you won or lost there are unchanged. If a round was in the air when it was taken down, your stake came back."
+    ]
+  },
+  {
+    "id": "2026-11-28-square-corners",
+    "date": "2026-11-28",
+    "kind": "better",
+    "big": 1,
+    "title": "Square corners and less talk",
+    "summary": "Boxes and keys lost their round corners, the text face is sharper, and the tour no longer jumps in front of the pack.",
+    "items": [
+      "Every box, key, tag and bar now has square corners. Cards, coins, slabs and faces keep theirs.",
+      "Reading text is set in a square-ended face. Tabs and small labels stand upright so titles stand out.",
+      "The coin has a booster pack on its face, and the gold house coin you flip has a pack on heads and three cards on tails.",
+      "Empty pages say so in a plain line. The dashed boxes with a hollow ball are gone, and so are the arrows on the casino's rows.",
+      "The tour only runs if you ask for it in Settings.",
+      "Pages that explained themselves under the title mostly don't any more, and the footer is one paragraph."
+    ]
+  },
+  {
+    "id": "2026-11-28-phone-layout-two",
+    "date": "2026-11-28",
+    "kind": "better",
+    "title": "More screens rearranged for phones",
+    "summary": "The set page, grading, friends and trades follow the new phone layout.",
+    "items": [
+      "Set page: the pack sits in the middle with its art choices in a strip underneath, the same as Home.",
+      "Set page: pull rates are a grid you read at a glance, chase cards are a row of cards you flick through, and boxes and ETBs sit on one shelf you swipe.",
+      "Grading: the slab and Send a card come first, with the fee right under them. Cert lookup moved to the bottom of the page.",
+      "Friends: your friends lead the page as a clean list, and adding a friend sits under them.",
+      "Trades: starting a trade is at the top. How trades work folds shut until you tap it.",
+      "Fixed: a long Rip key on a set page no longer wraps onto two lines."
+    ]
+  },
+  {
+    "id": "2026-11-28-more-mystery-tins",
+    "date": "2026-11-28",
+    "kind": "new",
+    "big": 1,
+    "title": "62 more Mystery Tins",
+    "summary": "Every shelf gets more tins, 110 in all now, from 1 coin or bust tins up to a 650 coin Vault.",
+    "items": [
+      "Bargain bin: eleven more or bust tins, including Rayquaza, Lugia, Giratina, Gyarados, Gardevoir, Greninja, Mega, Supporter and Tag Team.",
+      "Budget: seventeen more lines and groups, such as Dragonite, Garchomp, Tyranitar, Blastoise, Venusaur, Alakazam, Zoroark, Mimikyu, Dragapult, the Johto, Hoenn, Sinnoh and Paldea starters, Cats and Ghosts.",
+      "Mid: Powerhouse, Regional forms, Paradox, Ultra Beast, Mythical, the Hoenn, Unova and Galar legends, Pikachu and Eeveelution picks, and two slab tins, Graded Gengar and Graded starters.",
+      "High: Dragon and Colorless type tins, hits tins for Pikachu, Gengar, Megas, dragons, starters and Supporters, and slab tins for legends, Tag Teams and Supporters.",
+      "High roller: Pikachu, Mega, Supporter, Fire, Water, Psychic, Dragon and Darkness high rollers, Gem mint Charizard and Gem mint Eeveelution where every slab is a RIP 10, and the Vault, where every card is worth 300 coins or more.",
+      "Each new tin pays back its shelf's share like the rest: 65% in the Bargain bin, 75% Budget, 85% Mid, 90% High and 94% High roller. Every card's odds are on the tin's page."
+    ]
+  },
+  {
     "id": "2026-11-28-phone-layout",
     "date": "2026-11-28",
     "kind": "better",

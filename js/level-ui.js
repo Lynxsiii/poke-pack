@@ -37,7 +37,7 @@ import {
   nextMilestone,
   unlockLevel,
 } from "./levels.js";
-import { COIN_I, coinAmount } from "./money.js?v=2";
+import { COIN_I, coinAmount } from "./money.js?v=4";
 import { FRAME_ART_VERSION } from "./frame-catalog.js";
 
 const escHtml = (value) =>

@@ -30,12 +30,12 @@ export const GEAR_KINDS = ["sleeve", "coin"];
 export const HOUSE_COIN = {
   id: "house",
   name: "House coin",
-  subject: "Sparkle",
+  subject: "Booster pack",
   material: "metal",
   front: "",
   back: "",
   tint: "#c9a24a",
-  blurb: "The site's own sparkle coin, until you choose another.",
+  blurb: "The site's own coin, until you choose another.",
   house: true,
 };
 

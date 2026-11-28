@@ -47,8 +47,9 @@ import { HIT_RARITIES, canPullReverse, isHit, tallyRarity } from "./engine.js";
 import { initRadio } from "./radio.js?v=5";
 import { createTear } from "./tear.js?v=2";
 import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends, paintLounge } from "./social.js?v=7";
-import { hubHeadHtml, socialTabFromPath } from "./social-hub.js?v=3";
-import { renderRankings, standingLine } from "./rankings.js?v=7";
+import { hubHeadHtml, socialTabFromPath, showEventsTab } from "./social-hub.js?v=4";
+import { renderEvents, eventsMayShow } from "./events-page.js?v=1";
+import { renderRankings, standingLine } from "./rankings.js?v=9";
 import { frameHtml, levelBadgeHtml, framePicksHtml, userFrame } from "./level-badge.js";
 import { BANNER_MOTION_LEVELS, BANNER_MOTION_NAMES, frameInfo } from "./levels.js";
 import { roomLine } from "./gate-notice.js";
@@ -86,9 +87,20 @@ import {
 } from "./achievements.js";
 import * as questRules from "./quests.js";
 import { masteryEmblemHtml as masteryEmblem, masterySetIds, masteryBannerId } from "./mastery.js";
+import { SET_ACCENTS } from "./set-accents.js";
+
+/* The slab behind a pack takes that set's own colour (DESIGN.md, House style): the pack decides
+   the colour of its page, the theme only lends its slab when a set has none. */
+function paintSetSlab(viewId, set) {
+  const el = document.getElementById(viewId);
+  if (!el) return;
+  const a = set && Object.prototype.hasOwnProperty.call(SET_ACCENTS, set.id) ? SET_ACCENTS[set.id].a : "";
+  if (a) el.style.setProperty("--set-a", a);
+  else el.style.removeProperty("--set-a");
+}
 import { bannerBlockHtml } from "./mastery-banner.js";
 import { masteryShelfProfileHtml } from "./mastery-shelf.js";
-import * as questArea from "./quest-area.js?v=10";
+import * as questArea from "./quest-area.js?v=12";
 import * as levelUi from "./level-ui.js";
 import { rollFigures, growBars, flyCoins, markPicks, landPreview } from "./acct-motion.js";
 import { avatarPickerHtml, initAvatarPicker, resetAvatarPicker } from "./avatar-picker.js";
@@ -128,40 +140,40 @@ import {
 } from "./accounts.js";
 import { api, ApiError } from "./api.js";
 import { THEMES, canUseTheme, resolveLook } from "./themes.js?v=2";
-import { equippedCoin, gearItem, normalizeGear } from "./gear.js?v=2";
-import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=17";
-import { initBattles } from "./battles.js?v=10";
-import { initCasino } from "./casino.js?v=33";
-import { coinOf } from "./coin.js?v=7";
+import { equippedCoin, gearItem, normalizeGear } from "./gear.js?v=3";
+import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=21";
+import { initBattles } from "./battles.js?v=12";
+import { initCasino } from "./casino.js?v=37";
+import { coinOf } from "./coin.js?v=9";
 // grading
-import { initGrading, GRADING_ROUTE, CERT_ROUTE } from "./grading-page.js?v=21";
+import { initGrading, GRADING_ROUTE, CERT_ROUTE } from "./grading-page.js?v=23";
 // trades
-import { initTrades, TRADES_ROUTE } from "./trades-page.js?v=6";
+import { initTrades, TRADES_ROUTE } from "./trades-page.js?v=9";
 import { coinTag } from "./battle-kit.js";
-import { coinText, coinAmount, COIN_I } from "./money.js?v=2";
-import { receiptHtml, pullRow } from "./receipt.js?v=2";
+import { coinText, coinAmount, COIN_I } from "./money.js?v=4";
+import { receiptHtml, pullRow } from "./receipt.js?v=4";
 // cart and sealed collection (CONTRACT: /mnt/project-files/cart-sealed/CONTRACT.md)
-import { cartStore, cartControlHtml, cartControlClick, cartControlChange, refreshCartControls, mountCartBar } from "./cart.js?v=6";
-import { initCart } from "./cart-page.js?v=10";
-import { startTour, maybeStartTour } from "./tour.js?v=3";
-import { initVault } from "./vault-page.js?v=9";
-import { initBatchOpen } from "./batch-open.js?v=6";
+import { cartStore, cartControlHtml, cartControlClick, cartControlChange, refreshCartControls, mountCartBar } from "./cart.js?v=8";
+import { initCart } from "./cart-page.js?v=12";
+import { startTour } from "./tour.js?v=3";
+import { initVault } from "./vault-page.js?v=11";
+import { initBatchOpen } from "./batch-open.js?v=8";
 import { cartEligible } from "./orders-rules.js?v=1";
-import { initSearch } from "./search.js?v=7";
-import { initWishlist } from "./wishlist.js?v=2";
+import { initSearch } from "./search.js?v=9";
+import { initWishlist } from "./wishlist.js?v=4";
 import { initSecurity, securityTabHtml, resetSecurity, securityChanged, finishDiscordReturn, startTwoStep, inTwoStep, endTwoStep, twoStepAuthHtml, twoStepHandle } from "./account-security.js?v=1";
-import { createShareSheet, pullUrl } from "./share-pull.js?v=3";
+import { createShareSheet, pullUrl } from "./share-pull.js?v=5";
 // binder looks: the /binder cover, the customiser and the owner's look on a profile
 import { binderObjectHtml, applyBinderLook } from "./binder-object.js";
 import { watchBinderFx } from "./binder-editions.js";
 import { normalizeBinderLook, resolveBinderLook, COLOR_FROM_CARDS } from "./binder-looks.js";
 import { hexToHsl, hslToHex, mixHex } from "./card-accent.js";
 import { cachedCardAccents, sampleCardAccents } from "./card-art-accent.js?v=1";
-import { initBinderEditor } from "./binder-editor.js?v=4";
+import { initBinderEditor } from "./binder-editor.js?v=6";
 import { renderNotesPage } from "./notes-page.js?v=4";
 import { initThisWeek } from "./this-week.js?v=1";
 import { initLiveRips } from "./live-rips.js?v=1";
-import { renderLegalPage, LEGAL_TITLES } from "./legal-page.js?v=6";
+import { renderLegalPage, LEGAL_TITLES } from "./legal-page.js?v=8";
 import { ageFieldsHtml, agreeRowHtml, readAgeFields, ageBlocked, blockAge, UNDERAGE_HTML, syncTermsSheet } from "./terms-sheet.js?v=1";
 
 const state = loadState();
@@ -178,7 +190,9 @@ let dmHandle = "";
 let dmSeen = { handle: "", n: 0 }; // social: how many lines of the open thread were last painted
 let rankingsDrawnAt = 0; // social: when the rankings were last fetched, so the 5s social tick refreshes them once a minute
 let dmStick = false; // social: the next paint of the open thread goes to the newest line (a message was just sent)
-let socialTab = "friends"; // friends, rankings or lounge (js/social-hub.js)
+let socialTab = "friends"; // friends, rankings, lounge or events (js/social-hub.js)
+let eventsProbed = false; // social: whether the Events word has been asked for this visit
+let eventsDrawnAt = 0; // social: when the event was last fetched, so the 5s social tick refreshes it once a minute
 const CLOUD_SEEN_KEY = "poke-pack-rip-cloud-seen";
 let pendingClaim = localStorage.getItem(CLOUD_SEEN_KEY) ? null : snapshotIfProgress(state);
 let ripLock = false;
@@ -1059,7 +1073,7 @@ function syncTerms() {
  */
 function claimTile(lead, value, left = 0) {
   const gap = Math.round(Math.min(1, Math.max(0, left)) * 100);
-  return `<span class="claim-ring" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.5" /><circle class="claim-arc" cx="12" cy="12" r="10.5" pathLength="100" style="stroke-dashoffset:${gap}" /></svg><img src="assets/coins/pp-coin-v1.svg" alt="" width="14" height="14" /></span><span class="claim-tx"><small class="btn-word">${esc(lead)} </small><b>${esc(value)}</b></span>`;
+  return `<span class="claim-ring" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.5" /><circle class="claim-arc" cx="12" cy="12" r="10.5" pathLength="100" style="stroke-dashoffset:${gap}" /></svg><img src="assets/coins/pp-coin-v2.svg" alt="" width="14" height="14" /></span><span class="claim-tx"><small class="btn-word">${esc(lead)} </small><b>${esc(value)}</b></span>`;
 }
 
 /** The phone HUD's trainer: their face in a ring that fills toward the next level, and the level under it. */
@@ -1634,6 +1648,7 @@ function paintWrapperChoice() {
 }
 
 function renderShop() {
+  paintSetSlab("view-shop", liveSet);
   renderSetChrome();
   renderSwitcher();
   const quickSets = document.getElementById("shop-quick-sets");
@@ -3272,7 +3287,7 @@ function renderCatalog() {
       : "";
     top.innerHTML = `${back}
       <div class="cat-tabs" role="tablist" aria-label="Kinds of packs">${tabs}</div>
-      <p class="catalog-summary${cat.id === "booster" || cat.id === "japanese" ? " is-plain" : ""}">${esc(cat.note)}${cat.id === "booster" || cat.id === "japanese" ? "" : " Extras have a collection page and no mastery."}</p>
+      ${cat.note ? `<p class="catalog-summary${cat.id === "booster" || cat.id === "japanese" ? " is-plain" : ""}">${esc(cat.note)}${cat.id === "booster" || cat.id === "japanese" ? "" : " Extras have a collection page and no mastery."}</p>` : ""}
       ${jumps}`;
   }
   els.catalogEras.innerHTML = blocks;
@@ -3773,6 +3788,7 @@ function rollHomePrice(el, to, moving) {
 
 /** The set on show: tag, name, meta, the wrapper party, the pack, the Open key. `dir` is the step that brought it (-1 newer, 1 older). */
 function paintFeatured(set, dir = 0) {
+  paintSetSlab("view-home", set);
   const wrap = set.id === liveSet.id ? chosenWrapper(set) : set.wrappers?.[0];
   const firstPaint = !homeShown.set;
   const setChanged = homeShown.set !== set.id;
@@ -4357,7 +4373,7 @@ function renderAuth() {
     <div class="auth-page ${recover ? "is-recover" : signin ? "is-signin" : "is-signup"}">
       ${authHeroHtml()}
       <div class="auth-copy">
-        <p class="au-kicker"><img class="auth-mark" src="assets/mark-v3.png" width="256" height="256" alt="" /><span class="au-plate">${recover ? "Recovery" : signin ? "Continue" : "New game"}</span></p>
+        <p class="au-kicker"><img class="auth-mark" src="assets/mark-v3.png" width="256" height="256" alt="" /></p>
         <h1>${recover ? "Reset your password" : signin ? "Welcome back" : "Make a trainer"}</h1>
         <p class="lede">${
           recover
@@ -5231,6 +5247,15 @@ async function renderSocial() {
   const body = els.socialBody;
   if (!body) return;
   const trainer = activeTrainer();
+  // The Events word appears once the server says an event shows for this viewer. Asked once, and never while events are off.
+  if (eventsMayShow() && !eventsProbed) {
+    eventsProbed = true;
+    api("/api/events")
+      .then((data) => {
+        if (showEventsTab(Boolean(data?.visible)) && view === "social") renderSocial();
+      })
+      .catch(() => {});
+  }
   if (socialTab === "rankings") {
     const pane = socialPane("rankings");
     rankingsDrawnAt = Date.now();
@@ -5240,6 +5265,28 @@ async function renderSocial() {
   if (socialTab === "lounge") {
     renderLoungePane(socialPane("lounge"));
     return;
+  }
+  if (socialTab === "events") {
+    // Weekly events (js/events-page.js). While they are switched off there is no page: /events is Friends.
+    if (!eventsMayShow()) {
+      socialTab = "friends";
+      replacePath("/social");
+    } else {
+      const pane = socialPane("events");
+      eventsDrawnAt = Date.now();
+      renderEvents(pane, {
+        api, faceHtml, levelTag, toast, user: () => activeTrainer(),
+        onClaim: (data, rect) => {
+          afterEconomy(data.save);
+          renderHeader();
+          if (rect) flyCoins(rect, { count: data.coins >= 100 ? 6 : 4 });
+        },
+        onHidden: () => showEventsTab(false),
+      }).then(() => {
+        if (showEventsTab(Boolean(pane.querySelector(".ev"))) && view === "social" && socialTab === "events") renderSocial();
+      });
+      return;
+    }
   }
   if (!trainer) {
     socialPane("friends").innerHTML = `<div class="social-gate">
@@ -5587,7 +5634,7 @@ function themeRow() {
   return `<div class="set-row look-row">
       <span class="set-copy">
         <b>Colours</b>
-        <small>Same menu, a whole new coat of paint. Rotom follows Light or dark above, the others bring their own.</small>
+        <small>Rotom follows Light or dark above. Every other theme is light or dark by itself.</small>
       </span>
       <div class="look-tiles" role="group" aria-label="Colours">${tiles}</div>
     </div>`;
@@ -5826,6 +5873,7 @@ const PATH_VIEWS = {
   "/leaderboards": "social",
   "/lounge": "social",
   "/chat": "social",
+  "/events": "social",
 };
 
 const VIEW_TITLES = {
@@ -5975,6 +6023,7 @@ function viewTitle() {
   if (view === "profile" && profileHandle) return `@${profileHandle} | poke-pack.rip`;
   if (view === "social" && socialTab === "rankings") return "Rankings | poke-pack.rip";
   if (view === "social" && socialTab === "lounge") return "Lounge | poke-pack.rip";
+  if (view === "social" && socialTab === "events") return "Events | poke-pack.rip";
   if (view === "social" && dmHandle) return `DM @${dmHandle} | poke-pack.rip`;
   if (view === "shop") return `${kitOf(liveSet)?.name || `${liveSet.name} packs`} | poke-pack.rip`;
   if (view === "legal") return `${LEGAL_TITLES[legalDoc]} | poke-pack.rip`;
@@ -5989,7 +6038,7 @@ function pathForView(name) {
   if (name === "tcg") return tcgPath;
   if (name === "profile") return profilePath(profileHandle || "trainer", profilePageWanted);
   if (name === "shop") return `/packs/${liveSet.id}`;
-  if (name === "social") return socialTab === "rankings" ? "/rankings" : socialTab === "lounge" ? "/lounge" : dmHandle ? `/social/${dmHandle}` : "/social";
+  if (name === "social") return socialTab === "rankings" ? "/rankings" : socialTab === "lounge" ? "/lounge" : socialTab === "events" ? "/events" : dmHandle ? `/social/${dmHandle}` : "/social";
   if (name === "legal") return `/${legalDoc}`;
   return VIEW_PATHS[name] || "/home";
 }
@@ -10656,7 +10705,7 @@ let tcgLoading = null;
 function showTcg() {
   if (tcgPage) return tcgPage.show(tcgPath);
   els.viewTcg.innerHTML = `<div class="tg-page"><div class="rt-skel tg-loading">Loading</div></div>`;
-  tcgLoading ||= import("./tcg-page.js?v=43")
+  tcgLoading ||= import("./tcg-page.js?v=46")
     .then(({ initTcg }) => {
       tcgPage = initTcg({
         root: els.viewTcg,
@@ -10885,7 +10934,7 @@ const casino = initCasino({
   },
   navigate: (path) => {
     // A won sealed product waits in the Sealed collection.
-    if (path === "/bulk/sealed") return navigateTo(path);
+    if (path === "/bulk/sealed" || path === "/packs") return navigateTo(path);
     if (!/^\/casino(?:\/[a-z]+(?:\/[a-zA-Z0-9-]+)?)?$/.test(path) && !/^\/battles(?:\/[a-zA-Z0-9_-]+)?$/.test(path)) return;
     if (path.startsWith("/battles")) {
       battlePath = path;
@@ -11184,7 +11233,7 @@ function sharePull(card, { pulled = false } = {}) {
   shareSheet.open({
     id: card.id,
     image: `/${String(card.image || card.imageSmall || "").replace(/^\//, "")}`,
-    coin: "/assets/coins/pp-coin-v1.svg",
+    coin: "/assets/coins/pp-coin-v2.svg",
     mark: "/assets/mark-v3.png",
     name: card.name,
     line: [rarity, no === "Energy" ? "" : no].filter(Boolean).join(", "),
@@ -11425,6 +11474,7 @@ initSocial({
     if (view !== "social") return;
     if (document.activeElement?.closest("#dm-form, .dm-threads")) return;
     if (socialTab === "rankings" && Date.now() - rankingsDrawnAt < 60_000) return;
+    if (socialTab === "events" && Date.now() - eventsDrawnAt < 60_000) return;
     renderSocial();
   },
 });
@@ -11504,20 +11554,13 @@ async function checkForNewDeploy() {
   }
 }
 
-/* The first-run tour (js/tour.js): once, on Home, when nothing is open over it.
-   Settings and the welcome screen can start it again. */
+/* The tour (js/tour.js) never starts by itself: a new visitor sees the pack, not a card over it
+   (house style, 2026-11-28). Settings and the welcome screen can start it. */
 document.addEventListener("click", (e) => {
   if (!(e.target instanceof Element) || !e.target.closest("[data-tour-start]")) return;
   setView("home");
   setTimeout(startTour, 450);
 });
-maybeStartTour(
-  () =>
-    view === "home" &&
-    packPhase === "idle" &&
-    document.visibilityState === "visible" &&
-    !document.querySelector("dialog[open], .batch-open:not(.hidden), .tabbar .nav-more[open]")
-);
 
 document.addEventListener("click", (e) => {
   const btn = e.target instanceof Element && e.target.closest("[data-show-all-sealed]");

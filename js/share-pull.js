@@ -30,7 +30,7 @@ const TY = {
 };
 const XC = '"Kanit Title", "Kanit", "Arial Black", sans-serif';
 const SC = '"Kanit", "Arial Rounded MT Bold", sans-serif';
-const TEXT = '"M PLUS Rounded 1c", system-ui, sans-serif';
+const TEXT = '"M PLUS 1p", system-ui, sans-serif';
 const TAN = Math.tan((14 * Math.PI) / 180);
 
 const esc = (s) =>

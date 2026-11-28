@@ -7,7 +7,7 @@
 @keyframes tour-in { from { opacity: 0; } }
 .tour-ring {
   position: absolute; left: 0; top: 0;
-  border: 3px solid var(--yel); border-radius: 8px;
+  border: 3px solid var(--yel); border-radius: var(--r);
   outline: var(--line-w) solid var(--k); outline-offset: 0;
   box-shadow: 0 0 0 9999px rgb(20 23 27 / 0.58);
   transition: transform 0.3s var(--ease-out);
@@ -16,14 +16,14 @@
 .tour-card {
   position: absolute; left: 12px; top: 12px;
   width: min(380px, calc(100vw - 24px)); margin: 0; padding: 16px 18px 12px;
-  border: var(--line-w) solid var(--k); border-radius: 8px; background: var(--box); color: var(--k);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); color: var(--k);
   box-shadow: var(--drop); pointer-events: auto;
 }
 .tour-card.is-in { animation: tour-card 0.26s var(--ease-out); }
 .tour-card[data-side="above"].is-in { animation-name: tour-card-up; }
 @keyframes tour-card { from { opacity: 0; transform: translateY(-10px); } }
 @keyframes tour-card-up { from { opacity: 0; transform: translateY(10px); } }
-.tour-step { display: flex; align-items: center; gap: 10px; margin: 0; color: var(--k-2); font: italic 700 13px var(--font-h); }
+.tour-step { display: flex; align-items: center; gap: 10px; margin: 0; color: var(--k-2); font: 700 13px var(--font-h); }
 .tour-pips { display: inline-flex; gap: 5px; }
 .tour-pips .rt-ball { width: 15px; height: 15px; }
 .tour-pips .rt-ball.now { animation: tour-ball 0.34s var(--ease-pop); }

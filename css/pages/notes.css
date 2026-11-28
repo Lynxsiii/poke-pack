@@ -16,13 +16,13 @@
 }
 /* The week's big updates, above everything: rows that jump to their entry. */
 .nt-week { margin: 4px 0 22px; }
-.nt-week h3 { margin: 0 0 10px; color: var(--k); font: italic 800 25px/1 var(--font-xc); letter-spacing: -0.015em; }
-.nt-week-rows { display: grid; gap: 8px; }
-.nt-week-row { min-height: 52px; }
-.nt-week-row .rt-row-lab { min-width: 74px; font-variant-numeric: tabular-nums; }
-.nt-week-row .rt-row-name { padding: 8px 12px 8px 0; font-size: 15.5px; line-height: 1.15; text-wrap: balance; }
+.nt-week h3 { margin: 0 0 4px; color: var(--k); font: 700 22px/1.1 var(--font-h); letter-spacing: -0.01em; }
+.nt-week-rows { display: grid; }
+#view-notes .nt-week-row { min-height: 50px; overflow: visible; border: 0; border-bottom: 2px solid var(--rule); border-radius: 0; background: none; }
+.nt-week-row .rt-row-lab { align-self: center; min-width: 62px; padding: 0; background: none; color: var(--k-2); clip-path: none; font-variant-numeric: tabular-nums; }
+.nt-week-row .rt-row-name { margin-left: 0; padding: 10px 0; font-size: 15.5px; line-height: 1.2; text-wrap: balance; }
 .nt-week-row:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 2px; }
-@media (min-width: 720px) { .nt-week { max-width: 980px; } .nt-week-rows { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 720px) { .nt-week { max-width: 980px; } .nt-week-rows { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 28px; } }
 
 /* What kind of update: the words are the page's main filter. The month is a small picker beside Expand all. */
 .nt-kinds { display: flex; flex-wrap: wrap; gap: 2px 2px; margin-left: 2px; }
@@ -45,11 +45,11 @@
 .nt-day { padding: 24px 0 4px; border: 0; }
 .nt-date { display: flex; align-items: center; gap: 10px; margin: 0 0 10px; font: inherit; }
 .nt-date .rt-tag { font-size: 14px; font-variant-numeric: tabular-nums; }
-.nt-count { color: var(--k-2); font: italic 700 13px var(--font-h); }
+.nt-count { color: var(--k-2); font: 700 13px var(--font-h); }
 .nt-updates { display: grid; gap: 10px; }
 
 .nt-entry {
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box);
   transition: transform 0.14s var(--ease-out);
 }
 .nt-entry[open] { box-shadow: var(--drop-sm); }
@@ -63,13 +63,13 @@
 /* The kind of update, and the mark on one that arrived since the last visit. */
 .nt-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; margin: 0 0 7px; }
 .nt-kind {
-  display: inline-block; padding: 1px 9px 1px 8px; border: 2px solid var(--rule-2); border-radius: 3px;
-  color: var(--k-2); font: italic 700 12.5px/1.4 var(--font-h);
+  display: inline-block; padding: 1px 9px 1px 8px; border: 2px solid var(--rule-2); border-radius: var(--r-tag);
+  color: var(--k-2); font: 700 12.5px/1.4 var(--font-h);
 }
 .nt-kind[data-kind="new"] { border-color: var(--hp-low); background: var(--hp-low); color: var(--w0); }
 .nt-kind[data-kind="better"] { border-color: var(--k); color: var(--k); }
 .nt-fresh { display: inline-flex; align-items: center; gap: 6px; color: var(--k); font: 700 12px/1.4 var(--font); }
-.nt-fresh::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--yel-k); }
+.nt-fresh::before { content: ""; width: 9px; height: 9px; background: var(--yel-k); }
 /* A big update: a heavier title and the slab's colour down its left edge. */
 .nt-entry.is-big { border-left-width: 9px; border-left-color: var(--slab); }
 .nt-entry.is-big .nt-title { font-size: 24px; }

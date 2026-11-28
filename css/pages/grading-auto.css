@@ -7,10 +7,10 @@
 
 .gd-auto-stops { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
 .gd-auto-field { display: grid; gap: 5px; min-width: 0; }
-.gd-auto-field > span:first-child { color: var(--k-3); font: italic 700 13px var(--font-h); }
+.gd-auto-field > span:first-child { color: var(--k-3); font: 700 13px var(--font-h); }
 .gd-auto-input {
   display: flex; align-items: center; gap: 6px; min-width: 0; height: 46px; padding: 0 10px;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box);
 }
 .gd-auto-input:focus-within { box-shadow: 0 0 0 3px var(--yel); }
 .gd-auto-input .coin-i { flex: none; width: 18px; height: 18px; }
@@ -28,7 +28,7 @@
 .gd-auto-meters { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; margin: 16px 0 0; }
 .gd-auto-meter { display: grid; gap: 6px; min-width: 0; }
 .gd-auto-meter-top { display: flex; align-items: baseline; flex-wrap: wrap; gap: 3px 6px; }
-.gd-auto-meter-top > span { color: var(--k-3); font: italic 700 13px var(--font-h); width: 100%; }
+.gd-auto-meter-top > span { color: var(--k-3); font: 700 13px var(--font-h); width: 100%; }
 .gd-auto-meter-top b { display: inline-flex; align-items: center; gap: 4px; font: 700 26px/1 var(--font-h); font-variant-numeric: tabular-nums; }
 .gd-auto-meter-top b .coin-i { width: 20px; height: 20px; }
 .gd-auto-meter-top small { color: var(--k-2); font: 700 13px var(--font-h); font-variant-numeric: tabular-nums; }

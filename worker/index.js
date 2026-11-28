@@ -18,7 +18,7 @@ import {
   sellValue,
   DEFAULT_SET_ID,
 } from "../js/catalog.js";
-import { drawPromos, isHit, ripPack, tallyRarity } from "../js/engine.js";
+import { drawPromos, isHit, ripPack, tallyRarity, withRandom } from "../js/engine.js";
 import { homeSetId, PROMO_HOME_LIKE } from "../js/card-home.js";
 import { ensureTesterSchema, wantsTester } from "./testers.js";
 import { creditBlackLabels, handleShiny, shinyError } from "./shiny.js";
@@ -60,6 +60,7 @@ import { ensureGearSchema, gearSummary, prepareRewardGear, handleGear, loadGearC
 import { productGear, rollGear } from "../js/gear.js";
 import { handleCasino, maintainCoinflips } from "./casino.js";
 import { ensureBetaSchema } from "./beta.js";
+import { handleFair, takeRoll } from "./fair.js";
 import { ensureGradingSchema, gradedCounts, gradedSlabs, gradedTotal, handleCert, handleGrading, shownSlabs } from "./grading.js";
 import { handleBinderLook, lookColumns, resetEditionStmts, trainerLookFields } from "./binder-look.js";
 import { bestHistory, rollSealedProduct, tallyOpened } from "./sealed-roll.js";
@@ -80,6 +81,7 @@ import {
   readyToClaim,
 } from "../js/achievements.js";
 import { handleRankings, maintainRankings, ensureRankSchema, clearRankStmts, CLAIM_STAT } from "./rankings.js";
+import { handleEvents, maintainEvents, clearEventStmts } from "./events.js";
 import { makeRecoveryCode, recoverAccount, hasRecoveryCode } from "./recovery.js";
 import { handleSecurity, signinBlocked, signinFailed, signinSucceeded, makeSigninTicket, totpOn, logEvent, tagSession, touchSession, ensureSecuritySchema, discordReady, TOO_MANY } from "./security.js";
 
@@ -176,6 +178,8 @@ export default {
     ctx.waitUntil(flushFeed(env).catch(err => console.error('discord feed', err)));
     ctx.waitUntil(postNewPatchNotes(env).catch(err => console.error('discord patch notes', err)));
     ctx.waitUntil(maintainRankings(env, { findCatalogCard }).catch(err => console.error('rankings', err)));
+    // Weekly events (worker/events.js): returns at once while js/events-rules.js EVENTS_MODE is "off".
+    ctx.waitUntil(maintainEvents(env, { findCatalogCard }).catch(err => console.error('events', err)));
     ctx.waitUntil(
       recordDailyPrices(env).then(
         (result) => console.log("daily prices", JSON.stringify(result)),
@@ -202,6 +206,11 @@ export async function handleApi(request, env, url) {
     return handleBattles(path, method, request, env, {
       json, requireUser, readJson, loadSave, loadSetCards, loadSealed, loadProducts, packCost, ensureSocialSchema,
     });
+  }
+
+  // provably fair seeds (worker/fair.js): your seed pair, rotating it, and any game's own seed
+  if (path === '/api/fair' || path.startsWith('/api/fair/')) {
+    return handleFair(path, method, request, env, { json, requireUser, readJson });
   }
 
   if (path.startsWith('/api/casino')) {
@@ -365,6 +374,9 @@ export async function handleApi(request, env, url) {
   if (wish) return wish;
 
   await ensureSocialSchema(env);
+  if (path.startsWith("/api/events")) {
+    return handleEvents(path, method, request, env, { json, requireUser, publicUser, readJson, loadSave });
+  }
   if (path.startsWith("/api/rankings")) {
     return handleRankings(path, method, request, env, { json, requireUser, publicUser, findCatalogCard });
   }
@@ -535,6 +547,7 @@ async function wipeAccount(env, id) {
     env.DB.prepare("DELETE FROM history WHERE user_id = ?").bind(id),
     env.DB.prepare("DELETE FROM pack_log WHERE user_id = ?").bind(id),
     ...clearRankStmts(env, id),
+    ...(await clearEventStmts(env, id)),
     env.DB.prepare("DELETE FROM cards WHERE user_id = ?").bind(id),
     env.DB.prepare("DELETE FROM profiles WHERE user_id = ?").bind(id),
     env.DB.prepare("DELETE FROM users WHERE id = ?").bind(id),
@@ -769,6 +782,7 @@ async function resetMe(request, env) {
     env.DB.prepare("DELETE FROM history WHERE user_id = ?").bind(auth.user.id),
     env.DB.prepare("DELETE FROM pack_log WHERE user_id = ?").bind(auth.user.id),
     ...clearRankStmts(env, auth.user.id),
+    ...(await clearEventStmts(env, auth.user.id)),
     env.DB.prepare("DELETE FROM user_gear WHERE user_id = ?").bind(auth.user.id),
     env.DB.prepare("DELETE FROM gear_equipped WHERE user_id = ?").bind(auth.user.id),
     env.DB.prepare("DELETE FROM graded_cards WHERE user_id = ?").bind(auth.user.id),
@@ -820,7 +834,11 @@ async function rip(request, env) {
 
   const catalog = await loadSetCards(env, request, live);
   const cost = await packCost(env, request, live);
-  const opened = await openPacks(env, auth.user.id, live, [{ wrapper, pulls: ripPack(live, catalog) }], cost);
+  // One nonce of the player's seed pair decides the pack (worker/fair.js).
+  const fair = await takeRoll(env, auth.user.id);
+  const pulls = withRandom(fair.stream.unit, () => ripPack(live, catalog));
+  const fairLog = fair.log("packs", null, { setId: live.id, product: "pack" }, { draws: fair.stream.used(), cards: pulls.map((card) => card.id) });
+  const opened = await openPacks(env, auth.user.id, live, [{ wrapper, pulls }], cost, [], [], { extraStmts: [fairLog] });
   if (opened.response) return opened.response;
   return json({ save: opened.save, cards: opened.packs[0].cards, cost });
 }
@@ -842,17 +860,20 @@ async function openSealed(request, env) {
   const body = await readJson(request);
   if (!body) return json({ error: "Expected JSON." }, 400);
 
-  // The same roll a checkout and the sealed collection use (worker/sealed-roll.js).
+  // The same roll a checkout and the sealed collection use (worker/sealed-roll.js), from one nonce of the player's seeds.
   let rolled;
+  let fair;
   try {
-    rolled = await rollSealedProduct(env, request, body.setId, body.product, SEALED_DEPS);
+    fair = await takeRoll(env, auth.user.id);
+    rolled = await rollSealedProduct(env, request, body.setId, body.product, SEALED_DEPS, null, fair.stream.unit);
   } catch (err) {
     if (err?.status === 400) return json({ error: err.message }, 400);
     throw err;
   }
   const { live, offer, packs, promos, boxCards, gearItems } = rolled;
   const grant = await prepareGrant(env, auth.user.id, gearItems);
-  const opened = await openPacks(env, auth.user.id, live, packs, offer.price, promos, boxCards, { sealed: true, extraStmts: grant.stmts });
+  const opened = await openPacks(env, auth.user.id, live, packs, offer.price, promos, boxCards, { sealed: true, extraStmts: [...grant.stmts,
+    fair.log("packs", null, { setId: live.id, product: offer.id }, { draws: fair.stream.used(), packs: packs.length })] });
   if (opened.response) return opened.response;
   return json({
     save: opened.save,
