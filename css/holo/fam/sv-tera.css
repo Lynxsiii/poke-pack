@@ -39,7 +39,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-tera.fam-sv-tera.fam-sv-tera.fam-sv-ter
     #000 0%, #000 18%, rgba(0, 0, 0, 0.55) 45%, rgba(0, 0, 0, 0.18) 80%, rgba(0, 0, 0, 0.1) 100%);
   /* the silver: what the dodge adds round the light (metal and pale inks brighten, ink stays) */
   --svt-silver: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    rgb(22, 22, 25) 0%, rgb(16, 16, 18) 22%, rgb(8, 8, 9) 50%, rgb(4, 4, 5) 100%);
+    rgb(22, 22, 25) 0%, rgb(14, 14, 16) 20%, rgb(5, 5, 6) 46%, rgb(1, 1, 1) 100%);
   /* the etch lines' lamp (multiplied onto the veiled etch) */
   --svt-lamp: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     rgb(96, 96, 96) 0%, rgb(66, 66, 66) 12%, rgb(30, 30, 30) 30%, rgb(16, 16, 16) 60%, rgb(12, 12, 12) 100%);
@@ -49,7 +49,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-tera.fam-sv-tera.fam-sv-tera.fam-sv-ter
   --svt-fine: url("/assets/foil/glitter-fine.webp");
   /* the band, as dodge light: a soft spectrum a third of the card wide (tile 250%: 1% of the line ~3.2% of the card) */
   --svt-broad: linear-gradient(116deg,
-    transparent 36%, rgb(110, 30, 60) 39%, rgb(128, 70, 20) 42%, rgb(124, 118, 18) 45%, rgb(58, 128, 40) 48%,
+    transparent 36%, rgb(110, 30, 60) 39%, rgb(128, 70, 20) 42%, rgb(124, 112, 24) 45%, rgb(70, 104, 52) 48%,
     rgb(16, 96, 106) 51%, rgb(22, 40, 92) 54%, rgb(60, 22, 84) 57%, rgb(52, 14, 46) 59.5%, transparent 63%);
   /* two narrower streaks of uneven width and strength, a different angle and speed (tile 320%) */
   --svt-streaks: linear-gradient(108deg,
@@ -58,8 +58,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-tera.fam-sv-tera.fam-sv-tera.fam-sv-ter
     transparent 49.8%);
   /* the same band as pastel multiply tints for the pale inks (.glare): white is neutral */
   --svt-tint: linear-gradient(116deg,
-    #fff 36%, rgb(255, 196, 214) 39%, rgb(255, 214, 178) 42%, rgb(250, 244, 176) 45%, rgb(196, 250, 190) 48%,
-    rgb(150, 226, 255) 51%, rgb(160, 176, 255) 54%, rgb(210, 166, 255) 57%, rgb(240, 196, 230) 59.5%, #fff 63%);
+    #fff 36%, rgb(255, 196, 214) 39%, rgb(255, 214, 178) 42%, rgb(250, 244, 190) 45%, rgb(226, 248, 214) 48%,
+    rgb(170, 230, 255) 51%, rgb(160, 176, 255) 54%, rgb(210, 166, 255) 57%, rgb(240, 196, 230) 59.5%, #fff 63%);
   --svt-shift-x: calc(100% - var(--background-x));
   --svt-shift-y: calc((var(--background-y) - 50%) * 0.6 + 50%);
   --svt-shift-x2: calc((var(--background-x) - 50%) * 1.5 + 50%);
@@ -186,9 +186,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-tera.fam-sv-tera.fam-sv-tera.fam-sv-ter
   background-repeat: no-repeat, no-repeat;
   background-blend-mode: normal, normal;
   mix-blend-mode: multiply;
-  filter: none;
+  filter: saturate(0.6);
   clip-path: none;
-  opacity: calc(var(--card-opacity) * 0.38 * var(--foil-strength, 1));
+  /* 0.28, was 0.38, and the band's green taken down in both copies (2026-11-28: "green tint over the Pokémon") */
+  opacity: calc(var(--card-opacity) * 0.28 * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-tera.fam-sv-tera.fam-sv-tera.fam-sv-tera.foil-tera.has-foil-map.has-etch-map .glare::after,
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-tera.fam-sv-tera.fam-sv-tera.fam-sv-tera.foil-tera.has-foil-map .glare::before {

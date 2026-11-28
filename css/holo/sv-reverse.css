@@ -127,40 +127,45 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-prism.foil-prism.foil-prism.foil-prism[da
   -webkit-mask-repeat: no-repeat, no-repeat;
   mask-repeat: no-repeat, no-repeat;
 }
+/* 2026-11-28, the card-by-card review (all 178 bad: "ball rings drawn over text, letters cut; text pales when lit").
+   The tile was painted as it is, dark and light outlines in normal blend, so the rings ran over the attack text like
+   ink. On the real card the balls are stamped in the foil UNDER the ink: now the tile is only a mask (it, cut to the
+   card less the art window) over white, overlaid: the rings are a lighter tone of whatever they cross, and black
+   text, which an overlay cannot move, stays whole on top of them. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-prism.foil-prism.foil-prism.foil-prism[data-ball-layout="repeat"] .foil {
   --foil-tex: none;
   background-color: transparent;
-  background-image: var(--ball-etch);
-  background-size: var(--ballrev-size);
-  background-position: 50% 0;
-  background-repeat: repeat;
-  background-blend-mode: normal;
-  filter: none;
-  mix-blend-mode: normal;
-  opacity: calc(0.62 * min(1, var(--foil-strength, 1)));
-}
-body.fx-holo.fx-holo.fx-holo .tcg.foil-prism.foil-prism.foil-prism.foil-prism[data-ball-layout="repeat"]:not(.lit):not(.settling) .foil {
-  opacity: calc(0.5 * min(1, var(--foil-strength, 1)));
-}
-body.fx-holo.fx-holo.fx-holo .tcg.foil-prism.foil-prism.foil-prism.foil-prism[data-ball-layout="repeat"] .foil::before {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    #fff 0%, rgba(255, 255, 255, 0.85) 22%, rgba(255, 255, 255, 0.3) 48%, rgba(255, 255, 255, 0) 75%);
+    #fff 0%, rgb(236, 236, 236) 24%, rgb(190, 190, 190) 52%, rgb(160, 160, 160) 100%);
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
   background-blend-mode: normal;
   filter: none;
-  mix-blend-mode: normal;
-  -webkit-mask-image: var(--ball-etch);
-  mask-image: var(--ball-etch);
-  -webkit-mask-size: var(--ballrev-size);
-  mask-size: var(--ballrev-size);
-  -webkit-mask-position: 50% 0;
-  mask-position: 50% 0;
-  -webkit-mask-repeat: repeat;
-  mask-repeat: repeat;
-  clip-path: none;
-  opacity: 1;
+  mix-blend-mode: overlay;
+  -webkit-mask-image: var(--ball-etch), var(--art), var(--ballrev-window);
+  -webkit-mask-composite: source-in, source-out, source-over;
+  mask-image: var(--ball-etch), var(--art), var(--ballrev-window);
+  mask-composite: intersect, subtract, add;
+  mask-mode: alpha, alpha, alpha;
+  -webkit-mask-size: var(--ballrev-size), contain, contain;
+  mask-size: var(--ballrev-size), contain, contain;
+  -webkit-mask-position: 50% 0, center, center;
+  mask-position: 50% 0, center, center;
+  -webkit-mask-repeat: repeat, no-repeat, no-repeat;
+  mask-repeat: repeat, no-repeat, no-repeat;
+  opacity: calc(0.75 * min(1, var(--foil-strength, 1)));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-prism.foil-prism.foil-prism.foil-prism[data-ball-layout="repeat"]:not(.lit):not(.settling) .foil {
+  background-image: linear-gradient(rgb(176, 176, 176), rgb(176, 176, 176));
+  opacity: calc(0.6 * min(1, var(--foil-strength, 1)));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-prism.foil-prism.foil-prism.foil-prism[data-ball-layout="repeat"] .foil::before {
+  background-image: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  filter: none;
+  opacity: 0;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.foil-prism.foil-prism.foil-prism.foil-prism[data-ball-layout="repeat"] .foil::after {
   background-image: none;
@@ -171,9 +176,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-prism.foil-prism.foil-prism.foil-prism[da
 }
 body.fx-holo.fx-holo.fx-holo .tcg.foil-prism.foil-prism.foil-prism.foil-prism[data-ball-layout="repeat"] .glare {
   background-image:
-    linear-gradient(-45deg, rgba(255, 255, 255, 0) 36%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0) 64%),
+    linear-gradient(-45deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.16) 50%, rgba(255, 255, 255, 0) 60%),
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0.34) 28%, rgba(255, 255, 255, 0.1) 60%, rgba(128, 128, 128, 0) 100%);
+      rgba(255, 255, 255, 0.42) 0%, rgba(255, 255, 255, 0.18) 24%, rgba(255, 255, 255, 0.04) 50%, rgba(128, 128, 128, 0) 75%);
   background-size: 250% 250%, 100% 100%;
   background-position: calc(100% * var(--pointer-from-left)) calc(100% * var(--pointer-from-top)), center;
   background-repeat: no-repeat;

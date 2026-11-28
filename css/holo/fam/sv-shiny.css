@@ -54,7 +54,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-shiny.fam-sv-shiny.fam-sv-shiny.fam-sv-
 }
 /* Shiny Ultra Rare: broader, stronger bands, two to three, over a darker ground */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-shiny.fam-sv-shiny.fam-sv-shiny.fam-sv-shiny.foil-shiny.has-foil-map.ssh-sur {
-  --ssh-gap: rgb(186, 188, 193);
+  /* lighter than it was (186): the pale Tera crystal bodies (Espathra ex 214, Forretress ex 212) are bare foil in
+     Live's map and the darker grey muddied them olive */
+  --ssh-gap: rgb(206, 208, 212);
   --ssh-light: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     rgb(246, 246, 248) 0%, rgb(220, 221, 224) 14%, rgb(190, 192, 196) 42%, rgb(176, 178, 183) 100%);
   --ssh-tint: linear-gradient(122deg,
