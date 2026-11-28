@@ -1,0 +1,37 @@
+{
+  "id": "jsv5k",
+  "name": "Wild Force",
+  "lang": "ja",
+  "code": "SV5K",
+  "series": "scarlet-violet",
+  "slug": "wild-force",
+  "scrydexId": "sv5k_ja",
+  "era": "sv",
+  "tcgplayerCategory": 85,
+  "tcgplayerGroup": 23612,
+  "englishTwin": "sv5",
+  "rarityMap": {
+    "C": "Common",
+    "U": "Uncommon",
+    "R": "Rare",
+    "RR": "Double Rare",
+    "ACE": "ACE SPEC Rare",
+    "AR": "Illustration Rare",
+    "SR": "Ultra Rare",
+    "SAR": "Special Illustration Rare",
+    "UR": "Hyper Rare"
+  },
+  "printedTotal": 71,
+  "products": [
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 565225,
+      "packs": 30,
+      "promos": [],
+      "hull": "ortho",
+      "imageVersion": 3
+    }
+  ]
+}
