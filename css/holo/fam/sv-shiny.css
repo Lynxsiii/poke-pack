@@ -43,12 +43,20 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-shiny.fam-sv-shiny.fam-sv-shiny.fam-sv-
   --ssh-size: 210% 210%;
   --ssh-pos: calc((var(--background-x) - 50%) * 3.2 + 50%) calc((var(--background-y) - 50%) * 1.4 + 50%);
   --ssh-dodge: 0.85;
+  /* 2026-11-28, the card-by-card review: the face's --foil-map is Live's with the Pokémon cut out
+     (make_shiny_masks.py), so the silver, the band, the shared spectrum and glitter all stop at its outline. The
+     relief (the engraving over ink, where the foil map is shut) would then land on the Pokémon alone and grain its
+     dark fur: off. The shared glitter and spectrum stay quiet so the whorls lead ("the sparkles or dots on the holo
+     take away from the texture"). */
+  --relief: 0;
+  --shine-glit: 0.25;
+  --shine-line: 0.3;
 }
 /* Shiny Ultra Rare: broader, stronger bands, two to three, over a darker ground */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-shiny.fam-sv-shiny.fam-sv-shiny.fam-sv-shiny.foil-shiny.has-foil-map.ssh-sur {
   --ssh-gap: rgb(186, 188, 193);
   --ssh-light: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    rgb(246, 246, 248) 0%, rgb(214, 215, 219) 14%, rgb(170, 172, 177) 42%, rgb(146, 148, 154) 100%);
+    rgb(246, 246, 248) 0%, rgb(220, 221, 224) 14%, rgb(190, 192, 196) 42%, rgb(176, 178, 183) 100%);
   --ssh-tint: linear-gradient(122deg,
     #fff 37%, rgb(255, 150, 180) 39%, rgb(255, 180, 100) 40.8%, rgb(236, 236, 100) 42.4%, rgb(130, 230, 120) 44%,
     rgb(100, 196, 255) 45.6%, rgb(150, 124, 255) 47.2%, #fff 49%,
@@ -64,6 +72,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-shiny.fam-sv-shiny.fam-sv-shiny.fam-sv-
   /* 2026-11-28 per-card review (Charizard ex svp074: "green-gold tint over the figure"): the dodge at 0.55 and the
      multiply tint at half saturation (rule after .foil::before below) */
   --ssh-dodge: 0.55;
+  --shine-line: 0.2;
 }
 
 /* ---- .foil: grey silver + etch lines (+ light pool and band tint when held), multiplied ---------------------------- */
