@@ -205,19 +205,25 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-hol
   mask-position: center;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-  background-color: rgb(84, 84, 88);
+  /* 2026-11-28: the gain was x1.5 everywhere (grey 84) and x2 in the hot spot, with the sparkle and streak tiles in
+     full: a pale window blew out to white (Shaymin sm11 26, Alolan Ninetales sm8 150), others went milky, and the
+     sparkle dots sat on top of the art (Noah: "the sparkles or dots on the holo take away from the texture"). Now
+     about x1.33 (grey 64), x1.6 in the hot spot, and a veil of the base grey over the tiles halves the sparkle. */
+  background-color: rgb(64, 64, 68);
   background-image:
+    linear-gradient(rgba(64, 64, 68, 0.5), rgba(64, 64, 68, 0.5)),
     var(--smh-sparkle),
     var(--smh-streaks),
     radial-gradient(ellipse 34% 25% at var(--pointer-x) var(--pointer-y),
-      rgb(128, 120, 100) 0%, rgba(104, 100, 92, 0.7) 45%, rgba(84, 84, 88, 0) 100%);
-  background-size: 100% auto, 100% auto, 100% 100%;
+      rgb(128, 120, 100) 0%, rgba(104, 100, 92, 0.7) 45%, rgba(64, 64, 68, 0) 100%);
+  background-size: 100% 100%, 100% auto, 100% auto, 100% 100%;
   background-position:
+    center,
     calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%),
     calc(100% - var(--background-x, 50%)) calc(100% - var(--background-y, 50%)),
     center;
-  background-repeat: repeat, repeat, no-repeat;
-  background-blend-mode: screen, screen, normal;
+  background-repeat: no-repeat, repeat, repeat, no-repeat;
+  background-blend-mode: normal, screen, screen, normal;
   mix-blend-mode: color-dodge;
   filter: contrast(0.9);
   opacity: var(--smh-hold);
