@@ -239,40 +239,91 @@ body.no-motion .tg-fan img, body.no-motion .tg-dk, body.no-motion .tg-block > .t
 body.no-motion .tg-meter-track i, body.no-motion .tg-meter-cut, body.no-motion .tg-meter-n, body.no-motion .tg-ct b, body.no-motion .tg-step b { animation: none; }
 @media (prefers-reduced-motion: reduce) { .tg-meter-track i, .tg-meter-cut, .tg-meter-n, .tg-ct b, .tg-step b { animation: none; } }
 
-/* ---- The close look at one card ------------------------------------------------------------------------ */
-.tg-sheet-bg { position: fixed; inset: 0; z-index: 60; background: rgb(20 23 27 / 0.62); animation: tg-fade 0.16s ease-out; }
+/* ---- Sheets: the close look at one card, and everything that opens over the table -------------------------- */
+/* A sheet rises from the bottom edge over the dimmed screen: a straight box with the ink line, its name large at
+   the top, a short fact at the right. Too tall for the screen, it scrolls inside itself so its keys never fall off. */
+.tg-sheet-bg { position: fixed; inset: 0; z-index: 60; background: rgb(13 15 18 / 0.66); animation: tg-fade 0.2s ease-out; }
 .tg-sheet {
-  position: fixed; z-index: 61; left: 50%; bottom: max(12px, env(safe-area-inset-bottom)); width: min(440px, calc(100vw - 20px));
-  max-height: calc(100dvh - 24px); overflow: auto; padding: 14px; border: var(--line-w) solid var(--k); border-radius: 8px;
-  background: var(--box); color: var(--k); box-shadow: var(--drop);
-  transform: translateX(-50%); animation: tg-rise 0.24s var(--ease-out);
+  position: fixed; z-index: 61; left: 0; right: 0; bottom: 0; width: min(480px, 100%); margin: 0 auto;
+  max-height: calc(100dvh - max(14px, env(safe-area-inset-top))); overflow: auto; overscroll-behavior: contain;
+  padding: 18px 18px max(20px, calc(env(safe-area-inset-bottom) + 12px));
+  border: var(--line-w) solid var(--k); border-bottom-width: 0; border-radius: 14px 14px 0 0;
+  background: var(--box); color: var(--k);
+  animation: tg-sheet-up 0.34s var(--ease-out);
 }
 .rt-dark .tg-sheet { border-color: var(--on-k); color: var(--on-k); }
 .tg-sheet h2 { margin: 0; font: italic 800 34px/1.05 var(--font-xc); letter-spacing: -0.025em; }
-.tg-sheet h3 { margin: 0; font: italic 800 21px/1.1 var(--font-xc); letter-spacing: -0.02em; }
-.tg-sheet-keys { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-top: 12px; padding: 0 6px 4px; }
-/* Choosing cards: a deck search, the discard pile, or a price paid from the hand. */
-.tg-choose { display: grid; gap: 10px; }
-.tg-choose header p, .tg-choose-none { margin: 2px 0 0; color: var(--k-2); font-size: 13.5px; font-weight: 500; }
-.tg-choose-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; max-height: min(52dvh, 430px); overflow: auto; padding: 4px; overscroll-behavior: contain; }
-.tg-choose-card { position: relative; padding: 0; border: 0; border-radius: 4.5%/3.2%; background: none; cursor: pointer; transition: transform 0.14s var(--ease-out), opacity 0.14s; }
+.tg-sheet h3 { margin: 0; font: italic 800 27px/1.05 var(--font-xc); letter-spacing: -0.02em; }
+.tg-sheet-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 14px; }
+.tg-sheet-head h3 { min-width: 0; overflow-wrap: anywhere; }
+.tg-sheet-meta {
+  display: inline-flex; align-items: center; gap: 8px; margin-left: auto; color: var(--k-2);
+  font: 600 13.5px/1.2 var(--font-n); font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.tg-sheet-meta .tg-pips { font-size: 15px; }
+.tg-sheet-keys { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: 16px; padding: 0 6px 4px; }
+/* The quieter things a sheet can do are underlined words, not keys. */
+.tg-links { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 26px; padding: 0 4px; }
+.tg-link, .tg-sheet .tlink {
+  display: inline-flex; align-items: center; gap: 7px; min-height: 40px; padding: 0; border: 0; background: none; color: inherit;
+  font: 700 15px var(--font-h); text-decoration: underline; text-decoration-color: currentColor; text-decoration-thickness: 2px; text-underline-offset: 4px; cursor: pointer;
+}
+.tg-link .tg-pips { font-size: 15px; }
+.tg-link:disabled { color: var(--k-3); text-decoration: none; cursor: default; }
+.tg-link:disabled .tg-en { opacity: 0.5; }
+@media (hover: hover) { .tg-link:hover:not(:disabled), .tg-sheet .tlink:hover { color: inherit; text-decoration-color: var(--yel); } }
+/* On the dark stage every key but the one yellow is a white key. */
+.rt-dark .tg-sheet .ghost { color: var(--k0); }
+.rt-dark .tg-sheet .ghost::before { background: var(--w0); border-color: var(--k0); }
+.rt-dark .tg-sheet .ghost:disabled { color: var(--k-3); }
+.rt-dark .tg-sheet .ghost:disabled::before { background: var(--box-2); border-color: var(--rule-2); }
+/* Rows in a sheet arrive in turn as it opens. */
+.tg-rows { display: grid; gap: 14px; }
+.tg-rows > * { animation: tg-row-in 0.32s var(--ease-out) 0.12s backwards; }
+.tg-rows > :nth-child(2) { animation-delay: 0.18s; }
+.tg-rows > :nth-child(3) { animation-delay: 0.24s; }
+.tg-rows > :nth-child(4) { animation-delay: 0.3s; }
+.tg-rows > :nth-child(5) { animation-delay: 0.36s; }
+.tg-rows > :nth-child(n + 6) { animation-delay: 0.42s; }
+@keyframes tg-sheet-up { from { transform: translateY(100%); } }
+@keyframes tg-row-in { from { opacity: 0; transform: translateY(14px); } }
+
+/* Choosing cards: a deck search, the discard pile, or a price paid from the hand. Four across; the grid scrolls,
+   the key stays. What you chose rises with the yellow edge and the rest go quiet. */
+.tg-choose { display: flex; flex-direction: column; gap: 12px; }
+.tg-choose-sub { display: flex; align-items: baseline; gap: 12px; margin-top: -4px; }
+.tg-choose-note, .tg-choose-none { margin: 0; color: var(--k-2); font: 500 13.5px/1.4 var(--font); }
+.tg-choose-none { margin: 4px 0; }
+.tg-choose-grid {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px 8px; flex: 0 1 auto; min-height: 150px; overflow: auto;
+  margin: -4px -6px 0; padding: 14px 6px 6px; overscroll-behavior: contain;
+}
+.tg-choose-card { position: relative; padding: 0; border: 0; border-radius: 4.5%/3.2%; background: none; cursor: pointer; transition: transform 0.18s var(--ease-out), opacity 0.18s ease; }
 .tg-choose-card img { display: block; width: 100%; aspect-ratio: 5 / 7; border-radius: 4.5%/3.2%; object-fit: cover; pointer-events: none; }
-.tg-choose-card.is-chosen { transform: translateY(-3px); }
-.tg-choose-card.is-chosen::after { content: ""; position: absolute; inset: -3px; border: 3px solid var(--yel); border-radius: 6px; pointer-events: none; }
-.tg-choose-grid:has(.is-chosen) .tg-choose-card:not(.is-chosen) { opacity: 0.55; }
-.tg-look { display: grid; grid-template-columns: minmax(0, 46%) minmax(0, 1fr); gap: 14px; align-items: start; }
+.tg-choose-card.is-chosen { transform: translateY(-8px); }
+.tg-choose-card.is-chosen::after { content: ""; position: absolute; inset: -4px; border: 3px solid var(--yel); border-radius: 7px; pointer-events: none; }
+.tg-choose-grid:has(.is-chosen) .tg-choose-card:not(.is-chosen) { opacity: 0.42; }
+.tg-choose > .tg-sheet-keys { margin-top: 2px; }
+
+/* The close look: the card large at the left, what it does at the right. */
+.tg-look { display: grid; grid-template-columns: minmax(0, 44%) minmax(0, 1fr); gap: 16px; align-items: start; }
 .tg-look-face .tcg { width: 100%; }
-.tg-look-side { display: grid; gap: 8px; justify-items: start; min-width: 0; }
+.tg-look-side { display: grid; gap: 9px; justify-items: start; min-width: 0; }
+.tg-look-side h3 { font-size: 25px; }
 .tg-look-meta, .tg-look-note { margin: 0; color: var(--k-2); font-size: 13.5px; font-weight: 500; line-height: 1.4; }
-.tg-look-note { padding-left: 9px; border-left: 3px solid var(--yel); }
-.tg-look-facts { display: grid; gap: 4px; margin: 2px 0; width: 100%; }
-.tg-look-facts div { display: flex; justify-content: space-between; gap: 10px; padding: 4px 0; border-bottom: 1.5px solid var(--rule); }
-.tg-look-facts dt { color: var(--k-2); font: 600 13.5px var(--font-h); }
-.tg-look-attacks { display: grid; gap: 6px; width: 100%; margin: 4px 0 0; padding: 0; list-style: none; }
-.tg-look-attacks li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 2px 8px; padding: 5px 0; border-bottom: 1.5px solid var(--rule); font: 700 14px var(--font-h); }
-.tg-look-attacks em { font-style: normal; font-weight: 800; }
-.tg-look-attacks p { grid-column: 1 / -1; margin: 0; color: var(--k-2); font: 500 12.5px/1.35 var(--font); }
-.tg-look-attacks p.off b { font: inherit; font-weight: 700; color: var(--k); }
+.tg-look-meta .tg-pips, .tg-look-meta .tg-en { font-size: 14px; }
+.tg-look-note { padding-left: 9px; border-left: 3px solid var(--k-3); }
+.tg-look-facts { display: grid; margin: 2px 0; padding: 0 10px; width: 100%; border: 1.5px solid var(--rule-2); border-radius: 6px; }
+.tg-look-facts div { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--rule); }
+.tg-look-facts div:last-child { border-bottom: 0; }
+.tg-look-facts dt { color: var(--k-2); font: 600 13px var(--font-h); }
+.tg-look-attacks { display: grid; gap: 2px; width: 100%; margin: 2px 0 0; padding: 0; list-style: none; }
+.tg-look-attacks li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 3px 8px; padding: 7px 0; border-bottom: 1px solid var(--rule); font: 700 15px/1.2 var(--font-h); }
+.tg-look-attacks li:last-child { border-bottom: 0; }
+.tg-look-attacks em { font: 700 17px/1 var(--font-n); font-style: normal; font-variant-numeric: tabular-nums; }
+.tg-look-attacks p { grid-column: 1 / -1; margin: 0; color: var(--k-2); font: 500 12.5px/1.4 var(--font); }
+.tg-look-attacks p.off b { font: inherit; font-weight: 700; color: inherit; }
+.tg-look .tg-links { margin-top: 2px; }
 .tg-look-facts dd { margin: 0; font: 700 14px var(--font-h); }
 
 /* ---- The table ------------------------------------------------------------------------------------------- */
@@ -458,52 +509,124 @@ body.tg-playing { overflow: hidden; }
 .tg-table .ghost:disabled::before { background: var(--box); border-color: var(--rule-2); }
 .tg-table .solid:disabled::before { background: var(--box-2); border-color: var(--rule-2); }
 
-/* Attacks: one row each. A row is a thing you press, so it leans. */
-.tg-attacks { display: grid; gap: 10px; }
-.tg-attacks header { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+/* Attacks: one row each. A row is a thing you press, so it leans: a yellow plate when it can be used, a dashed
+   outline that says why when it can't. Abilities and the Trainer you can discard from play take the same row. */
+.tg-attacks { display: grid; gap: 16px; }
 .tg-atk {
-  position: relative; isolation: isolate; display: grid; gap: 4px; padding: 10px 16px 13px; border: 0; background: none;
-  color: var(--k0); text-align: left; cursor: pointer; transition: transform 0.1s var(--ease-out);
+  position: relative; isolation: isolate; display: grid; gap: 5px; width: calc(100% - 14px); justify-self: center; padding: 12px 20px 15px;
+  border: 0; background: none; color: var(--k0); text-align: left; cursor: pointer; transition: transform 0.1s var(--ease-out);
 }
 .tg-atk::before {
   content: ""; position: absolute; inset: 0; z-index: -1; border: var(--line-w) solid var(--k0); border-bottom-width: 6px; border-radius: 6px;
-  background: var(--yel); transform: skewX(-6deg);
+  background: var(--yel); transform: skewX(-7deg);
 }
 .tg-atk:active:not(:disabled) { transform: translateY(3px); }
+.tg-atk:active:not(:disabled)::before { bottom: 3px; border-bottom-width: 3px; }
+@media (hover: hover) { .tg-atk:hover:not(:disabled)::before { background: var(--yel-2); } }
 .tg-atk:disabled { color: var(--k-2); cursor: default; }
-.tg-atk:disabled::before { background: var(--box-2); border-color: var(--rule-2); }
-.tg-atk-top { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 9px; }
-.tg-atk-top b { font: italic 800 19px/1.1 var(--font-xc); letter-spacing: -0.015em; }
-.tg-atk-top em { font: 700 24px/1 var(--font-n); font-style: normal; }
-.tg-atk-text { font-size: 12.5px; font-weight: 500; line-height: 1.35; }
+.tg-atk:disabled::before { background: transparent; border: 2px dashed var(--k-3); }
+.tg-atk-top { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 10px; }
+.tg-atk-top .tg-pips { gap: 3px; font-size: 19px; }
+.tg-atk-top .tg-pips small { color: inherit; font-size: 13px; }
+.tg-atk-top b { min-width: 0; font: italic 800 21px/1.1 var(--font-xc); letter-spacing: -0.015em; }
+.tg-atk-top em { font: 700 26px/1 var(--font-n); font-style: normal; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tg-atk-top em s { margin-right: 6px; font-size: 16px; font-weight: 600; opacity: 0.55; }
+.tg-atk-top em .up, .tg-atk-top em .down { color: inherit; }
+.tg-atk-note { font: 700 13.5px/1.3 var(--font-h); }
+.tg-atk-text { font: 500 13px/1.4 var(--font); }
 .tg-atk-text.off { opacity: 0.75; }
-.tg-opening-note { margin: 0; color: var(--k-2); font-size: 13.5px; font-weight: 500; }
-.tg-atk-top em s { margin-right: 6px; font-size: 15px; font-weight: 600; opacity: 0.6; }
-.tg-atk-top em .up { color: var(--bad); }
-.tg-atk-top em .down { opacity: 0.7; }
-.tg-atk-note { font: italic 700 13px/1.3 var(--font-h); }
-.tg-atk-note.up, .tg-atk-note.ko { color: var(--bad); }
-.tg-atk:disabled .tg-atk-note, .tg-atk:disabled .tg-atk-top em .up { color: inherit; }
-.tg-atk-why { font: 700 12.5px var(--font-h); color: var(--bad); }
+.tg-atk-why { font: 700 13.5px/1.3 var(--font-h); }
+.tg-atk:disabled .tg-atk-top b, .tg-atk:disabled .tg-atk-why { color: var(--on-k); }
+.tg-opening-note { margin: 0; color: var(--k-2); font: 500 13.5px/1.4 var(--font); }
 
-.tg-over, .tg-opening, .tg-flip { display: grid; justify-items: center; gap: 8px; text-align: center; bottom: auto; top: 50%; transform: translate(-50%, -50%); animation-name: tg-pop; }
-.tg-over p, .tg-opening p { margin: 0; color: var(--k-2); font-weight: 500; }
-.tg-opening-lab { font: 700 14px var(--font-h); }
-.tg-coin { display: grid; place-items: center; min-height: 150px; padding: 8px 0 2px; }
-.tg-flip { width: auto; min-width: 190px; z-index: 62; }
-.tg-flip .tg-coin { min-height: 120px; }
+/* After the match: the whole screen turns to the stage. The result large on the slab, the Pokémon that finished
+   in your Active Spot, a box of what the game counted, then the keys at the foot. */
+.tg-over {
+  top: 0; width: 100%; max-height: none; display: flex; flex-direction: column; gap: 18px; isolation: isolate;
+  padding: max(26px, calc(env(safe-area-inset-top) + 16px)) max(20px, calc(50% - 220px)) max(20px, calc(env(safe-area-inset-bottom) + 14px));
+  border: 0; border-radius: 0; background: var(--bg) var(--dots) 0 0 / 22px 22px; text-align: left;
+  animation: tg-fade 0.28s ease-out;
+}
+.tg-over::before {
+  content: ""; position: absolute; z-index: -1; top: 0; right: max(-64px, calc(50% - 300px)); width: min(56%, 300px); height: 116px;
+  background: var(--slab); transform: skewX(var(--skew)); transform-origin: 0 0; animation: tg-slab-in 0.5s var(--ease-out) backwards;
+}
+.tg-over-head { display: grid; gap: 12px; margin-top: 20px; }
+.tg-over h2 { font: italic 800 56px/0.92 var(--font-xc); letter-spacing: -0.04em; animation: tg-title-in 0.46s var(--ease-out) 0.08s backwards; }
+.tg-over-why { margin: 0; max-width: 34ch; color: var(--k-2); font: 500 15px/1.45 var(--font); animation: tg-row-in 0.32s var(--ease-out) 0.18s backwards; }
+.tg-over-card { display: grid; grid-template-columns: 112px minmax(0, 1fr); align-items: center; gap: 18px; }
+.tg-over-card img {
+  display: block; width: 100%; aspect-ratio: 5 / 7; border-radius: 4.5%/3.2%; object-fit: cover; transform: rotate(-4deg);
+  filter: drop-shadow(5px 7px 0 rgb(0 0 0 / 0.4)); animation: tg-card-land 0.5s var(--ease-out) 0.2s backwards;
+}
+.tg-over-card div { display: grid; gap: 2px; min-width: 0; animation: tg-row-in 0.32s var(--ease-out) 0.3s backwards; }
+.tg-over-card small { color: var(--k-2); font: 600 13px var(--font-h); }
+.tg-over-card b { overflow-wrap: anywhere; font: italic 800 27px/1.05 var(--font-xc); letter-spacing: -0.02em; }
+.tg-facts { display: grid; padding: 2px 16px; border: var(--line-w) solid var(--on-k); border-radius: 6px; background: var(--box); }
+.tg-facts > div, .tg-facts > p {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 14px; margin: 0; padding: 11px 0; border-bottom: 1px solid var(--rule);
+  color: var(--k-2); font: 500 14px/1.3 var(--font); animation: tg-row-in 0.32s var(--ease-out) 0.34s backwards;
+}
+.tg-facts > :nth-child(2) { animation-delay: 0.4s; }
+.tg-facts > :nth-child(3) { animation-delay: 0.46s; }
+.tg-facts > :nth-child(n + 4) { animation-delay: 0.52s; }
+.tg-facts > :last-child { border-bottom: 0; }
+.tg-facts b { flex: none; color: var(--on-k); font: 700 18px/1 var(--font-n); font-variant-numeric: tabular-nums; }
+.tg-over > .tg-sheet-keys { margin-top: auto; padding-top: 4px; animation: tg-row-in 0.32s var(--ease-out) 0.5s backwards; }
+@media (max-height: 640px) {
+  .tg-over { gap: 14px; }
+  .tg-over-head { margin-top: 6px; gap: 8px; }
+  .tg-over h2 { font-size: 50px; }
+  .tg-over::before { height: 90px; }
+  .tg-over-card { grid-template-columns: 78px minmax(0, 1fr); }
+  .tg-facts > div, .tg-facts > p { padding: 9px 0; }
+}
+/* Against a friend the rematch needs the room: the card steps aside on a short screen. */
+@media (max-height: 620px) { .tg-over:has(.tg-rematch) .tg-over-card { display: none; } }
+.tg-over .tg-sheet-keys { gap: 12px 14px; }
+.tg-over .tg-sheet-keys :is(.solid, .ghost) { padding-inline: 20px; font-size: 17px; }
+.tg-over .tg-sheet-keys .rt-go { padding-left: 44px; }
+@keyframes tg-slab-in { from { opacity: 0; transform: skewX(var(--skew)) translateX(30%); } }
+@keyframes tg-title-in { from { opacity: 0; transform: translateX(-28px) skewX(-8deg); } }
+@keyframes tg-card-land { from { opacity: 0; transform: translateY(26px) rotate(-11deg); } }
 
-/* The coach (the lesson): sits over their Bench, which the lesson never needs you to touch. */
+/* The coin flips: a small stage in the middle of the screen, the coin large, the side it landed on in big type. */
+.tg-opening, .tg-flip {
+  top: 0; width: min(352px, calc(100% - 32px)); height: max-content; max-height: calc(100dvh - 32px); margin: auto;
+  display: grid; justify-items: center; gap: 8px; padding: 18px 20px 20px; text-align: center;
+  border-bottom-width: var(--line-w); border-radius: 8px; box-shadow: var(--drop); animation: tg-stage-in 0.32s var(--ease-out);
+}
+.tg-coin { display: grid; place-items: center; margin-top: -8px; }
+.tg-opening-lab { margin: 0; color: var(--k-2); font: 700 14px/1.2 var(--font-h); }
+.tg-opening.is-landed .tg-opening-lab, #tg-flip-text {
+  color: var(--on-k); font: italic 800 50px/1 var(--font-xc); letter-spacing: -0.035em;
+}
+.tg-opening.is-landed .tg-opening-lab, .tg-flip.is-landed #tg-flip-text { animation: tg-word-in 0.36s var(--ease-out); }
+.tg-sheet #tg-first { max-width: 28ch; font: 700 17px/1.3 var(--font-h); letter-spacing: 0; text-wrap: balance; }
+.tg-opening-mull { margin: 0; color: var(--k-2); font: 500 13.5px/1.4 var(--font); }
+.tg-opening .tg-sheet-keys { justify-content: center; margin-top: 8px; }
+.tg-flip { width: min(260px, calc(100% - 32px)); z-index: 62; gap: 2px; padding-bottom: 16px; }
+@keyframes tg-stage-in { from { opacity: 0; transform: translateY(16px) scale(0.97); } }
+@keyframes tg-word-in { from { opacity: 0; transform: translateY(10px) scale(0.86); } }
+
+/* The coach (the lesson): a white box with the ink line over their Bench, which the lesson never needs you to
+   touch. The lesson's progress is an HP bar; its key is the ink one, so the yellow stays on the table. */
 .tg-coach {
   position: absolute; z-index: 61; top: calc(max(6px, env(safe-area-inset-top)) + 36px); left: max(8px, calc(50vw - var(--u) * 50)); right: max(8px, calc(50vw - var(--u) * 50));
-  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 6px 12px; padding: 9px 12px 10px;
-  border: var(--line-w) solid var(--k0); border-bottom-width: 5px; border-radius: 6px; background: var(--yel); color: var(--k0);
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 8px 12px; padding: 10px 12px 12px;
+  border: var(--line-w) solid var(--k0); border-radius: 6px; background: var(--w0); color: var(--k0); box-shadow: var(--drop);
   animation: tg-rise-card 0.24s var(--ease-out);
 }
-.tg-coach p { margin: 0; font: 600 14px/1.3 var(--font-h); text-wrap: pretty; }
+.tg-coach-top { grid-column: 1 / -1; display: flex; align-items: center; gap: 10px; }
+.tg-coach-lab {
+  flex: none; padding: 2px 16px 3px 9px; border-radius: 3px 0 0 3px; background: var(--k0); color: var(--w0);
+  font: italic 800 13px/1.3 var(--font-xc); clip-path: polygon(0 0, 100% 0, calc(100% - 7px) 100%, 0 100%);
+}
+.tg-coach-top small { flex: none; color: var(--k0); opacity: 0.7; font: 600 12.5px/1 var(--font-n); font-variant-numeric: tabular-nums; }
+.tg-coach p { margin: 0; font: 600 14.5px/1.3 var(--font-h); text-wrap: pretty; }
 .tg-table.has-coach .tg-half-foe .tg-row { visibility: hidden; }
-.tg-coach-bar { grid-column: 1 / -1; height: 4px; border-radius: 2px; background: color-mix(in srgb, var(--k0) 22%, transparent); overflow: hidden; }
-.tg-coach-bar i { display: block; height: 100%; background: var(--k0); transform-origin: left; }
+.tg-coach-bar { flex: 1; min-width: 0; height: 11px; padding: 2.5px; border-radius: 6px; background: var(--k0); overflow: hidden; }
+.tg-coach-bar i { display: block; height: 100%; border-radius: 4px; background: var(--hp); transform-origin: left; }
 .tg-coach .solid::before { background: var(--k0); border-color: var(--k0); }
 .tg-coach .solid, .tg-coach .solid:hover:not(:disabled) { color: var(--yel); }
 .tg-coach .solid:hover:not(:disabled)::before { background: var(--k0); }
@@ -601,16 +724,29 @@ body.no-motion .tg-table *, body.no-motion .tg-fx *, body.no-motion .tg-sheet, b
   .tg-table *, .tg-fx *, .tg-sheet, .tg-sheet-bg { animation: none !important; transition: none !important; }
 }
 
-/* Abilities: a row in the attack sheet, a tag on a Pokémon whose Ability is ready, a chip on the HUD. */
-.tg-abil { display: grid; gap: 4px; padding: 10px 12px; border: 2px solid var(--k0); border-radius: 10px; background: var(--w0); color: var(--k0); text-align: left; }
+/* Abilities: a row in the attack sheet, a tag on a Pokémon whose Ability is ready, a chip on the HUD. A row's
+   small straight tag says what kind it is. One that is always on is a straight box, not a key. */
+.tg-tag {
+  flex: none; justify-self: start; padding: 2px 7px 3px; border-radius: 3px; background: var(--k0); color: var(--w0);
+  font: 700 12px/1.2 var(--font-h); font-style: normal; white-space: nowrap;
+}
+.tg-atk:disabled .tg-tag, .tg-abil.is-info .tg-tag { background: var(--w0); color: var(--k0); }
+.tg-atk-top .tg-atk-do { font: italic 800 18px/1.1 var(--font-xc); letter-spacing: -0.01em; }
+.tg-abil.is-info { display: grid; gap: 6px; width: calc(100% - 14px); justify-self: center; padding: 11px 14px 13px; border: 1.5px solid var(--rule-2); border-radius: 6px; background: var(--box-2); text-align: left; }
+.tg-abil.is-info .tg-atk-top b { font-size: 19px; }
+.tg-abil.is-info .tg-atk-top small { color: var(--k-2); font: 600 12.5px var(--font-h); white-space: nowrap; }
 .tg-abil.off { opacity: 0.6; }
-.tg-abil-top { display: flex; align-items: center; gap: 8px; }
-.tg-abil-top em { font-style: normal; font-size: 11px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; padding: 2px 6px; border-radius: 4px; background: var(--yel); color: var(--k0); }
-.tg-abil-top b { flex: 1; min-width: 0; font-size: 15px; }
-.tg-abil .tg-atk-why.on { color: inherit; opacity: 0.7; }
-.tg-abil-sheet .tg-abil { padding: 8px 10px; }
 .tg-ability-text b { display: block; }
-.tg-abil-tag { position: absolute; left: 50%; top: -7px; transform: translateX(-50%); padding: 1px 6px; border-radius: 4px; background: var(--yel); color: var(--k0); box-shadow: 0 0 0 1.5px var(--k0); font-size: 9px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap; pointer-events: none; animation: tg-abil-pulse 1.4s var(--ease-out) infinite alternate; }
+/* The Stadium in play: its card beside what it says. */
+.tg-sheet.tg-stadium-sheet { display: block; }
+.tg-stadium-sheet .tg-stadium-body { display: grid; grid-template-columns: minmax(0, 34%) minmax(0, 1fr); gap: 14px; align-items: start; margin-top: 14px; }
+.tg-stadium-sheet .tg-stadium-body img { display: block; width: 100%; border-radius: 4.5%/3.2%; }
+.tg-stadium-sheet .tg-stadium-body > div { display: grid; gap: 8px; min-width: 0; }
+.tg-stadium-sheet > .tg-sheet-keys { display: flex; }
+/* Sheets outside the table (the deck editor's close look) keep still under reduced motion too. */
+body.no-motion .tg-sheet * { animation: none !important; transition: none !important; }
+@media (prefers-reduced-motion: reduce) { .tg-sheet * { animation: none !important; transition: none !important; } }
+.tg-abil-tag { position: absolute; left: 50%; top: -7px; transform: translateX(-50%); padding: 1px 6px; border-radius: 4px; background: var(--yel); color: var(--k0); box-shadow: 0 0 0 1.5px var(--k0); font-size: 10px; font-weight: 800; white-space: nowrap; pointer-events: none; animation: tg-abil-pulse 1.4s var(--ease-out) infinite alternate; }
 .tg-mon.big .tg-abil-tag { display: none; }
 @keyframes tg-abil-pulse { from { opacity: 0.7; } to { opacity: 1; } }
 .tg-cond[data-cond="ability"] { background: var(--yel); color: var(--k0); font-style: normal; }
@@ -658,13 +794,14 @@ body.no-motion .tg-quick-scan i { animation: none !important; }
 @media (prefers-reduced-motion: reduce) { .tg-quick-scan i { animation: none !important; } }
 
 /* A rematch, on the finished table's sheet: the offer, its answer, and which deck to bring. */
-.tg-rematch { display: grid; justify-items: center; gap: 8px; width: 100%; margin-top: 6px; padding-top: 12px; border-top: 1px solid var(--rule); }
-.tg-rematch .tg-sheet-keys { justify-content: center; margin-top: 0; }
-.tg-rematch-line b { display: block; color: var(--k); font: italic 800 20px/1.15 var(--font-xc); letter-spacing: -0.015em; }
+.tg-rematch { display: grid; justify-items: start; gap: 10px; width: 100%; animation: tg-row-in 0.32s var(--ease-out) 0.46s backwards; }
+.tg-rematch .tg-sheet-keys { margin-top: 0; }
+.tg-rematch-line { margin: 0; color: var(--k-2); font: 500 14.5px/1.45 var(--font); }
+.tg-rematch-line b { display: block; margin-bottom: 2px; color: var(--k); font: italic 800 21px/1.15 var(--font-xc); letter-spacing: -0.015em; }
 .rt-dark .tg-rematch-line b, .rt-dark .tg-over .tlink { color: var(--on-k); }
-.tg-rematch [data-rematch-time] { font-family: var(--font-n); font-variant-numeric: tabular-nums; }
-.tg-rematch-deck { display: flex; align-items: center; gap: 8px; width: 100%; max-width: 320px; }
-.tg-rematch-deck span { flex: none; font: 700 13px var(--font-h); color: var(--k-2); }
+.tg-rematch [data-rematch-time] { color: var(--on-k); font-family: var(--font-n); font-weight: 700; font-variant-numeric: tabular-nums; }
+.tg-rematch-deck { display: flex; align-items: center; gap: 10px; width: 100%; max-width: 340px; }
+.tg-rematch-deck span { flex: none; font: 700 13.5px var(--font-h); color: var(--k-2); }
 .tg-rematch-deck select { flex: 1; min-width: 0; }
 /* On the dark table the page's field colours vanish: the menu takes the sheet's own. */
 .rt-dark .tg-rematch-deck span { color: inherit; opacity: 0.75; }
