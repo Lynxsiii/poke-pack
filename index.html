@@ -70,6 +70,7 @@
     <link rel="stylesheet" href="css/binder/materials.css?v=3" />
     <link rel="stylesheet" href="css/binder/editions.css?v=3" />
     <link rel="stylesheet" href="css/binder/editor.css?v=6" />
+    <link rel="stylesheet" href="css/binder/flipbook.css?v=1" />
     <link rel="stylesheet" href="css/pages/account.css?v=21" />
     <link rel="stylesheet" href="css/pages/rankings.css?v=5" />
     <link rel="stylesheet" href="css/pages/profile-look.css?v=10" />
@@ -739,13 +740,15 @@
         <div id="binder-tabs"></div>
         <header class="bd-head">
           <div class="bd-title">
-            <h1>Binder</h1>
+            <h1 id="binder-name">Binder</h1>
             <p id="binder-count">0 cards on show</p>
           </div>
-          <div class="binder-actions">
+          <!-- Arrange holds all the editing (js/app.js renderBinder; css/binder/flipbook.css) -->
+          <button class="ghost" type="button" id="binder-arrange" aria-pressed="false" hidden>Arrange</button>
+          <div class="binder-actions bd-edit-only">
             <!-- binder customiser (js/binder-editor.js) -->
-            <button class="solid" type="button" id="binder-customise" aria-expanded="false" aria-controls="binder-editor" hidden>Customise</button>
-            <button class="ghost" type="button" id="binder-add-page">Add page</button>
+            <button class="ghost sm" type="button" id="binder-customise" aria-expanded="false" aria-controls="binder-editor" hidden>Customise</button>
+            <button class="ghost sm" type="button" id="binder-add-page">Add page</button>
           </div>
         </header>
         <div class="binder-layout" id="binder-layout">
@@ -995,7 +998,7 @@
       </nav>
     </footer>
     <script type="module" src="js/etch.js?v=1"></script>
-    <script type="module" src="js/app.js?v=408"></script>
+    <script type="module" src="js/app.js?v=409"></script>
     <script type="module" src="js/rotom.js?v=3"></script>
   </body>
 </html>

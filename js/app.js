@@ -2761,8 +2761,36 @@ function eraTitle(name) {
    Bulk is the inventory; this is what you choose to display. Slots are pages of
    nine, drawn as a facing spread so it reads like an open binder. */
 
-let binderSpread = 0;   // index of the left-hand page in the current spread
-let binderTurn = 0;     // the next draw turns the pages: 1 forward, -1 back (css/pages/collection.css)
+let binderSpread = 0;   // index of the first page on screen (one page on a phone, a facing pair from 860px)
+let binderTurn = 0;     // the next draw turns the pages: 1 forward, -1 back (css/binder/flipbook.css)
+let binderOpen = false; // the binder starts closed, showing its cover; opening is kept for the visit
+try { binderOpen = sessionStorage.getItem("pp-binder-open") === "1"; } catch { /* closed */ }
+let binderArranging = false; // Arrange: the one place cards are moved, taken out and put in
+let binderHolding = null;    // slot picked up in Arrange, waiting for the pocket it goes to
+const binderWide = () => matchMedia("(min-width: 860px)").matches;
+/** The first page of the view that holds page `p`. */
+function binderViewOf(p, pages = binderPageCount()) {
+  if (!binderWide()) return Math.max(0, Math.min(p, pages - 1));
+  return Math.max(0, Math.min(p - (p % 2), pages - 2));
+}
+/** Turn to a page (its view), or to the cover with -1. */
+function binderGo(target) {
+  const before = binderOpen ? binderSpread : -1;
+  const to = target < 0 ? -1 : binderViewOf(target);
+  if (to === before) return;
+  binderTurn = to > before ? 1 : -1;
+  binderOpen = to >= 0;
+  if (binderOpen) binderSpread = to;
+  binderHolding = null;
+  try { sessionStorage.setItem("pp-binder-open", binderOpen ? "1" : "0"); } catch { /* not kept */ }
+  renderBinder();
+  // Opening on a phone: bring the page up under the header so all nine pockets and the keys fit.
+  if (before < 0 && binderOpen && !binderWide()) {
+    requestAnimationFrame(() =>
+      els.binderBody?.querySelector(".binder-object")?.scrollIntoView({ block: "start", behavior: reduceMotion() ? "auto" : "smooth" })
+    );
+  }
+}
 let binderMark = null;  // { i, kind: "in" | "out" }: the pocket a card just went into or came out of
 let binderPicking = null; // slot index awaiting a card, or null
 
@@ -2782,10 +2810,10 @@ function binderPocket(index) {
       aria-label="Empty pocket ${index + 1}"><i class="pocket-ball" aria-hidden="true"></i></button>`;
   }
   const card = slot.reverse ? { ...base, reverse: true } : base;
-  return `<div class="pocket filled">
-    <button type="button" class="pocket-card" ${inspectAttrs(card)} title="${esc(card.name)}">
+  return `<div class="pocket filled${binderHolding === index ? " is-held" : ""}" style="--i:${index % BINDER_PAGE}">
+    <button type="button" class="pocket-card" data-slot="${index}" ${inspectAttrs(card)} title="${esc(card.name)}">
       ${tcgFace(card, { small: true, stamp: false })}
-    </button>
+    </button><i class="pocket-sheen" aria-hidden="true"></i>
     <button type="button" class="pocket-clear" data-unpocket="${index}"
       title="Take ${esc(card.name)} out" aria-label="Take ${esc(card.name)} out of the binder">×</button>
   </div>`;
@@ -2924,6 +2952,7 @@ function binderPageHtml(page) {
   const own = pageLookVars(binderLookNow(), binderCardsOf(start, start + BINDER_PAGE), binderCardsOf());
   return `<div class="binder-page" data-page-index="${page}"${pageStyleAttr(own)}>
     <div class="binder-page-toolbar"><span>Page ${page + 1}</span>
+      ${shared ? `<em class="bd-onprofile">On your profile</em>` : ""}
       <button type="button" class="ghost page-share" data-share-page="${page}" aria-pressed="${shared}" ${empty && !shared ? "disabled" : ""}>
         ${shared ? "Remove from profile" : "Display on profile"}
       </button></div>
@@ -2984,6 +3013,50 @@ function loadBinderSets() {
   });
 }
 
+/**
+ * Swing the pages that were showing over (or under) the ones just drawn. One
+ * page on a phone turns on its ring edge; a facing pair turns across the spine
+ * in two halves. The old pages ride along as inert ghosts and are dropped when
+ * the turn ends. Transform and opacity only (css/binder/flipbook.css).
+ */
+let binderTurnTimer = 0;
+function stageBinderTurn(spread, leaving, turn) {
+  if (!spread) return;
+  const fresh = [...spread.querySelectorAll(":scope > .binder-page")];
+  const lit = () => fresh.forEach((el) => el.classList.add("bd-lit"));
+  clearTimeout(binderTurnTimer);
+  if (!leaving.length) { lit(); return; }
+  const ghost = (el, cls) => {
+    el.className += ` bd-ghost ${cls}`;
+    if (el._bd) Object.assign(el.style, { left: `${el._bd.l}px`, top: `${el._bd.t}px`, width: `${el._bd.w}px`, height: `${el._bd.h}px` });
+    el.inert = true;
+    el.setAttribute("aria-hidden", "true");
+    el.querySelectorAll("[id]").forEach((node) => node.removeAttribute("id"));
+    spread.append(el);
+  };
+  if (leaving.length === 1 && fresh.length === 1) {
+    if (turn > 0) ghost(leaving[0], "bd-leaf-out");
+    else { ghost(leaving[0], "bd-under"); fresh[0].classList.add("bd-leaf-in"); }
+  } else if (leaving.length === 2 && fresh.length === 2) {
+    if (turn > 0) {
+      ghost(leaving[0], "bd-under bd-g-l");
+      ghost(leaving[1], "bd-g-r bd-half-out-l");
+      fresh[0].classList.add("bd-half-in-r");
+    } else {
+      ghost(leaving[1], "bd-under bd-g-r");
+      ghost(leaving[0], "bd-g-l bd-half-out-r");
+      fresh[1].classList.add("bd-half-in-l");
+    }
+  } else {
+    fresh.forEach((el) => el.classList.add("bd-enter")); // cover to a facing pair and back: the sizes differ
+  }
+  lit();
+  binderTurnTimer = setTimeout(() => {
+    spread.querySelectorAll(".bd-ghost").forEach((el) => el.remove());
+    fresh.forEach((el) => el.classList.remove("bd-leaf-in", "bd-half-in-r", "bd-half-in-l", "bd-enter"));
+  }, 820);
+}
+
 function renderBinder() {
   if (!els.binderBody) return;
   const binderTabs = document.getElementById("binder-tabs");
@@ -2992,6 +3065,10 @@ function renderBinder() {
     if (els.binderCount) els.binderCount.textContent = "Sign in to keep a binder";
     els.binderBody.innerHTML = accountGateHtml("binder");
     if (els.binderCustomise) els.binderCustomise.hidden = true;
+    const key = document.getElementById("binder-arrange");
+    if (key) key.hidden = true;
+    binderArranging = false;
+    els.viewBinder?.classList.remove("is-arranging");
     binderEditor?.close();
     return;
   }
@@ -3000,62 +3077,98 @@ function renderBinder() {
   loadBinderSets();
 
   const pages = binderPageCount();
-  binderSpread = Math.min(binderSpread, Math.max(0, pages - 2));
+  const wide = binderWide();
+  if (binderArranging || binderPicking != null) binderOpen = true;
+  binderSpread = binderViewOf(binderSpread, pages);
+  const closed = !binderOpen;
   const left = binderSpread;
-  const right = binderSpread + 1;
+  const right = wide ? binderSpread + 1 : -1;
   const shown = (state.binder || []).filter(Boolean).length;
-
+  const worth = money(
+    (state.binder || []).reduce((sum, slot) => {
+      const card = slot && findCard(slot.id);
+      return card ? sum + sellValue(card) : sum;
+    }, 0)
+  );
+  const lookName = binderLookNow().name || "";
+  const nameEl = document.getElementById("binder-name");
+  if (nameEl) nameEl.textContent = lookName || "Binder";
   if (els.binderCount) {
-    const worth = money(
-      (state.binder || []).reduce((sum, slot) => {
-        const card = slot && findCard(slot.id);
-        return card ? sum + sellValue(card) : sum;
-      }, 0)
-    );
     els.binderCount.innerHTML = shown
       ? `<b>${num(shown)}</b> card${shown === 1 ? "" : "s"} on show, worth <b class="binder-worth">${coinAmount(worth)}</b>`
       : "Tap an empty pocket to put a card on show.";
+  }
+  els.viewBinder?.classList.toggle("is-arranging", binderArranging);
+  const arrangeKey = document.getElementById("binder-arrange");
+  if (arrangeKey) {
+    arrangeKey.hidden = false;
+    arrangeKey.textContent = binderArranging ? "Done" : "Arrange";
+    arrangeKey.setAttribute("aria-pressed", String(binderArranging));
+    arrangeKey.classList.toggle("solid", binderArranging);
+    arrangeKey.classList.toggle("ghost", !binderArranging);
   }
 
   const typing = binderPicking == null ? null : cardPicker.typing(els.binderBody); // a redraw must not drop a search being typed
   const options = binderPicking == null ? [] : binderCandidates();
   const onProfile = (activeTrainer()?.binderPages || []).length;
   const room = roomLine("pages", activeTrainer() ? unlockOf(activeTrainer()) : undefined, onProfile, PROFILE_PAGE_LIMIT);
-  // The bar over the binder: Back, a Poke Ball pip for every page (the ones
-  // showing are current, an empty page is a hollow pip), Next; where you are
-  // and the profile line. A pip flips straight to its spread.
+  // Under the binder: Back, a pip for the cover and a Poke Ball pip for every page
+  // (an empty page is a hollow pip), Next. A pip turns straight to its page.
   const pageHasCards = (p) => (state.binder || []).slice(p * BINDER_PAGE, (p + 1) * BINDER_PAGE).some(Boolean);
-  const spreadOf = (p) => Math.min(p - (p % 2), Math.max(0, pages - 2));
-  const pips = pages <= 14
-    ? Array.from({ length: pages }, (_, p) => {
-        const now = p === left || (p === right && right < pages);
-        return `<button type="button" class="bd-pip" data-flip="${(spreadOf(p) - left) / 2}" aria-label="Page ${p + 1}${pageHasCards(p) ? "" : ", empty"}"${now ? ' aria-current="true"' : ""}><i class="rt-ball${pageHasCards(p) ? "" : " e"}${now ? " now" : ""}"></i></button>`;
-      }).join("")
-    : "";
-  els.binderBody.innerHTML = `
-    <div class="bd-bar rt-box">
-      <div class="binder-nav">
-        <button type="button" class="ghost sm" data-flip="-1" ${left === 0 ? "disabled" : ""}>Back</button>
-        <div class="bd-pips">${pips}</div>
-        <button type="button" class="ghost sm" data-flip="1" ${right >= pages - 1 ? "disabled" : ""}>Next</button>
-      </div>
-      <p class="bd-where"><b>${right < pages ? `Pages ${left + 1} and ${right + 1}` : `Page ${left + 1}`}</b> of ${pages}</p>
-      <p class="binder-sharing-note">${onProfile} of ${room.cap} pages on your profile.${room.more}</p>
-    </div>
-    ${binderObjectHtml({
-      innerHtml: `<div class="binder-spread">
-        ${binderPageHtml(left)}
-        ${right < pages ? binderPageHtml(right) : ""}
-      </div>`,
-      resolved: binderResolved(binderLookNow(), binderCardsOf()),
-    })}
-    ${binderPickerHtml(options)}`;
+  const onScreen = (p) => !closed && (p === left || p === right);
+  const pips = pages <= 12
+    ? `<button type="button" class="bd-pip" data-goto="-1" aria-label="Cover"${closed ? ' aria-current="true"' : ""}><i class="bd-cover-pip"></i></button>` +
+      Array.from({ length: pages }, (_, p) =>
+        `<button type="button" class="bd-pip" data-goto="${p}" aria-label="Page ${p + 1}${pageHasCards(p) ? "" : ", empty"}"${onScreen(p) ? ' aria-current="true"' : ""}><i class="rt-ball${pageHasCards(p) ? "" : " e"}${onScreen(p) ? " now" : ""}"></i></button>`
+      ).join("")
+    : `<p class="bd-where"><b>${closed ? "Cover" : right >= 0 && right < pages ? `Pages ${left + 1} and ${right + 1}` : `Page ${left + 1}`}</b> of ${pages}</p>`;
+  const atEnd = !closed && (wide ? left >= pages - 2 : left >= pages - 1);
+  const hint = binderArranging
+    ? binderHolding != null
+      ? "Now tap the pocket it should go in."
+      : "Tap a card to pick it up, × to take it out, an empty pocket to add one."
+    : closed
+      ? "Tap the cover to open your binder."
+      : wide ? "Use the keys to turn the page. Click a card to look closer." : "Swipe to turn the page. Tap a card to look closer.";
+  const trainerName = activeTrainer()?.name || "";
+  const front = `<button type="button" class="binder-page binder-front" data-goto="0" aria-label="Open your binder">
+      <span class="bf-size" aria-hidden="true"><span class="binder-page-toolbar"><span>&nbsp;</span></span><span class="binder-pockets">${'<i class="pocket"></i>'.repeat(BINDER_PAGE)}</span></span>
+      <span class="bf-band" aria-hidden="true"></span>
+      <span class="bf-plate"><em>Binder</em><b>${esc(lookName || trainerName || "My binder")}</b></span>
+      <span class="bf-stats"><span><b>${num(shown)}</b> card${shown === 1 ? "" : "s"} on show</span><span><b>${coinAmount(worth)}</b> worth</span><span><b>${num(pages)}</b> pages</span></span>
+      <span class="bf-open">Tap to open</span>
+    </button>`;
+  // A turn keeps the pages that were showing, to swing them over the new ones (stageBinderTurn).
   const turn = binderTurn;
   const mark = binderMark;
   binderTurn = 0;
   binderMark = null;
-  if (turn) els.binderBody.querySelector(".binder-spread")?.classList.add(turn > 0 ? "bd-turn-next" : "bd-turn-prev");
-  if (turn) els.binderBody.querySelector(".bd-pips")?.classList.add("is-turned");
+  const leaving = turn && !reduceMotion() && !document.body.classList.contains("no-motion")
+    ? [...els.binderBody.querySelectorAll(".binder-spread > .binder-page:not(.bd-ghost)")]
+    : [];
+  for (const el of leaving) el._bd = { l: el.offsetLeft, t: el.offsetTop, w: el.offsetWidth, h: el.offsetHeight };
+  els.binderBody.innerHTML = `
+    <p class="binder-sharing-note bd-edit-only">${onProfile} of ${room.cap} pages on your profile.${room.more}</p>
+    ${binderObjectHtml({
+      innerHtml: `<div class="binder-spread${closed ? " is-closed" : ""}">
+        ${closed ? front : binderPageHtml(left)}
+        ${!closed && right >= 0 && right < pages ? binderPageHtml(right) : ""}
+      </div>`,
+      resolved: binderResolved(binderLookNow(), binderCardsOf()),
+    })}
+    <div class="binder-nav">
+      <button type="button" class="ghost sm" data-flip="-1" ${closed || (binderArranging && left === 0) ? "disabled" : ""}>Back</button>
+      <div class="bd-pips">${pips}</div>
+      <button type="button" class="ghost sm" data-flip="1" ${atEnd ? "disabled" : ""}>Next</button>
+    </div>
+    <p class="bd-hint">${hint}</p>
+    ${binderPickerHtml(options)}`;
+  els.binderBody.querySelector(".binder-object")?.classList.toggle("is-closed", closed);
+  if (wide && !closed) els.binderBody.querySelector(".binder-spread > .binder-page")?.classList.add("bd-left"); // its ring edge is on the right
+  if (turn) {
+    stageBinderTurn(els.binderBody.querySelector(".binder-spread"), leaving, turn);
+    els.binderBody.querySelector(".bd-pips")?.classList.add("is-turned");
+  }
   if (mark) {
     const at = els.binderBody.querySelector(mark.kind === "in" ? `[data-unpocket="${mark.i}"]` : `[data-pocket="${mark.i}"]`);
     (mark.kind === "in" ? at?.closest(".pocket") : at)?.classList.add(mark.kind === "in" ? "is-placed" : "is-cleared");
@@ -10041,12 +10154,15 @@ els.leavePack?.addEventListener("click", leavePack);
 els.binderBody?.addEventListener("click", async (e) => {
   const sharedPage = e.target.closest("[data-share-page]");
   if (sharedPage) { await toggleProfilePage(Number(sharedPage.dataset.sharePage)); return; }
+  if (binderSwiped) return; // the click that ends a swipe
+  const goto = e.target.closest("[data-goto]");
+  if (goto) { binderGo(Number(goto.dataset.goto)); return; }
   const flip = e.target.closest("[data-flip]");
   if (flip) {
-    const before = binderSpread;
-    binderSpread = Math.max(0, binderSpread + Number(flip.dataset.flip) * 2);
-    binderTurn = Math.sign(binderSpread - before);
-    renderBinder();
+    const step = Number(flip.dataset.flip) * (binderWide() ? 2 : 1);
+    if (!binderOpen) { if (step > 0) binderGo(0); }
+    else if (step < 0 && binderSpread === 0) { if (!binderArranging) binderGo(-1); }
+    else binderGo(binderSpread + step);
     return;
   }
   if (e.target.closest("[data-picker-close]")) {
@@ -10067,7 +10183,10 @@ els.binderBody?.addEventListener("click", async (e) => {
   }
   const pocket = e.target.closest("[data-pocket]");
   if (pocket) {
-    binderPicking = Number(pocket.dataset.pocket);
+    const to = Number(pocket.dataset.pocket);
+    if (binderArranging && binderHolding != null) { await moveBinderCard(binderHolding, to); return; }
+    binderArranging = true; // an empty pocket is the way into Arrange
+    binderPicking = to;
     cardPicker.reset();
     renderBinder();
     return;
@@ -10085,9 +10204,68 @@ els.binderBody?.addEventListener("click", async (e) => {
     renderBinder();
     return;
   }
+  // Arrange: a tap picks a card up, the next tap on a pocket puts it there (two cards trade places).
+  const held = binderArranging && !e.target.closest(".picker") ? e.target.closest("[data-slot]") : null;
+  if (held) {
+    const i = Number(held.dataset.slot);
+    if (binderHolding == null) { binderHolding = i; renderBinder(); }
+    else if (binderHolding === i) { binderHolding = null; renderBinder(); }
+    else await moveBinderCard(binderHolding, i);
+    return;
+  }
   // anything else in a filled pocket opens the inspector
   inspectFromEl(e.target);
 });
+
+/** Move the card in pocket `from` to pocket `to`; a card already there takes its place. */
+async function moveBinderCard(from, to) {
+  const slots = state.binder || (state.binder = []);
+  while (slots.length <= Math.max(from, to)) slots.push(null);
+  [slots[from], slots[to]] = [slots[to], slots[from]];
+  saveState(state);
+  binderHolding = null;
+  binderMark = { i: to, kind: "in" };
+  await pushBinder();
+  // A page on show that just lost its last card comes off the profile, as when a card is taken out.
+  const page = Math.floor(from / BINDER_PAGE);
+  const left = (state.binder || []).slice(page * BINDER_PAGE, (page + 1) * BINDER_PAGE).some(Boolean);
+  if (!left && (activeTrainer()?.binderPages || []).includes(page)) await toggleProfilePage(page);
+  renderBinder();
+}
+
+// A sideways swipe on the pages turns them; the click it ends with is swallowed.
+let binderSwipe = null;
+let binderSwiped = false;
+els.binderBody?.addEventListener("pointerdown", (e) => {
+  binderSwipe = e.target.closest(".binder-spread") && !e.target.closest(".picker") ? { x: e.clientX, y: e.clientY, t: performance.now(), id: e.pointerId } : null;
+});
+els.binderBody?.addEventListener("pointerup", (e) => {
+  const from = binderSwipe;
+  binderSwipe = null;
+  if (!from || from.id !== e.pointerId || binderPicking != null) return;
+  const dx = e.clientX - from.x;
+  const dy = e.clientY - from.y;
+  if (Math.abs(dx) < 44 || Math.abs(dx) < Math.abs(dy) * 1.5 || performance.now() - from.t > 700) return;
+  binderSwiped = true;
+  setTimeout(() => { binderSwiped = false; }, 80);
+  const step = (dx < 0 ? 1 : -1) * (binderWide() ? 2 : 1);
+  if (!binderOpen) { if (step > 0) binderGo(0); }
+  else if (step < 0 && binderSpread === 0) { if (!binderArranging) binderGo(-1); }
+  else binderGo(binderSpread + step);
+});
+els.binderBody?.addEventListener("pointercancel", () => { binderSwipe = null; });
+
+document.getElementById("binder-arrange")?.addEventListener("click", () => {
+  if (!activeTrainer()) { openAuth("signin"); return; }
+  binderArranging = !binderArranging;
+  binderHolding = null;
+  binderPicking = null;
+  if (!binderArranging) binderEditor?.close();
+  if (binderArranging && !binderOpen) { binderGo(binderSpread); return; } // opens the cover onto the page it was last on
+  renderBinder();
+});
+
+matchMedia("(min-width: 860px)").addEventListener?.("change", () => { if (view === "binder") renderBinder(); });
 
 if (els.binderBody) cardPicker.attach(els.binderBody);
 
@@ -10098,8 +10276,9 @@ els.binderAddPage?.addEventListener("click", async () => {
   }
   addBinderPage(state);
   await pushBinder();
-  const before = binderSpread;
-  binderSpread = Math.max(0, binderPageCount() - 2);
+  const before = binderOpen ? binderSpread : -1;
+  binderOpen = true;
+  binderSpread = binderViewOf(binderPageCount() - 1);
   binderTurn = Math.sign(binderSpread - before);
   renderBinder();
   toast("Page added.");
