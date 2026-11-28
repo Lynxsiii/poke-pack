@@ -91,7 +91,10 @@ def main():
                     if full:
                         if e.get("rarity") not in FULL and e.get("rarity") != "Promo":
                             continue
-                    elif e.get("rarity") != c.get("rarity") and not (c["rarity"].startswith("Shiny") and e.get("rarity") == "Promo"):
+                    elif e.get("rarity") != c.get("rarity") and not (
+                            e.get("rarity") == "Promo" and (c["rarity"].startswith("Shiny") or c["rarity"] == "Double Rare")):
+                        # a Double Rare too: Terastal Festival's nine ex with new art are the English SVP promos
+                        # (2026-11-28: they had no map and wore the whole-face foil-ex wash)
                         continue
                     try:
                         corr = float((mine * art(e["image"])).mean())
