@@ -17,22 +17,28 @@
  */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-cel.has-foil-map {
   --ssp-grain: url("/assets/foil/glitter-fine.webp");
-  --ssp-gap: rgb(196, 197, 200);
+  --ssp-gap: rgb(218, 219, 222);
   --ssp-light: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    rgb(252, 252, 252) 0%, rgb(232, 232, 234) 16%, rgb(198, 199, 202) 46%, rgb(182, 183, 187) 100%);
-  --ssp-rest: linear-gradient(rgb(216, 216, 218), rgb(206, 206, 209));
+    rgb(254, 254, 254) 0%, rgb(244, 244, 245) 16%, rgb(222, 223, 226) 46%, rgb(210, 211, 214) 100%);
+  --ssp-rest: linear-gradient(rgb(234, 234, 236), rgb(226, 226, 229));
+  /* 2026-11-28: two broad rays and a thin one instead of one narrow streak that usually fell outside the window
+     ("foil invisible when lit", per-card review), in a pool that reaches most of the window. */
   --ssp-tint: linear-gradient(112deg,
-    #fff 40%, rgb(255, 200, 206) 41.8%, rgb(255, 224, 168) 43.2%, rgb(220, 244, 196) 44.5%, rgb(184, 224, 255) 45.8%,
-    rgb(214, 196, 255) 47.2%, #fff 48.8%,
-    #fff 52.4%, rgb(255, 228, 190) 53.2%, rgb(200, 226, 255) 54%, #fff 54.8%);
+    #fff 22%, rgb(255, 204, 210) 24.5%, rgb(255, 228, 176) 27%, rgb(222, 246, 200) 29.5%, rgb(188, 228, 255) 32%,
+    rgb(216, 200, 255) 34.5%, #fff 37%,
+    #fff 43%, rgb(255, 200, 206) 45.4%, rgb(255, 224, 168) 47.4%, rgb(220, 244, 196) 49.4%, rgb(184, 224, 255) 51.4%,
+    rgb(214, 196, 255) 53.4%, #fff 56%,
+    #fff 66%, rgb(255, 228, 190) 68%, rgb(200, 226, 255) 70.5%, rgb(226, 208, 255) 73%, #fff 75%);
   --ssp-band: linear-gradient(112deg,
-    transparent 40%, rgb(120, 40, 56) 41.8%, rgb(126, 84, 20) 43.2%, rgb(70, 110, 40) 44.5%, rgb(20, 86, 126) 45.8%,
-    rgb(70, 50, 126) 47.2%, transparent 48.8%,
-    transparent 52.4%, rgb(104, 70, 30) 53.2%, rgb(30, 74, 110) 54%, transparent 54.8%);
+    transparent 22%, rgb(150, 50, 70) 24.5%, rgb(156, 104, 26) 27%, rgb(88, 136, 50) 29.5%, rgb(26, 108, 156) 32%,
+    rgb(88, 62, 156) 34.5%, transparent 37%,
+    transparent 43%, rgb(150, 50, 70) 45.4%, rgb(156, 104, 26) 47.4%, rgb(88, 136, 50) 49.4%, rgb(26, 108, 156) 51.4%,
+    rgb(88, 62, 156) 53.4%, transparent 56%,
+    transparent 66%, rgb(130, 88, 38) 68%, rgb(38, 92, 136) 70.5%, rgb(96, 66, 150) 73%, transparent 75%);
   --ssp-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    #000 0%, #000 14%, rgba(0, 0, 0, 0.5) 34%, rgba(0, 0, 0, 0.1) 58%, transparent 78%);
+    #000 0%, #000 24%, rgba(0, 0, 0, 0.6) 46%, rgba(0, 0, 0, 0.22) 70%, rgba(0, 0, 0, 0.08) 100%);
   --ssp-size: 210% 210%;
-  --ssp-pos: calc((var(--background-x) - 50%) * 3.2 + 50%) calc((var(--background-y) - 50%) * 1.4 + 50%);
+  --ssp-pos: clamp(0%, calc((var(--background-x) - 50%) * 2.2 + 50%), 100%) clamp(0%, calc((var(--background-y) - 50%) * 1.2 + 50%), 100%);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-cel.has-foil-map .foil {
   background-color: transparent;
@@ -146,13 +152,13 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-spe
  */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-cc.ssp-cc {
   --ssp-flakes: linear-gradient(rgb(128, 128, 128), rgb(128, 128, 128)), url("/assets/foil/bw-confetti.webp");
-  --ssp-flake-size: 100% 100%, 60% auto;
+  --ssp-flake-size: 100% 100%, 34% auto;
   --ssp-flake-pos: center, calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
   --ssp-flake-rep: no-repeat, repeat;
-  --ssp-gap: rgb(200, 201, 204);
+  --ssp-gap: rgb(226, 227, 229);
   --ssp-light: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    rgb(252, 252, 252) 0%, rgb(232, 232, 234) 16%, rgb(204, 205, 208) 46%, rgb(190, 191, 195) 100%);
-  --ssp-rest: linear-gradient(rgb(224, 224, 226), rgb(214, 214, 217));
+    rgb(254, 254, 254) 0%, rgb(246, 246, 247) 16%, rgb(230, 231, 233) 46%, rgb(220, 221, 224) 100%);
+  --ssp-rest: linear-gradient(rgb(240, 240, 241), rgb(234, 234, 236));
   --ssp-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     #000 0%, #000 16%, rgba(0, 0, 0, 0.5) 38%, rgba(0, 0, 0, 0.1) 62%, transparent 80%);
 }
@@ -223,7 +229,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-spe
   mask-position: center;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-  opacity: calc(var(--card-opacity) * 0.8 * min(1, var(--foil-strength, 1)));
+  opacity: calc(var(--card-opacity) * 0.5 * min(1, var(--foil-strength, 1)));
 }
 
 /* ---- ssp-rad: Radiant Rares (15 faces) ------------------------------------------------------------------------------
