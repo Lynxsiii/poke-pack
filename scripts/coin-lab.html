@@ -1,0 +1,65 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Coin lab</title>
+<base href="/">
+<link rel="stylesheet" href="/css/theme.css">
+<link rel="stylesheet" href="/css/casino-coin.css">
+<link rel="stylesheet" href="/css/pages/gear.css">
+<style>
+  body { margin: 0; padding: 8px; background: var(--lab-bg, #1b1a19); font: 11px system-ui; color: #ddd; }
+  #grid { display: grid; grid-template-columns: repeat(var(--cols, 3), 1fr); gap: 6px 4px; }
+  .cell { display: grid; justify-items: center; gap: 2px; text-align: center; }
+  .cell small { opacity: .8; max-width: 100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+  .cf-coin-stage { --cf-headroom: 0.08 !important; }
+</style>
+<div id="grid"></div>
+<script type="module">
+  // Coin lab: every catalog coin through the site's own coin component.
+  // /scripts/coin-lab.html?ids=a,b | finish=foil  &size=120 &nx=0.8&ny=-0.5 &side=front|back &flat=1 &from=0&n=24 &nomap=1
+  import { coinFaceHTML, coinOf, coinStageHTML } from "/js/coin.js";
+  const q = new URLSearchParams(location.search);
+  const cat = await (await fetch("/data/gear.json")).json();
+  let coins = Object.values(cat.coins);
+  if (q.get("ids")) { const ids = q.get("ids").split(","); coins = ids.map((id) => cat.coins[id]).filter(Boolean); }
+  if (q.get("finish")) coins = coins.filter((c) => (c.foil?.finish || c.material) === q.get("finish"));
+  if (q.get("look")) coins = coins.filter((c) => q.get("look").split(",").includes(c.foil?.look));
+  const from = Number(q.get("from") || 0), n = Number(q.get("n") || 999);
+  coins = coins.slice(from, from + n);
+  const size = Number(q.get("size") || 120);
+  const side = q.get("side") || "front";
+  const grid = document.getElementById("grid");
+  grid.style.setProperty("--cols", q.get("cols") || 3);
+  if (q.get("bg")) document.body.style.setProperty("--lab-bg", q.get("bg"));
+  // strip=1: every coin four times in a row: bare photo | at rest | lit upper left | lit lower right
+  const STRIP = [["plain"], ["rest"], [-0.7, -0.6], [0.8, 0.5]];
+  const pose = (el, nx, ny) => {
+    for (const c of el.querySelectorAll(".cf-coin, .gcoin")) {
+      c.classList.add("is-held");
+      c.style.setProperty("--nx", nx); c.style.setProperty("--ny", ny);
+      c.style.setProperty("--ry", nx * 32); c.style.setProperty("--rx", -ny * 32);
+      c.style.setProperty("--tilt", Math.min(1, Math.hypot(nx, ny)));
+    }
+  };
+  const bare = (el) => { for (const l of el.querySelectorAll(".cf-holo, .cf-glare, .cf-sheen, .cf-spark")) l.style.display = "none"; };
+  const one = (c) => {
+    const face = coinOf(c, side);
+    return q.get("flat")
+      ? `<span class="gcoin" style="--s:${size}px"><span class="gcoin-in">${coinFaceHTML(face, c.name)}</span></span>`
+      : coinStageHTML({ heads: face, tails: coinOf(c, side === "back" ? "front" : "back"), size });
+  };
+  if (q.get("strip")) grid.style.setProperty("--cols", 4);
+  for (const c of coins) {
+    const label = `<small>${c.id.replace(/-coin$/, "")} · ${c.foil?.look || "-"}</small>`;
+    if (!q.get("strip")) { grid.insertAdjacentHTML("beforeend", `<div class="cell" data-id="${c.id}">${one(c)}${label}</div>`); continue; }
+    STRIP.forEach((p, i) => {
+      grid.insertAdjacentHTML("beforeend", `<div class="cell" data-id="${c.id}">${one(c)}${i === 1 ? label : "<small>&nbsp;</small>"}</div>`);
+      const cell = grid.lastElementChild;
+      if (p[0] === "plain") bare(cell); else if (p[0] !== "rest") pose(cell, p[0], p[1]);
+    });
+  }
+  if (q.get("nx") !== null) pose(grid, Number(q.get("nx")), Number(q.get("ny") || 0));
+  if (q.get("nomap")) bare(grid);
+  await Promise.all([...document.images].map((i) => i.decode?.().catch(() => {})));
+  document.body.dataset.ready = "1";
+</script>
