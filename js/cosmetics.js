@@ -6,6 +6,7 @@
  * loaded only by the picker. AVATARS below is the short list of favourites.
  */
 import { avatarColor, COLOR_IDS } from "./palette.js";
+import { AVATAR_FIT } from "./avatar-fit.js";
 import { BANNER_MOTION_LEVELS, BANNER_MOTION_NAMES } from "./level-data.js";
 import { isMasteryBanner, isMasterySet, masteryBannerId, masteryBannerSet, setAccent } from "./mastery.js";
 
@@ -171,6 +172,20 @@ export function avatarSrc(id, style, { still = false } = {}) {
   const shiny = avatarShiny(style);
   if (kind === "anim") return still ? avatarIcon(id, shiny) : avatarAnim(id, shiny);
   return kind === "pixel" ? avatarIcon(id, shiny) : avatarArt(id, shiny);
+}
+
+/**
+ * The attributes that sit a sprite in a round face: ` class="av-fit" style="..."`, or "" for official art.
+ * Sprites come off-centre in their canvas (js/avatar-fit.js has each one's measure); css/app.css img.av-fit
+ * applies the move and zoom. Pass the same `still` as avatarSrc so the measure matches the picture drawn.
+ */
+export function avatarFit(id, style, { still = false } = {}) {
+  const kind = avatarKind(style);
+  if (kind === "art") return "";
+  const row = AVATAR_FIT[avatarId(id)];
+  if (!row) return ` class="av-fit"`;
+  const at = kind === "anim" && !still && !motionOff() ? 3 : 0;
+  return ` class="av-fit" style="--ax:${row[at]}%;--ay:${row[at + 1]}%;--as:${row[at + 2] / 100}"`;
 }
 
 /** What to show if a picture fails to load: the same Pokémon, one step plainer. */

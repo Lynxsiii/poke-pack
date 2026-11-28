@@ -1,5 +1,20 @@
 [
   {
+    "id": "2026-11-28-picture-alignment",
+    "date": "2026-11-28",
+    "title": "Pixel and animated pictures sit in the middle",
+    "summary": "Sprites are now centred and sized the same in every round picture.",
+    "groups": [
+      {
+        "title": "Fixes",
+        "items": [
+          "Pixel and animated profile pictures could sit low or to one side and get cut off by the circle. Each of the 1,307 pictures is now measured, centred on the Pokémon itself and sized to fill the circle the same way.",
+          "This applies everywhere a picture shows: the header, your trainer card, profiles, lists, chat and battle seats."
+        ]
+      }
+    ]
+  },
+  {
     "id": "2026-11-28-loading-screen",
     "date": "2026-11-28",
     "title": "New loading screen",
