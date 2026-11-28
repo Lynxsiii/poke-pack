@@ -15,7 +15,7 @@
  * ctx: { state, defs, events, player }
  */
 
-import { ACTIVE, abilityOn, benchMax, caged, devolveSlot, noteShed, addCondition, takeTools, toolOn, toolGone, toolRoom, toolsIn, trainerBlock, win, askChoose, askPick, conditionsOn, damageAfterTyping, defOf, energyOf, evolveSpots, flip, healMore, healRoom, heldOn, hpLeft, inPlay, mayEvolve, other, rand, shedEnergy, shuffle, slotAt, switchActive, toolOf, warded } from "./engine.js";
+import { ACTIVE, abilityOn, benchMax, caged, countersStay, keptInPlay, devolveSlot, noteShed, addCondition, takeTools, toolOn, toolGone, toolRoom, toolsIn, trainerBlock, win, askChoose, askPick, conditionsOn, damageAfterTyping, defOf, energyOf, evolveSpots, flip, healMore, healRoom, heldOn, hpLeft, inPlay, mayEvolve, other, rand, shedEnergy, shuffle, slotAt, switchActive, toolOf, warded } from "./engine.js";
 import { runFx } from "./effects.js";
 
 export const RPS = ["Rock", "Paper", "Scissors"];
@@ -119,6 +119,7 @@ const careSpots = (ctx) => inPlay(ctx.state, ctx.player).filter(([slot]) => slot
 /** Every Energy on one of your Pokémon goes to the discard pile (or, `toHand`, back to the hand). */
 export function stripEnergy(ctx, p, spot, toHand = false) {
   const slot = slotAt(ctx.state, p, spot);
+  if (toHand && keptInPlay(ctx.state, p)) return;
   const gone = slot ? slot.energy.splice(0) : [];
   if (!gone.length) return;
   ctx.state.players[p][toHand ? "hand" : "discard"].push(...gone);
@@ -414,6 +415,14 @@ export const T_OPS = {
       askChoose(ctx.state, { player: ctx.player, zone: "deck", what, uids: fitting(ctx, mine(ctx).deck, what), min: 0, max: spots.length, effect: spots.length === 1 ? { op: "attach", to: "one", spot: spots[0] } : { op: "attach", to: "each", spots }, shuffle: true });
     },
   },
+  /** Phantump's Spiteful Evolution: a card from the hand that evolves from this Pokémon goes onto it, then damage counters on it. */
+  selfEvolve: {
+    ready: (ctx) => ctx.spot != null && mine(ctx).hand.some((uid) => evolveSpots(ctx.state, ctx.player, defOf(ctx.state, uid, ctx.defs), ctx.defs, { hand: true }).includes(ctx.spot)),
+    run(ctx, { hurt = 0 }) {
+      const uids = mine(ctx).hand.filter((uid) => evolveSpots(ctx.state, ctx.player, defOf(ctx.state, uid, ctx.defs), ctx.defs, { hand: true }).includes(ctx.spot));
+      if (uids.length) askChoose(ctx.state, { player: ctx.player, zone: "hand", what: "evolution", uids, min: 1, max: 1, effect: { op: "evolveFrom", how: { hand: true }, at: ctx.spot, hurt } });
+    },
+  },
   treeEvolve: {
     ready: (ctx) => hasDeck(ctx) && mine(ctx).deck.some((uid) => defOf(ctx.state, uid, ctx.defs)?.line === 1 && evolveSpots(ctx.state, ctx.player, defOf(ctx.state, uid, ctx.defs), ctx.defs).length > 0),
     run(ctx) {
@@ -509,7 +518,7 @@ export const T_OPS = {
   /** Move damage counters from one of your Pokémon to one of theirs (`to: "foe"`) or another of yours. */
   // `fromWho`: only from your Pokémon that fit ("from 1 of your Team Rocket's Pokémon").
   moveCounters: {
-    ready: (ctx, { to = "foe", fromWho = "" }) => hurt(ctx).filter((spot) => !fromWho || fits(defOf(ctx.state, slotAt(ctx.state, ctx.player, spot).uid, ctx.defs), fromWho)).length > 0 && (to !== "foe" || inPlay(ctx.state, other(ctx.player)).length > 0) && (to === "foe" || inPlay(ctx.state, ctx.player).length > 1),
+    ready: (ctx, { to = "foe", fromWho = "" }) => !countersStay(ctx.state) && hurt(ctx).filter((spot) => !fromWho || fits(defOf(ctx.state, slotAt(ctx.state, ctx.player, spot).uid, ctx.defs), fromWho)).length > 0 && (to !== "foe" || inPlay(ctx.state, other(ctx.player)).length > 0) && (to === "foe" || inPlay(ctx.state, ctx.player).length > 1),
     run(ctx, { n, to = "foe", fromWho = "" }) {
       const spots = hurt(ctx).filter((spot) => !fromWho || fits(defOf(ctx.state, slotAt(ctx.state, ctx.player, spot).uid, ctx.defs), fromWho));
       askPick(ctx.state, { player: ctx.player, side: ctx.player, spots, left: 1, effect: { op: "moveCountersFrom", n, to } });
@@ -2020,7 +2029,7 @@ export function condOf(words) {
   m = words.match(/^you have ([A-Z][^,]*?(?:(?:, and |, | and )[A-Z][^,]*?)*) in play$/);
   if (m) {
     const names = m[1].split(/, and |, | and /);
-    if (names.every((name) => /^[A-Z][\w.'é-]*(?: [A-Z][\w.'é-]*)?$/.test(name) && !/Pokémon/.test(name))) return { names };
+    if (names.every((name) => /^[A-Z][\w.'é-]*(?: [A-Z][\w.'é-]*)?(?: ex)?$/.test(name) && !/Pokémon/.test(name))) return { names };
   }
   if (/^you have no cards in your hand$/.test(words)) return { handMax: 0 };
   m = words.match(/^this Pokémon's remaining HP is (\d+) or less$/);

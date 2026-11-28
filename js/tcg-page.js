@@ -811,8 +811,10 @@ export function initTcg(deps) {
   function prizesHtml(state, p) {
     const left = state.phase === "setup" ? state.rules.prizes : state.players[p].prizes.length;
     const all = Math.max(state.rules.prizes, left);
+    // Prize cards turned face up (Team Rocket's Bother-Bot) show what they are.
+    const up = state.phase === "setup" ? [] : (state.players[p].prizesUp || []).filter((uid) => state.cards[uid]);
     return `<span class="tg-pile tg-prizes" data-p="${p}" style="--rows:${Math.ceil(all / 2)}" aria-label="${p === ME ? "Your" : "Their"} prize cards: ${left} left">
-      <span class="tg-prize-grid">${Array.from({ length: all }, (_, i) => `<i${i < left ? "" : ` class="e"`}></i>`).join("")}</span>
+      <span class="tg-prize-grid">${Array.from({ length: all }, (_, i) => (i < up.length ? `<i class="up" title="${esc(d(up[i]).name)}, face up" style="background:center/cover url(${img(state.cards[up[i]])})"></i>` : `<i${i < left ? "" : ` class="e"`}></i>`)).join("")}</span>
       <b class="tg-pile-n">${left}</b>
     </span>`;
   }
@@ -2595,7 +2597,9 @@ export function initTcg(deps) {
     if (state.phase === "setup" && match.online && state.players[ME].placed) return;
     if (state.phase === "setup") {
       const def = d(uid);
-      if (def.kind !== "pokemon" || def.stage !== "basic") return toast("Only Basic Pokémon can start in play.");
+      // Cinderace's Explosiveness: it may start in the Active Spot, not on the Bench.
+      const leadOnly = def.kind === "pokemon" && def.ability?.setupActive && def.stage !== "basic";
+      if ((def.kind !== "pokemon" || def.stage !== "basic") && !(leadOnly && !match.setup.active)) return toast(leadOnly ? `${def.name} can only start in the Active Spot.` : "Only Basic Pokémon can start in play.");
       const step = lessonStep();
       if (step && !step.pick?.(def)) return toast(step.pick || step.want ? step.nudge : "Tap Next when you've read it.");
       if (step) lessonNext();

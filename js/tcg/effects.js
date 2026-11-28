@@ -19,7 +19,7 @@
  *        shielded (the target takes no effects this turn) }
  */
 
-import { ACTIVE, abilityOn, benchMax, caged, hitBack, typedDef, noteShed, shieldOn, sideHit, addCondition, addMark, askChoose, askPick, benchSafe, canPay, conditionsOn, damageAfterTyping, defOf, devolveSlot, energyAlike, energyToDeck, energyFits, energyMod, energyOf, flip, healMore, healRoom, heldOn, hpLeft, inPlay, markOn, maxHp, other, rand, retreatCost, shedEnergy, shuffle, slotAt, strike, struck, switchActive, toLost, takeTool, takeTools, toolGone, toolsIn, unpaid, warded, win } from "./engine.js";
+import { ACTIVE, abilityOn, benchMax, caged, countersStay, keptInPlay, hitBack, typedDef, noteShed, shieldOn, sideHit, addCondition, addMark, askChoose, askPick, benchSafe, canPay, conditionsOn, damageAfterTyping, defOf, devolveSlot, energyAlike, energyToDeck, energyFits, energyMod, energyOf, flip, healMore, healRoom, heldOn, hpLeft, inPlay, markOn, maxHp, other, rand, retreatCost, shedEnergy, shuffle, slotAt, strike, struck, switchActive, toLost, takeTool, takeTools, toolGone, toolsIn, unpaid, warded, win } from "./engine.js";
 import { T_OPS, compileTrainer, fits, runTrainer, trainerReady, whatOf } from "./trainers.js";
 
 const WORDS = { a: 1, an: 1, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6 };
@@ -781,6 +781,7 @@ export const OPS = {
     const { state, player, defs, events, slot } = ctx;
     const spot = spotOf(ctx);
     if (spot == null || hpLeft(state, slot, defs) <= 0) return;
+    if ((to === "hand" || to === "handBare") && keptInPlay(state, player)) return;
     if (optional && to === "deck") return askPick(state, { player, side: player, spots: [spot], left: 1, optional: true, effect: { op: "shuffleIn" } });
     const side = state.players[player];
     const tools = toolsIn(slot);
@@ -1047,7 +1048,7 @@ export const OPS = {
   swapCounters(ctx) {
     const { state, player, defs, events, slot } = ctx;
     const target = state.players[other(player)].active;
-    if (!target || ctx.shielded || warded(state, target, { player, src: "attack" }, defs) || target.damage === slot.damage) return;
+    if (!target || ctx.shielded || warded(state, target, { player, src: "attack" }, defs) || target.damage === slot.damage || countersStay(state)) return;
     const [mine, theirs] = [slot.damage, target.damage];
     slot.damage = theirs;
     target.damage = mine;
@@ -1202,6 +1203,7 @@ export const OPS = {
     const side = state.players[foe];
     const slot = side.active;
     if (!slot || ctx.shielded || warded(state, slot, { player, src: "attack" }, defs)) return;
+    if (to === "hand" && keptInPlay(state, foe)) return;
     // `to`: "deck" (shuffled in), "hand", "discard", "lost" (the Lost Zone). It isn't Knocked Out: no Prize cards for it.
     // The Tool goes with it (to the discard pile the way any Tool does: one that says so goes back to the hand).
     const cards = [slot.uid, ...slot.under, ...slot.energy, ...(to !== "discard" ? toolsIn(slot) : []), ...heldOn(slot)];
@@ -1231,7 +1233,7 @@ export const OPS = {
   benchCountersToFoe(ctx, { who = "" } = {}) {
     const { state, player, defs } = ctx;
     const target = state.players[other(player)].active;
-    if (!target || ctx.shielded || warded(state, target, { player, src: "attack" }, defs)) return;
+    if (!target || ctx.shielded || warded(state, target, { player, src: "attack" }, defs) || countersStay(state)) return;
     // `who`: "from 1 of your Benched Team Rocket's Pokémon" (a kind, trainers.js fits).
     const spots = state.players[player].bench.map((s, i) => [s, i]).filter(([s]) => s.damage > 0 && (!who || fits(defIn(ctx, s), who))).map(([, i]) => i);
     if (spots.length) askPick(state, { player, side: player, spots, left: 1, effect: { op: "moveCountersFrom", n: 9990, to: "foe", only: ACTIVE, src: "attack" } });
@@ -1508,7 +1510,7 @@ export const OPS = {
   countersToFoe(ctx, { from = "self", n = 9990 }) {
     const { state, player, defs, events } = ctx;
     const target = state.players[other(player)].active;
-    if (!target || ctx.shielded || warded(state, target, { player, src: "attack" }, defs)) return;
+    if (!target || ctx.shielded || warded(state, target, { player, src: "attack" }, defs) || countersStay(state)) return;
     const mine = from === "self" ? [[ctx.slot, spotOf(ctx)]] : inPlay(state, player);
     for (const [slot, spot] of mine) {
       const k = Math.min(n, slot.damage);
