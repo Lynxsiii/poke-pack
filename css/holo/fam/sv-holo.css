@@ -22,88 +22,78 @@
  * sliding sideways). `.glare` multiplies the same structure in saturated colour (white neutral), so a pale sky and the
  * silver border clearly take the band and the dashes. `::before` the era's glitter, finer and fainter; `::after` a soft
  * hot spot. Rest state (PR 5): a resting card paints `.foil` alone, faint dashes and a faint even tint.
+ *
+ * Round 2 (per-card review of the whole family, 2026-11-28: 105 of 200 judged bad): the overlay spectrum sat under a
+ * veil that was clear over a quarter of the card and 14% open everywhere, and the multiply `.glare` painted the same
+ * spectrum at full saturation, so the whole art box took a blue/violet/pink/orange cast and the border dashes read as
+ * cyan/orange blocks at the card's edge. Now every layer is the product of three things: a pool round the light that
+ * ends in black, soft horizontal bars (the same 11.5% period, feathered) and a PALE spectrum (lightness 84%, so it is a
+ * sheen and not a colour). `.foil` screens that product onto 50% grey and overlays it: grey is neutral, so the print
+ * away from the light is untouched, and the pool and its bars brighten the print by its own ink.
+ * `.glare` screens the same product faintly so a dark background still shows the bars. No ladder strips: the bars
+ * cross the silver border because the Live map does.
  */
 
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-holo.fam-sv-holo.fam-sv-holo.fam-sv-holo.foil-svholo.has-foil-map {
-  /* The border dashes: two strips 5% of the card wide down the side borders, 200% tall (5.75% of the layer is 11.5% of
-     the card; a dash is about 2.5%), grey (neutral) with clear gaps; they walk down about one period with the tilt. Only
-     the strips carry them, so the art window never shows thin hard lines. */
-  --svh-ladder: repeating-linear-gradient(180deg,
-    #808080 0%, #808080 4.2%, hsla(0, 0%, 50%, 0) 4.55%, hsla(0, 0%, 50%, 0) 5.4%, #808080 5.75%);
-  --svh-ladder-white: repeating-linear-gradient(180deg,
-    #fff 0%, #fff 4.2%, hsla(0, 0%, 100%, 0) 4.55%, hsla(0, 0%, 100%, 0) 5.4%, #fff 5.75%);
-  --svh-ladder-y: calc((0.3 + var(--py, 0.5) * 0.115) * 100%);
-  /* The light's band: a 300%-tall layer (1% of it is 3% of the card) clear round its middle and veiled away from it:
-     clear over 2.4% of the card, feathering to a 0.82 veil over 2.7% each side (one broad soft band about 8% of the card,
-     a fifth of the art window), then to 0.97 over the next 12% (the dashes beside it fade, the art far off stays print).
-     The middle travels from 10% to 62% of the card's height as the light moves down. */
-  --svh-band-y: calc((0.72 - var(--py, 0.5) * 0.26) * 100%);
-  --svh-falloff: linear-gradient(180deg,
-    hsla(0, 0%, 50%, 0.86) 0%, hsla(0, 0%, 50%, 0.86) 36%, hsla(0, 0%, 50%, 0.5) 45.5%, hsla(0, 0%, 50%, 0.12) 49%,
-    hsla(0, 0%, 50%, 0.12) 51%, hsla(0, 0%, 50%, 0.5) 54.5%, hsla(0, 0%, 50%, 0.86) 64%, hsla(0, 0%, 50%, 0.86) 100%);
-  --svh-falloff-white: linear-gradient(180deg,
-    hsla(0, 0%, 100%, 0.92) 0%, hsla(0, 0%, 100%, 0.92) 36%, hsla(0, 0%, 100%, 0.6) 45.5%, hsla(0, 0%, 100%, 0.2) 49%,
-    hsla(0, 0%, 100%, 0.2) 51%, hsla(0, 0%, 100%, 0.6) 54.5%, hsla(0, 0%, 100%, 0.92) 64%, hsla(0, 0%, 100%, 0.92) 100%);
+  /* The pool: full under the light, black 58% of the way to the far corner. */
+  --svh-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #fff 0%, #e0e0e0 14%, #9a9a9a 32%, #484848 50%, #000 68%);
+  /* The bars: a 200%-tall layer, one soft bar every 5.75% of it (11.5% of the card), walking down with the tilt. */
+  --svh-bars: repeating-linear-gradient(180deg,
+    #6a6a6a 0%, #8c8c8c 1.5%, #fff 2.875%, #8c8c8c 4.25%, #6a6a6a 5.75%);
+  --svh-bars-y: calc((0.3 + var(--py, 0.5) * 0.115) * 100%);
+  /* The hue runs along each bar; pale, so it reads as a sheen. */
   --svh-spectrum-x: calc((0.1 + var(--px, 0.5) * 0.8) * 100%);
   --svh-spectrum: linear-gradient(95deg,
-    hsl(0, 85%, 58%), hsl(30, 90%, 57%), hsl(55, 90%, 56%), hsl(110, 75%, 52%), hsl(178, 85%, 52%),
-    hsl(212, 90%, 60%), hsl(268, 80%, 62%), hsl(322, 85%, 60%), hsl(360, 85%, 58%), hsl(30, 90%, 57%),
-    hsl(55, 90%, 56%), hsl(110, 75%, 52%), hsl(178, 85%, 52%), hsl(212, 90%, 60%), hsl(268, 80%, 62%),
-    hsl(322, 85%, 60%), hsl(360, 85%, 58%));
+    hsl(0, 70%, 86%), hsl(40, 75%, 85%), hsl(110, 55%, 84%), hsl(180, 65%, 84%), hsl(220, 75%, 87%),
+    hsl(275, 65%, 87%), hsl(330, 70%, 86%), hsl(360, 70%, 86%), hsl(40, 75%, 85%), hsl(110, 55%, 84%),
+    hsl(180, 65%, 84%), hsl(220, 75%, 87%), hsl(275, 65%, 87%), hsl(330, 70%, 86%), hsl(360, 70%, 86%));
 }
 
-/* ---- The bars ---------------------------------------------------------------------------------------------------- */
+/* ---- The bars: overlaid, neutral away from the light ------------------------------------------------------------- */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-holo.fam-sv-holo.fam-sv-holo.fam-sv-holo.foil-svholo.has-foil-map .foil {
-  background-image: var(--svh-ladder), var(--svh-ladder), var(--svh-falloff), var(--svh-spectrum);
-  background-size: 5% 200%, 5% 200%, 100% 300%, 300% 100%;
-  background-position:
-    0% var(--svh-ladder-y),
-    100% var(--svh-ladder-y),
-    50% var(--svh-band-y),
-    var(--svh-spectrum-x) 50%;
-  background-repeat: repeat-y, repeat-y, no-repeat, no-repeat;
-  background-blend-mode: normal;
-  /* overlay and no saturate/contrast push (per-card review, 2026-11-28): hard-lit at saturate(1.8) contrast(1.5) the
-     band was a glowing magenta/red-blue blob over the Pokémon (Chi-Yu SVP 057, Aerodactyl 142). Overlay scales the
-     tint by the ink under it: the pale background foil takes a pastel band, dark ink stays dark. */
-  filter: saturate(0.85);
-  mix-blend-mode: overlay;
-  opacity: calc((0.4 + var(--card-opacity) * 0.5) * var(--foil-strength, 1));
-}
-/* Resting: the border dashes faint, the window a faint even tint (a card on a table shows a few soft bars on the silver). */
-body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-holo.fam-sv-holo.fam-sv-holo.fam-sv-holo.foil-svholo.has-foil-map:not(.lit):not(.settling) .foil {
-  background-image: var(--svh-ladder), var(--svh-ladder), linear-gradient(hsla(0, 0%, 50%, 0.75), hsla(0, 0%, 50%, 0.75)),
-    var(--svh-spectrum);
-  background-size: 5% 200%, 5% 200%, 100% 100%, 300% 100%;
-  background-position: 0% 35%, 100% 35%, center, 50% 50%;
-  background-repeat: repeat-y, repeat-y, no-repeat, no-repeat;
+  background-image: linear-gradient(#808080, #808080), var(--svh-pool), var(--svh-bars), var(--svh-spectrum);
+  background-size: 100% 100%, 100% 100%, 100% 200%, 170% 100%;
+  background-position: center, center, 50% var(--svh-bars-y), var(--svh-spectrum-x) 50%;
+  background-repeat: no-repeat, no-repeat, repeat-y, no-repeat;
+  background-blend-mode: screen, multiply, multiply, normal;
   filter: none;
-  mix-blend-mode: soft-light;
+  mix-blend-mode: overlay;
+  opacity: calc((0.25 + var(--card-opacity) * 0.6) * var(--foil-strength, 1));
+}
+/* Resting: one faint pale band across the upper art, nothing else. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-holo.fam-sv-holo.fam-sv-holo.fam-sv-holo.foil-svholo.has-foil-map:not(.lit):not(.settling) .foil {
+  background-image: linear-gradient(180deg, #808080 0%, #808080 14%, #c4c8d0 22%, #808080 30%, #808080 100%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: overlay;
   opacity: calc(0.3 * var(--foil-strength, 1));
 }
-/* The glitter: the era's silver points at half the size and well under half the strength (no snow on a pale sky). */
+/* The fine holo grain: silver points, only round the light. */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-holo.fam-sv-holo.fam-sv-holo.fam-sv-holo.foil-svholo.has-foil-map .foil::before {
   background-image: url("/assets/foil/glitter.png"), url("/assets/foil/glitter-flecks.webp");
   background-size: 19% auto, 16% auto;
   background-position: var(--seed-pos), calc(var(--seed-x, 0.5) * -100%) calc(var(--seed-y, 0.5) * 100%);
   background-repeat: repeat;
   background-blend-mode: screen, normal;
-  filter: saturate(0.3) brightness(1.05);
-  mix-blend-mode: screen;
-  opacity: 0.7;
+  filter: saturate(0.2);
+  mix-blend-mode: overlay;
+  opacity: 0.5;
   -webkit-mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    #000 0%, hsla(0, 0%, 0%, 0.5) 35%, hsla(0, 0%, 0%, 0.2) 100%);
+    #000 0%, hsla(0, 0%, 0%, 0.45) 30%, hsla(0, 0%, 0%, 0) 55%);
   mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    #000 0%, hsla(0, 0%, 0%, 0.5) 35%, hsla(0, 0%, 0%, 0.2) 100%);
+    #000 0%, hsla(0, 0%, 0%, 0.45) 30%, hsla(0, 0%, 0%, 0) 55%);
 }
-/* Surging Sparks on (sv8 and later): the photos show the fine glitter, a step more visible. */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-holo.fam-sv-holo.fam-sv-holo.fam-sv-holo.foil-svholo.has-foil-map.svh-late .foil::before {
-  opacity: 0.85;
+  opacity: 0.62;
 }
-/* A soft hot spot under the light, plain silver (no glitter white) elsewhere. */
+/* A soft hot spot under the light. */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-holo.fam-sv-holo.fam-sv-holo.fam-sv-holo.foil-svholo.has-foil-map .foil::after {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(0, 0%, 100%, 0.3) 0%, hsla(0, 0%, 100%, 0.1) 26%, hsla(0, 0%, 100%, 0) 48%, hsla(0, 0%, 50%, 0) 100%);
+    hsla(0, 0%, 100%, 0.22) 0%, hsla(0, 0%, 100%, 0.08) 22%, hsla(0, 0%, 100%, 0) 42%);
   background-size: 100% 100%;
   background-repeat: no-repeat;
   mix-blend-mode: normal;
@@ -111,10 +101,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-holo.fam-sv-holo.fam-sv-holo.fam-sv-hol
   opacity: 1;
 }
 
-/* ---- Pale print: the bars in colour where soft-light barely tints ---------------------------------------------------
-   Cut to the Live map like `.foil`; replaces the era's overlay gloss. A multiply copy of the same ladder and dominant
-   band in saturated colour (white is neutral): a pale sky or the silver border takes the band and dashes, while dark
-   ink, which multiply cannot darken visibly, stays as it is. */
+/* ---- Dark print: the same bars screened faintly, so a black background still shows them ---------------------------
+   Cut to the Live map like `.foil`; the pool ends in black, so nothing is lifted away from the light. */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-holo.fam-sv-holo.fam-sv-holo.fam-sv-holo.foil-svholo.has-foil-map .glare {
   -webkit-mask-image: var(--art), var(--foil-map);
   -webkit-mask-composite: source-in, source-over;
@@ -122,20 +110,14 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-holo.fam-sv-holo.fam-sv-holo.fam-sv-hol
   mask-composite: intersect, add;
   -webkit-mask-size: contain, 100% 100%;
   mask-size: contain, 100% 100%;
-  background-image:
-    var(--svh-ladder-white), var(--svh-ladder-white), var(--svh-falloff-white),
-    linear-gradient(95deg,
-      hsl(0, 95%, 62%), hsl(30, 95%, 60%), hsl(55, 95%, 58%), hsl(110, 80%, 58%), hsl(178, 90%, 56%),
-      hsl(212, 95%, 64%), hsl(268, 85%, 68%), hsl(322, 90%, 66%), hsl(360, 95%, 62%), hsl(30, 95%, 60%),
-      hsl(55, 95%, 58%), hsl(110, 80%, 58%), hsl(178, 90%, 56%), hsl(212, 95%, 64%), hsl(268, 85%, 68%),
-      hsl(322, 90%, 66%), hsl(360, 95%, 62%));
-  background-size: 5% 200%, 5% 200%, 100% 300%, 300% 100%;
-  background-position: 0% var(--svh-ladder-y), 100% var(--svh-ladder-y), 50% var(--svh-band-y), var(--svh-spectrum-x) 50%;
-  background-repeat: repeat-y, repeat-y, no-repeat, no-repeat;
-  background-blend-mode: normal;
-  mix-blend-mode: multiply;
+  background-image: var(--svh-pool), var(--svh-bars), var(--svh-spectrum);
+  background-size: 100% 100%, 100% 200%, 170% 100%;
+  background-position: center, 50% var(--svh-bars-y), var(--svh-spectrum-x) 50%;
+  background-repeat: no-repeat, repeat-y, no-repeat;
+  background-blend-mode: multiply, multiply, normal;
+  mix-blend-mode: screen;
   filter: none;
-  opacity: calc(var(--card-opacity) * 0.5 * var(--foil-strength, 1));
+  opacity: calc(var(--card-opacity) * 0.26 * var(--foil-strength, 1));
 }
 
 /* ---- Faces whose assets fight the foil ---------------------------------------------------------------------------- */
