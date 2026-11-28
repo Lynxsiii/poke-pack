@@ -821,3 +821,6 @@ body.no-motion #view-settings .switch::after { transition: none; }
 }
 @media (hover: hover) { #view-settings .look-tile:not(.on, .is-locked):hover { border-color: var(--k); } }
 @media (min-width: 961px) { #view-settings .look-tiles { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+
+/* A row the current theme has no use for (the Light or dark row off Rotom). */
+#view-settings .set-row[hidden] { display: none; }

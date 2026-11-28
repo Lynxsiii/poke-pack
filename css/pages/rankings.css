@@ -159,7 +159,7 @@
   display: block; margin-top: 18px; padding: 16px 0 0;
   border: 0; border-top: var(--line-w) solid var(--rule);
 }
-.rk-empty-box .rk-ball, .rk-me-none .rk-ball { display: none; }
+.rk-empty-box .rk-ball, .rk-me-none .rk-ball, .rk-me-out .rk-ball { display: none; }
 .rk-empty-box p { margin: 0; line-height: 1.45; }
 .rk-ghosts { display: grid; gap: 8px; }
 /* Loading: dashed places with the cyan band crossing them (rotom.css .rt-skel). */
