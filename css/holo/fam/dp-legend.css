@@ -18,6 +18,15 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-lege
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-legend.fam-dp-legend.fam-dp-legend.fam-dp-legend.fam-dp-legend-bottom { --lg-join: 1; }
 
 /* ---- the foil group: mask = the card's own map (picture + swooshes + attack text; plates, orbs and border matte) ---- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-legend.fam-dp-legend.fam-dp-legend.fam-dp-legend {
+  /* 2026-11-28: the light is local. Two pools at the pointer (the sheen's, and a wider one for the flecks); everything a layer
+     multiplies by them fades to black, and screened black adds nothing, so there is no wash away from the light. */
+  --cz-pool: radial-gradient(ellipse 84% 60% at var(--pointer-x) var(--pointer-y),
+    hsl(0, 0%, 100%) 0%, hsl(0, 0%, 72%) 22%, hsl(0, 0%, 38%) 50%, hsl(0, 0%, 10%) 80%, hsl(0, 0%, 0%) 100%);
+  --cz-pool-wide: radial-gradient(ellipse 88% 64% at var(--pointer-x) var(--pointer-y),
+    hsl(0, 0%, 100%) 0%, hsl(0, 0%, 74%) 22%, hsl(0, 0%, 34%) 50%, hsl(0, 0%, 8%) 80%, hsl(0, 0%, 0%) 100%);
+}
+
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-legend.fam-dp-legend.fam-dp-legend.fam-dp-legend .foil,
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-legend.fam-dp-legend.fam-dp-legend.fam-dp-legend .cure {
   clip-path: none;
@@ -38,31 +47,36 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-lege
    contrast(0.8) Safari needs); the spectrum is two card widths wide across a pair, so what one half does at its join
    the other does at its own. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-legend.fam-dp-legend.fam-dp-legend.fam-dp-legend .foil {
+  /* lit (2026-11-28 site review, 0 of 10 good: "saturated magenta/cyan/green flood plus coloured speckle"). The colour-dodged
+     spectrum repainted the whole picture. A real LEGEND is a mild holo and its art stays saturated: now a pool of light at the
+     pointer times a slow spectrum, screened at a low level, so the picture takes a soft hue near the lamp only. The spectrum is
+     two card widths wide across a pair, so what one half does at its join the other does at its own. */
   background-image:
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsl(0, 0%, 100%) 0%, hsl(0, 0%, 74%) 28%, hsl(0, 0%, 44%) 70%, hsl(0, 0%, 36%) 100%),
-    linear-gradient(120deg, hsl(172, 100%, 50%) 0%, hsl(198, 100%, 56%) 8%, hsl(232, 100%, 66%) 16%, hsl(286, 100%, 64%) 24%, hsl(328, 100%, 62%) 32%, hsl(24, 100%, 58%) 40%, hsl(52, 100%, 54%) 48%, hsl(110, 100%, 50%) 56%, hsl(172, 100%, 50%) 64%, hsl(198, 100%, 56%) 72%, hsl(232, 100%, 66%) 80%, hsl(286, 100%, 64%) 88%, hsl(328, 100%, 62%) 100%);
+    var(--cz-pool),
+    linear-gradient(118deg,
+      hsl(176, 95%, 46%) 0%, hsl(204, 95%, 52%) 12%, hsl(250, 90%, 60%) 24%, hsl(300, 85%, 56%) 36%,
+      hsl(340, 95%, 56%) 48%, hsl(30, 100%, 52%) 60%, hsl(56, 100%, 48%) 72%, hsl(120, 85%, 46%) 86%, hsl(176, 95%, 46%) 100%);
   background-size: 100% 100%, 300% 300%;
   background-position:
     center,
     calc((var(--pointer-from-left, 0.5) * 0.5 + var(--lg-join, 0) * 0.5) * 100%) calc(var(--pointer-from-top, 0.5) * 100%);
   background-repeat: no-repeat;
   background-blend-mode: multiply;
-  filter: brightness(0.55) saturate(1.6) contrast(0.8);
-  mix-blend-mode: color-dodge;
-  opacity: calc((0.62 + var(--pointer-from-center, 0) * 0.38) * var(--card-opacity, 1) * max(1, var(--foil-strength, 1)));
+  filter: none;
+  mix-blend-mode: screen;
+  opacity: calc((0.4 + var(--pointer-from-center, 0) * 0.14) * var(--card-opacity, 1) * var(--foil-strength, 1));
 }
 /* rest: a soft pale band across the picture, light only */
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-legend.fam-dp-legend.fam-dp-legend.fam-dp-legend:not(.lit):not(.settling) .foil {
   background-image:
-    linear-gradient(120deg, hsla(190, 70%, 80%, 0) 10%, hsla(200, 80%, 82%, 0.34) 34%, hsla(280, 70%, 86%, 0.38) 50%, hsla(48, 80%, 84%, 0.3) 62%, hsla(320, 70%, 84%, 0) 86%);
+    linear-gradient(120deg, hsla(190, 70%, 80%, 0) 10%, hsla(200, 80%, 84%, 0.16) 34%, hsla(280, 70%, 86%, 0.18) 50%, hsla(48, 80%, 84%, 0.14) 62%, hsla(320, 70%, 84%, 0) 86%);
   background-size: 200% 100%;
   background-position: calc(var(--lg-join, 0) * 100%) 0;
   background-repeat: no-repeat;
   background-blend-mode: normal;
   filter: none;
   mix-blend-mode: screen;
-  opacity: calc(0.7 * var(--foil-strength, 1));
+  opacity: calc(0.55 * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-legend.fam-dp-legend.fam-dp-legend.fam-dp-legend .foil::before,
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-legend.fam-dp-legend.fam-dp-legend.fam-dp-legend .foil::after {
@@ -72,24 +86,17 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-lege
 /* ---- the cosmos glints: a rainbow seen through a speckle texture (assets/foil/fam/dp-legend/cosmos-glints.webp, the era's cosmos glints without the big discs; laid across the pair, 200% wide) and the
    card's map; screened, so they only add light ---- */
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-legend.fam-dp-legend.fam-dp-legend.fam-dp-legend .cure {
-  background-image: linear-gradient(112deg, hsl(172, 100%, 50%) 0%, hsl(198, 100%, 56%) 8%, hsl(232, 100%, 66%) 16%, hsl(286, 100%, 64%) 24%, hsl(328, 100%, 62%) 32%, hsl(24, 100%, 58%) 40%, hsl(52, 100%, 54%) 48%, hsl(110, 100%, 50%) 56%, hsl(172, 100%, 50%) 64%, hsl(198, 100%, 56%) 72%, hsl(232, 100%, 66%) 80%, hsl(286, 100%, 64%) 88%, hsl(328, 100%, 62%) 100%);
-  background-size: 300% 100%;
-  background-position: calc((var(--pointer-from-left, 0.5) * 0.5 + var(--lg-join, 0) * 0.5) * 100%) 0;
+  /* the glints: the card's own fleck map (legend-<id>-f2.webp, make_cosmos_flecks.py: a sparse sprinkle of soft round dots,
+     black elsewhere) times the wide pool, so only the dots near the light show; the speckle tile laid over the whole picture is
+     gone (it read as coloured confetti over the art) */
+  background-image: var(--cz-pool-wide), var(--foil-map);
+  background-size: 100% 100%, 100% 100%;
+  background-position: center, center;
   background-repeat: no-repeat;
-  background-blend-mode: normal;
-  -webkit-mask-image: var(--foil-map), url("/assets/foil/fam/dp-legend/cosmos-glints.webp");
-  mask-image: var(--foil-map), url("/assets/foil/fam/dp-legend/cosmos-glints.webp");
-  -webkit-mask-size: 100% 100%, 200% auto;
-  mask-size: 100% 100%, 200% auto;
-  -webkit-mask-position: center, clamp(0%, calc(var(--lg-join, 0) * 100%), 100%) 30%;
-  mask-position: center, clamp(0%, calc(var(--lg-join, 0) * 100%), 100%) 30%;
-  -webkit-mask-repeat: no-repeat, no-repeat;
-  mask-repeat: no-repeat, no-repeat;
-  -webkit-mask-composite: source-in, source-over;
-  mask-composite: intersect, add;
-  filter: brightness(1.5) saturate(1.5);
+  background-blend-mode: multiply, normal;
+  filter: hue-rotate(calc(var(--pointer-from-left, 0.5) * 270deg + var(--pointer-from-top, 0.5) * 90deg)) brightness(2.3) saturate(1.3);
   mix-blend-mode: screen;
-  opacity: calc((0.5 + var(--pointer-from-center, 0) * 0.5) * var(--card-opacity, 1) * max(1, var(--foil-strength, 1)));
+  opacity: calc(var(--card-opacity, 1) * max(1, var(--foil-strength, 1)));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.fam-dp-legend.fam-dp-legend.fam-dp-legend.fam-dp-legend .cure::after {
   content: none;

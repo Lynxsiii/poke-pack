@@ -29,6 +29,7 @@ export function famExtras(card, url, base) {
   if (!claims(card)) return null;
   const id = String(card.id);
   const cut = id.indexOf("-");
-  const map = `assets/foil/fam/dp-cosmos-holo/${id.slice(0, cut)}/${id.slice(cut + 1)}.webp`;
+  // -f2 (2026-11-28, scripts/make_cosmos_flecks.py): the same foil area, the flecks redrawn from the scan as soft round dots
+  const map = `assets/foil/fam/dp-cosmos-holo/${id.slice(0, cut)}/${id.slice(cut + 1)}-f2.webp`;
   return { classes: "fam-dp-cosmos-holo has-foil-map", style: `--foil-map:url('${url(map)}')`, cure: true };
 }

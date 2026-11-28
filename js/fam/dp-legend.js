@@ -26,6 +26,7 @@ export function claims(card) {
 export function famExtras(card, url, base) {
   if (!claims(card)) return null;
   const half = legendHalf(card);
-  const map = `assets/foil/fam/dp-legend/legend-${card.id}.webp`;
+  // -f2 (2026-11-28, scripts/make_cosmos_flecks.py): the same foil area, plus the fleck dots in the colour channels
+  const map = `assets/foil/fam/dp-legend/legend-${card.id}-f2.webp`;
   return { classes: `fam-dp-legend${half ? ` fam-dp-legend-${half}` : ""} has-foil-map`, style: `--foil-map:url('${url(map)}')`, cure: true };
 }
