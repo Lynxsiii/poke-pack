@@ -170,7 +170,7 @@ import { normalizeBinderLook, resolveBinderLook, COLOR_FROM_CARDS } from "./bind
 import { hexToHsl, hslToHex, mixHex } from "./card-accent.js";
 import { cachedCardAccents, sampleCardAccents } from "./card-art-accent.js?v=1";
 import { initBinderEditor } from "./binder-editor.js?v=6";
-import { renderNotesPage } from "./notes-page.js?v=3";
+import { renderNotesPage } from "./notes-page.js?v=4";
 import { renderLegalPage, LEGAL_TITLES } from "./legal-page.js?v=9";
 import { ageFieldsHtml, agreeRowHtml, readAgeFields, ageBlocked, blockAge, UNDERAGE_HTML, syncTermsSheet } from "./terms-sheet.js?v=1";
 
@@ -10878,7 +10878,7 @@ let tcgLoading = null;
 function showTcg() {
   if (tcgPage) return tcgPage.show(tcgPath);
   els.viewTcg.innerHTML = `<div class="tg-page"><div class="rt-skel tg-loading">Loading</div></div>`;
-  tcgLoading ||= import("./tcg-page.js?v=47")
+  tcgLoading ||= import("./tcg-page.js?v=48")
     .then(({ initTcg }) => {
       tcgPage = initTcg({
         root: els.viewTcg,

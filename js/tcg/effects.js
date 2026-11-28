@@ -137,6 +137,15 @@ const COUNTS = {
   // "damage counter on all of your Magikarp": `type` a kind (fits).
   ownCounters: (ctx, what) => slotsOf(sideOf(ctx, true)).filter((s) => fits(defIn(ctx, s), what)).reduce((n, s) => n + s.damage / 10, 0),
   selfConditions: (ctx) => conditionsOn(ctx.slot).length,
+  // "for each of your Pokémon that has "Tauros" in its name that has any damage counters on it".
+  ownDamagedKind: (ctx, what) => slotsOf(sideOf(ctx, true)).filter((s) => s.damage > 0 && fits(defIn(ctx, s), what)).length,
+  // "for each Pokémon Tool attached to all Pokémon" (both sides).
+  allTools: (ctx) => [...slotsOf(sideOf(ctx, true)), ...slotsOf(sideOf(ctx))].reduce((n, s) => n + toolsIn(s).length, 0),
+  // "for each Lightning Energy attached to all of your Iono's Pokémon": `type` "Type|kind".
+  kindEnergy: (ctx, key) => {
+    const [type, what] = key.split("|");
+    return slotsOf(sideOf(ctx, true)).filter((s) => fits(defIn(ctx, s), what)).reduce((n, s) => n + unitsOf(ctx, s, type), 0);
+  },
   // Energy cards of a kind on Pokémon (`type` "on|kind[:Type]": on "self", "foe", "both", "own", "foes", "all"; kind "basic", "special").
   energyKind: (ctx, key) => {
     const [on, kind] = key.split("|");
@@ -294,6 +303,15 @@ const TESTS = {
   benchDamagedKind: (ctx, { what }) => sideOf(ctx, true).bench.some((s) => s.damage > 0 && fits(defIn(ctx, s), what)),
   foeBenchAtLeast: (ctx, { k }) => sideOf(ctx).bench.length >= k,
   foeGxUsed: (ctx) => Boolean(sideOf(ctx).gxUsed),
+  // "If Beldum and Metang are on your Bench": every one of the names.
+  ownHasAll: (ctx, { names, bench = false }) => names.every((name) => (bench ? sideOf(ctx, true).bench : slotsOf(sideOf(ctx, true))).some((s) => defIn(ctx, s).name === name)),
+  moreEnergy: (ctx) => Boolean(ctx.target) && unitsOf(ctx, ctx.slot) > unitsOf(ctx, ctx.target),
+  foeRetreatAtLeast: (ctx, { k }) => Boolean(ctx.target) && retreatCost(ctx.state, ctx.target, ctx.defs) >= k,
+  // "If any of your Pokémon in play are the same type as any of your opponent's Pokémon in play".
+  sharedType: (ctx) => {
+    const theirs = new Set(slotsOf(sideOf(ctx)).flatMap((s) => defIn(ctx, s).types || []));
+    return slotsOf(sideOf(ctx, true)).some((s) => (defIn(ctx, s).types || []).some((t) => theirs.has(t)));
+  },
 };
 /** Tests that hold all turn long (history), so an effect after the damage may ask them too. */
 /** The attacks this player's Pokémon used during their last turn (engine.js keeps side.attacks). */
@@ -528,7 +546,7 @@ export const OPS = {
    * included, with Weakness and Resistance for it alone), "ownBench". `count` 0 is all of them;
    * otherwise the attacker chooses that many, when there are more than that to choose from.
    */
-  spread(ctx, { n, to = "bench", count = 0, noTyping = false, pierce = false, damaged = null, per = "", type = "", only = null, stage = "", boxes = null, typed = false, perCounter = false, energized = false, ptype = "" }) {
+  spread(ctx, { n, to = "bench", count = 0, noTyping = false, pierce = false, damaged = null, per = "", type = "", only = null, stage = "", boxes = null, typed = false, perCounter = false, energized = false, ptype = "", special = false, notSelf = false }) {
     const { state, player, events } = ctx;
     // "for each Grass Energy attached to this Pokémon": that much for each (COUNTS).
     if (per) n *= COUNTS[per](ctx, type);
@@ -549,7 +567,7 @@ export const OPS = {
     // `only`: these spots (coins flipped for each); `stage`, `boxes`: only their Basic Pokémon, their Pokémon V ...
     const kind = (slot) => {
       const def = defOf(state, slot.uid, ctx.defs);
-      return (!stage || def.stage === stage) && (!boxes || boxes.includes(def.box)) && (!ptype || def.types.includes(ptype));
+      return (!stage || def.stage === stage) && (!boxes || boxes.includes(def.box)) && (!ptype || def.types.includes(ptype)) && (!special || slot.energy.some((uid) => !defOf(state, uid, ctx.defs).basic)) && (!notSelf || slot !== ctx.slot);
     };
     const p = to === "ownBench" || to === "ownAny" ? player : other(player);
     const side = state.players[p];
@@ -920,6 +938,18 @@ export const OPS = {
     if (n <= 0) return;
     slot.damage += n;
     events.push({ t: "damage", p: foe, spot: ACTIVE, n });
+  },
+  /** "Put damage counters on each of your opponent's Benched Pokémon until its remaining HP is 100". */
+  countersToEach(ctx, { hp }) {
+    const { state, player, defs, events } = ctx;
+    const foe = other(player);
+    state.players[foe].bench.forEach((slot, spot) => {
+      if (warded(state, slot, { player, src: "attack" }, defs) || benchSafe(state, slot, spot, defs, false)) return;
+      const n = hpLeft(state, slot, defs) - hp;
+      if (n <= 0) return;
+      slot.damage += n;
+      events.push({ t: "damage", p: foe, spot, n });
+    });
   },
   /** "Knock Out your opponent's Active Pokémon. If your opponent's Active Pokémon is Knocked Out in this way, this Pokémon does 200 damage to itself." */
   knockOutRecoil(ctx, { n }) {
@@ -1784,6 +1814,14 @@ const ENERGY_ON = {
 /** More of what "for each ..." counts (countOf): Pokémon of a kind, Energy cards of a kind, types of Energy. */
 function moreCounts(p) {
   let m;
+  if ((m = p.match(/^(?:of )?your Pokémon that has "(.+?)" in its name that has any damage counters on it$/))) return { per: "ownDamagedKind", type: `pokemon~${m[1]}` };
+  if (/^Pokémon Tools? attached to all Pokémon$/.test(p)) return { per: "allTools", type: "" };
+  if ((m = p.match(/^(?:of )?your Benched Pokémon that has "(.+?)" in its name$/))) return { per: "benchKind", type: `pokemon~${m[1]}` };
+  if ((m = p.match(/^(?:of )?your Benched Pokémon that has a maximum HP of (\d+)$/))) return { per: "benchKind", type: `pokemon@${m[1]}` };
+  if ((m = p.match(/^Pokémon in play that has "(.+?)" or "(.+?)" in its name \(both yours and your opponent's\)$/))) return { per: "allKind", type: `pokemon~${m[1]}|pokemon~${m[2]}` };
+  if ((m = p.match(/^Supporter cards? that has "(.+?)" in its name in your discard pile$/))) return { per: "discardKind", type: `supporter~${m[1]}` };
+  if ((m = p.match(/^Basic Energy attached to (.+)$/)) && ENERGY_ON[m[1]]) return { per: "energyKind", type: `${ENERGY_ON[m[1]]}|basic` };
+  if ((m = p.match(new RegExp(`^${TYPE} Energy attached to all of your (.+)$`))) && monWhat(m[2]) && m[2] !== "Pokémon") return { per: "kindEnergy", type: `${m[1]}|${monWhat(m[2])}` };
   // The Lost Zone.
   if (/^(?:of )?your Pokémon, except (?:◇|p) \(Prism Star\) Pokémon, in the Lost Zone$/.test(p)) return { per: "lostNoPrism", type: "" };
   if (/^(?:of )?your Pokémon in the Lost Zone$/.test(p)) return { per: "lostKind", type: "pokemon" };
@@ -1857,6 +1895,10 @@ function monWhat(words) {
   if (/^Ultra Beasts?$/.test(words)) return "+Ultra Beast";
   if ((m = words.match(/^([A-Z][\w.]*(?: [A-Z][\w.]*)?'s) Pokémon$/))) return `pokemon~${m[1]}`;
   if (BOXES[words]) return BOXES[words].map((b) => `box=${b}`).join("|");
+  if ((m = words.match(new RegExp(`^Stage (1|2) ${POKE_TYPE} Pokémon$`)))) return `stage${m[1]}&&pokemon:${m[2]}`;
+  if (words === "Tera Pokémon") return "tera";
+  if ((m = words.match(/^([A-Z][\w.'é♀♂-]*) ex$/u))) return `name=${m[1]} ex`;
+  if ((m = words.match(/^Pokémon that has "(.+?)" in its name$/))) return `pokemon~${m[1]}`;
   if ((m = words.match(/^(.+?) and (.+)$/)) && monWhat(m[1]) && monWhat(m[2])) return `${monWhat(m[1])}|${monWhat(m[2])}`;
   // A name: "Magikarp", "Dark Magneton" (no kind words in it).
   if (/^[A-Z][\w.'é♀♂-]*(?: [A-Z][\w.'é♀♂-]*)?$/u.test(words) && !/\b(?:Pokémon|Energy|Trainer|Supporter|Item|Stadium|Prize|Bench|Basic|Evolution)\b/.test(words)) return `name=${words}`;
@@ -1985,11 +2027,11 @@ function moreTests(p) {
   if ((m = p.match(/^you played (.+?) from your hand during this turn$/))) {
     const tag = m[1].match(/^an? (Ancient|Future|Rapid Strike|Single Strike|Fusion Strike) Supporter card$/);
     const w = tag ? `supporter+${tag[1]}` : /^[A-Z][\w.'é-]*(?: [A-Z][\w.'é-]*)*$/.test(m[1]) && !/\b(?:Supporter|Item|Trainer|card)\b/.test(m[1]) ? `trainer=${m[1]}` : "";
-    return w ? { test: "played", what: w } : null;
+    if (w) return { test: "played", what: w };
   }
   if ((m = p.match(/^you have (\d+) or more (.+?) in your discard pile$/))) {
     const w = whatOf(m[2].replace(/s$/, "")) || what(m[2]);
-    return w ? { test: "discardAtLeast", k: Number(m[1]), what: w } : null;
+    if (w) return { test: "discardAtLeast", k: Number(m[1]), what: w };
   }
   if (new RegExp(`^${OPP} has no Retreat Cost$`).test(p)) return { test: "foeNoRetreat" };
   if (/^this Pokémon has full HP$/.test(p)) return { test: "selfDamaged", not: true };
@@ -2025,6 +2067,29 @@ function batch9Tests(p) {
   if (/^your opponent has already used their GX attack$/.test(p)) return { test: "foeGxUsed" };
   // "If 1 of your Pokémon used Bubble during your last turn": any of them, this one too (`who` "*").
   if ((m = p.match(/^1 of your ([A-Z][\w.'é♀♂ -]*?) used ([A-Z].+) during your last turn$/))) return { test: "usedLast", name: m[2], who: m[1] === "Pokémon" ? "*" : m[1] };
+  return stdTests(p);
+}
+
+/** What the last Standard attacks ask (testOf). */
+function stdTests(p) {
+  let m;
+  const NAME = "[A-Z][\\w.'é♀♂-]*";
+  if (/^this Pokémon didn't move from the Bench to the Active Spot during this turn$/.test(p)) return { test: "movedUp", not: true };
+  if ((m = p.match(new RegExp(`^you don't have (${NAME})(?: and (${NAME}))? on your Bench$`)))) return m[2] ? { test: "ownHasAll", names: [m[1], m[2]], bench: true, not: true } : { test: "ownHasKind", what: `name=${m[1]}`, bench: true, not: true };
+  if ((m = p.match(new RegExp(`^(${NAME}) and (${NAME}) are on your Bench$`)))) return { test: "ownHasAll", names: [m[1], m[2]], bench: true };
+  if ((m = p.match(/^a Pokémon that has "(.+?)" in its name is on your Bench$/))) return { test: "ownHasKind", what: `pokemon~${m[1]}`, bench: true };
+  if ((m = p.match(/^you don't have (\d+) or more (.+?) in your discard pile$/))) {
+    const w = whatOf(m[2].replace(/s$/, "")) || monWhat(m[2]);
+    return w ? { test: "discardAtLeast", k: Number(m[1]), what: w, not: true } : null;
+  }
+  if ((m = p.match(/^you have (\d+) or more Pokémon that have the (.+) Ability in your discard pile$/))) return { test: "discardAtLeast", k: Number(m[1]), what: `ability=${m[2]}` };
+  if ((m = p.match(/^you played a Supporter card that has "(.+?)" in its name from your hand during this turn$/))) return { test: "played", what: `supporter~${m[1]}` };
+  if ((m = p.match(/^([A-Z][\w.'é-]*(?: [A-Z][\w.'é-]*)+) is in your discard pile$/))) return { test: "discardHas", what: `card=${m[1]}` };
+  if ((m = p.match(/^this Pokémon has no ([A-Z][\w']*(?: [A-Z][\w']*)* Energy) attached(?: to it)?$/))) return { test: "energyCard", name: m[1], not: true };
+  if ((m = p.match(/^you have (\d+) or more Energy in play$/))) return { test: "ownEnergyAtLeast", k: Number(m[1]) };
+  if (new RegExp(`^this Pokémon has more Energy attached(?: to it)? than ${OPP}$`).test(p)) return { test: "moreEnergy" };
+  if ((m = p.match(new RegExp(`^the Retreat Cost of ${OPP} is ((?:Colorless)+) or more$`)))) return { test: "foeRetreatAtLeast", k: m[1].length / 9 };
+  if (/^any of your Pokémon in play are the same type as any of your opponent's Pokémon in play$/.test(p)) return { test: "sharedType" };
   return null;
 }
 
@@ -3313,6 +3378,27 @@ const BATCH10 = [
 ];
 PATTERNS.push(...BATCH10);
 
+/** The last Standard attacks (2026-11-28). */
+const BATCH_STD = [
+  [/^Flip a coin\. If heads, choose 1 of your opponent's (Benched )?Pokémon\. Shuffle that Pokémon and all (?:attached cards|cards attached to it) into (?:their|your opponent's) deck\.$/, (m) => [{ op: "flip", when: "after", heads: [{ op: "shuffleFoeOne", where: m[1] ? "bench" : "any" }] }]],
+  [/^Shuffle 1 of your opponent's (Benched )?Pokémon and all (?:attached cards|cards attached to it) into (?:their|your opponent's) deck\.$/, (m) => [{ op: "shuffleFoeOne", when: "after", where: m[1] ? "bench" : "any" }]],
+  [/^If (.+?), this attack does (\d+) damage\.$/, (m) => {
+    const t = testOf(m[1]);
+    return t && [{ op: "baseIf", when: "before", n: Number(m[2]), ...t }];
+  }],
+  [/^If (.+?), ignore all Energy in this attack's cost\.$/, (m) => {
+    const t = testOf(m[1]);
+    return t && [{ op: "costIf", when: "before", ...t, cost: [] }];
+  }],
+  [/^This attack does (\d+) damage to 1 of your opponent's Pokémon that has any Special Energy attached\.(?: \(Don't apply Weakness and Resistance for Benched Pokémon\.\))?$/, (m) => [{ op: "spread", when: "after", n: Number(m[1]), to: "any", count: 1, special: true }]],
+  [/^This attack does (\d+) damage to 1 of your opponent's Benched Pokémon ex or Benched Pokémon V\.(?: \(Don't apply Weakness and Resistance for Benched Pokémon\.\))?$/, (m) => [{ op: "spread", when: "after", n: Number(m[1]), to: "bench", count: 1, boxes: ["ex", "V", "VMAX", "VSTAR"] }]],
+  [/^This attack does (\d+) damage to each of your opponent's Pokémon ex and Pokémon V\.$/, (m) => [{ op: "spread", when: "after", n: Number(m[1]), to: "any", boxes: ["ex", "V", "VMAX", "VSTAR"] }]],
+  [/^This attack does (\d+) damage to each Pokémon that has any damage counters on it \(both yours and your opponent's\), except for this Pokémon\.(?: \(Don't apply Weakness and Resistance for Benched Pokémon\.\))?$/, (m) => [{ op: "spread", when: "after", n: Number(m[1]), to: "any", damaged: true }, { op: "spread", when: "after", n: Number(m[1]), to: "ownAny", damaged: true, notSelf: true }]],
+  [/^This attack also does (\d+) damage to each Benched Pokémon that has any damage counters on it \(both yours and your opponent's\)\.(?: \(Don't apply Weakness and Resistance for Benched Pokémon\.\))?$/, (m) => [{ op: "spread", when: "after", n: Number(m[1]), to: "bench", damaged: true }, { op: "spread", when: "after", n: Number(m[1]), to: "ownBench", damaged: true }]],
+  [/^Put damage counters on each of your opponent's Benched Pokémon until its remaining HP is (\d+)\.$/, (m) => [{ op: "countersToEach", when: "after", hp: Number(m[1]) }]],
+];
+PATTERNS.push(...BATCH_STD);
+
 /** Basic Pokémon an old search puts onto the Bench, as trainers.js fits reads them, or "". */
 function benchWhat(words) {
   let m;
@@ -3613,6 +3699,13 @@ function byName(plain, name) {
 function tidy(text) {
   return text
     .replace(/\bPokemon\b/g, "Pokémon")
+    .replace(/Hide n' Sneak/g, "Hide 'n' Sneak")
+    .replace(/\{N\}/g, "Dragon")
+    .replace(/oppoennt's/g, "opponent's")
+    .replace(/\bThen Shuffle your deck\./g, "Then, shuffle your deck.")
+    .replace(/^Head (\d+) damage from /, "Heal $1 damage from ")
+    .replace(/ you discarded this way\./g, " you discarded in this way.")
+    .replace(/(^|\. )Place damage counters on /g, "$1Put damage counters on ")
     .replace(/Don't apply Weakness or Resistance for Benched Pokémon/g, "Don't apply Weakness and Resistance for Benched Pokémon")
     .replace(/for Benched Pokémon\)\./g, "for Benched Pokémon.)")
     .replace(/ \(Do the damage before switching the Pokémon\.(?: Switch the Pokémon even if [^.)]+ is [Kk]nocked [Oo]ut\.)?\)/g, "")

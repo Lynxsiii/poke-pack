@@ -160,6 +160,7 @@ export function fits(def, what) {
   if (what.endsWith("!rule")) return def.kind === "pokemon" && !def.rule && fits(def, what.slice(0, -5));
   if (what.endsWith("!ex")) return def.kind === "pokemon" && def.box !== "ex" && fits(def, what.slice(0, -3));
   if (what.endsWith("!gx")) return def.kind === "pokemon" && def.box !== "GX" && fits(def, what.slice(0, -3));
+  if (what.startsWith("ability=")) return def.kind === "pokemon" && def.abilityName === what.slice(8);
   if (what.startsWith("name=")) return def.kind === "pokemon" && def.name === what.slice(5);
   // A card of any kind by its name ("an Ethan's Adventure card", "Spiky Energy cards"); "not:" what doesn't fit.
   if (what.startsWith("card=")) return def.name === what.slice(5);
