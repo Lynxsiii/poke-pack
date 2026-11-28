@@ -337,7 +337,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full
   background-blend-mode: normal, normal;
   filter: none;
   mix-blend-mode: hard-light;
-  opacity: calc(var(--card-opacity) * 0.4 * var(--foil-strength, 1));
+  opacity: calc(var(--card-opacity) * 0.3 * var(--foil-strength, 1));
   /* The ink map alone: it carries the scan's own alpha (rounded corners), so it is the art mask too. */
   -webkit-mask-image: var(--bwfa-ink);
   -webkit-mask-composite: source-over;
@@ -362,10 +362,13 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full
   inset: 0;
   background-image:
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsla(0, 0%, 50%, 0) 0%, hsla(0, 0%, 50%, 0) 35%, hsla(0, 0%, 50%, 0.35) 100%),
+      hsla(0, 0%, 50%, 0.1) 0%, hsla(0, 0%, 50%, 0.3) 30%, hsla(0, 0%, 50%, 0.85) 75%, hsl(0, 0%, 50%) 100%),
+    /* 2026-11-28: one soft pastel cycle in about 1.2 card widths, fading to nothing away from the lamp. The full-strength
+       spectrum every 0.36 of the card read as rainbow stripes down the card's left edge at phone size (every bw1-bw3
+       full art in the full-site check). */
     repeating-linear-gradient(125deg,
-      hsl(330, 85%, 64%) 0%, hsl(275, 70%, 62%) 3%, hsl(215, 85%, 60%) 6%, hsl(185, 85%, 56%) 8.5%,
-      hsl(130, 70%, 58%) 11%, hsl(55, 90%, 60%) 13.5%, hsl(30, 90%, 62%) 15.5%, hsl(330, 85%, 64%) 18%);
+      hsl(330, 50%, 66%) 0%, hsl(275, 42%, 66%) 10%, hsl(215, 50%, 64%) 20%, hsl(185, 50%, 62%) 28%,
+      hsl(130, 42%, 62%) 37%, hsl(55, 55%, 64%) 45%, hsl(30, 55%, 66%) 52%, hsl(330, 50%, 66%) 60%);
   background-size: 100% 100%, 200% 200%;
   background-position: center, var(--background-x) var(--background-y);
   background-repeat: no-repeat, no-repeat;
@@ -391,7 +394,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full
    white stays white). No image mask: the printed card's radius rounds it. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art:is(.bwfa-sand, .bwfa-pebble) .glare {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(30, 10%, 42%, 0.9) 0%, hsla(30, 10%, 36%, 0.55) 24%, hsla(30, 10%, 30%, 0) 58%);
+    hsla(30, 10%, 42%, 0.5) 0%, hsla(30, 10%, 36%, 0.28) 24%, hsla(30, 10%, 30%, 0) 52%);
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;

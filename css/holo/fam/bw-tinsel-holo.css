@@ -206,41 +206,34 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tins
    Dragon Vault override the lit `.foil` below with a stronger hue in a wider band. */
 /* v4 (2026-11-28, make_tinsel_v4.py; the full-site check still read v3 as a line screen on 30 faces and as no foil on 13
    pale windows). The foil is a field of scattered streaks, each its own dash, colour and brightness, in patches
-   (tinsel-streak-v4.webp), drawn in hard-light so a streak tints pale ink and lifts dark ink. `.foil` shows it faintly
-   over the whole foiled background, at rest and held; `.cure` (held only) shows it plainly, under a second layer of
-   longer near-white streaks that slides with the tilt (tinsel-hot-v4.webp), inside a soft flat pool on the lamp (a third
-   mask layer), so the light is local and the far side of the window stays the print. No ridge grid, no gap shading, no
-   dots. */
+   (tinsel-streak-v4.webp), with a second field of longer streaks that slides with the tilt (tinsel-hot-v4.webp). No
+   ridge grid, no gap shading, no dots.
+   The streaks go on in `overlay`: the foil shows through the ink in proportion to how light the ink is, so a streak
+   tints pale and mid ink in its own colour and leaves black ink nearly black (in hard-light the same streaks were
+   rainbow static over every dark window: Virizion 13/101, Serperior 6/114, Dratini). At rest `.foil` shows them faintly
+   over the whole foiled background. Held, `.cure` shows them plainly inside a soft flat pool on the lamp (a third mask
+   layer) and nearly not at all on the far side of the window, and `.foil` adds the long streaks as silver light
+   (hard-light, desaturated, low) in a tighter pool, so a dark window still catches the lamp. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo:is(.bwt-tinsel, .bwt-vault) {
   --bwt-streaks: url("/assets/foil/fam/bw-tinsel-holo/tinsel-streak-v4.webp");
   --bwt-hot: url("/assets/foil/fam/bw-tinsel-holo/tinsel-hot-v4.webp");
-  --bwt-rest: 0.2;
+  --bwt-rest: 0.4;
+  --bwt-silver-k: 0.9;
   --bwt-pw: 62%;
   --bwt-ph: 30%;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo:is(.bwt-tinsel, .bwt-vault) .foil {
-  background-image: var(--bwt-streaks);
-  background-size: 100% 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-blend-mode: normal;
-  mix-blend-mode: hard-light;
-  filter: none;
-  opacity: calc(var(--bwt-rest) * var(--foil-strength, 1));
-}
-body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo:is(.bwt-tinsel, .bwt-vault) .foil::before {
-  background-image: none;
-  opacity: 0;
-}
-body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo:is(.bwt-tinsel, .bwt-vault) .cure {
-  background-image: var(--bwt-hot), var(--bwt-streaks);
+  /* tinsel-silver-v4.webp (the long streaks as low silver light: a dark window still catches the lamp) over
+     tinsel-tint-v4.webp (the fine streaks as tints whose strongest channel is hard-light's neutral 0.5: a coloured
+     line on pale ink, where overlay can add nothing, and no change on dark ink) */
+  background-image: url("/assets/foil/fam/bw-tinsel-holo/tinsel-silver-v4.webp"), url("/assets/foil/fam/bw-tinsel-holo/tinsel-tint-v4.webp");
   background-size: 120% 100%, 100% 100%;
   background-position: var(--background-x) 0, center;
   background-repeat: no-repeat;
   background-blend-mode: normal, normal;
   mix-blend-mode: hard-light;
   filter: none;
-  opacity: calc(var(--card-opacity) * min(1, 0.85 * var(--bwt-lit)));
+  opacity: calc(var(--card-opacity) * min(1, var(--bwt-silver-k) * var(--bwt-lit)));
   -webkit-mask-image: var(--art), var(--foil-map),
     radial-gradient(ellipse calc(var(--bwt-pw) + var(--pointer-from-center, 0) * 16%) calc(var(--bwt-ph) + var(--pointer-from-center, 0) * 8%)
       at var(--pointer-x) var(--bwt-sheen-y),
@@ -254,9 +247,50 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tins
   -webkit-mask-size: contain, 100% 100%, 100% 100%;
   mask-size: contain, 100% 100%, 100% 100%;
 }
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo:is(.bwt-tinsel, .bwt-vault):not(.lit):not(.settling) .foil {
+  background-image: var(--bwt-streaks);
+  background-size: 100% 100%;
+  background-position: center;
+  mix-blend-mode: overlay;
+  filter: none;
+  opacity: calc(var(--bwt-rest) * var(--foil-strength, 1));
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo:is(.bwt-tinsel, .bwt-vault) .foil::before {
+  background-image: none;
+  opacity: 0;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo:is(.bwt-tinsel, .bwt-vault) .cure {
+  background-image: var(--bwt-hot), var(--bwt-streaks);
+  background-size: 120% 100%, 100% 100%;
+  background-position: var(--background-x) 0, center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal, normal;
+  mix-blend-mode: overlay;
+  filter: none;
+  opacity: calc(var(--card-opacity) * min(1, 0.9 * var(--bwt-lit)));
+  -webkit-mask-image: var(--art), var(--foil-map),
+    radial-gradient(ellipse calc(var(--bwt-pw) + var(--pointer-from-center, 0) * 16%) calc(var(--bwt-ph) + var(--pointer-from-center, 0) * 8%)
+      at var(--pointer-x) var(--bwt-sheen-y),
+      hsl(0, 0%, 0%) 0%, hsla(0, 0%, 0%, 0.75) 35%, hsla(0, 0%, 0%, 0.25) 70%, hsla(0, 0%, 0%, 0.14) 100%);
+  -webkit-mask-composite: source-in, source-in, source-over;
+  mask-image: var(--art), var(--foil-map),
+    radial-gradient(ellipse calc(var(--bwt-pw) + var(--pointer-from-center, 0) * 16%) calc(var(--bwt-ph) + var(--pointer-from-center, 0) * 8%)
+      at var(--pointer-x) var(--bwt-sheen-y),
+      hsl(0, 0%, 0%) 0%, hsla(0, 0%, 0%, 0.75) 35%, hsla(0, 0%, 0%, 0.25) 70%, hsla(0, 0%, 0%, 0.14) 100%);
+  mask-composite: intersect, intersect, add;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
+}
 /* The Dragon Vault: the same Tinsel, stronger. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-vault {
-  --bwt-rest: 0.4;
+  --bwt-rest: 0.5;
+  --bwt-silver-k: 1;
   --bwt-pw: 80%;
   --bwt-ph: 38%;
 }

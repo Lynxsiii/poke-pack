@@ -10,6 +10,8 @@ ink (hard-light: the weak channel multiplies to about x0.6) and lift dark ink.
 - tinsel-streak-v4.webp (600 x 840, RGBA): the field of fine streaks. Faint over the window at rest, plain round the lamp.
 - tinsel-hot-v4.webp (720 x 840, RGBA): fewer, longer, near-white streaks with a bright core: the flash in the lamp's
   pool, slid sideways by the tilt (the layer is 120 % wide).
+- tinsel-silver-v4.webp: the same long streaks, desaturated, low alpha: light for a dark window (hard-light).
+- tinsel-tint-v4.webp: the fine streaks as hard-light tints that only darken (strongest channel 0.5): colour on pale ink.
 
     python3 .claude/skills/card-textures/scripts/fam/bw-tinsel-holo/make_tinsel_v4.py [--force] [--preview <png>]
 """
@@ -81,7 +83,17 @@ def main():
     args = ap.parse_args()
     streak = draw(20411, 600, 4200, (24, 120), (0.75, 1.2), 0.4, (0.52, 0.60), 0.85, 0.1)
     hot = draw(20412, 720, 900, (40, 170), (0.9, 1.6), 0.5, (0.54, 0.62), 0.85, 0.04)
-    for arr, name in ((streak, f"tinsel-streak-{V}.webp"), (hot, f"tinsel-hot-{V}.webp")):
+    # the long streaks as silver light for dark windows (hard-light source over 0.5: it only lifts), low alpha
+    luma = hot[..., :3] @ np.array([0.299, 0.587, 0.114])
+    silver = np.dstack([hot[..., :3] * 0.3 + luma[..., None] * 0.7, hot[..., 3] * 0.34])
+    # the fine streaks as a tint for pale windows: each colour scaled so its strongest channel is hard-light's neutral
+    # 0.5 and its weakest about 0.27 (x0.54): a coloured line on white ink, nothing on dark ink
+    c = streak[..., :3]
+    mx = np.maximum(c.max(axis=2, keepdims=True), 1e-3)
+    tint = np.dstack([0.5 * (1 - 0.6 * (1 - c / mx)), streak[..., 3] * 0.85])
+    tint[..., :3][streak[..., 3] < 1e-3] = 0.5
+    for arr, name in ((streak, f"tinsel-streak-{V}.webp"), (hot, f"tinsel-hot-{V}.webp"),
+                      (silver, f"tinsel-silver-{V}.webp"), (tint, f"tinsel-tint-{V}.webp")):
         path = OUT / name
         if path.exists() and not args.force:
             raise SystemExit(f"{path} exists: a changed texture needs a new version (--force only before it ships)")
