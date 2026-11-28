@@ -2695,6 +2695,14 @@ body.no-motion #price-dialog .price-stage { animation: none !important; }
   image-rendering: pixelated;
   image-rendering: crisp-edges;
 }
+/* A sprite (pixel or animated picture) in any round face: the whole canvas is laid in the face, then moved and
+   zoomed so the Pokémon itself is centred and fills the same share of it (js/avatar-fit.js, avatarFit in
+   js/cosmetics.js). One rule for every face, so it has to beat each face's own art sizing. */
+img.av-fit {
+  width: 100% !important; height: 100% !important; object-fit: contain !important;
+  transform: scale(var(--as, 1)) translate(var(--ax, 0%), var(--ay, 0%)) !important;
+  image-rendering: pixelated;
+}
 .user-face.xs { width: 22px; height: 22px; }
 .user-face.sm { width: 32px; height: 32px; }
 .user-face.md { width: 52px; height: 52px; }

@@ -54,6 +54,7 @@ import { roomLine } from "./gate-notice.js";
 import {
   AVATARS,
   avatarSrc,
+  avatarFit,
   avatarStyle,
   avatarPixel,
   avatarFallback,
@@ -1072,7 +1073,7 @@ function paintHud(trainer) {
   if (face) {
     face.classList.toggle("pixel", Boolean(trainer) && avatarPixel(trainer.avatarStyle));
     face.innerHTML = trainer
-      ? `<img src="${esc(avatarSrc(trainer.avatar, trainer.avatarStyle, { still: true }))}" alt="" />`
+      ? `<img src="${esc(avatarSrc(trainer.avatar, trainer.avatarStyle, { still: true }))}"${avatarFit(trainer.avatar, trainer.avatarStyle, { still: true })} alt="" />`
       : `<img src="assets/mark-v3.png" alt="" />`;
     if (trainer) face.style.setProperty("--avatar", avatarColor(trainer.color).hex);
   }
@@ -1121,7 +1122,7 @@ function renderHeader() {
   if (trainer && els.trainerChip) {
     const color = avatarColor(trainer.color);
     els.trainerChip.style.setProperty("--avatar", color.hex);
-    els.trainerAvatar.innerHTML = `<img src="${esc(avatarSrc(trainer.avatar, trainer.avatarStyle, { still: true }))}" alt="" />`;
+    els.trainerAvatar.innerHTML = `<img src="${esc(avatarSrc(trainer.avatar, trainer.avatarStyle, { still: true }))}"${avatarFit(trainer.avatar, trainer.avatarStyle, { still: true })} alt="" />`;
     els.trainerAvatar.classList.toggle("pixel", avatarPixel(trainer.avatarStyle));
     els.trainerChipName.textContent = trainer.name;
     els.trainerChipHandle.textContent = `@${trainer.handle}`;
@@ -1133,7 +1134,7 @@ function renderHeader() {
 function paintMeMenus(trainer) {
   const xp = trainer && state.xp ? levelUi.xpOf(state) : null;
   const face = trainer
-    ? `<img src="${esc(avatarSrc(trainer.avatar, trainer.avatarStyle, { still: true }))}" alt="" />`
+    ? `<img src="${esc(avatarSrc(trainer.avatar, trainer.avatarStyle, { still: true }))}"${avatarFit(trainer.avatar, trainer.avatarStyle, { still: true })} alt="" />`
     : `<img src="assets/mark-v3.png" alt="" />`;
   const pixel = Boolean(trainer) && avatarPixel(trainer.avatarStyle);
   const set = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; };
@@ -4110,7 +4111,7 @@ function colorPicks(selected, attr = "data-color", label = "Avatar colour") {
 function avatarMark(trainer, extraClass = "trainer-mark") {
   const color = avatarColor(trainer?.color);
   const pixel = avatarPixel(trainer?.avatarStyle) ? " pixel" : "";
-  const mark = `<div class="${extraClass}${pixel}" style="--avatar:${esc(color.hex)}"><img src="${esc(avatarSrc(trainer?.avatar, trainer?.avatarStyle))}" alt="" /></div>`;
+  const mark = `<div class="${extraClass}${pixel}" style="--avatar:${esc(color.hex)}"><img src="${esc(avatarSrc(trainer?.avatar, trainer?.avatarStyle))}"${avatarFit(trainer?.avatar, trainer?.avatarStyle)} alt="" /></div>`;
   const frame = userFrame(trainer);
   return frame ? frameHtml(mark, frame, { size: "xl", color: color.hex }) : mark;
 }
