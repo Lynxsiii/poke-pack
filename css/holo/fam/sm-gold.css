@@ -55,11 +55,17 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gol
     #000 0%, #000 16%, rgba(0, 0, 0, 0.6) 36%, rgba(0, 0, 0, 0.15) 58%, rgba(0, 0, 0, 0) 75%);
   /* the darkened ridges (.cure, multiplied): about x0.86 on bright gold, under dark_specks.py's 40-level drop */
   --smg-ridge: rgb(196, 168, 128);
-  --smg-ridge-a: 0.62;
+  /* 2026-11-28: was 0.62; at that the multiplied ridges greyed white items and the burst behind them and darkened
+     the Energies' whole field (site review: "item greyed with speckle grain"). */
+  --smg-ridge-a: 0.3;
   /* 2026-11-28: was 0.8 (0.32 on the GX): with the `color` blend that repainted the gold green, cyan and purple
      (per-card review, 6 of 13). Gold stays gold: a hint of hue on the ridges near the light, no more. */
   --smg-prism-a: 0.2;
   --shine-line: 0.06;
+  /* No glitter on these cards (see the header), but the shared etch shine screened its fleck tile on every ridge at
+     0.6: coloured sparkle dots over black straps, red items and dark backgrounds (site review 2026-11-28, 37 of 99
+     bad). Off: the etch itself is the texture. */
+  --shine-glit: 0;
 }
 /* the gold Pokémon-GX: the dense etch covers the field, so the rainbow is held to a tint (Tapu Koko SV93: amber gold,
    a green-cyan tint near the GX bar) */
