@@ -624,7 +624,7 @@ body > .site-footer .footer-links { display: flex; flex-wrap: wrap; gap: 0 20px;
   border: 0; border-radius: var(--r); background: none; color: var(--k-2);
 }
 .radio-peek:hover, .radio.is-open .radio-peek { color: var(--k); }
-.radio-peek svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: square; stroke-linejoin: miter; }
+.radio-peek svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .radio-peek-eq { display: none; position: absolute; right: 5px; top: 8px; align-items: flex-end; gap: 1.5px; height: 9px; }
 .radio.is-playing .radio-peek-eq { display: flex; }
 .radio-peek-eq i { display: block; width: 2px; height: 9px; background: var(--cy-2); transform-origin: 50% 100%; animation: radio-eq 0.7s ease-in-out infinite; }

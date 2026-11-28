@@ -90,7 +90,7 @@ function mountFriends() {
   root.setAttribute("aria-label", "Friends");
   root.innerHTML = `
     <button type="button" class="friends-peek" id="friends-peek" aria-expanded="false" aria-controls="friends-panel" aria-label="Friends">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-people"/></svg>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8.5" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><circle cx="16.5" cy="9.5" r="2.4"/><path d="M15.5 14.2a4.5 4.5 0 0 1 5 4.3"/></svg>
       <span class="friends-peek-live" id="friends-peek-live" hidden></span>
       <span class="friends-peek-count" id="friends-peek-count" aria-hidden="true" hidden>0</span>
     </button>
