@@ -165,7 +165,7 @@ import { initSecurity, securityTabHtml, resetSecurity, securityChanged, finishDi
 import { createShareSheet, pullUrl } from "./share-pull.js?v=5";
 // binder looks: the /binder cover, the customiser and the owner's look on a profile
 import { binderObjectHtml, applyBinderLook } from "./binder-object.js";
-import { watchBinderFx } from "./binder-editions.js";
+import { watchBinderFx, binderFxHtml } from "./binder-editions.js";
 import { normalizeBinderLook, resolveBinderLook, COLOR_FROM_CARDS } from "./binder-looks.js";
 import { hexToHsl, hslToHex, mixHex } from "./card-accent.js";
 import { cachedCardAccents, sampleCardAccents } from "./card-art-accent.js?v=1";
@@ -3165,6 +3165,7 @@ function renderBinder() {
       : wide ? "Use the keys to turn the page. Click a card to look closer." : "Swipe to turn the page. Tap a card to look closer.";
   const trainerName = activeTrainer()?.name || "";
   const front = `<button type="button" class="binder-page binder-front" data-goto="0" aria-label="Open your binder">
+      <span class="binder-cover bf-skin" aria-hidden="true"><span class="binder-fx">${binderFxHtml(binderLookNow().edition)}</span></span>
       <span class="bf-size" aria-hidden="true"><span class="binder-page-toolbar"><span>&nbsp;</span></span><span class="binder-pockets">${'<i class="pocket"></i>'.repeat(BINDER_PAGE)}</span></span>
       <span class="bf-band" aria-hidden="true"></span>
       <span class="bf-plate"><em>Binder</em><b>${esc(lookName || trainerName || "My binder")}</b></span>
