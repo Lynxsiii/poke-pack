@@ -7407,7 +7407,7 @@ export function boxPromoCards(set, lists) {
  * Packs, Collection, Mastery and search all group by this, in SET_CATEGORIES order.
  */
 export const SET_CATEGORIES = [
-  { id: "booster", name: "Sets", one: "Booster set", note: "English expansions with booster packs." },
+  { id: "booster", name: "Sets", one: "Booster set", note: "" },
   { id: "japanese", name: "Japanese", one: "Japanese set", note: "Sets printed in Japan, with Japanese cards and Japanese market prices." },
   { id: "promos", name: "Promos", one: "Black Star Promos", note: "One binder an era. Every card comes in a box." },
   { id: "special", name: "Special packs", one: "Special pack", note: "Happy Meal, Trick or Trade and POP Series." },

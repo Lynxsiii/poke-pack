@@ -6,7 +6,7 @@
   margin-top: 16px; padding: 12px 40px 12px 12px; color: var(--k);
   transition: transform 0.16s var(--ease-out), box-shadow 0.16s var(--ease-out);
 }
-.hub-beta-art { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 4px; background: var(--cy-3); }
+.hub-beta-art { display: grid; place-items: center; width: 64px; height: 64px; border-radius: var(--r-tag); background: var(--cy-3); }
 .hub-beta-art svg { width: 46px; height: 46px; }
 .hub-beta-copy { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .hub-beta-copy b { display: flex; align-items: center; gap: 8px; font: italic 800 21px/1.1 var(--font-xc); letter-spacing: -0.02em; }
@@ -30,7 +30,7 @@
 .bz-field > span:first-child { font: 700 14px var(--font-h); color: var(--k-2); }
 .bz-field b { color: var(--k); font-variant-numeric: tabular-nums; }
 .bz-input {
-  width: 100%; min-width: 0; height: 44px; padding: 0 12px; border: var(--line-w) solid var(--k); border-radius: 6px;
+  width: 100%; min-width: 0; height: 44px; padding: 0 12px; border: var(--line-w) solid var(--k); border-radius: var(--r);
   background: var(--box); color: var(--k); font: 700 17px var(--font-h); font-variant-numeric: tabular-nums;
 }
 .bz-input:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 2px; }
@@ -44,7 +44,7 @@
 .bz-status { margin: 0 0 12px; min-height: 1.4em; font-weight: 700; line-height: 1.4; }
 .bz-status.is-good { color: var(--k); }
 .bz-status.is-good::before, .bz-status.is-bad::before {
-  content: ""; display: inline-block; width: 10px; height: 10px; margin-right: 8px; border: 2px solid var(--k); border-radius: 2px; background: var(--hp); vertical-align: 1px;
+  content: ""; display: inline-block; width: 10px; height: 10px; margin-right: 8px; border: 2px solid var(--k); border-radius: var(--r-tag); background: var(--hp); vertical-align: 1px;
 }
 .bz-status.is-bad::before { background: var(--hp-low); }
 .bz-play { display: grid; gap: 16px; }
@@ -80,7 +80,7 @@
 
 /* ---- Tall Grass ------------------------------------------------------------------ */
 /* A framed patch of grass: the payout over it, an HP bar for the next step, the tiles, what comes next. */
-.bz-patch { max-width: 480px; border: var(--line-w) solid var(--k); border-radius: 6px; overflow: hidden; background: var(--box); }
+.bz-patch { max-width: 480px; border: var(--line-w) solid var(--k); border-radius: var(--r); overflow: hidden; background: var(--box); }
 .bz-patch.is-boom { animation: bz-quake 0.45s linear; }
 @keyframes bz-quake { 15% { transform: translate(-5px, 2px) rotate(-0.6deg); } 30% { transform: translate(5px, -2px) rotate(0.6deg); } 45% { transform: translate(-4px, -1px); } 60% { transform: translate(3px, 2px); } 80% { transform: translate(-2px, 0); } }
 .bz-hud { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; padding: 9px 14px 8px; border-bottom: var(--line-w) solid var(--k); }
@@ -100,7 +100,7 @@
 .bz-safe { display: flex; align-items: center; gap: 10px; margin: 0; padding: 6px 14px; border-bottom: var(--line-w) solid var(--k); font: 700 13px var(--font-h); color: var(--k-2); }
 .bz-safe small { font: inherit; flex: 1; white-space: nowrap; }
 .bz-safe small b { color: var(--k); font-size: 15px; font-variant-numeric: tabular-nums; }
-.bz-safe-bar { flex: 0 0 34%; height: 11px; border: 2px solid var(--k0); border-radius: 6px; background: var(--k0); overflow: hidden; }
+.bz-safe-bar { flex: 0 0 34%; height: 11px; border: 2px solid var(--k0); border-radius: var(--r); background: var(--k0); overflow: hidden; }
 .bz-safe-bar i { display: block; height: 100%; background: var(--hp); transform-origin: 0 50%; transition: transform 0.35s var(--ease-out); }
 .bz-safe.is-mid .bz-safe-bar i { background: var(--hp-mid); }
 .bz-safe.is-low .bz-safe-bar i { background: var(--hp-low); }
@@ -112,7 +112,7 @@
   background-color: var(--soil); background-image: var(--dots); background-size: 14px 14px;
 }
 .bz-tile {
-  position: relative; aspect-ratio: 1; border: var(--line-w) solid var(--k0); border-radius: 6px; padding: 0; overflow: hidden;
+  position: relative; aspect-ratio: 1; border: var(--line-w) solid var(--k0); border-radius: var(--r); padding: 0; overflow: hidden;
   background: var(--grass); color: var(--k0); cursor: pointer;
   transition: transform 0.14s var(--ease-out); -webkit-tap-highlight-color: transparent;
 }
@@ -171,7 +171,7 @@
 .bz-ladder { display: flex; align-items: center; gap: 4px 6px; overflow: hidden; white-space: nowrap; margin: 0; padding: 7px 14px 8px; border-top: var(--line-w) solid var(--k); font: 700 15px var(--font-h); font-variant-numeric: tabular-nums; color: var(--k-2); }
 .bz-ladder small { font: inherit; font-size: 13px; margin-right: 6px; }
 .bz-ladder span + span::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 8px; border-top: 2px solid currentColor; border-right: 2px solid currentColor; transform: rotate(45deg) translateY(-1px); opacity: 0.6; }
-.bz-ladder .is-next { color: var(--k0); font-size: 17px; padding: 3px 9px; border: 2px solid var(--k0); border-radius: 4px; background: var(--yel); transform: skewX(var(--skew)); }
+.bz-ladder .is-next { color: var(--k0); font-size: 17px; padding: 3px 9px; border: 2px solid var(--k0); border-radius: var(--r-tag); background: var(--yel); transform: skewX(var(--skew)); }
 
 /* Tall Grass: how many Voltorb, as quick picks with a step either side. */
 .bz-volts { display: flex; align-items: center; justify-content: space-between; gap: 2px; padding: 4px 10px 4px 14px; border-bottom: var(--line-w) solid var(--k); }
@@ -260,7 +260,7 @@
 /* The price, stuck on the tin like a shop sticker. A high roller's is a gold plate. */
 .bz-tin-tag {
   position: absolute; z-index: 3; left: 50%; bottom: 7cqw; transform: translateX(-50%) rotate(-3deg);
-  display: inline-flex; align-items: center; padding: 1px 9px 2px 6px; border: 2px solid var(--k0); border-radius: 4px;
+  display: inline-flex; align-items: center; padding: 1px 9px 2px 6px; border: 2px solid var(--k0); border-radius: var(--r-tag);
   background: var(--w0); color: var(--k0); font: 700 16px/1.3 var(--font-h); font-variant-numeric: tabular-nums; white-space: nowrap;
 }
 .bz-tin-tag :is(.coin-tag, .cs-coin) { color: inherit; }
@@ -270,7 +270,7 @@
 /* A slab's grade, on a plain picture of its card (the reel, the list of everything inside). */
 .bz-cell-pic { position: relative; display: block; }
 .bz-grade {
-  position: absolute; top: 4%; right: 5%; min-width: 1.75em; padding: 0 0.3em; border: 2px solid var(--k0); border-radius: 4px;
+  position: absolute; top: 4%; right: 5%; min-width: 1.75em; padding: 0 0.3em; border: 2px solid var(--k0); border-radius: var(--r-tag);
   background: var(--w0); color: var(--k0); font: 800 13px/1.45 var(--font-h); font-style: normal; text-align: center;
 }
 .bz-grade[data-g="10"] { background: #f0bf2c; }
@@ -290,7 +290,7 @@
 .bz-view-head { display: grid; gap: 4px; margin: 0 0 14px; }
 .bz-view-back { justify-self: start; padding: 6px 0; }
 .bz-view-name { margin: 0; font: italic 800 30px/1.05 var(--font-xc); letter-spacing: -0.02em; }
-.bz-view-show { border: var(--line-w) solid var(--k); border-radius: 6px; }
+.bz-view-show { border: var(--line-w) solid var(--k); border-radius: var(--r); }
 .bz-chase {
   display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
   padding: 22px max(18px, calc(50% - min(104px, 27vw))) 16px; -webkit-overflow-scrolling: touch;
@@ -352,7 +352,7 @@
 /* How many to open: slanted words in a row above the key. */
 .bz-count { display: flex; align-items: center; justify-content: center; gap: 6px; font: 700 14px var(--font-h); color: var(--k-2); }
 .bz-count .rt-word { min-width: 40px; min-height: 40px; padding: 0 10px; font-size: 17px; }
-.bz-reveal-plate { display: grid; justify-items: center; gap: 2px; padding: 6px 18px 7px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); text-align: center; animation: bz-rise 0.3s var(--ease-out) backwards; }
+.bz-reveal-plate { display: grid; justify-items: center; gap: 2px; padding: 6px 18px 7px; border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); text-align: center; animation: bz-rise 0.3s var(--ease-out) backwards; }
 .bz-reveal-plate b { font: italic 800 23px/1.1 var(--font-xc); letter-spacing: -0.02em; }
 .bz-reveal-plate span { color: var(--k-2); font-size: 13px; font-weight: 700; }
 .bz-reveal-plate.is-hit { background: var(--yel); border-color: var(--k0); }

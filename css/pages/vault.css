@@ -18,7 +18,7 @@
   transition: color 0.12s ease;
 }
 .vt-tab::before {
-  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 4px; background: var(--k);
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: var(--r-tag); background: var(--k);
   transform: skewX(var(--skew)) scaleX(0.6); opacity: 0; transition: transform 0.2s var(--ease-out), opacity 0.14s ease;
 }
 .vt-tab:hover { color: var(--k); }
@@ -38,7 +38,7 @@
 /* ---- Notice, sign in, empty and error states ------------------------------- */
 .vt-notice {
   display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin: 0 0 18px; padding: 10px 14px;
-  border: var(--line-w) solid var(--k); border-left-width: 8px; border-radius: 6px; background: var(--box);
+  border: var(--line-w) solid var(--k); border-left-width: 8px; border-radius: var(--r); background: var(--box);
   animation: rt-pop 0.22s var(--ease-out);
 }
 .vt-notice p { margin: 0; flex: 1 1 240px; color: var(--k); font-size: 14.5px; font-weight: 500; line-height: 1.5; }
@@ -70,7 +70,7 @@
 /* The shelf: a white board with an ink line; each product stands on a plank. */
 .vt-shelf {
   --vt-cols: 2; display: grid; grid-template-columns: repeat(var(--vt-cols), minmax(0, 1fr)); gap: 0;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); overflow: hidden;
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); overflow: hidden;
 }
 .vt-good { position: relative; display: flex; flex-direction: column; min-width: 0; padding: 0 0 14px; border-left: 1.5px solid var(--rule); }
 .vt-good:nth-child(2n + 1) { border-left: 0; }
@@ -102,7 +102,7 @@
 .vt-fan img { display: block; width: 100%; height: auto; }
 /* How many you hold: an ink plate with the yellow figure, landing on the slant. */
 .vt-count {
-  position: absolute; z-index: 2; top: 10px; right: 10px; padding: 1px 10px 2px; border-radius: 4px;
+  position: absolute; z-index: 2; top: 10px; right: 10px; padding: 1px 10px 2px; border-radius: var(--r-tag);
   background: var(--k); color: var(--yel-k); font: italic 800 17px/1.3 var(--font-xc); font-variant-numeric: tabular-nums;
   transform: skewX(var(--skew)); animation: vt-land 0.36s var(--ease-pop) 0.2s backwards;
 }
@@ -113,7 +113,7 @@
 .vt-name { margin: 0; color: var(--k); font: 600 16px/1.15 var(--font-h); letter-spacing: 0; overflow-wrap: anywhere; }
 .vt-what { margin: 4px 0 0; color: var(--k-2); font-size: 12.5px; font-weight: 700; line-height: 1.35; }
 .vt-price { display: flex; align-items: center; gap: 4px; margin: 6px 0 0; color: var(--k); font: 700 17px/1 var(--font-h); font-variant-numeric: tabular-nums; }
-.vt-price::before { content: ""; flex: none; width: 16px; height: 16px; background: url("../../assets/coins/pp-coin-v1.svg") center / contain no-repeat; }
+.vt-price::before { content: ""; flex: none; width: 16px; height: 16px; background: url("../../assets/coins/pp-coin-v2.svg") center / contain no-repeat; }
 .vt-good.is-gone .vt-stand > * { opacity: 0.4; filter: grayscale(1); }
 .vt-gone { margin: 0; padding: 10px 12px 0; color: var(--k-3); font-size: 13px; font-weight: 700; line-height: 1.45; }
 
@@ -124,7 +124,7 @@
 .vt-many .ghost { flex: 1 1 auto; white-space: nowrap; }
 .vt-step {
   display: flex; align-items: stretch; flex: none; height: 42px;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); overflow: hidden;
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); overflow: hidden;
 }
 .vt-step-btn {
   width: 28px; padding: 0; border: 0; border-radius: 0; background: var(--k); color: var(--on-k);

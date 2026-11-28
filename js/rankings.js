@@ -4,7 +4,7 @@
  * Numbers come from GET /api/rankings (worker/rankings.js).
  */
 import { BOARDS, BOARD_ORDER, PERIOD_LABEL, MIN_PACKS } from "./rankings-rules.js";
-import { coinAmount, coinText } from "./money.js?v=2";
+import { coinAmount, coinText } from "./money.js?v=4";
 
 const esc = (value) =>
   String(value ?? "").replace(/[&<>"']/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[ch]);

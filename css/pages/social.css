@@ -46,7 +46,7 @@
 .hub-word.rt-word { flex: none; gap: 7px; min-height: 40px; margin: 0; padding: 4px 17px 5px; font-size: 17px; white-space: nowrap; box-shadow: none; }
 .hub-word.rt-word.on { color: var(--on-k); box-shadow: none; }
 .hub-count {
-  display: inline-grid; place-items: center; min-width: 21px; height: 20px; padding: 0 6px; border-radius: 3px;
+  display: inline-grid; place-items: center; min-width: 21px; height: 20px; padding: 0 6px; border-radius: var(--r-tag);
   background: var(--yel); color: var(--k0); font: italic 700 12.5px/1 var(--font-h); font-variant-numeric: tabular-nums;
 }
 .hub-word.on .hub-count { box-shadow: 0 0 0 1.5px var(--k); }
@@ -63,7 +63,7 @@
 /* ---- Friends: you, then the messenger --------------------------------------- */
 #view-social .hub-me {
   display: flex; align-items: center; gap: 8px 16px; margin: 0 0 22px; padding: 0 18px 0 0; overflow: hidden;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box);
 }
 .hub-me-who {
   display: flex; align-items: center; flex: 1 1 auto; align-self: stretch; min-width: 0; min-height: 76px; color: inherit; text-decoration: none;
@@ -82,7 +82,7 @@
 #view-social .social-friends { display: flex; flex-direction: column; gap: 8px; min-width: 0; padding: 0; border: 0; }
 #view-social .social-add { display: flex; align-items: center; gap: 10px; margin: 0 0 6px; }
 #view-social .social-add input {
-  flex: 1; min-width: 0; min-height: 48px; padding: 0 14px; border: var(--line-w) solid var(--k); border-radius: 6px;
+  flex: 1; min-width: 0; min-height: 48px; padding: 0 14px; border: var(--line-w) solid var(--k); border-radius: var(--r);
   background: var(--box); font: 500 16px var(--font);
 }
 #view-social .social-add input:focus { border-color: var(--k); background: var(--box); box-shadow: 0 0 0 3px var(--cy); outline: none; }
@@ -99,7 +99,7 @@
 /* A row: the picture on the label, the name and a line, a small white key. */
 #view-social .friends-row, #view-social .dm-thread {
   display: flex; align-items: center; gap: 0; min-height: 62px; margin: 0; padding: 0 10px 0 0; overflow: hidden;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); color: inherit;
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); color: inherit;
   transition: transform 0.14s var(--ease-out);
 }
 #view-social .friends-row > a:not(.ghost), #view-social .dm-thread-go {
@@ -122,7 +122,7 @@
 /* An empty list: a dashed place with a hollow ball. */
 .soc-empty {
   display: flex; align-items: center; gap: 14px; padding: 18px 16px;
-  border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: rgb(var(--box-rgb) / 0.88);
+  border: var(--line-w) dashed var(--rule-2); border-radius: var(--r); background: rgb(var(--box-rgb) / 0.88);
 }
 .soc-empty p { margin: 0; color: var(--k-2); font-size: 14.5px; line-height: 1.45; }
 .soc-empty b { display: block; color: var(--k); font: 600 16px/1.3 var(--font-h); }
@@ -130,7 +130,7 @@
 /* The messenger: a white box with the trainer at the top, speech lines, and the field. */
 #view-social .dm-pane {
   position: sticky; top: 16px; display: flex; flex-direction: column; min-width: 0; height: min(72vh, 640px); min-height: 460px; max-height: none;
-  overflow: hidden; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  overflow: hidden; border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box);
 }
 #view-social .social-grid:not(.has-thread) .dm-pane { border-style: dashed; border-color: var(--rule-2); background: var(--box); }
 .dm-head { display: flex; align-items: stretch; gap: 0; min-height: 64px; padding: 0 12px 0 0; border-bottom: var(--line-w) solid var(--k); }
@@ -146,7 +146,7 @@
 .dm-line { display: grid; justify-items: start; max-width: min(80%, 520px); align-self: flex-start; }
 .dm-line + .dm-line.mine, .dm-line.mine + .dm-line:not(.mine) { margin-top: 10px; }
 .dm-line span {
-  display: block; padding: 9px 13px 10px; border: 2px solid var(--k); border-radius: 6px; background: var(--box);
+  display: block; padding: 9px 13px 10px; border: 2px solid var(--k); border-radius: var(--r); background: var(--box);
   color: var(--k); font-size: 15px; font-weight: 500; line-height: 1.4; overflow-wrap: anywhere;
 }
 .dm-line.mine { align-self: flex-end; justify-items: end; }
@@ -156,7 +156,7 @@
 .dm-empty { display: grid; justify-items: center; gap: 10px; margin: auto; color: var(--k-2); font-size: 15px; text-align: center; }
 .dm-form { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-top: var(--line-w) solid var(--k); background: var(--box); }
 #view-social .dm-form input {
-  flex: 1; min-width: 0; min-height: 48px; padding: 0 14px; border: 2px solid var(--k); border-radius: 6px; font: 500 16px var(--font);
+  flex: 1; min-width: 0; min-height: 48px; padding: 0 14px; border: 2px solid var(--k); border-radius: var(--r); font: 500 16px var(--font);
 }
 #view-social .dm-form input:focus { border-color: var(--k); background: var(--box); box-shadow: 0 0 0 3px var(--cy); outline: none; }
 .dm-form .solid { flex: none; min-width: 0; padding: 6px 24px 10px; }
@@ -172,7 +172,7 @@
 #view-social .trade-soon {
   position: relative; isolation: isolate; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 20px 40px;
   margin-top: 36px; padding: 22px 24px; overflow: hidden;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box);
 }
 #view-social .trade-soon::before {
   content: ""; position: absolute; z-index: -1; top: -12px; bottom: -12px; right: 40px; width: 260px;
@@ -183,7 +183,7 @@
 .trade-slips { display: flex; align-items: center; gap: 14px; padding-right: 30px; }
 .trade-slot {
   display: grid; place-items: center; width: clamp(68px, 7vw, 88px); aspect-ratio: 63 / 88;
-  border: var(--line-w) dashed var(--on-k); border-radius: 6px; background: rgb(var(--box-rgb) / 0.28);
+  border: var(--line-w) dashed var(--on-k); border-radius: var(--r); background: rgb(var(--box-rgb) / 0.28);
 }
 .trade-slot .soc-ball { width: 46%; border-color: var(--on-k); background: linear-gradient(transparent 0 44%, #fff 44% 56%, transparent 56%); }
 .trade-slips svg { width: 30px; height: 30px; fill: none; stroke: var(--on-k); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
@@ -191,7 +191,7 @@
 /* Signed out. */
 #view-social .social-gate {
   display: flex; flex-wrap: wrap; align-items: center; gap: 14px 18px; max-width: 640px; padding: 22px 20px;
-  border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: rgb(var(--box-rgb) / 0.88);
+  border: var(--line-w) dashed var(--rule-2); border-radius: var(--r); background: rgb(var(--box-rgb) / 0.88);
 }
 .social-gate .soc-ball { width: 40px; }
 .social-gate p { flex: 1 1 200px; margin: 0; color: var(--k); font: 500 16px/1.45 var(--font); }
@@ -200,7 +200,7 @@
 /* ---- The Lounge: who's on, and the global chat -------------------------------- */
 .lounge-panel {
   display: flex; flex-direction: column; min-width: 0; overflow: hidden;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box);
 }
 .lounge-head {
   display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 52px; margin: 0; padding: 0 16px 0 0;
@@ -227,7 +227,7 @@
 .chat-who .user-face { width: 30px; height: 30px; box-shadow: 0 0 0 2px var(--k); }
 .chat-who .lvl-frame .user-face { box-shadow: none; }
 .chat-say {
-  min-width: 0; padding: 7px 12px 9px; border: 2px solid var(--k); border-radius: 6px; background: var(--box);
+  min-width: 0; padding: 7px 12px 9px; border: 2px solid var(--k); border-radius: var(--r); background: var(--box);
 }
 .chat-meta { display: flex; align-items: baseline; gap: 8px; margin: 0 0 2px; }
 .chat-meta b {
@@ -245,7 +245,7 @@
 
 .chat-form { display: flex; align-items: center; gap: 10px; margin: 0; padding: 12px 14px; border-top: var(--line-w) solid var(--k); background: var(--box); }
 .chat-form input, .hub-lounge .chat-form input {
-  flex: 1; min-width: 0; min-height: 48px; padding: 0 14px; border: 2px solid var(--k); border-radius: 6px;
+  flex: 1; min-width: 0; min-height: 48px; padding: 0 14px; border: 2px solid var(--k); border-radius: var(--r);
   background: var(--box); color: var(--k); font: 500 16px var(--font);
 }
 .chat-form input:focus { box-shadow: 0 0 0 3px var(--cy); outline: none; }
@@ -255,7 +255,7 @@
 .online-list { display: flex; flex-direction: column; gap: 2px; padding: 8px; }
 .online-chip {
   display: flex; align-items: center; gap: 10px; width: 100%; min-height: 48px; padding: 6px 10px 6px 6px;
-  border: 0; border-radius: 4px; background: none; color: var(--k); font: 600 15px var(--font-h); text-align: left; cursor: pointer;
+  border: 0; border-radius: var(--r-tag); background: none; color: var(--k); font: 600 15px var(--font-h); text-align: left; cursor: pointer;
   transition: transform 0.14s var(--ease-out), background-color 0.12s ease;
 }
 .online-chip > span:not([class]) { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -308,21 +308,21 @@
 .friends { position: relative; }
 .friends .friends-peek {
   position: relative; display: grid; place-items: center; width: 44px; height: 44px; padding: 0;
-  border: 0; border-radius: 6px; background: none; color: var(--k-2);
+  border: 0; border-radius: var(--r); background: none; color: var(--k-2);
 }
 .friends .friends-peek:hover, .friends.is-open .friends-peek { color: var(--k); }
 .friends-peek svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .friends-peek-live { position: absolute; top: 10px; right: 8px; width: 8px; height: 8px; border-radius: 50%; background: var(--hp); box-shadow: 0 0 0 1.5px var(--k); }
 .friends-peek-live[hidden], .friends-peek-count[hidden] { display: none; }
 .friends-peek-count {
-  position: absolute; top: 3px; right: 0; min-width: 19px; height: 18px; padding: 0 5px; border-radius: 3px;
+  position: absolute; top: 3px; right: 0; min-width: 19px; height: 18px; padding: 0 5px; border-radius: var(--r-tag);
   background: var(--yel); color: var(--k0); box-shadow: 0 0 0 1.5px var(--k);
   font: italic 700 11.5px/18px var(--font-h); text-align: center; font-variant-numeric: tabular-nums;
 }
 .friends .friends-panel {
   display: none; position: absolute; top: calc(100% + 11px); right: 0; z-index: 36;
   width: 370px; max-width: calc(100vw - 32px); padding: 0 14px 14px; overflow: hidden;
-  border: var(--line-w) solid var(--k); border-radius: 8px; background: var(--box); box-shadow: var(--drop);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); box-shadow: var(--drop);
 }
 .friends.is-open .friends-panel { display: block; animation: soc-sheet 0.24s var(--ease-out); transform-origin: 80% 0; }
 /* The header: the name on a slanted ink plate, the count beside it, the close key. */
@@ -336,19 +336,19 @@
 .friends-now small { flex: 1; min-width: 0; margin: 0; color: var(--k-2); font: 700 13px/1.3 var(--font); }
 .friends-hide, .radio-hide {
   display: grid; place-items: center; flex: none; width: 40px; height: 40px; margin: 0; padding: 0;
-  border: 0; border-radius: 4px; background: none; color: var(--k); font: 700 20px/1 var(--font-h);
+  border: 0; border-radius: var(--r-tag); background: none; color: var(--k); font: 700 20px/1 var(--font-h);
 }
 .friends-hide:hover, .radio-hide:hover { background: var(--cy-3); color: var(--k); }
 .friends .friends-add { display: flex; align-items: center; gap: 10px; margin: 0 0 12px; }
-.friends .friends-add input { flex: 1; min-width: 0; min-height: 44px; padding: 0 12px; border: 2px solid var(--k); border-radius: 6px; font: 500 16px var(--font); }
+.friends .friends-add input { flex: 1; min-width: 0; min-height: 44px; padding: 0 12px; border: 2px solid var(--k); border-radius: var(--r); font: 500 16px var(--font); }
 .friends .friends-add .solid.sm { flex: none; min-width: 0; min-height: 42px; padding: 4px 16px 7px; }
 .friends .friends-trades {
   display: flex; align-items: center; justify-content: space-between; min-height: 44px; margin: 0 0 10px; padding: 0 12px;
-  border: 2px solid var(--k); border-radius: 6px; background: var(--box-2);
+  border: 2px solid var(--k); border-radius: var(--r); background: var(--box-2);
   color: var(--k); font: italic 800 17px var(--font-xc); text-decoration: none; transition: transform 0.14s var(--ease-out);
 }
 .friends .friends-trades b {
-  display: grid; place-items: center; min-width: 24px; height: 22px; padding: 0 7px; border-radius: 3px; background: var(--yel); color: var(--k0);
+  display: grid; place-items: center; min-width: 24px; height: 22px; padding: 0 7px; border-radius: var(--r-tag); background: var(--yel); color: var(--k0);
   box-shadow: 0 0 0 1.5px var(--k); font: italic 700 13px var(--font-h); font-variant-numeric: tabular-nums;
 }
 .friends .friends-trades b[hidden] { display: none; }
@@ -361,7 +361,7 @@
 }
 .friends .friends-row {
   display: flex; align-items: center; gap: 4px; min-width: 0; min-height: 52px; padding: 0 6px 0 0; overflow: hidden;
-  border: 2px solid var(--k); border-radius: 6px; background: var(--box);
+  border: 2px solid var(--k); border-radius: var(--r); background: var(--box);
 }
 .friends .friends-row:hover { background: var(--box); }
 .friends .friends-row > a:not(.tiny) { display: flex; align-items: center; flex: 1; align-self: stretch; gap: 0; min-width: 0; color: inherit; text-decoration: none; }
@@ -375,12 +375,12 @@
 .friends .friends-row .tiny, .friends .friends-row .solid, .friends .friends-row .ghost {
   flex: none; min-width: 0; min-height: 32px; padding: 2px 9px 5px; font-size: 13px;
 }
-.friends .friends-row .tiny::before, .friends .friends-row-actions .solid::before, .friends .friends-row-actions .ghost::before { transform: none; border-width: 2px; border-bottom-width: 4px; border-radius: 5px; }
+.friends .friends-row .tiny::before, .friends .friends-row-actions .solid::before, .friends .friends-row-actions .ghost::before { transform: none; border-width: 2px; border-bottom-width: 4px; border-radius: var(--r-tag); }
 .friends .friends-row [data-friend-remove] { min-width: 32px; padding: 0 0 3px; color: var(--k-2); font: 500 22px/1 var(--font); }
 .friends .friends-row [data-friend-remove]::before { border-color: transparent; background: none; }
 .friends .friends-row [data-friend-remove]:hover { color: var(--red-text); }
 .friends .friends-row [data-friend-remove]:hover::before { background: var(--bad-wash); border-color: var(--k); }
-.friends-empty { display: flex; align-items: center; gap: 12px; margin: 2px 0 10px; padding: 14px; border: 2px dashed var(--rule-2); border-radius: 6px; color: var(--k-2); font-size: 14px; line-height: 1.45; }
+.friends-empty { display: flex; align-items: center; gap: 12px; margin: 2px 0 10px; padding: 14px; border: 2px dashed var(--rule-2); border-radius: var(--r); color: var(--k-2); font-size: 14px; line-height: 1.45; }
 .friends-empty .soc-ball { width: 26px; border-width: 2.5px; }
 .friends .friends-label { margin: 10px 2px 2px; color: var(--k); font: italic 800 16px var(--font-xc); letter-spacing: 0; text-transform: none; }
 .friends-list > .solid { width: calc(100% - 8px); margin: 0 auto 6px; }
@@ -394,7 +394,7 @@
 /* ---- The trainer card (tap a name in chat) ---------------------------------- */
 .player-tip {
   position: fixed; z-index: 40; isolation: isolate; width: 320px; overflow: hidden;
-  border: var(--line-w) solid var(--k); border-radius: 8px; background: var(--box); box-shadow: var(--drop);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); box-shadow: var(--drop);
 }
 .player-tip.hidden { display: none; }
 .player-tip:not(.hidden) { animation: soc-sheet 0.24s var(--ease-out); transform-origin: 50% 0; }
@@ -405,7 +405,7 @@
 .tip-id { position: relative; z-index: 1; display: flex; align-items: flex-start; gap: 12px; margin-top: -30px; padding: 0 16px; }
 .tip-id .user-face.md, .tip-id .user-face.md.on { width: 64px; height: 64px; box-shadow: 0 0 0 3px var(--box), 0 0 0 5.5px var(--k); }
 .tip-id > div { min-width: 0; padding: 38px 0 0; }
-.tip-id .account-title { min-height: 0; margin: 0 0 4px; padding: 1px 8px; border-radius: 3px; background: var(--k); color: var(--on-k); font: italic 700 12px/1.5 var(--font-h); }
+.tip-id .account-title { min-height: 0; margin: 0 0 4px; padding: 1px 8px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k); font: italic 700 12px/1.5 var(--font-h); }
 .tip-id b { display: flex; align-items: center; gap: 6px; color: var(--k); font: 600 19px/1.15 var(--font-h); }
 .tip-id small { color: var(--k-2); font: 700 13px var(--font); }
 .tip-bio, .tip-stats { position: relative; z-index: 1; margin: 12px 16px 0; font-size: 14px; line-height: 1.45; }
@@ -443,7 +443,7 @@ body:has(#price-dialog:not(.hidden)) .player-tip { display: none; }
   #view-social .dm-pane { position: relative; top: 0; min-height: 0; height: max(380px, calc(100svh - var(--tabbar, 64px) - 170px - env(safe-area-inset-top))); }
   .dm-head { min-height: 58px; padding-right: 8px; }
   .dm-back {
-    display: grid; place-items: center; flex: none; align-self: center; width: 40px; height: 40px; margin: 0 2px 0 4px; border-radius: 4px; color: var(--k);
+    display: grid; place-items: center; flex: none; align-self: center; width: 40px; height: 40px; margin: 0 2px 0 4px; border-radius: var(--r-tag); color: var(--k);
   }
   .dm-back svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
   .dm-back:hover { background: var(--cy-3); }
@@ -516,7 +516,7 @@ body.no-motion :is(#view-social .dm-thread, #view-social .friends-row, .online-c
 }
 
 /* Keyboard focus inside a row that clips its corners: the ring sits inside the row. */
-:is(#view-social .dm-thread-go, #view-social .friends-row > a, .hub-me-who, .friends .friends-row > a, .dm-head .dm-who):focus-visible { outline-offset: -4px; border-radius: 4px; }
+:is(#view-social .dm-thread-go, #view-social .friends-row > a, .hub-me-who, .friends .friends-row > a, .dm-head .dm-who):focus-visible { outline-offset: -4px; border-radius: var(--r-tag); }
 
 /* pseudo-elements can't sit inside :is(), so they are named on their own */
 body.no-motion .is-switch > .hub-head .hub-word.on::before { animation: none !important; }

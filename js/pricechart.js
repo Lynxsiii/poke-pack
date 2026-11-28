@@ -11,7 +11,7 @@
  * single snapshot and says so, because a made-up trend line on something people
  * treat as a price guide would be worse than no line at all.
  */
-import { coinText as fmtMoney } from "./money.js?v=2";
+import { coinText as fmtMoney } from "./money.js?v=4";
 
 const RANGES = [
   ["7d", "7D", 7],

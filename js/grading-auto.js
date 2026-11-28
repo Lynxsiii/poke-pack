@@ -14,7 +14,7 @@ import { GRADE_WORDS, BLACK_LABEL, bandFor, gradingFee } from "./grading-rules.j
 import { AUTO_BLACK, AUTO_LIMITS, autoHit, hitChance, hitWithin, triesFor } from "./grading-auto-rules.js";
 import { uuid } from "./casino-kit.js";
 import { esc, coins } from "./battle-kit.js";
-import { COIN_I as COIN_IMG } from "./money.js?v=2";
+import { COIN_I as COIN_IMG } from "./money.js?v=4";
 
 /** How long each try stays on screen while a run plays back, in ms. */
 const TRY_MS = 240;

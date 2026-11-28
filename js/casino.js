@@ -14,10 +14,10 @@ import { api, esc, coins, coinTag, icon, plural, playerName, playerChip, emptyLi
 import { createStakePicker } from "./stake-picker.js?v=12";
 import { createCoinflip } from "./coinflip.js?v=15";
 import { createJackpot } from "./jackpot.js?v=9";
-import { createUpgrader } from "./upgrader.js?v=10";
+import { createUpgrader } from "./upgrader.js?v=12";
 import { chanceText } from "./upgrader-rules.js?v=3";
 import { gateLock, gateNoticeHTML } from "./gate-notice.js";
-import { createBetaPages, BETA_KEYS, BETA_ART } from "./beta.js?v=10";
+import { createBetaPages, BETA_KEYS, BETA_ART } from "./beta.js?v=11";
 
 const HUB_POLL_MS = 8000;
 const ROUTE = /^\/casino(?:\/(coinflip|jackpot|upgrader|beta|grass|rocket|tins)(?:\/([a-zA-Z0-9-]{1,80}))?)?$/;
@@ -134,7 +134,7 @@ export function initCasino(deps = {}) {
     return `<li class="hub-tile" data-game="${key}">
       <a class="hub-game" href="${href}" data-hub-link>
         <span class="hub-game-art" aria-hidden="true"><span class="hub-game-obj">${art}</span></span>
-        <span class="hub-game-copy"><b>${esc(title)}</b><span>${esc(line)}</span></span>
+        <span class="hub-game-copy"><b>${esc(title)}</b>${line ? `<span>${esc(line)}</span>` : ""}</span>
         ${fig ? `<span class="hub-game-fig${bump ? " is-bump" : ""}">${esc(fig)}</span>` : ""}
         <i class="hub-game-go" aria-hidden="true"></i>
       </a>
@@ -250,10 +250,10 @@ export function initCasino(deps = {}) {
       ? feed.map(winRow).join("")
       : loaded ? emptyBox("No wins yet. The first coinflip or pot to finish shows up here.") : loadingRows(3);
     const tiles = [
-      game({ href: "/casino/coinflip", key: "coinflip", title: "Coinflip", line: "Your pile against theirs, one toss.", n: hubData ? (hubData.open || []).length : null, word: "open", art: coinArtHTML({ size: 92 }) }),
-      game({ href: "/casino/jackpot", key: "jackpot", title: "Jackpot", line: "One pot, one draw, weighted by value.", n: jackData ? (jackData.open || []).length : null, word: "open", art: potArtHTML({ size: 92 }) }),
-      game({ href: "/casino/upgrader", key: "upgrader", title: "Upgrader", line: "Aim higher, the odds drop.", art: upgraderArtHTML({ size: 92 }) }),
-      game({ href: "/battles", key: "battles", title: "Pack battles", line: "Same packs, best pulls take the pot.", art: battlesArtHTML({ setId: featured, size: 92 }) }),
+      game({ href: "/casino/coinflip", key: "coinflip", title: "Coinflip", n: hubData ? (hubData.open || []).length : null, word: "open", art: coinArtHTML({ size: 92 }) }),
+      game({ href: "/casino/jackpot", key: "jackpot", title: "Jackpot", n: jackData ? (jackData.open || []).length : null, word: "open", art: potArtHTML({ size: 92 }) }),
+      game({ href: "/casino/upgrader", key: "upgrader", title: "Upgrader", art: upgraderArtHTML({ size: 92 }) }),
+      game({ href: "/battles", key: "battles", title: "Pack battles", art: battlesArtHTML({ setId: featured, size: 92 }) }),
     ];
     const live = `<section class="cs-section" aria-labelledby="cs-open">
           <h2 class="cs-h" id="cs-open">Open tables${tables.length ? ` <span>${tables.length}</span>` : ""}</h2>

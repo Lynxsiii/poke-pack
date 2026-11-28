@@ -36,7 +36,7 @@
   display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 24px; align-items: start;
 }
 #view-account :is(.acct-cols, .look-controls) > .acct-sec, #view-account .acct-pins {
-  padding: 14px 16px 18px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  padding: 14px 16px 18px; border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box);
 }
 
 /* Chip rows scroll sideways on a phone rather than wrapping into a wall. */
@@ -51,7 +51,7 @@
 :is(#view-auth, #view-account) .field > .hint { color: var(--k-2); font-size: 13px; font-weight: 500; line-height: 1.45; opacity: 1; }
 :is(#view-auth, #view-account) .field input,
 :is(#view-auth, #view-account) .field textarea {
-  width: 100%; min-height: 46px; padding: 10px 14px; border: var(--line-w) solid var(--k); border-radius: 6px; font: inherit; font-size: 16px;
+  width: 100%; min-height: 46px; padding: 10px 14px; border: var(--line-w) solid var(--k); border-radius: var(--r); font: inherit; font-size: 16px;
 }
 :is(#view-auth, #view-account) .field textarea { min-height: 104px; resize: vertical; line-height: 1.45; }
 :is(#view-auth, #view-account) .field input:focus-visible,
@@ -112,7 +112,7 @@
   color: var(--k); font-family: var(--font); font-size: inherit; font-weight: 700;
 }
 .acct-meta .account-title {
-  padding: 1px 8px 1px 7px; border-radius: 3px; background: var(--k); color: var(--on-k); font: italic 700 12.5px/1.45 var(--font-h);
+  padding: 1px 8px 1px 7px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k); font: italic 700 12.5px/1.45 var(--font-h);
 }
 .acct-code { color: var(--k-2); font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
 .acct-facts { margin: 12px 0 0; color: var(--k); font-size: 15px; line-height: 1.45; }
@@ -160,7 +160,7 @@
   color: var(--k-2); font: italic 800 15px var(--font-xc); cursor: pointer;
 }
 .sheet-filters .pick-chip::before {
-  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 4px; background: var(--k);
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: var(--r-tag); background: var(--k);
   transform: skewX(var(--skew)) scaleX(0.55); opacity: 0; transition: transform 0.2s var(--ease-out), opacity 0.14s ease;
 }
 .sheet-filters .pick-chip:hover { color: var(--k); }
@@ -173,7 +173,7 @@
 .pull-list { display: grid; gap: 8px; }
 #view-account .pull-row {
   display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; align-items: center; gap: 14px;
-  padding: 8px 12px 8px 8px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  padding: 8px 12px 8px 8px; border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box);
 }
 .pull-list > .pull-row:nth-child(-n + 8) { animation: acct-rise 0.32s var(--ease-out) backwards; }
 .pull-list > .pull-row:nth-child(2) { animation-delay: 30ms; } .pull-list > .pull-row:nth-child(3) { animation-delay: 60ms; }
@@ -181,14 +181,14 @@
 .pull-list > .pull-row:nth-child(6) { animation-delay: 150ms; } .pull-list > .pull-row:nth-child(7) { animation-delay: 180ms; }
 .pull-list > .pull-row:nth-child(8) { animation-delay: 210ms; }
 .pull-row .mini-card { width: 52px; padding: 0; border: 0; background: none; cursor: pointer; }
-.pull-row .ghost-card { display: block; aspect-ratio: 63 / 88; border: 2px dashed var(--rule-2); border-radius: 4px; background: none; }
+.pull-row .ghost-card { display: block; aspect-ratio: 63 / 88; border: 2px dashed var(--rule-2); border-radius: var(--r-tag); background: none; }
 .pull-copy { min-width: 0; display: grid; gap: 1px; }
 .pull-copy b { font: 600 16px/1.2 var(--font-h); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .pull-copy > span { color: var(--k-2); font-size: 13px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .pull-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
 .pull-tags:empty { display: none; }
 .tag {
-  padding: 1px 8px; border-radius: 3px; background: var(--k); color: var(--on-k);
+  padding: 1px 8px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k);
   font: italic 700 12px/1.5 var(--font-h); letter-spacing: 0; text-transform: none;
 }
 .tag.new { background: var(--hp-low); color: var(--w0); }
@@ -211,7 +211,7 @@
 #view-account .stat-toggles label:has(input:focus-visible) { outline: 3px solid var(--cy-2); outline-offset: 2px; }
 #view-account .share-row {
   display: flex; align-items: center; gap: 10px; margin: 0 0 12px; padding: 5px 5px 5px 14px;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box-2);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box-2);
 }
 .share-url { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--k); font: 600 15px var(--font-h); }
 .share-open { display: inline-block; font-weight: 700; }
@@ -233,7 +233,7 @@
 /* The preview is the trainer card in small: white, the ink line, the band and the face. */
 #view-account .look-card {
   isolation: isolate; overflow: hidden;
-  border: var(--line-w) solid var(--k); border-radius: 8px; background: var(--box); box-shadow: var(--drop);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); box-shadow: var(--drop);
 }
 #view-account .look-card .acct-banner {
   height: 112px; border-bottom: var(--line-w) solid var(--k); border-radius: 0;
@@ -247,7 +247,7 @@
 .look-id b { display: inline-flex; align-items: center; gap: 8px; font: italic 800 26px/1 var(--font-xc); letter-spacing: -0.02em; overflow-wrap: anywhere; }
 .look-id small { color: var(--k-2); font-size: 14px; font-weight: 700; }
 .look-id .account-title {
-  margin-top: 8px; padding: 1px 8px 1px 7px; border-radius: 3px; background: var(--k); color: var(--on-k); font: italic 700 12.5px/1.45 var(--font-h);
+  margin-top: 8px; padding: 1px 8px 1px 7px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k); font: italic 700 12.5px/1.45 var(--font-h);
 }
 /* A pick lands on the preview (js/acct-motion.js landPreview): the card settles and the face pops into its frame.
    The tile you chose lands with a small overshoot (markPicks adds .rt-picked). */
@@ -276,7 +276,7 @@ body.no-motion :is(#view-account .look-card.is-landing, #view-account .look-card
 /* A pick: a flat tile; the chosen one wears the ink line and its yellow cursor edge. */
 .pick {
   position: relative; display: grid; justify-items: center; gap: 4px; padding: 8px 4px 6px;
-  border: 2px solid transparent; border-radius: 6px; background: transparent; color: inherit; cursor: pointer; overflow: hidden;
+  border: 2px solid transparent; border-radius: var(--r); background: transparent; color: inherit; cursor: pointer; overflow: hidden;
   transition: transform 0.12s var(--ease-out), background-color 0.12s ease;
 }
 .pick:hover { background: var(--box-2); border-color: var(--rule); }
@@ -300,7 +300,7 @@ body.no-motion :is(#view-account .look-card.is-landing, #view-account .look-card
 }
 #view-account .title-chip {
   position: relative; display: grid; align-content: start; gap: 2px; min-height: 0;
-  padding: 9px 12px 10px; border: 2px solid var(--rule); border-radius: 6px;
+  padding: 9px 12px 10px; border: 2px solid var(--rule); border-radius: var(--r);
   background: var(--box); color: var(--k); text-align: left; animation: none; cursor: pointer;
   transition: border-color 0.12s ease, transform 0.12s var(--ease-out);
 }
@@ -323,7 +323,7 @@ body.no-motion :is(#view-account .look-card.is-landing, #view-account .look-card
 .reward-flash {
   position: fixed; z-index: 120; left: 50%; top: calc(84px + env(safe-area-inset-top));
   display: grid; justify-items: center; gap: 2px; padding: 16px 28px 16px;
-  border: var(--line-w) solid var(--k); border-radius: 8px;
+  border: var(--line-w) solid var(--k); border-radius: var(--r);
   background: var(--box); box-shadow: var(--drop);
   opacity: 0; pointer-events: none; text-align: center;
   transform: translate(-50%, -14px) scale(0.94);
@@ -341,7 +341,7 @@ body.no-motion :is(#view-account .look-card.is-landing, #view-account .look-card
 }
 /* The badge's name lands on a slanted ink plate a beat after the amount. */
 .reward-flash span::before {
-  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 4px; background: var(--k); transform: skewX(var(--skew));
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: var(--r-tag); background: var(--k); transform: skewX(var(--skew));
 }
 @keyframes acct-plate-land { from { opacity: 0; transform: translateX(-10px) skewX(var(--skew)) scaleX(0.6); } }
 @keyframes acct-plate-word { from { opacity: 0; } }
@@ -362,12 +362,12 @@ body.no-motion .reward-flash.show span, body.no-motion .reward-flash.show span::
 /* Loading: the hero card's shape, dashed, while the trainer arrives. */
 #view-profile .profile-loading {
   display: grid; place-items: center; min-height: 220px; padding: 24px; margin: 0;
-  border: var(--line-w) dashed var(--rule-2); border-radius: 8px; background: rgb(var(--box-rgb) / 0.5);
+  border: var(--line-w) dashed var(--rule-2); border-radius: var(--r); background: rgb(var(--box-rgb) / 0.5);
   color: var(--k-2); font: 600 17px var(--font-h); text-align: center;
 }
 #view-profile .profile-missing {
   display: grid; place-items: center; max-width: none; min-height: 200px; padding: 28px; margin: 0;
-  border: var(--line-w) dashed var(--rule-2); border-radius: 8px; background: rgb(var(--box-rgb) / 0.5);
+  border: var(--line-w) dashed var(--rule-2); border-radius: var(--r); background: rgb(var(--box-rgb) / 0.5);
   color: var(--k); font: 600 17px var(--font-h); text-align: center;
 }
 
@@ -375,11 +375,11 @@ body.no-motion .reward-flash.show span, body.no-motion .reward-flash.show span::
 #view-profile .profile-hero {
   --face: 104px;
   position: relative; isolation: isolate; margin: 0; padding: 0 16px 18px;
-  border: var(--line-w) solid var(--k); border-radius: 8px; background: var(--box); box-shadow: var(--drop);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); box-shadow: var(--drop);
 }
 #view-profile .profile-hero .acct-banner {
   position: relative; z-index: 0; height: 132px; margin: 0 -16px; pointer-events: none;
-  border-bottom: var(--line-w) solid var(--k); border-radius: 5.5px 5.5px 0 0;
+  border-bottom: var(--line-w) solid var(--k); border-radius: var(--r-tag) var(--r-tag) 0 0;
   -webkit-mask-image: none; mask-image: none;
 }
 #view-profile .profile-hero .acct-hero-body {
@@ -428,7 +428,7 @@ body.no-motion .reward-flash.show span, body.no-motion .reward-flash.show span::
   color: var(--on-k); font: italic 800 14px/1 var(--font-xc);
 }
 #view-profile .profile-name .lvl-badge::after {
-  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 4px; background: var(--k); transform: skewX(var(--skew));
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: var(--r-tag); background: var(--k); transform: skewX(var(--skew));
   border: 0; box-shadow: none; opacity: 1; animation: none;
 }
 #view-profile .profile-name .lvl-badge .lb-n { position: static; color: inherit; font: inherit; text-shadow: none; transform: none; background: none; -webkit-text-fill-color: currentColor; }
@@ -456,12 +456,12 @@ body.no-motion .reward-flash.show span, body.no-motion .reward-flash.show span::
 #view-profile .profile-todo .plate-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 0 0 10px; }
 #view-profile .profile-todo .plate-head h2 { margin: 0; }
 #view-profile .profile-todo .plate-head > span {
-  padding: 1px 8px; border-radius: 3px; background: var(--k); color: var(--on-k); font: italic 700 13px/1.45 var(--font-h);
+  padding: 1px 8px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k); font: italic 700 13px/1.45 var(--font-h);
 }
 #view-profile .profile-todo .rows { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
 #view-profile .profile-todo .row-btn {
   display: flex; align-items: center; gap: 12px; width: 100%; min-height: 58px; padding: 8px 40px 8px 12px; position: relative;
-  border: 2px dashed var(--rule-2); border-radius: 6px; background: rgb(var(--box-rgb) / 0.6);
+  border: 2px dashed var(--rule-2); border-radius: var(--r); background: rgb(var(--box-rgb) / 0.6);
   color: var(--k); text-decoration: none; text-align: left; cursor: pointer;
   transition: transform 0.14s var(--ease-out), border-color 0.12s ease;
 }
@@ -486,7 +486,7 @@ body.no-motion .reward-flash.show span, body.no-motion .reward-flash.show span::
 .profile-case {
   --case-cols: 3;
   position: relative; isolation: isolate; overflow: hidden;
-  margin: 0; padding: 0 16px 22px; border: var(--line-w) solid var(--k); border-radius: 8px; background: var(--box);
+  margin: 0; padding: 0 16px 22px; border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box);
   box-shadow: var(--drop);
 }
 .profile-case::before {
@@ -511,7 +511,7 @@ body.no-motion .reward-flash.show span, body.no-motion .reward-flash.show span::
 .profile-case .loader-card:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 3px; }
 .profile-case .loader-tag {
   position: absolute; z-index: 3; left: -4px; top: 8px; padding: 1px 8px 2px 7px;
-  border-radius: 3px; background: var(--yel); color: var(--k0); box-shadow: 0 0 0 2px var(--k);
+  border-radius: var(--r-tag); background: var(--yel); color: var(--k0); box-shadow: 0 0 0 2px var(--k);
   font: 700 14px/1.3 var(--font-h); font-variant-numeric: tabular-nums; transform: none; translate: none;
 }
 /* The price plates land on their cards as the page arrives, one after another (first six only). */
@@ -544,7 +544,7 @@ body.no-motion .profile-case .loader-tag { animation: none; }
 #view-profile .profile-binder > .panel-empty { margin: 8px 0 14px; }
 #view-profile .profile-section-head { margin-bottom: 14px; }
 #view-profile .profile-section-head > span {
-  flex: none; padding: 1px 8px; border-radius: 3px; background: var(--k); color: var(--on-k); font: italic 700 13px/1.45 var(--font-h); white-space: nowrap;
+  flex: none; padding: 1px 8px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k); font: italic 700 13px/1.45 var(--font-h); white-space: nowrap;
 }
 /* The page's own label and links sit on the owner's page tone, which is dark unless they chose cream: the site's
    ink would vanish there. */
@@ -588,7 +588,7 @@ body.no-motion #view-profile .profile-binder .binder-pockets > .pocket { animati
 .comment-list { display: grid; gap: 8px; margin: 0 0 14px; padding: 0; list-style: none; }
 #view-profile .comment-item {
   display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 12px;
-  padding: 10px 12px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  padding: 10px 12px; border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box);
 }
 .comment-item a { color: inherit; text-decoration: none; }
 .comment-by { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; }
@@ -597,12 +597,12 @@ body.no-motion #view-profile .profile-binder .binder-pockets > .pocket { animati
 .comment-item p:not(.comment-by) { margin: 3px 0 0; color: var(--k); font-size: 15px; font-weight: 500; line-height: 1.5; overflow-wrap: anywhere; }
 #view-profile .profile-wall > .panel-empty {
   margin: 0 0 12px; padding: 18px 16px; max-width: none;
-  border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: rgb(var(--box-rgb) / 0.5); color: var(--k-2); font-weight: 600;
+  border: var(--line-w) dashed var(--rule-2); border-radius: var(--r); background: rgb(var(--box-rgb) / 0.5); color: var(--k-2); font-weight: 600;
 }
 #view-profile .comment-form { display: grid; justify-items: end; gap: 12px; margin: 4px 0 0; }
 #view-profile .comment-form textarea {
   width: 100%; min-height: 96px; padding: 12px 14px; resize: vertical;
-  border: var(--line-w) solid var(--k); border-radius: 6px; font: inherit; font-size: 16px; line-height: 1.45;
+  border: var(--line-w) solid var(--k); border-radius: var(--r); font: inherit; font-size: 16px; line-height: 1.45;
 }
 #view-profile .comment-form textarea:focus { border-color: var(--k); background: var(--box); box-shadow: 0 0 0 3px var(--cy); outline: none; }
 #view-profile .profile-wall .panel-note { color: var(--k-2); font-size: 15px; font-weight: 600; }
@@ -702,7 +702,7 @@ body.no-motion #view-profile .profile-page > *, body.no-motion :is(.pull-list > 
 #view-auth .auth-forgot { display: block; width: auto; min-height: 44px; margin: 10px auto 0; padding: 0 8px; background: none; border: 0; box-shadow: none; color: var(--ink-2); font-size: 14.5px; }
 #view-auth .auth-note { margin: 0 0 20px; color: var(--ink-2); font-size: 14.5px; line-height: 1.5; }
 /* The recovery code, set in the figures face so 0 and O can't be mistaken, on a sunken well. */
-.recovery-code { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 12px 12px 16px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box-2); }
+.recovery-code { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 12px 12px 16px; border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box-2); }
 .recovery-value { margin: 0; font-family: var(--font-h); font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: 0.06em; color: var(--paper); overflow-wrap: anywhere; user-select: all; }
 .recovery-note { margin: 10px 0 14px; color: var(--k-2); font-size: 14px; font-weight: 700; line-height: 1.5; }
 .welcome-facts dd .text-btn { display: inline; min-height: 0; padding: 0; margin: 0; background: none; border: 0; box-shadow: none; font: inherit; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
@@ -781,13 +781,13 @@ body.no-motion #view-profile .profile-page > *, body.no-motion :is(.pull-list > 
   #view-account .sheet {
     left: 0; right: 0; top: auto; bottom: 0; transform: none;
     width: 100%; max-height: 88vh; max-height: 88svh;
-    border-radius: 8px 8px 0 0 !important; border-width: var(--line-w) 0 0 !important; box-shadow: none;
+    border-radius: var(--r) var(--r) 0 0 !important; border-width: var(--line-w) 0 0 !important; box-shadow: none;
     padding-bottom: env(safe-area-inset-bottom);
     animation-name: acct-sheet-up;
   }
   #view-account .sheet::before {
     content: ""; align-self: center; flex: none; width: 40px; height: 4px; margin: 10px 0 0;
-    border-radius: 2px; background: var(--rule-2);
+    border-radius: var(--r-tag); background: var(--rule-2);
   }
   .sheet-head { padding: 12px 16px 10px; }
   .sheet-filters { padding: 0 16px 12px; }
