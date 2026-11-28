@@ -69,6 +69,7 @@ import { handleTrades } from "./trades.js";
 import { handleTcg, maintainTcg } from "./tcg.js";
 import { seoResponse } from "./seo.js";
 import { handleWishlist, wishlistFor } from "./wishlist.js";
+import { claimFirstRip, firstRipOpen, handleFirstRip } from "./first-rip.js";
 import { DISCORD_URL, ensureFeedSchema, flushFeed, postNewPatchNotes, pullFeedStmts, sharesFeed } from "./discord.js";
 import { claimLevels, clearXpStmts, ensureXpSchema, loadXpCounters, prestigeUp, readXpRow, syncXp } from "./xp.js";
 import { hourlyBonus } from "../js/levels.js";
@@ -326,6 +327,9 @@ export async function handleApi(request, env, url) {
   if (path === "/api/packs/rip" && method === "POST") {
     return rip(request, env);
   }
+  if (path === "/api/packs/first" && method === "POST") {
+    return handleFirstRip(request, env, { json, readJson, requireUser, loadSetCards, packCost, openPacks, takeRoll, withRandom });
+  }
   if (path === "/api/sealed/open" && method === "POST") {
     return openSealed(request, env);
   }
@@ -467,11 +471,13 @@ async function signup(request, env) {
     const claimed = Object.values(claim?.collection || {}).reduce((sum, n) => sum + (Number(n) || 0), 0);
     if (claimed > 0) await setStatStmt(env, id, CLAIM_STAT, claimed).run();
   }
+  // The free pack ripped before signing up goes onto the account (worker/first-rip.js).
+  const firstRipCards = body.firstRip ? await claimFirstRip(env, request, id, body.firstRip, { loadSetCards, openPacks }) : 0;
   const token = await createSession(env, id, now, request);
   await logEvent(env, request, id, "signup");
   const user = await env.DB.prepare("SELECT * FROM users WHERE id = ?").bind(id).first();
   const save = await loadSave(env, id);
-  return json({ user: await trainerUser(env, user, save), save }, 201, sessionCookie(request, token));
+  return json({ user: await trainerUser(env, user, save), save, firstRipCards }, 201, sessionCookie(request, token));
 }
 
 async function signin(request, env) {
@@ -1825,7 +1831,9 @@ function reconcileBinder(binder, collection) {
 async function trainerUser(env, row, save, levelHint = null) {
   const fromSave = save?.xp ? { level: save.xp.level, prestige: save.xp.prestige || 0, peak: save.xp.peak || save.xp.level } : null;
   const base = { ...withLevel(publicUser(row), save), ...(await levelFields(env, row, levelHint ?? fromSave)) };
-  return { ...base, ...(await trainerLookFields(env, row)), feedShare: sharesFeed(row), ...termsFields(row) };
+  // A new account's free first pack, until it is opened (worker/first-rip.js).
+  const firstRip = (await firstRipOpen(env, row)) ? { firstRip: true } : {};
+  return { ...base, ...(await trainerLookFields(env, row)), feedShare: sharesFeed(row), ...termsFields(row), ...firstRip };
 }
 
 function withLevel(user, save) {

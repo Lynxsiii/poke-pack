@@ -230,7 +230,7 @@ main h1:not(.sr-only), .signage, .page-title, .view-title, .hero h1, .bulk-head 
   color: var(--k); text-shadow: none;
 }
 .plate-head h2, .ground-h, .section-head h2,
-:where(.cs-h, .gd-send-h, .gd-slab-h, .tr-title, .lv-head h2, .lv-claim h2, .lv-prestige h2, .rk-last h3, #overlay .spread-head h2, .pulls-title, #inspect .inspect-info h2, #view-catalog .era-head h3, .search-sec h3, .cart-done h3, .share-pull-head h2, #view-shop .section-head h2, #view-shop .shop-rail-head h2, #view-shop .promo-kind-head, .hub-game-copy b, .cs-sheet-head h2, .tour-h) {
+:where(.cs-h, .gd-send-h, .gd-slab-h, .tr-title, .lv-head h2, .lv-claim h2, .lv-prestige h2, .rk-last h3, #overlay .spread-head h2, .pulls-title, #inspect .inspect-info h2, #view-catalog .era-head h3, .search-sec h3, .cart-done h3, .share-pull-head h2, #view-shop .section-head h2, #view-shop .shop-rail-head h2, #view-shop .promo-kind-head, .hub-game-copy b, .cs-sheet-head h2) {
   font-family: var(--font-xc); font-style: italic; font-weight: 800;
   font-size: 24px; line-height: 1; letter-spacing: -0.015em;
 }

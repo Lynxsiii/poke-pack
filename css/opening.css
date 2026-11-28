@@ -1466,6 +1466,9 @@ html[data-theme="dark"] #overlay.is-spread {
 #overlay .box-count { right: 0; bottom: 0; font-variant-numeric: tabular-nums; }
 #overlay .box-new { left: 0; top: 0; background: var(--hp-low); }
 #overlay .spread-tip { margin: 18px 0 0; color: var(--k-2); font: 500 14px/1.4 var(--font); text-align: left; }
+/* What a first pack teaches, once, under the cards it is about. */
+#overlay .first-tip { max-width: 46ch; padding-top: 14px; border-top: var(--line-w) solid var(--line); color: var(--k); font-size: 15px; line-height: 1.45; }
+#overlay .first-tip .tlink { font: inherit; }
 
 /* ---- Computers ---------------------------------------------------------------------
    The card on the slab at the left, the panel beside it with the keys in it. */
