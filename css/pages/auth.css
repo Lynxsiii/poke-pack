@@ -233,6 +233,9 @@ body.no-motion :is(#view-auth, .terms-sheet) .check-row input:checked { animatio
 @keyframes au-swap { from { opacity: 0; transform: translateX(-14px); } }
 @keyframes au-land { from { opacity: 0; transform: translateX(-10px) scale(0.8); } }
 @keyframes au-form { from { opacity: 0; transform: translateY(10px); } }
+/* The visitor's kept pack: its best cards take the wrappers' place. */
+#view-auth .au-hero.is-kept .au-pack { top: 14px; }
+#view-auth .au-hero.is-kept .au-pack .tcg { display: block; width: 100%; }
 @keyframes au-plate { from { opacity: 0.4; transform: skewX(var(--skew)) scaleX(0.5); } }
 
 @media (max-width: 380px) {
