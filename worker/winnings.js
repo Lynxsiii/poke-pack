@@ -1,3 +1,4 @@
+import { binderLocks } from './binder-lock.js';
 import { money, sellValue } from '../js/catalog.js';
 import { gradedValue } from '../js/grading-rules.js';
 import { SALES_DDL } from './casino-ddl.js';
@@ -123,18 +124,21 @@ async function priorSales(env, source, gameId, userId) {
 const saleMarker = (source, gameId) => `casino:${source}:${gameId}`;
 
 /** The won slabs this player still holds (theirs, unlocked, slabbed), priced now: [{ id, cardId, v }], at most one part; `more` when cut. */
-async function sellableSlabs(env, request, helpers, userId, ids) {
-  const out = []; let more = false;
+async function sellableSlabs(env, request, helpers, userId, ids, locks = null, rawLeft = {}) {
+  const out = []; let more = false; let pocketed = 0; const leaving = {};
   if (!ids.length) return { slabs: out, more };
   const rows = (await env.DB.prepare(`SELECT id, card_id, grade, black_label FROM graded_cards WHERE user_id = ? AND status = 'slabbed' AND locked IS NULL
     AND id IN (${ids.map(() => '?').join(',')}) ORDER BY id`).bind(userId, ...ids).all()).results || [];
   for (const row of rows) {
     if (out.length >= SALE_PART_SLABS) { more = true; break; }
+    // A slab filling a binder pocket stays (worker/binder-lock.js).
+    if (locks && (leaving[row.card_id] || 0) + 1 > locks.freeSlabs(row.card_id, rawLeft[row.card_id] ?? null)) { pocketed++; continue; }
     const card = await helpers.findCatalogCard(env, request, row.card_id);
     if (!card) continue;
+    leaving[row.card_id] = (leaving[row.card_id] || 0) + 1;
     out.push({ id: row.id, cardId: row.card_id, v: Math.round(gradedValue(card, row.grade, setForCard(row.card_id), Boolean(row.black_label)) * 100) });
   }
-  return { slabs: out, more };
+  return { slabs: out, more, pocketed };
 }
 
 /**
@@ -151,10 +155,15 @@ async function plan(env, request, helpers, source, gameId, userId) {
     for (const s of parse(sale.items)) { const row = won.get(s.id); if (row) { row.qty -= s.qty; row.rev -= s.rev; } }
   }
   const { collection, reverses } = await helpers.inventoryMap(env, userId);
-  const items = []; let cards = 0; let cents = 0; let more = false;
+  const locks = await binderLocks(env, userId, collection);
+  const items = []; let cards = 0; let cents = 0; let more = false; let pocketed = 0;
+  const rawLeft = { ...collection };
   for (const id of [...won.keys()].sort()) {
     const row = won.get(id);
-    const qty = Math.min(row.qty, collection[id] || 0);
+    const held = Math.min(row.qty, collection[id] || 0);
+    // Copies in binder pockets stay (worker/binder-lock.js).
+    const qty = Math.min(held, locks.freeRaw(id, collection[id] || 0));
+    pocketed += held - Math.max(0, qty);
     if (qty < 1) continue;
     if (items.length >= SALE_PART_CARDS) { more = true; break; }
     const card = await helpers.findCatalogCard(env, request, id);
@@ -163,21 +172,23 @@ async function plan(env, request, helpers, source, gameId, userId) {
     // Keep reverse holos: sell the plain copies first.
     const rev = Math.max(0, qty - ((collection[id] || 0) - (reverses[id] || 0)));
     items.push({ id, qty, rev, v });
+    rawLeft[id] = (collection[id] || 0) - qty;
     cards += qty; cents += qty * v;
   }
-  const held = await sellableSlabs(env, request, helpers, userId, slabIds);
+  const held = await sellableSlabs(env, request, helpers, userId, slabIds, locks, rawLeft);
+  pocketed += held.pocketed;
   const sold = slabIds.length
     ? await env.DB.prepare(`SELECT COUNT(*) AS n, COALESCE(SUM(sold_cents), 0) AS cents FROM graded_cards WHERE user_id = ? AND status = 'sold' AND sell_request_id = ?
         AND id IN (${slabIds.map(() => '?').join(',')})`).bind(userId, saleMarker(source, gameId), ...slabIds).first()
     : null;
-  return { items, cards, cents, more, soldCents, parts: before.length, collection, mintedIds,
+  return { items, cards, cents, more, soldCents, parts: before.length, collection, mintedIds, pocketed,
     slabs: held.slabs, slabCents: held.slabs.reduce((n, s) => n + s.v, 0), moreSlabs: held.more, soldSlabs: sold?.n || 0, soldSlabCents: sold?.cents || 0 };
 }
 
 export async function winningsInfo(env, request, helpers, user, source, gameId) {
   const p = await plan(env, request, helpers, source, gameId, user.id);
   const soldCents = p.soldCents + p.soldSlabCents;
-  return { eligible: true, cards: p.cards, slabs: p.slabs.length, coins: money((p.cents + p.slabCents) / 100), soldCoins: money(soldCents / 100),
+  return { eligible: true, locked: p.pocketed || 0, cards: p.cards, slabs: p.slabs.length, coins: money((p.cents + p.slabCents) / 100), soldCoins: money(soldCents / 100),
     sold: (soldCents > 0 || p.soldSlabs > 0) && !p.cards && !p.slabs.length, more: p.more || p.moreSlabs };
 }
 
@@ -192,6 +203,7 @@ export async function sellWinnings(env, request, helpers, user, source, gameId, 
   const slabs = withSlabs ? p.slabs : [];
   if (!p.items.length && !slabs.length) {
     if (!withSlabs && p.slabs.length) error('Only slabs are left to sell.', 409);
+    if (p.pocketed) error('Those cards are locked in your binder. Take them out of the binder to sell them.', 409);
     error(p.soldCents > 0 || p.soldSlabs > 0 ? 'Those winnings are already sold.' : 'You no longer hold any of those cards.', 409);
   }
   const at = Date.now(); const marker = saleMarker(source, gameId);

@@ -165,14 +165,18 @@ assert.equal(qtyOf('host', 'me5-1'), 5, 'expiry hands the cards back');
 assert.equal((await api(`/api/casino/coinflips/${expiring.flip.id}`, 'GET', undefined, null)).flip.status, 'cancelled');
 assert.equal(listed.open.some(f => f.id === expiring.flip.id), false);
 
-// ---- Binder slots follow the cards out ---------------------------------------------------------
-db.prepare('UPDATE profiles SET binder = ? WHERE user_id = ?').run(JSON.stringify([{ id: 'me5-90', reverse: false }, { id: 'me5-1', reverse: false }, null, null, null, null, null, null, null,
-  null, null, null, null, null, null, null, null, null]), 'host');
-const binderFlip = await create([{ id: 'me5-90', qty: 1 }], 'host');
-assert.equal(binderFlip.status, 200);
+// ---- Binder cards are locked (worker/binder-lock.js) ---------------------------------------------
+const binderSlots = [{ id: 'me5-90', reverse: false }, { id: 'me5-1', reverse: false }, null, null, null, null, null, null, null,
+  null, null, null, null, null, null, null, null, null];
+db.prepare('UPDATE profiles SET binder = ? WHERE user_id = ?').run(JSON.stringify(binderSlots), 'host');
+const pocketedQty = qtyOf('host', 'me5-90');
+const lockedFlip = await create([{ id: 'me5-90', qty: pocketedQty }], 'host');
+assert.equal(lockedFlip.status, 409, 'the copy in the binder cannot be staked');
+assert.match(lockedFlip.error, /binder/);
+assert.equal(qtyOf('host', 'me5-90'), pocketedQty, 'nothing moved');
 const binder = JSON.parse(db.prepare('SELECT binder FROM profiles WHERE user_id = ?').get('host').binder);
-assert.equal(binder[0], null, 'the staked card left the binder'); assert.equal(binder[1]?.id, 'me5-1', 'other slots stay');
-assert.equal((await cancel(binderFlip.flip.id)).status, 200);
+assert.equal(binder[0]?.id, 'me5-90', 'the pocket keeps its card'); assert.equal(binder[1]?.id, 'me5-1', 'other slots stay');
+db.prepare('UPDATE profiles SET binder = ? WHERE user_id = ?').run(JSON.stringify(binderSlots.map(() => null)), 'host');
 
 // ---- Public list, record, and hiding nothing private ---------------------------------------------
 const list = await api('/api/casino/coinflips', 'GET', undefined, null);

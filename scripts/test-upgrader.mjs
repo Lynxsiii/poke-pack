@@ -459,23 +459,29 @@ await check('slabs: a slab that is in an open coinflip cannot be upgraded away',
 });
 
 // ---- Binder ---------------------------------------------------------------------------------
-await check('binder: a staked card that leaves the collection leaves its slot, a won card keeps the slot of a card you still own', async () => {
+await check('binder: a pocketed card cannot be staked; a spare copy can, and the pocket keeps its card', async () => {
   addUser('binder'); give('binder', 'me5-903', 1); give('binder', 'me5-902', 1);
   db.prepare('UPDATE profiles SET binder = ? WHERE user_id = ?').run(JSON.stringify(Array.from({ length: 45 }, (_, i) => (i === 0 ? { id: 'me5-903', reverse: false } : i === 1 ? { id: 'me5-902', reverse: false } : null))), 'binder');
+  const locked = await up.go('binder', { cards: [{ id: 'me5-903', qty: 1 }], target: card('me5-902'), roll: 0 });
+  assert.equal(locked.status, 409, JSON.stringify(locked)); assert.match(locked.error, /binder/);
+  assert.equal(qtyOf('binder', 'me5-903'), 1, 'nothing moved');
+  give('binder', 'me5-903', 1);
   const res = await up.go('binder', { cards: [{ id: 'me5-903', qty: 1 }], target: card('me5-902'), roll: 0 });
   assert.equal(res.status, 200, JSON.stringify(res)); assert.equal(res.upgrade.won, true);
   const binder = JSON.parse(db.prepare('SELECT binder FROM profiles WHERE user_id = ?').get('binder').binder);
-  assert.equal(binder[0], null, 'the staked card is out of the binder'); assert.equal(binder[1]?.id, 'me5-902'); assert.equal(qtyOf('binder', 'me5-902'), 2);
+  assert.equal(binder[0]?.id, 'me5-903', 'the pocket keeps its card'); assert.equal(binder[1]?.id, 'me5-902'); assert.equal(qtyOf('binder', 'me5-902'), 2);
+  assert.equal(qtyOf('binder', 'me5-903'), 1);
   audit('after binder');
 });
-await check('binder: a binder slot held only by a staked slab is cleared when the slab leaves', async () => {
+await check('binder: a slab filling a pocket cannot be staked', async () => {
   addUser('binder2'); give('binder2', 'me5-903', 1);
   const s = mint('binder2', 'me5-87', 9);
   db.prepare('UPDATE profiles SET binder = ? WHERE user_id = ?').run(JSON.stringify(Array.from({ length: 45 }, (_, i) => (i === 0 ? { id: 'me5-87', reverse: false } : i === 1 ? { id: 'me5-903', reverse: false } : null))), 'binder2');
   const res = await up.go('binder2', { slabs: [s], target: card('me5-913'), roll: 999999 });
-  assert.equal(res.status, 200, JSON.stringify(res)); assert.equal(res.upgrade.won, false);
+  assert.equal(res.status, 409, JSON.stringify(res)); assert.match(res.error, /binder/);
+  assert.equal(db.prepare('SELECT status, locked FROM graded_cards WHERE id = ?').get(s).status, 'slabbed');
   const binder = JSON.parse(db.prepare('SELECT binder FROM profiles WHERE user_id = ?').get('binder2').binder);
-  assert.equal(binder[0], null, 'the slot held only by the staked slab is cleared'); assert.equal(binder[1]?.id, 'me5-903', 'an untouched card keeps its slot');
+  assert.equal(binder[0]?.id, 'me5-87', 'the pocket keeps its slab'); assert.equal(binder[1]?.id, 'me5-903');
   audit('after binder slab');
 });
 

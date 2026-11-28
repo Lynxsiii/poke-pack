@@ -6,7 +6,7 @@
 
      mountWinnings(container, { source: "coinflip"|"jackpot"|"battle", id, ctx })
 
-   GET  /api/casino/winnings/<source>/<id>  -> { eligible, cards, slabs, coins, soldCoins, sold, more }
+   GET  /api/casino/winnings/<source>/<id>  -> { eligible, locked, cards, slabs, coins, soldCoins, sold, more }
    POST /api/casino/winnings/sell { source, id, slabs?: false }
         -> { sold: { coins, cards, slabs, remaining, more }, save }
 
@@ -51,6 +51,9 @@ export async function mountWinnings(container, { source, id, ctx }) {
   const paint = (busy = false) => {
     const cards = Number(info.cards) || 0;
     const slabs = Number(info.slabs) || 0;
+    // Won cards put in the binder are locked there (worker/binder-lock.js) and left out of the sale.
+    const pocketed = Number(info.locked) || 0;
+    const lockNote = pocketed > 0 ? `<p class="cs-locked">${pocketed === 1 ? "1 card you won is" : `${pocketed} cards you won are`} in your binder, so ${pocketed === 1 ? "it stays" : "they stay"}.</p>` : "";
     if (cards > 0 || slabs > 0) {
       const sold = info.soldCoins > 0 ? `<p class="cs-sold">Winnings sold for ${coinTag(info.soldCoins)}.</p>` : "";
       container.innerHTML = `${sold}<button class="ghost cs-sell" type="button" data-sell ${busy ? "disabled" : ""}>${
@@ -59,10 +62,10 @@ export async function mountWinnings(container, { source, id, ctx }) {
         cards > 0 && slabs > 0
           ? `<button class="cs-link cs-sell-cards" type="button" data-sell-cards ${busy ? "disabled" : ""}>Sell cards, keep the slabs</button>`
           : ""
-      }`;
+      }${lockNote}`;
     } else if (info.soldCoins > 0) {
-      container.innerHTML = `<p class="cs-sold">Winnings sold for ${coinTag(info.soldCoins)}.</p>`;
-    } else container.innerHTML = "";
+      container.innerHTML = `<p class="cs-sold">Winnings sold for ${coinTag(info.soldCoins)}.</p>${lockNote}`;
+    } else container.innerHTML = lockNote;
   };
   paint();
 
