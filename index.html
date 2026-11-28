@@ -9,12 +9,13 @@
       name="description"
       content="Open Pokémon TCG booster packs with printed pull rates, real card scans, and market-based values. Free, fan-made, no real money."
     />
-    <meta name="theme-color" content="#eef2f3" />
-    <style>html{background:#eef2f3;color-scheme:light}</style>
+    <meta name="theme-color" content="#0d0d0e" />
+    <style>html{background:#0d0d0e;color-scheme:dark}</style>
     <script>
       // Paint the chosen look before anything draws (Settings, Look; js/app.js applyTheme keeps this copy).
       try {
-        var look = JSON.parse(localStorage.getItem("pp-look") || "null");
+        // No saved look yet: Rocket, the default theme (js/themes.js DEFAULT_THEME).
+        var look = JSON.parse(localStorage.getItem("pp-look") || "null") || { mode: "dark", palette: "rocket", light: "#0d0d0e", dark: "#0d0d0e" };
         if (look) {
           var dark = look.mode === "dark" || (look.mode === "device" && matchMedia("(prefers-color-scheme: dark)").matches);
           var ground = dark ? look.dark : look.light;
@@ -26,6 +27,15 @@
             document.querySelector('meta[name="theme-color"]').content = ground;
           }
         }
+        // The loading screen stays still for Lite, or motion switched off (js/app.js applySettings keeps this key).
+        if (localStorage.getItem("pp-calm") === "1") document.documentElement.dataset.calm = "1";
+      } catch (e) {}
+      // The loading screen's percentage: note each of the site's files as it arrives (read by the script under .boot-veil).
+      var ppBoot = (window.ppBoot = { seen: {}, step: 0, at: function (n) { if (n > this.step) this.step = n; } });
+      try {
+        new PerformanceObserver(function (list) {
+          list.getEntries().forEach(function (e) { ppBoot.seen[e.name] = 1; });
+        }).observe({ type: "resource", buffered: true });
       } catch (e) {}
     </script>
     <!-- Impact-Site-Verification: 23749cf9-1a5a-401e-9b6e-481a379791d2 -->
@@ -40,25 +50,25 @@
       property="og:description"
       content="Printed booster odds, real card scans and market-based values. No real money."
     />
-    <meta property="og:image" content="https://poke-pack.rip/assets/og-v2.jpg" />
+    <meta property="og:image" content="https://poke-pack.rip/assets/og-v3.jpg" />
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="poke-pack.rip | rip packs, fill the binder" />
     <meta name="twitter:description" content="Printed booster odds, real card scans and market-based values. No real money." />
-    <meta name="twitter:image" content="https://poke-pack.rip/assets/og-v2.jpg" />
+    <meta name="twitter:image" content="https://poke-pack.rip/assets/og-v3.jpg" />
     <meta name="twitter:image:alt" content="Five Pokémon TCG chase cards fanned out under the poke-pack.rip wordmark" />
 
-    <link rel="icon" href="assets/icon-32-v2.png" type="image/png" sizes="32x32" />
-    <link rel="apple-touch-icon" href="assets/icon-180-v2.png" />
+    <link rel="icon" href="assets/icon-32-v3.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="assets/icon-180-v3.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
     <noscript>
       <style>.boot-veil { display: none !important; }</style>
     </noscript>
     <link rel="preload" href="assets/fonts/mplus-rounded-1c-500-latin-v1.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="assets/fonts/kanit-800i-latin-v1.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="stylesheet" href="css/app.css?v=68" />
+    <link rel="stylesheet" href="css/app.css?v=70" />
     <link rel="stylesheet" href="css/theme.css?v=28" />
     <link rel="stylesheet" href="css/counter.css?v=4" />
     <link rel="stylesheet" href="css/pages/home.css?v=14" />
@@ -69,9 +79,10 @@
     <link rel="stylesheet" href="css/binder/materials.css?v=3" />
     <link rel="stylesheet" href="css/binder/editions.css?v=3" />
     <link rel="stylesheet" href="css/binder/editor.css?v=6" />
+    <link rel="stylesheet" href="css/binder/flipbook.css?v=2" />
     <link rel="stylesheet" href="css/pages/account.css?v=21" />
     <link rel="stylesheet" href="css/pages/rankings.css?v=5" />
-    <link rel="stylesheet" href="css/pages/profile-look.css?v=10" />
+    <link rel="stylesheet" href="css/pages/profile-look.css?v=11" />
     <link rel="stylesheet" href="css/pages/extras.css?v=22" />
     <link rel="stylesheet" href="css/pages/notes.css?v=3" />
     <link rel="stylesheet" href="css/pages/share.css?v=5" />
@@ -86,18 +97,19 @@
     <link rel="stylesheet" href="css/pages/banners.css?v=4" />
     <link rel="stylesheet" href="css/pages/mastery-shelf.css?v=3" />
     <link rel="stylesheet" href="css/pages/trainer-card.css?v=7" />
-    <link rel="stylesheet" href="css/opening.css?v=22" />
+    <link rel="stylesheet" href="css/pages/account-edit.css?v=2" />
+    <link rel="stylesheet" href="css/opening.css?v=23" />
     <link rel="stylesheet" href="css/tear.css?v=2" />
     <link rel="stylesheet" href="css/promo-set.css?v=4" />
     <link rel="stylesheet" href="css/pages/gear.css?v=17" />
     <link rel="stylesheet" href="css/pages/battles.css?v=10" />
     <link rel="stylesheet" href="css/battle-table.css?v=5" />
     <link rel="stylesheet" href="css/battle-reveal.css?v=3" />
-    <link rel="stylesheet" href="css/casino-coin.css?v=8" />
+    <link rel="stylesheet" href="css/casino-coin.css?v=9" />
     <link rel="stylesheet" href="css/pages/casino.css?v=20" />
     <link rel="stylesheet" href="css/pages/upgrader.css?v=8" />
-    <link rel="stylesheet" href="css/pages/beta.css?v=8" />
-    <link rel="stylesheet" href="css/pages/tcg.css?v=23" />
+    <link rel="stylesheet" href="css/pages/beta.css?v=9" />
+    <link rel="stylesheet" href="css/pages/tcg.css?v=24" />
     <link rel="stylesheet" href="css/pages/target-picker.css?v=6" />
     <link rel="stylesheet" href="css/pages/gates.css?v=5" />
     <!-- grading -->
@@ -116,9 +128,10 @@
     <link rel="stylesheet" href="css/pages/batch.css?v=7" />
     <link rel="stylesheet" href="css/pages/inspect.css?v=5" />
     <link rel="stylesheet" href="css/pages/auth.css?v=4" />
+    <link rel="stylesheet" href="css/pages/account-security.css?v=1" />
     <link rel="stylesheet" href="css/pages/wishlist.css?v=1" />
-    <link rel="stylesheet" href="css/rotom.css?v=10" />
-    <link rel="stylesheet" href="css/themes.css?v=1" />
+    <link rel="stylesheet" href="css/rotom.css?v=13" />
+    <link rel="stylesheet" href="css/themes.css?v=3" />
     <!-- Holofoil, derived from pokemon-cards-css (GPL-3). Loaded after app.css
          so its body.fx-holo rules win; Settings → Card effects switches to
          body.fx-classic, which leaves the original system painting. -->
@@ -311,13 +324,14 @@
     <link rel="modulepreload" href="js/quest-area.js?v=10" />
     <link rel="modulepreload" href="js/level-ui.js" />
     <link rel="modulepreload" href="js/acct-motion.js" />
+    <link rel="modulepreload" href="js/avatar-picker.js" />
     <link rel="modulepreload" href="js/level-feed.js" />
     <link rel="modulepreload" href="js/liveprices.js?v=5" />
     <link rel="modulepreload" href="js/pricechart.js" />
-    <link rel="modulepreload" href="js/themes.js?v=1" />
+    <link rel="modulepreload" href="js/themes.js?v=2" />
     <link rel="modulepreload" href="js/gear.js?v=2" />
-    <link rel="modulepreload" href="js/gear-page.js?v=16" />
-    <link rel="modulepreload" href="js/coin.js?v=6" />
+    <link rel="modulepreload" href="js/gear-page.js?v=17" />
+    <link rel="modulepreload" href="js/coin.js?v=7" />
     <link rel="modulepreload" href="js/battles.js?v=10" />
     <link rel="modulepreload" href="js/battle-hall.js?v=8" />
     <link rel="modulepreload" href="js/battle-kit.js" />
@@ -326,16 +340,16 @@
     <link rel="modulepreload" href="js/battle-table.js?v=10" />
     <link rel="modulepreload" href="js/battle-reveal.js" />
     <link rel="modulepreload" href="js/casino-winnings.js" />
-    <link rel="modulepreload" href="js/casino.js?v=31" />
+    <link rel="modulepreload" href="js/casino.js?v=33" />
     <link rel="modulepreload" href="js/stake-picker.js?v=12" />
     <link rel="modulepreload" href="js/casino-rules.js" />
-    <link rel="modulepreload" href="js/coinflip.js?v=14" />
+    <link rel="modulepreload" href="js/coinflip.js?v=15" />
     <link rel="modulepreload" href="js/jackpot.js?v=9" />
     <link rel="modulepreload" href="js/upgrader.js?v=10" />
     <link rel="modulepreload" href="js/upgrader-rules.js?v=3" />
     <link rel="modulepreload" href="js/target-picker.js?v=9" />
-    <link rel="modulepreload" href="js/beta.js?v=8" />
-    <link rel="modulepreload" href="js/beta-rules.js?v=3" />
+    <link rel="modulepreload" href="js/beta.js?v=9" />
+    <link rel="modulepreload" href="js/beta-rules.js?v=4" />
     <link rel="modulepreload" href="js/grading-page.js?v=21" />
     <link rel="modulepreload" href="js/grading-auto.js?v=1" />
     <link rel="modulepreload" href="js/grading-auto-rules.js" />
@@ -351,13 +365,15 @@
     <link rel="modulepreload" href="js/batch-open.js?v=6" />
     <link rel="modulepreload" href="js/search.js?v=7" />
     <link rel="modulepreload" href="js/wishlist.js?v=2" />
+    <link rel="modulepreload" href="js/account-security.js?v=1" />
+    <link rel="modulepreload" href="js/qr.js?v=1" />
     <link rel="modulepreload" href="js/share-pull.js?v=3" />
     <link rel="modulepreload" href="js/binder-object.js" />
     <link rel="modulepreload" href="js/binder-editions.js" />
     <link rel="modulepreload" href="js/card-art-accent.js?v=1" />
     <link rel="modulepreload" href="js/binder-editor.js?v=4" />
     <link rel="modulepreload" href="js/notes-page.js?v=3" />
-    <link rel="modulepreload" href="js/legal-page.js?v=5" />
+    <link rel="modulepreload" href="js/legal-page.js?v=6" />
     <link rel="modulepreload" href="js/terms-sheet.js?v=1" />
     <link rel="modulepreload" href="js/fam/mcd-promos.js?v=6" />
     <link rel="modulepreload" href="js/fam/xy-evolutions.js?v=3" />
@@ -469,12 +485,49 @@
       <symbol id="i-profile" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="11" r="2"/><path d="M5.5 16c.5-1.5 1.6-2.2 3-2.200s2.5.7 3 2.200M14 10h4.500M14 13.500h3"/></symbol>
     </svg>
     <a class="skip-link" href="#main-content">Skip to content</a>
-    <div class="boot-veil" aria-hidden="true"></div>
+    <div class="boot-veil" aria-hidden="true">
+      <div class="boot-fan">
+        <span class="boot-slot"><span class="boot-deal"><span class="boot-flip"><i class="boot-card"><u>R</u></i><i class="boot-card boot-back"></i></span></span></span>
+        <span class="boot-slot"><span class="boot-deal"><span class="boot-flip"><i class="boot-card"><u>I</u></i><i class="boot-card boot-back"></i></span></span></span>
+        <span class="boot-slot"><span class="boot-deal"><span class="boot-flip"><i class="boot-card"><u>P</u></i><i class="boot-card boot-back"></i></span></span></span>
+      </div>
+      <div class="boot-name">POKE PACK</div>
+      <div class="boot-meter"><span class="boot-bar"><i id="boot-bar"></i></span><b id="boot-num">0%</b></div>
+    </div>
+    <script>
+      // The loading screen's percentage, from real progress: the share of the site's script files that have
+      // arrived (0 to 70), then the start-up steps js/app.js reports through ppBoot.at (70 to 100).
+      (function () {
+        var boot = window.ppBoot, num = document.getElementById("boot-num"), bar = document.getElementById("boot-bar");
+        if (!boot || !num) return;
+        var want = [], links = document.querySelectorAll('link[rel="modulepreload"]');
+        for (var i = 0; i < links.length; i++) want.push(links[i].href);
+        var STEPS = 5, shown = -1, best = 0;
+        function real() {
+          var got = 0;
+          for (var i = 0; i < want.length; i++) if (boot.seen[want[i]]) got++;
+          var now = boot.step ? 70 + (30 * Math.min(boot.step, STEPS)) / STEPS : want.length ? (70 * got) / want.length : 0;
+          if (now > best) best = now;
+          return best;
+        }
+        function paint() {
+          var ready = document.body.classList.contains("is-ready"), to = ready ? 100 : Math.floor(real());
+          if (to !== shown) {
+            shown = to;
+            num.textContent = to + "%";
+            bar.style.transform = "scaleX(" + to / 100 + ")";
+          }
+          if (!ready) requestAnimationFrame(paint);
+        }
+        boot.paint = paint;
+        paint();
+      })();
+    </script>
     <header class="site-header">
       <a class="brand" href="/home">
-        <img class="brand-logo" src="assets/mark-v2.png" width="256" height="256" alt="" />
+        <img class="brand-logo" src="assets/mark-v3.png" width="256" height="256" alt="" />
         <span class="brand-copy">
-          <span class="brand-name">poke-pack<span>.rip</span></span>
+          <span class="brand-name">POKE PACK<img class="brand-fan" src="assets/fan-v3.png" width="476" height="268" alt=".rip" /></span>
           <span class="brand-sub">pull like it's real</span>
         </span>
       </a>
@@ -517,7 +570,7 @@
         <!-- Phone HUD: the trainer with their level ring; opens the menu that More holds on a laptop -->
         <button class="hud-me" id="hud-me" type="button" aria-label="Menu" aria-haspopup="true">
           <svg class="hud-ring" viewBox="0 0 54 54" aria-hidden="true"><circle cx="27" cy="27" r="25" /><circle class="hud-arc" cx="27" cy="27" r="25" pathLength="100" /></svg>
-          <span class="hud-face" id="hud-face"><img src="assets/mark-v2.png" alt="" /></span>
+          <span class="hud-face" id="hud-face"><img src="assets/mark-v3.png" alt="" /></span>
           <span class="hud-lv" id="hud-lv" hidden></span>
         </button>
         <button class="search-open" id="search-open" type="button" aria-label="Search cards and products" aria-haspopup="dialog" title="Search ( / )">
@@ -557,6 +610,7 @@
           </div>
           <div class="me-xp" id="me-xp" hidden><span class="rt-track"><i id="me-xp-fill"></i></span><small id="me-xp-note"></small></div>
           <button class="me-item" type="button" role="menuitem" data-me-go="account"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-you"/></svg><span>Account</span><small>Levels, quests, badges</small></button>
+          <button class="me-item" type="button" role="menuitem" data-me-edit><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-profile"/></svg><span>Edit profile</span><small>Picture, frame, banner, name</small></button>
           <a class="me-item" id="me-profile" role="menuitem" href="/account"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-profile"/></svg><span>Public profile</span><small id="me-profile-url">What other trainers see</small></a>
           <button class="me-item" type="button" role="menuitem" data-me-go="social"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-people"/></svg><span>Friends</span><small>Messages and requests</small></button>
           <button class="me-item" type="button" role="menuitem" data-me-go="settings"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-settings"/></svg><span>Settings</span><small>Effects, sound, motion</small></button>
@@ -738,13 +792,15 @@
         <div id="binder-tabs"></div>
         <header class="bd-head">
           <div class="bd-title">
-            <h1>Binder</h1>
+            <h1 id="binder-name">Binder</h1>
             <p id="binder-count">0 cards on show</p>
           </div>
-          <div class="binder-actions">
+          <!-- Arrange holds all the editing (js/app.js renderBinder; css/binder/flipbook.css) -->
+          <button class="ghost" type="button" id="binder-arrange" aria-pressed="false" hidden>Arrange</button>
+          <div class="binder-actions bd-edit-only">
             <!-- binder customiser (js/binder-editor.js) -->
-            <button class="solid" type="button" id="binder-customise" aria-expanded="false" aria-controls="binder-editor" hidden>Customise</button>
-            <button class="ghost" type="button" id="binder-add-page">Add page</button>
+            <button class="ghost sm" type="button" id="binder-customise" aria-expanded="false" aria-controls="binder-editor" hidden>Customise</button>
+            <button class="ghost sm" type="button" id="binder-add-page">Add page</button>
           </div>
         </header>
         <div class="binder-layout" id="binder-layout">
@@ -994,7 +1050,7 @@
       </nav>
     </footer>
     <script type="module" src="js/etch.js?v=1"></script>
-    <script type="module" src="js/app.js?v=404"></script>
+    <script type="module" src="js/app.js?v=415"></script>
     <script type="module" src="js/rotom.js?v=3"></script>
   </body>
 </html>

@@ -163,7 +163,7 @@ function attackValue(state, player, action, defs) {
       apply(copy, action, defs);
       // Choices the attack opens (targets, the other side's new Active Pokémon) are made as the bot would.
       for (let k = 0; k < 12 && copy.phase === "main" && copy.pending.length; k += 1) {
-        const next = botAction(copy, copy.pending[0].player, defs);
+        const next = thinkAction(copy, copy.pending[0].player, defs);
         if (!next) break;
         apply(copy, next, defs);
       }
@@ -254,7 +254,39 @@ function placeAction(state, player, defs) {
   return { type: "place", player, active: basics[0], bench: basics.slice(1, 1 + state.rules.bench) };
 }
 
-export function botAction(state, player, defs) {
+/**
+ * How hard the bot plays. "normal" and "hard" think the same way (hard gets the stronger deck,
+ * js/tcg/decks.js buildBotDeck); "easy" is a beginner: it misses plays, attacks with whatever it
+ * likes, and sends in whoever comes to hand. Its slips use their own random numbers, never the
+ * match's, so the deck order and the coins are the same whichever level is picked.
+ */
+export function botAction(state, player, defs, { level = "normal", random = Math.random } = {}) {
+  const action = thinkAction(state, player, defs);
+  if (level !== "easy" || !action || simulating) return action;
+  return slip(state, player, defs, action, random) || action;
+}
+
+function slip(state, player, defs, action, random) {
+  if (state.phase !== "main") return null;
+  const actions = legalActions(state, player, defs);
+  // A new Active Pokémon: whoever it likes, not whoever fits.
+  if (action.type === "promote") return actions[Math.floor(random() * actions.length)];
+  if (state.pending.length) return null;
+  // An attack: any it can pay for, not the best.
+  if (action.type === "attack") {
+    const attacks = actions.filter((a) => a.type === "attack");
+    return attacks[Math.floor(random() * attacks.length)];
+  }
+  // Trainers and retreats: often forgotten. Energy, Pokémon and evolutions it rarely misses, so it still puts up a fight.
+  const forget = { play: 0.45, retreat: 0.7, ability: 0.4, stadium: 0.5, tool: 0.4, attach: 0.12, bench: 0.15, evolve: 0.15 }[action.type] || 0;
+  if (forget && random() < forget) {
+    const attack = actions.find((a) => a.type === "attack");
+    return attack || actions.find((a) => a.type === "end") || null;
+  }
+  return null;
+}
+
+function thinkAction(state, player, defs) {
   const actions = legalActions(state, player, defs);
   if (!actions.length) return null;
   if (actions[0].type === "place") return placeAction(state, player, defs);

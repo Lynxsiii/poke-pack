@@ -5,7 +5,7 @@
 import { api } from "./api.js";
 import { mountDock, bindDock } from "./header-docks.js?v=3";
 import { avatarColor } from "./accounts.js";
-import { avatarSrc, avatarStyle, bannerVars } from "./cosmetics.js";
+import { avatarSrc, avatarPixel, bannerVars } from "./cosmetics.js";
 import { frameHtml, levelBadgeHtml, userFrame } from "./level-badge.js";
 import { bannerBlockHtml } from "./mastery-banner.js";
 
@@ -48,8 +48,9 @@ export function notifySignedIn() {
 /** A face in the frame its trainer wears (none when the row carries no level). `opts.frame === false` leaves it bare, for stacked faces. */
 export function faceHtml(user, size = "md", opts = {}) {
   const color = avatarColor(user?.color).hex;
-  const src = avatarSrc(user?.avatar, user?.avatarStyle);
-  const pixel = avatarStyle(user?.avatarStyle) === "pixel" ? " pixel" : "";
+  // An animated picture moves on the big faces (a profile, a seat) and holds still in lists.
+  const src = avatarSrc(user?.avatar, user?.avatarStyle, { still: !["lg", "xl"].includes(size) });
+  const pixel = avatarPixel(user?.avatarStyle) ? " pixel" : "";
   const frame = opts.frame === false ? null : userFrame(user);
   const cls = `user-face ${size}${user?.online && !frame ? " on" : ""}${pixel}`;
   const face = `<span class="${cls}" style="--avatar:${esc(color)}"><img src="${esc(src)}" alt="" /></span>`;

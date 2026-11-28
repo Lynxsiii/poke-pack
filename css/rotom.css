@@ -41,6 +41,7 @@
   --box-2: #f4f7f8;        /* a row or cell inside a box */
   --rule: #d9e0e3;         /* thin dividers inside boxes */
   --rule-2: #b4bec4;       /* dashed empties, disabled edges */
+  --key-off: #e3e9eb;      /* the plate of a key you can't press yet */
   --cy: #00b4c8;           /* the slab */
   --cy-2: #008fa6;         /* cyan as an icon or a link on white */
   --cy-3: #d3f1f5;         /* a cyan wash */
@@ -146,7 +147,7 @@ html[data-theme="dark"] {
   --k-2: #aab4bc; --k-3: #8b96a0;
   --bg: #101317; --box: #1a1f25; --box-2: #222830; --rule: #323a43; --rule-2: #4c5661;
   --box-rgb: 26 31 37; --yel-k: #6b5200; --bad-wash: #3d181d; --bad-wash-2: #54212a;
-  --cy-2: #37cfe0; --cy-3: #12363d; --slab: #007f8f;
+  --cy-2: #37cfe0; --cy-3: #12363d; --slab: #007f8f; --key-off: #262d35;
   --drop: 6px 8px 0 rgb(0 0 0 / 0.45); --drop-sm: 3px 4px 0 rgb(0 0 0 / 0.4);
   --dots: radial-gradient(rgb(255 255 255 / 0.07) 1.6px, transparent 1.7px);
   --ty-secret: #eef2f3;
@@ -159,7 +160,7 @@ html[data-theme="dark"] {
    Put .rt-dark on a container to get it. */
 .rt-dark {
   color-scheme: dark;
-  --k: #14171b; --on-k: #ffffff; --box-rgb: 255 255 255; --yel-k: var(--yel); --bad-wash: #ffe3e5; --bad-wash-2: #ffc9cd; --cy-2: var(--cy-2s); --cy-3: var(--cy-3s); --ty-secret: #14171b; --drop-sm: 3px 4px 0 rgb(0 40 50 / 0.18);
+  --k: #14171b; --on-k: #ffffff; --box-rgb: 255 255 255; --yel-k: var(--yel); --bad-wash: #ffe3e5; --bad-wash-2: #ffc9cd; --cy-2: var(--cy-2s); --cy-3: var(--cy-3s); --ty-secret: #14171b; --drop-sm: 3px 4px 0 rgb(0 40 50 / 0.18); --key-off: #e3e9eb;
   /* Root tokens built from the ones above are worked out at the root, so the
      stage restates them: it looks the same under either theme. */
   --print: #14171b; --print-2: #566069; --red-deep: #14171b; --wall: #eef2f3; --wall-dark: #ffffff; --thermal: #ffffff;
@@ -182,7 +183,14 @@ html[data-theme="dark"] {
 /* The ground is on html so the slab (body::after, z-index -1) shows over it. */
 html {
   font-synthesis: none; overflow-x: clip;
-  background-color: var(--bg); background-image: var(--dots); background-size: 14px 14px;
+  background-color: var(--bg); background-image: var(--dots); background-size: var(--dots-size, 14px 14px);
+}
+/* A theme's own ground art (css/themes.css --ground-art): slanted bands or a
+   foil sheet, fixed behind the page so every screen is composed the same way.
+   It never moves or animates. */
+html[data-palette]::before {
+  content: ""; position: fixed; inset: 0; z-index: -2; pointer-events: none;
+  background: var(--ground-art, none);
 }
 body, body.on-home, body.on-auth, body.on-collection, body.on-shop, body.on-social, body.on-casino, body.on-battles {
   position: relative; background: none;
@@ -202,7 +210,7 @@ b, strong { font-weight: 700; }
 body::after {
   content: ""; position: absolute; z-index: -1; pointer-events: none;
   top: -40px; right: -84px; width: min(250px, 56vw); height: 168px;
-  background-color: var(--slab); background-image: var(--dots-light); background-size: 14px 14px;
+  background-color: var(--slab); background-image: var(--dots-light); background-size: var(--dots-size, 14px 14px);
   transform: skewX(var(--skew)); transform-origin: 100% 0;
 }
 @media (min-width: 961px) {
@@ -259,7 +267,7 @@ main h1:not(.sr-only), .signage, .page-title, .view-title, .hero h1, .bulk-head 
 .ghost:active:not(:disabled), .solid:active:not(:disabled), .buy:active:not(:disabled) { transform: translateY(3px); background: none; box-shadow: none; }
 .ghost:active:not(:disabled)::before, .solid:active:not(:disabled)::before, .buy:active:not(:disabled)::before { border-bottom-width: 3px; bottom: 3px; }
 .solid:disabled, .buy:disabled, .ghost:disabled { background: none; border-color: transparent; color: var(--k-3); cursor: default; opacity: 1; }
-.solid:disabled::before, .buy:disabled::before, .ghost:disabled::before { background: #e3e9eb; border-color: var(--rule-2); }
+.solid:disabled::before, .buy:disabled::before, .ghost:disabled::before { background: var(--key-off); border-color: var(--rule-2); }
 .ghost.sm, .solid.sm { min-height: 38px; padding: 4px 14px 7px; font-size: 15px; }
 .ghost.sm::before, .solid.sm::before { transform: none; border-radius: 5px; border-bottom-width: 4.5px; }
 .solid.danger::before, .ghost.danger:hover::before { background: #ffd9dc; }
@@ -501,13 +509,12 @@ a.rt-row, button.rt-row { transition: transform 0.14s var(--ease-out); }
 .brand { gap: 8px; text-decoration: none; color: var(--k); }
 .brand-logo { border-radius: 8px; }
 .brand-name { font-family: var(--font-xc); font-style: italic; font-size: 19px; font-weight: 700; letter-spacing: -0.01em; }
-/* ".rip" stands on a slanted ink plate in the key's yellow: the wordmark's one mark. */
-.brand-name span { position: relative; z-index: 0; display: inline-block; margin-left: 4px; padding: 2px 6px 3px 5px; color: var(--yel-k); }
-.brand-name span::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 3px; background: var(--k); transform: skewX(var(--skew)); }
-/* In the dark theme the plate turns yellow with ink lettering, set from fixed colours
-   (--yel, --k0) so no theme's tokens can leave it blank. */
-html[data-theme="dark"] .brand-name span { color: var(--k0); }
-html[data-theme="dark"] .brand-name span::before { background: var(--yel); }
+/* The name, then three cards of our own spelling R, I, P (assets/fan-v3.png from scripts/make_logo.mjs). The
+   lockup carries the brand in the top bar, so the square mark only shows where the name has no room. */
+.brand-name { display: flex; align-items: center; gap: 6px; overflow: visible; }
+.brand-fan { display: block; height: 1.5em; width: auto; flex: none; }
+.site-header .brand > .brand-logo { display: none; }
+@media (max-width: 350px) { .site-header .brand > .brand-logo { display: block; } }
 /* The purse: coins on a slanted ink plate. */
 .balance {
   position: relative; isolation: isolate; min-height: 36px; padding: 0 17px 0 11px;
@@ -930,7 +937,7 @@ body.no-motion .rt-track > i[style*="--fill"] { transition: none !important; }
    A plate drawn in yellow or green by a pseudo-element keeps ink lettering
    under the dark theme, where the page's own text turns light. */
 #view-battles .hl-change:hover, #view-battles .hl-arrow:hover, #view-battles .hl-vs-mark,
-#view-battles a.hl-row:hover .hl-take, .cart-bar-go, .cf-vs, .is-decided .cf-result, .jp-entry, .gear-hero-name, .gear-hero-name span, .gear-eq-tag,
+#view-battles a.hl-row:hover .hl-take, .cart-bar-go, .cf-vs, .is-decided .cf-result, .jp-entry, .gear-hero-name, .gear-hero-name span,
 .gear-sheet-close:hover, .gd-plate, .hh-step:hover:not(:disabled), #view-shop .product-open.confirming,
 .rk-seat[data-place="1"] .rk-plate, .tr-vs[data-st="accepted"] .tr-vs-mark, .ug-line > span, .me-item:active { color: var(--k0); }
 .is-decided.you-lost .cf-result, .ug-line.is-lost > span, .gd-plate[data-tier="cracked"] { color: var(--on-k); }

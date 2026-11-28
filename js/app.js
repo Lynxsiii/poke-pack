@@ -55,11 +55,11 @@ import {
   AVATARS,
   avatarSrc,
   avatarStyle,
-  avatarIcon,
+  avatarPixel,
+  avatarFallback,
   bannerVars,
   parseBanner,
   BANNER_MOTIONS,
-  searchAvatars,
   STAT_KEYS,
   DEFAULT_STATS,
   SHOWCASE_MAX,
@@ -89,6 +89,7 @@ import { masteryShelfProfileHtml } from "./mastery-shelf.js";
 import * as questArea from "./quest-area.js?v=10";
 import * as levelUi from "./level-ui.js";
 import { rollFigures, growBars, flyCoins, markPicks, landPreview } from "./acct-motion.js";
+import { avatarPickerHtml, initAvatarPicker, resetAvatarPicker } from "./avatar-picker.js";
 import { createXpFeed } from "./level-feed.js";
 import { startLivePrices, applyCachedPrices, applyLatestSealed } from "./liveprices.js?v=5";
 import {
@@ -124,12 +125,12 @@ import {
   trainerCode,
 } from "./accounts.js";
 import { api, ApiError } from "./api.js";
-import { THEMES, canUseTheme, resolveLook } from "./themes.js?v=1";
+import { THEMES, canUseTheme, resolveLook } from "./themes.js?v=2";
 import { equippedCoin, gearItem, normalizeGear } from "./gear.js?v=2";
-import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=16";
+import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=17";
 import { initBattles } from "./battles.js?v=10";
-import { initCasino } from "./casino.js?v=31";
-import { coinOf } from "./coin.js?v=6";
+import { initCasino } from "./casino.js?v=33";
+import { coinOf } from "./coin.js?v=7";
 // grading
 import { initGrading, GRADING_ROUTE, CERT_ROUTE } from "./grading-page.js?v=21";
 // trades
@@ -146,6 +147,7 @@ import { initBatchOpen } from "./batch-open.js?v=6";
 import { cartEligible } from "./orders-rules.js?v=1";
 import { initSearch } from "./search.js?v=7";
 import { initWishlist } from "./wishlist.js?v=2";
+import { initSecurity, securityTabHtml, resetSecurity, securityChanged, finishDiscordReturn, startTwoStep, inTwoStep, endTwoStep, twoStepAuthHtml, twoStepHandle } from "./account-security.js?v=1";
 import { createShareSheet, pullUrl } from "./share-pull.js?v=3";
 // binder looks: the /binder cover, the customiser and the owner's look on a profile
 import { binderObjectHtml, applyBinderLook } from "./binder-object.js";
@@ -155,7 +157,7 @@ import { hexToHsl, hslToHex, mixHex } from "./card-accent.js";
 import { cachedCardAccents, sampleCardAccents } from "./card-art-accent.js?v=1";
 import { initBinderEditor } from "./binder-editor.js?v=4";
 import { renderNotesPage } from "./notes-page.js?v=3";
-import { renderLegalPage, LEGAL_TITLES } from "./legal-page.js?v=5";
+import { renderLegalPage, LEGAL_TITLES } from "./legal-page.js?v=6";
 import { ageFieldsHtml, agreeRowHtml, readAgeFields, ageBlocked, blockAge, UNDERAGE_HTML, syncTermsSheet } from "./terms-sheet.js?v=1";
 
 const state = loadState();
@@ -173,7 +175,6 @@ let dmSeen = { handle: "", n: 0 }; // social: how many lines of the open thread 
 let rankingsDrawnAt = 0; // social: when the rankings were last fetched, so the 5s social tick refreshes them once a minute
 let dmStick = false; // social: the next paint of the open thread goes to the newest line (a message was just sent)
 let socialTab = "friends"; // friends, rankings or lounge (js/social-hub.js)
-let avatarQuery = "";
 const CLOUD_SEEN_KEY = "poke-pack-rip-cloud-seen";
 let pendingClaim = localStorage.getItem(CLOUD_SEEN_KEY) ? null : snapshotIfProgress(state);
 let ripLock = false;
@@ -1069,10 +1070,10 @@ function paintHud(trainer) {
   me.classList.toggle("is-guest", !trainer);
   me.classList.toggle("has-wait", Boolean(xp && (xp.claimable.length || xp.canPrestige)));
   if (face) {
-    face.classList.toggle("pixel", Boolean(trainer) && avatarStyle(trainer.avatarStyle) === "pixel");
+    face.classList.toggle("pixel", Boolean(trainer) && avatarPixel(trainer.avatarStyle));
     face.innerHTML = trainer
-      ? `<img src="${esc(avatarSrc(trainer.avatar, trainer.avatarStyle))}" alt="" />`
-      : `<img src="assets/mark-v2.png" alt="" />`;
+      ? `<img src="${esc(avatarSrc(trainer.avatar, trainer.avatarStyle, { still: true }))}" alt="" />`
+      : `<img src="assets/mark-v3.png" alt="" />`;
     if (trainer) face.style.setProperty("--avatar", avatarColor(trainer.color).hex);
   }
   if (lv) {
@@ -1120,8 +1121,8 @@ function renderHeader() {
   if (trainer && els.trainerChip) {
     const color = avatarColor(trainer.color);
     els.trainerChip.style.setProperty("--avatar", color.hex);
-    els.trainerAvatar.innerHTML = `<img src="${esc(avatarSrc(trainer.avatar, trainer.avatarStyle))}" alt="" />`;
-    els.trainerAvatar.classList.toggle("pixel", avatarStyle(trainer.avatarStyle) === "pixel");
+    els.trainerAvatar.innerHTML = `<img src="${esc(avatarSrc(trainer.avatar, trainer.avatarStyle, { still: true }))}" alt="" />`;
+    els.trainerAvatar.classList.toggle("pixel", avatarPixel(trainer.avatarStyle));
     els.trainerChipName.textContent = trainer.name;
     els.trainerChipHandle.textContent = `@${trainer.handle}`;
   }
@@ -1132,9 +1133,9 @@ function renderHeader() {
 function paintMeMenus(trainer) {
   const xp = trainer && state.xp ? levelUi.xpOf(state) : null;
   const face = trainer
-    ? `<img src="${esc(avatarSrc(trainer.avatar, trainer.avatarStyle))}" alt="" />`
-    : `<img src="assets/mark-v2.png" alt="" />`;
-  const pixel = Boolean(trainer) && avatarStyle(trainer.avatarStyle) === "pixel";
+    ? `<img src="${esc(avatarSrc(trainer.avatar, trainer.avatarStyle, { still: true }))}" alt="" />`
+    : `<img src="assets/mark-v3.png" alt="" />`;
+  const pixel = Boolean(trainer) && avatarPixel(trainer.avatarStyle);
   const set = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; };
   for (const id of ["me-face", "menu-me-face"]) {
     const el = document.getElementById(id);
@@ -2761,8 +2762,36 @@ function eraTitle(name) {
    Bulk is the inventory; this is what you choose to display. Slots are pages of
    nine, drawn as a facing spread so it reads like an open binder. */
 
-let binderSpread = 0;   // index of the left-hand page in the current spread
-let binderTurn = 0;     // the next draw turns the pages: 1 forward, -1 back (css/pages/collection.css)
+let binderSpread = 0;   // index of the first page on screen (one page on a phone, a facing pair from 860px)
+let binderTurn = 0;     // the next draw turns the pages: 1 forward, -1 back (css/binder/flipbook.css)
+let binderOpen = false; // the binder starts closed, showing its cover; opening is kept for the visit
+try { binderOpen = sessionStorage.getItem("pp-binder-open") === "1"; } catch { /* closed */ }
+let binderArranging = false; // Arrange: the one place cards are moved, taken out and put in
+let binderHolding = null;    // slot picked up in Arrange, waiting for the pocket it goes to
+const binderWide = () => matchMedia("(min-width: 860px)").matches;
+/** The first page of the view that holds page `p`. */
+function binderViewOf(p, pages = binderPageCount()) {
+  if (!binderWide()) return Math.max(0, Math.min(p, pages - 1));
+  return Math.max(0, Math.min(p - (p % 2), pages - 2));
+}
+/** Turn to a page (its view), or to the cover with -1. */
+function binderGo(target) {
+  const before = binderOpen ? binderSpread : -1;
+  const to = target < 0 ? -1 : binderViewOf(target);
+  if (to === before) return;
+  binderTurn = to > before ? 1 : -1;
+  binderOpen = to >= 0;
+  if (binderOpen) binderSpread = to;
+  binderHolding = null;
+  try { sessionStorage.setItem("pp-binder-open", binderOpen ? "1" : "0"); } catch { /* not kept */ }
+  renderBinder();
+  // Opening on a phone: bring the page up under the header so all nine pockets and the keys fit.
+  if (before < 0 && binderOpen && !binderWide()) {
+    requestAnimationFrame(() =>
+      els.binderBody?.querySelector(".binder-object")?.scrollIntoView({ block: "start", behavior: reduceMotion() ? "auto" : "smooth" })
+    );
+  }
+}
 let binderMark = null;  // { i, kind: "in" | "out" }: the pocket a card just went into or came out of
 let binderPicking = null; // slot index awaiting a card, or null
 
@@ -2782,10 +2811,10 @@ function binderPocket(index) {
       aria-label="Empty pocket ${index + 1}"><i class="pocket-ball" aria-hidden="true"></i></button>`;
   }
   const card = slot.reverse ? { ...base, reverse: true } : base;
-  return `<div class="pocket filled">
-    <button type="button" class="pocket-card" ${inspectAttrs(card)} title="${esc(card.name)}">
+  return `<div class="pocket filled${binderHolding === index ? " is-held" : ""}" style="--i:${index % BINDER_PAGE}">
+    <button type="button" class="pocket-card" data-slot="${index}" ${inspectAttrs(card)} title="${esc(card.name)}">
       ${tcgFace(card, { small: true, stamp: false })}
-    </button>
+    </button><i class="pocket-sheen" aria-hidden="true"></i>
     <button type="button" class="pocket-clear" data-unpocket="${index}"
       title="Take ${esc(card.name)} out" aria-label="Take ${esc(card.name)} out of the binder">×</button>
   </div>`;
@@ -2924,6 +2953,7 @@ function binderPageHtml(page) {
   const own = pageLookVars(binderLookNow(), binderCardsOf(start, start + BINDER_PAGE), binderCardsOf());
   return `<div class="binder-page" data-page-index="${page}"${pageStyleAttr(own)}>
     <div class="binder-page-toolbar"><span>Page ${page + 1}</span>
+      ${shared ? `<em class="bd-onprofile">On your profile</em>` : ""}
       <button type="button" class="ghost page-share" data-share-page="${page}" aria-pressed="${shared}" ${empty && !shared ? "disabled" : ""}>
         ${shared ? "Remove from profile" : "Display on profile"}
       </button></div>
@@ -2984,6 +3014,52 @@ function loadBinderSets() {
   });
 }
 
+/**
+ * Swing the pages that were showing over (or under) the ones just drawn. One
+ * page on a phone turns on its ring edge; a facing pair turns across the spine
+ * in two halves. The old pages ride along as inert ghosts and are dropped when
+ * the turn ends. Transform and opacity only (css/binder/flipbook.css).
+ */
+let binderTurnTimer = 0;
+function stageBinderTurn(spread, leaving, turn) {
+  if (!spread) return;
+  const fresh = [...spread.querySelectorAll(":scope > .binder-page")];
+  const lit = () => fresh.forEach((el) => el.classList.add("bd-lit"));
+  clearTimeout(binderTurnTimer);
+  if (!leaving.length) { lit(); return; }
+  const ghost = (el, cls) => {
+    el.className += ` bd-ghost ${cls}`;
+    if (el._bd) Object.assign(el.style, { left: `${el._bd.l}px`, top: `${el._bd.t}px`, width: `${el._bd.w}px`, height: `${el._bd.h}px` });
+    el.inert = true;
+    el.setAttribute("aria-hidden", "true");
+    el.querySelectorAll("[id]").forEach((node) => node.removeAttribute("id"));
+    spread.append(el);
+  };
+  if (document.body.classList.contains("no-motion")) {
+    leaving.forEach((el) => ghost(el, "bd-fade-out")); // no swing: the old page fades off the new one
+  } else if (leaving.length === 1 && fresh.length === 1) {
+    if (turn > 0) ghost(leaving[0], "bd-leaf-out");
+    else { ghost(leaving[0], "bd-under"); fresh[0].classList.add("bd-leaf-in"); }
+  } else if (leaving.length === 2 && fresh.length === 2) {
+    if (turn > 0) {
+      ghost(leaving[0], "bd-under bd-g-l");
+      ghost(leaving[1], "bd-g-r bd-half-out-l");
+      fresh[0].classList.add("bd-half-in-r");
+    } else {
+      ghost(leaving[1], "bd-under bd-g-r");
+      ghost(leaving[0], "bd-g-l bd-half-out-r");
+      fresh[1].classList.add("bd-half-in-l");
+    }
+  } else {
+    fresh.forEach((el) => el.classList.add("bd-enter")); // cover to a facing pair and back: the sizes differ
+  }
+  lit();
+  binderTurnTimer = setTimeout(() => {
+    spread.querySelectorAll(".bd-ghost").forEach((el) => el.remove());
+    fresh.forEach((el) => el.classList.remove("bd-leaf-in", "bd-half-in-r", "bd-half-in-l", "bd-enter"));
+  }, 900);
+}
+
 function renderBinder() {
   if (!els.binderBody) return;
   const binderTabs = document.getElementById("binder-tabs");
@@ -2992,6 +3068,10 @@ function renderBinder() {
     if (els.binderCount) els.binderCount.textContent = "Sign in to keep a binder";
     els.binderBody.innerHTML = accountGateHtml("binder");
     if (els.binderCustomise) els.binderCustomise.hidden = true;
+    const key = document.getElementById("binder-arrange");
+    if (key) key.hidden = true;
+    binderArranging = false;
+    els.viewBinder?.classList.remove("is-arranging");
     binderEditor?.close();
     return;
   }
@@ -3000,62 +3080,96 @@ function renderBinder() {
   loadBinderSets();
 
   const pages = binderPageCount();
-  binderSpread = Math.min(binderSpread, Math.max(0, pages - 2));
+  const wide = binderWide();
+  if (binderArranging || binderPicking != null) binderOpen = true;
+  binderSpread = binderViewOf(binderSpread, pages);
+  const closed = !binderOpen;
   const left = binderSpread;
-  const right = binderSpread + 1;
+  const right = wide ? binderSpread + 1 : -1;
   const shown = (state.binder || []).filter(Boolean).length;
-
+  const worth = money(
+    (state.binder || []).reduce((sum, slot) => {
+      const card = slot && findCard(slot.id);
+      return card ? sum + sellValue(card) : sum;
+    }, 0)
+  );
+  const lookName = binderLookNow().name || "";
+  const nameEl = document.getElementById("binder-name");
+  if (nameEl) nameEl.textContent = lookName || "Binder";
   if (els.binderCount) {
-    const worth = money(
-      (state.binder || []).reduce((sum, slot) => {
-        const card = slot && findCard(slot.id);
-        return card ? sum + sellValue(card) : sum;
-      }, 0)
-    );
     els.binderCount.innerHTML = shown
       ? `<b>${num(shown)}</b> card${shown === 1 ? "" : "s"} on show, worth <b class="binder-worth">${coinAmount(worth)}</b>`
       : "Tap an empty pocket to put a card on show.";
+  }
+  els.viewBinder?.classList.toggle("is-arranging", binderArranging);
+  const arrangeKey = document.getElementById("binder-arrange");
+  if (arrangeKey) {
+    arrangeKey.hidden = false;
+    arrangeKey.textContent = binderArranging ? "Done" : "Arrange";
+    arrangeKey.setAttribute("aria-pressed", String(binderArranging));
+    arrangeKey.classList.toggle("solid", binderArranging);
+    arrangeKey.classList.toggle("ghost", !binderArranging);
   }
 
   const typing = binderPicking == null ? null : cardPicker.typing(els.binderBody); // a redraw must not drop a search being typed
   const options = binderPicking == null ? [] : binderCandidates();
   const onProfile = (activeTrainer()?.binderPages || []).length;
   const room = roomLine("pages", activeTrainer() ? unlockOf(activeTrainer()) : undefined, onProfile, PROFILE_PAGE_LIMIT);
-  // The bar over the binder: Back, a Poke Ball pip for every page (the ones
-  // showing are current, an empty page is a hollow pip), Next; where you are
-  // and the profile line. A pip flips straight to its spread.
+  // Under the binder: Back, a pip for the cover and a Poke Ball pip for every page
+  // (an empty page is a hollow pip), Next. A pip turns straight to its page.
   const pageHasCards = (p) => (state.binder || []).slice(p * BINDER_PAGE, (p + 1) * BINDER_PAGE).some(Boolean);
-  const spreadOf = (p) => Math.min(p - (p % 2), Math.max(0, pages - 2));
-  const pips = pages <= 14
-    ? Array.from({ length: pages }, (_, p) => {
-        const now = p === left || (p === right && right < pages);
-        return `<button type="button" class="bd-pip" data-flip="${(spreadOf(p) - left) / 2}" aria-label="Page ${p + 1}${pageHasCards(p) ? "" : ", empty"}"${now ? ' aria-current="true"' : ""}><i class="rt-ball${pageHasCards(p) ? "" : " e"}${now ? " now" : ""}"></i></button>`;
-      }).join("")
-    : "";
-  els.binderBody.innerHTML = `
-    <div class="bd-bar rt-box">
-      <div class="binder-nav">
-        <button type="button" class="ghost sm" data-flip="-1" ${left === 0 ? "disabled" : ""}>Back</button>
-        <div class="bd-pips">${pips}</div>
-        <button type="button" class="ghost sm" data-flip="1" ${right >= pages - 1 ? "disabled" : ""}>Next</button>
-      </div>
-      <p class="bd-where"><b>${right < pages ? `Pages ${left + 1} and ${right + 1}` : `Page ${left + 1}`}</b> of ${pages}</p>
-      <p class="binder-sharing-note">${onProfile} of ${room.cap} pages on your profile.${room.more}</p>
-    </div>
-    ${binderObjectHtml({
-      innerHtml: `<div class="binder-spread">
-        ${binderPageHtml(left)}
-        ${right < pages ? binderPageHtml(right) : ""}
-      </div>`,
-      resolved: binderResolved(binderLookNow(), binderCardsOf()),
-    })}
-    ${binderPickerHtml(options)}`;
+  const onScreen = (p) => !closed && (p === left || p === right);
+  const pips = pages <= 12
+    ? `<button type="button" class="bd-pip" data-goto="-1" aria-label="Cover"${closed ? ' aria-current="true"' : ""}><i class="bd-cover-pip"></i></button>` +
+      Array.from({ length: pages }, (_, p) =>
+        `<button type="button" class="bd-pip" data-goto="${p}" aria-label="Page ${p + 1}${pageHasCards(p) ? "" : ", empty"}"${onScreen(p) ? ' aria-current="true"' : ""}><i class="rt-ball${pageHasCards(p) ? "" : " e"}${onScreen(p) ? " now" : ""}"></i></button>`
+      ).join("")
+    : `<p class="bd-where"><b>${closed ? "Cover" : right >= 0 && right < pages ? `Pages ${left + 1} and ${right + 1}` : `Page ${left + 1}`}</b> of ${pages}</p>`;
+  const atEnd = !closed && (wide ? left >= pages - 2 : left >= pages - 1);
+  const hint = binderArranging
+    ? binderHolding != null
+      ? "Now tap the pocket it should go in."
+      : "Tap a card to pick it up, × to take it out, an empty pocket to add one."
+    : closed
+      ? "Tap the cover to open your binder."
+      : wide ? "Use the keys to turn the page. Click a card to look closer." : "Swipe to turn the page. Tap a card to look closer.";
+  const trainerName = activeTrainer()?.name || "";
+  const front = `<button type="button" class="binder-page binder-front" data-goto="0" aria-label="Open your binder">
+      <span class="bf-size" aria-hidden="true"><span class="binder-page-toolbar"><span>&nbsp;</span></span><span class="binder-pockets">${'<i class="pocket"></i>'.repeat(BINDER_PAGE)}</span></span>
+      <span class="bf-band" aria-hidden="true"></span>
+      <span class="bf-plate"><em>Binder</em><b>${esc(lookName || trainerName || "My binder")}</b></span>
+      <span class="bf-stats"><span><b>${num(shown)}</b> card${shown === 1 ? "" : "s"} on show</span><span><b>${coinAmount(worth)}</b> worth</span><span><b>${num(pages)}</b> pages</span></span>
+      <span class="bf-open">Tap to open</span>
+    </button>`;
+  // A turn keeps the pages that were showing, to swing them over the new ones (stageBinderTurn).
   const turn = binderTurn;
   const mark = binderMark;
   binderTurn = 0;
   binderMark = null;
-  if (turn) els.binderBody.querySelector(".binder-spread")?.classList.add(turn > 0 ? "bd-turn-next" : "bd-turn-prev");
-  if (turn) els.binderBody.querySelector(".bd-pips")?.classList.add("is-turned");
+  const leaving = turn && !reduceMotion() ? [...els.binderBody.querySelectorAll(".binder-spread > .binder-page:not(.bd-ghost)")] : [];
+  for (const el of leaving) el._bd = { l: el.offsetLeft, t: el.offsetTop, w: el.offsetWidth, h: el.offsetHeight };
+  els.binderBody.innerHTML = `
+    <p class="binder-sharing-note bd-edit-only">${onProfile} of ${room.cap} pages on your profile.${room.more}</p>
+    ${binderObjectHtml({
+      innerHtml: `<div class="binder-spread${closed ? " is-closed" : ""}">
+        ${closed ? front : binderPageHtml(left)}
+        ${!closed && right >= 0 && right < pages ? binderPageHtml(right) : ""}
+      </div>`,
+      resolved: binderResolved(binderLookNow(), binderCardsOf()),
+    })}
+    <div class="binder-nav">
+      <button type="button" class="ghost sm" data-flip="-1" ${closed || (binderArranging && left === 0) ? "disabled" : ""}>Back</button>
+      <div class="bd-pips">${pips}</div>
+      <button type="button" class="ghost sm" data-flip="1" ${atEnd ? "disabled" : ""}>Next</button>
+    </div>
+    <p class="bd-hint">${hint}</p>
+    ${binderPickerHtml(options)}`;
+  els.binderBody.querySelector(".binder-object")?.classList.toggle("is-closed", closed);
+  if (wide && !closed) els.binderBody.querySelector(".binder-spread > .binder-page")?.classList.add("bd-left"); // its ring edge is on the right
+  if (turn) {
+    stageBinderTurn(els.binderBody.querySelector(".binder-spread"), leaving, turn);
+    els.binderBody.querySelector(".bd-pips")?.classList.add("is-turned");
+  }
   if (mark) {
     const at = els.binderBody.querySelector(mark.kind === "in" ? `[data-unpocket="${mark.i}"]` : `[data-pocket="${mark.i}"]`);
     (mark.kind === "in" ? at?.closest(".pocket") : at)?.classList.add(mark.kind === "in" ? "is-placed" : "is-cleared");
@@ -3995,7 +4109,7 @@ function colorPicks(selected, attr = "data-color", label = "Avatar colour") {
 
 function avatarMark(trainer, extraClass = "trainer-mark") {
   const color = avatarColor(trainer?.color);
-  const pixel = avatarStyle(trainer?.avatarStyle) === "pixel" ? " pixel" : "";
+  const pixel = avatarPixel(trainer?.avatarStyle) ? " pixel" : "";
   const mark = `<div class="${extraClass}${pixel}" style="--avatar:${esc(color.hex)}"><img src="${esc(avatarSrc(trainer?.avatar, trainer?.avatarStyle))}" alt="" /></div>`;
   const frame = userFrame(trainer);
   return frame ? frameHtml(mark, frame, { size: "xl", color: color.hex }) : mark;
@@ -4055,6 +4169,7 @@ function returnAfterAuth() {
 
 async function hydrateAfterAccountChange() {
   recoveryInfo = { loaded: false, createdAt: 0, code: "" };
+  resetSecurity();
   applySettings();
   await activateSet(state.activeSetId || DEFAULT_SET_ID, true);
   renderHeader();
@@ -4075,7 +4190,7 @@ async function hydrateAfterAccountChange() {
 /** The sign-in screen's hero: the set on show, its wrappers fanned on the cyan slab (decoration only). */
 function authHeroHtml() {
   const wraps = (liveSet?.wrappers || []).slice(0, 3);
-  if (!wraps.length) return `<div class="au-hero is-mark" aria-hidden="true"><span class="au-slab"></span><img class="au-pack" src="assets/mark-v2.png" alt="" /></div>`;
+  if (!wraps.length) return `<div class="au-hero is-mark" aria-hidden="true"><span class="au-slab"></span><img class="au-pack" src="assets/mark-v3.png" alt="" /></div>`;
   const order = wraps.length === 3 ? [wraps[1], wraps[2], wraps[0]] : wraps.length === 2 ? [wraps[1], wraps[0]] : wraps;
   return `<div class="au-hero n${wraps.length}" aria-hidden="true"><span class="au-slab"></span>${order
     .map((w, i) => `<span class="au-pack p${order.length - i}">${packPicture(w, " ", liveSet).replace(/ alt="[^"]*"/, ' alt=""')}</span>`)
@@ -4130,7 +4245,7 @@ function welcomeHtml(trainer) {
         <dl class="welcome-facts">
           <div class="rt-row"><dt class="rt-row-lab">Claim</dt><dd class="rt-row-name">${num(hourly)} coins every hour, from the top of the screen</dd></div>
           <div class="rt-row"><dt class="rt-row-lab">Your link</dt><dd class="rt-row-name">poke-pack.rip/u/${esc(trainer.handle)}</dd></div>
-          <div class="rt-row"><dt class="rt-row-lab">Password</dt><dd class="rt-row-name">There's no email to reset it. <button class="text-btn" type="button" data-welcome-recovery>Make a recovery code</button> in case you forget it.</dd></div>
+          <div class="rt-row"><dt class="rt-row-lab">Password</dt><dd class="rt-row-name"><button class="text-btn" type="button" data-welcome-recovery>Make a recovery code</button> in Account, Security, in case you forget it. You can turn on two-step sign-in there too.</dd></div>
           <div class="rt-row"><dt class="rt-row-lab">New here?</dt><dd class="rt-row-name"><button class="text-btn" type="button" data-tour-start>Take the 30-second tour</button></dd></div>
         </dl>
         ${
@@ -4149,6 +4264,20 @@ function renderAuth() {
     return;
   }
   if (authTab === "welcome") authTab = "signup";
+  if (authTab === "twostep" && !inTwoStep()) authTab = "signin";
+  if (authTab === "twostep") {
+    els.authBody.innerHTML = `
+    <div class="auth-page is-signin is-twostep">
+      ${authHeroHtml()}
+      <div class="auth-copy">
+        <p class="au-kicker"><img class="auth-mark" src="assets/mark-v3.png" width="256" height="256" alt="" /><span class="au-plate">Two-step</span></p>
+        <h1>One more step</h1>
+        <p class="lede">Signing in as @${esc(twoStepHandle())}.</p>
+      </div>
+      ${twoStepAuthHtml()}
+    </div>`;
+    return;
+  }
   const keepDefault = !signed && guestHasProgress();
   const recover = authTab === "recover";
   const signin = authTab === "signin" || recover;
@@ -4198,15 +4327,15 @@ function renderAuth() {
       <button class="text-btn auth-forgot" type="button" data-auth-tab="recover">Forgot your password?</button>
     </form>`;
 
-  const recoverForm = `<form id="recover-form" class="auth-form" autocomplete="on">
-      <p class="auth-note">Accounts have no email, so a recovery code is the way back in. You make one in Account, under Security. Without one the password can't be reset.</p>
+  const recoverForm = `<form id="recover-form" class="auth-form sec-auth" autocomplete="on">
+      <p class="auth-note">A recovery code is the way back in. You make one in Account, under Security. Without one the password can't be reset.</p>
       <label class="field">
         <span>Handle</span>
         <span class="field-at"><input name="handle" maxlength="16" required placeholder="ripper" autocapitalize="off" spellcheck="false" autocomplete="username" /></span>
       </label>
       <label class="field">
         <span>Recovery code</span>
-        <input name="code" required maxlength="24" placeholder="XXXX-XXXX-XXXX-XXXX" autocapitalize="characters" autocorrect="off" spellcheck="false" autocomplete="one-time-code" />
+        <input name="code" required maxlength="24" placeholder="XXXX-XXXX-XXXX-XXXX" autocapitalize="characters" autocorrect="off" spellcheck="false" autocomplete="off" />
       </label>
       <label class="field">
         <span>New password</span>
@@ -4214,15 +4343,15 @@ function renderAuth() {
         <span class="hint">At least 6 characters.</span>
       </label>
       <p class="form-error" id="auth-error" role="alert"></p>
-      <button class="solid rt-go" type="submit">Reset password and sign in</button>
-      <button class="text-btn auth-forgot" type="button" data-auth-tab="signin">Back to sign in</button>
+      <button class="solid rt-go" type="submit">Save and sign in</button>
+      <div class="sec-auth-links"><button class="text-btn" type="button" data-auth-tab="signin">Back to sign in</button></div>
     </form>`;
 
   els.authBody.innerHTML = `
     <div class="auth-page ${recover ? "is-recover" : signin ? "is-signin" : "is-signup"}">
       ${authHeroHtml()}
       <div class="auth-copy">
-        <p class="au-kicker"><img class="auth-mark" src="assets/mark-v2.png" width="256" height="256" alt="" /><span class="au-plate">${recover ? "Recovery" : signin ? "Continue" : "New game"}</span></p>
+        <p class="au-kicker"><img class="auth-mark" src="assets/mark-v3.png" width="256" height="256" alt="" /><span class="au-plate">${recover ? "Recovery" : signin ? "Continue" : "New game"}</span></p>
         <h1>${recover ? "Reset your password" : signin ? "Welcome back" : "Make a trainer"}</h1>
         <p class="lede">${
           recover
@@ -4253,20 +4382,25 @@ function renderAuth() {
     </div>`;
 }
 
+/* The account page is two places. What you play: five tabs under your trainer card.
+   What you edit: "Edit profile", one screen with a live preview and a word for each
+   thing you can change, and Security on its own. Old tab names still land somewhere. */
 const ACCOUNT_TABS = [
   { id: "overview", name: "Overview", note: "Career, sets, and what you pulled." },
   { id: "levels", name: "Levels", note: "Your level, the road ahead and where your XP comes from." },
   { id: "quests", name: "Quests", note: "Daily, weekly and monthly coin rewards." },
-  { id: "achievements", name: "Achievements", note: "Badges, secrets, rewards and titles." },
+  { id: "achievements", name: "Badges", note: "Badges, secrets, rewards and titles." },
   { id: "mastery", name: "Mastery", note: "Complete a set for a title, an emblem and a banner." },
-  { id: "profile", name: "Profile", note: "Name, bio, and what the public sees.", edit: true },
-  { id: "look", name: "Look", note: "Avatar, banner, and title.", edit: true },
-  { id: "layout", name: "Layout", note: "Room colour, backdrop and the sections of your public profile.", edit: true },
-  { id: "security", name: "Security", note: "Password and deleting the account.", edit: true },
 ];
-
-/** The account tabs sit on two rows: what you play, then what you edit. */
-const ACCOUNT_TAB_GROUPS = ["play", "edit"];
+const EDIT_TABS = [
+  { id: "picture", name: "Picture", note: "Your Pokémon, its style and ring colour." },
+  { id: "frame", name: "Frame", note: "The frame around your picture." },
+  { id: "banner", name: "Banner", note: "The band behind your name." },
+  { id: "name", name: "Name", note: "Name, handle, bio and the title under your name." },
+  { id: "page", name: "Page", note: "Your public profile: room, sections, showcase and what it shares." },
+];
+const TAB_ALIASES = { look: "picture", profile: "name", about: "name", title: "name", layout: "page" };
+const isEditTab = (id) => EDIT_TABS.some((tab) => tab.id === id);
 
 /** Word rows scroll sideways on a phone: bring the chosen word into view, sideways only. */
 function bringIntoView(el) {
@@ -4317,49 +4451,85 @@ function renderAccount() {
   restoreFocus(focused);
 }
 
+function tabRowHtml(tabs, stats, label) {
+  return `<nav class="acct-tabs${tabs === EDIT_TABS ? " edit-tabs" : ""}" aria-label="${label}">
+      <div class="acct-tabrow">${tabs
+        .map(
+          (tab) => `<button type="button" class="acct-tab${tab.id === accountTab ? " on" : ""}"
+          aria-current="${tab.id === accountTab}" data-acct-tab="${esc(tab.id)}" title="${esc(tab.note)}">
+          ${esc(tab.name)}${stats ? tabDot(tab.id, stats) : ""}
+        </button>`
+        )
+        .join("")}</div>
+    </nav>`;
+}
+
+/** The head of Edit profile and Security: the way back, the screen's name, and the public page. */
+function editTopHtml(trainer, title) {
+  return `<header class="edit-top">
+      <button type="button" class="edit-back" data-acct-tab="overview"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>Account</button>
+      <h1 class="edit-h">${title}</h1>
+      <a class="tlink edit-view" href="/u/${esc(trainer.handle)}">View profile</a>
+    </header>`;
+}
+
+/** The small trainer card that stays in view while you edit: every pick lands on it. */
+function lookCardHtml(trainer) {
+  return `${bannerBlockHtml(trainer.banner, { className: "acct-banner" })}
+        <div class="look-id">
+          ${avatarMark(trainer, "trainer-mark look-face")}
+          <b>${esc(trainer.name)}${levelBadgeHtml(trainer.level, { size: "md", prestige: trainer.prestige })}</b>
+          <small>@${esc(trainer.handle)}</small>
+          <span class="account-title">${esc(trainer.title || "Rookie")}</span>
+        </div>`;
+}
+
 function renderAccountBody() {
   const trainer = activeTrainer();
   if (!trainer) {
     els.accountBody.innerHTML = signedOutAccount();
     return;
   }
-  if (!ACCOUNT_TABS.some((tab) => tab.id === accountTab)) accountTab = "overview";
+  accountTab = TAB_ALIASES[accountTab] || accountTab;
+  const editing = isEditTab(accountTab);
+  if (!editing && accountTab !== "security" && !ACCOUNT_TABS.some((tab) => tab.id === accountTab)) accountTab = "overview";
+  if (accountTab !== "picture") resetAvatarPicker();
   const stats = achievementStats();
-  const body =
-    accountTab === "levels"
-      ? levelsTab()
-      : accountTab === "quests"
-      ? questsTab()
-      : accountTab === "achievements"
-      ? achievementsTab(stats)
-      : accountTab === "mastery"
-      ? masteryTab(stats)
-      : accountTab === "profile"
-        ? profileTab(trainer)
-        : accountTab === "look"
-          ? lookTab(trainer, stats)
-          : accountTab === "layout"
-            ? profileEditor.layoutTab(trainer, layoutDeps())
-          : accountTab === "security"
-            ? securityTab(trainer)
-            : overviewTab(trainer, stats);
+  els.accountBody.dataset.mode = editing ? "edit" : accountTab === "security" ? "security" : "play";
 
-  els.accountBody.innerHTML = `
-    ${accountHero(trainer, stats)}
-    <nav class="acct-tabs" aria-label="Account sections">
-      ${ACCOUNT_TAB_GROUPS.map(
-        (group) => `<div class="acct-tabrow">${ACCOUNT_TABS.filter((tab) => (tab.edit ? "edit" : "play") === group)
-          .map(
-            (tab) => `<button type="button" class="acct-tab${tab.id === accountTab ? " on" : ""}"
-          aria-current="${tab.id === accountTab}" data-acct-tab="${esc(tab.id)}" title="${esc(tab.note)}">
-          ${esc(tab.name)}${tabDot(tab.id, stats)}
-        </button>`
-          )
-          .join("")}</div>`
-      ).join("")}
-    </nav>
-    <div class="acct-body">${body}</div>
-    ${historyOpen ? historySheet() : ""}`;
+  if (editing) {
+    // The Page tab brings its own preview (the room, js/profile-editor.js); the rest share the trainer card.
+    const body =
+      accountTab === "picture" ? pictureTab(trainer)
+      : accountTab === "frame" ? frameTab(trainer)
+      : accountTab === "banner" ? bannerTab(trainer, stats)
+      : accountTab === "name" ? `${aboutTab(trainer)}${titleTab(trainer)}`
+      : pageTab(trainer);
+    els.accountBody.innerHTML = `
+      ${editTopHtml(trainer, "Edit profile")}
+      ${
+        accountTab === "page"
+          ? `${tabRowHtml(EDIT_TABS, null, "Edit profile")}<div class="acct-body">${body}</div>`
+          : `<div class="look-layout">
+              <aside class="look-preview" aria-label="Preview"><div class="look-card">${lookCardHtml(trainer)}</div></aside>
+              <div class="look-controls">${tabRowHtml(EDIT_TABS, null, "Edit profile")}<div class="acct-body">${body}</div></div>
+            </div>`
+      }`;
+  } else if (accountTab === "security") {
+    els.accountBody.innerHTML = `${editTopHtml(trainer, "Security")}<div class="acct-body">${securityTab(trainer)}</div>`;
+  } else {
+    const body =
+      accountTab === "levels" ? levelsTab()
+      : accountTab === "quests" ? questsTab()
+      : accountTab === "achievements" ? achievementsTab(stats)
+      : accountTab === "mastery" ? masteryTab(stats)
+      : overviewTab(trainer, stats);
+    els.accountBody.innerHTML = `
+      ${accountHero(trainer, stats)}
+      ${tabRowHtml(ACCOUNT_TABS, stats, "Account sections")}
+      <div class="acct-body">${body}</div>
+      ${historyOpen ? historySheet() : ""}`;
+  }
 
   const chart = els.accountBody.querySelector("#acct-worth-chart");
   if (chart) renderWorthChart(chart, state.worthLog, state.granted);
@@ -4381,6 +4551,17 @@ function renderAccountBody() {
   freshLevels = new Set();
 }
 
+/** Redraw only the small trainer card on Edit profile (a picture was picked: nothing else may move). */
+function repaintLookCard() {
+  const trainer = activeTrainer();
+  const card = els.accountBody.querySelector(".look-card");
+  if (!trainer || !card) return;
+  card.innerHTML = lookCardHtml(trainer);
+  card.classList.remove("is-landing");
+  void card.offsetWidth;
+  landPreview(card);
+}
+
 function signedOutAccount() {
   const preview = ACHIEVEMENTS.filter((row) => !isSecret(row))
     .slice(0, 10)
@@ -4395,7 +4576,7 @@ function signedOutAccount() {
     <header class="tcard signed-out">
       <div class="tcard-band"></div>
       <div class="tcard-id">
-        <img class="brand-logo lg" src="assets/mark-v2.png" width="256" height="256" alt="" />
+        <img class="brand-logo lg" src="assets/mark-v3.png" width="256" height="256" alt="" />
         <div class="tcard-who">
           <h1 class="tcard-name">Make a trainer</h1>
           <p class="tcard-idno"><span><small>ID No.</small> <b>Not issued yet</b></span></p>
@@ -4456,9 +4637,11 @@ function accountHero(trainer, stats) {
           ? `<button class="solid claim-cta rt-go" type="button" data-acct-tab="achievements">Claim <span class="claim-amt">${coinAmount(stats.waiting)}</span></button>`
           : ""
       }
+      <button class="ghost" type="button" data-acct-tab="picture">Edit profile</button>
       <a class="ghost" href="/u/${esc(trainer.handle)}">Public profile</a>
       <span class="tcard-links">
         <button class="tlink" type="button" id="copy-profile-link">Copy link</button>
+        <button class="tlink" type="button" data-acct-tab="security">Security</button>
         <button class="tlink acct-signout" type="button" id="sign-out">Sign out</button>
       </span>
     </div>
@@ -4707,9 +4890,27 @@ function statLabel(key) {
   return { packs: "Packs ripped", pulls: "Cards pulled", unique: "Unique cards", coins: "Coins" }[key] || key;
 }
 
-function profileTab(trainer) {
+/** Name, handle and bio. */
+function aboutTab(trainer) {
+  return `<section class="acct-sec">
+      <div class="acct-sec-head"><h2>Name and bio</h2></div>
+      <form id="profile-form" class="acct-form">
+        <label class="field"><span>Trainer name</span><input name="name" minlength="2" maxlength="24" value="${esc(trainer.name)}" required /></label>
+        <label class="field"><span>Handle</span><span class="field-at"><input name="handle" minlength="3" maxlength="16" value="${esc(trainer.handle)}" required autocapitalize="off" spellcheck="false" /></span>
+          <span class="hint">Your profile lives at poke-pack.rip/u/${esc(trainer.handle)}.</span>
+        </label>
+        <label class="field"><span>Bio</span><textarea name="bio" maxlength="160" placeholder="What are you chasing?">${esc(trainer.bio || "")}</textarea></label>
+        <p class="form-error" id="profile-error" role="alert"></p>
+        <button class="solid" type="submit">Save</button>
+      </form>
+    </section>`;
+}
+
+/** The public page: its room and sections (js/profile-editor.js), then what it shares and the cards pinned to it. */
+function pageTab(trainer) {
   const shown = new Set(trainer.shownStats || DEFAULT_STATS);
   const showcase = trainer.showcase || [];
+  const room = roomLine("showcase", unlockOf(trainer), showcase.length, SHOWCASE_MAX);
   const pinned = showcase
     .map((slot) => {
       const card = findCard(slot.id);
@@ -4721,53 +4922,24 @@ function profileTab(trainer) {
       </div>`;
     })
     .join("");
-
-  return `<div class="acct-cols">
+  return `${profileEditor.layoutTab(trainer, layoutDeps())}
+  <div class="acct-cols page-extras">
     <section class="acct-sec">
-      <div class="acct-sec-head">
-        <div>
-          <h2>Name and bio</h2>
-        </div>
-      </div>
-      <form id="profile-form" class="acct-form">
-        <label class="field"><span>Trainer name</span><input name="name" minlength="2" maxlength="24" value="${esc(trainer.name)}" required /></label>
-        <label class="field"><span>Handle</span><span class="field-at"><input name="handle" minlength="3" maxlength="16" value="${esc(trainer.handle)}" required autocapitalize="off" spellcheck="false" /></span>
-          <span class="hint">Your profile lives at poke-pack.rip/u/${esc(trainer.handle)}.</span>
-        </label>
-        <label class="field"><span>Bio</span><textarea name="bio" maxlength="160" placeholder="What are you chasing?">${esc(trainer.bio || "")}</textarea></label>
-        <p class="form-error" id="profile-error" role="alert"></p>
-        <button class="solid" type="submit">Save profile</button>
-      </form>
-    </section>
-    <section class="acct-sec">
-      <div class="acct-sec-head">
-        <div>
-          <h2>What the public sees</h2>
-        </div>
-      </div>
+      <div class="acct-sec-head"><div><h2>Shared figures</h2><p>The numbers visitors see under your name. These save as you tick them.</p></div></div>
       <div class="stat-toggles">${STAT_KEYS.map(
         (key) => `<label><input type="checkbox" data-stat-toggle="${key}" ${shown.has(key) ? "checked" : ""} /> ${esc(statLabel(key))}</label>`
       ).join("")}</div>
-      <div class="share-row">
-        <span class="share-url">poke-pack.rip/u/${esc(trainer.handle)}</span>
-        <button class="ghost sm" type="button" id="copy-profile-link-2">Copy link</button>
-      </div>
-      <a class="text-btn share-open" href="/u/${esc(trainer.handle)}">Open your public profile</a>
     </section>
-  </div>
-  <section class="acct-sec acct-pins">
-    <div class="acct-sec-head">
-      <div>
-        <h2>Showcase</h2>
-        <p>${showcase.length} of ${roomLine("showcase", unlockOf(trainer), showcase.length, SHOWCASE_MAX).cap} pinned.${roomLine("showcase", unlockOf(trainer), showcase.length, SHOWCASE_MAX).more}</p>
+    <section class="acct-sec acct-pins">
+      <div class="acct-sec-head">
+        <div>
+          <h2>Showcase</h2>
+          <p>${showcase.length} of ${room.cap} pinned.${room.more}</p>
+        </div>
       </div>
-    </div>
-    ${
-      pinned
-        ? `<div class="pin-row">${pinned}</div>`
-        : `<p class="panel-empty">Open a card you own and choose Pin to showcase it here.</p>`
-    }
-  </section>`;
+      ${pinned ? `<div class="pin-row">${pinned}</div>` : `<p class="panel-empty">Open a card you own and choose Pin to showcase it here.</p>`}
+    </section>
+  </div>`;
 }
 
 /* ---- Look --------------------------------------------------------------- */
@@ -4781,98 +4953,64 @@ function bannerMotionRows() {
   return rows.sort((a, b) => a.level - b.level);
 }
 
-function lookTab(trainer, stats) {
-  const avatars = searchAvatars(avatarQuery);
+/** Your Pokémon (js/avatar-picker.js) and the colour of the ring behind it. */
+function pictureTab(trainer) {
+  return `<section class="acct-sec av-sec">
+      <div class="acct-sec-head"><h2>Picture</h2></div>
+      ${avatarPickerHtml(trainer)}
+    </section>
+    <section class="acct-sec">
+      <div class="acct-sec-head"><h2>Ring colour</h2></div>
+      ${colorPicks(trainer.color, "data-profile-color", "Ring colour")}
+    </section>`;
+}
+
+function frameTab(trainer) {
+  return `<section class="acct-sec">
+      <div class="acct-sec-head"><h2>Frame</h2></div>
+      ${framePicksHtml({
+        level: unlockOf(trainer),
+        prestige: trainer.prestige || 0,
+        beta: Boolean(trainer.beta || cloudUser?.beta),
+        frame: trainer.frame,
+        color: avatarColor(trainer.color).hex,
+        avatar: faceHtml({ ...trainer, online: false }, "md", { frame: false }),
+      })}
+    </section>`;
+}
+
+function bannerTab(trainer, stats) {
   const banner = parseBanner(trainer.banner);
-  const style = avatarStyle(trainer.avatarStyle);
+  const onMastery = Boolean(banner.set);
+  return `<section class="acct-sec">
+      <div class="acct-sec-head"><h2>Banner</h2></div>
+      <div class="qa-words qa-words-inline qa-words-wrap" role="group" aria-label="Banner motion">${bannerMotionRows()
+        .map((row) => {
+          const locked = unlockOf(trainer) < row.level;
+          const on = !onMastery && banner.motion === row.id;
+          return locked
+            ? `<button type="button" class="qa-word locked" data-motion-locked="${esc(row.id)}" aria-disabled="true"><span>${esc(row.name)}</span><small>Level ${row.level}</small></button>`
+            : `<button type="button" class="qa-word${on ? " on" : ""}" data-set-motion="${esc(row.id)}" aria-pressed="${on}"><span>${esc(row.name)}</span></button>`;
+        })
+        .join("")}</div>
+      <div class="field"><span>First colour</span>${colorPicks(onMastery ? "" : banner.colors[0], "data-banner-a", "First banner colour")}</div>
+      <div class="field"><span>Second colour</span>${colorPicks(onMastery ? "" : banner.colors[1], "data-banner-b", "Second banner colour")}</div>
+      ${questArea.masteryBannersHtml(banner.set ? masteryBannerId(banner.set) : "", stats.claimed, areaDeps)}
+    </section>`;
+}
+
+function titleTab(trainer) {
   const ctx = titleContext(state, { signed: true, findCard, rarities: ownedRarities(), level: state.xp?.peak ?? state.xp?.level ?? unlockOf(cloudUser) });
   const unlocked = new Set(unlockedTitles(ctx).map((row) => row.name));
-  const titleGroups = questArea.titleGroupsHtml(TITLES, trainer.title, unlocked, areaDeps);
-  const onMastery = Boolean(banner.set);
-
-  return `<div class="look-layout">
-    <aside class="look-preview" aria-label="Preview">
-      <div class="look-card">
-        ${bannerBlockHtml(trainer.banner, { className: "acct-banner" })}
-        <div class="look-id">
-          ${avatarMark(trainer, "trainer-mark look-face")}
-          <b>${esc(trainer.name)}${levelBadgeHtml(trainer.level, { size: "md", prestige: trainer.prestige })}</b>
-          <small>@${esc(trainer.handle)}</small>
-          <span class="account-title">${esc(trainer.title || "Rookie")}</span>
+  return `<section class="acct-sec">
+      <div class="acct-sec-head">
+        <div>
+          <h2>Title</h2>
+          <p>${unlocked.size} of ${TITLES.length - questArea.hiddenTitles(TITLES, unlocked, areaDeps).length} unlocked.</p>
         </div>
       </div>
-      <div class="look-actions">
-        <button class="ghost sm" type="button" id="look-random">Surprise me</button>
-        <button class="ghost sm" type="button" id="look-swap">Swap banner colours</button>
-      </div>
-    </aside>
-    <div class="look-controls">
-      <section class="acct-sec">
-        <div class="acct-sec-head">
-          <div>
-            <h2>Picture</h2>
-          </div>
-          <div class="seg style-picks" role="group" aria-label="Picture style">
-            <button type="button" class="seg-btn${style === "art" ? " on" : ""}" data-set-style="art" aria-pressed="${style === "art"}">Full art</button>
-            <button type="button" class="seg-btn${style === "pixel" ? " on" : ""}" data-set-style="pixel" aria-pressed="${style === "pixel"}">Pixel</button>
-          </div>
-        </div>
-        <label class="field avatar-search"><span>Search Pokémon</span>
-          <input id="avatar-search" type="search" value="${esc(avatarQuery)}" placeholder="Pikachu, 25, Darkrai" autocomplete="off" />
-        </label>
-        <div class="avatar-grid">${avatars
-          .map(
-            ([id, name]) => `<button type="button" class="pick${String(trainer.avatar) === String(id) ? " on" : ""}" data-set-avatar="${id}" title="${esc(name)}">
-            <img class="${style === "pixel" ? "pixel" : ""}" src="${esc(style === "pixel" ? avatarIcon(id) : avatarSrc(id, "art"))}" alt="${esc(name)}" loading="lazy" />
-            <small>${esc(name)}</small>
-          </button>`
-          )
-          .join("")}</div>
-        <div class="field"><span>Ring colour</span>${colorPicks(trainer.color, "data-profile-color", "Ring colour")}</div>
-      </section>
-      <section class="acct-sec">
-        <div class="acct-sec-head">
-          <h2>Frame</h2>
-        </div>
-        ${framePicksHtml({
-          level: unlockOf(trainer),
-          prestige: trainer.prestige || 0,
-          beta: Boolean(trainer.beta || cloudUser?.beta),
-          frame: trainer.frame,
-          color: avatarColor(trainer.color).hex,
-          avatar: faceHtml({ ...trainer, online: false }, "md", { frame: false }),
-        })}
-      </section>
-      <section class="acct-sec">
-        <div class="acct-sec-head">
-          <div>
-            <h2>Banner</h2>
-          </div>
-        </div>
-        <div class="qa-words qa-words-inline qa-words-wrap" role="group" aria-label="Banner motion">${bannerMotionRows()
-          .map((row) => {
-            const locked = unlockOf(trainer) < row.level;
-            const on = !onMastery && banner.motion === row.id;
-            return locked
-              ? `<button type="button" class="qa-word locked" data-motion-locked="${esc(row.id)}" aria-disabled="true"><span>${esc(row.name)}</span><small>Level ${row.level}</small></button>`
-              : `<button type="button" class="qa-word${on ? " on" : ""}" data-set-motion="${esc(row.id)}" aria-pressed="${on}"><span>${esc(row.name)}</span></button>`;
-          })
-          .join("")}</div>
-        <div class="field"><span>First colour</span>${colorPicks(onMastery ? "" : banner.colors[0], "data-banner-a", "First banner colour")}</div>
-        <div class="field"><span>Second colour</span>${colorPicks(onMastery ? "" : banner.colors[1], "data-banner-b", "Second banner colour")}</div>
-        ${questArea.masteryBannersHtml(banner.set ? masteryBannerId(banner.set) : "", stats.claimed, areaDeps)}
-      </section>
-      <section class="acct-sec">
-        <div class="acct-sec-head">
-          <div>
-            <h2>Title</h2>
-            <p>${unlocked.size} of ${TITLES.length - questArea.hiddenTitles(TITLES, unlocked, areaDeps).length} unlocked.</p>
-          </div>
-        </div>
-        <div class="title-groups">${titleGroups}</div>
-      </section>
-    </div>
-  </div>`;
+      <div class="title-groups">${questArea.titleGroupsHtml(TITLES, trainer.title, unlocked, areaDeps)}</div>
+    </section>`;
 }
 
 /* ---- Security ----------------------------------------------------------- */
@@ -4890,62 +5028,9 @@ async function loadRecoveryInfo() {
   if (view === "account" && accountTab === "security") renderAccount();
 }
 
-function recoveryHtml() {
-  if (!recoveryInfo.loaded) {
-    loadRecoveryInfo();
-    return `<p class="panel-empty">Checking for a recovery code.</p>`;
-  }
-  if (recoveryInfo.code) {
-    return `<div class="recovery-code">
-        <p class="recovery-value" id="recovery-value">${esc(recoveryInfo.code)}</p>
-        <button class="ghost sm" type="button" data-copy-recovery>Copy</button>
-      </div>
-      <p class="recovery-note">Save it in your notes or a password manager now. It won't be shown again.</p>`;
-  }
-  return `${
-    recoveryInfo.createdAt
-      ? `<p class="recovery-note">You made one on ${esc(new Date(recoveryInfo.createdAt).toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" }))}. A new one replaces it.</p>`
-      : `<p class="recovery-note">You don't have one yet.</p>`
-  }
-    <button class="ghost" type="button" data-make-recovery>${recoveryInfo.createdAt ? "Make a new code" : "Make a recovery code"}</button>`;
-}
-
+/* The tab itself is js/account-security.js; the recovery code state above stays here. */
 function securityTab(trainer) {
-  return `<div class="acct-cols">
-    <section class="acct-sec acct-recovery">
-      <div class="acct-sec-head">
-        <div>
-          <h2>Recovery code</h2>
-          <p>There's no email on your account. If you forget your password, this code and your handle let you set a new one.</p>
-        </div>
-      </div>
-      ${recoveryHtml()}
-    </section>
-    <section class="acct-sec">
-      <div class="acct-sec-head">
-        <div>
-          <h2>Password</h2>
-        </div>
-      </div>
-      <form id="password-form" class="acct-form">
-        <label class="field"><span>Current password</span><input name="current" type="password" maxlength="64" required autocomplete="current-password" /></label>
-        <label class="field"><span>New password</span><input name="password" type="password" minlength="6" maxlength="64" required autocomplete="new-password" />
-          <span class="hint">At least 6 characters.</span>
-        </label>
-        <p class="form-error" id="password-error" role="alert"></p>
-        <button class="solid" type="submit">Update password</button>
-      </form>
-    </section>
-    <section class="acct-sec acct-danger">
-      <div class="acct-sec-head">
-        <div>
-          <h2>Delete account</h2>
-          <p>Removes @${esc(trainer.handle)}, every card, every badge, the binder, and your chat messages, DMs and comments. There's no undo.</p>
-        </div>
-      </div>
-      <button class="ghost danger-btn" type="button" id="delete-trainer">Delete ${esc(trainer.name)}</button>
-    </section>
-  </div>`;
+  return securityTabHtml(trainer);
 }
 
 async function renderProfile() {
@@ -5047,6 +5132,29 @@ function layoutDeps() {
   };
 }
 profileEditor.initProfileEditor(els.accountBody, layoutDeps());
+// The picture picker saves in place: only the header and the small trainer card are redrawn, so the grid never jumps.
+initAvatarPicker({
+  root: () => els.accountBody,
+  trainer: activeTrainer,
+  esc,
+  toast,
+  api,
+  save: async (patch) => {
+    const data = await api("/api/me", { method: "PATCH", body: JSON.stringify(patch) });
+    cloudUser = data.user;
+    renderHeader();
+    repaintLookCard();
+  },
+});
+// A picture that fails to load (a sprite the art repo has lost) steps down to a plainer one of the same Pokémon.
+document.addEventListener("error", (e) => {
+  const img = e.target;
+  if (!(img instanceof HTMLImageElement) || img.dataset.avFell) return;
+  const next = avatarFallback(img.src);
+  if (!next) return;
+  img.dataset.avFell = "1";
+  img.src = next;
+}, true);
 
 /** What js/profile-view.js and js/profile-editor.js need from the app: helpers, never state. */
 function profileDeps() {
@@ -5473,7 +5581,7 @@ function themeRow() {
   return `<div class="set-row look-row">
       <span class="set-copy">
         <b>Colours</b>
-        <small>Same menu, different colours. Each one works in light and dark.</small>
+        <small>Same menu, a whole new coat of paint. Rotom follows Light or dark above, the others bring their own.</small>
       </span>
       <div class="look-tiles" role="group" aria-label="Colours">${tiles}</div>
     </div>`;
@@ -5577,8 +5685,7 @@ function applyTheme() {
   root.style.backgroundColor = "";
   document.querySelector('meta[name="theme-color"]')?.setAttribute("content", look.ground);
   try {
-    if (look.mode === "light" && look.theme.id === "rotom") localStorage.removeItem("pp-look");
-    else localStorage.setItem("pp-look", JSON.stringify({ mode: look.mode, palette: look.theme.id, light: look.theme.ground.light, dark: look.theme.ground.dark }));
+    localStorage.setItem("pp-look", JSON.stringify({ mode: look.theme.mode || look.mode, palette: look.theme.id, light: look.theme.ground.light, dark: look.theme.ground.dark }));
   } catch {}
 }
 darkQuery.addEventListener?.("change", applyTheme);
@@ -5596,6 +5703,12 @@ function applySettings() {
   document.body.classList.toggle("no-tilt", !tilt || Boolean(lite));
   document.body.classList.toggle("no-stamps", !stamps);
   document.body.classList.toggle("no-motion", !motion || Boolean(lite));
+  // The loading screen reads this before anything else runs (index.html), so it can lie still too.
+  try {
+    localStorage.setItem("pp-calm", !motion || lite ? "1" : "0");
+  } catch {
+    /* private mode */
+  }
   document.body.classList.toggle("no-flash", !flash || Boolean(lite));
   document.body.style.setProperty("--foil-strength", FOIL_STRENGTH[foil] ?? 1);
   document.body.style.setProperty("--binder-min", BINDER_MIN[binder] ?? BINDER_MIN.cosy);
@@ -5796,6 +5909,11 @@ function viewFromPath(pathname) {
   if (TCG_ROUTE.test(path)) {
     tcgPath = path;
     return "tcg";
+  }
+  // Account > Security, and the way back from linking Discord (js/account-security.js finishes it).
+  if (path === "/account/security" || path === "/account/discord") {
+    accountTab = "security";
+    return "account";
   }
   const legal = path.match(/^\/(terms|privacy|legal)$/);
   if (legal) {
@@ -8579,6 +8697,12 @@ meMenu?.addEventListener("click", (e) => {
   if (!item) return;
   const go = item.dataset.meGo;
   closeMeMenu();
+  if (item.hasAttribute("data-me-edit")) {
+    accountTab = "picture";
+    if (view === "account") { renderAccount(); window.scrollTo({ top: 0, behavior: "auto" }); }
+    else setView("account");
+    return;
+  }
   if (go) document.querySelector(`.site-header .nav .nav-btn[data-view="${go}"]`)?.click();
 });
 document.addEventListener("pointerdown", (e) => {
@@ -8740,8 +8864,14 @@ els.accountBody.addEventListener("click", async (e) => {
   }
   const tab = e.target.closest("[data-acct-tab]");
   if (tab) {
+    const wasMode = els.accountBody.dataset.mode;
     accountTab = tab.dataset.acctTab;
     renderAccount();
+    if (els.accountBody.dataset.mode !== wasMode) {
+      // Edit profile and Security are screens of their own: arrive at their top, and come back to the trainer card.
+      window.scrollTo({ top: 0, behavior: "auto" });
+      return;
+    }
     // "nearest" left the tabs under the phone's tab bar, so a tap on Claim seemed
     // to do nothing; bring the tabs up under the header instead.
     const tabs = els.accountBody.querySelector(".acct-tabs");
@@ -8907,24 +9037,6 @@ els.accountBody.addEventListener("click", async (e) => {
     }
     return;
   }
-  const setAvatar = e.target.closest("[data-set-avatar]");
-  if (setAvatar) {
-    try {
-      await patchLook({ avatar: setAvatar.dataset.setAvatar });
-    } catch (err) {
-      toast(err.message || "Couldn't update avatar.");
-    }
-    return;
-  }
-  const setStyle = e.target.closest("[data-set-style]");
-  if (setStyle) {
-    try {
-      await patchLook({ avatarStyle: setStyle.dataset.setStyle });
-    } catch (err) {
-      toast(err.message || "Couldn't update picture style.");
-    }
-    return;
-  }
   const setFrame = e.target.closest("[data-set-frame]");
   if (setFrame) {
     try {
@@ -8999,22 +9111,7 @@ els.accountBody.addEventListener("click", async (e) => {
     await toggleShowcase(unpin.dataset.unpin);
     return;
   }
-  if (e.target.closest("#look-random")) {
-    await surpriseLook();
-    return;
-  }
-  if (e.target.closest("#look-swap")) {
-    const trainer = activeTrainer();
-    if (!trainer) return;
-    const banner = parseBanner(trainer.banner);
-    try {
-      await patchLook({ banner: `${banner.motion}:${banner.colors[1]}+${banner.colors[0]}` });
-    } catch (err) {
-      toast(err.message || "Couldn't swap the banner.");
-    }
-    return;
-  }
-  if (e.target.closest("#copy-profile-link") || e.target.closest("#copy-profile-link-2")) {
+  if (e.target.closest("#copy-profile-link")) {
     const trainer = activeTrainer();
     if (!trainer) return;
     copyText(`${location.origin}/u/${trainer.handle}`, "Profile link copied.");
@@ -9029,23 +9126,6 @@ function copyText(text, done) {
     .catch(() => toast(text));
 }
 
-/** One roll of the dice across picture, ring, and banner. */
-async function surpriseLook() {
-  const trainer = activeTrainer();
-  if (!trainer) return;
-  const pick = (list) => list[Math.floor(Math.random() * list.length)];
-  const [a, b] = [pick(AVATAR_COLORS).id, pick(AVATAR_COLORS).id];
-  try {
-    await patchLook({
-      avatar: String(pick(AVATARS)[0]),
-      color: pick(AVATAR_COLORS).id,
-      banner: `${pick(BANNER_MOTIONS.filter((m) => !m.level || unlockOf(trainer) >= m.level)).id}:${a}+${b === a ? pick(AVATAR_COLORS).id : b}`,
-    });
-    toast("New look rolled.");
-  } catch (err) {
-    toast(err.message || "Couldn't roll a new look.");
-  }
-}
 
 /**
  * Cash in one achievement, or every ready one. The reward comes back from the
@@ -9126,24 +9206,6 @@ window.addEventListener("resize", () => {
   masteryResize = window.setTimeout(() => {
     if (view === "account" && accountTab === "mastery") placeMasteryDetail();
   }, 120);
-});
-
-els.accountBody.addEventListener("input", (e) => {
-  if (e.target.id !== "avatar-search") return;
-  avatarQuery = e.target.value;
-  const trainer = activeTrainer();
-  const grid = els.accountBody.querySelector(".avatar-grid");
-  if (!trainer || !grid) return;
-  grid.innerHTML = searchAvatars(avatarQuery)
-    .map(([id, name]) => {
-      const style = avatarStyle(trainer.avatarStyle);
-      const src = style === "pixel" ? avatarIcon(id) : avatarSrc(id, "art");
-      return `<button type="button" class="pick${String(trainer.avatar) === String(id) ? " on" : ""}" data-set-avatar="${id}" title="${esc(name)}">
-      <img class="${style === "pixel" ? "pixel" : ""}" src="${esc(src)}" alt="${esc(name)}" loading="lazy" />
-      <small>${esc(name)}</small>
-    </button>`;
-    })
-    .join("");
 });
 
 els.accountBody.addEventListener("change", async (e) => {
@@ -9406,6 +9468,7 @@ els.accountBody.addEventListener("submit", async (e) => {
         password: String(data.get("password") || ""),
       }),
     });
+    securityChanged();
     renderAccount();
     toast("Password updated.");
   } catch (error) {
@@ -9418,6 +9481,7 @@ els.authBody?.addEventListener("click", (e) => {
   const tab = e.target.closest("[data-auth-tab]");
   if (tab) {
     authTab = ["signin", "recover"].includes(tab.dataset.authTab) ? tab.dataset.authTab : "signup";
+    endTwoStep();
     renderAuth();
     // Switching forms: only the title and the form swap in (css/pages/auth.css), the packs stay put.
     els.authBody.querySelector(".auth-page")?.classList.add("is-swap");
@@ -9662,6 +9726,14 @@ els.authBody?.addEventListener("submit", async (e) => {
         password: String(data.get("password") || ""),
       }),
     });
+    // Two-step on (js/account-security.js): the password was right, now the app's code.
+    if (result.twoStep) {
+      startTwoStep(result.ticket, String(data.get("handle") || "").replace(/^@/, "").toLowerCase());
+      authTab = "twostep";
+      renderAuth();
+      els.authBody.querySelector("#signin-totp-form input")?.focus({ preventScroll: true });
+      return;
+    }
     cloudUser = result.user;
     pendingClaim = null;
     localStorage.setItem(CLOUD_SEEN_KEY, "1");
@@ -10042,12 +10114,15 @@ els.leavePack?.addEventListener("click", leavePack);
 els.binderBody?.addEventListener("click", async (e) => {
   const sharedPage = e.target.closest("[data-share-page]");
   if (sharedPage) { await toggleProfilePage(Number(sharedPage.dataset.sharePage)); return; }
+  if (binderSwiped) return; // the click that ends a swipe
+  const goto = e.target.closest("[data-goto]");
+  if (goto) { binderGo(Number(goto.dataset.goto)); return; }
   const flip = e.target.closest("[data-flip]");
   if (flip) {
-    const before = binderSpread;
-    binderSpread = Math.max(0, binderSpread + Number(flip.dataset.flip) * 2);
-    binderTurn = Math.sign(binderSpread - before);
-    renderBinder();
+    const step = Number(flip.dataset.flip) * (binderWide() ? 2 : 1);
+    if (!binderOpen) { if (step > 0) binderGo(0); }
+    else if (step < 0 && binderSpread === 0) { if (!binderArranging) binderGo(-1); }
+    else binderGo(binderSpread + step);
     return;
   }
   if (e.target.closest("[data-picker-close]")) {
@@ -10068,7 +10143,10 @@ els.binderBody?.addEventListener("click", async (e) => {
   }
   const pocket = e.target.closest("[data-pocket]");
   if (pocket) {
-    binderPicking = Number(pocket.dataset.pocket);
+    const to = Number(pocket.dataset.pocket);
+    if (binderArranging && binderHolding != null) { await moveBinderCard(binderHolding, to); return; }
+    binderArranging = true; // an empty pocket is the way into Arrange
+    binderPicking = to;
     cardPicker.reset();
     renderBinder();
     return;
@@ -10086,9 +10164,68 @@ els.binderBody?.addEventListener("click", async (e) => {
     renderBinder();
     return;
   }
+  // Arrange: a tap picks a card up, the next tap on a pocket puts it there (two cards trade places).
+  const held = binderArranging && !e.target.closest(".picker") ? e.target.closest("[data-slot]") : null;
+  if (held) {
+    const i = Number(held.dataset.slot);
+    if (binderHolding == null) { binderHolding = i; renderBinder(); }
+    else if (binderHolding === i) { binderHolding = null; renderBinder(); }
+    else await moveBinderCard(binderHolding, i);
+    return;
+  }
   // anything else in a filled pocket opens the inspector
   inspectFromEl(e.target);
 });
+
+/** Move the card in pocket `from` to pocket `to`; a card already there takes its place. */
+async function moveBinderCard(from, to) {
+  const slots = state.binder || (state.binder = []);
+  while (slots.length <= Math.max(from, to)) slots.push(null);
+  [slots[from], slots[to]] = [slots[to], slots[from]];
+  saveState(state);
+  binderHolding = null;
+  binderMark = { i: to, kind: "in" };
+  await pushBinder();
+  // A page on show that just lost its last card comes off the profile, as when a card is taken out.
+  const page = Math.floor(from / BINDER_PAGE);
+  const left = (state.binder || []).slice(page * BINDER_PAGE, (page + 1) * BINDER_PAGE).some(Boolean);
+  if (!left && (activeTrainer()?.binderPages || []).includes(page)) await toggleProfilePage(page);
+  renderBinder();
+}
+
+// A sideways swipe on the pages turns them; the click it ends with is swallowed.
+let binderSwipe = null;
+let binderSwiped = false;
+els.binderBody?.addEventListener("pointerdown", (e) => {
+  binderSwipe = e.target.closest(".binder-spread") && !e.target.closest(".picker") ? { x: e.clientX, y: e.clientY, t: performance.now(), id: e.pointerId } : null;
+});
+els.binderBody?.addEventListener("pointerup", (e) => {
+  const from = binderSwipe;
+  binderSwipe = null;
+  if (!from || from.id !== e.pointerId || binderPicking != null) return;
+  const dx = e.clientX - from.x;
+  const dy = e.clientY - from.y;
+  if (Math.abs(dx) < 44 || Math.abs(dx) < Math.abs(dy) * 1.5 || performance.now() - from.t > 700) return;
+  binderSwiped = true;
+  setTimeout(() => { binderSwiped = false; }, 80);
+  const step = (dx < 0 ? 1 : -1) * (binderWide() ? 2 : 1);
+  if (!binderOpen) { if (step > 0) binderGo(0); }
+  else if (step < 0 && binderSpread === 0) { if (!binderArranging) binderGo(-1); }
+  else binderGo(binderSpread + step);
+});
+els.binderBody?.addEventListener("pointercancel", () => { binderSwipe = null; });
+
+document.getElementById("binder-arrange")?.addEventListener("click", () => {
+  if (!activeTrainer()) { openAuth("signin"); return; }
+  binderArranging = !binderArranging;
+  binderHolding = null;
+  binderPicking = null;
+  if (!binderArranging) binderEditor?.close();
+  if (binderArranging && !binderOpen) { binderGo(binderSpread); return; } // opens the cover onto the page it was last on
+  renderBinder();
+});
+
+matchMedia("(min-width: 860px)").addEventListener?.("change", () => { if (view === "binder") renderBinder(); });
 
 if (els.binderBody) cardPicker.attach(els.binderBody);
 
@@ -10099,8 +10236,9 @@ els.binderAddPage?.addEventListener("click", async () => {
   }
   addBinderPage(state);
   await pushBinder();
-  const before = binderSpread;
-  binderSpread = Math.max(0, binderPageCount() - 2);
+  const before = binderOpen ? binderSpread : -1;
+  binderOpen = true;
+  binderSpread = binderViewOf(binderPageCount() - 1);
   binderTurn = Math.sign(binderSpread - before);
   renderBinder();
   toast("Page added.");
@@ -10508,7 +10646,7 @@ let tcgLoading = null;
 function showTcg() {
   if (tcgPage) return tcgPage.show(tcgPath);
   els.viewTcg.innerHTML = `<div class="tg-page"><div class="rt-skel tg-loading">Loading</div></div>`;
-  tcgLoading ||= import("./tcg-page.js?v=40")
+  tcgLoading ||= import("./tcg-page.js?v=43")
     .then(({ initTcg }) => {
       tcgPage = initTcg({
         root: els.viewTcg,
@@ -10527,6 +10665,7 @@ function showTcg() {
         },
         playerName: () => (cloudUser?.handle ? `@${cloudUser.handle}` : "You"),
         signedIn: () => Boolean(cloudUser),
+        refreshSave: () => refreshSession(),
         storeKey: () => cloudUser?.id || cloudUser?.handle || "guest",
         owned: () => ownedMapNow(),
         findCard,
@@ -11036,7 +11175,7 @@ function sharePull(card, { pulled = false } = {}) {
     id: card.id,
     image: `/${String(card.image || card.imageSmall || "").replace(/^\//, "")}`,
     coin: "/assets/coins/pp-coin-v1.svg",
-    mark: "/assets/mark-v2.png",
+    mark: "/assets/mark-v3.png",
     name: card.name,
     line: [rarity, no === "Energy" ? "" : no].filter(Boolean).join(", "),
     rarity,
@@ -11121,7 +11260,11 @@ const vaultPage = initVault({
   toast,
 });
 
+// The loading screen's percentage (index.html, ppBoot): boot reports each step as it finishes.
+const bootAt = (step) => window.ppBoot?.at(step);
+
 async function boot() {
+  bootAt(1); // every script is in
   try {
     // The session is asked for alongside the shop files, not after them (one round trip less before first paint);
     // it is still applied after them, as before.
@@ -11133,7 +11276,11 @@ async function boot() {
       /* only a head start */
     }
     await Promise.all([loadSealedPrices(), loadPatchNotes(), loadGearCatalog()]);
+    bootAt(2); // shop files
     await refreshSession(me);
+    bootAt(3); // who is signed in
+    // Back from Discord's consent screen: link it (js/account-security.js), then land on Security.
+    finishDiscordReturn().catch(() => {});
     // Friends and requests load now rather than on the next 5s poll, so the
     // Social page and the Friends badge are right on first paint.
     if (cloudUser) notifySignedIn();
@@ -11144,12 +11291,14 @@ async function boot() {
       const saved = state.activeSetId || DEFAULT_SET_ID;
       if (saved === linkedSet || !(await activateSet(saved))) await activateSet(DEFAULT_SET_ID);
     }
+    bootAt(4); // the set's cards
     applySettings();
     renderHeader();
     scheduleDailyTick();
     const back = new Image();
     back.src = backSrc();
     await routeFromLocation();
+    bootAt(5); // the page is drawn
 
     // Not awaited: the page is usable without it, and it refreshes home when done.
     loadAllSets();
@@ -11184,6 +11333,7 @@ function revealSite() {
   const go = () => {
     document.body.classList.add("is-ready");
     document.body.classList.remove("is-booting");
+    window.ppBoot?.paint?.(); // the loading screen ends on 100%
   };
   if (reduceMotion()) {
     go();
@@ -11191,6 +11341,31 @@ function revealSite() {
   }
   requestAnimationFrame(() => requestAnimationFrame(go));
 }
+
+// Account > Security and the sign-in page's two-step step (js/account-security.js).
+initSecurity({
+  api,
+  toast,
+  esc,
+  rerender: () => renderAccount(),
+  onSecurityTab: () => view === "account" && accountTab === "security",
+  getRecovery: () => recoveryInfo,
+  loadRecovery: () => loadRecoveryInfo(),
+  renderAuth: () => renderAuth(),
+  backToSignin: () => {
+    authTab = "signin";
+    renderAuth();
+  },
+  onSignedIn: async (result) => {
+    cloudUser = result.user;
+    pendingClaim = null;
+    localStorage.setItem(CLOUD_SEEN_KEY, "1");
+    applyCloudSave(result.save);
+    await hydrateAfterAccountChange();
+    returnAfterAuth();
+    toast(`Signed in as ${result.user.name}.`);
+  },
+});
 
 boot().catch((err) => {
   console.error(err);

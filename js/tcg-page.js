@@ -23,19 +23,29 @@
  *   coinFaces()         { heads, tails } art of the equipped coin, or null for the house coin
  */
 
-import { ACTIVE, FORMATS, RuleError, abilityBlock, abilityOn, apply, attacksOf, canRetreat, dropBlock, conditionsOn, createGame, damageAfterTyping, defOf, energyOf, hpLeft, legalActions, markOn, marksOn, maxHp, other, retreatCost, shieldOn, stadiumBlock, toolOf, trainerBlock, usableAttacks } from "./tcg/engine.js";
+import { ACTIVE, FORMATS, RuleError, abilityBlock, abilityOn, apply, attacksOf, canRetreat, costFor, dropBlock, conditionsOn, createGame, damageAfterTyping, defOf, energyOf, hpLeft, legalActions, markOn, marksOn, maxHp, other, retreatCost, shieldOn, stadiumBlock, toolOf, trainerBlock, unpaid, usableAttacks } from "./tcg/engine.js";
 import { ENERGY_TYPES, FREE_ENERGY, createDefs, isFreeEnergy } from "./tcg/cards.js";
 import { botAction } from "./tcg/bot.js";
 import { MAX_DECKS, buildBotDeck, buildDeck, checkDeck, deckList, deckSize, notLegal, roomFor, rulesOf } from "./tcg/decks.js";
 import { BOT_FALLBACK, DECK_FORMATS, FORMAT_NOTES } from "./tcg/formats.js";
 import { LESSON, LESSON_CARDS, LESSON_SET, createLesson } from "./tcg/tutorial.js";
-import { coinStageHTML, flipCoin } from "./coin.js?v=6";
+import { coinStageHTML, flipCoin } from "./coin.js?v=7";
 import { api } from "./api.js";
+import { XP_WEIGHTS } from "./xp.js";
 
 /** The seats on the table. A match against a friend can put you in seat 1 (worker/tcg.js), so these follow the match. */
 let ME = 0;
 let BOT = 1;
 const BOT_NAME = "House bot";
+/** How hard the house bot plays (js/tcg/bot.js botAction, js/tcg/decks.js buildBotDeck). */
+const LEVELS = [
+  { id: "easy", name: "Easy", note: "The house bot plays a beginner's deck and misses plays.", line: "A beginner's deck, misses plays" },
+  { id: "normal", name: "Normal", note: "The house bot plays a sound one-prize deck from your main set.", line: "A sound deck from your main set" },
+  { id: "hard", name: "Hard", note: "The house bot plays the best deck your main set can make, Pokémon ex and V included.", line: "Your set's best deck, ex and V too" },
+];
+const levelName = (id) => LEVELS.find((l) => l.id === id)?.name || "Normal";
+/** XP a win pays at each level (worker/tcg.js counts at most BOT_DAILY_WINS a day, and only after two minutes). */
+const levelXp = (id) => XP_WEIGHTS[{ easy: "tcgEasy", normal: "tcgNormal", hard: "tcgHard" }[id] || "tcgNormal"];
 /** The move clock of a match against a friend (worker/tcg.js TCG_TIMING.DECISION_MS). */
 const TCG_MOVE_SECONDS = 90;
 /**
@@ -63,8 +73,12 @@ export function initTcg(deps) {
   let route = { name: "hub" };
   let decks = [];
   let record = { wins: 0, losses: 0 };
+  /** The bot's level for the next match, kept on the device. */
+  let level = "normal";
   let draft = { open: false, format: "standard" };
-  let editor = { tab: "cards", query: "", type: "" };
+  let editor = { tab: "cards", query: "", type: "", bumped: "" };
+  /** Where the editor's bar last stood for each deck, so the next paint slides from there. */
+  const meterWas = new Map();
   /** The match on the table: { state, deckId, botSet, sel, sheet, busy, line, setup, shownState, over } */
   let match = null;
 
@@ -87,7 +101,7 @@ export function initTcg(deps) {
     }
   }
   const saveDecks = () => write("decks", decks);
-  const saveMatch = () => !match?.online && write("match", match && match.state.phase !== "over" ? { state: match.state, deckId: match.deckId, botSet: match.botSet, botTheme: match.botTheme || "", lesson: match.lesson ?? null } : null);
+  const saveMatch = () => !match?.online && write("match", match && match.state.phase !== "over" ? { state: match.state, deckId: match.deckId, botSet: match.botSet, botTheme: match.botTheme || "", level: match.level || "normal", ticket: match.ticket || "", lesson: match.lesson ?? null } : null);
 
   /* ---------- loading ---------- */
 
@@ -110,6 +124,8 @@ export function initTcg(deps) {
         d.v = 2;
       }
       record = read("record", record);
+      record.levels ||= {};
+      level = LEVELS.some((l) => l.id === read("level", "")) ? read("level", "") : "normal";
     })().catch((err) => {
       loading = null;
       throw err;
@@ -144,6 +160,13 @@ export function initTcg(deps) {
     return `<i class="tg-en" data-en="${esc(one)}" title="${esc(title)}" role="img" aria-label="${esc(title)}">${enIcon(one)}</i>`;
   };
   const pips = (types) => types.map(pip).join("");
+  /** Attached Energy, never overlapped: every symbol while there are few, then one symbol and a count for each type. */
+  const pipRow = (types, max = 4) => {
+    if (types.length <= max) return pips(types);
+    const n = new Map();
+    for (const type of types) n.set(type, (n.get(type) || 0) + 1);
+    return [...n].map(([type, count]) => `${pip(type)}${count > 1 ? `<b class="tg-pip-n">${count}</b>` : ""}`).join("");
+  };
   const stageName = (def) => (def.stage === "basic" ? "Basic" : `Evolves from ${def.evolvesFrom}`);
 
   function hpBar(left, max) {
@@ -165,69 +188,145 @@ export function initTcg(deps) {
     return [...seen];
   }
 
-  function deckRowHtml(deck) {
-    const check = checkDeck(deck, owned(), defs);
-    const kind = FORMATS[deck.format];
-    const lead = (deck.lead && deck.cards[deck.lead] && deck.lead) || Object.keys(deck.cards).find((id) => defs(id)?.kind === "pokemon");
-    return `<article class="rt-box tg-deck" data-deck="${esc(deck.id)}">
-      <span class="tg-deck-art">${lead ? `<img src="${img(lead)}" alt="" loading="lazy" decoding="async" />` : ""}</span>
-      <div class="tg-deck-main">
-        <h3>${esc(deck.name)}</h3>
-        <p>${deck.theme ? "Pre-made, " : ""}${kind.name}, ${check.size} of ${check.need} cards ${pips(typesOf(deck))}</p>
-        <p class="tg-deck-state${check.ok ? " ok" : ""}">${check.ok ? "Ready to play" : esc(check.problems[0])}</p>
-      </div>
-      <div class="tg-deck-keys">
-        <button type="button" class="solid sm" data-play="${esc(deck.id)}"${check.ok ? "" : " disabled"}>Play</button>
-        <button type="button" class="ghost sm" data-edit="${esc(deck.id)}">Edit</button>
-      </div>
-    </article>`;
+  const leadOf = (deck) => (deck.lead && deck.cards[deck.lead] && deck.lead) || Object.keys(deck.cards).find((id) => defs(id)?.kind === "pokemon");
+  /** The chosen deck: the one last tapped, played, edited or made (kept as "pick"), else the newest. */
+  const pickedDeck = () => deckById(read("pick", "")) || decks[decks.length - 1] || null;
+  const pickDeck = (id) => deckById(id) && write("pick", id);
+
+  /** Three of a deck's Pokémon for the fan: its lead in the middle, the two it runs most either side. */
+  function fanIds(deck) {
+    const lead = leadOf(deck);
+    const names = new Set(lead ? [defs(lead)?.name] : []);
+    const rest = [];
+    for (const [id] of Object.entries(deck.cards).sort((a, b) => b[1] - a[1])) {
+      const def = defs(id);
+      if (id === lead || def?.kind !== "pokemon" || names.has(def.name)) continue;
+      names.add(def.name);
+      rest.push(id);
+    }
+    return [rest[0], lead, rest[1]].filter((id) => id && cardOf(id));
   }
+
+  function fanHtml(ids) {
+    if (!ids.length) return `<span class="tg-fan is-empty" aria-hidden="true"><i></i><i></i><i></i></span>`;
+    return `<span class="tg-fan" data-n="${ids.length}" aria-hidden="true">${ids.map((id) => `<img src="${img(id)}" alt="" decoding="async" draggable="false" />`).join("")}</span>`;
+  }
+
+  /** A deck in "Your decks": a flat tile. Tapping it chooses it (`data-pick`); the chosen one wears the yellow shadow. */
+  function deckRowHtml(deck, chosen = false) {
+    const check = checkDeck(deck, owned(), defs);
+    const lead = leadOf(deck);
+    return `<button type="button" class="tg-dk${chosen ? " on" : ""}${check.ok ? "" : " bad"}" data-pick="${esc(deck.id)}" aria-pressed="${chosen}">
+      <span class="tg-dk-art">${lead && cardOf(lead) ? `<img src="${img(lead)}" alt="" loading="lazy" decoding="async" draggable="false" />` : ""}</span>
+      <b class="tg-dk-name">${esc(deck.name)}</b>
+      ${check.ok ? "" : `<small class="tg-dk-state">${esc(check.problems[0])}</small>`}
+    </button>`;
+  }
+
+  /** The hero: the chosen deck, its fan, and the one yellow key. */
+  function heroHtml(deck) {
+    const check = checkDeck(deck, owned(), defs);
+    const played = record.wins + record.losses;
+    return `<section class="rt-box tg-hero">
+      ${fanHtml(fanIds(deck))}
+      <div class="tg-hero-main">
+        <h2 class="tg-hero-name">${esc(deck.name)}</h2>
+        <p class="tg-meta"><span class="tg-pips">${pips(typesOf(deck))}</span>${deck.theme ? "Pre-made, " : ""}${FORMATS[deck.format].name}, ${check.size} of ${check.need} cards</p>
+        ${check.ok ? (played ? `<p class="tg-meta">Won ${record.wins} of ${played} against the bot</p>` : "") : `<p class="tg-hero-why">${esc(check.problems[0])}</p>`}
+        <div class="tg-hero-keys">
+          <button type="button" class="solid rt-go" data-play="${esc(deck.id)}"${check.ok ? "" : " disabled"}>Play</button>
+          <button type="button" class="tlink" data-edit="${esc(deck.id)}">Edit</button>
+        </div>
+      </div>
+    </section>`;
+  }
+
+  /** The cards of a saved match the hero shows: your Active Pokémon in the middle, two of your Bench beside it. */
+  function resumeIds(resume) {
+    const side = resume?.state?.players?.[0];
+    const id = (slot) => (slot?.uid ? resume.state.cards[slot.uid] : null);
+    return [id(side?.bench?.[0]), id(side?.active), id(side?.bench?.[1])].filter(Boolean);
+  }
+
+  /** A match is waiting: it takes the hero's place, and its key goes back to the table. */
+  function resumeHtml(resume) {
+    // Before anything is in play (the opening), the fan shows the deck the match is played with.
+    const inPlay = resumeIds(resume).filter((id) => cardOf(id));
+    const deck = deckById(resume.deckId);
+    return `<section class="rt-box tg-hero tg-hero-resume">
+      ${fanHtml(inPlay.length ? inPlay : deck ? fanIds(deck) : [])}
+      <div class="tg-hero-main">
+        <h2 class="tg-hero-name">${resume.lesson != null ? "Your lesson is waiting" : "A match is waiting"}</h2>
+        <p class="tg-meta">Turn ${Math.max(1, resume.state.turn)} against the ${BOT_NAME}</p>
+        <div class="tg-hero-keys"><button type="button" class="solid rt-go" data-go="/play/match">Back to it</button></div>
+      </div>
+    </section>`;
+  }
+
+  /** One row of "Who to play": an ink label cut on the slant, a name, one line, an action word. */
+  const rowHtml = (attrs, lab, name, line, val, cls = "") =>
+    `<button type="button" class="rt-row tg-row${cls}" ${attrs}><span class="rt-row-lab">${lab}</span><span class="rt-row-name">${name}<small>${line}</small></span><span class="rt-row-val">${val}</span></button>`;
 
   function hubHtml() {
     const resume = read("match", null);
+    const waiting = resume?.state && resume.state.phase !== "over";
     // Only the empty hub prints the count; the draft only asks whether there is one. A big collection is
     // thousands of cards to read the rules of, so don't count them all when no one will see the number.
     const canPlay = ([id, n]) => n > 0 && defs(id)?.kind === "pokemon" && defs(id).playable;
     const playable = !decks.length ? Object.entries(owned()).filter(canPlay).length : draft.open ? Number(Object.entries(owned()).some(canPlay)) : 0;
-    const played = record.wins + record.losses;
-    return `<div class="tg-page">
-      <header class="tg-head">
-        <span class="rt-tag">Early build</span>
-        <h1 class="page-title tg-title">Play</h1>
-        <p class="tg-lede">Build a deck from the cards you own, or open a Theme Deck or Battle Deck from the shop, then take it to the table.${played ? ` You've won ${record.wins} of ${plural(played, "match")}.` : ""}</p>
-      </header>
-      ${resume?.state && resume.state.phase !== "over" ? `<div class="rt-box tg-resume">
-        <p><b>${resume.lesson != null ? "Your lesson is waiting" : "A match is waiting"}</b>Turn ${Math.max(1, resume.state.turn)} against the ${BOT_NAME}.</p>
-        <button type="button" class="solid sm" data-go="/play/match">Back to the table</button>
-      </div>` : ""}
-      ${read("learned", false) ? "" : `<div class="rt-box tg-learn">
-        <p><b>New to the card game?</b>A practice match on borrowed cards, with a coach for the first turns. About three minutes.</p>
-        <button type="button" class="solid sm" data-lesson>Start lesson</button>
-      </div>`}
-      <div class="rt-box tg-learn tg-friend-entry">
-        <p><b>Play online</b>${lobby.matches?.incoming.length ? `${plural(lobby.matches.incoming.length, "challenge")} waiting for you.` : lobby.matches?.live.length ? `${lobby.matches.live.length === 1 ? "A match is" : `${lobby.matches.live.length} matches are`} on.` : "Find a quick match, or challenge a friend with one of your decks."}</p>
-        <button type="button" class="${lobby.matches?.incoming.length || lobby.matches?.live.length ? "solid" : "ghost"} sm" data-go="/play/friends">${lobby.matches?.incoming.length ? "See challenges" : lobby.matches?.live.length ? "Back to it" : "Play online"}</button>
-      </div>
-      <section class="tg-block">
-        <h2 class="tg-h2">Your decks</h2>
-        ${decks.length ? decks.map(deckRowHtml).join("") : `<p class="rt-empty tg-none">No decks yet. ${playable ? `You own ${playable} Pokémon you can play.` : "Rip a few packs first: a deck needs Pokémon you own."}</p>`}
-        ${draft.open ? draftHtml(playable) : decks.length < MAX_DECKS ? `<button type="button" class="${decks.length ? "ghost" : "solid rt-go"} tg-new" data-new>New deck</button>` : ""}
+    const learned = read("learned", false);
+    const chosen = pickedDeck();
+    const incoming = lobby.matches?.incoming.length || 0;
+    const live = lobby.matches?.live.length || 0;
+    const learnLink = learned ? `<button type="button" class="tlink tg-relearn" data-lesson>Learn to play</button>` : "";
+    const hero = waiting
+      ? resumeHtml(resume)
+      : chosen
+        ? heroHtml(chosen)
+        : `<section class="rt-box tg-hero tg-hero-empty">
+          ${fanHtml([])}
+          <div class="tg-hero-main">
+            <h2 class="tg-hero-name">No deck yet</h2>
+            <p class="tg-meta">${playable ? `You own ${playable} Pokémon you can play.` : "Rip a few packs first: a deck needs Pokémon you own."}</p>
+            ${draft.open ? "" : `<div class="tg-hero-keys"><button type="button" class="solid rt-go" data-new>New deck</button></div>`}
+          </div>
+        </section>`;
+    return `<div class="tg-page tg-hub">
+      <header class="tg-head"><h1 class="page-title tg-title">Play</h1></header>
+      ${hero}
+      ${!decks.length && draft.open ? draftHtml(playable) : ""}
+      <section class="tg-block tg-who">
+        <div class="tg-hd"><h2 class="tg-h2">Who to play</h2>${decks.length ? "" : learnLink}</div>
+        ${learned ? "" : rowHtml("data-lesson", "Lesson", `Learn to play <span class="rt-tag">New</span>`, "Borrowed cards and a coach, about three minutes", "Start")}
+        ${levelPickHtml()}
+        ${rowHtml('data-go="/play/friends"', "Online", "Quick match", live ? `${live === 1 ? "A match is" : `${live} matches are`} on` : "Any trainer, same format", live && !incoming ? "Back to it" : "Find")}
+        ${rowHtml('data-go="/play/friends"', "Friend", `Challenge a friend${incoming ? ` <span class="rt-tag">${incoming}</span>` : ""}`, incoming ? `${plural(incoming, "challenge")} waiting for you` : "Pick a friend and a deck", incoming ? "See" : "Open")}
       </section>
-      <section class="tg-block tg-notes">
-        <h2 class="tg-h2">What's in so far</h2>
-        <ul>
-          <li>Basic Pokémon, evolution, Energy, attacks, Weakness and Resistance, Special Conditions, retreat, prizes.</li>
-          <li>Your own cards only, as many copies as you own. Basic Energy is free.</li>
-          <li>Decks follow the official tournament rules: Standard (regulation marks H, I, J), Expanded (Black &amp; White on, minus the ban list) or Unlimited. 60 cards, up to 4 of a card by name, one ACE SPEC, one Radiant Pokémon.</li>
-          <li>Your sleeve is your card back and your coin makes the flips.</li>
-          <li>Trainers: Items and Supporters that draw, search your deck, heal, switch or pull a Pokémon forward. More with each update.</li>
-          <li>Pokémon Tools that change HP, Retreat Cost, damage or Weakness can be attached, one to a Pokémon.</li>
-          <li>Stadiums stay in play for both players. Tap the Stadium on the table to read it or use it.</li>
-          <li>Abilities, Pokémon Tools, Stadiums and Special Energy as their cards read, with more each update. Not yet: some attack text (the printed damage still lands).</li>
-        </ul>
-        ${read("learned", false) ? `<button type="button" class="tlink tg-relearn" data-lesson>Run the lesson again</button>` : ""}
-      </section>
+      ${decks.length ? `<section class="tg-block tg-decks">
+        <div class="tg-hd"><h2 class="tg-h2">Your decks</h2>${learnLink}</div>
+        <div class="tg-dks">
+          ${decks.map((deck) => deckRowHtml(deck, deck.id === chosen?.id)).join("")}
+          ${decks.length < MAX_DECKS && !draft.open ? `<button type="button" class="tg-dk tg-dk-new" data-new><span>New deck</span></button>` : ""}
+        </div>
+        ${draft.open ? draftHtml(playable) : ""}
+      </section>` : ""}
     </div>`;
+  }
+
+  /** The house bot's row in "Who to play", with its level folded in as slanted words (`data-level`) and that level's record. */
+  function levelPickHtml() {
+    const now = LEVELS.find((l) => l.id === level) || LEVELS[1];
+    const at = record.levels?.[now.id];
+    const tally = at && at.wins + at.losses ? `, won ${at.wins} of ${at.wins + at.losses}${at.streak > 1 ? `, ${at.streak} in a row` : ""}` : "";
+    return `<div class="rt-row tg-row tg-row-bot">
+        <span class="rt-row-lab">Bot</span>
+        <span class="rt-row-name">${BOT_NAME}<small>${esc(now.line)}${tally}${deps.signedIn?.() ? `. A win pays ${levelXp(now.id)} XP, up to 10 wins a day` : ""}</small>
+          <span class="tg-levels" role="group" aria-label="House bot level">
+            ${LEVELS.map((l) => `<button type="button" class="rt-word${l.id === now.id ? " on" : ""}" data-level="${l.id}" aria-pressed="${l.id === now.id}">${l.name}</button>`).join("")}
+          </span>
+        </span>
+        <span class="rt-row-val">Chosen</span>
+      </div>`;
   }
 
   /** The three tournament formats (js/tcg/formats.js) as a segmented choice; `data-format` sets the draft's or the open deck's. */
@@ -259,6 +358,7 @@ export function initTcg(deps) {
     const deck = { id: `d${Date.now().toString(36)}`, name, format: draft.format, cards, v: 2 };
     decks.push(deck);
     saveDecks();
+    write("pick", deck.id);
     draft.open = false;
     return deck;
   }
@@ -334,7 +434,7 @@ export function initTcg(deps) {
   }
 
   function stepHtml(id, count, room, label, of = "") {
-    return `<span class="tg-step">
+    return `<span class="tg-step${editor.bumped === id ? " is-bump" : ""}">
       <button type="button" data-less="${esc(id)}" aria-label="Take one ${esc(label)} out"${count ? "" : " disabled"}>&minus;</button>
       <b>${count}</b>${of ? `<small>${of}</small>` : ""}
       <button type="button" data-more="${esc(id)}" aria-label="Add one ${esc(label)}"${room > 0 ? "" : " disabled"}>+</button>
@@ -346,15 +446,20 @@ export function initTcg(deps) {
     const room = roomFor(deck, id, owned(), defs);
     // A card the deck's format doesn't allow stays in view, greyed, with the reason.
     const why = notLegal(def, deck.format);
-    return `<div class="tg-tile${row.inDeck ? " in" : ""}${why ? " off" : ""}">
-      <button type="button" class="tg-tile-face" data-look="${esc(id)}" aria-label="Look at ${esc(def.name)}">
-        <img src="${img(id)}" alt="" loading="lazy" decoding="async" />
-        ${row.inDeck ? `<span class="tg-tile-n">${row.inDeck}</span>` : ""}
+    const n = row.inDeck;
+    const name = esc(def.name);
+    // The count strip on its ink plate: minus, the count, plus. A card you own but left out says Add instead.
+    return `<div class="tg-tile${n ? " in" : ""}${why ? " off" : ""}">
+      <button type="button" class="tg-tile-face" data-look="${esc(id)}" aria-label="Look at ${name}">
+        <img src="${img(id)}" alt="" loading="lazy" decoding="async" draggable="false" />
       </button>
-      <b class="tg-tile-name">${esc(def.name)}</b>
-      <span class="tg-tile-meta">${def.kind === "energy" ? "Special Energy" : def.kind === "trainer" ? (def.sub === "supporter" ? "Supporter" : def.sub === "tool" ? "Tool" : def.sub === "stadium" ? "Stadium" : "Item") : `${def.stage === "basic" ? "Basic" : "Evolution"}, ${def.hp} HP`}</span>
-      ${why ? `<span class="tg-tile-why">Not in ${esc(FORMATS[deck.format].name)}. ${esc(why)}</span>` : ""}
-      ${stepHtml(id, row.inDeck, room, def.name, `of ${row.owned}`)}
+      <span class="tg-ct${editor.bumped === id ? " is-bump" : ""}" title="${n} in the deck, ${row.owned} owned">
+        <button type="button" data-less="${esc(id)}" aria-label="Take one ${name} out"${n ? "" : " disabled"}>&minus;</button>
+        ${n ? `<b>${n}</b>` : `<button type="button" class="tg-ct-add" data-more="${esc(id)}" aria-label="Add one ${name}"${room > 0 ? "" : " disabled"}>Add</button>`}
+        <button type="button" data-more="${esc(id)}" aria-label="Add one ${name}, ${row.owned} owned"${room > 0 ? "" : " disabled"}>+</button>
+      </span>
+      <b class="sr-only">${name}, ${n} of ${row.owned}</b>
+      ${why ? `<span class="tg-tile-why" title="${esc(why)}">Not in ${esc(FORMATS[deck.format].name)}</span>` : ""}
     </div>`;
   }
 
@@ -367,24 +472,34 @@ export function initTcg(deps) {
       if (def?.kind === "energy" && def.basic && !isFreeEnergy(id)) rows.push({ id, type: def.provides[0], n, ownedPrint: have[id] || 0 });
     }
     return `<div class="rt-box tg-energy">
-      <h3>Basic Energy <small>free, as many as you need</small></h3>
+      <h3>Basic Energy <small>Free, as many as you need</small></h3>
       ${rows.map((r) => `<div class="tg-energy-row">${pip(r.type)}<span>${esc(r.type)}</span>${stepHtml(r.id, r.n, roomFor(deck, r.id, have, defs), `${r.type} Energy`)}</div>`).join("")}
     </div>`;
   }
 
   function summaryHtml(deck) {
     const check = checkDeck(deck, owned(), defs);
-    const pct = Math.min(1, check.size / check.need);
     const tally = (kind) => Object.entries(deck.cards).reduce((n, [id, c]) => n + (defs(id)?.kind === kind ? c : 0), 0);
     const mons = tally("pokemon");
     const trainers = tally("trainer");
-    return `<div class="tg-sum-top">
-        <span class="tg-sum-count"><b>${check.size}</b> of ${check.need}</span>
-        <span class="tg-sum-split">${mons} Pokémon, ${trainers ? `${plural(trainers, "Trainer")}, ` : ""}${check.size - mons - trainers} Energy</span>
-        <button type="button" class="solid sm" data-play="${esc(deck.id)}"${check.ok ? "" : " disabled"}>Play</button>
+    const energy = check.size - mons - trainers;
+    // One bar filling toward the deck size, split by kind. Each part is a full-width layer scaled from the left,
+    // so a change slides from where it was (--f0) to where it is (--f): transform only.
+    const of = (n) => Number((n / Math.max(check.need, check.size, 1)).toFixed(4));
+    const now = { p: of(mons), t: of(mons + trainers), e: of(check.size) };
+    const was = meterWas.get(deck.id) || { p: 0, t: 0, e: 0 };
+    meterWas.set(deck.id, now);
+    const part = (k) => `<i class="tg-meter-${k}" style="--f:${now[k]};--f0:${was[k]}"></i>`;
+    const cut = (k, next) => (now[k] > 0 && now[next] > now[k] ? `<b class="tg-meter-cut" style="--f:${now[k]};--f0:${was[k]}"></b>` : "");
+    return `<div class="tg-meter${check.size > check.need ? " over" : ""}">
+        <span class="tg-meter-track" aria-hidden="true"><span>${part("e")}${part("t")}${part("p")}${cut("p", "e")}${cut("t", "e")}</span></span>
+        <span class="tg-meter-n${editor.bumped ? " is-bump" : ""}"><b>${check.size}</b>/${check.need}</span>
       </div>
-      <span class="bar tg-sum-bar${check.size > check.need ? " over" : ""}"><i style="transform:scaleX(${pct.toFixed(3)})"></i></span>
-      <p class="tg-sum-state${check.ok ? " ok" : ""}">${check.ok ? "Ready to play." : esc(check.problems.slice(0, 2).join(" "))}</p>`;
+      <p class="tg-legend"><span class="p">${mons} Pokémon</span><span class="t">${plural(trainers, "Trainer")}</span><span class="e">${energy} Energy</span></p>
+      <div class="tg-sum-foot">
+        <p class="tg-sum-state${check.ok ? " ok" : ""}">${check.ok ? "Ready to play." : esc(check.problems.slice(0, 2).join(" "))}</p>
+        <button type="button" class="solid sm" data-play="${esc(deck.id)}"${check.ok ? "" : " disabled"}>Play</button>
+      </div>`;
   }
 
   function gridHtml(deck) {
@@ -400,17 +515,20 @@ export function initTcg(deps) {
     const types = ENERGY_TYPES.concat("Dragon", "Colorless").filter((t) => Object.keys(have).some((id) => have[id] > 0 && defs(id)?.kind === "pokemon" && defs(id).types.includes(t)));
     const inDeck = Object.keys(deck.cards).filter((id) => defs(id)?.kind === "pokemon").length;
     return `<div class="tg-page tg-editor" data-deck="${esc(deck.id)}">
-      <header class="tg-head">
-        <button type="button" class="tlink tg-back" data-go="/play">Decks</button>
-        <label class="tg-name"><span class="sr-only">Deck name</span><input type="text" class="search" id="tg-name" maxlength="32" value="${esc(deck.name)}" autocomplete="off" /></label>
-        ${formatSegHtml(deck.format)}
-        <p class="tg-lede">${FORMATS[deck.format].pick ? formatNote(deck.format) : `${esc(FORMATS[deck.format].name)}s are retired. Pick a format above, then fill the deck to 60 cards.`}</p>
+      <header class="tg-head tg-ed-head">
+        <label class="tg-name"><span class="sr-only">Deck name</span><input type="text" id="tg-name" maxlength="32" value="${esc(deck.name)}" autocomplete="off" spellcheck="false" /></label>
+        <button type="button" class="tlink tg-done" data-go="/play">Done</button>
       </header>
+      <div class="tg-ed-format">
+        ${formatSegHtml(deck.format)}
+        <p class="tg-ed-note">${FORMATS[deck.format].pick ? formatNote(deck.format) : `${esc(FORMATS[deck.format].name)}s are retired. Pick a format above, then fill the deck to 60 cards.`}</p>
+      </div>
       <div class="rt-box tg-sum rt-still" id="tg-sum">${summaryHtml(deck)}</div>
       <div class="tg-tools">
-        <div class="seg tg-seg" role="group" aria-label="Show">
-          <button type="button" class="seg-btn${editor.tab === "cards" ? " on" : ""}" data-tab="cards" aria-pressed="${editor.tab === "cards"}">Your cards</button>
-          <button type="button" class="seg-btn${editor.tab === "deck" ? " on" : ""}" data-tab="deck" aria-pressed="${editor.tab === "deck"}">In the deck${inDeck ? ` (${inDeck})` : ""}</button>
+        <div class="tg-tabs" role="group" aria-label="Show">
+          <button type="button" class="rt-word${editor.tab === "cards" ? " on" : ""}" data-tab="cards" aria-pressed="${editor.tab === "cards"}">Your cards</button>
+          <button type="button" class="rt-word${editor.tab === "deck" ? " on" : ""}" data-tab="deck" aria-pressed="${editor.tab === "deck"}">In the deck${inDeck ? ` (${inDeck})` : ""}</button>
+          <button type="button" class="tlink tg-fill" data-fill>Fill with Energy</button>
         </div>
         <div class="tg-find">
           <input type="search" class="search" id="tg-q" placeholder="Search your Pokémon" value="${esc(editor.query)}" autocomplete="off" aria-label="Search your Pokémon" />
@@ -422,7 +540,6 @@ export function initTcg(deps) {
       </div>
       <div id="tg-grid">${gridHtml(deck)}</div>
       <div class="tg-foot">
-        <button type="button" class="ghost sm" data-fill>Fill the rest with Energy</button>
         <button type="button" class="ghost sm danger" data-delete>Delete deck</button>
       </div>
     </div>`;
@@ -442,7 +559,10 @@ export function initTcg(deps) {
     if (next) deck.cards[id] = next;
     else delete deck.cards[id];
     saveDecks();
+    // The count that changed pops as it lands.
+    editor.bumped = id;
     repaintEditor(deck);
+    editor.bumped = "";
   }
 
   /** Top the deck up with Energy, split by what its attacks ask for. */
@@ -495,7 +615,7 @@ export function initTcg(deps) {
           ${def.kind === "trainer" ? `<p class="tg-look-meta">${{ item: "Item", supporter: "Supporter: one a turn", stadium: "Stadium", tool: "Pokémon Tool" }[def.sub]}</p>${def.text ? `<p class="tg-look-text">${esc(def.text)}</p>` : ""}${def.why ? `<p class="tg-look-note">${esc(def.why)}</p>` : ""}` : ""}
           ${def.kind === "energy" && !def.basic ? `<p class="tg-look-meta">Special Energy</p>${def.text ? `<p class="tg-look-text">${esc(def.text)}</p>` : ""}${def.why ? `<p class="tg-look-note">${esc(def.why)}</p>` : ""}` : ""}
           ${extra}${body}
-          <button type="button" class="ghost sm" data-close>Close</button>
+          <div class="tg-links"><button type="button" class="tg-link" data-close>Close</button></div>
         </div>
       </div>`;
   }
@@ -536,7 +656,7 @@ export function initTcg(deps) {
     let botSet = "";
     for (const setId of sets) {
       const list = await deps.loadSet(setId).catch(() => null);
-      botDeck = list && buildBotDeck(list.map((c) => defs(c.id)), deck.format);
+      botDeck = list && buildBotDeck(list.map((c) => defs(c.id)), deck.format, Math.random, { level });
       if (botDeck) {
         botSet = setId;
         break;
@@ -547,13 +667,18 @@ export function initTcg(deps) {
     botSeats();
     // The flip comes before the deal: its winner chooses who goes first without seeing a hand.
     const state = createGame({ decks: [deckList(deck), deckList(botDeck)], names: [deps.playerName(), BOT_NAME], format: deck.format, seed, chooseFirst: true }, defs);
-    match = { state, deckId, botSet, botTheme: botDeck.theme || "", sel: null, sheet: "", busy: false, line: "", setup: { active: null, bench: [] }, opening: true, over: false };
-    if (state.flipWinner === BOT) apply(state, botAction(state, BOT, defs), defs);
+    // A signed-in player's win can pay XP: the Worker hands out a ticket now and takes it back at the end.
+    const ticket = deps.signedIn?.() ? await api("/api/tcg/bot/start", { method: "POST", body: JSON.stringify({ level }) }).then((r) => r.id || "").catch(() => "") : "";
+    match = { state, deckId, botSet, botTheme: botDeck.theme || "", level, ticket, sel: null, sheet: "", busy: false, line: "", setup: { active: null, bench: [] }, opening: true, over: false };
+    if (state.flipWinner === BOT) apply(state, botMove(state), defs);
     // The bot sets up as soon as there are hands; its cards stay face down until both are ready.
-    if (state.dealt !== false) apply(state, botAction(state, BOT, defs), defs);
+    if (state.dealt !== false) apply(state, botMove(state), defs);
     saveMatch();
     deps.navigate("/play/match");
   }
+
+  /** The bot's next action at the match's level (the lesson's bot always plays it straight). */
+  const botMove = (state) => botAction(state, BOT, defs, { level: match?.lesson != null ? "normal" : match?.level || "normal" });
 
   /** Against the bot you are always seat 0. */
   function botSeats() {
@@ -600,7 +725,7 @@ export function initTcg(deps) {
     if (!step) return "";
     const talk = !step.want && !step.pick;
     return `<div class="tg-coach" role="status">
-      <span class="tg-coach-bar" aria-hidden="true"><i style="transform:scaleX(${((match.lesson + 1) / LESSON.length).toFixed(3)})"></i></span>
+      <span class="tg-coach-top"><em class="tg-coach-lab">Coach</em><span class="tg-coach-bar" aria-hidden="true"><i style="transform:scaleX(${((match.lesson + 1) / LESSON.length).toFixed(3)})"></i></span><small>${match.lesson + 1} of ${LESSON.length}</small></span>
       <p>${esc(step.say)}</p>
       ${talk ? `<button type="button" class="solid sm" data-act="coach-next">${step.free ? "Got it" : "Next"}</button>` : ""}
     </div>`;
@@ -616,7 +741,7 @@ export function initTcg(deps) {
       return false;
     }
     botSeats();
-    match = { state: saved.state, deckId: saved.deckId, botSet: saved.botSet, botTheme: saved.botTheme || "", lesson: saved.lesson ?? null, sel: null, sheet: "", busy: false, line: "", setup: { active: null, bench: [] }, opening: saved.state.dealt === false, over: false };
+    match = { state: saved.state, deckId: saved.deckId, botSet: saved.botSet, botTheme: saved.botTheme || "", level: saved.level || "normal", ticket: saved.ticket || "", lesson: saved.lesson ?? null, sel: null, sheet: "", busy: false, line: "", setup: { active: null, bench: [] }, opening: saved.state.dealt === false, over: false };
     return true;
   }
 
@@ -637,11 +762,11 @@ export function initTcg(deps) {
     const how = slot && d(slot.uid).fossil?.drop;
     if (!how) return "";
     const why = !myTurn() ? "Wait for your turn." : dropWhy(match.state, spot);
-    return `<div class="tg-abil">
-      <span class="tg-abil-top"><em>Trainer</em><b>${how === "bottom" ? "To the bottom of your deck" : "Discard from play"}</b><button type="button" class="solid sm" data-act="drop" data-spot="${spot}"${why ? " disabled" : ""}>${how === "bottom" ? "Put back" : "Discard"}</button></span>
+    return `<button type="button" class="tg-atk tg-abil" data-act="drop" data-spot="${spot}"${why ? " disabled" : ""}>
+      <span class="tg-atk-top"><i class="tg-tag">Trainer</i><b>${how === "bottom" ? "To the bottom of your deck" : "Discard from play"}</b><em class="tg-atk-do">${how === "bottom" ? "Put back" : "Discard"}</em></span>
       <span class="tg-atk-text">${how === "bottom" ? "Its cards go to the discard pile and it goes to the bottom of your deck." : "It and its cards go to the discard pile. This isn't a Knock Out: no Prize card."}</span>
       ${why ? `<span class="tg-atk-why">${esc(why)}</span>` : ""}
-    </div>`;
+    </button>`;
   }
   const stadiumWhy = (state) => (match.online ? (serverLegal((a) => a.type === "stadium") ? "" : "Can't be used right now.") : stadiumBlock(state, ME, defs));
   const trainerWhy = (state, def) => (match.online ? "" : trainerBlock(state, ME, def, defs));
@@ -658,7 +783,7 @@ export function initTcg(deps) {
     return `<button type="button" class="tg-mon${ready ? " has-ability" : ""}${big ? " big" : ""}${target ? " is-target" : ""}${chosen ? " is-chosen" : ""}" data-p="${p}" data-spot="${spot}" aria-label="${esc(label)}">
       <img src="${img(state.cards[slot.uid], big)}" alt="" draggable="false" decoding="async" />
       ${slot.damage ? `<span class="tg-dmg">${slot.damage}</span>` : ""}
-      ${big ? (slot.energy.length ? `<span class="tg-pips tg-on">${pips(energyOf(state, slot, defs))}</span>` : "") : `${hpBar(left, full)}<span class="tg-pips">${pips(energyOf(state, slot, defs))}${toolName ? `<i class="tg-en tg-toolpip" title="${esc(toolName)}">T</i>` : ""}</span>`}
+      ${big ? "" : `${hpBar(left, full)}<span class="tg-pips">${pipRow(energyOf(state, slot, defs), toolName ? 2 : 3)}${toolName ? `<i class="tg-en tg-toolpip" title="${esc(toolName)}">T</i>` : ""}</span>`}
       ${ready ? `<span class="tg-abil-tag">${esc(def.ability.kind === "Ability" ? "Ability" : "Power")}</span>` : ""}
     </button>`;
   }
@@ -675,15 +800,38 @@ export function initTcg(deps) {
     const edge = typing?.weak ? `<i class="tg-cond" data-cond="weak">Weak ${def.weakness.op === "x" ? "×" : "+"}${def.weakness.n}</i>` : typing?.resist ? `<i class="tg-cond" data-cond="resist">Resists -${def.resistance.n}</i>` : "";
     return `<div class="tg-hud" data-p="${p}">
       <b class="tg-hud-name">${esc(def.name)}</b>
-      <span class="tg-pips">${energy.length ? pips(energy) : `<small>No Energy</small>`}</span>
-      <span class="tg-hud-hp"><em>HP</em>${hpBar(left, maxHp(state, slot, defs))}<span class="num">${left}/${maxHp(state, slot, defs)}</span></span>
+      <span class="tg-hud-hp">${hpBar(left, maxHp(state, slot, defs))}</span>
+      <span class="tg-pips">${energy.length ? pipRow(energy, 5) : `<small>No Energy</small>`}</span>
+      <span class="num"><b>${left}</b>/${maxHp(state, slot, defs)}</span>
       ${conditionsOn(slot).length || marksOn(state, slot).length || edge || slot.tool || (slot.held || []).length || def.ability ? `<span class="tg-conds">${edge}${def.ability ? `<i class="tg-cond" data-cond="ability"${abilityOn(state, slot, defs) ? "" : " data-off"}>${esc(def.ability.name)}</i>` : ""}${slot.tool ? `<i class="tg-cond" data-cond="tool">${esc(defOf(state, slot.tool, defs).name)}</i>` : ""}${(slot.held || []).map((h) => `<i class="tg-cond" data-cond="tool">${esc(defOf(state, h.uid, defs).name)}</i>`).join("")}${conditionsOn(slot).map((c) => `<i class="tg-cond" data-cond="${c}">${COND_NAME[c]}</i>`).join("")}${marksOn(state, slot).map((m) => `<i class="tg-cond" data-cond="mark" data-mark="${m.kind}">${esc(markLabel(m))}</i>`).join("")}</span>` : ""}
     </div>`;
   }
 
+  /** Prize cards laid out face down beside the Bench, the way they sit on a mat. One leaves each time a prize is taken. */
   function prizesHtml(state, p) {
     const left = state.phase === "setup" ? state.rules.prizes : state.players[p].prizes.length;
-    return `<span class="tg-prizes" aria-label="${plural(left, "prize card")} left">${Array.from({ length: state.rules.prizes }, (_, i) => `<i class="rt-ball${i < left ? "" : " e"}"></i>`).join("")}</span>`;
+    const all = Math.max(state.rules.prizes, left);
+    return `<span class="tg-pile tg-prizes" data-p="${p}" style="--rows:${Math.ceil(all / 2)}" aria-label="${p === ME ? "Your" : "Their"} prize cards: ${left} left">
+      <span class="tg-prize-grid">${Array.from({ length: all }, (_, i) => `<i${i < left ? "" : ` class="e"`}></i>`).join("")}</span>
+      <b class="tg-pile-n">${left}</b>
+    </span>`;
+  }
+
+  /** The deck, with its count, and the discard pile's count under it. */
+  function deckHtml(state, p, back) {
+    const side = state.players[p];
+    return `<span class="tg-pile tg-deckpile" data-p="${p}">
+      <span class="tg-stack${side.deck.length ? "" : " e"}" title="${p === ME ? "Cards in your deck" : "Cards in their deck"}"><span class="tg-mini">${back}</span><b class="tg-pile-n">${side.deck.length}</b></span>
+      <small class="tg-bin" title="${p === ME ? "Cards in your discard pile" : "Cards in their discard pile"}">Discard ${side.discard.length}</small>
+    </span>`;
+  }
+
+  /** What you still have this turn: one Energy, one Supporter, one retreat. */
+  function trackHtml(state) {
+    if (state.phase !== "main" || state.current !== ME) return "";
+    const side = state.players[ME];
+    const mark = (used, label) => `<span${used ? ` class="used"` : ""}>${label}<i class="sr-only">${used ? ", used" : ", still to use"}</i></span>`;
+    return `<span class="tg-track" aria-label="This turn">${mark(side.energyUsed, "Energy")}${mark(side.supporterUsed || (state.turn === 1 && state.first === ME), "Supporter")}${mark(side.retreated, "Retreat")}</span>`;
   }
 
   /** What the player is being asked to do, and the keys for it. */
@@ -755,8 +903,10 @@ export function initTcg(deps) {
       return { text, keys: `<button type="button" class="ghost sm" data-act="look">View</button>` };
     }
     const canAttack = usableNow(state).length > 0;
+    // Nothing left but to end the turn (retreating aside): say so, so a turn doesn't stall on a hunt for a move.
+    const stuck = !canAttack && !legal().some((a) => a.type !== "end" && a.type !== "retreat");
     return {
-      text: state.turn === 1 ? "Going first: no attack this turn." : canAttack ? "Tap your Active Pokémon to attack." : "Play cards, then end your turn.",
+      text: state.turn === 1 && !stuck ? "Going first: no attack this turn." : canAttack ? "Tap your Active Pokémon to attack." : stuck ? "Nothing more to play. End your turn." : "Play cards, then end your turn.",
       keys: `<button type="button" class="${canAttack ? "ghost" : "solid"} sm" data-act="end">End turn</button>`,
     };
   }
@@ -799,49 +949,76 @@ export function initTcg(deps) {
       for (const a of acts) if (a.uid) for (const uid of hand) if (real.cards[uid] === real.cards[a.uid]) playable.add(uid);
     }
 
+    // The hand is laid out by kind, and copies of one card sit as a pile with a count, so five Energy read as one stack.
+    const kindRank = (uid) => ({ pokemon: 0, trainer: 1, energy: 2 })[d(uid).kind] ?? 3;
+    const sorted = hand.map((uid, i) => ({ uid, i })).sort((a, b) => kindRank(a.uid) - kindRank(b.uid) || (real.cards[a.uid] === real.cards[b.uid] ? 0 : real.cards[a.uid] < real.cards[b.uid] ? -1 : 1) || a.i - b.i).map((x) => x.uid);
+    const shownHand = sorted.map((uid, i) => {
+      const id = real.cards[uid];
+      const stacked = i > 0 && real.cards[sorted[i - 1]] === id;
+      const last = i === sorted.length - 1 || real.cards[sorted[i + 1]] !== id;
+      return { uid, stacked, count: last ? sorted.filter((u) => real.cards[u] === id).length : 0, tilt: 0 };
+    });
+    const groups = shownHand.filter((c) => !c.stacked).length;
+    const handUnits = groups + (shownHand.length - groups) * 0.16;
+    let g = -1;
+    for (const c of shownHand) {
+      if (!c.stacked) g += 1;
+      c.tilt = groups > 1 ? ((g / (groups - 1)) * 2 - 1).toFixed(2) : 0;
+    }
+    const foeBench = setup && match.online ? Array(match.online.hidden.bench).fill(null) : foe.bench;
+    const places = (n) => Array.from({ length: Math.max(0, n) }, () => `<span class="tg-place"></span>`).join("");
+
     const point = coach && !sel && !match.sheet ? coach : null;
     const pointHand = point && (point.pick || point.want?.({ type: "attach", spot: ACTIVE }) || point.want?.({ type: "attach", spot: 0 }) || point.want?.({ type: "evolve" }));
     const pointActive = point?.want?.({ type: "attack" });
     return `<div class="tg-table rt-dark rt-still${myTurn() ? " my-turn" : ""}${coach ? " has-coach" : ""}${pointHand ? " coach-hand" : ""}${pointActive ? " coach-active" : ""}${coach?.want?.({ type: "end" }) || coach?.want?.({ type: "place" }) ? " coach-key" : ""}" data-phase="${real.phase}">
       <div class="tg-bar tg-bar-foe">
         <button type="button" class="tg-leave" data-act="leave" aria-label="Leave the match">${match.leaving ? "Concede?" : "Leave"}</button>
-        <b class="tg-who">${esc(foe.name)}${match.botTheme && !setup ? `<small>${esc(match.botTheme)} deck</small>` : ""}</b>
-        ${prizesHtml(state, BOT)}
-        <span class="tg-count" title="Cards in hand"><i class="tg-ic hand"></i>${foe.hand.length}</span>
-        <span class="tg-count" title="Cards in deck"><i class="tg-ic deck"></i>${foe.deck.length}</span>
-      </div>
-      <div class="tg-bench tg-bench-foe">
-        ${(setup && match.online ? Array(match.online.hidden.bench).fill(null) : foe.bench).map((slot, i) => (setup ? foeBack : monHtml(state, BOT, slot, i, { target: foeTargets.has(i) }))).join("")}
-      </div>
-      <div class="tg-arena">
-        ${state.stadium ? `<button type="button" class="tg-stadium" data-act="stadium" aria-label="Stadium in play: ${esc(defOf(state, state.stadium.uid, defs).name)}"><img src="${img(state.cards[state.stadium.uid])}" alt="" draggable="false" /><b>Stadium</b></button>` : ""}
-        <span class="tg-slab" aria-hidden="true"></span>
-        <div class="tg-spot tg-spot-foe" data-p="${BOT}">${foe.active || (setup && match.online?.hidden.active) ? (setup ? foeBack : monHtml(state, BOT, foe.active, ACTIVE, { big: true, target: foeTargets.has(ACTIVE) })) : ""}</div>
-        <div class="tg-info tg-info-foe">
-          ${setup ? `<div class="tg-hud" data-p="${BOT}"><b class="tg-hud-name">${esc(foe.name)}</b><span class="tg-pips"><small>${match.online ? (match.online.hidden.placed ? "Ready" : "Choosing their Pokémon") : "Ready when you are"}</small></span></div>` : hudHtml(state, BOT)}
-        </div>
-        <div class="tg-spot tg-spot-me" data-p="${ME}">${myActive ? monHtml(state, ME, myActive, ACTIVE, { big: true, target: targets.has(ACTIVE) }) : `<span class="tg-hole">Active</span>`}</div>
-        <div class="tg-info tg-info-me">
-          <p class="tg-line" aria-live="polite">${esc(match.busy || !myTurn() ? "" : match.line || "")}</p>
-          ${setup ? "" : hudHtml(state, ME)}
-        </div>
-      </div>
-      <div class="tg-bench tg-bench-me${benchOpen ? " is-open" : ""}" data-bench>
-        ${myBench.map((slot, i) => monHtml(state, ME, slot, i, { target: targets.has(i) })).join("")}
-        ${myBench.length < state.rules.bench ? `<span class="tg-hole${benchOpen ? " is-target" : ""}" data-bench>${benchOpen ? "Play here" : "Bench"}</span>` : ""}
-      </div>
-      <div class="tg-bar tg-bar-me">
-        <b class="tg-who">${esc(me.name)}</b>
+        <b class="tg-who">${esc(foe.name)}${match.botTheme && !setup ? `<small>${match.level && match.lesson == null ? `${levelName(match.level)}, ` : ""}${esc(match.botTheme)} deck</small>` : ""}</b>
         ${match.online && real.phase !== "over" ? clockHtml() : ""}
-        ${prizesHtml(state, ME)}
-        <span class="tg-count" title="Cards in your deck"><span class="tg-mini">${back}</span>${me.deck.length}</span>
-        <span class="tg-count" title="Cards in your discard pile"><i class="tg-ic bin"></i>${me.discard.length}</span>
+        <span class="tg-count tg-foe-hand" title="Cards in their hand"><i class="tg-ic hand"></i>${foe.hand.length}</span>
       </div>
-      <div class="tg-hand" style="--n:${hand.length}">
-        ${hand.map((uid) => `<button type="button" class="tg-card${sel?.kind === "hand" && sel.uid === uid ? " is-chosen" : ""}${playable.has(uid) ? " can" : ""}" data-hand="${uid}" aria-label="${esc(d(uid).name)}"><img src="${img(real.cards[uid])}" alt="" draggable="false" /></button>`).join("")}
+      <div class="tg-field tg-arena">
+        <div class="tg-half tg-half-foe">
+          <div class="tg-row">
+            ${prizesHtml(state, BOT)}
+            <div class="tg-bench tg-bench-foe" style="--slots:${Math.max(state.rules.bench, foeBench.length)}">
+              ${foeBench.map((slot, i) => (setup ? foeBack : monHtml(state, BOT, slot, i, { target: foeTargets.has(i) }))).join("")}
+              ${places(Math.max(0, state.rules.bench - foeBench.length))}
+            </div>
+            ${deckHtml(state, BOT, foeBack)}
+          </div>
+          <div class="tg-side tg-side-foe">
+            <div class="tg-info tg-info-foe">
+              ${setup ? `<div class="tg-hud" data-p="${BOT}"><b class="tg-hud-name">${esc(foe.name)}</b><span class="tg-pips"><small>${match.online ? (match.online.hidden.placed ? "Ready" : "Choosing their Pokémon") : "Ready when you are"}</small></span></div>` : hudHtml(state, BOT)}
+            </div>
+            <div class="tg-spot tg-spot-foe" data-p="${BOT}">${foe.active || (setup && match.online?.hidden.active) ? (setup ? foeBack : monHtml(state, BOT, foe.active, ACTIVE, { big: true, target: foeTargets.has(ACTIVE) })) : ""}</div>
+            <div class="tg-wing">
+              ${state.stadium ? `<button type="button" class="tg-stadium" data-act="stadium" aria-label="Stadium in play: ${esc(defOf(state, state.stadium.uid, defs).name)}"><img src="${img(state.cards[state.stadium.uid])}" alt="" draggable="false" /><b>Stadium</b></button>` : ""}
+            </div>
+          </div>
+        </div>
+        <div class="tg-half tg-half-me">
+          <div class="tg-side tg-side-me">
+            <div class="tg-wing"><p class="tg-line" aria-live="polite">${esc(match.busy || !myTurn() ? "" : match.line || "")}</p></div>
+            <div class="tg-spot tg-spot-me" data-p="${ME}">${myActive ? monHtml(state, ME, myActive, ACTIVE, { big: true, target: targets.has(ACTIVE) }) : `<span class="tg-hole">Active</span>`}</div>
+            <div class="tg-info tg-info-me">${setup ? "" : hudHtml(state, ME)}</div>
+          </div>
+          <div class="tg-row">
+            ${prizesHtml(state, ME)}
+            <div class="tg-bench tg-bench-me${benchOpen ? " is-open" : ""}" data-bench style="--slots:${Math.max(state.rules.bench, myBench.length)}">
+              ${myBench.map((slot, i) => monHtml(state, ME, slot, i, { target: targets.has(i) })).join("")}
+              ${myBench.length < state.rules.bench ? `<span class="tg-hole${benchOpen ? " is-target" : ""}" data-bench>${benchOpen ? "Play here" : "Bench"}</span>${places(state.rules.bench - myBench.length - 1)}` : ""}
+            </div>
+            ${deckHtml(state, ME, back)}
+          </div>
+        </div>
+      </div>
+      <div class="tg-hand" style="--n:${handUnits.toFixed(2)}">
+        ${shownHand.map(({ uid, stacked, count, tilt }) => `<button type="button" class="tg-card${stacked ? " stk" : ""}${sel?.kind === "hand" && sel.uid === uid ? " is-chosen" : ""}${playable.has(uid) ? " can" : ""}" data-hand="${uid}" style="--t:${tilt}" aria-label="${esc(d(uid).name)}"><img src="${img(real.cards[uid])}" alt="" draggable="false" />${count > 1 ? `<b class="tg-card-n">${count}</b>` : ""}</button>`).join("")}
       </div>
       <div class="tg-prompt">
-        <p>${esc(prompt.text)}</p>
+        <div class="tg-say"><p>${esc(prompt.text)}</p>${trackHtml(real)}</div>
         <div class="tg-keys">${prompt.keys}</div>
       </div>
       ${coachHtml()}
@@ -860,12 +1037,28 @@ export function initTcg(deps) {
     if (!ability) return "";
     const why = !ability.use ? "" : !myTurn() ? "Wait for your turn." : abilityWhy(state, spot);
     const off = !abilityOn(state, slot, defs);
-    return `<div class="tg-abil${off ? " off" : ""}">
-      <span class="tg-abil-top"><em>${esc(ability.kind)}</em><b>${esc(ability.name)}</b>${ability.use ? `<button type="button" class="solid sm" data-act="ability-use" data-spot="${spot}"${why ? " disabled" : ""}>Use</button>` : ""}</span>
+    const tag = `<i class="tg-tag">${esc(ability.kind)}</i>`;
+    // One the player uses is a row to press, like an attack; one that just works is a straight box that says so.
+    if (ability.use) {
+      return `<button type="button" class="tg-atk tg-abil${off ? " off" : ""}" data-act="ability-use" data-spot="${spot}"${why ? " disabled" : ""}>
+      <span class="tg-atk-top">${tag}<b>${esc(ability.name)}</b><em class="tg-atk-do">Use</em></span>
       <span class="tg-atk-text">${esc(ability.text)}</span>
-      ${why ? `<span class="tg-atk-why">${esc(why)}</span>` : !ability.use && !ability.enter ? `<span class="tg-atk-why on">${off ? "Not working right now" : "Always on"}</span>` : ""}
+      ${why ? `<span class="tg-atk-why">${esc(why)}</span>` : ""}
+    </button>`;
+    }
+    return `<div class="tg-abil is-info${off ? " off" : ""}">
+      <span class="tg-atk-top">${tag}<b>${esc(ability.name)}</b>${ability.enter ? "" : `<small>${off ? "Not working right now" : "Always on"}</small>`}</span>
+      <span class="tg-atk-text">${esc(ability.text)}</span>
     </div>`;
   }
+
+  /** A sheet's head: the name large, a short fact at the right. */
+  const sheetHead = (name, meta = "") => `<header class="tg-sheet-head"><h3>${esc(name)}</h3>${meta ? `<span class="tg-sheet-meta">${meta}</span>` : ""}</header>`;
+  /** A Pokémon in play: its HP as words, and the Energy on it. */
+  const monMeta = (state, slot) => {
+    const units = energyOf(state, slot, defs);
+    return `${units.length ? `<span class="tg-pips">${pipRow(units, 5)}</span>` : ""}<span>${hpLeft(state, slot, defs)} of ${maxHp(state, slot, defs)} HP</span>`;
+  };
 
   /** A Benched Pokémon with an Ability to use: read it, use it, or look at the card. */
   function abilitySheetHtml() {
@@ -874,13 +1067,12 @@ export function initTcg(deps) {
     if (!slot) return "";
     const def = d(slot.uid);
     return `<div class="tg-sheet-bg" data-act="cancel"></div>
-      <div class="tg-sheet tg-stadium-sheet tg-abil-sheet" role="dialog" aria-label="${esc(def.name)}">
-        <img src="${img(state.cards[slot.uid], true)}" alt="" draggable="false" />
-        <div>
-          <h3>${esc(def.name)}</h3>
+      <div class="tg-sheet tg-attacks tg-abil-sheet" role="dialog" aria-label="${esc(def.name)}">
+        ${sheetHead(def.name, monMeta(state, slot))}
+        <div class="tg-rows">
           ${abilityRowHtml(match.sheetSpot)}
           ${dropRowHtml(match.sheetSpot)}
-          <div class="tg-sheet-keys"><button type="button" class="ghost sm" data-act="look-spot">View card</button><button type="button" class="ghost sm" data-act="cancel">Close</button></div>
+          <div class="tg-links"><button type="button" class="tg-link" data-act="look-spot">View card</button><button type="button" class="tg-link" data-act="cancel">Close</button></div>
         </div>
       </div>`;
   }
@@ -891,14 +1083,16 @@ export function initTcg(deps) {
     const why = def.stadium?.use ? (myTurn() ? stadiumWhy(state) : "Wait for your turn.") : "";
     return `<div class="tg-sheet-bg" data-act="cancel"></div>
       <div class="tg-sheet tg-stadium-sheet" role="dialog" aria-label="${esc(def.name)}">
-        <img src="${img(state.cards[state.stadium.uid], true)}" alt="" draggable="false" />
-        <div>
-          <h3>${esc(def.name)}</h3>
-          <p class="tg-look-meta">Stadium, played by ${state.stadium.owner === ME ? "you" : foeName()}. It affects both players.</p>
-          <p class="tg-look-text">${esc(def.text)}</p>
-          ${why && def.stadium?.use ? `<p class="tg-look-note">${esc(why)}</p>` : ""}
-          <div class="tg-sheet-keys">${def.stadium?.use ? `<button type="button" class="solid sm" data-act="stadium-use"${why ? " disabled" : ""}>Use</button>` : ""}<button type="button" class="ghost sm" data-act="cancel">Close</button></div>
+        ${sheetHead(def.name, `<span>Stadium</span>`)}
+        <div class="tg-stadium-body">
+          <img src="${img(state.cards[state.stadium.uid], true)}" alt="" draggable="false" />
+          <div>
+            <p class="tg-look-meta">Played by ${state.stadium.owner === ME ? "you" : foeName()}. It affects both players.</p>
+            <p class="tg-look-text">${esc(def.text)}</p>
+            ${why && def.stadium?.use ? `<p class="tg-look-note">${esc(why)}</p>` : ""}
+          </div>
         </div>
+        <div class="tg-sheet-keys">${def.stadium?.use ? `<button type="button" class="solid sm" data-act="stadium-use"${why ? " disabled" : ""}>Use</button>` : ""}<button type="button" class="tg-link" data-act="cancel">Close</button></div>
       </div>`;
   }
 
@@ -932,17 +1126,21 @@ export function initTcg(deps) {
       if (typed.resist) notes.push(`Resistance -${foeDef.resistance.n}`);
       if (blocked) notes.push("Blocked this turn");
       else if (less) notes.push(`${less} less${theirs.less ? "" : " this turn"}`);
-      if (!blocked && real >= hpLeft(state, foeSlot, defs)) notes.push(`Knocks out ${foeDef.name}`);
+      if (!blocked && real >= hpLeft(state, foeSlot, defs)) notes.push(`Knocks Out ${foeDef.name}`);
       const tone = real > base ? "up" : real < base ? "down" : "";
       return {
         html: tone ? `<s>${base}</s><span class="${tone}">${real}${esc(more)}</span>` : esc(attack.damage),
-        note: notes.length ? `<span class="tg-atk-note ${tone || (notes.length ? "ko" : "")}">${esc(notes.join(" · "))}</span>` : "",
+        note: notes.length ? `<span class="tg-atk-note">${esc(notes.join(", "))}</span>` : "",
       };
     };
-    const whyNot = (attack) => (state.turn === 1 ? "No attack on the first turn" : held ? `${COND_NAME[held]}: can't attack` : markOn(state, slot, "noAttack") ? "Can't attack this turn" : barred(attack) ? "Can't be used this turn" : "Not enough Energy");
+    // Short of Energy says by how much; otherwise the rule that stops it.
+    const short = (attack) => unpaid(costFor(state, slot, attack, defs), units);
+    const whyNot = (attack) => (state.turn === 1 ? "No attack on the first turn" : held ? `${COND_NAME[held]}: can't attack` : markOn(state, slot, "noAttack") ? "Can't attack this turn" : barred(attack) ? "Can't be used this turn" : short(attack) ? `Needs ${short(attack)} more Energy` : "Can't be used right now");
+    const cost = retreatCost(state, slot, defs);
     return `<div class="tg-sheet-bg" data-act="cancel"></div>
       <div class="tg-sheet tg-attacks" role="dialog" aria-label="${esc(def.name)}">
-        <header><h3>${esc(def.name)}</h3><span class="tg-pips">${units.length ? pips(units) : "<small>No Energy attached</small>"}</span></header>
+        ${sheetHead(def.name, monMeta(state, slot))}
+        <div class="tg-rows">
         ${abilityRowHtml(ACTIVE)}
         ${dropRowHtml(ACTIVE)}
         ${attacksOf(state, slot, defs).map((attack, i) => `<button type="button" class="tg-atk" data-attack="${i}"${usable.has(i) && myTurn() ? "" : " disabled"}>
@@ -952,9 +1150,10 @@ export function initTcg(deps) {
           ${attack.text ? `<span class="tg-atk-text${attack.plain ? " off" : ""}">${attack.plain ? "Text not live yet: " : ""}${esc(attack.text)}</span>` : ""}
           ${usable.has(i) || !myTurn() ? "" : `<span class="tg-atk-why">${whyNot(attack)}</span>`}
         </button>`).join("")}
-        <div class="tg-sheet-keys">
-          <button type="button" class="ghost sm" data-act="retreat"${retreat ? "" : " disabled"}>${markOn(state, slot, "noRetreat") || def.fossil?.noRetreat ? "Can't retreat" : `Retreat ${retreatCost(state, slot, defs) ? pips(Array(retreatCost(state, slot, defs)).fill("Colorless")) : "(free)"}`}</button>
-          <button type="button" class="ghost sm" data-act="look-active">View card</button>
+        <div class="tg-links">
+          <button type="button" class="tg-link" data-act="retreat"${retreat ? "" : " disabled"}>${markOn(state, slot, "noRetreat") || def.fossil?.noRetreat ? "Can't retreat" : cost ? `Retreat <span class="tg-pips">${pips(Array(cost).fill("Colorless"))}</span>` : "Retreat for free"}</button>
+          <button type="button" class="tg-link" data-act="look-active">View card</button>
+        </div>
         </div>
       </div>`;
   }
@@ -977,23 +1176,34 @@ export function initTcg(deps) {
     // A match given up before anyone took a turn has no turns to count.
     const early = state.turn < 1;
     if (early && state.reason === "concede") why = won ? `${foeName()} gave up before the first turn.` : "You gave up before the first turn.";
-    const span = early ? "" : ` ${plural(state.turn, "turn")}.`;
+    // The facts box: only what the engine counted. Prize cards taken by each side, then the turns played.
+    const taken = (p) => Math.max(0, state.rules.prizes - (state.players[p].prizes?.length ?? state.rules.prizes));
+    const fact = (label, value) => `<div><span>${esc(label)}</span><b>${esc(String(value))}</b></div>`;
+    const facts = (more = "") => `<div class="tg-facts">${fact("Prize cards taken", `${taken(ME)} to ${taken(BOT)}`)}${early ? "" : fact("Turns", state.turn)}${more}</div>`;
+    // The screen's card: the Pokémon still in your Active Spot, else the one in theirs.
+    const side = [ME, BOT].find((p) => state.players[p].active?.uid && cardOf(state.cards[state.players[p].active.uid]));
+    const leadUid = side != null ? state.players[side].active.uid : "";
+    const hero = leadUid ? `<div class="tg-over-card"><img src="${img(state.cards[leadUid], true)}" alt="" draggable="false" /><div><small>${side === ME ? "Your" : "Their"} Active Pokémon</small><b>${esc(d(leadUid)?.name || "")}</b></div></div>` : "";
+    const head = (title, line) => `<div class="tg-over-head"><h2>${title}</h2><p class="tg-over-why">${line}</p></div>`;
     if (match.lesson != null) {
       return `<div class="tg-sheet-bg"></div>
       <div class="tg-sheet tg-over" role="dialog" aria-label="Lesson over">
-        <h2>${won ? "Lesson done" : "Lesson over"}</h2>
-        <p>${esc(why)} ${won ? "That's the whole loop: Energy, evolve, attack, prizes. Build a deck from your own cards and play it for real." : "Run it again, or build a deck from your own cards and learn as you go."}</p>
+        ${head(won ? "Lesson done" : "Lesson over", `${esc(why)} ${won ? "That's the whole loop: Energy, evolve, attack, prizes. Build a deck from your own cards and play it for real." : "Run it again, or build a deck from your own cards and learn as you go."}`)}
+        ${hero}
+        ${facts()}
         <div class="tg-sheet-keys">
-          <button type="button" class="solid rt-go" data-go="/play">Build a deck</button>
+          <button type="button" class="solid rt-go" data-act="lesson-build">Build a deck</button>
           <button type="button" class="ghost" data-act="again">Run it again</button>
         </div>
       </div>`;
     }
+    const title = tie ? "A tie" : won ? "You won" : "You lost";
     if (match.online) {
       return `<div class="tg-sheet-bg"></div>
       <div class="tg-sheet tg-over" role="dialog" aria-label="Match over">
-        <h2>${tie ? "A tie" : won ? "You win" : "You lose"}</h2>
-        <p>${esc(why)}${span}</p>
+        ${head(title, esc(why))}
+        ${hero}
+        ${facts()}
         <div class="tg-rematch" data-rematch aria-live="polite">${rematchHtml()}</div>
         <div class="tg-sheet-keys">
           <button type="button" class="ghost" data-go="/play/friends">Play online</button>
@@ -1001,15 +1211,32 @@ export function initTcg(deps) {
         </div>
       </div>`;
     }
+    // Against the house bot: the level's record, and after a win, the next level up as the next match.
+    const lv = match.level || "normal";
+    const at = record.levels?.[lv];
+    const up = won && LEVELS[LEVELS.findIndex((l) => l.id === lv) + 1];
+    const tally = at && at.wins + at.losses ? `${at.wins} won, ${at.losses} lost` : "";
+    const standing = tally ? `<p class="tg-over-tally"><span>Your record on ${esc(levelName(lv))}</span><b>${esc(tally)}</b></p>${at.streak > 1 ? fact("Wins in a row", at.streak) : ""}` : "";
     return `<div class="tg-sheet-bg"></div>
       <div class="tg-sheet tg-over" role="dialog" aria-label="Match over">
-        <h2>${tie ? "A tie" : won ? "You win" : "You lose"}</h2>
-        <p>${esc(why)}${span}</p>
+        ${head(title, esc(why))}
+        ${hero}
+        ${facts(standing + (match.reward?.paid ? rewardHtml(lv) : ""))}
+        ${match.reward?.paid ? "" : rewardHtml(lv)}
         <div class="tg-sheet-keys">
-          <button type="button" class="solid rt-go" data-act="again">Play again</button>
-          <button type="button" class="ghost" data-go="/play">Decks</button>
+          ${up ? `<button type="button" class="solid rt-go" data-act="again-up">Try ${up.name}</button><button type="button" class="ghost" data-act="again">Play again</button>` : `<button type="button" class="solid rt-go" data-act="again">Play again</button>`}
+          <button type="button" class="tlink" data-go="/play">Decks</button>
         </div>
       </div>`;
+  }
+
+  /** What a win against the bot paid, once the Worker has answered. */
+  function rewardHtml(lv) {
+    const r = match.reward;
+    if (!r || r.reason === "lost") return "";
+    const text = r.paid ? `+${levelXp(lv)} XP` : r.reason === "cap" ? "That's today's 10 paid wins. More XP tomorrow." : r.reason === "quick" ? "No XP for a match under two minutes." : "";
+    if (r.paid) return `<div class="tg-over-reward"><span>Reward</span><b>${esc(text)}</b></div>`;
+    return text ? `<p class="tg-over-note">${esc(text)}</p>` : "";
   }
 
   /** What the opening mulligans were, for the flip sheet or the line once hands are dealt. */
@@ -1027,10 +1254,10 @@ export function initTcg(deps) {
     const mull = mulliganLines(state);
     return `<div class="tg-sheet-bg"></div>
       <div class="tg-sheet tg-opening" role="dialog" aria-label="Coin flip">
+        <div class="tg-coin">${coinStageHTML({ heads: faces?.heads || null, tails: faces?.tails || null, size: 150, rest: "heads" })}</div>
         <p class="tg-opening-lab">Flip for the first turn</p>
-        <div class="tg-coin">${coinStageHTML({ heads: faces?.heads || null, tails: faces?.tails || null, size: 132, rest: "heads" })}</div>
         <h2 id="tg-first">&nbsp;</h2>
-        ${mull.map((m) => `<p>${esc(m)}</p>`).join("")}
+        ${mull.map((m) => `<p class="tg-opening-mull">${esc(m)}</p>`).join("")}
         <p class="tg-opening-note" hidden>Whoever goes first can't attack or play a Supporter on that turn.</p>
         <div class="tg-sheet-keys">${state.flipWinner === ME
           ? `<button type="button" class="solid rt-go" data-act="go-first" disabled>Go first</button><button type="button" class="ghost" data-act="go-second" disabled>Go second</button>`
@@ -1041,7 +1268,7 @@ export function initTcg(deps) {
   function flipSheetHtml() {
     const faces = deps.coinFaces();
     return `<div class="tg-sheet tg-flip" role="status">
-        <div class="tg-coin">${coinStageHTML({ heads: faces?.heads || null, tails: faces?.tails || null, size: 104, rest: "heads" })}</div>
+        <div class="tg-coin">${coinStageHTML({ heads: faces?.heads || null, tails: faces?.tails || null, size: 120, rest: "heads" })}</div>
         <h2 id="tg-flip-text">&nbsp;</h2>
       </div>`;
   }
@@ -1103,7 +1330,8 @@ export function initTcg(deps) {
     const picked = match.choice.size;
     return `<div class="tg-sheet-bg"></div>
       <div class="tg-sheet tg-choose" role="dialog" aria-label="${esc(title)}" data-min="${min}" data-max="${max}">
-        <header><h3>${esc(title)}</h3>${waiting.zone === "deck" ? `<p>Your deck is shuffled afterwards.</p>` : ""}</header>
+        <header class="tg-sheet-head"><h3>${esc(title)}</h3></header>
+        ${waiting.zone === "deck" || (max > 0 && cards.length) ? `<div class="tg-choose-sub">${waiting.zone === "deck" ? `<p class="tg-choose-note">Your deck is shuffled afterwards.</p>` : ""}${max > 0 && cards.length ? `<span class="tg-sheet-meta tg-choose-count">${picked} of ${max}</span>` : ""}</div>` : ""}
         ${cards.length ? `<div class="tg-choose-grid">${cards.map((uid) => `<button type="button" class="tg-choose-card${match.choice.has(uid) ? " is-chosen" : ""}" data-choose="${uid}" aria-pressed="${match.choice.has(uid)}" aria-label="${esc(d(uid).name)}"><img src="${img(state.cards[uid])}" alt="" draggable="false" decoding="async" /></button>`).join("")}</div>` : `<p class="tg-choose-none">${esc(none)}</p>`}
         <div class="tg-sheet-keys"><button type="button" class="solid rt-go" data-act="choose-done"${picked >= min ? "" : " disabled"}>${max === 0 ? "Done" : chooseLabel(picked, min)}</button></div>
       </div>`;
@@ -1132,6 +1360,8 @@ export function initTcg(deps) {
     const key = sheet.querySelector('[data-act="choose-done"]');
     key.disabled = chosen.size < min;
     key.textContent = chooseLabel(chosen.size, min);
+    const count = sheet.querySelector(".tg-choose-count");
+    if (count) count.textContent = `${chosen.size} of ${max}`;
   }
 
   function paintTable() {
@@ -1165,6 +1395,7 @@ export function initTcg(deps) {
     if (text) text.textContent = mine ? "You won the flip" : waiting ? `${foeName()} won the flip and is choosing who goes first` : `${foeName()} won the flip and ${match.state.first === ME ? "lets you go first" : "goes first"}`;
     const lab = root.querySelector(".tg-opening-lab");
     if (lab) lab.textContent = mine ? "Heads" : "Tails";
+    root.querySelector(".tg-opening")?.classList.add("is-landed");
     root.querySelector(".tg-opening-note")?.removeAttribute("hidden");
     if (!mine && waiting) return;
     root.querySelectorAll(".tg-opening .tg-sheet-keys button").forEach((key) => key.removeAttribute("disabled"));
@@ -1324,7 +1555,8 @@ export function initTcg(deps) {
   }
 
   /** A card image travels from one rect to another. `absorb`: it sinks into what it lands on. */
-  function ghost(src, from, to, { ms = 340, width = 0, absorb = false, show = false, delay = 0 } = {}) {
+  function ghost(src, from, to, opts = {}) {
+    const { ms = 340, width = 0, absorb = false, show = false, delay = 0, flip = false } = opts;
     if (!src || !from || !to || !fx || still() || !to.width) return;
     const w = width || to.width;
     const h = w * 1.4;
@@ -1337,6 +1569,22 @@ export function initTcg(deps) {
     el.style.cssText = `left:${b.x - w / 2}px;top:${b.y - h / 2}px;width:${w}px;height:${h}px`;
     fx.appendChild(el);
     const from0 = `translate(${a.x - b.x}px, ${a.y - b.y}px) scale(${Math.max(0.16, Math.min(1.4, from.width / w)).toFixed(3)})`;
+    if (flip) {
+      // Leaves the pile face down, turns over on the way and lands face up.
+      const mid = `translate(${(a.x - b.x) * 0.45}px, ${(a.y - b.y) * 0.45 - h * 0.18}px) scale(1.12)`;
+      el.src = "assets/cards/shared/card-back-sm.webp";
+      el.animate([{ transform: from0 }, { transform: `${mid} rotateY(90deg)` }], { duration: ms * 0.5, delay, easing: "cubic-bezier(0.4, 0, 0.7, 0.4)", fill: "both" }).finished.catch(() => {}).then(() => {
+        el.src = src;
+        return el.animate([{ transform: `${mid} rotateY(-90deg)` }, { transform: "none" }], { duration: ms * 0.5, easing: EASE, fill: "both" }).finished;
+      }).catch(() => {}).then(() => el.remove());
+      return;
+    }
+    if (opts.toss) {
+      // Thrown to a pile: the card keeps its own size, shrinks and greys as it goes.
+      el.style.cssText = `left:${a.x - w / 2}px;top:${a.y - h / 2}px;width:${w}px;height:${h}px`;
+      el.animate([{ transform: "none", opacity: 1, filter: "grayscale(1) brightness(0.7)" }, { transform: `translate(${b.x - a.x}px, ${b.y - a.y}px) scale(${(to.width / w).toFixed(3)}) rotate(18deg)`, opacity: 0.2, filter: "grayscale(1) brightness(0.7)" }], { duration: ms, delay, easing: "cubic-bezier(0.5, 0, 0.8, 0.5)", fill: "both" }).finished.catch(() => {}).then(() => el.remove());
+      return;
+    }
     const frames = show
       ? [{ transform: from0, opacity: 1 }, { transform: "none", opacity: 1, offset: 0.28 }, { transform: "none", opacity: 1, offset: 0.82 }, { transform: "scale(1.06)", opacity: 0 }]
       : absorb
@@ -1379,10 +1627,10 @@ export function initTcg(deps) {
   }
 
   /** Something on the table arrives from elsewhere: its picture flies in, and it shows when the picture lands. */
-  function flyIn(from, el, { ms = 340, delay = 0 } = {}) {
+  function flyIn(from, el, { ms = 340, delay = 0, flip = false } = {}) {
     const pic = el?.querySelector("img");
     if (!pic || !from || still()) return;
-    ghost(pic.currentSrc || pic.src, from, pic.getBoundingClientRect(), { ms, delay });
+    ghost(pic.currentSrc || pic.src, from, pic.getBoundingClientRect(), { ms, delay, flip });
     el.animate([{ opacity: 0 }, { opacity: 0 }], { duration: ms + delay });
   }
 
@@ -1395,7 +1643,7 @@ export function initTcg(deps) {
     const arena = rectOf(".tg-arena");
     if (arena) el.style.top = `${arena.top + arena.height / 2}px`;
     fx.appendChild(el);
-    setTimeout(() => el.remove(), 1000);
+    setTimeout(() => el.remove(), 1200);
   }
 
   /** The flash where an attack lands, in the attacker's colour. */
@@ -1419,8 +1667,8 @@ export function initTcg(deps) {
     bar.animate([{ transform: `scaleX(${(before / max).toFixed(3)})` }, { transform: `scaleX(${(after / max).toFixed(3)})` }], { duration: 460, easing: EASE });
   }
 
-  const handSpot = (p) => (p === ME ? rectOf(".tg-hand") : rectOf(".tg-bar-foe .tg-count"));
-  const deckSpot = (p) => (p === ME ? rectOf(".tg-bar-me .tg-mini") : rectOf(".tg-bar-foe .tg-ic.deck"));
+  const handSpot = (p) => (p === ME ? rectOf(".tg-hand") : rectOf(".tg-foe-hand"));
+  const deckSpot = (p) => rectOf(`.tg-deckpile[data-p="${p}"] .tg-stack`);
   /** A rect the size of a Bench card in the middle of a Bench: where a Pokémon walks in from. */
   function benchSpot(p) {
     const r = rectOf(p === ME ? ".tg-bench-me" : ".tg-bench-foe");
@@ -1433,18 +1681,22 @@ export function initTcg(deps) {
   function animate(event, from) {
     if (still()) return 0;
     if (event.t === "turn") {
-      banner(event.p === ME ? "Your turn" : `${foeName()}'s turn`, event.p === ME ? "me" : "foe");
+      banner(event.p === ME ? "Your turn" : `${foeName()}'s turn`, event.p === ME ? "me" : "foe", match.state.turn > 0 ? `Turn ${match.state.turn}` : "");
       return 0;
     }
     if (event.t === "draw" || (event.t === "search" && event.to === "hand")) {
       if (!event.uids.length) return 0;
       if (event.p === BOT) {
-        cue(".tg-bar-foe .tg-count", "bump", 400);
+        cue(".tg-foe-hand", "bump", 400);
+        cue(`.tg-deckpile[data-p="${BOT}"] .tg-pile-n`, "bump", 400);
         return 0;
       }
-      const cards = [...root.querySelectorAll(".tg-hand .tg-card")].slice(-event.uids.length);
-      cards.forEach((card, i) => flyIn(deckSpot(ME), card, { ms: 320, delay: i * 90 }));
-      return 320 + (cards.length - 1) * 90;
+      // The hand is sorted, so the cards that just arrived are found by name, not by place.
+      const cards = event.uids.map((uid) => root.querySelector(`.tg-hand [data-hand="${uid}"]`)).filter(Boolean);
+      const fromDeck = event.t === "draw" || event.from !== "discard";
+      cards.forEach((card, i) => flyIn(deckSpot(ME), card, { ms: 460, delay: i * 110, flip: fromDeck }));
+      if (fromDeck) cue(`.tg-deckpile[data-p="${ME}"] .tg-pile-n`, "bump", 400);
+      return 460 + (cards.length - 1) * 110;
     }
     const src = from || (event.from === "deck" ? deckSpot(event.p) : handSpot(event.p));
     if (event.t === "bench") {
@@ -1479,9 +1731,11 @@ export function initTcg(deps) {
     }
     if (event.t === "attach" || event.t === "tool") {
       const to = rectOf(`${monSel(event.p, event.spot)} img`);
-      if (to) ghost(img(match.state.cards[event.uid]), src, to, { ms: 320, width: to.width * 0.62, absorb: true });
-      setTimeout(() => cue(monSel(event.p, event.spot), "charged", 460), 230);
-      return 420;
+      if (to) ghost(img(match.state.cards[event.uid]), src, to, { ms: 360, width: to.width * 0.62, absorb: true });
+      setTimeout(() => cue(monSel(event.p, event.spot), "charged", 460), 260);
+      // The new symbol lands on the name plate (or under a Benched Pokémon) as the card sinks in.
+      if (event.t === "attach") cue(event.spot === ACTIVE ? `.tg-hud[data-p="${event.p}"] .tg-pips > :last-child` : `${monSel(event.p, event.spot)} .tg-pips > :last-child`, "landed", 700);
+      return 460;
     }
     if (event.t === "promote" || event.t === "retreat" || event.t === "switch") {
       flyIn(benchSpot(event.p), root.querySelector(monSel(event.p, ACTIVE)), { ms: 320 });
@@ -1489,7 +1743,7 @@ export function initTcg(deps) {
     }
     if (event.t === "prize") {
       const to = handSpot(event.p);
-      const at = rectOf(`.tg-bar-${event.p === ME ? "me" : "foe"} .tg-prizes`);
+      const at = rectOf(`.tg-prizes[data-p="${event.p}"]`);
       const arena = rectOf(".tg-arena");
       if (event.p === ME && at && arena) {
         // Your prize cards turn up face up over the arena for a beat before they join your hand.
@@ -1499,14 +1753,14 @@ export function initTcg(deps) {
           const left = arena.left + arena.width / 2 + (i - (n - 1) / 2) * (w + 8) - w / 2;
           ghost(img(match.state.cards[uid]), at, { left, top: arena.top + arena.height / 2 - w * 0.7, width: w, height: w * 1.4 }, { ms: 950, width: w, show: true, delay: i * 90 });
         });
-        cue(".tg-bar-me .tg-prizes", "bump", 420);
+        cue(`.tg-prizes[data-p="${ME}"] .tg-pile-n`, "bump", 420);
         return 900 + (n - 1) * 90;
       }
       if (to && at) {
         const width = event.p === ME ? to.height / 1.6 : 26;
         event.uids.forEach((_, i) => ghost("assets/cards/shared/card-back-sm.webp", at, to, { ms: 420, width, absorb: true, delay: i * 110 }));
       }
-      cue(`.tg-bar-${event.p === ME ? "me" : "foe"} .tg-prizes`, "bump", 420);
+      cue(`.tg-prizes[data-p="${event.p}"] .tg-pile-n`, "bump", 420);
       return 300;
     }
     if (event.t === "ability") {
@@ -1527,6 +1781,7 @@ export function initTcg(deps) {
       await flipCoin(coin, heads ? "heads" : "tails", { ms: 1100, motion: !deps.reduceMotion() });
       const text = root.querySelector("#tg-flip-text");
       if (text) text.textContent = heads ? "Heads" : "Tails";
+      root.querySelector(".tg-flip")?.classList.add("is-landed");
       await sleep(420);
     }
     match.sheet = "";
@@ -1610,7 +1865,7 @@ export function initTcg(deps) {
             const heavy = !benched && (event.weak || (max && event.n * 2 >= max));
             if (!event.self && !event.why && !benched) burst(event.p, defOf(before, before.players[p].active.uid, defs).types?.[0], heavy);
             cue(monSel(event.p, benched ? event.spot : ACTIVE), "hit", 420);
-            if (heavy) cue(".tg-arena", "shake", 420);
+            if (heavy) cue(".tg-table", "shake", 420);
             deps.buzz?.(event.weak ? [18, 30, 18] : 14);
           }
           await wait(620);
@@ -1621,10 +1876,19 @@ export function initTcg(deps) {
         } else if (event.t === "ko") {
           say(event);
           paintTable();
-          cue(event.spot === ACTIVE ? `.tg-spot[data-p="${event.p}"] .tg-mon` : `.tg-bench .tg-mon[data-p="${event.p}"][data-spot="${event.spot}"]`, "ko", 700);
+          const fallen = monSel(event.p, event.spot === ACTIVE ? ACTIVE : event.spot);
+          cue(fallen, "ko", 900);
           banner("Knocked Out", event.p === ME ? "foe" : "me");
           deps.buzz?.([24, 40, 24]);
-          await wait(680);
+          await wait(520);
+          // The card leaves for its owner's discard pile.
+          const pic = root.querySelector(`${fallen} > img`);
+          const bin = rectOf(`.tg-deckpile[data-p="${event.p}"] .tg-bin`);
+          if (pic && bin) {
+            ghost(pic.currentSrc || pic.src, pic.getBoundingClientRect(), { left: bin.left + bin.width / 2 - 12, top: bin.top - 8, width: 24, height: 34 }, { ms: 380, width: pic.getBoundingClientRect().width, toss: true });
+            setTimeout(() => cue(`.tg-deckpile[data-p="${event.p}"] .tg-bin`, "bump", 400), 340);
+          }
+          await wait(still() ? 160 : 400);
           // It leaves the table as it stood, so the beats that follow don't bring it back.
           if (event.spot === ACTIVE) before.players[event.p].active = null;
           else before.players[event.p].bench[event.spot] = null;
@@ -1700,12 +1964,31 @@ export function initTcg(deps) {
       return true;
     }
     if (match.lesson != null) write("learned", true);
-    else if (match.state.winner === ME) record.wins += 1;
-    else if (match.state.winner === BOT) record.losses += 1;
+    else if (match.state.winner != null) {
+      // Kept per level too, for the hub and the end of the match. `streak` counts wins in a row at that level.
+      const won = match.state.winner === ME;
+      const at = (record.levels ||= {})[match.level || "normal"] ||= { wins: 0, losses: 0, streak: 0 };
+      if (won) record.wins += 1;
+      else record.losses += 1;
+      at[won ? "wins" : "losses"] += 1;
+      at.streak = won ? (at.streak || 0) + 1 : 0;
+    }
+    if (match.lesson == null && match.ticket) payOut(match);
     write("record", record);
     write("match", null);
     paintTable();
     return true;
+  }
+
+  /** Hands the match's ticket back; a paid win shows its XP on the end sheet and refreshes the level bar. */
+  async function payOut(done) {
+    const ticket = done.ticket;
+    done.ticket = "";
+    const res = await api("/api/tcg/bot/finish", { method: "POST", body: JSON.stringify({ id: ticket, won: done.state.winner === ME }) }).catch(() => null);
+    if (!res || done !== match) return;
+    done.reward = res;
+    if (res.paid) deps.refreshSave?.();
+    if (match.over) paintTable();
   }
 
   /** The bot plays while it has something to do: its turn, or its new Active Pokémon. */
@@ -1717,7 +2000,7 @@ export function initTcg(deps) {
       const waiting = state.pending[0];
       const botsMove = waiting ? waiting.player === BOT : state.current === BOT;
       if (!botsMove) return;
-      const action = botAction(state, BOT, defs);
+      const action = botMove(state);
       if (!action) return;
       match.busy = true;
       paintTable();
@@ -2199,18 +2482,25 @@ export function initTcg(deps) {
     const q = lobby.queue;
     const busy = lobby.queueBusy ? " disabled" : "";
     if (q) {
-      return `<div class="rt-box tg-learn tg-quick is-on">
+      return `<section class="rt-box tg-quick is-on">
         <div class="tg-quick-scan" aria-hidden="true"><i></i><i></i><i></i></div>
-        <p role="status"><b>Looking for a ${fmt(q.format)} match</b>With ${esc(q.deckName || "your deck")}, waiting <span data-quick-time>0:00</span>. The table opens when you're paired.</p>
-        <button type="button" class="ghost sm" data-quick-cancel${busy}>Cancel</button>
-      </div>`;
+        <div class="tg-quick-main">
+          <h2 class="tg-hero-name">Looking for a ${fmt(q.format)} match</h2>
+          <p class="tg-meta" role="status">With ${esc(q.deckName || "your deck")}, waiting <span data-quick-time>0:00</span>. The table opens when you're paired.</p>
+          <div class="tg-hero-keys"><button type="button" class="ghost sm" data-quick-cancel${busy}>Cancel</button></div>
+        </div>
+      </section>`;
     }
     const n = chosen ? lobby.waiting[chosen.format] || 0 : 0;
-    const line = chosen ? `Play anyone looking for a ${fmt(chosen.format)} match with ${esc(chosen.name)}. ${n ? `${plural(n, "trainer")} waiting now.` : "Nobody's waiting yet, so you'd be first in line."}` : "Pick a ready deck first.";
-    return `<div class="rt-box tg-learn tg-quick">
-      <p><b>Quick match</b>${line} You see each other's name and nothing else.</p>
-      <button type="button" class="solid sm" data-quick-find${chosen && !busy ? "" : " disabled"}>Find a match</button>
-    </div>`;
+    const line = chosen ? `Anyone looking for a ${fmt(chosen.format)} match. ${n ? `${plural(n, "trainer")} waiting now.` : "Nobody's waiting yet, so you'd be first in line."}` : "Pick a ready deck first.";
+    return `<section class="rt-box tg-quick">
+      <div class="tg-quick-scan" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="tg-quick-main">
+        <h2 class="tg-hero-name">Quick match</h2>
+        <p class="tg-meta">${line} You see each other's name and nothing else.</p>
+        <div class="tg-hero-keys"><button type="button" class="solid rt-go" data-quick-find${chosen && !busy ? "" : " disabled"}>Find a match</button></div>
+      </div>
+    </section>`;
   }
 
   function lobbySoon() {
@@ -2222,13 +2512,12 @@ export function initTcg(deps) {
     }, 4000);
   }
 
-  const markHtml = (u, on = false) => `<span class="tg-pvp-mark${on ? " on" : ""}" aria-hidden="true">${esc((u?.handle || u?.name || "?").slice(0, 1).toUpperCase())}</span>`;
-
-  function matchRowHtml(m, keys, line) {
-    return `<article class="rt-box tg-deck tg-pvp-row">
-      ${markHtml(m.them)}
-      <div class="tg-deck-main"><h3>${esc(handleOf(m.them))}</h3><p>${line}</p></div>
-      <div class="tg-deck-keys">${keys}</div>
+  /** A row on the online page: the same row as "Who to play", with its keys where the action word goes. */
+  function matchRowHtml(m, keys, line, lab = "Match", name = esc(handleOf(m.them))) {
+    return `<article class="rt-row tg-row tg-pvp-row">
+      <span class="rt-row-lab">${lab}</span>
+      <span class="rt-row-name">${name}<small>${line}</small></span>
+      <span class="tg-row-keys">${keys}</span>
     </article>`;
   }
 
@@ -2248,36 +2537,31 @@ export function initTcg(deps) {
     const busyWith = new Set(m ? [...m.incoming, ...m.outgoing, ...m.live].map((x) => x.them.handle) : []);
     const friends = lobby.friends?.friends || [];
     return `<div class="tg-page tg-pvp">
-      <header class="tg-head">
-        <button type="button" class="tlink tg-back" data-go="/play">Your decks</button>
+      <header class="tg-head tg-ed-head">
         <h1 class="page-title tg-title">Play online</h1>
-        <p class="tg-lede">Find a quick match or challenge a friend with one of your decks. Each move has ${TCG_MOVE_SECONDS} seconds on the clock. Just for fun: nothing is won or lost.</p>
+        <button type="button" class="tlink tg-done" data-go="/play">Back</button>
       </header>
+      <p class="tg-lede">Each move has ${TCG_MOVE_SECONDS} seconds on the clock. Just for fun: nothing is won or lost.</p>
       ${lobby.error ? `<p class="rt-empty tg-none">${esc(lobby.error)}</p>` : ""}
-      <div class="tg-pvp-deck">
-        <span>Your deck</span>
-        ${ready.length ? `<select class="filter" id="tg-pvp-deck" aria-label="Your deck"${lobby.queue ? " disabled" : ""}>${ready.map((deck) => `<option value="${esc(deck.id)}"${deck.id === lobby.deckId ? " selected" : ""}>${esc(deck.name)}, ${fmt(deck.format)}</option>`).join("")}</select>` : `<p>No deck is ready yet. <button type="button" class="tlink" data-go="/play">Build one</button></p>`}
-      </div>
+      ${ready.length
+        ? `<label class="rt-row tg-row tg-pvp-deck"><span class="rt-row-lab">Deck</span><span class="rt-row-name">Your deck<select class="filter" id="tg-pvp-deck" aria-label="Your deck"${lobby.queue ? " disabled" : ""}>${ready.map((deck) => `<option value="${esc(deck.id)}"${deck.id === lobby.deckId ? " selected" : ""}>${esc(deck.name)}, ${fmt(deck.format)}</option>`).join("")}</select></span></label>`
+        : `<div class="rt-row tg-row tg-pvp-deck"><span class="rt-row-lab">Deck</span><span class="rt-row-name">No deck is ready yet<small>Online matches need a deck that's legal in its format</small></span><span class="tg-row-keys"><button type="button" class="ghost sm" data-go="/play">Build one</button></span></div>`}
       ${lobby.error ? "" : quickHtml(chosen)}
       ${!m ? (lobby.error ? "" : `<div class="rt-skel tg-loading">Loading</div>`) : `
-      ${m.incoming.length ? `<section class="tg-block"><h2 class="tg-h2">Challenges for you</h2>
-        ${m.incoming.map((x) => matchRowHtml(x, `<button type="button" class="solid sm" data-accept="${x.id}"${chosen?.format === x.format ? "" : " disabled"}>Accept</button><button type="button" class="ghost sm" data-decline="${x.id}">Decline</button>`, `${fmt(x.format)}, ${timeLeft(x.deadline - now)} to answer${chosen?.format === x.format ? "" : `. Pick a ${fmt(x.format)} to accept`}`)).join("")}
+      ${m.incoming.length ? `<section class="tg-block"><div class="tg-hd"><h2 class="tg-h2">Challenges for you</h2></div>
+        ${m.incoming.map((x) => matchRowHtml(x, `<button type="button" class="solid sm" data-accept="${x.id}"${chosen?.format === x.format ? "" : " disabled"}>Accept</button><button type="button" class="ghost sm" data-decline="${x.id}">Decline</button>`, `${fmt(x.format)}, ${timeLeft(x.deadline - now)} to answer${chosen?.format === x.format ? "" : `. Pick a ${fmt(x.format)} to accept`}`, "Challenge")).join("")}
       </section>` : ""}
-      ${m.live.length ? `<section class="tg-block"><h2 class="tg-h2">Matches on</h2>
-        ${m.live.map((x) => matchRowHtml(x, `<button type="button" class="solid sm" data-go="/play/online/${x.id}">Play</button>`, `${fmt(x.format)}, ${x.toMove.includes(x.seat) ? "your move" : "their move"}`)).join("")}
+      ${m.live.length ? `<section class="tg-block"><div class="tg-hd"><h2 class="tg-h2">Matches on</h2></div>
+        ${m.live.map((x) => matchRowHtml(x, `<button type="button" class="solid sm" data-go="/play/online/${x.id}">Play</button>`, `${fmt(x.format)}, ${x.toMove.includes(x.seat) ? "your move" : "their move"}`, x.toMove.includes(x.seat) ? "Your move" : "On")).join("")}
       </section>` : ""}
-      ${m.outgoing.length ? `<section class="tg-block"><h2 class="tg-h2">Waiting for an answer</h2>
-        ${m.outgoing.map((x) => matchRowHtml(x, `<button type="button" class="ghost sm" data-call-off="${x.id}">Call off</button>`, `${esc(x.deckName)}, ${timeLeft(x.deadline - now)} left`)).join("")}
+      ${m.outgoing.length ? `<section class="tg-block"><div class="tg-hd"><h2 class="tg-h2">Waiting for an answer</h2></div>
+        ${m.outgoing.map((x) => matchRowHtml(x, `<button type="button" class="ghost sm" data-call-off="${x.id}">Call off</button>`, `${esc(x.deckName)}, ${timeLeft(x.deadline - now)} left`, "Sent")).join("")}
       </section>` : ""}
-      <section class="tg-block"><h2 class="tg-h2">Friends</h2>
-        ${friends.length ? friends.map((f) => `<article class="rt-box tg-deck tg-pvp-row">
-          ${markHtml(f, f.online)}
-          <div class="tg-deck-main"><h3>${esc(f.name || handleOf(f))}</h3><p>@${esc(f.handle)}${f.online ? ", online now" : ""}</p></div>
-          <div class="tg-deck-keys"><button type="button" class="ghost sm" data-challenge="${esc(f.handle)}"${chosen && !busyWith.has(f.handle) ? "" : " disabled"}>${busyWith.has(f.handle) ? "Playing" : "Challenge"}</button></div>
-        </article>`).join("") : `<p class="rt-empty tg-none">No friends yet. Add some from their profile, then challenge them here.</p>`}
+      <section class="tg-block"><div class="tg-hd"><h2 class="tg-h2">Friends</h2></div>
+        ${friends.length ? friends.map((f) => matchRowHtml({ them: f }, `<button type="button" class="ghost sm" data-challenge="${esc(f.handle)}"${chosen && !busyWith.has(f.handle) ? "" : " disabled"}>${busyWith.has(f.handle) ? "Playing" : "Challenge"}</button>`, `@${esc(f.handle)}${f.online ? ", online now" : ""}`, f.online ? "Online" : "Friend", esc(f.name || handleOf(f)))).join("") : `<p class="rt-empty tg-none">No friends yet. Add some from their profile, then challenge them here.</p>`}
       </section>
-      ${m.recent.length ? `<section class="tg-block tg-pvp-recent"><h2 class="tg-h2">Lately</h2>
-        <ul>${m.recent.map((x) => `<li><b>${esc(handleOf(x.them))}</b><span>${esc(resultOf(x))}</span></li>`).join("")}</ul>
+      ${m.recent.length ? `<section class="tg-block tg-pvp-recent"><div class="tg-hd"><h2 class="tg-h2">Lately</h2></div>
+        <ul class="rt-box">${m.recent.map((x) => `<li><span>${esc(handleOf(x.them))}</span><b>${esc(resultOf(x))}</b></li>`).join("")}</ul>
       </section>` : ""}`}
     </div>`;
   }
@@ -2545,7 +2829,7 @@ export function initTcg(deps) {
     }
     if (act === "go-first" || act === "go-second") {
       apply(state, { type: "order", player: ME, first: act === "go-first" }, defs);
-      if (!state.players[BOT].placed) apply(state, botAction(state, BOT, defs), defs);
+      if (!state.players[BOT].placed) apply(state, botMove(state), defs);
       saveMatch();
       match.line = [act === "go-first" ? "You go first." : `${foeName()} goes first.`, ...mulliganLines(state)].join(" ");
       match.opening = false;
@@ -2565,7 +2849,24 @@ export function initTcg(deps) {
     }
     if (act === "rematch" && match.online) return rematchAct("offer");
     if (act === "rematch-no" && match.online) return rematchAct("decline");
+    // From the lesson's end straight to a new deck, the next step.
+    if (act === "lesson-build") {
+      match = null;
+      draft.open = true;
+      return deps.navigate("/play");
+    }
+    if (act === "again-up") {
+      const next = LEVELS[LEVELS.findIndex((l) => l.id === (match.level || "normal")) + 1];
+      if (next) {
+        level = next.id;
+        write("level", level);
+      }
+      const id = match.deckId;
+      match = null;
+      return startMatch(id).then(() => paint());
+    }
     if (act === "again") {
+      level = match.level || level;
       const id = match.deckId;
       match = null;
       return startMatch(id).then(() => paint());
@@ -2682,15 +2983,36 @@ export function initTcg(deps) {
 
     if (t.closest("[data-lesson]")) return startLesson();
     const play = t.closest("[data-play]");
-    if (play) return startMatch(play.dataset.play);
+    if (play) {
+      pickDeck(play.dataset.play);
+      return startMatch(play.dataset.play);
+    }
     const edit = t.closest("[data-edit]");
-    if (edit) return deps.navigate(`/play/deck/${edit.dataset.edit}`);
+    if (edit) {
+      pickDeck(edit.dataset.edit);
+      return deps.navigate(`/play/deck/${edit.dataset.edit}`);
+    }
+    const pick = t.closest("[data-pick]");
+    if (pick) {
+      pickDeck(pick.dataset.pick);
+      paint();
+      // The tile lands on its yellow shadow and the hero deals the new deck's fan.
+      root.querySelector(`[data-pick="${CSS.escape(pick.dataset.pick)}"]`)?.classList.add("is-pick");
+      root.querySelector(".tg-hero")?.classList.add("is-new");
+      return;
+    }
     if (t.closest("[data-new]")) {
       draft.open = true;
       return paint();
     }
     if (t.closest("[data-cancel]")) {
       draft.open = false;
+      return paint();
+    }
+    const pickLevel = t.closest("[data-level]");
+    if (pickLevel && LEVELS.some((l) => l.id === pickLevel.dataset.level)) {
+      level = pickLevel.dataset.level;
+      write("level", level);
       return paint();
     }
     const format = t.closest("[data-format]");
@@ -2835,7 +3157,7 @@ export function initTcg(deps) {
       }
       await ensureCards(Object.keys(deck.cards));
     }
-    if (route.name === "hub") await ensureCards(decks.flatMap((deck) => Object.keys(deck.cards)));
+    if (route.name === "hub") await ensureCards([...decks.flatMap((deck) => Object.keys(deck.cards)), ...resumeIds(read("match", null))]);
     paint();
     if (route.name === "match" && match && !match.busy) botTurn();
     if (route.name === "online" && match?.online) {

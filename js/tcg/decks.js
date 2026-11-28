@@ -246,7 +246,9 @@ export function buildDeck(pool, format = "standard", { prefer = "", rand = Math.
  * tracks the set and not luck. Returns { cards, types, theme } or null, where `theme`
  * is the main attacker's name ("Charizard"), for the table to show.
  */
-export function buildBotDeck(setDefs, format, rand = Math.random) {
+export function buildBotDeck(setDefs, format, rand = Math.random, { level = "normal" } = {}) {
+  // Hard: the deck a collector with every card of the set would build, Pokémon ex and V included.
+  if (level === "hard") return hardDeck(setDefs, format, rand);
   const rules = rulesOf(format);
   const scale = rules.deckSize / 60;
   const n = (x) => Math.max(1, Math.min(rules.copies, Math.round(x * scale)));
@@ -341,13 +343,16 @@ export function buildBotDeck(setDefs, format, rand = Math.random) {
   const clubs = new Set();
   const ENERGY = total(13);
   let room = rules.deckSize - count - ENERGY;
+  // Only one Supporter goes down a turn: past about ten, the rest would sit in the hand.
+  let supporters = 0;
   const putTrainer = (def, k) => {
     if (def.club && (clubs.has(def.club) || cards[def.id])) return 0;
     const take = Math.max(0, Math.min(def.club ? 1 : def.cap || rules.copies, rules.copies) - (cards[def.id] || 0));
-    const got = Math.min(take, k, room);
+    const got = Math.min(take, k, room, def.sub === "supporter" ? total(10) - supporters : Infinity);
     if (got <= 0) return 0;
     if (def.club) clubs.add(def.club);
     cards[def.id] = (cards[def.id] || 0) + got;
+    if (def.sub === "supporter") supporters += got;
     count += got;
     room -= got;
     return got;
@@ -408,4 +413,15 @@ export function buildBotDeck(setDefs, format, rand = Math.random) {
   cards[energy.id] = (cards[energy.id] || 0) + rules.deckSize - count;
 
   return { cards, types: [energy.type], theme: lead[lead.length - 1].name };
+}
+
+function hardDeck(setDefs, format, rand) {
+  const pool = setDefs.filter(Boolean).map((def) => ({ def, owned: 4 }));
+  const built = buildDeck(pool, format, { rand });
+  if (!built) return null;
+  const defOf = new Map(setDefs.filter(Boolean).map((d) => [d.id, d]));
+  // Named after its hardest hitter among the cards it runs several of.
+  const weight = (d) => worth(d) * Math.min(3, built.cards[d.id]);
+  const lead = Object.keys(built.cards).map((id) => defOf.get(id)).filter((d) => d?.kind === "pokemon").sort((a, b) => weight(b) - weight(a))[0];
+  return { ...built, theme: lead?.name || "" };
 }

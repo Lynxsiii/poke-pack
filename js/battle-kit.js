@@ -4,7 +4,7 @@
 import { PLAYABLE_SETS } from "./catalog.js";
 import { isHit } from "./engine.js";
 import { botPersona } from "./battle-rules.js";
-import { avatarSrc, avatarStyle } from "./cosmetics.js";
+import { avatarSrc, avatarPixel } from "./cosmetics.js";
 import { avatarColor } from "./palette.js";
 import { coinText, coinAmount } from "./money.js?v=2";
 
@@ -48,8 +48,8 @@ export function seatAvatar(seat, cls = "bt-avatar") {
   if (!seat) return `<span class="${cls} is-open" aria-hidden="true">${icon("plus")}</span>`;
   const persona = seat.bot ? botPersona(seat) : null;
   const color = avatarColor(persona?.color || seat.color);
-  const src = avatarSrc(persona?.avatar || seat.avatar, persona ? "art" : seat.avatarStyle);
-  const pixel = !persona && avatarStyle(seat.avatarStyle) === "pixel" ? " pixel" : "";
+  const src = avatarSrc(persona?.avatar || seat.avatar, persona ? "art" : seat.avatarStyle, { still: true });
+  const pixel = !persona && avatarPixel(seat.avatarStyle) ? " pixel" : "";
   return `<span class="${cls}${seat.bot ? " is-bot" : ""}${pixel}" style="--avatar:${esc(color.hex)}"><img src="${esc(src)}" alt="" loading="lazy" decoding="async" /></span>`;
 }
 

@@ -33,7 +33,7 @@ export const DEFAULT_SETTINGS = {
   startView: "home", // home | shop | collection
   // Look (js/themes.js)
   theme: "light", // light | dark | device
-  palette: "rotom", // a colour theme's id
+  palette: "rocket", // a colour theme's id (Rocket is the default since 2026-11-28)
 };
 
 function blank() {
@@ -73,7 +73,7 @@ function blank() {
  * too big, so divide it once and stamp the save so it only ever happens once.
  */
 const ECONOMY_SCALE = 2;
-const SETTINGS_REV = 1;
+const SETTINGS_REV = 2;
 
 const WORTH_LOG_LIMIT = 160;
 
@@ -83,6 +83,14 @@ function migrateSettings(save) {
     if (!save.settings) save.settings = { ...DEFAULT_SETTINGS };
     save.settings.stamps = false;
     save.settingsRev = 1;
+  }
+  if (rev < 2) {
+    // Rocket became the default look (2026-11-28). A save still on the old untouched
+    // default (light Rotom) moves with it; anyone who chose dark or a theme keeps theirs.
+    if (!save.settings) save.settings = { ...DEFAULT_SETTINGS };
+    const untouched = (save.settings.palette || "rotom") === "rotom" && (save.settings.theme || "light") === "light";
+    if (untouched) save.settings.palette = "rocket";
+    save.settingsRev = 2;
   }
   return save;
 }
@@ -132,7 +140,7 @@ export function loadState() {
         economyScale: saved.economyScale ?? (typeof saved.coins === "number" ? 1 : ECONOMY_SCALE),
         settingsRev: saved.settingsRev || 0,
       }));
-      if ((saved.settingsRev || 0) < 1) {
+      if ((saved.settingsRev || 0) < SETTINGS_REV) {
         localStorage.setItem(KEY, JSON.stringify(next));
       }
       return next;

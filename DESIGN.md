@@ -85,12 +85,20 @@ theme. Light Rotom is the default. `js/app.js applyTheme()` puts
   places. The ground and boxes go to ink, `--k` (text, lines, plates) goes
   light, so an "ink plate" is a light plate with ink text. The slab deepens
   (`--slab`). Yellow, cyan and green keep ink lettering.
-- **Colour themes** (`css/themes.css`, listed in `js/themes.js`): Rotom, Fire,
-  Grass, Ghost, Fairy, Retro. Each recolours the slab and its accents
-  (`--cy`, `--cy-2`, `--cy-3`) and tints the ground, lines and ink toward it.
-  The key stays yellow except in Retro, which uses its own lime. Shapes, type
-  and motion never change. Values come from the default's lightness steps in
-  OKLCH, so every theme keeps the default's contrast.
+- **Colour themes** (`css/themes.css`, listed in `js/themes.js`): Rocket (the
+  default since 2026-11-28, Noah's pick), Rotom, Haunt, Emerald, Magma, Gold
+  star, Prism, Sunset, Dot matrix, Surf, Volt, Rival, Berry. Noah found the
+  first set (a hue shift of the slab) "lame", so a theme now repaints the
+  whole look: ground, boxes, lines, slab, key, the hard shadow's colour, the
+  pattern on the ground (`--dots`, `--dots-size`) and slanted bands or a foil
+  sheet fixed behind the page (`--ground-art`, drawn by `html::before`).
+  Shapes, type, layout and motion never change. Every theme but Rotom is
+  light or dark by itself (`mode` in `js/themes.js`); it puts
+  `data-theme="dark"` or `"light"` on `<html>` itself, so dark-only rules
+  keep working, and the Light/Dark setting only moves Rotom. They are
+  generated: edit `scripts/build_themes.mjs`, run it, bump `themes.css?v=`.
+  Keep bright thin lines of the ground art at the screen's edges (past 90%),
+  never where text runs, and keep slabs mid-tone so words that cross them read.
 - **Locking**: each theme in `js/themes.js` has `locked`. A locked theme shows
   a lock on its tile and can't be chosen unless `canUseTheme()` is given its
   id as unlocked. Nothing is locked and nothing sells them yet.
@@ -110,9 +118,8 @@ Rules for new CSS so every theme keeps working:
 | A see-through white fill | `rgb(var(--box-rgb) / 0.5)` | `rgb(255 255 255 / 0.5)` |
 | The slab's fill | `var(--slab)` | `var(--cy)` as a large fill |
 
-A new theme: add its tokens to `css/themes.css` (light and dark blocks, same
-set as the others), add it to `THEMES` in `js/themes.js` with its two ground
-colours, and check Home, a set page, Collection, the casino and Settings in
+A new theme: add it to `scripts/build_themes.mjs` and run it, add it to
+`THEMES` in `js/themes.js` with its `mode` and ground colour, and check Home, a set page, Collection, the casino and Settings in
 both modes at phone size.
 
 ## Parts (css/rotom.css)
@@ -244,8 +251,9 @@ choose, bars fill, figures roll.
 
 - No restyling of card faces, foils (`css/holo/`, `js/*-foil.js`), the tear
   (`css/tear.css`, `js/tear.js`) or the slabs' printed labels.
-- No dark page grounds outside `.rt-dark` stages and the dark theme. No
-  gradients, glows, blur shadows or coloured halos.
+- No dark page grounds outside `.rt-dark` stages, the dark theme and the dark
+  colour themes. No glows, blur shadows or coloured halos; no gradients
+  outside a theme's ground art (Prism's foil sheet).
 - No second accent on a page: one slab colour and one key. Colour comes from
   the packs, the cards and the rarity badges. (A colour theme changes which
   slab colour that is; it never adds another.)

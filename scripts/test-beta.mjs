@@ -5,7 +5,8 @@ import { DatabaseSync } from 'node:sqlite';
 import { readFileSync, readdirSync } from 'node:fs';
 import worker from '../worker/index.js';
 import { seedLevel } from './lib/level-seed.mjs';
-import { grassMultiplier, rocketCrash, stakeCents, payoutCents, TINS, isPieceCard } from '../js/beta-rules.js';
+import { grassMultiplier, rocketCrash, stakeCents, payoutCents, TINS, TIN_TIERS, tinLean, tinReturn, isPieceCard } from '../js/beta-rules.js';
+import { GRADING_LIMITS } from '../js/grading-rules.js';
 import { frameChoice } from '../worker/perks.js';
 
 // ---- The odds: every game returns at most 95% on average --------------------------------
@@ -176,6 +177,33 @@ assert.equal(prof.body.user?.beta ?? prof.body.profile?.beta ?? prof.body.beta, 
     assert.ok(t.back > 0.5 && t.back <= 0.95, `${t.name} says it returns ${t.back}`);
     assert.ok(!t.sets, 'a tin never names its sets');
     assert.ok(!t.cards.some((c) => /V-UNION|LEGEND$/.test(c.name)), `${t.name} holds a piece of a multi-card card`);
+    // Every tin sits on a shelf, costs what its rule says or more, and returns its shelf's share: never more, and not far under.
+    const rule = TINS.find((x) => x.id === t.id);
+    const tier = TIN_TIERS.find((x) => x.id === t.tier);
+    assert.ok(rule && tier && rule.tier === tier.id, `${t.name} has no shelf`);
+    assert.ok(t.price >= rule.price, `${t.name} costs less than its rule`);
+    assert.ok(t.back <= (rule.back || tier.back) + 0.0005, `${t.name} returns ${t.back}, over its shelf's ${tier.back}`);
+    assert.ok(t.back >= (rule.back || tier.back) - 0.05, `${t.name} returns ${t.back}, far under its shelf's ${tier.back}`);
+    assert.equal(t.slab, Boolean(rule.slab));
+    if (t.slab) assert.ok(t.cards.every((c) => rule.slab.includes(c.grade) && c.price > 0 && !('band' in c)), `${t.name} holds a card with no grade`);
+    else assert.ok(t.cards.every((c) => !c.grade));
+  }
+  // The shelves run cheapest first and each returns more than the one before; every shelf has tins on it.
+  for (let i = 0; i < TIN_TIERS.length; i++) {
+    const on = list.body.tins.filter((t) => t.tier === TIN_TIERS[i].id);
+    assert.ok(on.length >= 5, `${TIN_TIERS[i].name} holds ${on.length} tins`);
+    if (!i) continue;
+    assert.ok(TIN_TIERS[i].back > TIN_TIERS[i - 1].back && TIN_TIERS[i].back <= 0.95);
+    assert.ok(Math.min(...on.map((t) => t.price)) > Math.max(...list.body.tins.filter((t) => t.tier === TIN_TIERS[i - 1].id).map((t) => t.price)), `${TIN_TIERS[i].name} overlaps the shelf below`);
+  }
+  assert.ok(new Set(TINS.map((t) => t.id)).size === TINS.length, 'two tins share an id');
+  // The lean: solved so the return lands on the target or just under, 0 when even odds are already under, null when nothing can be.
+  {
+    const values = [10, 20, 50, 400, 9000, 120000];
+    const lean = tinLean(values, 300);
+    assert.ok(lean > 0 && tinReturn(values, lean) <= 300 && tinReturn(values, lean) > 299.9);
+    assert.equal(tinLean(values, 1e9), 0);
+    assert.equal(tinLean(values, 5), null);
   }
   const tin = list.body.tins[0];
   const o = await call('/api/casino/beta/tins/open', 'POST', { tin: tin.id, price: tin.price, requestId: rid() }, ash.sid);
@@ -200,6 +228,38 @@ assert.equal(prof.body.user?.beta ?? prof.body.profile?.beta ?? prof.body.beta, 
   assert.ok(Math.abs(coinsOf(ash.id) - tin.price * 3) < 1e-6, 'nothing taken when five cannot be paid for');
   assert.equal(db.prepare('SELECT COALESCE(SUM(qty), 0) AS n FROM cards WHERE user_id = ?').get(ash.id).n, cardsBefore + 5);
   db.prepare('UPDATE profiles SET coins = 100000 WHERE user_id = ?').run(ash.id);
+  // A slab tin: the price is taken and the slab is minted into the case, once, as a casino slab (no fee, no grading credit).
+  {
+    const slabTin = list.body.tins.find((t) => t.slab);
+    assert.ok(slabTin, 'no slab tin');
+    const slabsOf = () => db.prepare("SELECT card_id, grade, band, fee_cents, request_id, status FROM graded_cards WHERE user_id = ?").all(ash.id);
+    const had = slabsOf().length;
+    const rawBefore = db.prepare('SELECT COALESCE(SUM(qty), 0) AS n FROM cards WHERE user_id = ?').get(ash.id).n;
+    const requestId = rid();
+    const [s1, s2] = await Promise.all([1, 2].map(() => call('/api/casino/beta/tins/open', 'POST', { tin: slabTin.id, price: slabTin.price, count: 2, requestId }, ash.sid)));
+    assert.equal(s1.status, 200, JSON.stringify(s1.body));
+    assert.equal(s2.status, 200, JSON.stringify(s2.body));
+    assert.ok(Math.abs(coinsOf(ash.id) - (100000 - slabTin.price * 2)) < 1e-6, 'two slab tins paid for once');
+    const minted = slabsOf().slice(had);
+    assert.equal(minted.length, 2, 'two slabs minted, once');
+    for (const [i, run] of s1.body.runs.entries()) {
+      const row = minted.find((m) => m.request_id === `casino:tins:${i ? `${requestId}-${i}` : requestId}:0`);
+      assert.ok(row, 'a slab for each tin');
+      assert.equal(row.card_id, run.card.id);
+      assert.equal(row.grade, run.card.grade);
+      assert.ok(row.band && row.fee_cents === 0 && row.status === 'slabbed');
+    }
+    assert.equal(db.prepare('SELECT COALESCE(SUM(qty), 0) AS n FROM cards WHERE user_id = ?').get(ash.id).n, rawBefore, 'a slab tin adds no raw card');
+    // A full case: nothing is taken.
+    const fill = db.prepare("INSERT INTO graded_cards (user_id, card_id, reverse, grade, band, fee_cents, request_id, status, created_at) VALUES (?, ?, 0, 9, 'sv', 0, ?, 'slabbed', ?)");
+    for (let i = slabsOf().length; i < GRADING_LIMITS.maxSlabs; i++) fill.run(ash.id, minted[0].card_id, `fill:${i}`, Date.now());
+    const coinsFull = coinsOf(ash.id);
+    const fullCase = await call('/api/casino/beta/tins/open', 'POST', { tin: slabTin.id, price: slabTin.price, requestId: rid() }, ash.sid);
+    assert.equal(fullCase.status, 409, JSON.stringify(fullCase.body));
+    assert.equal(coinsOf(ash.id), coinsFull);
+    db.prepare("DELETE FROM graded_cards WHERE user_id = ? AND request_id LIKE 'fill:%'").run(ash.id);
+    db.prepare('UPDATE profiles SET coins = 100000 WHERE user_id = ?').run(ash.id);
+  }
 }
 
 // Rocket: bet in the window, an auto cash-out the round reaches pays, the rest lose; manual cash pays the clock's multiplier.
