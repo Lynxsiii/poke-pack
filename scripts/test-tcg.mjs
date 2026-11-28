@@ -8,7 +8,7 @@
  */
 import { readFileSync, readdirSync } from "node:fs";
 import assert from "node:assert/strict";
-import { ACTIVE, FORMATS, RuleError, abilityOn, askChoose, benchMax, typedDef, healRoom, rand, noteShed, hpLeft, attacksOf, defOf, addCondition, addMark, apply, costFor, benchSafe, canRetreat, energyOf, warded, toolOf, conditionsOn, createGame, flip, damageAfterTyping, legalActions, maxHp, resolveKnockOuts, retreatCost, unpaid, usableAttacks, viewFor } from "../js/tcg/engine.js";
+import { ACTIVE, FORMATS, RuleError, handLock as handLockOf, abilityOn, askChoose, benchMax, typedDef, healRoom, rand, noteShed, hpLeft, attacksOf, defOf, addCondition, addMark, apply, costFor, benchSafe, canRetreat, energyOf, warded, toolOf, conditionsOn, createGame, flip, damageAfterTyping, legalActions, maxHp, resolveKnockOuts, retreatCost, unpaid, usableAttacks, viewFor } from "../js/tcg/engine.js";
 import { createDefs, defineCard, FREE_ENERGY } from "../js/tcg/cards.js";
 import { T_OPS, boostOf, compileTrainer, fits, runTrainer, trainerAim, whatOf } from "../js/tcg/trainers.js";
 import { compileAttack, runFx } from "../js/tcg/effects.js";
@@ -8165,6 +8165,71 @@ test("Standard attacks: Energy from the hand (Tricolor Pump, Crescendo Wave), Re
   assert.ok(dark.length > 0);
   act(oki.state, { type: "choose", player: 0, uids: dark });
   assert.ok(conditionsOn(oki.state.players[0].active).includes("poisoned"));
+});
+
+test("Standard attacks: lasting effects (discard at the end of their turn, side locks, Electrified Incisors, Weakness now Lightning)", () => {
+  // Intense Kiss: the Defending Pokémon and all attached go at the end of their next turn.
+  const kiss = armed("me5-32", "Intense Kiss", { foeBench: ["lab-wall"] });
+  kiss.go();
+  const doomed = kiss.state.players[1].active.uid;
+  act(kiss.state, { type: "end", player: 1 });
+  assert.ok(kiss.state.players[1].discard.includes(doomed));
+  // Unleash Lightning: none of your Pokémon attack during your next turn.
+  const zap = armed("sv7-47", "Unleash Lightning");
+  zap.go();
+  act(zap.state, { type: "end", player: 1 });
+  assert.deepEqual(usableAttacks(zap.state, 0, defs), []);
+  // Frigid Fangs: their Pokémon with 2 or less Energy can't attack.
+  const fangs = armed("sv8-45", "Frigid Fangs");
+  fangs.go();
+  assert.equal(fangs.state.players[1].sideLocks.lowAttack.k, 2);
+  // Evolution Jammer: no evolving from the hand.
+  const jam = armed("sv5-69", "Evolution Jammer");
+  jam.go();
+  assert.match(handLockOf(jam.state, 1, defs("base1-24")), /evolve/);
+  // Electrified Incisors: 8 damage counters when they attach from the hand to it.
+  const bite = armed("me1-51", "Electrified Incisors");
+  bite.go();
+  const foe = bite.state.players[1];
+  const energy = slotFor(bite.state, 1, W).uid;
+  foe.hand.push(energy);
+  const before = foe.active.damage;
+  act(bite.state, { type: "attach", player: 1, uid: energy, spot: ACTIVE });
+  assert.equal(foe.active.damage - before, 80);
+  // Overwriting Bolt: Weakness to Lightning, x2, until the end of your next turn.
+  const bolt = armed("me55-40", "Overwriting Bolt");
+  bolt.go();
+  act(bolt.state, { type: "end", player: 1 });
+  assert.equal(typedDef(bolt.state, bolt.state.players[1].active, defs).weakness.type, "Lightning");
+});
+
+test("Standard attacks: copied attacks and Supporters (Try to Imitate, Supernatural Shapeshifter), Goad 'n' Grab, Mystical Eyes", () => {
+  const fx = defs("sv10-93").attacks.find((a) => a.name === "Try to Imitate").fx;
+  assert.deepEqual(fx.map((f) => f.op), ["flipOrNothing", "copyAttack"]);
+  const fox = armed("me1-20", "Supernatural Shapeshifter");
+  const side = fox.state.players[0];
+  const top = slotFor(fox.state, 0, "sv1-189");
+  side.deck.unshift(top.uid);
+  const hand = side.hand.length;
+  fox.go();
+  assert.ok(side.discard.includes(top.uid));
+  // Professor's Research: discard the hand, draw 7.
+  assert.equal(side.hand.length, 7);
+  assert.ok(hand > 0);
+  const grab = armed("sv7-96", "Goad 'n' Grab", { foeBench: ["lab-wall"] });
+  const benched = grab.state.players[1].bench[0].uid;
+  grab.go();
+  if (grab.state.pending[0]?.type === "pick") act(grab.state, { type: "pick", player: 1, spot: 0 });
+  assert.equal(grab.state.players[1].active.uid, benched);
+  assert.equal(grab.state.players[1].active.damage, 160);
+  const eyes = armed("sv8-95", "Mystical Eyes");
+  const foe = eyes.state.players[1];
+  const evolved = slotFor(eyes.state, 1, "base1-24");
+  evolved.under = [slotFor(eyes.state, 1, "base1-46").uid];
+  foe.bench = [evolved];
+  eyes.go();
+  if (eyes.state.pending[0]?.type === "pick") act(eyes.state, { type: "pick", player: 0, spot: 0 });
+  assert.equal(eyes.state.cards[foe.bench[0].uid], "base1-46");
 });
 
 test("Standard attacks: every read attack text of a Standard Pokémon runs, bots answering what it asks", () => {

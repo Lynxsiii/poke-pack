@@ -447,6 +447,9 @@ export function typedDef(state, slot, defs) {
   const def = playedAs(state, slot, defs);
   const as = toolOf(state, slot, defs).weakAs;
   let weakness = as ? { type: as, op: "x", n: 2 } : def.weakness;
+  // "The Defending Pokémon's Weakness is now Lightning" (a mark; `from` "keep": "The amount of Weakness doesn't change").
+  const now = markOn(state, slot, "weakAs");
+  if (now) weakness = now.from === "keep" ? (def.weakness ? { ...def.weakness, type: now.name } : null) : { type: now.name, op: "x", n: 2 };
   if (weakness?.op === "x" && [state.players[0].active, state.players[1].active].includes(slot)) {
     for (const p of [0, 1]) for (const [mate] of inPlay(state, p)) {
       const times = abilityOn(state, mate, defs)?.weakTimes;
@@ -1041,6 +1044,7 @@ function endOfTurn(state, defs, events) {
     front.healedOn = state.turn;
     events.push({ t: "heal", p, spot: ACTIVE, n: healed, why: "tool" });
   }
+  const doomed = [];
   for (const q of [0, 1]) {
     for (const [slot, spot] of inPlay(state, q)) {
       // "At the end of your opponent's next turn, put 6 damage counters on the Defending Pokémon."
@@ -1050,6 +1054,11 @@ function endOfTurn(state, defs, events) {
       if (doom) {
         slot.damage += doom.n;
         events.push({ t: "damage", p: q, spot, n: doom.n, why: "doom" });
+      }
+      // "At the end of your opponent's next turn, discard the Defending Pokémon and all attached cards."
+      if (markOn(state, slot, "doomDiscard")) {
+        doomed.push([q, slot]);
+        continue;
       }
       // "At the end of your opponent's next turn, the Defending Pokémon is now Asleep."
       const later = markOn(state, slot, "doomCond");
@@ -1061,6 +1070,16 @@ function endOfTurn(state, defs, events) {
         if ((lapse === "attack" && slot.toolSpent === state.turn) || (lapse === "foe" && q !== p && slot.toolOn < state.turn) || (lapse === "turn" && q === p)) dropTool(state, q, spot, slot, defs, events, uid);
       }
     }
+  }
+  // Discarded with all attached once the marks are read, so no Bench place moves while they are.
+  for (const [q, slot] of doomed) {
+    const side = state.players[q];
+    const spot = side.active === slot ? ACTIVE : side.bench.indexOf(slot);
+    if (spot !== ACTIVE && spot < 0) continue;
+    side.discard.push(slot.uid, ...slot.under, ...slot.energy, ...toolsIn(slot), ...heldOn(slot));
+    if (spot === ACTIVE) side.active = null;
+    else side.bench.splice(spot, 1);
+    events.push({ t: "discard-mon", p: q, spot, uid: slot.uid });
   }
 }
 
@@ -1207,10 +1226,18 @@ export function attacksOf(state, slot, defs) {
   return out.length ? [...def.attacks, ...out] : def.attacks;
 }
 
+/** A whole side kept from attacking this turn (effects.js OPS.sideLock): "" or why. */
+function sideAttackLock(state, player, slot, defs) {
+  const locks = state.players[player].sideLocks || {};
+  if (locks.attack?.turn === state.turn) return "Your Pokémon can't attack this turn.";
+  if (locks.lowAttack?.turn === state.turn && energyOf(state, slot, defs).length <= locks.lowAttack.k) return `Pokémon with ${locks.lowAttack.k} or less Energy attached can't attack this turn.`;
+  return "";
+}
+
 export function usableAttacks(state, player, defs) {
   const slot = state.players[player].active;
   if (!slot || state.phase !== "main" || state.current !== player || state.pending.length) return [];
-  if (markOn(state, slot, "noAttack")) return [];
+  if (markOn(state, slot, "noAttack") || sideAttackLock(state, player, slot, defs)) return [];
   const def = defOf(state, slot.uid, defs);
   const side = state.players[player];
   const spent = (attack) => (attack.once === "gx" && (side.gxUsed || side.gxBarred)) || (attack.once === "vstar" && side.vstarUsed);
@@ -2038,6 +2065,7 @@ const HANDLERS = {
     const def = defOf(state, uid, defs);
     const why = trainerBlock(state, player, def, defs);
     if (why) fail(why);
+    if (trainerFlipped(state, player, uid, events)) return;
     takeFromHand(state, player, uid);
     if (def.fossil) {
       // "Play it as if it were a Basic Pokémon": onto the Bench, a Pokémon while it is in play.
@@ -2099,6 +2127,13 @@ const HANDLERS = {
     if (markOn(state, slot, "attachEnds")) {
       events.push({ t: "mark", p: player, kind: "attachEnded" });
       state.ending = true;
+    }
+    // Electrified Incisors: "whenever they attach an Energy card from their hand to the Defending Pokémon, place 8 damage counters".
+    const zap = markOn(state, slot, "zapAttach");
+    if (zap) {
+      slot.damage += zap.n;
+      events.push({ t: "damage", p: player, spot, n: zap.n, why: "mark" });
+      if (!state.pending.length && hpLeft(state, slot, defs) <= 0) resolveKnockOuts(state, defs, events);
     }
     // Healing Scarf: an Energy card from the hand heals the Pokémon it goes on.
     const scarf = toolOn(state, slot, defs)?.attachHeal;
@@ -2188,6 +2223,7 @@ const HANDLERS = {
     if (!slot) fail("There's no Pokémon there.");
     if (toolsIn(slot).length >= toolRoom(state, slot, defs)) fail("That Pokémon already has a Tool.");
     if (!toolFits(def.tool, playedAs(state, slot, defs))) fail(`${def.name} can't be attached to that Pokémon.`);
+    if (trainerFlipped(state, player, uid, events)) return;
     takeFromHand(state, player, uid);
     // A second Tool (Multi Adapter) rides beside the first.
     if (slot.tool) (slot.extraTools ||= []).push(uid);
@@ -2268,6 +2304,7 @@ const HANDLERS = {
     if (!canPay(state, slot, costFor(state, slot, attack, defs), defs)) fail("Not enough Energy for that attack.");
     if (stuckAttack(slot, attack)) fail(`${def.name} is ${statusOf(slot).main === "asleep" ? "Asleep" : "Paralyzed"} and can't attack.`);
     if (markOn(state, slot, "noAttack")) fail(`${def.name} can't attack this turn.`);
+    if (sideAttackLock(state, player, slot, defs)) fail(sideAttackLock(state, player, slot, defs));
     if (barredAttack(state, slot, attack.name)) fail(`${def.name} can't use ${attack.name} now.`);
     if (attack.once === "gx" && side.gxUsed) fail("You've already used your GX attack this game.");
     if (attack.once === "gx" && side.gxBarred) fail("You can't use GX attacks for the rest of this game.");
@@ -2743,6 +2780,19 @@ const HANDLERS = {
  * Cards an attack keeps in the hand this turn ("During your opponent's next turn, they can't play any Item
  * cards from their hand"): side.locks { item, supporter, stadium, special, trainer } hold the turn they bar.
  */
+/** Quaking Fist: a coin to use a Trainer card from the hand this turn; tails, it is discarded instead (true). */
+function trainerFlipped(state, player, uid, events) {
+  const side = state.players[player];
+  if (side.sideLocks?.trainerFlip?.turn !== state.turn) return false;
+  const heads = flip(state, player);
+  events.push({ t: "flip", p: player, results: [heads], why: "trainerFlip" });
+  if (heads) return false;
+  takeFromHand(state, player, uid);
+  side.discard.push(uid);
+  events.push({ t: "discard", p: player, uids: [uid], from: "hand", why: "trainerFlip" });
+  return true;
+}
+
 export function handLock(state, player, def, defs) {
   const locks = state.players[player].locks || {};
   const barred = (kind) => locks[kind] === state.turn;
@@ -2755,6 +2805,8 @@ export function handLock(state, player, def, defs) {
     if (barred(kind)) return `You can't play ${{ supporter: "Supporter", stadium: "Stadium" }[kind] || "Item"} cards this turn.`;
   }
   if (def?.kind === "energy" && !def.basic && barred("special")) return "You can't play Special Energy cards this turn.";
+  // Evolution Jammer: "they can't play any Pokémon from their hand to evolve their Pokémon".
+  if (def?.kind === "pokemon" && def.stage === "evolution" && barred("evolve")) return "You can't evolve Pokémon from your hand this turn.";
   // The other player's Abilities: "As long as this Pokémon is in the Active Spot, your opponent can't play any Item cards from their hand."
   if (def && defs) {
     for (const [rival] of inPlay(state, other(player))) {
