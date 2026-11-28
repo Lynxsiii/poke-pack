@@ -316,6 +316,7 @@ export const SOURCES = {
   achievements: { weight: `${w.achievement[1]} to ${w.achievement[4]} XP, by tier`, start: "Claim an achievement.", noun: ["claimed", "claimed"] },
   mastery: { weight: `${w.mastery} XP a set`, start: "Master a whole set.", noun: ["set", "sets"] },
   battles: { weight: `${w.battle} XP a battle, ${w.battleWin} more for a win (${w.botBattle} and ${w.botBattleWin} against bots only)`, start: "Play a pack battle.", noun: ["battle", "battles"], gate: ["battles"] },
+  tcg: { weight: `${w.tcgEasy}, ${w.tcgNormal} or ${w.tcgHard} XP a win against the house bot on Easy, Normal or Hard (10 wins a day)`, start: "Win a card game match against the house bot.", noun: ["win", "wins"], hidden: true },
   casino: { weight: `${w.casino} XP a game, ${w.casinoWin} more for a win`, start: "Play your first game.", noun: ["game", "games"], gate: ["coinflip", "jackpot"] },
   grading: { weight: `${w.graded} XP a card, ${w.gemMint} more for a Gem Mint 10`, start: "Send a card to grading.", noun: ["card", "cards"], gate: ["grading"] },
   friends: { weight: `${w.friend} XP a friend, up to ${FRIEND_CAP}`, start: "Add a friend.", noun: ["friend", "friends"] },
@@ -340,7 +341,9 @@ export function sourceRows(xp) {
   for (const part of xp.parts) {
     const info = SOURCES[part.id] || { weight: "", start: "", noun: ["", ""] };
     const row = { ...part, ...info, share: Math.min(100, (part.xp / total) * 100), opensAt: sourceGate(part.id) };
-    (part.xp > 0 ? earned : fresh).push(row);
+    // A source still hidden from the menus (the card game at /play) is only listed once it has paid.
+    if (part.xp > 0) earned.push(row);
+    else if (!info.hidden) fresh.push(row);
   }
   earned.sort((a, b) => b.xp - a.xp);
   return { earned, fresh };
