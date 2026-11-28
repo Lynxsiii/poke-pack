@@ -10,6 +10,45 @@
     ]
   },
   {
+    "id": "2026-11-28-first-pack-free",
+    "date": "2026-11-28",
+    "kind": "new",
+    "big": 2,
+    "title": "Your first pack is free",
+    "summary": "New here? Rip a pack before you make an account, then keep the cards.",
+    "items": [
+      "A visitor can tear one pack open straight from Home. No account, no coins.",
+      "Make a trainer afterwards and those cards go into your collection, on top of the 25 coins every account starts with.",
+      "Signed up without ripping first? Your first pack costs nothing.",
+      "It's one free pack per account, on packs up to 25 coins.",
+      "The tour is gone. The first pack tells you where your cards went and where coins come from."
+    ]
+  },
+  {
+    "id": "2026-11-28-set-colours",
+    "date": "2026-11-28",
+    "title": "Every set brings its own colour",
+    "summary": "The slab behind the pack on Home and on a set's page is now that set's colour.",
+    "items": [
+      "Pitch Black sits on purple, Delta Reign on orange, Chaos Rising on blue, and so on for every set.",
+      "Menu and tab icons have square corners to match the rest of the site.",
+      "Legal, Patch notes and Settings lost the slab in the corner."
+    ]
+  },
+  {
+    "id": "2026-11-28-provably-fair",
+    "date": "2026-11-28",
+    "title": "Provably fair seeds and odds for the casino",
+    "summary": "Every casino result and every pack you open now comes from seeds you can check, and every game shows its odds and payback.",
+    "items": [
+      "You have a server seed (shown only as its hash until you change it), a client seed you can set to anything, and a nonce that counts your bets. Each result is HMAC-SHA256 of those, so it was fixed before you played.",
+      "Rotate your seeds any time from the new Fairness page in the casino. The old server seed is revealed, so you can check every bet you made with it.",
+      "Coinflips against players, jackpots and pack battles get their own seed when they open, shown as a hash in the lobby and revealed when the game is over. Both players' client seeds go into it.",
+      "The Fairness page has a verify tool and the odds and payback of every game: Coinflip, Jackpot, Pack battles, Upgrader, Tall Grass, Mystery Tins and opening packs.",
+      "No odds or payouts changed."
+    ]
+  },
+  {
     "id": "2026-11-28-rayquaza-removed",
     "date": "2026-11-28",
     "title": "Rayquaza has left the beta games",
@@ -27,7 +66,8 @@
     "items": [
       "Every box, key, tag and bar now has square corners. Cards, coins, slabs and faces keep theirs.",
       "Reading text is set in a square-ended face. Tabs and small labels stand upright so titles stand out.",
-      "The coin has a booster pack on its face.",
+      "The coin has a booster pack on its face, and the gold house coin you flip has a pack on heads and three cards on tails.",
+      "Empty pages say so in a plain line. The dashed boxes with a hollow ball are gone, and so are the arrows on the casino's rows.",
       "The tour only runs if you ask for it in Settings.",
       "Pages that explained themselves under the title mostly don't any more, and the footer is one paragraph."
     ]

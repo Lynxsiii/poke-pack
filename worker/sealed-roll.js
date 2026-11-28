@@ -12,7 +12,7 @@
  * many products counts the same way one box does.
  */
 import { PLAYABLE_SETS, RARITY_ORDER, boxCardList, findOffer, offerPackSets } from "../js/catalog.js";
-import { drawPromos, isHit, ripPack } from "../js/engine.js";
+import { drawPromos, isHit, ripPack, withRandom } from "../js/engine.js";
 import { productGear, rollGear } from "../js/gear.js";
 import { loadGearCatalog } from "./gear.js";
 
@@ -50,9 +50,14 @@ export async function resolveSealedOffer(env, request, setId, productId, deps) {
  * mixed, the way a real box is. `deps`: { loadSealed, loadProducts, loadSetCards,
  * loadBoxContents, findCatalogCard }. Pass `resolved` (resolveSealedOffer's
  * answer) to skip looking the offer up again for every copy.
+ *
+ * `unit` is where every draw comes from (a provably fair stream's unit, see
+ * worker/fair.js takeRoll): wrappers, every pack, the promos, the gear and the
+ * box's extras, in that order. Without one it is Math.random, as before.
  */
-export async function rollSealedProduct(env, request, setId, productId, deps, resolved = null) {
+export async function rollSealedProduct(env, request, setId, productId, deps, resolved = null, unit = Math.random) {
   const { live, offer, groups } = resolved || (await resolveSealedOffer(env, request, setId, productId, deps));
+  const seeded = (fn) => withRandom(unit, fn);
   const catalog = await deps.loadSetCards(env, request, live);
   const packs = [];
   for (const { set, count } of groups) {
@@ -60,8 +65,8 @@ export async function rollSealedProduct(env, request, setId, productId, deps, re
     for (let i = 0; i < count; i += 1) {
       packs.push({
         set,
-        wrapper: set.wrappers[Math.floor(Math.random() * set.wrappers.length)],
-        pulls: ripPack(set, cards),
+        wrapper: set.wrappers[Math.floor(unit() * set.wrappers.length)],
+        pulls: seeded(() => ripPack(set, cards)),
       });
     }
   }
@@ -69,23 +74,23 @@ export async function rollSealedProduct(env, request, setId, productId, deps, re
     const special = live.specialPacks?.[key];
     if (!special) fail(`Missing special pack ${key}.`, 500);
     for (let i = 0; i < count; i += 1) {
-      packs.push({ set: live, wrapper: special.wrapper, pulls: ripPack({ ...live, slots: special.slots }, catalog) });
+      packs.push({ set: live, wrapper: special.wrapper, pulls: seeded(() => ripPack({ ...live, slots: special.slots }, catalog)) });
     }
   }
-  const promos = drawPromos(offer).map((id) => {
+  const promos = seeded(() => drawPromos(offer)).map((id) => {
     const card = catalog.find((item) => item.id === id);
     if (!card) fail(`Missing promo card ${id}.`, 500);
     return { ...card };
   });
   // The sleeves and coins in the box come with it. What they are is decided
   // here, the same way the promo cards are, and saved in the same purchase.
-  const gearItems = rollGear(productGear(await loadGearCatalog(env, request), live.id, offer.id));
+  const gearItems = rollGear(productGear(await loadGearCatalog(env, request), live.id, offer.id), unit);
   // The rest of the box: a battle deck's other cards, an ETB's Energy. Each
   // one is the card of its own set (or a shared basic Energy), owned in
   // copies, and not a pull.
   const contents = (await deps.loadBoxContents(env, request))[`${live.id}/${offer.id}`];
   const boxCards = [];
-  for (const { id, n } of boxCardList(contents, promos.map((card) => card.id))) {
+  for (const { id, n } of boxCardList(contents, promos.map((card) => card.id), unit)) {
     const card = await deps.findCatalogCard(env, request, id);
     if (!card) fail(`Missing box card ${id} for ${offer.id}.`, 500);
     boxCards.push({ ...card, n });

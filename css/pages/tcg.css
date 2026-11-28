@@ -10,10 +10,10 @@
   font: 800 0.72em/1 var(--font-h); font-style: normal; vertical-align: -0.28em;
 }
 /* Each type's colour, for the hit flash and anything else tinted by type. */
-.tg-en[data-en="Grass"] { --en: #6cc35f; } .tg-en[data-en="Fire"] { --en: #f47a45; } .tg-en[data-en="Water"] { --en: #55aaf0; }
-.tg-en[data-en="Lightning"] { --en: #ffd83a; } .tg-en[data-en="Psychic"] { --en: #b77bd6; } .tg-en[data-en="Fighting"] { --en: #d68a52; }
-.tg-en[data-en="Darkness"] { --en: #5a6b7a; } .tg-en[data-en="Metal"] { --en: #aab6be; }
-.tg-en[data-en="Fairy"] { --en: #f19ac6; } .tg-en[data-en="Dragon"] { --en: #c9ad4b; } .tg-en[data-en="Colorless"] { --en: #dfe4e7; }
+.tg-en[data-en="Grass"], .tg-tint[data-en="Grass"] { --en: #6cc35f; } .tg-en[data-en="Fire"], .tg-tint[data-en="Fire"] { --en: #f47a45; } .tg-en[data-en="Water"], .tg-tint[data-en="Water"] { --en: #55aaf0; }
+.tg-en[data-en="Lightning"], .tg-tint[data-en="Lightning"] { --en: #ffd83a; } .tg-en[data-en="Psychic"], .tg-tint[data-en="Psychic"] { --en: #b77bd6; } .tg-en[data-en="Fighting"], .tg-tint[data-en="Fighting"] { --en: #d68a52; }
+.tg-en[data-en="Darkness"], .tg-tint[data-en="Darkness"] { --en: #5a6b7a; } .tg-en[data-en="Metal"], .tg-tint[data-en="Metal"] { --en: #aab6be; }
+.tg-en[data-en="Fairy"], .tg-tint[data-en="Fairy"] { --en: #f19ac6; } .tg-en[data-en="Dragon"], .tg-tint[data-en="Dragon"] { --en: #c9ad4b; } .tg-en[data-en="Colorless"], .tg-tint[data-en="Colorless"] { --en: #dfe4e7; }
 .tg-en img { width: 100%; height: 100%; display: block; border-radius: 50%; pointer-events: none; }
 .tg-pips { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 2px; }
 .tg-pips small { color: var(--k-3); font: 600 12px var(--font-h); }
@@ -649,7 +649,7 @@ body.tg-playing { overflow: hidden; }
 .tg-pop.heal { background: var(--hp); color: var(--k0); }
 .tg-pop.poisoned { background: #8a56d8; }
 .tg-pop.burned { background: var(--hp-low); }
-.tg-mon.evolved { animation: tg-evolved 0.56s var(--ease-out); }
+.tg-mon.evolved { animation: tg-evolved 0.68s var(--ease-out); }
 .tg-mon.charged { animation: tg-charged 0.46s var(--ease-out); }
 .tg-table.shake { animation: tg-shake 0.4s linear; }
 .tg-count.bump, .tg-cond.bump { animation: tg-bump 0.4s var(--ease-pop); }
@@ -690,6 +690,115 @@ body.tg-playing { overflow: hidden; }
 .tg-burst.big i:last-child { animation-duration: 0.6s; }
 .tg-burst[data-en="Colorless"] { --en: var(--w0); }
 .tg-table.turn-foe .tg-bar-foe .tg-who { animation: tg-turn 0.8s var(--ease-pop); }
+
+/* ---- Small effects in the layer above the table. Each is a plain shape moved with transform and opacity. */
+.tg-fx-top { z-index: 63; }
+.tg-tint { --en: var(--w0); position: absolute; display: block; pointer-events: none; }
+.tg-tint[data-en="Colorless"] { --en: var(--w0); }
+/* A ring opening out from a point, or closing in on it. */
+.tg-f-ring { width: var(--s); height: var(--s); margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2); border: max(4px, calc(var(--s) * 0.08)) solid var(--en); border-radius: 50%; animation: tg-ring 0.5s var(--ease-out) both; will-change: transform, opacity; }
+.tg-f-ring.in { animation-name: tg-ring-in; animation-duration: 0.42s; }
+/* Bits: the script throws them, the shape is all that is set here. */
+.tg-f-bit { width: var(--s); height: var(--s); margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2); background: var(--en); will-change: transform, opacity; }
+.tg-f-bit.dot { border-radius: 50%; }
+.tg-f-bit.shard { clip-path: polygon(50% 0, 100% 62%, 30% 100%, 0 38%); }
+.tg-f-bit.leaf { border-radius: 0 80% 0 80%; }
+.tg-f-bit.drop { border-radius: 50% 50% 50% 0; }
+.tg-f-bit.star { clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); }
+.tg-f-bit.plus { clip-path: polygon(36% 0, 64% 0, 64% 36%, 100% 36%, 100% 64%, 64% 64%, 64% 100%, 36% 100%, 36% 64%, 0 64%, 0 36%, 36% 36%); }
+.tg-f-bit.z { background: none; width: auto; height: auto; color: var(--w0); font: italic 800 calc(var(--s) * 1.3) / 1 var(--font-xc); -webkit-text-stroke: 1px var(--k0); }
+.tg-f-bit.z::before { content: "Z"; }
+/* The streak from the attacker to what it hits. */
+.tg-f-streak { width: var(--len); height: 26px; margin-top: -13px; background: linear-gradient(var(--en) 0 28%, var(--w0) 28% 72%, var(--en) 72%); clip-path: polygon(0 42%, 100% 0, 92% 50%, 100% 100%, 0 58%); transform-origin: 0 50%; animation: tg-streak 0.3s cubic-bezier(0.3, 0, 0.2, 1) both; }
+/* Lightning comes down on the Pokémon in two quick blinks. */
+.tg-f-bolt { width: var(--w); height: var(--h); margin: calc(var(--h) * -0.72) 0 0 calc(var(--w) / -2); background: var(--en); transform-origin: 50% 0; clip-path: polygon(46% 0, 78% 0, 56% 34%, 82% 34%, 38% 72%, 60% 72%, 30% 100%, 34% 80%, 14% 80%, 46% 42%, 22% 42%); animation: tg-bolt 0.42s steps(1) both; }
+.tg-f-bolt.two { animation-delay: 0.08s; transform: scaleX(-1); }
+.tg-f-slash { width: var(--len); height: 9px; margin: -4px 0 0 calc(var(--len) / -2); background: var(--w0); box-shadow: 0 3px 0 var(--en); clip-path: polygon(0 50%, 12% 0, 100% 40%, 12% 100%); animation: tg-slash 0.38s var(--ease-out) both; }
+.tg-f-flash { inset: 0; left: 0 !important; top: 0 !important; background: var(--en); animation: tg-flash 0.36s ease-out both; }
+.tg-f-flash.strong { animation-name: tg-flash-strong; }
+/* A word that lifts off a Pokémon: a Special Condition, a cure. */
+.tg-f-word {
+  padding: 2px 12px 4px; border: var(--line-w) solid var(--k0); border-radius: 5px; background: var(--w0); color: var(--k0);
+  font: italic 800 22px/1.15 var(--font-xc); letter-spacing: -0.02em; white-space: nowrap; animation: tg-word 1.05s var(--ease-out) both;
+}
+.tg-f-word.poisoned { background: #8a56d8; color: var(--w0); }
+.tg-f-word.burned { background: var(--hp-low); color: var(--w0); }
+.tg-f-word.paralyzed { background: #ffd83a; }
+.tg-f-word.heal { background: var(--hp); }
+/* Three stars circling a confused Pokémon's head. */
+.tg-f-orbit { width: var(--s); height: calc(var(--s) * 0.34); margin: calc(var(--s) * -0.17) 0 0 calc(var(--s) / -2); animation: tg-orbit 1.2s linear both; }
+.tg-f-orbit::before, .tg-f-orbit::after { content: ""; position: absolute; top: 20%; width: 22%; aspect-ratio: 1; background: var(--en); clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); animation: tg-orbit-star 0.6s ease-in-out infinite alternate; }
+.tg-f-orbit::before { left: 0; }
+.tg-f-orbit::after { right: 0; animation-delay: -0.3s; }
+/* Light fans out behind a Pokémon as it evolves. */
+.tg-f-rays { width: var(--s); height: var(--s); margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2); border-radius: 50%; background: repeating-conic-gradient(var(--w0) 0 9deg, transparent 9deg 30deg); animation: tg-rays 0.74s var(--ease-out) both; }
+/* The puff as a Pokémon sets down. */
+.tg-f-dust { width: var(--s); height: calc(var(--s) * 0.16); margin: calc(var(--s) * -0.08) 0 0 calc(var(--s) / -2); border: 3px solid var(--w0); border-radius: 50%; animation: tg-dust 0.42s var(--ease-out) both; }
+/* The band behind a played Trainer: what kind of card it is. */
+.tg-f-band { left: 0 !important; right: 0; display: grid; place-items: center; height: 0; }
+.tg-f-band b {
+  display: block; width: 130vw; padding: 34px 0; background: var(--w0); color: var(--k0); border-block: 3px solid var(--k0); box-shadow: 0 7px 0 var(--yel);
+  font: italic 800 30px/1 var(--font-xc); letter-spacing: -0.02em; text-indent: 9vw; white-space: nowrap; transform: skewY(-8deg); animation: tg-band 0.36s var(--ease-out) both;
+}
+.tg-f-band.foe b { background: var(--k0); color: var(--w0); border-color: var(--w0); box-shadow: 0 7px 0 var(--slab); }
+.tg-f-band.out b { animation: tg-band-out 0.3s var(--ease-out) both; }
+
+/* Damage: bigger numbers for bigger hits, and the name plate takes the knock too. */
+.tg-pop.big { font-size: calc(var(--w) * 0.3); }
+.tg-pop.huge { font-size: calc(var(--w) * 0.36); }
+.tg-hud.jolt { animation: tg-jolt 0.36s linear; }
+.tg-hud.jolt .tg-hp { animation: tg-hp-blink 0.36s steps(2); }
+.tg-mon.thud { animation: tg-thud 0.36s var(--ease-out); }
+.tg-stack.riffle .tg-mini { animation: tg-riffle 0.6s var(--ease-out); }
+.tg-hand.bump, .tg-foe-hand.bump { animation: tg-bump 0.4s var(--ease-pop); }
+/* A new Stadium: the whole mat takes a breath. */
+.tg-arena.stadium-in .tg-half { animation: tg-mat-pulse 0.7s var(--ease-out); }
+/* Your turn: your half of the mat lights for a moment and your hand lifts, card by card. */
+.tg-table.turn-me .tg-half-me, .tg-table.turn-foe .tg-half-foe { animation: tg-mat-pulse 0.8s var(--ease-out); }
+.tg-table.turn-me .tg-hand .tg-card { animation: tg-hand-wave 0.5s var(--ease-out) backwards; }
+.tg-table.turn-me .tg-hand .tg-card:nth-child(2) { animation-delay: 0.04s; } .tg-table.turn-me .tg-hand .tg-card:nth-child(3) { animation-delay: 0.08s; }
+.tg-table.turn-me .tg-hand .tg-card:nth-child(4) { animation-delay: 0.12s; } .tg-table.turn-me .tg-hand .tg-card:nth-child(5) { animation-delay: 0.16s; }
+.tg-table.turn-me .tg-hand .tg-card:nth-child(6) { animation-delay: 0.2s; } .tg-table.turn-me .tg-hand .tg-card:nth-child(7) { animation-delay: 0.24s; }
+.tg-table.turn-me .tg-hand .tg-card:nth-child(n + 8) { animation-delay: 0.28s; }
+.tg-table.turn-me .tg-track span { animation: tg-row-in 0.3s var(--ease-out) backwards; }
+.tg-table.turn-me .tg-track span:nth-child(2) { animation-delay: 0.07s; } .tg-table.turn-me .tg-track span:nth-child(3) { animation-delay: 0.14s; }
+.tg-table.turn-me .tg-keys .solid { animation: tg-thud 0.4s var(--ease-pop) 0.2s backwards; }
+
+/* A Special Condition stays on the card: turned and breathing asleep, twitching paralyzed, swaying confused,
+   and a colour that comes and goes while poisoned or burned. `--tg-now` keeps the loop in step across repaints. */
+.tg-mon.big[data-conds~="asleep"] > img { animation: tg-asleep 4s ease-in-out var(--tg-now, 0s) infinite; }
+.tg-mon.big[data-conds~="paralyzed"] > img { animation: tg-paralyzed 2s linear var(--tg-now, 0s) infinite; }
+.tg-mon.big[data-conds~="confused"] > img { animation: tg-confused 3s ease-in-out var(--tg-now, 0s) infinite; }
+.tg-mon.big[data-conds~="poisoned"]::after, .tg-mon.big[data-conds~="burned"]::after {
+  content: ""; position: absolute; inset: 0; border-radius: 4.5%/3.2%; background: #8a56d8; opacity: 0; pointer-events: none; animation: tg-ail 2s ease-in-out var(--tg-now, 0s) infinite;
+}
+.tg-mon.big[data-conds~="burned"]::after { background: var(--hp-low); }
+.tg-mon.big[data-conds~="poisoned"][data-conds~="burned"]::after { background: linear-gradient(#8a56d8 50%, var(--hp-low) 50%); }
+
+@keyframes tg-ring { from { opacity: 1; transform: scale(0.25); } 60% { opacity: 1; } to { opacity: 0; transform: scale(1); } }
+@keyframes tg-ring-in { from { opacity: 0; transform: scale(1); } 40% { opacity: 1; } to { opacity: 0; transform: scale(0.3); } }
+@keyframes tg-streak { from { transform: rotate(var(--a)) scaleX(0); opacity: 1; } 55% { transform: rotate(var(--a)) scaleX(1); opacity: 1; } to { transform: rotate(var(--a)) translateX(60%) scaleX(0.4); opacity: 0; } }
+@keyframes tg-bolt { from { opacity: 1; transform: scaleY(0.5); } 18% { opacity: 1; transform: scaleY(1); } 40% { opacity: 0.15; transform: scaleY(1); } 55% { opacity: 1; transform: scaleY(1); } 80%, to { opacity: 0; transform: scaleY(1); } }
+@keyframes tg-slash { from { opacity: 1; transform: rotate(-38deg) translateX(-40%) scaleX(0.1); } 45% { opacity: 1; transform: rotate(-38deg) scaleX(1); } to { opacity: 0; transform: rotate(-38deg) translateX(30%) scaleX(0.6); } }
+@keyframes tg-flash { from { opacity: 0.28; } to { opacity: 0; } }
+@keyframes tg-flash-strong { from { opacity: 0.5; } to { opacity: 0; } }
+@keyframes tg-word { from { opacity: 0; transform: translate(-50%, 20%) skewX(var(--skew)) scale(0.6); } 16% { opacity: 1; transform: translate(-50%, -50%) skewX(var(--skew)) scale(1.1); } 26%, 78% { opacity: 1; transform: translate(-50%, -50%) skewX(var(--skew)); } to { opacity: 0; transform: translate(-50%, -130%) skewX(var(--skew)); } }
+@keyframes tg-orbit { from { opacity: 0; transform: rotate(-8deg) scale(0.6); } 15%, 80% { opacity: 1; } 50% { transform: rotate(8deg) scale(1); } to { opacity: 0; transform: rotate(-8deg) scale(1); } }
+@keyframes tg-orbit-star { from { transform: translateX(0) scale(1); } to { transform: translateX(260%) scale(0.6); } }
+@keyframes tg-rays { from { opacity: 0; transform: scale(0.2) rotate(0deg); } 30% { opacity: 0.85; } to { opacity: 0; transform: scale(1) rotate(50deg); } }
+@keyframes tg-dust { from { opacity: 0.9; transform: scale(0.3); } to { opacity: 0; transform: scale(1); } }
+@keyframes tg-band { from { transform: translateX(-104%) skewY(-8deg); } }
+@keyframes tg-band-out { to { transform: translateX(104%) skewY(-8deg); } }
+@keyframes tg-jolt { 20% { transform: translateX(-3%); } 45% { transform: translateX(2.5%); } 70% { transform: translateX(-1%); } }
+@keyframes tg-hp-blink { 50% { opacity: 0.35; } }
+@keyframes tg-thud { from { transform: scale(1.1); } 45% { transform: scale(0.95, 0.97); } }
+@keyframes tg-riffle { 15% { transform: translate(-9%, 3%) rotate(-7deg); } 35% { transform: translate(9%, -3%) rotate(7deg); } 55% { transform: translate(-6%, 2%) rotate(-4deg); } 78% { transform: translate(4%, 0) rotate(3deg); } }
+@keyframes tg-mat-pulse { 30% { filter: brightness(1.22); } }
+@keyframes tg-hand-wave { from { transform: translateY(calc(var(--t, 0) * var(--t, 0) * var(--u) * 1.8 + var(--lift, 0px) + var(--u) * 4)) rotate(calc(var(--t, 0) * 3.5deg)); } 55% { transform: translateY(calc(var(--t, 0) * var(--t, 0) * var(--u) * 1.8 + var(--lift, 0px) - var(--u) * 2.2)) rotate(calc(var(--t, 0) * 3.5deg)); } }
+@keyframes tg-asleep { from, to { transform: rotate(-9deg) scale(0.97); filter: brightness(0.82) saturate(0.8); } 50% { transform: rotate(-9deg) scale(1); filter: brightness(0.9) saturate(0.8); } }
+@keyframes tg-paralyzed { from, 78%, to { transform: rotate(7deg); } 82% { transform: rotate(7deg) translateX(-2.5%); } 86% { transform: rotate(7deg) translateX(2.5%); } 90% { transform: rotate(7deg) translateX(-1.5%); } 94% { transform: rotate(7deg) translateX(1%); } }
+@keyframes tg-confused { from, to { transform: rotate(-5deg); } 50% { transform: rotate(5deg); } }
+@keyframes tg-ail { 50% { opacity: 0.34; } }
 
 @keyframes tg-fade { from { opacity: 0; } }
 @keyframes tg-rise { from { opacity: 0; transform: translate(-50%, 18px); } }
