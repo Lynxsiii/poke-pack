@@ -215,6 +215,3 @@ export function tinPicks(s, odds, count) {
   }
   return out;
 }
-
-/** Rayquaza: one unit draw per round; the game's rocketCrash(u) turns it into the multiplier. */
-export const rocketUnit = (s) => s.unit();

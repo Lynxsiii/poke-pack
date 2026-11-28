@@ -1,5 +1,18 @@
 [
   {
+    "id": "2026-11-28-provably-fair",
+    "date": "2026-11-28",
+    "title": "Provably fair seeds and odds for the casino",
+    "summary": "Every casino result and every pack you open now comes from seeds you can check, and every game shows its odds and payback.",
+    "items": [
+      "You have a server seed (shown only as its hash until you change it), a client seed you can set to anything, and a nonce that counts your bets. Each result is HMAC-SHA256 of those, so it was fixed before you played.",
+      "Rotate your seeds any time from the new Fairness page in the casino. The old server seed is revealed, so you can check every bet you made with it.",
+      "Coinflips against players, jackpots and pack battles get their own seed when they open, shown as a hash in the lobby and revealed when the game is over. Both players' client seeds go into it.",
+      "The Fairness page has a verify tool and the odds and payback of every game: Coinflip, Jackpot, Pack battles, Upgrader, Tall Grass, Mystery Tins and opening packs.",
+      "No odds or payouts changed."
+    ]
+  },
+  {
     "id": "2026-11-28-more-mystery-tins",
     "date": "2026-11-28",
     "title": "62 more Mystery Tins",

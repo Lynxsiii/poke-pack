@@ -2,12 +2,9 @@
    Every figure comes from the rules modules the Worker settles with, so this page can't drift from the game. */
 import { COINFLIP_RULES, JACKPOT_RULES } from './casino-rules.js';
 import { UPGRADER_RULES } from './upgrader-rules.js';
-import { BETA_RULES, GRASS, ROCKET, grassMultiplier } from './beta-rules.js';
+import { BETA_RULES, GRASS, grassMultiplier } from './beta-rules.js';
 
 const pct = (x, places = 1) => `${Number((x * 100).toFixed(places))}%`;
-
-/** Rayquaza: the chance a round reaches `m` (P(crash >= m) = 0.95 / m, and every round reaches 1x). */
-export const rocketReach = (m) => (m <= 1 ? 1 : m > ROCKET.maxMult ? 0 : Math.min(1, BETA_RULES.edge / m));
 
 /** Tall Grass: the chance of clearing `safe` tiles in a row with `mines` Voltorb hidden among 25. */
 export function grassClear(mines, safe) {

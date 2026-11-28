@@ -9,10 +9,9 @@ import worker from '../worker/index.js';
 import { seedLevel } from './lib/level-seed.mjs';
 import {
   sha256, hmacSha256, toHex, hashSeed, fairStream, cleanClientSeed, gameClientSeed,
-  flipWinner, jackpotTicket, jackpotSeat, upgradeRoll, grassBoard, tinPicks, rocketUnit,
+  flipWinner, jackpotTicket, jackpotSeat, upgradeRoll, grassBoard, tinPicks,
 } from '../js/fair.js';
-import { rocketCrash } from '../js/beta-rules.js';
-import { GAME_ODDS, grassTable, rocketReach } from '../js/fair-odds.js';
+import { GAME_ODDS, grassTable } from '../js/fair-odds.js';
 
 let checks = 0;
 const ok = (cond, msg) => { assert.ok(cond, msg); checks++; };
@@ -39,21 +38,18 @@ eq(hashSeed('abc'), 'ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20
 {
   const N = 200000;
   const s = fairStream('odds', 'test', 0);
-  let heads = 0, under = 0, two = 0, ten = 0;
+  let heads = 0, under = 0, half = 0;
   const tin = [0.5, 0.3, 0.15, 0.05]; const tinHits = [0, 0, 0, 0];
   for (let i = 0; i < N; i++) {
     if (flipWinner(s) === 'host') heads++;
     if (upgradeRoll(s) < 250000) under++;
-    const c = rocketCrash(rocketUnit(s));
-    if (c >= 2) two++;
-    if (c >= 10) ten++;
+    if (s.unit() < 0.5) half++;
     tinHits[tinPicks(s, tin, 1)[0]]++;
   }
   const near = (got, want, tol, msg) => ok(Math.abs(got - want) < tol, `${msg}: ${got} vs ${want}`);
   near(heads / N, 0.5, 0.005, 'a flip is even');
   near(under / N, 0.25, 0.005, 'an upgrade roll is uniform');
-  near(two / N, 0.475, 0.005, 'Rayquaza reaches 2x 47.5% of the time');
-  near(ten / N, 0.095, 0.004, 'Rayquaza reaches 10x 9.5% of the time');
+  near(half / N, 0.5, 0.005, 'a unit draw is uniform');
   tin.forEach((p, i) => near(tinHits[i] / N, p, 0.005, `tin card ${i}`));
   const b = grassBoard(fairStream('g', 'h', 1), 25, 5);
   eq(b.length, 5); ok(b.every((t, i) => t >= 0 && t < 25 && (i === 0 || t > b[i - 1])), 'a board is 5 sorted distinct tiles');
@@ -70,7 +66,6 @@ eq(cleanClientSeed('x'.repeat(65)), null);
 eq(cleanClientSeed(''), null);
 ok(GAME_ODDS.length === 7 && GAME_ODDS.every((g) => g.name && g.how && g.payback), 'every game has odds text');
 ok(grassTable(3).every((r) => r.mult * r.chance <= 0.95 + 1e-9), 'Tall Grass never pays over 95%');
-eq(rocketReach(1), 1);
 
 // ---- The Worker -----------------------------------------------------------------------------
 const db = new DatabaseSync(':memory:');
