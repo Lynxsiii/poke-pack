@@ -1839,5 +1839,62 @@
       "sir": 0.0067,
       "hyper": 0.005
     }
+  },
+  "jsv1a": {
+    "name": "Triplet Beat (Japanese)",
+    "printedTotal": 73,
+    "released": "2023-03-10",
+    "updated": "2026-11-28",
+    "source": "ESTIMATES. Japan publishes no pull rates. 30 packs a box, 5 cards a pack (2 common, 1 uncommon, a reverse or Art Rare, a rare or better); this high-class subset has no ACE SPEC. Samurai Sword Tokyo's guide to Japanese pull rates (https://samuraiswordtokyo.com/blogs/news/how-japanese-pokemon-pull-rates-work) and Hobby Collectors Australia's box listings put a Scarlet & Violet expansion box at about 4 RR and 3 AR, with about one SR a box and SAR and UR well under one. The split is our own estimate.",
+    "rates": {
+      "ir": 0.1,
+      "double": 0.14,
+      "ultra": 0.0267,
+      "sir": 0.0067,
+      "hyper": 0.005
+    }
+  },
+  "jsv3a": {
+    "name": "Raging Surf (Japanese)",
+    "printedTotal": 62,
+    "released": "2023-09-22",
+    "updated": "2026-11-28",
+    "source": "ESTIMATES. Japan publishes no pull rates. 30 packs a box, 5 cards a pack (2 common, 1 uncommon, a reverse or Art Rare, a rare or better); this high-class subset has no ACE SPEC. Samurai Sword Tokyo's guide to Japanese pull rates (https://samuraiswordtokyo.com/blogs/news/how-japanese-pokemon-pull-rates-work) and Hobby Collectors Australia's box listings put a Scarlet & Violet expansion box at about 4 RR and 3 AR, with about one SR a box and SAR and UR well under one. The split is our own estimate.",
+    "rates": {
+      "ir": 0.1,
+      "double": 0.14,
+      "ultra": 0.0267,
+      "sir": 0.0067,
+      "hyper": 0.005
+    }
+  },
+  "jsv6": {
+    "name": "Transformation Mask (Japanese)",
+    "printedTotal": 101,
+    "released": "2024-04-26",
+    "updated": "2026-11-28",
+    "source": "ESTIMATES. Japan publishes no pull rates. 30 packs a box, 5 cards a pack (2 common, 1 uncommon, a reverse or Art Rare, a rare or better). Samurai Sword Tokyo's guide to Japanese pull rates (https://samuraiswordtokyo.com/blogs/news/how-japanese-pokemon-pull-rates-work) and Hobby Collectors Australia's box listings put a Scarlet & Violet expansion box at about 4 RR, 3 AR and 1 ACE SPEC, with about one SR a box and SAR and UR well under one. We use the same rates as Paradise Dragona; the split is our own estimate.",
+    "rates": {
+      "ir": 0.1,
+      "double": 0.14,
+      "ace": 0.033,
+      "ultra": 0.0267,
+      "sir": 0.0067,
+      "hyper": 0.005
+    }
+  },
+  "jsv9a": {
+    "name": "Heat Wave Arena (Japanese)",
+    "printedTotal": 63,
+    "released": "2025-03-14",
+    "updated": "2026-11-28",
+    "source": "ESTIMATES. Japan publishes no pull rates. 30 packs a box, 5 cards a pack (2 common, 1 uncommon, a reverse or Art Rare, a rare or better); this high-class subset has no ACE SPEC. Samurai Sword Tokyo's guide to Japanese pull rates (https://samuraiswordtokyo.com/blogs/news/how-japanese-pokemon-pull-rates-work) and Hobby Collectors Australia's box listings put a Scarlet & Violet expansion box at about 4 RR and 3 AR, with about one SR a box and SAR and UR well under one. The split is our own estimate.",
+    "rates": {
+      "ir": 0.1,
+      "double": 0.14,
+      "ultra": 0.0267,
+      "sir": 0.0067,
+      "hyper": 0.005
+    }
   }
 }

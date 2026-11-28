@@ -1,0 +1,37 @@
+{
+  "id": "jsv6",
+  "name": "Transformation Mask",
+  "lang": "ja",
+  "code": "SV6",
+  "series": "scarlet-violet",
+  "slug": "transformation-mask",
+  "scrydexId": "sv6_ja",
+  "era": "sv",
+  "tcgplayerCategory": 85,
+  "tcgplayerGroup": 23614,
+  "englishTwin": "sv6",
+  "rarityMap": {
+    "C": "Common",
+    "U": "Uncommon",
+    "R": "Rare",
+    "RR": "Double Rare",
+    "ACE": "ACE SPEC Rare",
+    "AR": "Illustration Rare",
+    "SR": "Ultra Rare",
+    "SAR": "Special Illustration Rare",
+    "UR": "Hyper Rare"
+  },
+  "printedTotal": 101,
+  "products": [
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "tcgplayerId": 565221,
+      "packs": 30,
+      "promos": [],
+      "hull": "ortho",
+      "imageVersion": 3
+    }
+  ]
+}
