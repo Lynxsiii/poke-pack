@@ -50,7 +50,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
     var(--ws-lit),
     var(--ws-band),
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), var(--ws-pool) 0%, hsla(var(--ws-h), var(--ws-s), var(--ws-l), 0.5) 16%, hsla(var(--ws-h), var(--ws-s), var(--ws-l), 0.12) 34%, hsla(var(--ws-h), var(--ws-s), var(--ws-l), 0) 54%),
-    linear-gradient(var(--ws-ground), var(--ws-ground));
+    linear-gradient(#000, #000);
+  background-color: #000;
   background-size: 100% 100%, 260% 260%, 100% 100%, 100% 100%;
   background-position:
     center,
@@ -59,8 +60,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
     center;
   background-repeat: no-repeat;
   background-blend-mode: multiply, normal, normal, normal;
-  mix-blend-mode: screen;
-  filter: none;
+  /* site review 2: screened, the tinted pool lay on the figure as a flat teal, grey or khaki wash. Dodged a little under full brightness
+     over black, the light goes into the print: the ink's own lights flash first, its blacks stay, and it dies away from the lamp. */
+  mix-blend-mode: color-dodge;
+  filter: brightness(0.85);
   clip-path: none;
   border-radius: 0;
   -webkit-mask-image: var(--ws-mask);
@@ -75,7 +78,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
   mask-position: center;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-  opacity: calc((0.38 + var(--card-opacity) * 0.5) * var(--foil-strength, 1));
+  opacity: calc((0.3 + var(--card-opacity) * 0.6) * var(--foil-strength, 1));
 }
 /* at rest: the metal's own dim sheen, one soft diagonal highlight, so a binder page still reads as foil */
 body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-shining.fam-wotc-shining.fam-wotc-shining.fam-wotc-shining.ws-mapped:not(.lit):not(.settling) .foil {
@@ -85,7 +88,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
   background-size: 100% 100%, 100% 100%;
   background-position: center, center;
   background-blend-mode: multiply, normal;
-  opacity: calc(0.38 * var(--foil-strength, 1));
+  mix-blend-mode: screen;
+  filter: none;
+  opacity: calc(0.3 * var(--foil-strength, 1));
 }
 /* Neo Revelation: the sky takes a cooler, wider haze and the band runs the other way */
 body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-shining.fam-wotc-shining.fam-wotc-shining.fam-wotc-shining.ws-mapped.ws-bg .foil {

@@ -68,8 +68,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-revers
    card a sweep, a quarter of its one-card period. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.foil-reverse.fam-ex-reverse.fam-ex-reverse.fam-ex-reverse.fam-ex-reverse.xr-mapped.ex-rev-plain .foil {
   background-image:
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsla(0, 0%, 100%, 0.55) 0%, hsla(0, 0%, 100%, 0.16) 28%, hsla(0, 0%, 100%, 0) 58%),
-    linear-gradient(115deg, hsl(0, 45%, 74%) 0%, hsl(45, 50%, 72%) 8%, hsl(100, 40%, 70%) 17%, hsl(170, 42%, 70%) 25%, hsl(215, 48%, 74%) 33%, hsl(275, 42%, 76%) 41%, hsl(330, 45%, 75%) 50%, hsl(30, 48%, 73%) 58%, hsl(70, 45%, 71%) 66%, hsl(140, 40%, 70%) 74%, hsl(200, 46%, 73%) 83%, hsl(260, 42%, 76%) 91%, hsl(320, 45%, 75%) 100%);
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsla(0, 0%, 100%, 0.28) 0%, hsla(0, 0%, 100%, 0.08) 28%, hsla(0, 0%, 100%, 0) 58%),
+    /* site review 2: at 70-76% lightness the overlaid spectrum lifted every mid-tone (milky when lit); near 55% it only tints */
+    linear-gradient(115deg, hsl(0, 45%, 57%) 0%, hsl(45, 50%, 55%) 8%, hsl(100, 40%, 53%) 17%, hsl(170, 42%, 53%) 25%, hsl(215, 48%, 57%) 33%, hsl(275, 42%, 59%) 41%, hsl(330, 45%, 58%) 50%, hsl(30, 48%, 56%) 58%, hsl(70, 45%, 54%) 66%, hsl(140, 40%, 53%) 74%, hsl(200, 46%, 56%) 83%, hsl(260, 42%, 59%) 91%, hsl(320, 45%, 58%) 100%);
   background-size: 100% 100%, 200% 200%;
   background-position:
     center,

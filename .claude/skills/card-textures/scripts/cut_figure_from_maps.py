@@ -44,6 +44,8 @@ def main():
     ap.add_argument("--preview")
     ap.add_argument("--max-cover", type=float, default=0.7)
     ap.add_argument("--dry", action="store_true")
+    ap.add_argument("--points", default="", help='points on the figure, "x,y;x,y" scan px: cut by SAM prompt alone (one card)')
+    ap.add_argument("--panels", type=int, default=1, help="the map is a sprite of this many equal panels side by side")
     a = ap.parse_args()
     crop = tuple(int(v) for v in a.crop.split(",")) if a.crop else None
     zone = tuple(int(v) for v in a.zone.split(",")) if a.zone else (crop or (61, 94, 539, 430))
@@ -54,7 +56,10 @@ def main():
     bad = []
     for n in a.cards.split(","):
         scan = np.asarray(Image.open(os.path.join(ROOT, f"assets/cards/{a.set}/{n}.webp")).convert("RGB").resize((600, 838), Image.LANCZOS))
-        fig, info = FIG.figure_mask(scan, zone, window, False, sam)
+        if a.points:  # prompt SAM on the figure directly (one card): "x,y;x,y" in scan pixels
+            fig, info = FIG.point_mask(scan, zone, [tuple(int(v) for v in q.split(",")) for q in a.points.split(";")], sam)
+        else:
+            fig, info = FIG.figure_mask(scan, zone, window, False, sam)
         ok = info["cover"] <= a.max_cover
         print(f"{a.set}-{n}: {info}{'' if ok else '  <-- refused'}", flush=True)
         if a.preview:
@@ -66,11 +71,13 @@ def main():
         keep = np.clip(ndi.distance_transform_edt(fig < 0.5) - 1.0, 0, 1).astype(np.float32)
         for tpl in a.maps.split(","):
             src = os.path.join(ROOT, tpl.format(n=n))
-            dst = src.replace(f"-{a.src}.webp", f"-{a.to}.webp")
+            dst = src.replace(f"-{a.src}.webp", f"-{a.to}.webp") if a.src else src[:-5] + f"-{a.to}.webp"
             if dst == src or os.path.exists(dst):
                 sys.exit(f"refusing to overwrite {dst}")
             im = np.asarray(Image.open(src).convert("RGBA")).copy()
             k = keep[crop[1]:crop[3], crop[0]:crop[2]] if crop else keep
+            if a.panels > 1:  # a sprite of equal panels side by side (ex-cosmos-holo: area | dots A | dots B)
+                k = np.concatenate([k] * a.panels, 1)
             if k.shape != im.shape[:2]:
                 k = np.asarray(Image.fromarray((k * 255).astype(np.uint8)).resize((im.shape[1], im.shape[0]), Image.BILINEAR), np.float32) / 255
             im[..., 3] = np.round(im[..., 3] * k).astype(np.uint8)

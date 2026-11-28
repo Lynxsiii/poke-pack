@@ -317,6 +317,27 @@ def figure_mask(rgb: np.ndarray, zone, window: np.ndarray | None = None, spill: 
 
 
 # ---------------------------------------------------------------- command line
+def point_mask(rgb: np.ndarray, zone, points, sam: "Sam"):
+    """The figure by prompt alone, for scans where the foil's grain does not separate it (a plain print, a dark figure on a
+    dark sky, a busy background): SAM2 prompted with `points` on the figure (scan pixels) and the zone's four corners as
+    background; of its masks, the best-scored one covering 6-70% of the zone, holes filled. Returns (mask float32 0..1 at
+    scan size, info) like figure_mask()."""
+    x0, y0, x1, y1 = zone
+    crop = np.ascontiguousarray(rgb[y0:y1, x0:x1])
+    h, w = crop.shape[:2]
+    st = sam.encode(crop)
+    pos = [(x - x0, y - y0) for x, y in points]
+    neg = [(8, 8), (w - 8, 8), (8, h - 8), (w - 8, h - 8)]
+    cands = [(iou, m) for m, iou in sam.decode(st, pos + neg, [1] * len(pos) + [0] * 4) if 0.06 < m.mean() < 0.7]
+    out = np.zeros(rgb.shape[:2], np.float32)
+    if not cands:
+        return out, {"method": "points", "cover": 1.0}
+    iou, m = max(cands, key=lambda t: t[0])
+    m = ndi.binary_fill_holes(m)
+    out[y0:y1, x0:x1] = m
+    return out, {"method": "points", "iou": round(iou, 3), "cover": round(float(m.mean()), 3)}
+
+
 def load_mask(path: str, channel: str = "auto") -> np.ndarray:
     im = Image.open(path)
     a = np.asarray(im.convert("RGBA").resize((W, H), Image.LANCZOS)).astype(np.float32) / 255
