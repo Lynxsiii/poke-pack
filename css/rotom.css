@@ -958,3 +958,7 @@ body.no-motion .rt-track > i[style*="--fill"] { transition: none !important; }
   > :is(.rt-ball, .cart-empty-ball, .vt-ball, .tr-ball, .wish-empty-ico, .coll-ball) { display: none; }
 /* The menu arrow is for the one main key, never for rows. */
 .hub-game-go { display: none; }
+/* Icons are drawn like the logo: square ends and mitred corners. */
+.nav-btn svg, .site-header .nav svg, .me-item svg, .tabbar svg, .tabbar .nav-more-list .menu-out svg { stroke-linecap: square; stroke-linejoin: miter; }
+/* Reading pages have no slab: it is wallpaper there. */
+body:is([data-view="legal"], [data-view="notes"], [data-view="settings"])::after { display: none; }

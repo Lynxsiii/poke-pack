@@ -105,7 +105,7 @@ body.on-home .wrap { padding-top: 0; }
 .hh-slab {
   position: absolute; z-index: 0; pointer-events: none;
   top: -8px; bottom: -34px; left: 18%; right: calc(-1 * var(--gutter, 20px) - 120px);
-  background-color: var(--cy); background-image: var(--dots-light); background-size: 14px 14px;
+  background-color: var(--set-a, var(--cy)); background-image: var(--dots-light); background-size: 14px 14px;
   transform: skewX(var(--skew)); transform-origin: 0 100%;
 }
 .home-hero:not(.has-party) .hh-slab { left: 34%; }

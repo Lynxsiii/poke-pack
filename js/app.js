@@ -86,6 +86,17 @@ import {
 } from "./achievements.js";
 import * as questRules from "./quests.js";
 import { masteryEmblemHtml as masteryEmblem, masterySetIds, masteryBannerId } from "./mastery.js";
+import { SET_ACCENTS } from "./set-accents.js";
+
+/* The slab behind a pack takes that set's own colour (DESIGN.md, House style): the pack decides
+   the colour of its page, the theme only lends its slab when a set has none. */
+function paintSetSlab(viewId, set) {
+  const el = document.getElementById(viewId);
+  if (!el) return;
+  const a = set && Object.prototype.hasOwnProperty.call(SET_ACCENTS, set.id) ? SET_ACCENTS[set.id].a : "";
+  if (a) el.style.setProperty("--set-a", a);
+  else el.style.removeProperty("--set-a");
+}
 import { bannerBlockHtml } from "./mastery-banner.js";
 import { masteryShelfProfileHtml } from "./mastery-shelf.js";
 import * as questArea from "./quest-area.js?v=12";
@@ -1634,6 +1645,7 @@ function paintWrapperChoice() {
 }
 
 function renderShop() {
+  paintSetSlab("view-shop", liveSet);
   renderSetChrome();
   renderSwitcher();
   const quickSets = document.getElementById("shop-quick-sets");
@@ -3773,6 +3785,7 @@ function rollHomePrice(el, to, moving) {
 
 /** The set on show: tag, name, meta, the wrapper party, the pack, the Open key. `dir` is the step that brought it (-1 newer, 1 older). */
 function paintFeatured(set, dir = 0) {
+  paintSetSlab("view-home", set);
   const wrap = set.id === liveSet.id ? chosenWrapper(set) : set.wrappers?.[0];
   const firstPaint = !homeShown.set;
   const setChanged = homeShown.set !== set.id;

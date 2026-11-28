@@ -53,8 +53,10 @@ read it against this list.
 - A box (the ink line around a group) is for a real object or a form. A list
   is rows with a divider. A page is not a stack of boxes, and two boxes next
   to each other must not be the same box with different words.
-- The slab and the ground art are the theme's, not decoration to repeat: a
-  page may move or drop its slab when it has a hero of its own.
+- The slab behind a pack takes that set's own colour (`--set-a`, set by
+  `paintSetSlab()` in js/app.js from js/set-accents.js), so the pack decides
+  the colour of its page. The theme's slab colour is only the fallback.
+  Reading pages (Legal, Patch notes, Settings) have no slab.
 
 **Type**
 
