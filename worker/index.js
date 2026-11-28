@@ -21,8 +21,9 @@ import {
 import { drawPromos, isHit, ripPack, tallyRarity } from "../js/engine.js";
 import { homeSetId, PROMO_HOME_LIKE } from "../js/card-home.js";
 import { ensureTesterSchema, wantsTester } from "./testers.js";
+import { handleShiny, shinyError } from "./shiny.js";
 import { handleSocial, socialUserFields, patchSocialFields, ensureSocialSchema, looksLikeMasteryBanner, masteryBannerError } from "./social.js";
-import { DEFAULT_BANNER, SHOWCASE_MAX, bannerId } from "../js/cosmetics.js";
+import { DEFAULT_BANNER, SHOWCASE_MAX, avatarKind, bannerId } from "../js/cosmetics.js";
 import { levelFields, levelOf, standingOf, frameChoice, bannerMotionError, slotError, slotPeak } from "./perks.js";
 import {
   handleLatestPrices,
@@ -305,6 +306,10 @@ export async function handleApi(request, env, url) {
     await ensureSocialSchema(env);
     await ensureAchievementSchema(env);
     return patchMe(request, env);
+  }
+  if (path.startsWith("/api/me/shinies")) {
+    await ensureAchievementSchema(env);
+    return handleShiny(request, env, path, method, { json, requireUser, readJson, loadSetCards, findCatalogCard });
   }
   if (path === "/api/me/reset" && method === "POST") {
     return resetMe(request, env);
@@ -591,6 +596,13 @@ async function patchMe(request, env) {
     if (refusal) return json({ error: refusal.error }, refusal.status);
   }
   const social = patchSocialFields(body, user);
+  // A shiny picture is earned (js/shiny.js). Checked only when the picture or its style changes.
+  if (body.avatar != null || body.avatarStyle != null) {
+    const refusal = await shinyError(env, request, user.id, social.avatar, social.avatarStyle, { findCatalogCard });
+    // A new picture sent without a style keeps the style, but not a shiny it has not earned.
+    if (refusal && body.avatarStyle == null) social.avatarStyle = avatarKind(social.avatarStyle);
+    else if (refusal) return json({ error: refusal.error }, refusal.status);
+  }
   if (body.banner != null) {
     const refusal = bannerMotionError(bannerId(body.banner), user.banner, await level());
     if (refusal) return json({ error: refusal.error, needLevel: refusal.needLevel }, refusal.status);

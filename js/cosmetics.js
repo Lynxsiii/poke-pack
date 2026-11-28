@@ -114,11 +114,10 @@ export function avatarName(id) {
 }
 
 /**
- * Shiny pictures are built but not handed out yet: Noah wants them earned
- * (2026-11-28), and the rule is still being chosen. While this is false a
- * shiny style is saved and drawn as its plain picture, here and in the Worker.
+ * Shiny pictures are earned (js/shiny.js): the Worker refuses a shiny style
+ * the account has not unlocked. False turns every shiny back into its plain picture.
  */
-export const SHINY_OPEN = false;
+export const SHINY_OPEN = true;
 
 export function avatarStyle(value) {
   const [kind, shiny] = String(value || "").split("-");

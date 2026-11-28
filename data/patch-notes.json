@@ -1,5 +1,23 @@
 [
   {
+    "id": "2026-11-28-earned-shinies",
+    "date": "2026-11-28",
+    "title": "Shiny profile pictures, earned",
+    "summary": "A Black Label unlocks that Pokémon's shiny, and every mastered set gives you one shiny pick.",
+    "groups": [
+      {
+        "title": "Shiny pictures",
+        "items": [
+          "Grade a Black Label of any card of a Pokémon and its shiny picture unlocks. A Black Label you already have counts.",
+          "Every set you master gives one shiny pick from the Pokémon in that set. A pick cannot be changed, so it asks you to confirm.",
+          "A shiny you unlock is yours for good, even if the slab is later sold, cracked or lost in the casino. It covers that Pokémon's Mega and regional forms too.",
+          "Turn on Shiny in Account, Edit profile, Picture to see them all. Locked ones show a lock, and yours are kept under My shinies.",
+          "Shinies come in all three styles: Art, Pixel and Animated."
+        ]
+      }
+    ]
+  },
+  {
     "id": "2026-11-28-profile-pictures-account",
     "date": "2026-11-28",
     "title": "Every Pokémon as your picture, and a simpler account page",
@@ -9,7 +27,7 @@
         "title": "Profile pictures",
         "items": [
           "Your picture can now be any Pokémon, 1,025 of them, plus Megas, regional forms and other forms. That is 1,307 pictures, up from 200.",
-          "Shiny pictures are built and on the way. You will have to earn them, and the Shiny switch shows Soon until then.",
+          "Shiny pictures are earned, see the note above this one.",
           "Three styles: Art, Pixel and Animated. Animated pictures move on your profile and trainer card and hold still in lists and chat. They also hold still if you turned motion off.",
           "Pictures are sorted by generation, with groups for Mega, Regional and Forms, and you can search by name or Pokédex number.",
           "Fixed: picking a picture threw the page and the list back to the top. Now only the picture changes."

@@ -46,11 +46,6 @@
 .av-shiny.on { border-color: var(--k); background: var(--k); color: var(--on-k); }
 .av-shiny.on i { background: var(--yel-k, var(--yel)); transform: rotate(90deg) scale(1.15); }
 .av-shiny:active { transform: translateY(1px); }
-/* Not earnable yet: dashed like every empty place, with a small tag. */
-.av-shiny.is-soon { border-style: dashed; color: var(--k-3); cursor: default; }
-.av-shiny.is-soon:hover { color: var(--k-3); border-color: var(--rule-2); }
-.av-shiny small { margin-left: 2px; padding: 0 5px; border-radius: 3px; background: var(--k); color: var(--on-k); font: italic 700 11px/1.6 var(--font-h); }
-
 #view-account .look-controls .field.av-search, .av-search { margin: 14px 0 0; max-width: 460px; }
 .av-groups {
   display: flex; gap: 2px; margin: 10px calc(-1 * var(--gutter, 16px)) 0; padding: 3px var(--gutter, 16px);
@@ -84,6 +79,33 @@ img.av-face { object-fit: contain; image-rendering: pixelated; transform: scale(
 .av-pick.is-none { cursor: default; }
 .av-pick.is-none .av-face { opacity: 0.28; filter: grayscale(1); }
 .av-pick.is-none small { color: var(--k-3); }
+/* A shiny not earned yet: the face is there to want, held back, with a lock in the corner. */
+.av-pick.is-locked .av-face { opacity: 0.42; filter: saturate(0.55); }
+.av-pick.is-locked small { color: var(--k-3); }
+.av-lock { position: absolute; top: 5px; right: 6px; width: 13px; height: 13px; color: var(--k-2); }
+.av-pick.is-had { cursor: default; }
+.av-pick.is-had .av-face { opacity: 0.5; }
+.av-pick.is-had small { color: var(--k-3); font-style: italic; }
+.av-earn { margin: 0 0 10px; max-width: 62ch; color: var(--k-2); font-size: 13px; font-weight: 600; line-height: 1.45; }
+.av-earn b { color: var(--k); font-weight: 800; }
+/* A mastered set's pick, waiting or being spent: one ink-lined strip with the yellow cursor edge. */
+.av-claim {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; margin: 0 0 12px; padding: 11px 14px 11px 17px;
+  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); box-shadow: inset 5px 0 0 var(--yel);
+}
+.av-claim p { flex: 1 1 240px; margin: 0; color: var(--k-2); font-size: 13.5px; font-weight: 600; line-height: 1.4; }
+.av-claim b { color: var(--k); font-weight: 800; }
+.av-claim button { flex: none; min-width: 0; min-height: 40px; }
+.av-claim-acts { display: flex; flex-wrap: wrap; gap: 8px; }
+/* Spending a pick: the strip follows the screen, because the Pokémon tapped may be far down the list. */
+[data-av-picker] { scroll-margin-top: 92px; }
+.is-picking .av-claim { position: sticky; top: 84px; z-index: 3; box-shadow: inset 5px 0 0 var(--yel), var(--drop); }
+@media (max-width: 1040px) {
+  /* Under the pinned trainer card strip (css/pages/account.css), which is about 106px tall. */
+  .is-picking .av-claim { top: calc(env(safe-area-inset-top, 0px) + 114px); }
+  [data-av-picker] { scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 122px); }
+}
+.is-picking .av-results { margin-top: 0; }
 .av-note, .av-empty { margin: 12px 0 0; color: var(--k-2); font-size: 13px; font-weight: 700; line-height: 1.45; }
 
 /* Sprites (pixel and animated pictures) in a round face: whole, not cropped, hard-edged. */
@@ -119,6 +141,7 @@ body.no-motion .av-pick.rt-picked, body.no-motion .av-shiny i { animation: none;
   .edit-view { display: none; }
   .edit-top { grid-template-columns: auto minmax(0, 1fr); }
   .av-shiny { min-height: 44px; }
+  .av-claim button { min-height: 44px; }
   .av-groups .av-group { min-height: 44px; }
   /* Four across on any phone, each tile wide enough for a thumb. */
   .av-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2px; }
