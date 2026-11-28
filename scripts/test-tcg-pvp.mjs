@@ -10,6 +10,7 @@ import { TCG_DDL, TCG_TIMING, maintainTcg, owing } from "../worker/tcg.js";
 import { createDefs, FREE_ENERGY } from "../js/tcg/cards.js";
 import { botAction } from "../js/tcg/bot.js";
 import { buildDeck, checkDeck } from "../js/tcg/decks.js";
+import { XP_WEIGHTS, computeXp } from "../js/xp.js";
 import { createTestDb, seedPlayer, requester } from "./lib/d1-test-db.mjs";
 
 const results = [];
@@ -73,7 +74,7 @@ await befriend("ann", "bob");
 let matchId = "";
 
 await check("the migration files hold the Worker's DDL", async () => {
-  const sql = ["0038_tcg_matches.sql", "0039_tcg_rematch_queue.sql"].map((f) => readFileSync(new URL(`../worker/migrations/${f}`, import.meta.url), "utf8")).join("\n").replace(/\s+/g, " ");
+  const sql = ["0038_tcg_matches.sql", "0039_tcg_rematch_queue.sql", "0040_tcg_bot_matches.sql"].map((f) => readFileSync(new URL(`../worker/migrations/${f}`, import.meta.url), "utf8")).join("\n").replace(/\s+/g, " ");
   for (const stmt of TCG_DDL) assert.ok(sql.includes(stmt.replace(/\s+/g, " ")), stmt.slice(0, 60));
 });
 
@@ -595,6 +596,42 @@ await check("queue: three at once make one match, never two for the same player"
   assert.equal((await queue(left)).body.queue.match, null);
   for (const u of paired) assert.equal((await queue(u)).body.queue.match, made[0].id);
   await unqueue(left);
+});
+
+await check("house bot wins: a ticket, taken back once, after two minutes, ten paid a day, XP by level", async () => {
+  const stat = (key) => db.prepare("SELECT value FROM player_stats WHERE user_id = 'cat' AND key = ?").get(key)?.value || 0;
+  const start = async (level) => (await api("cat", "/api/tcg/bot/start", "POST", { level })).body.id;
+  let id = await start("hard");
+  let r = await api("cat", "/api/tcg/bot/finish", "POST", { id, won: true });
+  assert.equal(r.body.paid, false, JSON.stringify(r));
+  assert.equal(r.body.reason, "quick", "a win faster than two minutes isn't paid");
+  r = await api("cat", "/api/tcg/bot/finish", "POST", { id, won: true });
+  assert.equal(r.body.reason, "done", "a ticket is taken back once");
+  r = await api("bob", "/api/tcg/bot/finish", "POST", { id: await start("easy"), won: true });
+  assert.equal(r.status, 404, "someone else's ticket");
+  id = await start("hard");
+  clock += 3 * 60 * 1000;
+  r = await api("cat", "/api/tcg/bot/finish", "POST", { id, won: true });
+  assert.equal(r.body.paid, true, JSON.stringify(r.body));
+  assert.equal(stat("tcgHardWins"), 1);
+  r = await api("cat", "/api/tcg/bot/finish", "POST", { id, won: true });
+  assert.equal(stat("tcgHardWins"), 1, "paid once");
+  id = await start("normal");
+  clock += 3 * 60 * 1000;
+  r = await api("cat", "/api/tcg/bot/finish", "POST", { id, won: false });
+  assert.equal(r.body.paid, false);
+  assert.equal(stat("tcgNormalWins"), 0);
+  const ids = [];
+  for (let i = 0; i < 11; i += 1) ids.push(await start("easy"));
+  clock += 3 * 60 * 1000;
+  const paid = [];
+  for (const t of ids) paid.push((await api("cat", "/api/tcg/bot/finish", "POST", { id: t, won: true })).body.paid);
+  assert.equal(paid.filter(Boolean).length, 9, "ten wins a day, the Hard one included");
+  assert.equal(stat("tcgEasyWins"), 9);
+  const me = (await api("cat", "/api/me")).body;
+  assert.equal(me.save.stats.counters.tcgHardWins, 1);
+  const part = computeXp(me.save).parts.find((p) => p.id === "tcg");
+  assert.equal(part.xp, 9 * XP_WEIGHTS.tcgEasy + XP_WEIGHTS.tcgHard);
 });
 
 Date.now = realNow;

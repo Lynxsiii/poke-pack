@@ -35,6 +35,7 @@
 import { FORMATS, RuleError, apply, createGame, legalActions, viewFor } from "../js/tcg/engine.js";
 import { createDefs } from "../js/tcg/cards.js";
 import { checkDeck, deckList } from "../js/tcg/decks.js";
+import { bumpStatStmt } from "./stats.js";
 
 export const TCG_TIMING = {
   DECISION_MS: 90_000,
@@ -110,7 +111,29 @@ export const TCG_DDL = [
   match_id TEXT
 )`,
   "CREATE INDEX IF NOT EXISTS tcg_queue_format ON tcg_queue(format, match_id, joined_at)",
+  // The same DDL as worker/migrations/0040_tcg_bot_matches.sql.
+  `CREATE TABLE IF NOT EXISTS tcg_bot_matches (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL,
+  level TEXT NOT NULL,
+  started_at INTEGER NOT NULL,
+  ended_at INTEGER,
+  won INTEGER NOT NULL DEFAULT 0,
+  paid INTEGER NOT NULL DEFAULT 0
+)`,
+  "CREATE INDEX IF NOT EXISTS tcg_bot_matches_user ON tcg_bot_matches(user_id, ended_at)",
 ];
+
+/**
+ * XP for beating the house bot (Noah chose "XP only, more for Hard", 2026-11-28).
+ * The match runs on the page, so the Worker can't see it: it hands out a ticket at
+ * the start, takes it back once, only after BOT_MIN_MS, and pays at most
+ * BOT_DAILY_WINS wins a day (UTC). The XP itself is worked out from the counters
+ * (js/xp.js XP_WEIGHTS.tcgEasy/tcgNormal/tcgHard), like every other source.
+ */
+export const BOT_LEVELS = { easy: "tcgEasyWins", normal: "tcgNormalWins", hard: "tcgHardWins" };
+export const BOT_MIN_MS = 2 * 60 * 1000;
+export const BOT_DAILY_WINS = 10;
 let schemaReady = false;
 /** Tests only: forget the per-isolate cache so another database is checked. */
 export const resetTcgSchemaCache = () => {
@@ -585,6 +608,36 @@ async function queueReply(env, userId, extra = {}) {
   return { queue: row ? { format: row.format, deckName: row.deck_name, joinedAt: row.joined_at, match } : null, waiting: Object.fromEntries(counts.map((c) => [c.format, c.n])), now, ...extra };
 }
 
+async function botRoute(env, request, path, method, me, h) {
+  const { json, readJson } = h;
+  const now = Date.now();
+  if (path === "/api/tcg/bot/start" && method === "POST") {
+    const body = (await readJson(request)) || {};
+    const level = BOT_LEVELS[body.level] ? body.level : "normal";
+    // Tickets nobody handed back after a day are dropped.
+    await env.DB.prepare("DELETE FROM tcg_bot_matches WHERE user_id = ? AND ended_at IS NULL AND started_at < ?").bind(me.id, now - 86_400_000).run();
+    const id = newId();
+    await env.DB.prepare("INSERT INTO tcg_bot_matches (id, user_id, level, started_at) VALUES (?, ?, ?, ?)").bind(id, me.id, level, now).run();
+    return json({ id });
+  }
+  if (path === "/api/tcg/bot/finish" && method === "POST") {
+    const body = (await readJson(request)) || {};
+    const row = typeof body.id === "string" && (await env.DB.prepare("SELECT * FROM tcg_bot_matches WHERE id = ? AND user_id = ?").bind(body.id, me.id).first());
+    if (!row) fail("That match isn't known.", 404);
+    if (row.ended_at) return json({ paid: Boolean(row.paid), level: row.level, reason: "done" });
+    const won = body.won === true;
+    const dayStart = Math.floor(now / 86_400_000) * 86_400_000;
+    const today = won ? (await env.DB.prepare("SELECT COUNT(*) AS n FROM tcg_bot_matches WHERE user_id = ? AND paid = 1 AND ended_at >= ?").bind(me.id, dayStart).first())?.n || 0 : 0;
+    const reason = !won ? "lost" : now - row.started_at < BOT_MIN_MS ? "quick" : today >= BOT_DAILY_WINS ? "cap" : "";
+    const paid = won && !reason;
+    // Taken back once: a second finish of the same ticket changes nothing.
+    const done = await env.DB.prepare("UPDATE tcg_bot_matches SET ended_at = ?, won = ?, paid = ? WHERE id = ? AND ended_at IS NULL").bind(now, won ? 1 : 0, paid ? 1 : 0, row.id).run();
+    if (paid && done.meta?.changes) await bumpStatStmt(env, me.id, BOT_LEVELS[row.level] || BOT_LEVELS.normal, 1).run();
+    return json({ paid: paid && Boolean(done.meta?.changes), level: row.level, reason, left: Math.max(0, BOT_DAILY_WINS - today - (paid ? 1 : 0)) });
+  }
+  return json({ error: "Not found." }, 404);
+}
+
 async function queueRoute(env, request, path, method, me, h) {
   const { json, readJson } = h;
   const now = Date.now();
@@ -686,6 +739,7 @@ export async function handleTcg(path, method, request, env, h) {
     return json({ match: summary(row, 0, await usersOf(env, row)) });
   }
 
+  if (path.startsWith("/api/tcg/bot/")) return botRoute(env, request, path, method, me, h);
   if (path === "/api/tcg/queue" || path === "/api/tcg/queue/cancel") return queueRoute(env, request, path, method, me, h);
 
   const m = path.match(/^\/api\/tcg\/matches\/([a-f0-9]+)(?:\/(accept|decline|cancel|action|concede|rematch|rematch\/decline|rematch\/leave))?$/);

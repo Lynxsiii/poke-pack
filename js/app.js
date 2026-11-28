@@ -10508,7 +10508,7 @@ let tcgLoading = null;
 function showTcg() {
   if (tcgPage) return tcgPage.show(tcgPath);
   els.viewTcg.innerHTML = `<div class="tg-page"><div class="rt-skel tg-loading">Loading</div></div>`;
-  tcgLoading ||= import("./tcg-page.js?v=41")
+  tcgLoading ||= import("./tcg-page.js?v=42")
     .then(({ initTcg }) => {
       tcgPage = initTcg({
         root: els.viewTcg,
@@ -10527,6 +10527,7 @@ function showTcg() {
         },
         playerName: () => (cloudUser?.handle ? `@${cloudUser.handle}` : "You"),
         signedIn: () => Boolean(cloudUser),
+        refreshSave: () => refreshSession(),
         storeKey: () => cloudUser?.id || cloudUser?.handle || "guest",
         owned: () => ownedMapNow(),
         findCard,

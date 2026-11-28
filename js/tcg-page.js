@@ -31,6 +31,7 @@ import { BOT_FALLBACK, DECK_FORMATS, FORMAT_NOTES } from "./tcg/formats.js";
 import { LESSON, LESSON_CARDS, LESSON_SET, createLesson } from "./tcg/tutorial.js";
 import { coinStageHTML, flipCoin } from "./coin.js?v=6";
 import { api } from "./api.js";
+import { XP_WEIGHTS } from "./xp.js";
 
 /** The seats on the table. A match against a friend can put you in seat 1 (worker/tcg.js), so these follow the match. */
 let ME = 0;
@@ -43,6 +44,8 @@ const LEVELS = [
   { id: "hard", name: "Hard", note: "The house bot plays the best deck your main set can make, Pokémon ex and V included." },
 ];
 const levelName = (id) => LEVELS.find((l) => l.id === id)?.name || "Normal";
+/** XP a win pays at each level (worker/tcg.js counts at most BOT_DAILY_WINS a day, and only after two minutes). */
+const levelXp = (id) => XP_WEIGHTS[{ easy: "tcgEasy", normal: "tcgNormal", hard: "tcgHard" }[id] || "tcgNormal"];
 /** The move clock of a match against a friend (worker/tcg.js TCG_TIMING.DECISION_MS). */
 const TCG_MOVE_SECONDS = 90;
 /**
@@ -96,7 +99,7 @@ export function initTcg(deps) {
     }
   }
   const saveDecks = () => write("decks", decks);
-  const saveMatch = () => !match?.online && write("match", match && match.state.phase !== "over" ? { state: match.state, deckId: match.deckId, botSet: match.botSet, botTheme: match.botTheme || "", level: match.level || "normal", lesson: match.lesson ?? null } : null);
+  const saveMatch = () => !match?.online && write("match", match && match.state.phase !== "over" ? { state: match.state, deckId: match.deckId, botSet: match.botSet, botTheme: match.botTheme || "", level: match.level || "normal", ticket: match.ticket || "", lesson: match.lesson ?? null } : null);
 
   /* ---------- loading ---------- */
 
@@ -251,7 +254,7 @@ export function initTcg(deps) {
         <div class="seg tg-seg" role="group" aria-label="House bot level">
           ${LEVELS.map((l) => `<button type="button" class="seg-btn${l.id === now.id ? " on" : ""}" data-level="${l.id}" aria-pressed="${l.id === now.id}">${l.name}</button>`).join("")}
         </div>
-        <p class="tg-draft-note">${esc(now.note)}${tally}</p>
+        <p class="tg-draft-note">${esc(now.note)}${deps.signedIn?.() ? ` A win pays ${levelXp(now.id)} XP, up to 10 wins a day.` : ""}${tally}</p>
       </div>`;
   }
 
@@ -572,7 +575,9 @@ export function initTcg(deps) {
     botSeats();
     // The flip comes before the deal: its winner chooses who goes first without seeing a hand.
     const state = createGame({ decks: [deckList(deck), deckList(botDeck)], names: [deps.playerName(), BOT_NAME], format: deck.format, seed, chooseFirst: true }, defs);
-    match = { state, deckId, botSet, botTheme: botDeck.theme || "", level, sel: null, sheet: "", busy: false, line: "", setup: { active: null, bench: [] }, opening: true, over: false };
+    // A signed-in player's win can pay XP: the Worker hands out a ticket now and takes it back at the end.
+    const ticket = deps.signedIn?.() ? await api("/api/tcg/bot/start", { method: "POST", body: JSON.stringify({ level }) }).then((r) => r.id || "").catch(() => "") : "";
+    match = { state, deckId, botSet, botTheme: botDeck.theme || "", level, ticket, sel: null, sheet: "", busy: false, line: "", setup: { active: null, bench: [] }, opening: true, over: false };
     if (state.flipWinner === BOT) apply(state, botMove(state), defs);
     // The bot sets up as soon as there are hands; its cards stay face down until both are ready.
     if (state.dealt !== false) apply(state, botMove(state), defs);
@@ -644,7 +649,7 @@ export function initTcg(deps) {
       return false;
     }
     botSeats();
-    match = { state: saved.state, deckId: saved.deckId, botSet: saved.botSet, botTheme: saved.botTheme || "", level: saved.level || "normal", lesson: saved.lesson ?? null, sel: null, sheet: "", busy: false, line: "", setup: { active: null, bench: [] }, opening: saved.state.dealt === false, over: false };
+    match = { state: saved.state, deckId: saved.deckId, botSet: saved.botSet, botTheme: saved.botTheme || "", level: saved.level || "normal", ticket: saved.ticket || "", lesson: saved.lesson ?? null, sel: null, sheet: "", busy: false, line: "", setup: { active: null, bench: [] }, opening: saved.state.dealt === false, over: false };
     return true;
   }
 
@@ -1041,11 +1046,20 @@ export function initTcg(deps) {
         <h2>${tie ? "A tie" : won ? "You win" : "You lose"}</h2>
         <p>${esc(why)}${span}</p>
         ${tally ? `<p class="tg-over-tally">${esc(tally)}</p>` : ""}
+        ${rewardHtml(lv)}
         <div class="tg-sheet-keys">
           ${up ? `<button type="button" class="solid rt-go" data-act="again-up">Try ${up.name}</button><button type="button" class="ghost" data-act="again">Play again</button>` : `<button type="button" class="solid rt-go" data-act="again">Play again</button>`}
           <button type="button" class="ghost" data-go="/play">Decks</button>
         </div>
       </div>`;
+  }
+
+  /** What a win against the bot paid, once the Worker has answered. */
+  function rewardHtml(lv) {
+    const r = match.reward;
+    if (!r || r.reason === "lost") return "";
+    const text = r.paid ? `+${levelXp(lv)} XP` : r.reason === "cap" ? "That's today's 10 paid wins. More XP tomorrow." : r.reason === "quick" ? "No XP for a match under two minutes." : "";
+    return text ? `<p class="tg-over-reward${r.paid ? " is-paid" : ""}">${esc(text)}</p>` : "";
   }
 
   /** What the opening mulligans were, for the flip sheet or the line once hands are dealt. */
@@ -1745,10 +1759,22 @@ export function initTcg(deps) {
       at[won ? "wins" : "losses"] += 1;
       at.streak = won ? (at.streak || 0) + 1 : 0;
     }
+    if (match.lesson == null && match.ticket) payOut(match);
     write("record", record);
     write("match", null);
     paintTable();
     return true;
+  }
+
+  /** Hands the match's ticket back; a paid win shows its XP on the end sheet and refreshes the level bar. */
+  async function payOut(done) {
+    const ticket = done.ticket;
+    done.ticket = "";
+    const res = await api("/api/tcg/bot/finish", { method: "POST", body: JSON.stringify({ id: ticket, won: done.state.winner === ME }) }).catch(() => null);
+    if (!res || done !== match) return;
+    done.reward = res;
+    if (res.paid) deps.refreshSave?.();
+    if (match.over) paintTable();
   }
 
   /** The bot plays while it has something to do: its turn, or its new Active Pokémon. */
