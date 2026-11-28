@@ -158,7 +158,7 @@
       "tcgplayerId": 123447,
       "packs": 8,
       "promos": [],
-      "imageVersion": 3
+      "imageVersion": 4
     },
     {
       "id": "etb-mega-blastoise",
@@ -167,7 +167,7 @@
       "tcgplayerId": 123448,
       "packs": 8,
       "promos": [],
-      "imageVersion": 4
+      "imageVersion": 5
     },
     {
       "id": "prerelease-kit",
@@ -206,7 +206,8 @@
       "packs": 1,
       "promos": [
         "xyp162"
-      ]
+      ],
+      "imageVersion": 2
     },
     {
       "id": "weezing-single-pack-blister",
@@ -217,7 +218,7 @@
       "promos": [
         "xyp163"
       ],
-      "imageVersion": 2
+      "imageVersion": 3
     },
     {
       "id": "mega-blastoise-pin-collection",
@@ -235,7 +236,8 @@
       "tcgplayerId": 229352,
       "packs": 3,
       "promos": [],
-      "note": "Two Evolutions packs and one random XY pack in the real box; all three are Evolutions here."
+      "note": "Two Evolutions packs and one random XY pack in the real box; all three are Evolutions here.",
+      "imageVersion": 2
     },
     {
       "id": "charizard-ex-box",
@@ -253,7 +255,8 @@
       "tcgplayerId": 125732,
       "packs": 4,
       "promos": [],
-      "note": "Pack mix approximate: the real split isn't documented. The foil Kangaskhan-EX is a reprint, not simulated."
+      "note": "Pack mix approximate: the real split isn't documented. The foil Kangaskhan-EX is a reprint, not simulated.",
+      "imageVersion": 2
     },
     {
       "id": "gengar-ex-box",
@@ -267,7 +270,7 @@
         "xy11": 1,
         "xy9": 1
       },
-      "imageVersion": 2
+      "imageVersion": 3
     },
     {
       "id": "dragonite-ex-box",
@@ -354,7 +357,8 @@
         "xyp181",
         "xyp182"
       ],
-      "note": "Pack mix approximate: the real split isn't documented."
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "imageVersion": 2
     },
     {
       "id": "autumn-2016-collector-chest",
@@ -385,7 +389,7 @@
         "xyp195"
       ],
       "note": "Pack mix approximate: the real split isn't documented.",
-      "imageVersion": 2
+      "imageVersion": 3
     },
     {
       "id": "mythical-collection-magearna",
@@ -402,7 +406,8 @@
         "xyp196",
         "xyp197"
       ],
-      "note": "Pack mix approximate: the real split isn't documented. The real box's promo count is 6 or 7 depending on the source; the 7 are listed."
+      "note": "Pack mix approximate: the real split isn't documented. The real box's promo count is 6 or 7 depending on the source; the 7 are listed.",
+      "imageVersion": 2
     },
     {
       "id": "kanto-power-collection-mewtwo-slowbro",
@@ -411,7 +416,8 @@
       "tcgplayerId": 222988,
       "packs": 10,
       "promos": [],
-      "note": "The foil Mewtwo-EX and Slowbro-EX are reprints, not simulated."
+      "note": "The foil Mewtwo-EX and Slowbro-EX are reprints, not simulated.",
+      "imageVersion": 2
     },
     {
       "id": "kanto-power-collection-dragonite-pidgeot",

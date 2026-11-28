@@ -52,8 +52,8 @@ export function applyBinderLook(el, resolved) {
   const { look, attrs, vars } = resolved;
   for (const [key, value] of Object.entries(attrs)) el.setAttribute(key, value);
   for (const [key, value] of Object.entries({ ...vars, ...plateVars(vars) })) el.style.setProperty(key, value);
-  const fx = el.querySelector(".binder-fx");
-  if (fx && fx.dataset.edition !== look.edition) {
+  for (const fx of el.querySelectorAll(".binder-fx")) { // the cover, and the closed front leaf's copy of it
+    if (fx.dataset.edition === look.edition) continue;
     fx.dataset.edition = look.edition;
     fx.innerHTML = binderFxHtml(look.edition);
   }

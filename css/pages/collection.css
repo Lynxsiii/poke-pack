@@ -412,7 +412,7 @@ body.no-motion :is(.binder-page, .bd-pip .rt-ball, .pocket-card, .pocket-ball) {
   position: relative; flex: none; display: grid; place-items: center; width: 46px; height: 46px; padding: 0;
   border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); color: var(--k); cursor: pointer;
 }
-.picker-filter-toggle svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: square; stroke-linejoin: miter; }
+.picker-filter-toggle svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 .picker-filter-toggle[aria-expanded="true"] { background: var(--k); color: var(--on-k); }
 .picker-filter-toggle[data-active]::after { content: ""; position: absolute; top: -5px; right: -5px; width: 12px; height: 12px; border: 2px solid var(--box); border-radius: 50%; background: var(--hp-low); }
 .picker-filter-toggle:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 2px; }

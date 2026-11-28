@@ -214,7 +214,7 @@ function tileName(row, deps) {
 }
 
 function tileIcon(row, deps) {
-  const common = `viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"`;
+  const common = `viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"`;
   switch (row.kind) {
     case "frame":
       // The Pokémon frames show their own ring art (assets/frames, drawn by scripts/make-frames.mjs).
@@ -229,10 +229,10 @@ function tileIcon(row, deps) {
       if (art) return `<span class="lv-ic lv-ic-art">${art}</span>`;
       return row.gearKind === "coin"
         ? `<span class="lv-ic"><svg ${common}><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/></svg></span>`
-        : `<span class="lv-ic"><svg ${common}><rect x="6" y="3" width="12" height="18"/><path d="M9 7h6"/></svg></span>`;
+        : `<span class="lv-ic"><svg ${common}><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M9 7h6"/></svg></span>`;
     }
     case "slots":
-      return `<span class="lv-ic"><svg ${common}><rect x="4" y="4" width="6.5" height="6.5"/><rect x="13.5" y="4" width="6.5" height="6.5"/><rect x="4" y="13.5" width="6.5" height="6.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" stroke-dasharray="2 2.4"/></svg></span>`;
+      return `<span class="lv-ic"><svg ${common}><rect x="4" y="4" width="6.5" height="6.5" rx="1"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1" stroke-dasharray="2 2.4"/></svg></span>`;
     case "hourly":
       return `<span class="lv-ic"><svg ${common}><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9.5 2.5h5"/></svg></span>`;
     case "gate":
