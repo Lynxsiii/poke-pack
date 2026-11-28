@@ -46,7 +46,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm
   --sgx-band-pos: clamp(0%, calc(((50% - var(--background-x, 50%)) * 1.5) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y, 50%)) * 1.0) + 50%), 100%);
   /* where the colour gathers: clear round the pointer, white (no tint) far from it */
   --sgx-fade: radial-gradient(ellipse 58% 44% at var(--pointer-x) var(--pointer-y),
-    rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 35%, rgba(255, 255, 255, 0.72) 75%, rgba(255, 255, 255, 0.86) 100%);
+    rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.46) 35%, rgba(255, 255, 255, 0.8) 75%, rgba(255, 255, 255, 0.9) 100%);
   /* the frame ring: four strips (sides 3.8% of the width, top and bottom 2.7% of the height), mid-grey silver */
   /* tinted silver along the frame (lavender, cyan, green, pink between greys), sliding with the tilt: the frame's
      rainbow glitter shows its colour all along, not only under the light */
@@ -64,6 +64,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm
   --sgx-ring-rest-pos: 0% 0%, 100% 0%, 0% 0%, 0% 100%;
   --sgx-seed: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
   --sgx-hold: min(1, calc((0.45 + var(--card-opacity, 0) * 0.55) * var(--foil-strength, 1)));
+  /* a few promos carry an etch map (White Kyurem SM141, Lucario & Melmetal SM139): the shared etch shine's spectrum and
+     glitter at their defaults read as heavy glitter and a rainbow tint over the art. A trace of colour, no glitter. */
+  --shine-line: 0.1;
+  --shine-glit: 0;
 }
 
 /* ---- Every layer reset: what base.css, rarities.css, realism.css, maps.css and sm-gx.css put here ------------- */
@@ -116,10 +120,14 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm
 
 /* ---- .foil (held): band patches x grain, gathered near the light, the ring grey, multiplied -------------------- */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx .foil {
+  /* 2026-11-28: the pebble tile is out of the colour (its slot holds mid grey, which overlay leaves alone) and the
+     colour is held to about 0.6 under the light. Overlaid on the saturated bands the grain tore them into a green or
+     rainbow glitter patch that sat on the Pokémon beside the light and recoloured eyes (site review: 49 of 203 bad).
+     The real card shows a soft rainbow sheen there; the grain is the faint relief `.glare` draws. */
   background-image:
     var(--sgx-ring-v), var(--sgx-ring-v), var(--sgx-ring-h), var(--sgx-ring-h),
     var(--sgx-fade),
-    var(--sgx-pebble),
+    linear-gradient(#808080, #808080),
     var(--sgx-cloud),
     var(--sgx-bands);
   background-size: var(--sgx-ring-size), 100% 100%, 17% auto, 90% auto, 260% 260%;
