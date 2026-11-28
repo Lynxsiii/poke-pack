@@ -20,6 +20,7 @@ import {
   BASIC_ENERGY,
   sellValue,
   money,
+  COINS_PER_USD,
   rarityKey,
   setIdentity,
   sealedOffers,
@@ -171,6 +172,8 @@ import { hexToHsl, hslToHex, mixHex } from "./card-accent.js";
 import { cachedCardAccents, sampleCardAccents } from "./card-art-accent.js?v=1";
 import { initBinderEditor } from "./binder-editor.js?v=6";
 import { renderNotesPage } from "./notes-page.js?v=4";
+import { initThisWeek } from "./this-week.js?v=1";
+import { initLiveRips } from "./live-rips.js?v=1";
 import { renderLegalPage, LEGAL_TITLES } from "./legal-page.js?v=9";
 import { ageFieldsHtml, agreeRowHtml, readAgeFields, ageBlocked, blockAge, UNDERAGE_HTML, syncTermsSheet } from "./terms-sheet.js?v=1";
 
@@ -4043,6 +4046,8 @@ function renderHome() {
   // the set on show and its chase cards, then the player's binder. Odds live on
   // the set page, older sets in All sets, pulls on the account page, chat on Social.
   els.homeBody.innerHTML = trainer ? `<div class="home-grid">${binder}</div>` : "";
+  liveRips.render();
+  thisWeek.render();
 }
 
 function formatWhen(ts) {
@@ -5773,8 +5778,8 @@ function renderSettings() {
   const feedRow = activeTrainer()
     ? `<label class="set-row toggle-row">
         <span class="set-copy">
-          <b>Share big pulls on Discord</b>
-          <small>A pull worth $100 or more, a Special Illustration Rare or better, or a Black Label 10 is posted in our Discord with your handle. Turn it off to stay out of the feed.</small>
+          <b>Share big pulls</b>
+          <small>A pull worth $100 or more, a Special Illustration Rare or better, or a Black Label 10 shows in Live rips on Home and is posted in our Discord, with your handle. Turn it off to stay out of both.</small>
         </span>
         <input type="checkbox" data-feed-share ${activeTrainer().feedShare === false ? "" : "checked"} />
         <i class="switch" aria-hidden="true"></i>
@@ -8863,7 +8868,11 @@ document.addEventListener("click", (e) => {
   e.preventDefault();
   if (next === "auth") openAuth();
   else if (setIdFromPath(url.pathname)) playSet(setIdFromPath(url.pathname));
-  else setView(next);
+  else {
+    // A link to one update (Home's "This week"): the notes page opens it once it is on screen.
+    if (next === "notes" && url.hash.startsWith("#note-")) notesState.jump = decodeURIComponent(url.hash.slice(1));
+    setView(next);
+  }
 });
 
 window.addEventListener("popstate", () => {
@@ -11536,6 +11545,39 @@ async function openIndexedCard({ id, setId }) {
     toast("Couldn't open that card.");
   }
 }
+
+// Home's "This week" (js/this-week.js): the newest big update and the week's price moves.
+const thisWeek = initThisWeek({
+  root: document.getElementById("home-week"),
+  esc,
+  coinAmount,
+  coinText,
+  toCoins: (usd) => Math.max(0.01, money(Number(usd) * COINS_PER_USD)),
+  openCard: openIndexedCard,
+  loadMovers: () =>
+    fetch("/api/prices/movers").then((res) => {
+      if (!res.ok) throw new Error(res.status);
+      return res.json();
+    }),
+  notes: () => patchNotes,
+});
+
+// Home's "Live rips" (js/live-rips.js): the newest big pulls from trainers who share them.
+const liveRips = initLiveRips({
+  root: document.getElementById("home-rips"),
+  esc,
+  coinAmount,
+  coinText,
+  toCoins: (usd) => Math.max(0.01, money(Number(usd) * COINS_PER_USD)),
+  // A card's set file is named by the front of its id ("me5-116" is in data/me5.json).
+  openCard: (id) => openIndexedCard({ id, setId: getSet(String(id).split("-")[0]).id }),
+  load: () =>
+    fetch("/api/rips/live").then((res) => {
+      if (!res.ok) throw new Error(res.status);
+      return res.json();
+    }),
+  onScreen: () => view === "home" && document.visibilityState === "visible" && packPhase === "idle",
+});
 
 const siteSearch = initSearch({
   root: document.getElementById("site-search"),
