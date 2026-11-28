@@ -15,10 +15,12 @@
      restCoin(coinEl, "heads"|"tails")      instant resting pose
 
    `coin` is null (the house coin, see HOUSE_COIN_ART) or
-   { id, name, image, side, map, finish, tint, material } for a promo coin: `image` is
+   { id, name, image, side, map, finish, look, tint, material } for a promo coin: `image` is
    the catalog's two-face file (obverse left, reverse right), `side` picks the half,
    `map` is the holo map drawn from the coin's own art (scripts/coin_foil.py) and
-   `finish` is metal | foil | plastic (what the real coin is). */
+   `finish` is metal | foil | plastic (what the real coin is made of) and `look` is
+   what its surface does to light (struck, mirror, rainbow, sheen, ice, glitter,
+   pearl, gloss: css/casino-coin.css .cf-look-*). */
 
 const esc = (value = "") =>
   String(value).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -80,6 +82,7 @@ export function coinOf(item, side = "front") {
     side: side === "back" ? "back" : "front",
     map: item.foil?.map || "",
     finish: item.foil?.finish || (item.material === "metal" ? "metal" : item.material === "foil" ? "foil" : "plastic"),
+    look: item.foil?.look || "",
     tint: item.tint || "",
     material: item.material || "",
   };
@@ -97,10 +100,11 @@ export function coinFaceHTML(coin, label = "") {
   if (coin && coin.image) {
     const back = coin.side === "back";
     const finish = coin.finish || "plastic";
+    const look = /^[a-z]+$/.test(coin.look || "") ? coin.look : finish === "metal" ? "struck" : finish === "foil" ? "rainbow" : "gloss";
     const vars = [`--art:url('${esc(abs(coin.image))}')`, `--mpos:${back ? "100% 0" : "0 0"}`];
     if (coin.map) vars.push(`--map:url('${esc(abs(coin.map))}')`);
-    return `<span class="cf-face-flat cf-has-art cf-fin-${esc(finish)}${back ? " cf-reverse" : ""}"${aria} style="${vars.join(";")}">
-      <span class="cf-photo"></span>${coin.map ? `<span class="cf-holo"><i></i></span>` : ""}${light}</span>`;
+    return `<span class="cf-face-flat cf-has-art cf-fin-${esc(finish)} cf-look-${look}${back ? " cf-reverse" : ""}"${aria} style="${vars.join(";")}">
+      <span class="cf-photo"></span>${coin.map ? `<span class="cf-holo"><i></i></span>${look === "glitter" ? `<i class="cf-spark"></i>` : ""}` : ""}${light}</span>`;
   }
   const kind = String(label).toLowerCase() === "tails" ? "tails" : "heads";
   return `<span class="cf-face-flat cf-house cf-${kind}"${aria}>

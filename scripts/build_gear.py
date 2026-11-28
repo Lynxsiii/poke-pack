@@ -227,10 +227,10 @@ def main() -> int:
             row.update({"material": it.get("material", "unknown"), "front": rel, "drawn": rendered})
             # Holo map drawn from the coin's own art: scripts/coin_foil.py (run it after a build).
             cspec = coin_foil.load_spec()
-            cfin = coin_foil.finish_of(row, cspec)
+            cfin = coin_foil.mode_of(row, cspec)
             cmap = coin_foil.map_path(it["id"], row, cspec)
             if cfin != "off" and cmap.exists():
-                row["foil"] = {"finish": cfin, "map": cmap.relative_to(ROOT).as_posix()}
+                row["foil"] = coin_foil.foil_row(row, cspec, cmap)
             elif cfin != "off":
                 print(f"NOTE {it['id']} has no holo map yet; run scripts/coin_foil.py", file=sys.stderr)
             catalog["coins"][it["id"]] = row
