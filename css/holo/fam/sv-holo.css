@@ -39,11 +39,11 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-holo.fam-sv-holo.fam-sv-holo.fam-sv-hol
      The middle travels from 10% to 62% of the card's height as the light moves down. */
   --svh-band-y: calc((0.72 - var(--py, 0.5) * 0.26) * 100%);
   --svh-falloff: linear-gradient(180deg,
-    hsla(0, 0%, 50%, 0.955) 0%, hsla(0, 0%, 50%, 0.955) 42%, hsla(0, 0%, 50%, 0.72) 48.2%, hsla(0, 0%, 50%, 0) 49.4%,
-    hsla(0, 0%, 50%, 0) 50.6%, hsla(0, 0%, 50%, 0.72) 51.8%, hsla(0, 0%, 50%, 0.955) 58%, hsla(0, 0%, 50%, 0.955) 100%);
+    hsla(0, 0%, 50%, 0.86) 0%, hsla(0, 0%, 50%, 0.86) 36%, hsla(0, 0%, 50%, 0.5) 45.5%, hsla(0, 0%, 50%, 0.12) 49%,
+    hsla(0, 0%, 50%, 0.12) 51%, hsla(0, 0%, 50%, 0.5) 54.5%, hsla(0, 0%, 50%, 0.86) 64%, hsla(0, 0%, 50%, 0.86) 100%);
   --svh-falloff-white: linear-gradient(180deg,
-    hsla(0, 0%, 100%, 0.97) 0%, hsla(0, 0%, 100%, 0.97) 44%, hsla(0, 0%, 100%, 0.82) 48.7%, hsla(0, 0%, 100%, 0) 49.6%,
-    hsla(0, 0%, 100%, 0) 50.4%, hsla(0, 0%, 100%, 0.82) 51.3%, hsla(0, 0%, 100%, 0.97) 56%, hsla(0, 0%, 100%, 0.97) 100%);
+    hsla(0, 0%, 100%, 0.92) 0%, hsla(0, 0%, 100%, 0.92) 36%, hsla(0, 0%, 100%, 0.6) 45.5%, hsla(0, 0%, 100%, 0.2) 49%,
+    hsla(0, 0%, 100%, 0.2) 51%, hsla(0, 0%, 100%, 0.6) 54.5%, hsla(0, 0%, 100%, 0.92) 64%, hsla(0, 0%, 100%, 0.92) 100%);
   --svh-spectrum-x: calc((0.1 + var(--px, 0.5) * 0.8) * 100%);
   --svh-spectrum: linear-gradient(95deg,
     hsl(0, 85%, 58%), hsl(30, 90%, 57%), hsl(55, 90%, 56%), hsl(110, 75%, 52%), hsl(178, 85%, 52%),
@@ -63,9 +63,12 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-holo.fam-sv-holo.fam-sv-holo.fam-sv-hol
     var(--svh-spectrum-x) 50%;
   background-repeat: repeat-y, repeat-y, no-repeat, no-repeat;
   background-blend-mode: normal;
-  filter: saturate(1.8) contrast(1.5);
-  mix-blend-mode: hard-light;
-  opacity: calc((0.36 + var(--card-opacity) * 0.46) * var(--foil-strength, 1));
+  /* overlay and no saturate/contrast push (per-card review, 2026-11-28): hard-lit at saturate(1.8) contrast(1.5) the
+     band was a glowing magenta/red-blue blob over the Pokémon (Chi-Yu SVP 057, Aerodactyl 142). Overlay scales the
+     tint by the ink under it: the pale background foil takes a pastel band, dark ink stays dark. */
+  filter: saturate(0.85);
+  mix-blend-mode: overlay;
+  opacity: calc((0.4 + var(--card-opacity) * 0.5) * var(--foil-strength, 1));
 }
 /* Resting: the border dashes faint, the window a faint even tint (a card on a table shows a few soft bars on the silver). */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-holo.fam-sv-holo.fam-sv-holo.fam-sv-holo.foil-svholo.has-foil-map:not(.lit):not(.settling) .foil {
@@ -100,7 +103,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-holo.fam-sv-holo.fam-sv-holo.fam-sv-hol
 /* A soft hot spot under the light, plain silver (no glitter white) elsewhere. */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-holo.fam-sv-holo.fam-sv-holo.fam-sv-holo.foil-svholo.has-foil-map .foil::after {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(0, 0%, 100%, 0.22) 0%, hsla(0, 0%, 100%, 0) 30%, hsla(0, 0%, 50%, 0) 100%);
+    hsla(0, 0%, 100%, 0.3) 0%, hsla(0, 0%, 100%, 0.1) 26%, hsla(0, 0%, 100%, 0) 48%, hsla(0, 0%, 50%, 0) 100%);
   background-size: 100% 100%;
   background-repeat: no-repeat;
   mix-blend-mode: normal;
@@ -132,7 +135,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-holo.fam-sv-holo.fam-sv-holo.fam-sv-hol
   background-blend-mode: normal;
   mix-blend-mode: multiply;
   filter: none;
-  opacity: calc(var(--card-opacity) * 0.7 * var(--foil-strength, 1));
+  opacity: calc(var(--card-opacity) * 0.5 * var(--foil-strength, 1));
 }
 
 /* ---- Faces whose assets fight the foil ---------------------------------------------------------------------------- */
