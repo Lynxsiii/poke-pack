@@ -75,17 +75,20 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-full
   --smf-tint-a: 1;
   /* where the light is: full round the pointer, a good part of it across the card */
   --smf-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    #000 0%, #000 26%, rgba(0, 0, 0, 0.62) 62%, rgba(0, 0, 0, 0.45) 100%);
+    #000 0%, #000 24%, rgba(0, 0, 0, 0.5) 58%, rgba(0, 0, 0, 0.24) 100%);
   /* the tint's falloff: white laid over the bands away from the light */
   --smf-fade: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 30%, rgba(255, 255, 255, 0.3) 65%, rgba(255, 255, 255, 0.5) 100%);
   /* the light pool the dodge lifts (white and black ink do not move) */
   --smf-hot: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    rgb(34, 34, 34) 0%, rgb(20, 20, 20) 22%, rgb(7, 7, 7) 50%, #000 75%);
+    rgb(26, 26, 26) 0%, rgb(15, 15, 15) 22%, rgb(5, 5, 5) 50%, #000 75%);
   /* the etch as drawn in .foil and as the bands' mask */
   --smf-etch: var(--etch-map, linear-gradient(transparent, transparent));
-  --smf-etch-veil: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55));
-  --smf-etch-rest: linear-gradient(rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.62));
+  /* 2026-11-28: veils 0.55 / 0.62 before. The etch map is grey nearly everywhere, so the dodge was a gain over the
+     whole face: a navy background went lilac at rest (Lunala sm1 141) and a saturated blue clipped to teal-green
+     under the light (Lapras sm1 139, "teal tint washes whole card"). */
+  --smf-etch-veil: linear-gradient(rgba(0, 0, 0, 0.66), rgba(0, 0, 0, 0.66));
+  --smf-etch-rest: linear-gradient(rgba(0, 0, 0, 0.76), rgba(0, 0, 0, 0.76));
   --smf-etch-floor: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
   /* the silver frame ring, as four strips (sides 3.6% of the width, top and bottom 2.6% of the height) */
   --smf-ring-lit: linear-gradient(rgb(84, 84, 88), rgb(84, 84, 88));
@@ -101,7 +104,13 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-full
   --smf-ring-sparkle-a: 0.8;
   --smf-whole: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35));
   --smf-sparkle: url("/assets/foil/glitter-flecks.webp");
-  --smf-sparkle-a: calc(0.12 + var(--pointer-from-center) * 0.2);
+  --smf-sparkle-a: calc(0.04 + var(--pointer-from-center) * 0.08);
+  /* The shared etch shine (css/holo/etch-shine.css) at its defaults overlaid a full spectrum and screened glitter on
+     every engraved line of the face: black hair and clothes went olive, brown or purple under a speckle, and whole
+     cards took a teal or magenta cast (site review 2026-11-28, 98 of 278 bad; hiding `.shine` cleared nearly all of
+     them). This family draws its own bands on the hatch, so the shine is a trace of colour and no glitter. */
+  --shine-line: 0.08;
+  --shine-glit: 0;
 }
 /* No TCG Live etch (the data's shared tile): nothing drawn for it. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.foil-ultra.has-foil-map.smf-noetch {
@@ -117,13 +126,19 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-full
   --smf-pos: calc(100% - var(--background-x)) var(--background-y);
   --smf-band: clamp(0, calc(0.4 + var(--pointer-from-center) * 1.1), 1);
   --smf-ring-lit: linear-gradient(rgb(96, 96, 100), rgb(96, 96, 100));
-  --smf-sparkle-a: calc(0.25 + var(--pointer-from-center) * 0.35);
-  /* the rainbow tint a step under full: the app keeps a held card lit, so a full-strength tint reads as a sheet */
-  --smf-tint-a: 0.75;
+  /* the Supporter's art is pale, so the dodge (pool + etch) clipped it to a milky pastel under the light (Lisia,
+     Diantha, Mina, Whitney): a smaller pool and a heavier veil on the etch than the GX */
+  --smf-hot: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    rgb(12, 12, 12) 0%, rgb(7, 7, 7) 22%, rgb(2, 2, 2) 50%, #000 75%);
+  --smf-etch-veil: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8));
+  --smf-sparkle-a: calc(0.06 + var(--pointer-from-center) * 0.1);
+  /* the rainbow tint well under full: the app keeps a held card lit, so a full-strength tint reads as a sheet, and at
+     0.75 pale Supporters (Faba, Kahili, Mina) were a pastel rainbow wash from edge to edge (site review 2026-11-28) */
+  --smf-tint-a: 0.45;
   /* the hatch's white held lower: the rainbow carries this card, the lines only glint */
-  --smf-sheen: repeating-linear-gradient(130deg, rgb(10, 10, 10) 0%, rgb(10, 10, 10) 2%, rgb(90, 90, 90) 4.5%,
-    rgb(140, 140, 140) 6.5%, rgb(90, 90, 90) 8.5%, rgb(10, 10, 10) 11%, rgb(10, 10, 10) 13%);
-  --smf-sheen-floor: linear-gradient(rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.18));
+  --smf-sheen: repeating-linear-gradient(130deg, rgb(10, 10, 10) 0%, rgb(10, 10, 10) 2%, rgb(64, 64, 64) 4.5%,
+    rgb(100, 100, 100) 6.5%, rgb(64, 64, 64) 8.5%, rgb(10, 10, 10) 11%, rgb(10, 10, 10) 13%);
+  --smf-sheen-floor: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1));
 }
 /* The alternate arts: one broad band, a sparkle on the scenery. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.foil-ultra.has-foil-map.smf-alt {
@@ -133,7 +148,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-full
   --smf-size: 250% 250%;
   --smf-pos: calc(100% - var(--background-x)) var(--background-y);
   /* 2026-11-25: the band read as nothing on a phone (Koffing 243 scored as foil-less); wider, brighter, more sparkle */
-  --smf-sparkle-a: calc(0.5 + var(--pointer-from-center) * 0.4);
+  --smf-sparkle-a: calc(0.2 + var(--pointer-from-center) * 0.2);
   --smf-band: clamp(0, calc(0.6 + var(--pointer-from-center) * 0.9), 1);
   /* the sheen: the same broad band, white x the scan's lightness (the printed star glints flash, mid-tone scenery takes
      a soft gleam), on the etch where there is one, else on a high floor; a sparkle in it */
@@ -353,4 +368,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-full
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.foil-ultra.has-foil-map.smf-photo:is(.smf-gx, .smf-t, .smf-alt) .foil {
   opacity: calc(min(1, var(--foil-strength, 1)) * 0.5);
+}
+/* ... and at rest (the rest rule above outranked this one, so a resting photo print was dodged in full: paler at rest
+   than lit, "hazed at rest" on every Japanese face in the 2026-11-28 render) */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.fam-sm-fullart.foil-ultra.has-foil-map.smf-photo:is(.smf-gx, .smf-t, .smf-alt):not(.lit):not(.settling) .foil {
+  opacity: calc(min(1, var(--foil-strength, 1)) * 0.35);
 }

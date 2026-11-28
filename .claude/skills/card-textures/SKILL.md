@@ -332,6 +332,13 @@ cure"). The surface gloss throws a soft highlight.
   light on the ridges) at `--shine-glit` 0.6 by default, and the star coat is a clear coat that fades out 55% of the
   way from the light. `holo_check.py` reports `speck` (fine grain the foil adds over the art, as a ratio of the
   print's own) and flags it over 0.45: watch it after touching any glitter, fleck or sparkle layer.
+- **A family with its own engraving recipe must set `--shine-line` and `--shine-glit` itself (Sun & Moon, 2026-11-28).**
+  The shared etch shine paints at 0.45 / 0.6 on every `has-etch-map` face unless the family says otherwise. The SM full
+  arts, gold secrets, Shining Pokémon and etched GX promos never did, so black hair and clothes went olive or purple
+  under a speckle and gold items wore sparkle dots (about 180 of 600 cards bad; hiding `.shine` cleared most). Same
+  for a grain tile overlaid on saturated bands (the GX pebble): it tears the colour into a glitter patch beside the
+  light; keep grain in the relief, colour smooth. A colour-dodge gain over a pale window (x1.5 on SM holos) is a
+  white-out: pale art needs a smaller gain than dark art, so keep it near x1.3.
 - **Pick the streak's blend by what the ink under it can show (BW Tinsel, 2026-11-28).** One hard-light streak texture
   cannot serve every window: coloured streaks in hard-light were rainbow static over dark art, pale pastels were
   invisible on pale art, and any evenly pitched ridge list reads as a CRT line screen at phone size. Scatter the streaks
