@@ -155,6 +155,13 @@ export function initTcg(deps) {
     return `<i class="tg-en" data-en="${esc(one)}" title="${esc(title)}" role="img" aria-label="${esc(title)}">${enIcon(one)}</i>`;
   };
   const pips = (types) => types.map(pip).join("");
+  /** Attached Energy, never overlapped: every symbol while there are few, then one symbol and a count for each type. */
+  const pipRow = (types, max = 4) => {
+    if (types.length <= max) return pips(types);
+    const n = new Map();
+    for (const type of types) n.set(type, (n.get(type) || 0) + 1);
+    return [...n].map(([type, count]) => `${pip(type)}${count > 1 ? `<b class="tg-pip-n">${count}</b>` : ""}`).join("");
+  };
   const stageName = (def) => (def.stage === "basic" ? "Basic" : `Evolves from ${def.evolvesFrom}`);
 
   function hpBar(left, max) {
@@ -686,7 +693,7 @@ export function initTcg(deps) {
     return `<button type="button" class="tg-mon${ready ? " has-ability" : ""}${big ? " big" : ""}${target ? " is-target" : ""}${chosen ? " is-chosen" : ""}" data-p="${p}" data-spot="${spot}" aria-label="${esc(label)}">
       <img src="${img(state.cards[slot.uid], big)}" alt="" draggable="false" decoding="async" />
       ${slot.damage ? `<span class="tg-dmg">${slot.damage}</span>` : ""}
-      ${big ? (slot.energy.length ? `<span class="tg-pips tg-on">${pips(energyOf(state, slot, defs))}</span>` : "") : `${hpBar(left, full)}<span class="tg-pips">${pips(energyOf(state, slot, defs))}${toolName ? `<i class="tg-en tg-toolpip" title="${esc(toolName)}">T</i>` : ""}</span>`}
+      ${big ? "" : `${hpBar(left, full)}<span class="tg-pips">${pipRow(energyOf(state, slot, defs), toolName ? 2 : 3)}${toolName ? `<i class="tg-en tg-toolpip" title="${esc(toolName)}">T</i>` : ""}</span>`}
       ${ready ? `<span class="tg-abil-tag">${esc(def.ability.kind === "Ability" ? "Ability" : "Power")}</span>` : ""}
     </button>`;
   }
@@ -703,15 +710,38 @@ export function initTcg(deps) {
     const edge = typing?.weak ? `<i class="tg-cond" data-cond="weak">Weak ${def.weakness.op === "x" ? "×" : "+"}${def.weakness.n}</i>` : typing?.resist ? `<i class="tg-cond" data-cond="resist">Resists -${def.resistance.n}</i>` : "";
     return `<div class="tg-hud" data-p="${p}">
       <b class="tg-hud-name">${esc(def.name)}</b>
-      <span class="tg-pips">${energy.length ? pips(energy) : `<small>No Energy</small>`}</span>
-      <span class="tg-hud-hp"><em>HP</em>${hpBar(left, maxHp(state, slot, defs))}<span class="num">${left}/${maxHp(state, slot, defs)}</span></span>
+      <span class="tg-hud-hp">${hpBar(left, maxHp(state, slot, defs))}</span>
+      <span class="tg-pips">${energy.length ? pipRow(energy, 5) : `<small>No Energy</small>`}</span>
+      <span class="num"><b>${left}</b>/${maxHp(state, slot, defs)}</span>
       ${conditionsOn(slot).length || marksOn(state, slot).length || edge || slot.tool || (slot.held || []).length || def.ability ? `<span class="tg-conds">${edge}${def.ability ? `<i class="tg-cond" data-cond="ability"${abilityOn(state, slot, defs) ? "" : " data-off"}>${esc(def.ability.name)}</i>` : ""}${slot.tool ? `<i class="tg-cond" data-cond="tool">${esc(defOf(state, slot.tool, defs).name)}</i>` : ""}${(slot.held || []).map((h) => `<i class="tg-cond" data-cond="tool">${esc(defOf(state, h.uid, defs).name)}</i>`).join("")}${conditionsOn(slot).map((c) => `<i class="tg-cond" data-cond="${c}">${COND_NAME[c]}</i>`).join("")}${marksOn(state, slot).map((m) => `<i class="tg-cond" data-cond="mark" data-mark="${m.kind}">${esc(markLabel(m))}</i>`).join("")}</span>` : ""}
     </div>`;
   }
 
+  /** Prize cards laid out face down beside the Bench, the way they sit on a mat. One leaves each time a prize is taken. */
   function prizesHtml(state, p) {
     const left = state.phase === "setup" ? state.rules.prizes : state.players[p].prizes.length;
-    return `<span class="tg-prizes" aria-label="${plural(left, "prize card")} left">${Array.from({ length: state.rules.prizes }, (_, i) => `<i class="rt-ball${i < left ? "" : " e"}"></i>`).join("")}</span>`;
+    const all = Math.max(state.rules.prizes, left);
+    return `<span class="tg-pile tg-prizes" data-p="${p}" style="--rows:${Math.ceil(all / 2)}" aria-label="${p === ME ? "Your" : "Their"} prize cards: ${left} left">
+      <span class="tg-prize-grid">${Array.from({ length: all }, (_, i) => `<i${i < left ? "" : ` class="e"`}></i>`).join("")}</span>
+      <b class="tg-pile-n">${left}</b>
+    </span>`;
+  }
+
+  /** The deck, with its count, and the discard pile's count under it. */
+  function deckHtml(state, p, back) {
+    const side = state.players[p];
+    return `<span class="tg-pile tg-deckpile" data-p="${p}">
+      <span class="tg-stack${side.deck.length ? "" : " e"}" title="${p === ME ? "Cards in your deck" : "Cards in their deck"}"><span class="tg-mini">${back}</span><b class="tg-pile-n">${side.deck.length}</b></span>
+      <small class="tg-bin" title="${p === ME ? "Cards in your discard pile" : "Cards in their discard pile"}">Discard ${side.discard.length}</small>
+    </span>`;
+  }
+
+  /** What you still have this turn: one Energy, one Supporter, one retreat. */
+  function trackHtml(state) {
+    if (state.phase !== "main" || state.current !== ME) return "";
+    const side = state.players[ME];
+    const mark = (used, label) => `<span${used ? ` class="used"` : ""}>${label}<i class="sr-only">${used ? ", used" : ", still to use"}</i></span>`;
+    return `<span class="tg-track" aria-label="This turn">${mark(side.energyUsed, "Energy")}${mark(side.supporterUsed || (state.turn === 1 && state.first === ME), "Supporter")}${mark(side.retreated, "Retreat")}</span>`;
   }
 
   /** What the player is being asked to do, and the keys for it. */
@@ -829,6 +859,25 @@ export function initTcg(deps) {
       for (const a of acts) if (a.uid) for (const uid of hand) if (real.cards[uid] === real.cards[a.uid]) playable.add(uid);
     }
 
+    // The hand is laid out by kind, and copies of one card sit as a pile with a count, so five Energy read as one stack.
+    const kindRank = (uid) => ({ pokemon: 0, trainer: 1, energy: 2 })[d(uid).kind] ?? 3;
+    const sorted = hand.map((uid, i) => ({ uid, i })).sort((a, b) => kindRank(a.uid) - kindRank(b.uid) || (real.cards[a.uid] === real.cards[b.uid] ? 0 : real.cards[a.uid] < real.cards[b.uid] ? -1 : 1) || a.i - b.i).map((x) => x.uid);
+    const shownHand = sorted.map((uid, i) => {
+      const id = real.cards[uid];
+      const stacked = i > 0 && real.cards[sorted[i - 1]] === id;
+      const last = i === sorted.length - 1 || real.cards[sorted[i + 1]] !== id;
+      return { uid, stacked, count: last ? sorted.filter((u) => real.cards[u] === id).length : 0, tilt: 0 };
+    });
+    const groups = shownHand.filter((c) => !c.stacked).length;
+    const handUnits = groups + (shownHand.length - groups) * 0.16;
+    let g = -1;
+    for (const c of shownHand) {
+      if (!c.stacked) g += 1;
+      c.tilt = groups > 1 ? ((g / (groups - 1)) * 2 - 1).toFixed(2) : 0;
+    }
+    const foeBench = setup && match.online ? Array(match.online.hidden.bench).fill(null) : foe.bench;
+    const places = (n) => Array.from({ length: Math.max(0, n) }, () => `<span class="tg-place"></span>`).join("");
+
     const point = coach && !sel && !match.sheet ? coach : null;
     const pointHand = point && (point.pick || point.want?.({ type: "attach", spot: ACTIVE }) || point.want?.({ type: "attach", spot: 0 }) || point.want?.({ type: "evolve" }));
     const pointActive = point?.want?.({ type: "attack" });
@@ -836,42 +885,50 @@ export function initTcg(deps) {
       <div class="tg-bar tg-bar-foe">
         <button type="button" class="tg-leave" data-act="leave" aria-label="Leave the match">${match.leaving ? "Concede?" : "Leave"}</button>
         <b class="tg-who">${esc(foe.name)}${match.botTheme && !setup ? `<small>${match.level && match.lesson == null ? `${levelName(match.level)}, ` : ""}${esc(match.botTheme)} deck</small>` : ""}</b>
-        ${prizesHtml(state, BOT)}
-        <span class="tg-count" title="Cards in hand"><i class="tg-ic hand"></i>${foe.hand.length}</span>
-        <span class="tg-count" title="Cards in deck"><i class="tg-ic deck"></i>${foe.deck.length}</span>
-      </div>
-      <div class="tg-bench tg-bench-foe">
-        ${(setup && match.online ? Array(match.online.hidden.bench).fill(null) : foe.bench).map((slot, i) => (setup ? foeBack : monHtml(state, BOT, slot, i, { target: foeTargets.has(i) }))).join("")}
-      </div>
-      <div class="tg-arena">
-        ${state.stadium ? `<button type="button" class="tg-stadium" data-act="stadium" aria-label="Stadium in play: ${esc(defOf(state, state.stadium.uid, defs).name)}"><img src="${img(state.cards[state.stadium.uid])}" alt="" draggable="false" /><b>Stadium</b></button>` : ""}
-        <span class="tg-slab" aria-hidden="true"></span>
-        <div class="tg-spot tg-spot-foe" data-p="${BOT}">${foe.active || (setup && match.online?.hidden.active) ? (setup ? foeBack : monHtml(state, BOT, foe.active, ACTIVE, { big: true, target: foeTargets.has(ACTIVE) })) : ""}</div>
-        <div class="tg-info tg-info-foe">
-          ${setup ? `<div class="tg-hud" data-p="${BOT}"><b class="tg-hud-name">${esc(foe.name)}</b><span class="tg-pips"><small>${match.online ? (match.online.hidden.placed ? "Ready" : "Choosing their Pokémon") : "Ready when you are"}</small></span></div>` : hudHtml(state, BOT)}
-        </div>
-        <div class="tg-spot tg-spot-me" data-p="${ME}">${myActive ? monHtml(state, ME, myActive, ACTIVE, { big: true, target: targets.has(ACTIVE) }) : `<span class="tg-hole">Active</span>`}</div>
-        <div class="tg-info tg-info-me">
-          <p class="tg-line" aria-live="polite">${esc(match.busy || !myTurn() ? "" : match.line || "")}</p>
-          ${setup ? "" : hudHtml(state, ME)}
-        </div>
-      </div>
-      <div class="tg-bench tg-bench-me${benchOpen ? " is-open" : ""}" data-bench>
-        ${myBench.map((slot, i) => monHtml(state, ME, slot, i, { target: targets.has(i) })).join("")}
-        ${myBench.length < state.rules.bench ? `<span class="tg-hole${benchOpen ? " is-target" : ""}" data-bench>${benchOpen ? "Play here" : "Bench"}</span>` : ""}
-      </div>
-      <div class="tg-bar tg-bar-me">
-        <b class="tg-who">${esc(me.name)}</b>
         ${match.online && real.phase !== "over" ? clockHtml() : ""}
-        ${prizesHtml(state, ME)}
-        <span class="tg-count" title="Cards in your deck"><span class="tg-mini">${back}</span>${me.deck.length}</span>
-        <span class="tg-count" title="Cards in your discard pile"><i class="tg-ic bin"></i>${me.discard.length}</span>
+        <span class="tg-count tg-foe-hand" title="Cards in their hand"><i class="tg-ic hand"></i>${foe.hand.length}</span>
       </div>
-      <div class="tg-hand" style="--n:${hand.length}">
-        ${hand.map((uid) => `<button type="button" class="tg-card${sel?.kind === "hand" && sel.uid === uid ? " is-chosen" : ""}${playable.has(uid) ? " can" : ""}" data-hand="${uid}" aria-label="${esc(d(uid).name)}"><img src="${img(real.cards[uid])}" alt="" draggable="false" /></button>`).join("")}
+      <div class="tg-field tg-arena">
+        <div class="tg-half tg-half-foe">
+          <div class="tg-row">
+            ${prizesHtml(state, BOT)}
+            <div class="tg-bench tg-bench-foe" style="--slots:${Math.max(state.rules.bench, foeBench.length)}">
+              ${foeBench.map((slot, i) => (setup ? foeBack : monHtml(state, BOT, slot, i, { target: foeTargets.has(i) }))).join("")}
+              ${places(Math.max(0, state.rules.bench - foeBench.length))}
+            </div>
+            ${deckHtml(state, BOT, foeBack)}
+          </div>
+          <div class="tg-side tg-side-foe">
+            <div class="tg-info tg-info-foe">
+              ${setup ? `<div class="tg-hud" data-p="${BOT}"><b class="tg-hud-name">${esc(foe.name)}</b><span class="tg-pips"><small>${match.online ? (match.online.hidden.placed ? "Ready" : "Choosing their Pokémon") : "Ready when you are"}</small></span></div>` : hudHtml(state, BOT)}
+            </div>
+            <div class="tg-spot tg-spot-foe" data-p="${BOT}">${foe.active || (setup && match.online?.hidden.active) ? (setup ? foeBack : monHtml(state, BOT, foe.active, ACTIVE, { big: true, target: foeTargets.has(ACTIVE) })) : ""}</div>
+            <div class="tg-wing">
+              ${state.stadium ? `<button type="button" class="tg-stadium" data-act="stadium" aria-label="Stadium in play: ${esc(defOf(state, state.stadium.uid, defs).name)}"><img src="${img(state.cards[state.stadium.uid])}" alt="" draggable="false" /><b>Stadium</b></button>` : ""}
+            </div>
+          </div>
+        </div>
+        <div class="tg-half tg-half-me">
+          <div class="tg-side tg-side-me">
+            <div class="tg-wing"><p class="tg-line" aria-live="polite">${esc(match.busy || !myTurn() ? "" : match.line || "")}</p></div>
+            <div class="tg-spot tg-spot-me" data-p="${ME}">${myActive ? monHtml(state, ME, myActive, ACTIVE, { big: true, target: targets.has(ACTIVE) }) : `<span class="tg-hole">Active</span>`}</div>
+            <div class="tg-info tg-info-me">${setup ? "" : hudHtml(state, ME)}</div>
+          </div>
+          <div class="tg-row">
+            ${prizesHtml(state, ME)}
+            <div class="tg-bench tg-bench-me${benchOpen ? " is-open" : ""}" data-bench style="--slots:${Math.max(state.rules.bench, myBench.length)}">
+              ${myBench.map((slot, i) => monHtml(state, ME, slot, i, { target: targets.has(i) })).join("")}
+              ${myBench.length < state.rules.bench ? `<span class="tg-hole${benchOpen ? " is-target" : ""}" data-bench>${benchOpen ? "Play here" : "Bench"}</span>${places(state.rules.bench - myBench.length - 1)}` : ""}
+            </div>
+            ${deckHtml(state, ME, back)}
+          </div>
+        </div>
+      </div>
+      <div class="tg-hand" style="--n:${handUnits.toFixed(2)}">
+        ${shownHand.map(({ uid, stacked, count, tilt }) => `<button type="button" class="tg-card${stacked ? " stk" : ""}${sel?.kind === "hand" && sel.uid === uid ? " is-chosen" : ""}${playable.has(uid) ? " can" : ""}" data-hand="${uid}" style="--t:${tilt}" aria-label="${esc(d(uid).name)}"><img src="${img(real.cards[uid])}" alt="" draggable="false" />${count > 1 ? `<b class="tg-card-n">${count}</b>` : ""}</button>`).join("")}
       </div>
       <div class="tg-prompt">
-        <p>${esc(prompt.text)}</p>
+        <div class="tg-say"><p>${esc(prompt.text)}</p>${trackHtml(real)}</div>
         <div class="tg-keys">${prompt.keys}</div>
       </div>
       ${coachHtml()}
@@ -1360,7 +1417,7 @@ export function initTcg(deps) {
   }
 
   /** A card image travels from one rect to another. `absorb`: it sinks into what it lands on. */
-  function ghost(src, from, to, { ms = 340, width = 0, absorb = false, show = false, delay = 0 } = {}) {
+  function ghost(src, from, to, { ms = 340, width = 0, absorb = false, show = false, delay = 0, flip = false } = {}) {
     if (!src || !from || !to || !fx || still() || !to.width) return;
     const w = width || to.width;
     const h = w * 1.4;
@@ -1373,6 +1430,16 @@ export function initTcg(deps) {
     el.style.cssText = `left:${b.x - w / 2}px;top:${b.y - h / 2}px;width:${w}px;height:${h}px`;
     fx.appendChild(el);
     const from0 = `translate(${a.x - b.x}px, ${a.y - b.y}px) scale(${Math.max(0.16, Math.min(1.4, from.width / w)).toFixed(3)})`;
+    if (flip) {
+      // Leaves the pile face down, turns over on the way and lands face up.
+      const mid = `translate(${(a.x - b.x) * 0.45}px, ${(a.y - b.y) * 0.45 - h * 0.18}px) scale(1.12)`;
+      el.src = "assets/cards/shared/card-back-sm.webp";
+      el.animate([{ transform: from0 }, { transform: `${mid} rotateY(90deg)` }], { duration: ms * 0.5, delay, easing: "cubic-bezier(0.4, 0, 0.7, 0.4)", fill: "both" }).finished.catch(() => {}).then(() => {
+        el.src = src;
+        return el.animate([{ transform: `${mid} rotateY(-90deg)` }, { transform: "none" }], { duration: ms * 0.5, easing: EASE, fill: "both" }).finished;
+      }).catch(() => {}).then(() => el.remove());
+      return;
+    }
     const frames = show
       ? [{ transform: from0, opacity: 1 }, { transform: "none", opacity: 1, offset: 0.28 }, { transform: "none", opacity: 1, offset: 0.82 }, { transform: "scale(1.06)", opacity: 0 }]
       : absorb
@@ -1415,10 +1482,10 @@ export function initTcg(deps) {
   }
 
   /** Something on the table arrives from elsewhere: its picture flies in, and it shows when the picture lands. */
-  function flyIn(from, el, { ms = 340, delay = 0 } = {}) {
+  function flyIn(from, el, { ms = 340, delay = 0, flip = false } = {}) {
     const pic = el?.querySelector("img");
     if (!pic || !from || still()) return;
-    ghost(pic.currentSrc || pic.src, from, pic.getBoundingClientRect(), { ms, delay });
+    ghost(pic.currentSrc || pic.src, from, pic.getBoundingClientRect(), { ms, delay, flip });
     el.animate([{ opacity: 0 }, { opacity: 0 }], { duration: ms + delay });
   }
 
@@ -1431,7 +1498,7 @@ export function initTcg(deps) {
     const arena = rectOf(".tg-arena");
     if (arena) el.style.top = `${arena.top + arena.height / 2}px`;
     fx.appendChild(el);
-    setTimeout(() => el.remove(), 1000);
+    setTimeout(() => el.remove(), 1200);
   }
 
   /** The flash where an attack lands, in the attacker's colour. */
@@ -1455,8 +1522,8 @@ export function initTcg(deps) {
     bar.animate([{ transform: `scaleX(${(before / max).toFixed(3)})` }, { transform: `scaleX(${(after / max).toFixed(3)})` }], { duration: 460, easing: EASE });
   }
 
-  const handSpot = (p) => (p === ME ? rectOf(".tg-hand") : rectOf(".tg-bar-foe .tg-count"));
-  const deckSpot = (p) => (p === ME ? rectOf(".tg-bar-me .tg-mini") : rectOf(".tg-bar-foe .tg-ic.deck"));
+  const handSpot = (p) => (p === ME ? rectOf(".tg-hand") : rectOf(".tg-foe-hand"));
+  const deckSpot = (p) => rectOf(`.tg-deckpile[data-p="${p}"] .tg-stack`);
   /** A rect the size of a Bench card in the middle of a Bench: where a Pokémon walks in from. */
   function benchSpot(p) {
     const r = rectOf(p === ME ? ".tg-bench-me" : ".tg-bench-foe");
@@ -1475,12 +1542,16 @@ export function initTcg(deps) {
     if (event.t === "draw" || (event.t === "search" && event.to === "hand")) {
       if (!event.uids.length) return 0;
       if (event.p === BOT) {
-        cue(".tg-bar-foe .tg-count", "bump", 400);
+        cue(".tg-foe-hand", "bump", 400);
+        cue(`.tg-deckpile[data-p="${BOT}"] .tg-pile-n`, "bump", 400);
         return 0;
       }
-      const cards = [...root.querySelectorAll(".tg-hand .tg-card")].slice(-event.uids.length);
-      cards.forEach((card, i) => flyIn(deckSpot(ME), card, { ms: 320, delay: i * 90 }));
-      return 320 + (cards.length - 1) * 90;
+      // The hand is sorted, so the cards that just arrived are found by name, not by place.
+      const cards = event.uids.map((uid) => root.querySelector(`.tg-hand [data-hand="${uid}"]`)).filter(Boolean);
+      const fromDeck = event.t === "draw" || event.from !== "discard";
+      cards.forEach((card, i) => flyIn(deckSpot(ME), card, { ms: 460, delay: i * 110, flip: fromDeck }));
+      if (fromDeck) cue(`.tg-deckpile[data-p="${ME}"] .tg-pile-n`, "bump", 400);
+      return 460 + (cards.length - 1) * 110;
     }
     const src = from || (event.from === "deck" ? deckSpot(event.p) : handSpot(event.p));
     if (event.t === "bench") {
@@ -1525,7 +1596,7 @@ export function initTcg(deps) {
     }
     if (event.t === "prize") {
       const to = handSpot(event.p);
-      const at = rectOf(`.tg-bar-${event.p === ME ? "me" : "foe"} .tg-prizes`);
+      const at = rectOf(`.tg-prizes[data-p="${event.p}"]`);
       const arena = rectOf(".tg-arena");
       if (event.p === ME && at && arena) {
         // Your prize cards turn up face up over the arena for a beat before they join your hand.
@@ -1535,14 +1606,14 @@ export function initTcg(deps) {
           const left = arena.left + arena.width / 2 + (i - (n - 1) / 2) * (w + 8) - w / 2;
           ghost(img(match.state.cards[uid]), at, { left, top: arena.top + arena.height / 2 - w * 0.7, width: w, height: w * 1.4 }, { ms: 950, width: w, show: true, delay: i * 90 });
         });
-        cue(".tg-bar-me .tg-prizes", "bump", 420);
+        cue(`.tg-prizes[data-p="${ME}"] .tg-pile-n`, "bump", 420);
         return 900 + (n - 1) * 90;
       }
       if (to && at) {
         const width = event.p === ME ? to.height / 1.6 : 26;
         event.uids.forEach((_, i) => ghost("assets/cards/shared/card-back-sm.webp", at, to, { ms: 420, width, absorb: true, delay: i * 110 }));
       }
-      cue(`.tg-bar-${event.p === ME ? "me" : "foe"} .tg-prizes`, "bump", 420);
+      cue(`.tg-prizes[data-p="${event.p}"] .tg-pile-n`, "bump", 420);
       return 300;
     }
     if (event.t === "ability") {
@@ -1646,7 +1717,7 @@ export function initTcg(deps) {
             const heavy = !benched && (event.weak || (max && event.n * 2 >= max));
             if (!event.self && !event.why && !benched) burst(event.p, defOf(before, before.players[p].active.uid, defs).types?.[0], heavy);
             cue(monSel(event.p, benched ? event.spot : ACTIVE), "hit", 420);
-            if (heavy) cue(".tg-arena", "shake", 420);
+            if (heavy) cue(".tg-table", "shake", 420);
             deps.buzz?.(event.weak ? [18, 30, 18] : 14);
           }
           await wait(620);
