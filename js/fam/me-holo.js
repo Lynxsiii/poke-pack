@@ -22,7 +22,10 @@
  * Research and what changed: .claude/skills/card-textures/reference/fam-me-holo.md.
  */
 
-const ME_ID = /^me\d(pt5)?-/;
+// me55 too since 2026-11-28: the 30th Celebration's holo Rares and Cosmos promos print the
+// same TCG Live foils (SV_HOLO, SUN_PILLAR, COSMOS) and were still on celebration.css / promos.css, where the site
+// review failed all 18 Rares ("saturated rainbow wash plus grain") and all 7 Cosmos promos ("shows nothing lit").
+const ME_ID = /^me(\d(pt5)?|55)-/;
 const COSMOS_DIR = "assets/foil/fam/me-holo/cosmos/";
 
 /* Pixel cosmos maps (scripts/fam/me-holo/cosmos_maps.py): drawn map min the plain print's TCG Live map where one exists
@@ -99,13 +102,19 @@ const COSMOS_MAPS = {
 const isExCard = (card) =>
   (card.subtypes || []).some((s) => String(s).toLowerCase() === "ex") || /(^|\s)ex$/i.test(card.name || "");
 
+/* Stamped reprints of a holo Rare that came without a Live map: they wear the unstamped print's map. */
+const STAMPED = { "me55-63-stamp": "assets/foil/maps/me55/63.webp" };
+
 /** The family's kind for a face ("rare", "mega", "ex", "cosmos"), or "" when the face is not this family's. */
 export function kindOf(card) {
+  if (card && STAMPED[card.id] && !card.reverse) return "rare";
   if (!card || card.reverse || card.pattern || !card.foilMap) return "";
   if (!ME_ID.test(String(card.id || ""))) return "";
   // Every ME-era cosmos promo is pixel cosmos (js/foil-maps.js pixelCosmos()).
   if (card.rarity === "Cosmos") return "cosmos";
   if (card.finish === "scodix") return "";
+  // The 30th Celebration's Double Rares stay on celebration.css (13 of 14 judged good there, 2026-11-28).
+  if (card.rarity === "Double Rare" && String(card.id).startsWith("me55-")) return "";
   if (card.rarity === "Double Rare") {
     // foil-ex foil-tera (isTeraFoil in js/app.js), then foil-ex foil-sunpillar: the etch map tells a Mega ex from a regular ex.
     if ((card.subtypes || []).includes("Tera")) return "mega";
@@ -128,6 +137,10 @@ export function famExtras(card, url, base) {
   const classes = ["fam-me-holo", `meh-${kind}`];
   if (kind === "rare" && (card.supertype === "Energy" || card.energy)) classes.push("meh-energy");
   const map = kind === "cosmos" && COSMOS_MAPS[card.id];
-  const style = map ? `--foil-map:url('${url(COSMOS_DIR + map)}')` : "";
+  let style = map ? `--foil-map:url('${url(COSMOS_DIR + map)}')` : "";
+  if (STAMPED[card.id] && !card.foilMap) {
+    classes.push("has-foil-map");
+    style = `--foil-map:url('${url(STAMPED[card.id])}')`;
+  }
   return { classes: classes.join(" "), style, cure: false };
 }

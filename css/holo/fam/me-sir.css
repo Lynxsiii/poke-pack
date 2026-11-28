@@ -78,10 +78,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-me-sir.fam-me-sir.fam-me-sir.foil-sir.has-
   /* a white pool round the light over a soft spectrum that slides with the tilt: the etch lines carry the rainbow
      across the whole face, brightest under the light (2026-11-23) */
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsla(0, 0%, 100%, 0.75) 0%, hsla(0, 0%, 100%, 0.35) 24%, hsla(0, 0%, 100%, 0) 55%),
+      hsla(0, 0%, 100%, 0.4) 0%, hsla(0, 0%, 100%, 0.16) 22%, hsla(0, 0%, 100%, 0) 46%),
     repeating-linear-gradient(118deg,
-      hsla(350, 90%, 62%, 0.6) 0%, hsla(35, 95%, 58%, 0.6) 8%, hsla(60, 95%, 55%, 0.6) 16%, hsla(130, 85%, 52%, 0.6) 25%,
-      hsla(185, 90%, 55%, 0.6) 34%, hsla(225, 90%, 64%, 0.6) 42%, hsla(285, 85%, 66%, 0.6) 50%);
+      hsla(350, 90%, 62%, 0.4) 0%, hsla(35, 95%, 58%, 0.4) 8%, hsla(60, 95%, 55%, 0.4) 16%, hsla(130, 85%, 52%, 0.4) 25%,
+      hsla(185, 90%, 55%, 0.4) 34%, hsla(225, 90%, 64%, 0.4) 42%, hsla(285, 85%, 66%, 0.4) 50%);
   background-size: 100% 100%, 260% 260%;
   background-position: center, calc(100% - var(--background-x)) var(--background-y);
   background-repeat: no-repeat, repeat;
@@ -92,10 +92,16 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-me-sir.fam-me-sir.fam-me-sir.foil-sir.has-
      sheen draws the engraved lines instead of washing the painting. Once over, it added twice the brightness of the
      typical SIR on the palest cards (Chi-Yu ex, Wo-Chien ex) and almost no line detail (etch_zones.py, 2026-11-25:
      cubed takes about 40% off the wash and the texture score does not move). */
-  -webkit-mask-image: var(--etch-map), var(--etch-map), var(--etch-map);
-  mask-image: var(--etch-map), var(--etch-map), var(--etch-map);
-  -webkit-mask-composite: source-in, source-in, source-over;
-  mask-composite: intersect, intersect, add;
+  /* 2026-11-28 site review, 13 of 73 bad ("milky wash over the art, faces washed out", "chevron / diagonal hatch",
+     "attack text greyed"): the sheen also gets a pool round the light as a fourth mask layer, so the dodged rainbow
+     on the lines is a local sheen and the far side of the painting (and a trainer's face away from the lamp) is the
+     plain print. */
+  -webkit-mask-image: var(--etch-map), var(--etch-map), var(--etch-map),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.75) 28%, rgba(0, 0, 0, 0.2) 58%, rgba(0, 0, 0, 0.05) 85%);
+  mask-image: var(--etch-map), var(--etch-map), var(--etch-map),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.75) 28%, rgba(0, 0, 0, 0.2) 58%, rgba(0, 0, 0, 0.05) 85%);
+  -webkit-mask-composite: source-in, source-in, source-in, source-over;
+  mask-composite: intersect, intersect, intersect, add;
   -webkit-mask-size: 100% 100%;
   mask-size: 100% 100%;
   -webkit-mask-position: center;
@@ -186,7 +192,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-me-sir.fam-me-sir.fam-me-sir.foil-sir.has-
   border-radius: 0;
   background-color: transparent;
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    rgba(255, 255, 255, 0.52) 0%, rgba(255, 255, 255, 0.4) 24%, rgba(255, 255, 255, 0.24) 58%, rgba(255, 255, 255, 0.14) 100%);
+    rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.18) 24%, rgba(255, 255, 255, 0.05) 55%, rgba(255, 255, 255, 0) 80%);
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -242,11 +248,12 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-me-sir.fam-me-sir.fam-me-sir.foil-sir.has-
 /* 2026-11-23, Noah: "a lot of cards lost their etched art". The etch sheen above was too dim to see on a phone, so
    under the light the dodge group runs near full and Live's etch lines read across the whole painting. */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-me-sir.fam-me-sir.fam-me-sir.foil-sir.has-foil-map:is(.lit, .settling) .foil {
-  opacity: calc((0.28 + var(--card-opacity) * 0.5) * var(--foil-strength, 1));
+  opacity: calc((0.28 + var(--card-opacity) * 0.36) * var(--foil-strength, 1));
 }
 /* The shared fleck glitter off and the shared rainbow hatch to a trace: the engraving leads (2026-11-28). */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-me-sir.fam-me-sir.fam-me-sir.foil-sir.has-foil-map {
   --shine-glit: 0;
-  --shine-line: 0.3;
-  --relief: 1;
+  --shine-line: 0.18;
+  --relief: 0.3;
+  --relief-reach: 60%;
 }

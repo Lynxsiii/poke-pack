@@ -44,14 +44,19 @@ export function claims(card) {
   if (!card || card.reverse || card.pattern) return false;
   // me55 too since 2026-11-28: celebration.css's dodged sun-pillar washed the 30th Celebration IRs white under the lamp
   if (!/^me(\d(pt5)?|55)-/.test(String(card.id || ""))) return false;
-  if (String(card.id).startsWith("me55-") && !card.foilMap) return false;
+  // (the three 30th Celebration promos with no map of their own, MEP 102, 103 and 106, are claimed too since the
+  // recipe became an overlay round the light: celebration.css blew them out white and drew a diagonal sparkle stripe)
   return card.rarity === "Illustration Rare";
 }
+
+const FLAT = new Set(["me55-mep106"]);
 
 export function famExtras(card, url, base) {
   if (!claims(card)) return null;
   const id = String(card.id);
   const style = [];
   if (!card.foilMap && LIVE_MAP.has(id)) style.push(`--foil-map:url('${url(`${DIR}/${id}-map.webp`)}')`);
-  return { classes: "fam-me-ir", style: style.join(";"), cure: false };
+  // Flat poster-colour art with no dark ink: the bands have nothing to sit under, so they run at half strength.
+  const flat = FLAT.has(id) ? " mir-flat" : "";
+  return { classes: `fam-me-ir${flat}`, style: style.join(";"), cure: false };
 }

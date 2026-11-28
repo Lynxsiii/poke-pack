@@ -178,19 +178,26 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-mega-attack.foil-mega-attack.has-foil-map
   filter: saturate(0.3) brightness(1.45);
   /* overlaid and local (was screened over the whole face at half strength: a grey film on every colour) */
   mix-blend-mode: overlay;
+  /* 2026-11-28 site review, 6 of 7 bad ("art darker / grey when lit, with grain"): the grain reached the far corner
+     at 0.15, the pool below and the gloss both ended in black (a shade over the art away from the lamp). The grain
+     now ends 60% of the way from the light at a third of the strength and nothing darkens. */
   -webkit-mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    #000 0%, hsla(0, 0%, 0%, 0.5) 35%, hsla(0, 0%, 0%, 0.15) 100%);
+    #000 0%, hsla(0, 0%, 0%, 0.45) 30%, hsla(0, 0%, 0%, 0) 60%);
   mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    #000 0%, hsla(0, 0%, 0%, 0.5) 35%, hsla(0, 0%, 0%, 0.15) 100%);
+    #000 0%, hsla(0, 0%, 0%, 0.45) 30%, hsla(0, 0%, 0%, 0) 60%);
+  opacity: 0.35;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.foil-mega-attack.foil-mega-attack.has-foil-map .foil::after {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(0, 0%, 100%, 0.3) 0%, hsla(0, 0%, 100%, 0) 35%, hsla(0, 0%, 0%, 0.12) 100%);
+    hsla(0, 0%, 100%, 0.3) 0%, hsla(0, 0%, 100%, 0) 35%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-mega-attack.foil-mega-attack.has-foil-map {
+  --shine-glit: 0.2;
 }
 /* Soft gloss on the varnish: nothing darkens the art away from the light. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-mega-attack.foil-mega-attack.has-foil-map .glare {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(0, 0%, 100%, 0.55) 5%, hsla(0, 0%, 100%, 0.2) 30%, hsla(0, 0%, 0%, 0.1) 95%);
+    hsla(0, 0%, 100%, 0.5) 5%, hsla(0, 0%, 100%, 0.18) 30%, hsla(0, 0%, 100%, 0) 70%);
   background-size: cover;
   background-position: center;
   mix-blend-mode: overlay;
@@ -210,6 +217,48 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-mega-attack.foil-mega-attack.has-foil-map
   mix-blend-mode: normal;
   filter: none;
   opacity: 1;
+}
+
+/* ---- Mega Hyper Rare: gold, SV_ULTRA / ETCHED (`foil-gold era-me`) ------------------
+   The shared gold recipe (sv-fullart.css) on the Mega Evolution golds, whose scans carry the whole engraving as
+   darker gold line art. 2026-11-28 site review, 5 of 9 bad: "the wash flattens the gold etch, line art lost, rainbow
+   band". Three things did it: white drawn on every etch line at up to 0.95 (the darker lines rose to the gold round
+   them and vanished), a hard-light glare whose centre is 74% champagne (a pale sheet over the upper half), and the
+   dodged spectrum at saturation 0.45 (a red-to-green band over gold). Here the lines get a small white glint only
+   round the lamp, the glare is an overlay pool (the dark lines stay dark under it), the spectrum is a warm sheen and
+   the glitter keeps to the light. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-gold.foil-gold.era-me.has-foil-map:not(.foil-tera):not(.foil-classic) {
+  --shine-glit: 0.3;
+  --shine-line: 0.1;
+  --relief: 0.2;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-gold.foil-gold.era-me.has-foil-map:not(.foil-tera):not(.foil-classic) .foil {
+  filter: brightness(0.4) contrast(1.4) saturate(0.18);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-gold.foil-gold.era-me.has-foil-map:not(.foil-tera):not(.foil-classic):not(.lit):not(.settling) .foil {
+  filter: brightness(0.5) contrast(1.4) saturate(0.15);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-gold.foil-gold.era-me.has-foil-map:not(.foil-tera):not(.foil-classic) .foil::after {
+  -webkit-mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #000 0%, rgba(0, 0, 0, 0.5) 28%, rgba(0, 0, 0, 0) 58%);
+  mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #000 0%, rgba(0, 0, 0, 0.5) 28%, rgba(0, 0, 0, 0) 58%);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc(0.14 + var(--pointer-from-center) * 0.16);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-gold.foil-gold.era-me.has-foil-map:not(.foil-tera):not(.foil-classic) .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(45, 100%, 94%, 0.34) 4%, hsla(45, 60%, 80%, 0.12) 30%, hsla(0, 0%, 100%, 0) 62%);
+  mix-blend-mode: overlay;
+  opacity: calc(var(--card-opacity) * 0.7);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-gold.foil-gold.era-me.has-foil-map:is(.has-etch-map, .has-etch-tile):not(.foil-tera):not(.foil-classic) .glare::after {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.5) 0%, hsla(0, 0%, 100%, 0.15) 22%, hsla(0, 0%, 100%, 0) 45%);
+  opacity: 0.25;
 }
 
 /* ---- Rare: SV_HOLO / HOLO ----------------------------------------------------
