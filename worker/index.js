@@ -79,6 +79,7 @@ import {
   readyToClaim,
 } from "../js/achievements.js";
 import { handleRankings, maintainRankings, ensureRankSchema, clearRankStmts, CLAIM_STAT } from "./rankings.js";
+import { handleEvents, maintainEvents, clearEventStmts } from "./events.js";
 import { makeRecoveryCode, recoverAccount, hasRecoveryCode } from "./recovery.js";
 import { handleSecurity, signinBlocked, signinFailed, signinSucceeded, makeSigninTicket, totpOn, logEvent, tagSession, touchSession, ensureSecuritySchema, discordReady, TOO_MANY } from "./security.js";
 
@@ -175,6 +176,8 @@ export default {
     ctx.waitUntil(flushFeed(env).catch(err => console.error('discord feed', err)));
     ctx.waitUntil(postNewPatchNotes(env).catch(err => console.error('discord patch notes', err)));
     ctx.waitUntil(maintainRankings(env, { findCatalogCard }).catch(err => console.error('rankings', err)));
+    // Weekly events (worker/events.js): returns at once while js/events-rules.js EVENTS_MODE is "off".
+    ctx.waitUntil(maintainEvents(env, { findCatalogCard }).catch(err => console.error('events', err)));
     ctx.waitUntil(
       recordDailyPrices(env).then(
         (result) => console.log("daily prices", JSON.stringify(result)),
@@ -361,6 +364,9 @@ export async function handleApi(request, env, url) {
   if (wish) return wish;
 
   await ensureSocialSchema(env);
+  if (path.startsWith("/api/events")) {
+    return handleEvents(path, method, request, env, { json, requireUser, publicUser, readJson, loadSave });
+  }
   if (path.startsWith("/api/rankings")) {
     return handleRankings(path, method, request, env, { json, requireUser, publicUser, findCatalogCard });
   }
@@ -531,6 +537,7 @@ async function wipeAccount(env, id) {
     env.DB.prepare("DELETE FROM history WHERE user_id = ?").bind(id),
     env.DB.prepare("DELETE FROM pack_log WHERE user_id = ?").bind(id),
     ...clearRankStmts(env, id),
+    ...(await clearEventStmts(env, id)),
     env.DB.prepare("DELETE FROM cards WHERE user_id = ?").bind(id),
     env.DB.prepare("DELETE FROM profiles WHERE user_id = ?").bind(id),
     env.DB.prepare("DELETE FROM users WHERE id = ?").bind(id),
@@ -765,6 +772,7 @@ async function resetMe(request, env) {
     env.DB.prepare("DELETE FROM history WHERE user_id = ?").bind(auth.user.id),
     env.DB.prepare("DELETE FROM pack_log WHERE user_id = ?").bind(auth.user.id),
     ...clearRankStmts(env, auth.user.id),
+    ...(await clearEventStmts(env, auth.user.id)),
     env.DB.prepare("DELETE FROM user_gear WHERE user_id = ?").bind(auth.user.id),
     env.DB.prepare("DELETE FROM gear_equipped WHERE user_id = ?").bind(auth.user.id),
     env.DB.prepare("DELETE FROM graded_cards WHERE user_id = ?").bind(auth.user.id),

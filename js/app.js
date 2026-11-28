@@ -46,7 +46,8 @@ import { HIT_RARITIES, canPullReverse, isHit, tallyRarity } from "./engine.js";
 import { initRadio } from "./radio.js?v=5";
 import { createTear } from "./tear.js?v=2";
 import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends, paintLounge } from "./social.js?v=7";
-import { hubHeadHtml, socialTabFromPath } from "./social-hub.js?v=3";
+import { hubHeadHtml, socialTabFromPath, showEventsTab } from "./social-hub.js?v=4";
+import { renderEvents, eventsMayShow } from "./events-page.js?v=1";
 import { renderRankings, standingLine } from "./rankings.js?v=9";
 import { frameHtml, levelBadgeHtml, framePicksHtml, userFrame } from "./level-badge.js";
 import { BANNER_MOTION_LEVELS, BANNER_MOTION_NAMES, frameInfo } from "./levels.js";
@@ -146,7 +147,7 @@ import { coinOf } from "./coin.js?v=9";
 // grading
 import { initGrading, GRADING_ROUTE, CERT_ROUTE } from "./grading-page.js?v=23";
 // trades
-import { initTrades, TRADES_ROUTE } from "./trades-page.js?v=8";
+import { initTrades, TRADES_ROUTE } from "./trades-page.js?v=9";
 import { coinTag } from "./battle-kit.js";
 import { coinText, coinAmount, COIN_I } from "./money.js?v=4";
 import { receiptHtml, pullRow } from "./receipt.js?v=4";
@@ -186,7 +187,9 @@ let dmHandle = "";
 let dmSeen = { handle: "", n: 0 }; // social: how many lines of the open thread were last painted
 let rankingsDrawnAt = 0; // social: when the rankings were last fetched, so the 5s social tick refreshes them once a minute
 let dmStick = false; // social: the next paint of the open thread goes to the newest line (a message was just sent)
-let socialTab = "friends"; // friends, rankings or lounge (js/social-hub.js)
+let socialTab = "friends"; // friends, rankings, lounge or events (js/social-hub.js)
+let eventsProbed = false; // social: whether the Events word has been asked for this visit
+let eventsDrawnAt = 0; // social: when the event was last fetched, so the 5s social tick refreshes it once a minute
 const CLOUD_SEEN_KEY = "poke-pack-rip-cloud-seen";
 let pendingClaim = localStorage.getItem(CLOUD_SEEN_KEY) ? null : snapshotIfProgress(state);
 let ripLock = false;
@@ -5239,6 +5242,15 @@ async function renderSocial() {
   const body = els.socialBody;
   if (!body) return;
   const trainer = activeTrainer();
+  // The Events word appears once the server says an event shows for this viewer. Asked once, and never while events are off.
+  if (eventsMayShow() && !eventsProbed) {
+    eventsProbed = true;
+    api("/api/events")
+      .then((data) => {
+        if (showEventsTab(Boolean(data?.visible)) && view === "social") renderSocial();
+      })
+      .catch(() => {});
+  }
   if (socialTab === "rankings") {
     const pane = socialPane("rankings");
     rankingsDrawnAt = Date.now();
@@ -5248,6 +5260,28 @@ async function renderSocial() {
   if (socialTab === "lounge") {
     renderLoungePane(socialPane("lounge"));
     return;
+  }
+  if (socialTab === "events") {
+    // Weekly events (js/events-page.js). While they are switched off there is no page: /events is Friends.
+    if (!eventsMayShow()) {
+      socialTab = "friends";
+      replacePath("/social");
+    } else {
+      const pane = socialPane("events");
+      eventsDrawnAt = Date.now();
+      renderEvents(pane, {
+        api, faceHtml, levelTag, toast, user: () => activeTrainer(),
+        onClaim: (data, rect) => {
+          afterEconomy(data.save);
+          renderHeader();
+          if (rect) flyCoins(rect, { count: data.coins >= 100 ? 6 : 4 });
+        },
+        onHidden: () => showEventsTab(false),
+      }).then(() => {
+        if (showEventsTab(Boolean(pane.querySelector(".ev"))) && view === "social" && socialTab === "events") renderSocial();
+      });
+      return;
+    }
   }
   if (!trainer) {
     socialPane("friends").innerHTML = `<div class="social-gate">
@@ -5834,6 +5868,7 @@ const PATH_VIEWS = {
   "/leaderboards": "social",
   "/lounge": "social",
   "/chat": "social",
+  "/events": "social",
 };
 
 const VIEW_TITLES = {
@@ -5983,6 +6018,7 @@ function viewTitle() {
   if (view === "profile" && profileHandle) return `@${profileHandle} | poke-pack.rip`;
   if (view === "social" && socialTab === "rankings") return "Rankings | poke-pack.rip";
   if (view === "social" && socialTab === "lounge") return "Lounge | poke-pack.rip";
+  if (view === "social" && socialTab === "events") return "Events | poke-pack.rip";
   if (view === "social" && dmHandle) return `DM @${dmHandle} | poke-pack.rip`;
   if (view === "shop") return `${kitOf(liveSet)?.name || `${liveSet.name} packs`} | poke-pack.rip`;
   if (view === "legal") return `${LEGAL_TITLES[legalDoc]} | poke-pack.rip`;
@@ -5997,7 +6033,7 @@ function pathForView(name) {
   if (name === "tcg") return tcgPath;
   if (name === "profile") return profilePath(profileHandle || "trainer", profilePageWanted);
   if (name === "shop") return `/packs/${liveSet.id}`;
-  if (name === "social") return socialTab === "rankings" ? "/rankings" : socialTab === "lounge" ? "/lounge" : dmHandle ? `/social/${dmHandle}` : "/social";
+  if (name === "social") return socialTab === "rankings" ? "/rankings" : socialTab === "lounge" ? "/lounge" : socialTab === "events" ? "/events" : dmHandle ? `/social/${dmHandle}` : "/social";
   if (name === "legal") return `/${legalDoc}`;
   return VIEW_PATHS[name] || "/home";
 }
@@ -11396,6 +11432,7 @@ initSocial({
     if (view !== "social") return;
     if (document.activeElement?.closest("#dm-form, .dm-threads")) return;
     if (socialTab === "rankings" && Date.now() - rankingsDrawnAt < 60_000) return;
+    if (socialTab === "events" && Date.now() - eventsDrawnAt < 60_000) return;
     renderSocial();
   },
 });
