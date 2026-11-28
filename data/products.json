@@ -21576,5 +21576,53 @@
       "tcgplayerId": 637386,
       "image": "assets/products/jsv11w/boosterBox-v3.webp"
     }
+  ],
+  "jsv7": [
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 30,
+      "promos": [],
+      "price": 91.52,
+      "tcgplayerId": 565217,
+      "image": "assets/products/jsv7/boosterBox-v3.webp"
+    }
+  ],
+  "jsv6a": [
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 30,
+      "promos": [],
+      "price": 90.3,
+      "tcgplayerId": 565218,
+      "image": "assets/products/jsv6a/boosterBox-v3.webp"
+    }
+  ],
+  "jsv5a": [
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 30,
+      "promos": [],
+      "price": 118.64,
+      "tcgplayerId": 565226,
+      "image": "assets/products/jsv5a/boosterBox-v3.webp"
+    }
+  ],
+  "jsv8": [
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 30,
+      "promos": [],
+      "price": 138.16,
+      "tcgplayerId": 587728,
+      "image": "assets/products/jsv8/boosterBox-v3.webp"
+    }
   ]
 }
