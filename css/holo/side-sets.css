@@ -94,3 +94,52 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-confetti .glare::after {
   -webkit-mask-image: none;
   mask-image: none;
 }
+
+/* ---- Confetti, round 2 (2026-11-28) ---------------------------------------------------------------------------------
+   Site review, 20 of 20: "lit shows almost no foil on the art box; confetti holo missing". Round 1 cut the dodge to
+   stop the white wash and nothing was left: a dodge has no setting that shows flakes on a dark window and spares a
+   pale one. The flakes are now light added to the print: [flake tile x spectrum x pool at the pointer], crushed so only
+   the brighter flakes stay, screened on. Black between the flakes adds nothing, so the art keeps its colours, and
+   the Live map is squared so its 13% floor over the Pokemon and the text box goes to under 2%. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-holo.foil-confetti.foil-confetti .foil {
+  background-image:
+    var(--confetti),
+    var(--confetti-rainbow),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      #fff 0%, #d0d0d0 22%, #8a8a8a 50%, #555 85%);
+  background-size: 34% auto, 200% 700%, cover;
+  background-position: var(--confetti-pos), 0% var(--background-y), center;
+  background-repeat: repeat;
+  background-blend-mode: multiply, multiply;
+  filter: brightness(1.9) contrast(2.4) saturate(0.85);
+  mix-blend-mode: screen;
+  opacity: calc((0.3 + var(--card-opacity) * 0.45) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-holo.foil-confetti.foil-confetti:not(.lit):not(.settling) .foil {
+  background-image: var(--confetti);
+  background-size: 34% auto;
+  background-position: var(--confetti-pos);
+  filter: brightness(1.5) contrast(2.4);
+  opacity: calc(0.22 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-holo.foil-confetti.foil-confetti.has-foil-map .foil {
+  -webkit-mask-image: var(--art), var(--foil-map), var(--foil-map);
+  -webkit-mask-composite: source-in, source-in, source-over;
+  mask-image: var(--art), var(--foil-map), var(--foil-map);
+  mask-composite: intersect, intersect, add;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+/* the counter-shifting copy and the pale sweep were built for the dodge: off */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-holo.foil-confetti.foil-confetti .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-holo.foil-confetti.foil-confetti .foil::after {
+  background-image: none;
+  opacity: 0;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-holo.foil-confetti.foil-confetti .glare {
+  opacity: calc(var(--card-opacity) * 0.35);
+}
