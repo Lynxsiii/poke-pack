@@ -245,6 +245,20 @@ cure"). The surface gloss throws a soft highlight.
 
 ## Pitfalls
 
+- **Glitter belongs on the engraving, not spread over the foil.** Noah, 2026-11-28: "the sparkles or dots on the holo
+  take away from the texture as i dont see the texture too much". The shared `.shine::after` fleck tile was masked by
+  art x foil map only, so on every face whose map covers the Pokémon (shiny vault cards, Japanese twins) a uniform
+  grain sat over the figure; the Scarlet & Violet Double Rare star coat (`cure-stars`) ran at full strength and
+  saturation edge to edge, coloured stars on every face. Now the flecks are masked by the etch too (they catch the
+  light on the ridges) at `--shine-glit` 0.6 by default, and the star coat is a clear coat that fades out 55% of the
+  way from the light. `holo_check.py` reports `speck` (fine grain the foil adds over the art, as a ratio of the
+  print's own) and flags it over 0.45: watch it after touching any glitter, fleck or sparkle layer.
+- **A Japanese full art with no map is foil edge to edge.** With no foilMap a full art gets the white `full.webp`, so
+  skin and faces take every band and tint (Supporter full arts read as a diagonal hatch over the face). Since the
+  English lettering can be painted out (`jp_twin_maps.py --clean-text`), full arts take their English twin's foil
+  map too (`FULL` in jp_twin_maps.py) and keep their own drawn etch; run `--write` then `--clean-text --write
+  --only=<ids>` after adding any Japanese set, then `make_sir_masks.py --ids` for any face that turns sv-sir.
+
 - **A refractor mask that covers the window lights the sky.** Holon Phantoms Rayquaza δ 016/110's silhouette was set to
   the whole art window on purpose ("its coils fill the window"), so the refractor's screened rainbow and rest sheen sat
   over the matte blue sky too, and on Noah's graded slab (2026-11-27) the art read as a blue-purple haze. The real card
