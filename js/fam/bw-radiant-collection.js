@@ -50,7 +50,7 @@ const DIR = "assets/foil/fam/bw-radiant-collection";
 /** The Confetti faces' zone map holds the sequins off the Pokémon (2026-11-28: the figure cut from each scan by
  *  scripts/make_figure_masks.py, turned into a map by scripts/fam/bw-radiant-collection/make_rc_figure_maps.py). */
 const FIG = new Set([3, 4, 6, 7, 10, 11, 12, 13, 14, 19, 21, 22, 23, 24, 25]);
-const ZONE = (n) => (FIG.has(n) ? `${DIR}/map-rc${n}-fig-v1.webp` : "assets/foil/maps/full.webp");
+const ZONE = (n) => (FIG.has(n) ? `${DIR}/map-rc${n}-fig-v2.webp` : "assets/foil/maps/full.webp");
 /** The facets (the background) and their coverage (the mask) are two files: WebKit dropped the whole layer at times while one
  *  URL was both (make_rc_textures.py). */
 const FINISH = (n, mask) => `${DIR}/rc-${STARS.has(n) ? "stars" : "chips"}${mask ? "-mask" : ""}-${STARS.has(n) ? "v3" : "v4"}.webp`;

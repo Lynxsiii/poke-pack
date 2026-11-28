@@ -19,12 +19,12 @@ from pathlib import Path
 
 import numpy as np
 from PIL import Image
-from scipy.ndimage import gaussian_filter
+from scipy.ndimage import binary_dilation, binary_fill_holes, gaussian_filter
 
 ROOT = Path(__file__).resolve().parents[6]
 OUT = ROOT / "assets" / "foil" / "fam" / "bw-radiant-collection"
 KEEP_OFF = 0.88   # how much of the foil the figure loses
-V = 1
+V = 2    # v2: holes in the cut-out filled (Stunfisk's eyes) and the figure grown 6 px, so no sequin sits on its outline
 PRIOR = {24: OUT / "map-rc24-v3.webp"}
 FULL = {11, 21, 22, 23, 24, 25}
 WINDOW = (48, 90, 552, 438)
@@ -36,7 +36,8 @@ def main():
     for f in sorted(figs.glob("bw11-RC*.png")):
         n = int(f.stem.split("RC")[1])
         fig = np.asarray(Image.open(f).convert("L").resize((600, 838), Image.LANCZOS)).astype(np.float32) / 255
-        a = 1 - KEEP_OFF * np.clip(gaussian_filter(fig, 2.0), 0, 1)
+        solid = binary_dilation(binary_fill_holes(fig > 0.5), iterations=6).astype(np.float32)
+        a = 1 - KEEP_OFF * np.clip(gaussian_filter(solid, 3.0), 0, 1)
         if n not in FULL:
             # regular art: SAM misses a tail or a wing on about a third of them (Purrloin, Stunfisk, Growlithe), so the
             # whole art window is held to half as well; the border, name bar and text box keep the sequins in full
