@@ -39,6 +39,7 @@ const MAPPED = new Set(
     "ex13:103 104",
     "ex14:100 99",
     "ex16:100 101 102",
+    "pop5:16 17",
   ].flatMap((row) => {
     const [s, nums] = row.split(":");
     return nums.split(" ").map((n) => `${s}-${n}`);
