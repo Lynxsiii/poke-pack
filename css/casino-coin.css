@@ -3,9 +3,10 @@
    metal keeps its own colour stops, money gold on the page stays --gold.
    The toss is Web Animations on transform, opacity and filter only; nothing here
    loops, so there is nothing to switch off under prefers-reduced-motion.
-   A promo coin is lit like the real thing: its own photo, a holo layer masked by
-   a map drawn from that photo (scripts/coin_foil.py), and the pointer tilt vars
-   (--rx --ry --nx --ny --tilt, set by tiltCoin) move the spectrum and the glare.
+   A promo coin is lit like the real thing: its own photo, a light layer masked by
+   a map drawn from that photo (scripts/coin_foil.py) and tuned to the coin's look
+   (.cf-look-*), and the pointer tilt vars (--rx --ry --nx --ny --tilt, set by
+   tiltCoin) move the light and the glare.
    Never put a filter on .cf-coin or .cf-tilt: Safari draws the back face through. */
 
 /* ---------- stage: the ground under the coin ---------- */
@@ -236,8 +237,16 @@
     inset -3px -5px 7px rgb(0 0 0 / 0.38);
 }
 
-/* The holo: a spectrum that slides over the coin's map, so it shows only where the
-   real coin is reflective. Masked container, oversized child moved by transform. */
+/* The light on the foil. The photo is the real coin and keeps its own colours: the
+   light is overlaid, so black line art stays black, a red coin stays red and the
+   metal gains contrast instead of a white wash. It is a diagonal stripe that slides
+   with the tilt (a lamp reflected in the coin), masked by the coin's map so it sits
+   only where the real coin is reflective. What the stripe holds depends on the
+   coin's look (scripts/coin_foil.py look_of, data/gear.json foil.look):
+     --cf-band  the white mirror band        --cf-dark  the dark flank that makes chrome
+     --cf-spec  the spectrum (rainbow only where the real coin throws one)
+     --cf-spark flecks that twinkle under the light (glitter, pixel foil)
+   Masked container, oversized child moved by transform. */
 .cf-holo {
   position: absolute;
   inset: 0;
@@ -256,8 +265,8 @@
   mask-position: var(--mpos, 0 0);
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-  mix-blend-mode: hard-light;
-  opacity: calc(var(--cf-rest, 0.5) + var(--tilt, 0) * 0.3);
+  mix-blend-mode: overlay;
+  opacity: calc(var(--cf-rest, 0.6) + var(--tilt, 0) * (1 - var(--cf-rest, 0.6)));
 }
 .cf-holo > i {
   position: absolute;
@@ -265,28 +274,72 @@
   top: -100%;
   width: 300%;
   height: 300%;
-  --p: calc(var(--cf-size, 168px) * 1.7); /* one spectrum, in this face's 2x pixels */
+  --p: calc(var(--cf-size, 168px) * 3.2); /* one spectrum, in this face's 2x pixels: the face shows about two thirds of it */
+  --sa: var(--cf-spec, 0);
   background:
-    radial-gradient(circle calc(var(--cf-size, 168px) * 0.95) at 50% 50%, rgb(255 255 255 / 0.85), rgb(255 255 255 / 0) 100%),
+    /* the mirror band, with a dark flank on each side */
+    linear-gradient(112deg,
+      rgb(0 0 0 / 0) 36%, rgb(0 0 0 / var(--cf-dark, 0)) 42%, rgb(255 255 255 / calc(var(--cf-band, 0.8) * 0.5)) 46.5%,
+      rgb(255 255 255 / var(--cf-band, 0.8)) 50%,
+      rgb(255 255 255 / calc(var(--cf-band, 0.8) * 0.5)) 53.5%, rgb(0 0 0 / var(--cf-dark, 0)) 58%, rgb(0 0 0 / 0) 64%),
     repeating-linear-gradient(112deg,
-      hsl(350 100% 62%) 0, hsl(32 100% 58%) calc(var(--p) * 0.14), hsl(58 100% 60%) calc(var(--p) * 0.28),
-      hsl(140 100% 56%) calc(var(--p) * 0.42), hsl(186 100% 58%) calc(var(--p) * 0.56),
-      hsl(230 100% 66%) calc(var(--p) * 0.7), hsl(292 100% 64%) calc(var(--p) * 0.84), hsl(350 100% 62%) var(--p));
-  /* the light sits at the pointer: the spectrum slides against the tilt */
+      hsl(350 95% 60% / var(--sa)) 0, hsl(32 95% 58% / var(--sa)) calc(var(--p) * 0.14), hsl(58 95% 58% / var(--sa)) calc(var(--p) * 0.28),
+      hsl(140 90% 55% / var(--sa)) calc(var(--p) * 0.42), hsl(186 95% 56% / var(--sa)) calc(var(--p) * 0.56),
+      hsl(230 95% 66% / var(--sa)) calc(var(--p) * 0.7), hsl(292 90% 64% / var(--sa)) calc(var(--p) * 0.84), hsl(350 95% 60% / var(--sa)) var(--p));
+  /* the stripe: nothing is lit outside it */
+  -webkit-mask-image: linear-gradient(112deg, rgb(0 0 0 / 0) 30%, #000 43%, #000 57%, rgb(0 0 0 / 0) 70%);
+  mask-image: linear-gradient(112deg, rgb(0 0 0 / 0) 30%, #000 43%, #000 57%, rgb(0 0 0 / 0) 70%);
+  /* the light sits under the pointer: the stripe follows it and never leaves the coin */
   transform: translate(
-    calc(var(--nx, -0.35) * var(--cf-size, 168px) * -1.5),
-    calc(var(--ny, -0.4) * var(--cf-size, 168px) * -1.1));
+    calc(var(--nx, -0.35) * var(--cf-size, 168px) * 0.84),
+    calc(var(--ny, -0.4) * var(--cf-size, 168px) * 0.56));
 }
-/* struck metal is a mirror: one broad bright band, silvery, no rainbow bars */
-.cf-fin-metal { --cf-rest: 0.7; }
-.cf-fin-metal .cf-holo > i {
-  background:
-    linear-gradient(112deg, rgb(255 255 255 / 0) 34%, rgb(255 255 255 / 0.55) 44%, rgb(255 255 255 / 0.95) 50%, rgb(255 255 255 / 0.55) 56%, rgb(255 255 255 / 0) 66%),
-    linear-gradient(112deg, rgb(150 190 255 / 0.18) 38%, rgb(255 200 150 / 0.2) 62%);
+/* flecks: a sparse tile lit in a pool round the light, so different flecks show as the coin turns */
+.cf-spark {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  display: none;
+  background: url("/assets/foil/glitter-flecks.webp") 0 0 / calc(var(--cf-size, 168px) * 1.3) auto;
+  -webkit-mask-image: var(--map), radial-gradient(circle at calc(50% + var(--nx, -0.35) * 46%) calc(50% + var(--ny, -0.4) * 46%), #000 0, rgb(0 0 0 / 0.5) 28%, rgb(0 0 0 / 0) 58%);
+  mask-image: var(--map), radial-gradient(circle at calc(50% + var(--nx, -0.35) * 46%) calc(50% + var(--ny, -0.4) * 46%), #000 0, rgb(0 0 0 / 0.5) 28%, rgb(0 0 0 / 0) 58%);
+  -webkit-mask-mode: luminance, alpha;
+  mask-mode: luminance, alpha;
+  -webkit-mask-size: 200% 100%, 100% 100%;
+  mask-size: 200% 100%, 100% 100%;
+  -webkit-mask-position: var(--mpos, 0 0), 0 0;
+  mask-position: var(--mpos, 0 0), 0 0;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  mix-blend-mode: screen;
+  filter: saturate(0.35) brightness(1.6);
+  opacity: calc(var(--cf-spark, 0) * (0.55 + var(--tilt, 0) * 0.45));
 }
-.cf-fin-foil { --cf-rest: 0.8; }
-.cf-fin-plastic { --cf-rest: 0.75; }
-.cf-fin-plastic .cf-holo > i { filter: saturate(0.75); }
+
+/* ---------- the looks ---------- */
+/* embossed metal, no holo: chrome. A hard band with dark flanks, no colour. */
+.cf-look-struck { --cf-rest: 0.7; --cf-band: 0.82; --cf-dark: 0.34; }
+/* smooth mirror foil in the coin's own colour */
+.cf-look-mirror { --cf-rest: 0.7; --cf-band: 1; --cf-dark: 0.26; }
+/* rainbow holofoil: a softer band and a broad pastel spectrum round it */
+.cf-look-rainbow { --cf-rest: 0.7; --cf-band: 0.7; --cf-dark: 0; --cf-spec: 0.6; }
+/* sheen foil: the band and a faint spectrum */
+.cf-look-sheen { --cf-rest: 0.7; --cf-band: 0.8; --cf-dark: 0.1; --cf-spec: 0.4; }
+/* cracked ice: the photo holds the shards; the light makes them flash */
+.cf-look-ice { --cf-rest: 0.72; --cf-band: 0.95; --cf-dark: 0.34; --cf-spec: 0.4; }
+/* glitter and pixel foil: a soft band, flecks under the light */
+.cf-look-glitter { --cf-rest: 0.66; --cf-band: 0.6; --cf-dark: 0; --cf-spec: 0.3; --cf-spark: 1; }
+.cf-look-glitter .cf-spark { display: block; }
+/* the reverse is a plain tinted disc whatever the front is: a band, no colour, no flecks */
+.cf-reverse { --cf-spec: 0; --cf-spark: 0; }
+.cf-reverse .cf-spark { display: none; }
+/* marbled, frosted, pearlescent: a glow, not a mirror */
+.cf-look-pearl { --cf-rest: 0.55; --cf-band: 0.45; --cf-dark: 0; --cf-spec: 0.12; }
+/* plain glossy plastic: the varnish glare does the work */
+.cf-look-gloss { --cf-rest: 0.5; --cf-band: 0.4; --cf-dark: 0; }
 
 /* ---------- light on the face (rewritten during a toss) ---------- */
 .cf-shade {
@@ -322,5 +375,5 @@
   opacity: calc(0.45 + var(--tilt, 0) * 0.4);
 }
 .cf-house .cf-glare { display: none; }
-.cf-fin-metal .cf-glare { opacity: calc(0.6 + var(--tilt, 0) * 0.35); }
-.cf-fin-plastic .cf-glare { opacity: calc(0.55 + var(--tilt, 0) * 0.35); }
+.cf-look-struck .cf-glare, .cf-look-mirror .cf-glare { opacity: calc(0.4 + var(--tilt, 0) * 0.3); }
+.cf-look-gloss .cf-glare, .cf-look-pearl .cf-glare { opacity: calc(0.55 + var(--tilt, 0) * 0.35); }

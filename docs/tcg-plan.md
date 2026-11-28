@@ -50,12 +50,22 @@ the cards, sleeves, coins and playmats they have bought in-game.
 - **Energy symbols**: the real printed symbols, transparent PNGs in
   `assets/tcg/energy/<type>-v1.png`, from pokewiki.de's `<Type>Symbol_TCG.png`
   files (cropped, 96 px).
-- **Table** (`js/tcg-page.js`, `css/pages/tcg.css`): phone first. Your sleeve
-  is your card back, your coin makes the flips. A hand card can be tapped then
-  placed, or dragged (touch or mouse) onto the field or a Pokémon. A match is kept on the device
-  and picks up where it stopped. Motion: the table is repainted whole, so
-  cards in flight, the turn banner and impacts live in a layer beside it
-  (`.tg-fx`); transform, opacity and filter only.
+- **Table** (`js/tcg-page.js`, `css/pages/tcg.css`): phone first, redrawn 2026-11-28 as a
+  playmat seen from your seat (Noah picked it from two mockups). The mat (`.tg-field`) is tilted
+  as a whole and takes the theme's slab colour: their half far and deeper, yours near, the two
+  Active Pokémon face to face on the centre line, each with an ink name plate beside it (never
+  over a card). Prize cards lie face down left of each Bench, the deck and the discard count
+  right of it, and each Bench shows its five places. Attached Energy never overlaps: every
+  symbol while there are few, then one symbol and a count per type (`pipRow`). The hand is a
+  fan sorted by kind, with copies of one card as a pile and a count; cards that can't be played
+  go dark, and yellow marks only the chosen card and where it can go. The bar at the bottom
+  says what to do, shows what is left this turn (Energy, Supporter, Retreat) and holds the key
+  that moves the turn on. Your sleeve is your card back, your coin makes the flips. A hand card
+  can be tapped then placed, or dragged. A match is kept on the device and picks up where it
+  stopped. Motion: the table is repainted whole, so cards in flight, the turn plate and
+  impacts live in a layer beside it (`.tg-fx`); transform, opacity and filter only. Drawn cards
+  and prizes leave their pile face down and turn over on the way; a Knocked Out card is thrown
+  to its discard pile.
 - **Lesson** (`js/tcg/tutorial.js`): a practice match on borrowed Base Set
   cards with both decks stacked, and a coach that waits for one action at a
   time. The hub offers it until it has been finished once. The test suite
