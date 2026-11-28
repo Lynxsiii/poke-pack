@@ -1,5 +1,20 @@
 [
   {
+    "id": "2026-11-28-phone-layout",
+    "date": "2026-11-28",
+    "title": "The site is rearranged for phones",
+    "summary": "On a phone, packs sit on swipe shelves, casino games are wide rows, Collection opens on your cards and Home puts the pack in the middle.",
+    "items": [
+      "Packs: every era is its own shelf of bigger packs that you swipe sideways, so the page is much shorter and a pack's name, price and progress are easier to read.",
+      "Casino: each game is one wide row and all four fit on the first screen. The free play line now sits under the games.",
+      "Collection: the header is one slim bar with the set, your progress and what it is worth, so your cards start far higher up the screen.",
+      "Collection filters live behind one Filter key. It opens a sheet with every choice visible at once, and the key shows how many filters are on. Sell duplicates sits beside the card count.",
+      "Home: the pack is centred with its art choices in a strip underneath, and the chase cards are a row of cards you flick through.",
+      "Rankings: the boards are one picker next to Everyone and Friends.",
+      "The Cards, Sealed, Binder tabs and the casino tabs stay at the top while you scroll."
+    ]
+  },
+  {
     "id": "2026-11-28-coin-shine",
     "date": "2026-11-28",
     "title": "Coins shine like the real ones",
