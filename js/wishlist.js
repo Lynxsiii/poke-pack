@@ -25,7 +25,7 @@ const MAX = 500;
 const esc = (value = "") =>
   String(value).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
-const HEART = `<svg class="wish-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.3 4.6 13a4.9 4.9 0 0 1 0-7 4.9 4.9 0 0 1 7 0l.4.4.4-.4a4.9 4.9 0 0 1 7 0 4.9 4.9 0 0 1 0 7Z"/></svg>`;
+const HEART = `<svg class="wish-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5 3.5 12V7.5l3.5-4h2.5l2.5 3 2.5-3H17l3.5 4V12z"/><path class="ic-a" d="M6.8 8.3l1.2-1.3h1.7l.9 1.1-2.3 2.7h-1.5z"/></svg>`;
 
 function readLocal() {
   try {

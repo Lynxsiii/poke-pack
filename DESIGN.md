@@ -91,6 +91,14 @@ read it against this list.
 - No four-point sparkle anywhere: it is the mark AI products use for
   themselves. The coin's face is a booster pack (`pp-coin-v2.svg`).
 - Icons are drawn for this site in the logo's thick line. No stock icon set.
+  Each is one ink line (2px on a 24 grid, flat ends, mitred corners) plus one
+  solid block, the way the logo's cards are an outline with a block of red.
+  Round only what is round in life (coins, heads, a dial). The block is
+  `.ic-a`: it takes `--ico-a` (the menus set it to `--cy-2`) and is ink
+  anywhere else; `.ic-f` is a solid ink part. Nav icons live in the sprite at
+  the top of `index.html` (`#i-name`), button icons in `js/battle-kit.js`.
+  Draw from the hobby (packs, slabs, toploaders, binders, trainers in caps),
+  never official art.
 - Text never overlaps or runs under the tab bar, and a row of tabs that
   scrolls shows that it does.
 
@@ -207,8 +215,8 @@ pseudo-element, or slant the element and counter-slant its one child
 ## Navigation
 
 - Phones: a white tab bar with an ink line across its top (Home, Packs, the
-  raised ink Rip key, Collection, Casino). The active tab is ink with a cyan
-  icon. Your picture at the top left opens the menu sheet: every other page,
+  raised ink Rip key, Collection, Casino). The active tab is ink, and its
+  icon's solid block takes the theme colour. Your picture at the top left opens the menu sheet: every other page,
   grouped.
 - Computers: one top bar. The logo, then Home, Packs, Collection, Casino,
   Community and More as plain words (no icons), Search, and coins, Claim and

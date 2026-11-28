@@ -10,7 +10,7 @@
   -webkit-tap-highlight-color: transparent;
 }
 .wish-heart .wish-ico {
-  width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linejoin: round;
+  width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linejoin: miter;
   transition: transform 0.16s var(--ease-out);
 }
 .wish-heart[aria-pressed="true"] { color: var(--hp-low); }
@@ -102,4 +102,4 @@
 .wish-empty { display: grid; justify-items: start; gap: 12px; margin-top: 8px; padding: 22px 18px; border-radius: var(--r); }
 .wish-empty p { margin: 0; max-width: 46ch; color: var(--k-2); font: 600 15px/1.45 var(--font); }
 .wish-empty p b { color: var(--k); }
-.wish-empty-ico .wish-ico { width: 34px; height: 34px; fill: none; stroke: var(--k-3); stroke-width: 2; stroke-linejoin: round; }
+.wish-empty-ico .wish-ico { width: 34px; height: 34px; fill: none; stroke: var(--k-3); stroke-width: 2; stroke-linejoin: miter; }

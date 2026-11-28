@@ -311,7 +311,7 @@
   border: 0; border-radius: var(--r); background: none; color: var(--k-2);
 }
 .friends .friends-peek:hover, .friends.is-open .friends-peek { color: var(--k); }
-.friends-peek svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.friends-peek svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: square; stroke-linejoin: miter; }
 .friends-peek-live { position: absolute; top: 10px; right: 8px; width: 8px; height: 8px; border-radius: 50%; background: var(--hp); box-shadow: 0 0 0 1.5px var(--k); }
 .friends-peek-live[hidden], .friends-peek-count[hidden] { display: none; }
 .friends-peek-count {

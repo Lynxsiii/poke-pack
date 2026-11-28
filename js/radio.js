@@ -81,7 +81,7 @@ function mountRadio() {
   root.innerHTML = `
     <audio id="radio-audio" preload="metadata" playsinline></audio>
     <button type="button" class="radio-peek" id="radio-peek" aria-expanded="false" aria-controls="radio-panel" aria-label="Radio">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="8.5" width="17" height="11" rx="1.5"/><path d="M7 8.5l9.5-4.5"/><circle cx="15.5" cy="14" r="2.5"/><path d="M6.5 12.5h4M6.5 15.5h4"/></svg>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-radio"/></svg>
       <span class="radio-peek-eq" aria-hidden="true"><i></i><i></i><i></i></span>
     </button>
     <div class="radio-panel" id="radio-panel" role="region" aria-label="Now playing">

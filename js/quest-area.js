@@ -163,7 +163,7 @@ function chestRowHtml(period, rows, summary, deps, { fresh }) {
         ? "Claim the quest above to open it."
         : `Claim ${skipped ? `${needs.length} quests above, battle wins aside,` : `all ${needs.length} quests above`} to open it.`;
   return `<li class="qrow qrow-chest ${state}${fresh.has(id) ? " is-fresh" : ""}">
-    <span class="qrow-chest-mark" aria-hidden="true"><svg class="qa-chest" viewBox="0 0 20 18" width="26" height="24"><path d="M2 7h16v9H2zM1 3.5h18V7H1z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.5 9.5h3v3h-3z" fill="currentColor"/></svg></span>
+    <span class="qrow-chest-mark" aria-hidden="true"><svg class="qa-chest" viewBox="0 0 20 18" width="26" height="24"><path d="M2 7h16v9H2zM1 3.5h18V7H1z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="miter"/><path d="M8.5 9.5h3v3h-3z" fill="currentColor"/></svg></span>
     <div class="qrow-main">
       <b class="qrow-name">${esc(name)}</b>
       <p class="qrow-note">${esc(note)}</p>
@@ -475,12 +475,12 @@ function masterySetTile(set, row, mastered, ready, on, deps) {
 }
 
 const ICON = {
-  xp: `<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M5 17l7-7 7 7M5 11l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
-  title: `<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M3.5 12.4V4.5h7.9l9.1 9.1-7.9 7.9zM8 8.3a1.2 1.2 0 1 0 0-.01z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>`,
-  sleeve: `<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><rect x="6" y="3.5" width="12" height="17" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6 7.5h12" stroke="currentColor" stroke-width="1.6"/></svg>`,
+  xp: `<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M5 17l7-7 7 7M5 11l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="square" stroke-linejoin="miter"/></svg>`,
+  title: `<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M3.5 12.4V4.5h7.9l9.1 9.1-7.9 7.9zM8 8.3a1.2 1.2 0 1 0 0-.01z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="miter"/></svg>`,
+  sleeve: `<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><rect x="6" y="3.5" width="12" height="17" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6 7.5h12" stroke="currentColor" stroke-width="1.6"/></svg>`,
   coin: `<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4.6" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>`,
-  crown: `<svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path d="M3.5 18.5h17M4.5 8l4.2 4 3.3-6.5 3.3 6.5 4.2-4-1.6 10.5H6.1z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/></svg>`,
-  tick: `<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M3 8.4l3.2 3.1L13 4.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  crown: `<svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path d="M3.5 18.5h17M4.5 8l4.2 4 3.3-6.5 3.3 6.5 4.2-4-1.6 10.5H6.1z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="square"/></svg>`,
+  tick: `<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M3 8.4l3.2 3.1L13 4.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/></svg>`,
 };
 
 /** A gift's picture: the real sleeve or coin when the gear catalogue has loaded, a plain mark until then. */

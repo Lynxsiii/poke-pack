@@ -9,7 +9,7 @@
   border: 0; border-radius: var(--r); background: none; color: var(--k);
 }
 .cart-link:hover { color: var(--cy-2); }
-.cart-link svg { width: 23px; height: 23px; fill: none; stroke: currentColor; stroke-width: 2.1; stroke-linecap: round; stroke-linejoin: round; }
+.cart-link svg { width: 23px; height: 23px; fill: none; stroke: currentColor; stroke-width: 2.1; stroke-linecap: square; stroke-linejoin: miter; }
 .cart-link b {
   position: absolute; top: 2px; right: -2px; display: grid; place-items: center; min-width: 20px; height: 19px; padding: 0 5px;
   border: 2px solid var(--box); border-radius: var(--r-tag); background: var(--k); color: var(--yel-k);
