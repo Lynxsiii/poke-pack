@@ -867,13 +867,15 @@ export const marksOn = (state, slot) => (slot?.marks || []).filter((m) => m.turn
 const markSum = (state, slot, kind, name = "") => (slot?.marks || []).filter((m) => m.kind === kind && m.turn === state.turn && (!m.name || m.name === name)).reduce((n, m) => n + (m.n || 0), 0);
 
 /** A guard mark that stops this attacker's damage: some guard only against Basic or Evolution Pokémon. */
-const GUARD_FROM = { basic: (d) => d.stage === "basic", evolution: (d) => d.stage === "evolution", basicNonColorless: (d) => d.stage === "basic" && !d.types.includes("Colorless"), ability: (d) => d.abilityKind === "Ability" };
+const GUARD_FROM = { burned: (d, s) => conditionsOn(s).includes("burned"), basic: (d) => d.stage === "basic", evolution: (d) => d.stage === "evolution", basicNonColorless: (d) => d.stage === "basic" && !d.types.includes("Colorless"), ability: (d) => d.abilityKind === "Ability" };
 /** Does a mark's `from` ("box:GX,EX", "tag:TAG TEAM", or a GUARD_FROM key) take in this attacker? */
 const fromFits = (from, def) => !from || (def ? (from.startsWith("box:") ? from.slice(4).split(",").includes(def.box) : from.startsWith("tag:") ? (def.tags || []).includes(from.slice(4)) : GUARD_FROM[from](def)) : false);
 /** A shield an earlier attack left in force against this attacker ("by your opponent's Pokémon-ex": only some). */
 export const shieldOn = (state, slot, attackerDef) => (slot?.marks || []).some((m) => m.kind === "shield" && m.turn === state.turn && fromFits(m.from, attackerDef));
 // "box:GX,EX": only against Pokémon with those rule boxes ("by attacks from Pokémon-GX and Pokémon-EX").
-const guardedFrom = (state, slot, attackerDef) => (slot?.marks || []).some((m) => m.kind === "guard" && m.turn === state.turn && (!m.from || (m.from.startsWith("box:") ? m.from.slice(4).split(",").includes(attackerDef.box) : m.from.startsWith("tag:") ? (attackerDef.tags || []).includes(m.from.slice(4)) : GUARD_FROM[m.from](attackerDef))));
+const guardedFrom = (state, slot, attackerDef, attacker = null, defs = null) => (slot?.marks || []).some((m) => m.kind === "guard" && m.turn === state.turn && (!m.from || (m.from.startsWith("box:") ? m.from.slice(4).split(",").includes(attackerDef.box) : m.from.startsWith("tag:") ? (attackerDef.tags || []).includes(m.from.slice(4)) : GUARD_FROM[m.from](attackerDef, attacker))))
+  // Miraidon's C.O.D.E.: Protect: a mark on the side's Active Pokémon that keeps some of its Pokémon from some attackers.
+  || (defs && state.players.some((side) => (side.active === slot || side.bench.includes(slot)) && (side.active?.marks || []).some((m) => m.kind === "guardTeam" && m.turn === state.turn && fits(defOf(state, slot.uid, defs), m.who) && fromFits(m.from, attackerDef))));
 
 /**
  * Damage from an attack landed on this Pokémon: `hit` the turn (cleared before the checkup), and kept past it
@@ -1574,7 +1576,7 @@ export function resolveKnockOuts(state, defs, events, { between = false } = {}) 
         events.push({ t: "flip", p: other(p), results: [heads], why: "ability", name: abilityOn(state, kiss[other(p)], defs)?.name || defOf(state, kiss[other(p)].uid, defs).ability.name });
         kissed = heads ? 1 : 0;
       }
-      if (!def.fossil?.noPrize && !shift.none) took[other(p)] += Math.max(0, (def.prizes ?? 1) + (tool?.prize || 0) + shift.n + kissed + (byAttack(slot, p) ? (markOn(state, slot, "bounty")?.n || 0) + prizeUp(state, other(p), spot, defs) - fewer : 0));
+      if (!def.fossil?.noPrize && !shift.none) took[other(p)] += Math.max(0, (def.prizes ?? 1) + (tool?.prize || 0) + shift.n + kissed + (byAttack(slot, p) ? (markOn(state, slot, "bounty") && !markOn(state, slot, "bounty").any ? markOn(state, slot, "bounty").n || 0 : 0) + prizeUp(state, other(p), spot, defs) - fewer : 0) + (markOn(state, slot, "bounty")?.any ? markOn(state, slot, "bounty").n || 0 : 0));
       if (!counts) continue;
       // Remembered by turn for "if any of your Pokémon were Knocked Out during your opponent's last turn"
       // (the checkup between turns is no one's turn).
@@ -1747,7 +1749,7 @@ export function strike(ctx) {
     const fat = power?.guardLess && power.guardLess.types.some((t) => def.types.includes(t)) ? power.guardLess.n : 0;
     const less = (lessMark && (!lessMark.from || GUARD_FROM[lessMark.from](def)) ? lessMark.n || 0 : 0) + (theirs.less || 0) + (noFx ? 0 : heldSum(target, "less")) + soak + fat;
     if (soak && vs.spent) hit.spentTool = toolWith(state, target, defs, "lessVs");
-    let guarded = (!noFx && marked) || (!noFx && guardedFrom(state, target, def));
+    let guarded = (!noFx && marked) || (!noFx && guardedFrom(state, target, def, slot, defs));
     // The target's Ability: no damage from this kind of attacker, or a coin flip to take none.
     if (!guarded && dealt.amount > 0 && power?.wall && walled(power.wall, def, state, slot, defs, dealt.amount - less)) guarded = true;
     if (!guarded && dealt.amount > 0 && !noFx && teamWalled(state, target, slot, defs)) guarded = true;
@@ -2306,8 +2308,10 @@ const HANDLERS = {
       }
     }
     if (markOn(state, slot, "mustFlip")) {
-      const heads = flip(state);
-      events.push({ t: "flip", p: player, results: [heads], why: "mustFlip" });
+      // "your opponent flips 2 coins. If either of them is tails, that attack doesn't happen."
+      const results = Array.from({ length: markOn(state, slot, "mustFlip").n || 1 }, () => flip(state));
+      const heads = results.every(Boolean);
+      events.push({ t: "flip", p: player, results, why: "mustFlip" });
       if (!heads) {
         events.push({ t: "miss", p: player });
         state.ending = true;
@@ -2491,6 +2495,8 @@ const HANDLERS = {
         slot.energy.push(...picked);
         for (const uid of picked) events.push({ t: "attach", p: player, uid, spot: waiting.effect.spot, from: "deck" });
         if (heal.heal) healAt(state, player, waiting.effect.spot, heal.each ? heal.heal * picked.length : heal.heal, events);
+        // "If you attached Energy to a Pokémon in this way, this Pokémon is now Poisoned."
+        if (heal.poison && addCondition(state, slot, "poisoned", defs)) events.push({ t: "condition", p: player, spot: waiting.effect.spot, kind: "poisoned" });
       } else if (picked.length && to === "each") {
         // "For each of your Benched Pokémon, ... attach it to that Pokémon": a different Pokémon for each card, one pick at a time.
         askPick(state, { player, side: player, spots, left: 1, effect: { op: "attachHeld", uids: [picked[0]], chain: picked.slice(1), ...(waiting.zone !== "deck" ? { zone: waiting.zone } : {}), ...heal }, ...(waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) });
@@ -3158,6 +3164,11 @@ function applyPick(state, waiting, spot, defs, events) {
     if (spot === ACTIVE) side.active = null;
     else side.bench.splice(spot, 1);
     events.push({ t: "shuffle-in", p, spot, uid: slot.uid });
+    // "Choose 2 of your opponent's Benched Pokémon": the next one, from the Bench as it is now.
+    if (effect.again > 0) {
+      const spots = inPlay(state, p).filter(([s, at]) => (effect.where === "any" || at !== ACTIVE) && !warded(state, s, { player: effect.by, src: "attack" }, defs)).map(([, at]) => at);
+      if (spots.length) follow(state, waiting, { player: effect.by, side: p, spots, left: 1, effect: { op: "shuffleIn", ...(effect.again > 1 ? { again: effect.again - 1, where: effect.where, by: effect.by } : {}) } });
+    }
   } else if (effect.op === "moveEnergyFrom") {
     // Which Energy: the last attached of the kind asked for. Then, where it goes.
     const slot = slotAt(state, p, spot);

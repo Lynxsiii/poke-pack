@@ -8094,6 +8094,79 @@ test("Standard attacks: their hand (an Item to the bottom, Item and Tool cards d
 });
 
 
+test("Standard attacks: Drifloon and Drifblim hurt themselves, Angelite takes two in turn", () => {
+  labMon("lab-drifloon", { name: "Drifloon", hp: "900" }, []);
+  const { state, go } = armed("sv7-61", "Everyone Explode Now", { bench: ["lab-drifloon", "lab-wall"] });
+  go();
+  assert.equal(foeHurt(state), 100);
+  assert.equal(state.players[0].bench[0].damage, 30);
+  assert.equal(state.players[0].bench[1].damage, 0);
+  assert.equal(state.players[0].active.damage, 30);
+  const angel = armed("sv8-86", "Angelite", { foeBench: ["lab-wall", "base1-46", "lab-wall"] });
+  const foe = angel.state.players[1];
+  const second = foe.bench[1].uid;
+  angel.go();
+  act(angel.state, { type: "pick", player: 0, spot: 0 });
+  assert.equal(foe.bench.length, 2);
+  assert.equal(angel.state.pending[0]?.type, "pick");
+  act(angel.state, { type: "pick", player: 0, spot: 0 });
+  assert.equal(foe.bench.length, 1);
+  assert.ok(foe.deck.includes(second));
+});
+
+test("Standard attacks: Lava Wall against Burned attackers, Crescent Purge's face-up Prize, Celebration", () => {
+  const { state, go } = armed("me5-7", "Lava Wall");
+  go();
+  const guard = state.players[0].active.marks.find((m) => m.kind === "guard");
+  assert.equal(guard.from, "burned");
+  const purge = armed("sv6pt5-21", "Crescent Purge");
+  purge.go();
+  act(purge.state, { type: "option", player: 0, index: 0 });
+  assert.equal(purge.state.players[0].prizesUp.length, 1);
+  assert.equal(foeHurt(purge.state), 160);
+  const party = armed("me55-108", "Celebration");
+  const side = party.state.players[0];
+  while (side.hand.length < 30) side.hand.push(side.deck.pop());
+  const prizes = side.prizes.length;
+  party.go();
+  assert.equal(side.prizes.length, prizes - 2);
+  assert.equal(side.hand.length, 0);
+});
+
+test("Standard attacks: Energy from the hand (Tricolor Pump, Crescendo Wave), Re-Brew, Bring Down, Poisonous Musculature", () => {
+  const { state, go } = armed("sv5-60", "Tricolor Pump");
+  const side = state.players[0];
+  const cards = [slotFor(state, 0, W).uid, slotFor(state, 0, W).uid];
+  side.hand.push(...cards);
+  go();
+  act(state, { type: "choose", player: 0, uids: cards });
+  if (state.pending[0]?.type === "pick") act(state, { type: "pick", player: 0, spot: ACTIVE });
+  assert.equal(foeHurt(state), 120);
+  const wave = armed("sv10-56", "Crescendo Wave");
+  const water = [slotFor(wave.state, 0, W).uid, slotFor(wave.state, 0, W).uid];
+  wave.state.players[0].hand.push(...water);
+  wave.go();
+  act(wave.state, { type: "choose", player: 0, uids: water });
+  assert.equal(foeHurt(wave.state), 90);
+  const brew = armed("sv6-23", "Re-Brew");
+  const grass = [slotFor(brew.state, 0, "energy-grass").uid, slotFor(brew.state, 0, "energy-grass").uid, slotFor(brew.state, 0, "energy-grass").uid];
+  brew.state.players[0].discard.push(...grass);
+  brew.go();
+  if (brew.state.pending[0]?.type === "pick") act(brew.state, { type: "pick", player: 0, spot: ACTIVE });
+  assert.equal(foeHurt(brew.state), 60);
+  assert.ok(grass.every((uid) => brew.state.players[0].deck.includes(uid)));
+  const down = armed("me1-41", "Bring Down", { bench: ["lab-wall"], foeBench: ["base1-46", "lab-wall"] });
+  const weak = down.state.players[1].bench[0];
+  down.go();
+  assert.ok(!down.state.players[1].bench.includes(weak));
+  const oki = armed("sv6pt5-36", "Poisonous Musculature");
+  oki.go();
+  const dark = oki.state.pending[0].uids.slice(0, 2);
+  assert.ok(dark.length > 0);
+  act(oki.state, { type: "choose", player: 0, uids: dark });
+  assert.ok(conditionsOn(oki.state.players[0].active).includes("poisoned"));
+});
+
 test("Standard attacks: every read attack text of a Standard Pokémon runs, bots answering what it asks", () => {
   let ran = 0;
   for (const card of byId.values()) {
