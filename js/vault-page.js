@@ -25,7 +25,7 @@
      navigate(path), signIn(), toast(message) */
 import { ORDER_LIMITS, packsInOffer, newRequestId } from "./orders-rules.js?v=1";
 import { SEALED_PRODUCTS } from "./catalog.js";
-import { coinAmount, coinText } from "./money.js?v=2";
+import { coinAmount, coinText } from "./money.js?v=4";
 
 const PENDING_KEY = "pokepack.vault.pending";
 const RESEND_WINDOW_MS = 120_000; // an unanswered open this young may still be running on the server

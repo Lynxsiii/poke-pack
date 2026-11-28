@@ -40,7 +40,7 @@ body.on-home .wrap { padding-top: 0; }
 }
 .hh-step::before {
   content: ""; position: absolute; inset: 0 3px; z-index: -1;
-  border: var(--line-w) solid var(--k); border-bottom-width: 4.5px; border-radius: 5px;
+  border: var(--line-w) solid var(--k); border-bottom-width: 4.5px; border-radius: var(--r-tag);
   background: var(--box); transform: skewX(var(--skew)); transition: background-color 0.12s ease;
 }
 .hh-step svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
@@ -77,7 +77,7 @@ body.on-home .wrap { padding-top: 0; }
 }
 /* The white plate, and the ink plate that grows over it when chosen. */
 .hh-slot::before, .hh-slot::after {
-  content: ""; position: absolute; inset: 0; border-radius: 6px; transform: skewX(var(--skew));
+  content: ""; position: absolute; inset: 0; border-radius: var(--r); transform: skewX(var(--skew));
 }
 .hh-slot::before { z-index: -2; border: var(--line-w) solid var(--k); background: var(--box); }
 .hh-slot::after {
@@ -91,7 +91,7 @@ body.on-home .wrap { padding-top: 0; }
 .hh-slot:active { transform: translateX(6px) translateY(2px); }
 .hh-slot-in { position: absolute; inset: 0; display: flex; align-items: center; gap: 6px; padding: 0 8px 0 11px; }
 .hh-slot picture { display: contents; }
-.hh-slot img { flex: none; width: auto; height: 50px; max-width: 29px; object-fit: contain; border-radius: 2px; -webkit-user-drag: none; }
+.hh-slot img { flex: none; width: auto; height: 50px; max-width: 29px; object-fit: contain; border-radius: var(--r-tag); -webkit-user-drag: none; }
 .hh-slot b {
   min-width: 0; font: 600 11px/1.08 var(--font-h); letter-spacing: -0.015em; overflow-wrap: break-word; hyphens: manual;
   display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;
@@ -132,7 +132,7 @@ body.on-home .wrap { padding-top: 0; }
 /* The fanned wrappers only show on a computer (the party chooses on a phone). */
 .hh-side { display: none; }
 /* A promo set: its top promo in a top-loader. */
-.hs-loader { display: block; width: 150px; padding: 7px 6px 14px; border: var(--line-w) solid var(--k); border-radius: 5px; background: rgb(var(--box-rgb) / 0.55); }
+.hs-loader { display: block; width: 150px; padding: 7px 6px 14px; border: var(--line-w) solid var(--k); border-radius: var(--r-tag); background: rgb(var(--box-rgb) / 0.55); }
 .hs-loader .tcg { width: 100%; }
 
 /* ---- Chase cards and the Open key ------------------------------------------ */
@@ -189,7 +189,7 @@ body.on-home .wrap { padding-top: 0; }
 
 /* ---- The lounge and the Discord row (hidden for now, see the end) ---------- */
 .home-page .home-lounge { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; margin: 40px 0 0; padding: 0; }
-#view-home .lounge-panel { padding: 14px 16px 16px; overflow: visible; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); }
+#view-home .lounge-panel { padding: 14px 16px 16px; overflow: visible; border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); }
 #view-home .lounge-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 10px; margin-bottom: 6px; padding: 0; }
 #view-home .lounge-head h2 { margin: 0; font: 800 24px/1 var(--font-xc); font-style: italic; letter-spacing: -0.015em; }
 #view-home .lounge-head span { color: var(--k-2); font-size: 14px; font-weight: 700; }
@@ -208,7 +208,7 @@ body.on-home .wrap { padding-top: 0; }
 #view-home .chat-form input { flex: 1; min-width: 0; padding: 10px 12px; }
 #view-home .lounge-empty { padding: 12px 0 0; color: var(--k-3); font-size: 14px; }
 .lounge-chat-link { display: none; font-size: 14px; }
-#view-home .home-discord { border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); }
+#view-home .home-discord { border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); }
 #view-home .home-discord .discord-mark { fill: var(--k); }
 #view-home .home-discord h2 { font: 800 24px/1 var(--font-xc); font-style: italic; letter-spacing: -0.015em; }
 #view-home .home-discord p { color: var(--k-2); }

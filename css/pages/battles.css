@@ -59,7 +59,7 @@ body.hl-in-hall::after { display: none; }
   scroll-snap-align: start; cursor: pointer; transition: color 0.12s ease;
 }
 #view-battles .hl-word::before {
-  content: ""; position: absolute; inset: 2px 0; z-index: -1; border-radius: 4px; background: var(--k);
+  content: ""; position: absolute; inset: 2px 0; z-index: -1; border-radius: var(--r-tag); background: var(--k);
   transform: skewX(var(--skew)) scaleX(0.6); opacity: 0; transition: transform 0.2s var(--ease-out), opacity 0.14s ease;
 }
 #view-battles .hl-word:hover:not(:disabled) { color: var(--k); }
@@ -79,7 +79,7 @@ body.hl-in-hall::after { display: none; }
   cursor: pointer; transition: color 0.12s ease;
 }
 #view-battles .hl-seg button::before {
-  content: ""; position: absolute; inset: 0; z-index: -1; border: var(--line-w) solid var(--rule-2); border-radius: 5px;
+  content: ""; position: absolute; inset: 0; z-index: -1; border: var(--line-w) solid var(--rule-2); border-radius: var(--r-tag);
   background: var(--box); transform: skewX(var(--skew)); transition: background-color 0.14s ease, border-color 0.14s ease;
 }
 #view-battles .hl-seg button:hover { color: var(--k); }
@@ -92,7 +92,7 @@ body.hl-in-hall::after { display: none; }
 /* Skeleton lines while something loads. */
 /* A rule-grey bar with the look's slanted cyan sweep (rotom.css .rt-skel). */
 #view-battles .hl-skel-line {
-  position: relative; overflow: hidden; display: inline-block; width: 56%; height: 12px; border-radius: 3px;
+  position: relative; overflow: hidden; display: inline-block; width: 56%; height: 12px; border-radius: var(--r-tag);
   background: var(--rule); vertical-align: middle;
 }
 #view-battles .hl-skel-line::after {
@@ -114,11 +114,11 @@ body.hl-in-hall::after { display: none; }
 #view-battles .hl-art.is-fan > span:nth-child(2) { z-index: 1; height: 100%; }
 #view-battles .hl-art.is-fan > span:nth-child(3) { transform: rotate(10deg) translateY(3%); }
 #view-battles .hl-art.is-fan img { width: 100%; height: 100%; object-position: bottom center; }
-#view-battles .hl-art.is-ghost { width: 46%; margin: auto; border: var(--line-w) dashed var(--rule-2); border-radius: 6px; }
+#view-battles .hl-art.is-ghost { width: 46%; margin: auto; border: var(--line-w) dashed var(--rule-2); border-radius: var(--r); }
 
 /* A lineup as a stack of wrappers and boxes, the last one in front. */
 #view-battles .hl-stack { --h: 58px; position: relative; display: block; flex: none; width: calc(var(--h) * 0.95); height: var(--h); }
-#view-battles .hl-stack.is-empty { width: calc(var(--h) * 0.62); margin-inline: auto; border: var(--line-w) dashed var(--rule-2); border-radius: 5px; }
+#view-battles .hl-stack.is-empty { width: calc(var(--h) * 0.62); margin-inline: auto; border: var(--line-w) dashed var(--rule-2); border-radius: var(--r-tag); }
 #view-battles .hl-stack > span {
   position: absolute; left: 50%; bottom: 0; height: 100%; width: 100%;
   display: flex; align-items: flex-end; justify-content: center;
@@ -148,7 +148,7 @@ body.hl-in-hall::after { display: none; }
 }
 #view-battles .hl-kicker {
   position: absolute; left: 0; top: 0; z-index: 3;
-  padding: 2px 12px 3px 10px; border-radius: 3px; background: var(--k); color: var(--on-k);
+  padding: 2px 12px 3px 10px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k);
   font: italic 700 13px/1.4 var(--font-h);
 }
 /* A small slanted white key. */
@@ -161,7 +161,7 @@ body.hl-in-hall::after { display: none; }
 }
 #view-battles .hl-change::before, #view-battles .hl-arrow::before {
   content: ""; position: absolute; inset: 0; z-index: -1;
-  border: var(--line-w) solid var(--k); border-bottom-width: 4.5px; border-radius: 5px;
+  border: var(--line-w) solid var(--k); border-bottom-width: 4.5px; border-radius: var(--r-tag);
   background: var(--box); transform: skewX(var(--skew)); transition: background-color 0.12s ease;
 }
 @media (hover: hover) { #view-battles .hl-change:hover::before, #view-battles .hl-arrow:hover::before { background: var(--yel); } }
@@ -213,7 +213,7 @@ body.hl-in-hall::after { display: none; }
   padding: 0 16px 0 8px; color: var(--on-k);
 }
 #view-battles .hl-side::before {
-  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 6px;
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: var(--r);
   background: var(--k); transform: skewX(var(--skew));
 }
 #view-battles .hl-side b { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: italic 800 17px/1 var(--font-xc); letter-spacing: -0.01em; }
@@ -231,7 +231,7 @@ body.hl-in-hall::after { display: none; }
   color: var(--k); font: italic 800 21px/1 var(--font-xc); letter-spacing: -0.02em;
 }
 #view-battles .hl-vs-mark::before {
-  content: ""; position: absolute; inset: 0; z-index: -1; border: var(--line-w) solid var(--k); border-radius: 5px;
+  content: ""; position: absolute; inset: 0; z-index: -1; border: var(--line-w) solid var(--k); border-radius: var(--r-tag);
   background: var(--yel); transform: skewX(var(--skew));
 }
 #view-battles .hl-stage.is-entering .hl-side.is-you { animation: hl-from-left 0.5s var(--ease-pop) 0.15s both; }
@@ -251,7 +251,7 @@ body.hl-in-hall::after { display: none; }
 /* Bots and entry: one straight box, two cells. */
 #view-battles .hl-quick-row {
   display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: stretch;
-  margin: 16px 0 18px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); overflow: hidden;
+  margin: 16px 0 18px; border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); overflow: hidden;
 }
 #view-battles .hl-field { display: grid; align-content: center; gap: 6px; padding: 10px 12px 12px; }
 #view-battles .hl-field > span, #view-battles .hl-entry > span { color: var(--k-2); font: italic 700 13px/1 var(--font-h); }
@@ -268,7 +268,7 @@ body.hl-in-hall::after { display: none; }
 #view-battles .hl-quick-actions .solid { min-width: 0; min-height: 58px; font-size: 22px; }
 #view-battles .hl-build { min-height: 58px; padding-inline: 18px; white-space: nowrap; font-size: 17px; }
 #view-battles .hl-msg {
-  margin: 14px 0 0; padding: 10px 12px; border: var(--line-w) solid var(--k); border-radius: 6px;
+  margin: 14px 0 0; padding: 10px 12px; border: var(--line-w) solid var(--k); border-radius: var(--r);
   background: var(--box); color: var(--k); font-size: 14px; font-weight: 700; line-height: 1.45;
   box-shadow: inset 6px 0 0 var(--hp-low);
 }
@@ -292,7 +292,7 @@ body.hl-in-hall::after { display: none; }
   transition: transform 0.16s var(--ease-out);
 }
 #view-battles .hl-mini::before {
-  content: ""; position: absolute; inset: 40px 0 0; z-index: -1; border: var(--line-w) solid var(--k); border-radius: 6px;
+  content: ""; position: absolute; inset: 40px 0 0; z-index: -1; border: var(--line-w) solid var(--k); border-radius: var(--r);
   background: var(--box); transform: skewX(var(--skew));
 }
 #view-battles .hl-mini.on { color: var(--on-k); }
@@ -326,7 +326,7 @@ body.hl-in-hall::after { display: none; }
 #view-battles .hl-row {
   position: relative; display: grid; grid-template-columns: 82px minmax(0, 1fr) auto; align-items: center; gap: 10px;
   min-height: 84px; padding: 10px 12px 10px 10px;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); color: var(--k); text-decoration: none;
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); color: var(--k); text-decoration: none;
   transition: transform 0.14s var(--ease-out);
 }
 @media (hover: hover) { #view-battles a.hl-row:hover { transform: translateX(4px); } }
@@ -346,7 +346,7 @@ body.hl-in-hall::after { display: none; }
 /* One meta line joined with commas (DESIGN.md, Copy); it wraps like text. */
 #view-battles .hl-row-rules { display: block; color: var(--k-2); font-size: 12.5px; font-weight: 700; line-height: 1.4; }
 #view-battles .hl-row-rules::first-letter { text-transform: uppercase; }
-#view-battles .hl-flag { display: inline-flex; align-items: center; gap: 2px; margin-left: 2px; padding: 0 6px 0 4px; vertical-align: 1px; border-radius: 3px; background: var(--k); color: var(--yel-k); font: italic 700 12px/1.5 var(--font-h); }
+#view-battles .hl-flag { display: inline-flex; align-items: center; gap: 2px; margin-left: 2px; padding: 0 6px 0 4px; vertical-align: 1px; border-radius: var(--r-tag); background: var(--k); color: var(--yel-k); font: italic 700 12px/1.5 var(--font-h); }
 #view-battles .hl-flag .bt-icon { width: 12px; height: 12px; fill: currentColor; stroke: none; }
 #view-battles .hl-row-rounds { white-space: nowrap; }
 #view-battles .hl-row-rounds::before { content: ", "; white-space: normal; }
@@ -370,7 +370,7 @@ body.hl-in-hall::after { display: none; }
   transition: transform 0.1s var(--ease-out);
 }
 #view-battles .hl-take::before {
-  content: ""; position: absolute; inset: 0; z-index: -1; border: var(--line-w) solid var(--k); border-bottom-width: 4.5px; border-radius: 5px;
+  content: ""; position: absolute; inset: 0; z-index: -1; border: var(--line-w) solid var(--k); border-bottom-width: 4.5px; border-radius: var(--r-tag);
   background: var(--box); transform: skewX(var(--skew)); transition: background-color 0.12s ease;
 }
 @media (hover: hover) { #view-battles a.hl-row:hover .hl-take::before { background: var(--yel); } }
@@ -389,13 +389,13 @@ body.hl-in-hall::after { display: none; }
 #view-battles .hl-row.is-skel .hl-stack { margin-top: 0; }
 #view-battles .hl-row.is-skel .hl-row-main { gap: 10px; }
 #view-battles .hl-empty {
-  margin: 0; padding: 16px 16px; border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: rgb(var(--box-rgb) / 0.5);
+  margin: 0; padding: 16px 16px; border: var(--line-w) dashed var(--rule-2); border-radius: var(--r); background: rgb(var(--box-rgb) / 0.5);
   color: var(--k-2); font-size: 14px; font-weight: 700; line-height: 1.45;
 }
 #view-battles .hl-empty a { color: var(--k); }
 #view-battles .hl-quiet {
   display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; padding: 18px 16px;
-  border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: rgb(var(--box-rgb) / 0.5);
+  border: var(--line-w) dashed var(--rule-2); border-radius: var(--r); background: rgb(var(--box-rgb) / 0.5);
   color: var(--k-2); font-size: 14px; font-weight: 700; line-height: 1.45;
 }
 #view-battles .hl-quiet p { margin: 0; flex: 1 1 220px; }
@@ -416,7 +416,7 @@ body.hl-in-hall::after { display: none; }
 #view-battles .hl-tables.is-calm .hl-rows > .hl-row.is-new { animation: hl-rise 0.32s var(--ease-out); }
 
 /* How battles work: a white box with the rules as rows. */
-#view-battles .hl-how { border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); overflow: hidden; }
+#view-battles .hl-how { border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); overflow: hidden; }
 #view-battles .hl-how summary {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   min-height: 54px; padding: 8px 16px; cursor: pointer; list-style: none;
@@ -437,7 +437,7 @@ body.hl-in-hall::after { display: none; }
 #view-battles .hl-how li + li { border-top: 1.5px solid var(--rule); }
 #view-battles .hl-how li::before {
   content: counter(hl-how); position: absolute; left: 14px; top: 11px; display: grid; place-items: center;
-  width: 26px; height: 22px; border-radius: 3px; background: var(--k); color: var(--yel-k);
+  width: 26px; height: 22px; border-radius: var(--r-tag); background: var(--k); color: var(--yel-k);
   font: italic 800 13px/1 var(--font-xc); transform: skewX(var(--skew));
 }
 
@@ -452,14 +452,14 @@ body.hl-in-hall::after { display: none; }
 @media (hover: hover) { #view-battles .hl-back:hover .bt-icon { transform: translateX(-3px); } }
 #view-battles .hl-steps { position: relative; z-index: 2; margin-bottom: 14px; }
 #view-battles .hl-step-n {
-  display: inline-grid; place-items: center; min-width: 20px; height: 18px; margin-left: 2px; padding: 0 5px; border-radius: 3px;
+  display: inline-grid; place-items: center; min-width: 20px; height: 18px; margin-left: 2px; padding: 0 5px; border-radius: var(--r-tag);
   background: var(--yel); color: var(--k0); font: 700 12px/1 var(--font-h); font-style: normal; font-variant-numeric: tabular-nums;
 }
 #view-battles .hl-shelf-tools { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; margin-bottom: 18px; }
 #view-battles .hl-search { position: relative; display: block; }
 #view-battles .hl-search .bt-icon { position: absolute; left: 13px; top: 50%; width: 19px; height: 19px; margin-top: -9.5px; color: var(--k); stroke-width: 2.4; pointer-events: none; }
 #view-battles .hl-search .search { width: 100%; min-height: 46px; padding: 10px 14px 10px 42px; border-width: var(--line-w); font-size: 16px; }
-#view-battles .hl-search.is-skel { height: 46px; border: var(--line-w) dashed var(--rule-2); border-radius: 6px; }
+#view-battles .hl-search.is-skel { height: 46px; border: var(--line-w) dashed var(--rule-2); border-radius: var(--r); }
 /* Sets: slanted slots with the symbol, the name and the pack price. */
 #view-battles .hl-sets {
   display: flex; gap: 8px;
@@ -474,7 +474,7 @@ body.hl-in-hall::after { display: none; }
   color: var(--k); text-align: left; cursor: pointer; scroll-snap-align: start;
   transition: color 0.12s ease;
 }
-#view-battles .hl-set::before, #view-battles .hl-set::after { content: ""; position: absolute; inset: 0; border-radius: 6px; transform: skewX(var(--skew)); }
+#view-battles .hl-set::before, #view-battles .hl-set::after { content: ""; position: absolute; inset: 0; border-radius: var(--r); transform: skewX(var(--skew)); }
 #view-battles .hl-set::before { z-index: -2; border: var(--line-w) solid var(--k); background: var(--box); }
 #view-battles .hl-set::after {
   z-index: -1; background: var(--k); border-left: 7px solid var(--yel);
@@ -516,7 +516,7 @@ body.hl-in-hall::after { display: none; }
   position: relative; isolation: isolate; display: grid; gap: 2px; min-height: 92px; padding: 24px 22px 9px 24px;
   transition: color 0.12s ease;
 }
-#view-battles .hl-prod-label::before, #view-battles .hl-prod-label::after { content: ""; position: absolute; inset: 0 8px; border-radius: 6px; transform: skewX(var(--skew)); }
+#view-battles .hl-prod-label::before, #view-battles .hl-prod-label::after { content: ""; position: absolute; inset: 0 8px; border-radius: var(--r); transform: skewX(var(--skew)); }
 #view-battles .hl-prod-label::before { z-index: -2; border: var(--line-w) solid var(--k); background: var(--box); }
 #view-battles .hl-prod-label::after {
   z-index: -1; background: var(--k); border-left: 7px solid var(--yel);
@@ -530,13 +530,13 @@ body.hl-in-hall::after { display: none; }
 #view-battles .hl-prod.is-in .hl-prod-set { color: color-mix(in srgb, var(--on-k) 80%, transparent); }
 #view-battles .hl-prod-price { margin-top: auto; padding-top: 2px; font-size: 21px; }
 #view-battles .hl-prod.is-skel .hl-prod-hit { cursor: default; }
-#view-battles .hl-prod.is-skel .hl-prod-art { margin: 0 22% 8px; border: var(--line-w) dashed var(--rule-2); border-radius: 6px; }
+#view-battles .hl-prod.is-skel .hl-prod-art { margin: 0 22% 8px; border: var(--line-w) dashed var(--rule-2); border-radius: var(--r); }
 #view-battles .hl-prod.is-skel .hl-prod-hit > .hl-skel-line { margin: 6px 10px 0; }
 /* A stepper: minus, the count, plus, on a straight white box. */
 #view-battles .hl-qty {
   position: absolute; top: 4px; right: 0; z-index: 3;
   display: inline-flex; align-items: center;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); box-shadow: var(--drop-sm);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); box-shadow: var(--drop-sm);
 }
 #view-battles .hl-qty[hidden] { display: none; }
 #view-battles .hl-qty button {
@@ -579,7 +579,7 @@ body.hl-in-hall::after { display: none; }
 #view-battles .hl-tray-inner {
   display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 6px 12px;
   padding: 10px 12px 10px 10px;
-  border: var(--line-w) solid var(--k); border-radius: 8px; background: var(--box); box-shadow: var(--drop);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); box-shadow: var(--drop);
 }
 #view-battles .hl-tray-stack { display: grid; place-items: center; width: 56px; height: 58px; padding: 0; border: 0; background: none; cursor: pointer; }
 #view-battles .hl-tray-stack .hl-stack { --h: 54px; }
@@ -616,7 +616,7 @@ body.hl-in-hall::after { display: none; }
 #view-battles .hl-lineup-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
 #view-battles .hl-lineup-head h2 { margin: 0; font: italic 800 24px/1 var(--font-xc); letter-spacing: -0.015em; }
 #view-battles .hl-lineup-head .link-btn { background: none; border: 0; padding: 8px 0; font-size: 14px; cursor: pointer; }
-#view-battles .hl-lineup-list { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); overflow: hidden; }
+#view-battles .hl-lineup-list { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); overflow: hidden; }
 #view-battles .hl-lineup-list li { display: grid; grid-template-columns: 46px minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 10px 10px 10px 12px; }
 #view-battles .hl-lineup-list li + li { border-top: 1.5px solid var(--rule); }
 #view-battles .hl-lineup-art { display: block; height: 56px; }
@@ -633,7 +633,7 @@ body.hl-in-hall::after { display: none; }
 #view-battles .hl-lineup-total > span:last-child { display: grid; justify-items: end; gap: 2px; font: italic 700 12.5px/1 var(--font-h); }
 #view-battles .hl-lineup-total .bt-coins { color: var(--k); font: normal 700 32px/1 var(--font-h); letter-spacing: -0.02em; }
 #view-battles .hl-lineup-total .bt-coins .coin-i { width: 0.8em; height: 0.8em; }
-#view-battles .hl-rules { min-width: 0; order: -1; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); overflow: hidden; }
+#view-battles .hl-rules { min-width: 0; order: -1; border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); overflow: hidden; }
 #view-battles .hl-rule { margin: 0; padding: 14px 14px 16px; border: 0; min-width: 0; }
 #view-battles .hl-rule + .hl-rule { border-top: 1.5px solid var(--rule); }
 #view-battles .hl-rule legend {
@@ -647,7 +647,7 @@ body.hl-in-hall::after { display: none; }
   position: relative; isolation: isolate; display: grid; align-content: start; gap: 5px; min-height: 96px; padding: 11px 12px 12px 14px;
   border: 0; background: none; color: var(--k); text-align: left; cursor: pointer; transition: color 0.12s ease;
 }
-#view-battles .hl-mode::before, #view-battles .hl-mode::after { content: ""; position: absolute; inset: 0; border-radius: 6px; transform: skewX(-6deg); }
+#view-battles .hl-mode::before, #view-battles .hl-mode::after { content: ""; position: absolute; inset: 0; border-radius: var(--r); transform: skewX(-6deg); }
 #view-battles .hl-mode::before { z-index: -2; border: var(--line-w) solid var(--k); background: var(--box); }
 #view-battles .hl-mode::after {
   z-index: -1; background: var(--k); border-left: 7px solid var(--yel);

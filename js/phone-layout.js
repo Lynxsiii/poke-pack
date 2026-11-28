@@ -122,3 +122,10 @@ function setupCollection() {
 }
 
 setupCollection();
+
+// Trades: "How trades work" folds shut on a phone; its heading opens it.
+document.addEventListener("click", (e) => {
+  if (!phone.matches) return;
+  const head = e.target.closest(".trades-view .tr-rules .plate-head");
+  if (head) head.closest(".tr-rules").classList.toggle("is-open");
+});

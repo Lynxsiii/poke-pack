@@ -25,7 +25,7 @@
 }
 /* Done: a small ink tag with a tick. */
 .qa-done {
-  display: inline-flex; align-items: center; gap: 6px; padding: 2px 9px 2px 8px; border-radius: 3px;
+  display: inline-flex; align-items: center; gap: 6px; padding: 2px 9px 2px 8px; border-radius: var(--r-tag);
   background: var(--k); color: var(--on-k); font: italic 700 13px/1.4 var(--font-h); white-space: nowrap;
 }
 .qa-done::before {
@@ -33,15 +33,15 @@
   transform: rotate(-45deg) translateY(-2px);
 }
 /* The HP bar: an ink track, a green fill. */
-.qa-bar { display: block; height: 12px; padding: 2.5px; border-radius: 6px; background: var(--k); overflow: hidden; }
-.qa-bar i { display: block; height: 100%; border-radius: 4px; background: var(--hp); transform-origin: 0 50%; }
+.qa-bar { display: block; height: 12px; padding: 2.5px; border-radius: var(--r); background: var(--k); overflow: hidden; }
+.qa-bar i { display: block; height: 100%; border-radius: var(--r-tag); background: var(--hp); transform-origin: 0 50%; }
 .qa-bar.full i { background: var(--hp); }
 /* Poké Ball pips: one per thing to finish. */
 .qa-segs { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
 .qa-segs .rt-ball { width: 17px; height: 17px; }
 .qa-empty {
   margin: 0; padding: 26px 18px; max-width: none; color: var(--k-2); font-size: 15px; font-weight: 600; line-height: 1.5; text-align: center;
-  border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: rgb(var(--box-rgb) / 0.5);
+  border: var(--line-w) dashed var(--rule-2); border-radius: var(--r); background: rgb(var(--box-rgb) / 0.5);
 }
 .qa-empty.slim { padding: 12px 14px; font-size: 14px; text-align: left; }
 .qa-none { margin: 0; color: var(--k-2); font: 700 14px var(--font); }
@@ -65,7 +65,7 @@
   scroll-snap-align: start; transition: color 0.12s ease;
 }
 .qa-word::before {
-  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 4px; background: var(--k);
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: var(--r-tag); background: var(--k);
   transform: skewX(var(--skew)) scaleX(0.55); opacity: 0; transition: transform 0.2s var(--ease-out), opacity 0.14s ease;
 }
 .qa-word small { color: var(--k-3); font: normal 700 12.5px var(--font-h); font-variant-numeric: tabular-nums; transition: color 0.12s ease; }
@@ -77,7 +77,7 @@
 .qa-word.on::after { content: none; }
 /* Something to claim under a word: an ink count tag. */
 .qa-dot {
-  position: static; display: inline-grid; place-items: center; min-width: 19px; height: 18px; padding: 0 5px; border-radius: 3px;
+  position: static; display: inline-grid; place-items: center; min-width: 19px; height: 18px; padding: 0 5px; border-radius: var(--r-tag);
   background: var(--k); color: var(--on-k); font: normal 700 11.5px/1 var(--font-h); font-variant-numeric: tabular-nums;
 }
 .qa-word.on .qa-dot { background: var(--yel); color: var(--k0); }
@@ -97,7 +97,7 @@
   font: italic 800 20px/1 var(--font-xc); letter-spacing: -0.015em; white-space: nowrap; transition: color 0.12s ease;
 }
 .qb-word::before {
-  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 5px; background: var(--k);
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: var(--r-tag); background: var(--k);
   transform: skewX(var(--skew)) scaleX(0.55); opacity: 0; transition: transform 0.2s var(--ease-out), opacity 0.14s ease;
 }
 .qb-word:hover { color: var(--k); }
@@ -109,7 +109,7 @@
 .qb-word small { color: var(--k-3); font: normal 700 13px var(--font-h); font-variant-numeric: tabular-nums; }
 .qb-word.on small { color: var(--yel-k); }
 .qb-tag {
-  display: inline-grid; place-items: center; min-width: 21px; height: 20px; padding: 0 5px; border-radius: 3px;
+  display: inline-grid; place-items: center; min-width: 21px; height: 20px; padding: 0 5px; border-radius: var(--r-tag);
   background: var(--k); color: var(--on-k); font: normal 700 12.5px/1 var(--font-h); font-variant-numeric: tabular-nums;
 }
 .qb-word.on .qb-tag { background: var(--yel); color: var(--k0); }
@@ -121,7 +121,7 @@
 /* The timer: "Resets in" quiet, the time in Kanit figures. */
 .qb-timer { display: inline-flex; align-items: baseline; gap: 6px; color: var(--k-2); }
 .qb-timer small { font: 700 12.5px var(--font); }
-.qb-timer b { padding: 1px 8px 2px; border-radius: 3px; background: var(--k); color: var(--yel-k); font: 700 15px/1.3 var(--font-h); font-variant-numeric: tabular-nums; }
+.qb-timer b { padding: 1px 8px 2px; border-radius: var(--r-tag); background: var(--k); color: var(--yel-k); font: 700 15px/1.3 var(--font-h); font-variant-numeric: tabular-nums; }
 .qb-got { color: var(--k-2); font: 700 13px var(--font); font-variant-numeric: tabular-nums; }
 .qb-got b { color: var(--k); font: 700 16px var(--font-h); }
 .qb-rows { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
@@ -130,7 +130,7 @@
    with the count; at the right the reward and, once done, the Claim key. */
 .qrow {
   position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 4px 14px;
-  padding: 11px 12px 12px 14px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  padding: 11px 12px 12px 14px; border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box);
   transition: transform 0.14s var(--ease-out);
 }
 @media (hover: hover) { .qrow:hover { transform: translateX(4px); } }
@@ -150,7 +150,7 @@
 .qrow-chest { grid-template-columns: auto minmax(0, 1fr) auto; margin-top: 4px; }
 .qrow-chest.is-open { border-style: dashed; border-color: var(--rule-2); background: rgb(var(--box-rgb) / 0.55); }
 .qrow-chest-mark {
-  display: grid; place-items: center; width: 46px; height: 46px; border-radius: 5px;
+  display: grid; place-items: center; width: 46px; height: 46px; border-radius: var(--r-tag);
   background: var(--k); color: var(--on-k);
 }
 .qrow-chest.is-ready .qrow-chest-mark { background: var(--yel); color: var(--k0); box-shadow: inset 0 0 0 2.5px var(--k); }
@@ -160,7 +160,7 @@
 /* The streak: the count in Kanit, fourteen days as Poké Ball pips. */
 .qb-streak {
   display: grid; gap: 12px 24px; align-items: center;
-  padding: 12px 14px 14px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  padding: 12px 14px 14px; border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box);
 }
 .qb-streak-copy p { margin: 0; }
 .qb-streak-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; }
@@ -192,7 +192,7 @@
 .qa-wall > *, .qm > * { min-width: 0; }
 .qa-head {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 28px;
-  margin: 0 0 16px; padding: 12px 14px 14px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  margin: 0 0 16px; padding: 12px 14px 14px; border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box);
 }
 .qa-head .claim-cta { flex: none; }
 /* The totals: the count large, the HP bar, one line of coins. */
@@ -236,7 +236,7 @@
 /* A badge tile: the medal and the reward, the name and what it asks, then the bar or the key. */
 .qa-tile {
   position: relative; display: grid; grid-template-rows: auto 1fr auto; gap: 8px; min-width: 0;
-  padding: 11px 12px 12px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  padding: 11px 12px 12px; border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box);
 }
 .qa-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
 .qa-top .qa-coin { margin-top: 4px; font-size: 16px; }
@@ -245,7 +245,7 @@
 .qa-copy b { display: block; font: 600 16px/1.2 var(--font-h); overflow-wrap: anywhere; }
 .qa-copy p { margin: 3px 0 0; color: var(--k-2); font-size: 12.5px; font-weight: 700; line-height: 1.4; }
 .qa-own {
-  display: inline-block; margin-top: 6px; padding: 1px 7px; border-radius: 3px; background: var(--box-2); box-shadow: inset 0 0 0 1.5px var(--rule);
+  display: inline-block; margin-top: 6px; padding: 1px 7px; border-radius: var(--r-tag); background: var(--box-2); box-shadow: inset 0 0 0 1.5px var(--rule);
   color: var(--k); font: italic 700 12px/1.45 var(--font-h);
 }
 .qa-foot { display: flex; align-items: center; gap: 8px; min-height: 30px; }
@@ -296,7 +296,7 @@
 .qa-tile.is-secret .qa-hint::after { content: "\201D"; }
 .qa-tile.is-secret .qa-coin { color: var(--k-3); }
 .qa-secret-mark {
-  display: inline-block; margin-left: 8px; padding: 0 6px; border-radius: 3px; background: var(--k); vertical-align: 2px;
+  display: inline-block; margin-left: 8px; padding: 0 6px; border-radius: var(--r-tag); background: var(--k); vertical-align: 2px;
   color: var(--yel-k); font: italic 700 11px/1.5 var(--font-h);
 }
 
@@ -353,7 +353,7 @@ button.mstrip:hover small { color: var(--k); text-decoration: underline; text-de
 }
 .qa-fold[open] > summary::after { transform: rotate(-135deg) translateY(-1px); }
 .qa-fold > summary small {
-  padding: 0 7px; border-radius: 3px; background: var(--k); color: var(--on-k); font: 700 12px/1.6 var(--font-h); font-variant-numeric: tabular-nums;
+  padding: 0 7px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k); font: 700 12px/1.6 var(--font-h); font-variant-numeric: tabular-nums;
 }
 .title-groups { display: grid; }
 .qa-hidden-titles { margin: 4px 0 0; padding-top: 12px; border-top: 1.5px solid var(--rule); color: var(--k-2); font-size: 13.5px; font-weight: 700; line-height: 1.4; }

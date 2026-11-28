@@ -6,7 +6,7 @@
 .discord-link {
   display: inline-flex; align-items: center; justify-content: center;
   flex: none; width: 44px; min-height: 44px;
-  border-radius: 6px; color: var(--k-2); text-decoration: none;
+  border-radius: var(--r); color: var(--k-2); text-decoration: none;
 }
 .discord-link:hover { color: var(--k); }
 .discord-link:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 2px; }
@@ -21,7 +21,7 @@
 .home-discord {
   display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 0 20px;
   margin-top: 48px; padding: 0 18px 0 0; overflow: hidden;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box);
 }
 .home-discord .discord-mark, #view-home .home-discord .discord-mark {
   box-sizing: content-box; align-self: stretch; width: 34px; height: auto; padding: 0 30px 0 18px; fill: #fff; background: var(--k);

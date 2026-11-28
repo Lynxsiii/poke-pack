@@ -6,7 +6,7 @@ import { isHit } from "./engine.js";
 import { botPersona } from "./battle-rules.js";
 import { avatarSrc, avatarPixel, avatarFit } from "./cosmetics.js";
 import { avatarColor } from "./palette.js";
-import { coinText, coinAmount } from "./money.js?v=2";
+import { coinText, coinAmount } from "./money.js?v=4";
 
 export const esc = (value = "") =>
   String(value).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);

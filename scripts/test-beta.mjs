@@ -5,7 +5,7 @@ import { DatabaseSync } from 'node:sqlite';
 import { readFileSync, readdirSync } from 'node:fs';
 import worker from '../worker/index.js';
 import { seedLevel } from './lib/level-seed.mjs';
-import { grassMultiplier, rocketCrash, stakeCents, payoutCents, TINS, TIN_TIERS, tinLean, tinReturn, isPieceCard } from '../js/beta-rules.js';
+import { grassMultiplier, stakeCents, payoutCents, TINS, TIN_TIERS, tinLean, tinReturn, isPieceCard } from '../js/beta-rules.js';
 import { GRADING_LIMITS } from '../js/grading-rules.js';
 import { frameChoice } from '../worker/perks.js';
 
@@ -21,14 +21,6 @@ assert.equal(grassMultiplier(3, 0), 1);
 assert.ok(Math.abs(grassMultiplier(3, 5) - 2.0) < 0.1, 'about 2x for 3 Voltorb and 5 clear tiles, as the design said');
 assert.ok(isPieceCard({ name: 'Pikachu V-UNION' }) && isPieceCard({ name: 'Lugia LEGEND' }) && isPieceCard({ name: 'X', subtypes: ['V-UNION'] }));
 assert.ok(!isPieceCard({ name: 'Legendary Pikachu V' }) && !isPieceCard({ name: 'Greninja BREAK', subtypes: ['BREAK'] }));
-assert.equal(rocketCrash(0), 1);
-assert.equal(rocketCrash(0.5), 1.9);
-assert.equal(rocketCrash(0.9999999), 100);
-{ // P(crash >= m) <= 0.95 / m
-  const N = 200000; let hit2 = 0, hit10 = 0;
-  for (let i = 0; i < N; i++) { const c = rocketCrash(Math.random()); if (c >= 2) hit2++; if (c >= 10) hit10++; }
-  assert.ok(Math.abs(hit2 / N - 0.475) < 0.01 && Math.abs(hit10 / N - 0.095) < 0.005, `${hit2 / N} ${hit10 / N}`);
-}
 assert.equal(stakeCents(5), 500);
 assert.equal(stakeCents('2.5'), 250);
 assert.equal(stakeCents(0.5), null);
@@ -262,43 +254,27 @@ assert.equal(prof.body.user?.beta ?? prof.body.profile?.beta ?? prof.body.beta, 
   }
 }
 
-// Rocket: bet in the window, an auto cash-out the round reaches pays, the rest lose; manual cash pays the clock's multiplier.
+// Rayquaza was taken down: nothing new can be bet, a round that had ended settles as it always did, and a round caught
+// in the air gives open bets their stake back. The tables stay as the record.
 {
   db.prepare('UPDATE profiles SET coins = 1000 WHERE user_id = ?').run(ash.id);
-  const g = await call('/api/casino/beta/rocket', 'GET', null, ash.sid);
-  assert.equal(g.status, 200);
-  assert.equal(g.body.round.phase, 'betting');
-  assert.equal(g.body.round.crash, null, 'the pop point stays hidden');
-  const id = g.body.round.id;
-  db.prepare('UPDATE rocket_rounds SET crash = 3 WHERE id = ?').run(id);
-  const b = await call('/api/casino/beta/rocket/bet', 'POST', { round: id, stake: 10, auto: 2, requestId: rid() }, ash.sid);
-  assert.equal(b.status, 200, JSON.stringify(b.body));
-  assert.equal(coinsOf(ash.id), 990);
-  const twice = await call('/api/casino/beta/rocket/bet', 'POST', { round: id, stake: 10, auto: 2, requestId: rid() }, ash.sid);
-  assert.equal(coinsOf(ash.id), 990, 'one bet per round');
-  assert.equal(twice.status, 200);
-  // Fly it: launch in the past, popped at 3x.
   const now = Date.now();
-  db.prepare('UPDATE rocket_rounds SET launch_at = ?, pop_at = ?, end_at = ? WHERE id = ?').run(now - 20000, now - 10, now + 3000, id);
-  const after = await call('/api/casino/beta/rocket', 'GET', null, ash.sid);
-  assert.equal(after.body.round.phase, 'popped');
-  assert.equal(after.body.round.crash, 3);
-  assert.equal(after.body.mine.status, 'won');
-  assert.equal(coinsOf(ash.id), 1010);
-  await call('/api/casino/beta/rocket', 'GET', null, ash.sid);
-  assert.equal(coinsOf(ash.id), 1010, 'settled once');
-  // A new round with a manual cash-out mid-flight.
-  db.prepare('UPDATE rocket_rounds SET end_at = ? WHERE id = ?').run(now - 1, id);
-  const g2 = await call('/api/casino/beta/rocket', 'GET', null, ash.sid);
-  const id2 = g2.body.round.id;
-  assert.equal(id2, id + 1);
-  await call('/api/casino/beta/rocket/bet', 'POST', { round: id2, stake: 10, auto: 50, requestId: rid() }, ash.sid);
-  const t = Date.now();
-  db.prepare('UPDATE rocket_rounds SET crash = 20, launch_at = ?, pop_at = ?, end_at = ? WHERE id = ?').run(t - 6400, t + 60000, t + 63000, id2);
-  const c = await call('/api/casino/beta/rocket/cash', 'POST', {}, ash.sid);
-  assert.equal(c.body.mine.status, 'won');
-  assert.ok(c.body.mine.cashed >= 2 && c.body.mine.cashed < 2.1, `cashed at ${c.body.mine.cashed}`);
-  assert.ok(Math.abs(coinsOf(ash.id) - (1000 + payoutCents(1000, c.body.mine.cashed) / 100)) < 1e-6);
+  const round = db.prepare('INSERT INTO rocket_rounds (id, crash, launch_at, pop_at, end_at) VALUES (?, ?, ?, ?, ?)');
+  const bet = db.prepare("INSERT INTO rocket_bets (round_id, user_id, stake, auto, status, request_id, created_at) VALUES (?, ?, ?, ?, 'open', ?, ?)");
+  round.run(9001, 3, now - 60000, now - 30000, now - 26000); // ended: an auto of 2x was reached
+  bet.run(9001, ash.id, 1000, 2, rid(), now - 61000);
+  round.run(9002, 50, now - 5000, now + 30000, now + 33500); // still in the air
+  bet.run(9002, ash.id, 2500, 40, rid(), now - 6000);
+  const gone = await call('/api/casino/beta/rocket', 'GET', null, ash.sid);
+  assert.equal(gone.status, 410, JSON.stringify(gone.body));
+  assert.equal(coinsOf(ash.id), 1000 + 20 + 25, 'the ended round pays 2x of 10, the flying one hands back 25');
+  const noBet = await call('/api/casino/beta/rocket/bet', 'POST', { round: 9002, stake: 10, auto: 2, requestId: rid() }, ash.sid);
+  assert.equal(noBet.status, 410);
+  await call('/api/casino/beta', 'GET', null, ash.sid);
+  assert.equal(coinsOf(ash.id), 1045, 'closed out once');
+  const rows = db.prepare('SELECT round_id, status, payout FROM rocket_bets WHERE round_id >= 9001 ORDER BY round_id').all();
+  assert.deepEqual(rows.map((r) => [r.status, r.payout]), [['won', 2000], ['refunded', 2500]]);
+  assert.equal(db.prepare('SELECT COUNT(*) AS n FROM rocket_rounds WHERE settled = 0').get().n, 0);
 }
 
 console.log('beta ok');

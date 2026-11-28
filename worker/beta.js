@@ -1,7 +1,7 @@
 import { PLAYABLE_SETS, ALL_SETS, sellValue } from '../js/catalog.js';
 import {
   BETA_RULES, BETA_ADMINS, stakeCents, payoutCents, GRASS, grassMultiplier,
-  ROCKET, rocketAt, rocketMsFor, rocketCrash, TINS, TIN_MAX_OPEN, TIN_MAX_LEAN, tinTier, tinWeight, tinReturn, tinLean, tinPrice, isPieceCard,
+  TINS, TIN_MAX_OPEN, TIN_MAX_LEAN, tinTier, tinWeight, tinReturn, tinLean, tinPrice, isPieceCard,
 } from '../js/beta-rules.js';
 import { GRADING_LIMITS, bandFor, gradedValueOf } from '../js/grading-rules.js';
 import { ensureGradingSchema } from './grading.js';
@@ -9,7 +9,7 @@ import { gateResponse } from './gates.js';
 import { takeRoll } from './fair.js';
 import { grassBoard, tinPicks } from '../js/fair.js';
 
-/* BETA TESTING (/api/casino/beta/...): invite codes, the tester flag, and three games against the house.
+/* BETA TESTING (/api/casino/beta/...): invite codes, the tester flag, and the games against the house.
 
    Joining: Noah (BETA_ADMINS, or the Worker var BETA_ADMINS) makes codes; a player enters one once and becomes a beta tester
    (users.beta = 1). Testers get the beta badge, the Beta Tester frame and the games below. Only code holders can play (Noah, 2026-11-26: "games be locked to code holders"); the owner is let in automatically.
@@ -358,22 +358,25 @@ async function tins(env, helpers, user, action, body, method, request) {
   return respond(helpers, env, user, { run: runs[0], runs });
 }
 
-// ---- Rocket --------------------------------------------------------------------------------
-/** The round now (made when the last one has finished), after settling every finished one. */
-async function currentRound(env) {
+// ---- Rayquaza (taken down 2026-11-28) ------------------------------------------------------
+/* The shared crash round ("rocket" in the tables) was removed from the site on Noah's word. Its tables stay as the
+   record of every round and bet. Nothing new can be bet. Any round the removal left unsettled is closed out once:
+   a round that had already ended pays the auto cash-outs it reached and loses the rest, as it always did; a round
+   still in its betting window or in the air gives every open bet its stake back. */
+async function closeRocket(env) {
   const now = Date.now();
-  let round = await env.DB.prepare('SELECT * FROM rocket_rounds ORDER BY id DESC LIMIT 1').first();
-  if (!round || now >= round.end_at) {
-    const id = (round?.id || 0) + 1;
-    const crash = rocketCrash(randUnit());
-    const launch = now + ROCKET.betMs;
-    const pop = launch + Math.round(rocketMsFor(crash));
-    await env.DB.prepare('INSERT OR IGNORE INTO rocket_rounds (id, crash, launch_at, pop_at, end_at) VALUES (?, ?, ?, ?, ?)').bind(id, crash, launch, pop, pop + ROCKET.afterMs).run();
-    round = await env.DB.prepare('SELECT * FROM rocket_rounds WHERE id = ?').bind(id).first();
+  const left = (await env.DB.prepare('SELECT * FROM rocket_rounds WHERE settled = 0 LIMIT 20').all()).results || [];
+  for (const r of left) {
+    if (r.pop_at <= now) { await settleRound(env, r); continue; }
+    await env.DB.batch([
+      env.DB.prepare(`UPDATE profiles SET coins = ROUND(coins + COALESCE((SELECT SUM(b.stake) FROM rocket_bets b
+          WHERE b.round_id = ?1 AND b.user_id = profiles.user_id AND b.status = 'open'), 0) / 100.0, 2)
+        WHERE user_id IN (SELECT user_id FROM rocket_bets WHERE round_id = ?1 AND status = 'open')
+          AND EXISTS (SELECT 1 FROM rocket_rounds WHERE id = ?1 AND settled = 0)`).bind(r.id),
+      env.DB.prepare("UPDATE rocket_bets SET status = 'refunded', payout = stake WHERE round_id = ? AND status = 'open'").bind(r.id),
+      env.DB.prepare('UPDATE rocket_rounds SET settled = 1 WHERE id = ?').bind(r.id),
+    ]);
   }
-  const due = (await env.DB.prepare('SELECT * FROM rocket_rounds WHERE settled = 0 AND pop_at <= ? LIMIT 5').bind(now).all()).results || [];
-  for (const r of due) await settleRound(env, r);
-  return round;
 }
 /** Pay every open bet whose auto cash-out the round reached, lose the rest, once. */
 function settleRound(env, r) {
@@ -389,60 +392,9 @@ function settleRound(env, r) {
     env.DB.prepare('UPDATE rocket_rounds SET settled = 1 WHERE id = ?').bind(r.id),
   ]);
 }
-async function viewRocket(env, user, round) {
-  const now = Date.now();
-  const popped = now >= round.pop_at;
-  const bets = (await env.DB.prepare(`SELECT b.*, u.name AS user_name, u.handle AS user_handle FROM rocket_bets b LEFT JOIN users u ON u.id = b.user_id
-    WHERE b.round_id = ? ORDER BY b.stake DESC LIMIT 50`).bind(round.id).all()).results || [];
-  const view = (b) => ({ name: b.user_name || 'Trainer', handle: b.user_handle || '', mine: b.user_id === user?.id, stake: coins(b.stake),
-    auto: b.user_id === user?.id ? b.auto : null, cashed: b.cashed, status: b.status, payout: coins(b.payout) });
-  const history = (await env.DB.prepare('SELECT id, crash FROM rocket_rounds WHERE pop_at <= ? ORDER BY id DESC LIMIT 12').bind(now).all()).results || [];
-  return { round: { id: round.id, launchAt: round.launch_at, endAt: round.end_at, phase: now < round.launch_at ? 'betting' : popped ? 'popped' : 'flying',
-      crash: popped ? round.crash : null, popAt: popped ? round.pop_at : null },
-    bets: bets.map(view), mine: bets.find((b) => b.user_id === user?.id) ? view(bets.find((b) => b.user_id === user?.id)) : null,
-    history: history.map((h) => ({ id: h.id, crash: h.crash })), serverNow: now };
-}
-async function rocket(env, helpers, user, action, body, method) {
-  const round = await currentRound(env);
-  if (method === 'GET') return helpers.json(await viewRocket(env, user, round));
-  const gate = await mayPlay(env, helpers, user);
-  if (gate) return gate;
-  const now = Date.now();
-  if (action === 'bet') {
-    if (Number(body?.round) !== round.id || now >= round.launch_at) error('Bets for this round are closed. Wait for the next one.', 409);
-    const stake = await readStake(body);
-    const requestId = readRequestId(body);
-    const auto = Math.floor(Number(body?.auto) * 100 + 1e-9) / 100;
-    if (!Number.isFinite(auto) || auto < ROCKET.minAuto || auto > ROCKET.maxMult) error(`Auto cash-out from ${ROCKET.minAuto}x to ${ROCKET.maxMult}x.`);
-    const results = await env.DB.batch([
-      env.DB.prepare(`UPDATE profiles SET coins = ROUND(coins - ?1 / 100.0, 2) WHERE user_id = ?2 AND coins >= ?1 / 100.0
-        AND NOT EXISTS (SELECT 1 FROM rocket_bets WHERE round_id = ?3 AND user_id = ?2)`).bind(stake, user.id, round.id),
-      env.DB.prepare(`INSERT INTO rocket_bets (round_id, user_id, stake, auto, status, request_id, created_at) SELECT ?, ?, ?, ?, 'open', ?, ? WHERE changes() = 1`)
-        .bind(round.id, user.id, stake, auto, requestId, now),
-    ]);
-    if (!results[1]?.meta?.changes) {
-      const had = await env.DB.prepare('SELECT 1 FROM rocket_bets WHERE round_id = ? AND user_id = ?').bind(round.id, user.id).first();
-      if (!had) error('Not enough coins.');
-    }
-    return respond(helpers, env, user, await viewRocket(env, user, round));
-  }
-  if (action === 'cash') {
-    const bet = await env.DB.prepare("SELECT * FROM rocket_bets WHERE round_id = ? AND user_id = ? AND status = 'open'").bind(round.id, user.id).first();
-    if (!bet || now < round.launch_at || now >= round.pop_at) return respond(helpers, env, user, await viewRocket(env, user, round));
-    const mult = Math.min(bet.auto, rocketAt(now - round.launch_at), round.crash);
-    const pay = payoutCents(bet.stake, mult);
-    await env.DB.batch([
-      env.DB.prepare(`UPDATE profiles SET coins = ROUND(coins + ?1 / 100.0, 2) WHERE user_id = ?2
-        AND EXISTS (SELECT 1 FROM rocket_bets WHERE round_id = ?3 AND user_id = ?2 AND status = 'open')`).bind(pay, user.id, round.id),
-      env.DB.prepare("UPDATE rocket_bets SET status = 'won', cashed = ?, payout = ? WHERE round_id = ? AND user_id = ? AND status = 'open'").bind(mult, pay, round.id, user.id),
-    ]);
-    return respond(helpers, env, user, await viewRocket(env, user, round));
-  }
-  error('Not found.', 404);
-}
 
 // ---- Router ------------------------------------------------------------------------------
-const GAMES = { grass, tins, rocket };
+const GAMES = { grass, tins };
 export async function handleBeta(path, method, request, env, helpers) {
   const m = path.match(/^\/api\/casino\/beta(?:\/([a-z]+))?(?:\/([a-z]+))?$/);
   if (!m) return helpers.json({ error: 'Not found.' }, 404);
@@ -470,6 +422,8 @@ export async function handleBeta(path, method, request, env, helpers) {
     }
 
     await settleRetired(env, user);
+    await closeRocket(env);
+    if (part === 'rocket') error('Rayquaza has been taken down.', 410);
     if (!part) {
       if (method !== 'GET') error('Not found.', 404);
       return helpers.json({ member: isMember(user), admin, codes: admin ? await listCodes(env) : null, rules: BETA_RULES, serverNow: Date.now() });
