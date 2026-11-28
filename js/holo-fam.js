@@ -59,7 +59,7 @@ export const FAMILIES = [
   ["xy-reverse", 2],
   ["me-ir", 5],
   ["sv-sir", 4],
-  ["sv-ultra", 4],
+  ["sv-ultra", 5],
   ["me55", 3],
   ["me-holo", 5],
   ["swsh-holo", 3],

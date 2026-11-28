@@ -19,7 +19,7 @@
 /** Scarlet & Violet set and promo ids (sv1-, sv3pt5-, rsv10pt5-, zsv10pt5-, svp-; not sve- energies or me-). */
 // The Mega Evolution Ultra Rares too since 2026-11-28: the same stock (Live's SV_ULTRA / ETCHED), and the shared recipe
 // laid a blue-grey grain over their dark ink.
-const SV_ID = /^(?:[zrj]?sv\d|svp-|me\d(?:pt5)?-)/;
+const SV_ID = /^(?:[zrj]?sv\d|svp-|j?me\d(?:pt5)?[a-z]?-)/;
 
 /** Whether a card face is this family's. */
 export function claims(card, base) {
