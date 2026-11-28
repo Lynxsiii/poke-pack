@@ -170,14 +170,14 @@ export function arrivals(seen) {
 const EXTRA_ICONS = {
   coin: '<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="5.6"/><path d="M12 9v6M9.6 12h4.8"/>',
   // the pot: three cards tossed in, fanned behind one coin
-  pot: '<path d="M3.5 12.5h17l-1.8 8H5.3z"/><path d="M4.72 10.3L2.77 4.93L7.47 3.22L7.6 3.59L7.6 10.3"/><path d="M16.4 10.3L16.4 3.59L16.53 3.22L21.23 4.93L19.28 10.3"/><path class="ic-a" d="M9.5 10.5V3h5v7.5z"/>',
+  pot: '<path d="M8.3 13.9 8.3 5 8.6 4.4 9.4 4.1 14.6 4.1 15.1 4.2 15.5 4.6 15.7 5.2 15.7 13.9M7.2 15.9 3.3 8.1 3.2 7.6 3.3 7.1 3.6 6.7 7.9 4.6M16.1 4.6 20.4 6.7 20.7 7.1 20.8 7.6 20.7 8.1 16.8 15.9"/><circle cx="12" cy="17.4" r="4.2"/><circle cx="12" cy="17.4" r="1.7"/>',
   // the hit between two packs
   clash: '<path d="M12 2.5v4M12 17.5v4M2.5 12h4M17.5 12h4M5.3 5.3l2.8 2.8M15.9 15.9l2.8 2.8M18.7 5.3l-2.8 2.8M8.1 15.9l-2.8 2.8"/>',
   clock: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
 };
 export const casinoIcon = (name, cls = "") =>
   EXTRA_ICONS[name]
-    ? `<svg class="bt-icon ${cls}" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">${EXTRA_ICONS[name]}</svg>`
+    ? `<svg class="bt-icon ${cls}" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">${EXTRA_ICONS[name]}</svg>`
     : icon(name, cls);
 
 /* ---------- The three table arts ----------
