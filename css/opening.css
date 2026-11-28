@@ -37,7 +37,7 @@
    end page. The same values as the page ground (css/rotom.css :root). */
 #overlay .focus-meta,
 #overlay.is-spread {
-  color-scheme: light;
+  color-scheme: light; --key-off: #e3e9eb;
   --bg: #eef2f3; --box: #ffffff; --box-2: #f4f7f8; --rule: #d9e0e3; --rule-2: #b4bec4;
   --k-2: #566069; --k-3: #6f7a83;
   --ground: var(--bg); --carbon: var(--box); --graphite: #e6ecee; --well: #e3e9eb;
@@ -55,7 +55,7 @@
    html[data-theme="dark"]): ink ground, light lines, light plates with ink text. */
 html[data-theme="dark"] #overlay .focus-meta,
 html[data-theme="dark"] #overlay.is-spread {
-  color-scheme: dark;
+  color-scheme: dark; --key-off: #262d35;
   --k: #eef2f3; --on-k: #14171b; --box-rgb: 26 31 37; --yel-k: #6b5200;
   --bg: #101317; --box: #1a1f25; --box-2: #222830; --rule: #323a43; --rule-2: #4c5661;
   --k-2: #aab4bc; --k-3: #8b96a0; --cy-2: var(--cy-2d); --cy-3: var(--cy-3d);
@@ -1036,7 +1036,7 @@ html[data-theme="dark"] #overlay.is-spread {
 #overlay .ghost:hover:not(:disabled)::before { background: var(--cy-3); }
 #overlay .overlay-actions .ghost:disabled { color: var(--k-3); }
 #overlay .overlay-actions .ghost:disabled::before,
-#overlay .overlay-actions .solid:disabled::before { background: #e3e9eb; border-color: var(--rule-2); }
+#overlay .overlay-actions .solid:disabled::before { background: var(--key-off); border-color: var(--rule-2); }
 /* The way to hurry stands left of the step. */
 #overlay #skip-btn,
 #overlay #skip-hits-btn { order: -1; }

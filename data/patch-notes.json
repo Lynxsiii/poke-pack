@@ -1,5 +1,15 @@
 [
   {
+    "id": "2026-11-28-dark-keys-equipped-tag",
+    "date": "2026-11-28",
+    "title": "Dark mode keys and the Equipped tag",
+    "summary": "Two small visual fixes.",
+    "items": [
+      "In dark mode, a key you can't press yet (Upgrade before you pick cards, Back and Next in the binder) is now a dim plate instead of the brightest thing on the page. It follows your colour theme too.",
+      "The Equipped tag on Sleeves and coins shows its word again in light mode. It was black text on a black tag."
+    ]
+  },
+  {
     "id": "2026-11-27-holo-every-card",
     "date": "2026-11-27",
     "title": "Real textures on Japanese cards, and a clearer Rayquaza δ",
