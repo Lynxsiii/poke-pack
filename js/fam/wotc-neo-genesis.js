@@ -23,6 +23,10 @@ import { isWotc, wotcPattern } from "../wotc-foil.js?v=6";
 const set = (card) => String(card?.id || "").split("-")[0];
 const DIR = "assets/foil/fam/wotc-neo-genesis";
 const V = 2;
+/** v3 (site review 2): the Pokémon cut out of the ground and both fleck maps from the scan itself (cut_figure_from_maps.py):
+ * the v2 ground let confetti and haze onto the matte Pokémon. */
+const V3 = new Set([5, 9, 15, 17]);
+const ver = (n) => (V3.has(Number(n)) ? 3 : V);
 /** The Rare Holo numbers whose maps are drawn (the 18 Pokémon and Metal Energy 19). */
 const MAPPED = new Set(Array.from({ length: 19 }, (_, i) => String(i + 1)));
 /** Per-card strength of the flecks (--ng-fleck) where the real card shows fewer, dimmer ones than its scan: Ampharos' near-black
@@ -40,9 +44,9 @@ export function famExtras(card, url, base) {
   const n = String(card.id).split("-")[1];
   if (!MAPPED.has(n)) return { classes: "fam-wotc-neo-genesis", style: "", cure: false };
   const style = [
-    `--ng-bg:url('${url(`${DIR}/${n}-bg-v${V}.webp`)}')`,
-    `--ng-fa:url('${url(`${DIR}/${n}-fleck-a-v${V}.webp`)}')`,
-    `--ng-fb:url('${url(`${DIR}/${n}-fleck-b-v${V}.webp`)}')`,
+    `--ng-bg:url('${url(`${DIR}/${n}-bg-v${ver(n)}.webp`)}')`,
+    `--ng-fa:url('${url(`${DIR}/${n}-fleck-a-v${ver(n)}.webp`)}')`,
+    `--ng-fb:url('${url(`${DIR}/${n}-fleck-b-v${ver(n)}.webp`)}')`,
   ];
   if (FLECK[n]) style.push(`--ng-fleck:${FLECK[n]}`);
   // Metal Energy's maps cover the picture box and the ENERGY wordmark above it: 565 x 587 card px at (18, 28)
