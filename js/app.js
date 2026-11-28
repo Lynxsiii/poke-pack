@@ -3154,7 +3154,7 @@ function renderCatalog() {
       : "";
     top.innerHTML = `${back}
       <div class="cat-tabs" role="tablist" aria-label="Kinds of packs">${tabs}</div>
-      <p class="catalog-summary">${esc(cat.note)}${cat.id === "booster" || cat.id === "japanese" ? "" : " Extras have a collection page and no mastery."}</p>
+      <p class="catalog-summary${cat.id === "booster" || cat.id === "japanese" ? " is-plain" : ""}">${esc(cat.note)}${cat.id === "booster" || cat.id === "japanese" ? "" : " Extras have a collection page and no mastery."}</p>
       ${jumps}`;
   }
   els.catalogEras.innerHTML = blocks;
