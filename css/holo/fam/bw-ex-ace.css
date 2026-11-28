@@ -227,8 +227,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-ex-a
   mix-blend-mode: hard-light;
   /* x0.7 and the flecks toned down (2026-11-28): at full strength the pillar read as a pasted RGB smear over a dark
      ground (holo check, Darkrai-EX 88/113) */
-  filter: saturate(0.7);
-  opacity: calc(var(--card-opacity) * 0.55);
+  filter: saturate(0.6);
+  opacity: calc(var(--card-opacity) * 0.45);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-ex-ace.fam-bw-ex-ace.fam-bw-ex-ace.fam-bw-ex-ace.bw-ex .glare::after {
   background-image: var(--bxa-pillar);

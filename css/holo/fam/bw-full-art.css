@@ -193,7 +193,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full
   background-blend-mode: normal, normal;
   filter: none;
   mix-blend-mode: hard-light;
-  opacity: calc(var(--card-opacity) * 0.42 * var(--foil-strength, 1));
+  opacity: calc(var(--card-opacity) * 0.34 * var(--foil-strength, 1));
   /* Two layers, no gradient (WebKit dropped whole lit layers with three masks and a gradient): the ink map carries the
      scan's alpha, so it is the art mask too. */
   -webkit-mask-image: var(--bwfa-ink), var(--bwfa-etch);
@@ -335,9 +335,12 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full
   background-position: center, var(--background-x) 0;
   background-repeat: no-repeat, no-repeat;
   background-blend-mode: normal, normal;
-  filter: none;
+  /* 2026-11-28: the stripes blurred by about 1.4 % of the card, so each reads as a soft band of colour 4-5 % wide. As
+     crisp 2 % lines they were hairline rainbow pinstripes down the Pokemon at phone size (the full-site check failed
+     every bw1-bw3 full art for them). */
+  filter: blur(calc(var(--bwfa-px) * 10));
   mix-blend-mode: hard-light;
-  opacity: calc(var(--card-opacity) * 0.3 * var(--foil-strength, 1));
+  opacity: calc(var(--card-opacity) * 0.38 * var(--foil-strength, 1));
   /* The ink map alone: it carries the scan's own alpha (rounded corners), so it is the art mask too. */
   -webkit-mask-image: var(--bwfa-ink);
   -webkit-mask-composite: source-over;
