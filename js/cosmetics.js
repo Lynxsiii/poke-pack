@@ -113,10 +113,17 @@ export function avatarName(id) {
   return AVATAR_MAP.get(key) || `#${key}`;
 }
 
+/**
+ * Shiny pictures are built but not handed out yet: Noah wants them earned
+ * (2026-11-28), and the rule is still being chosen. While this is false a
+ * shiny style is saved and drawn as its plain picture, here and in the Worker.
+ */
+export const SHINY_OPEN = false;
+
 export function avatarStyle(value) {
   const [kind, shiny] = String(value || "").split("-");
   if (!AVATAR_KINDS.includes(kind)) return DEFAULT_STYLE;
-  return shiny === "s" ? `${kind}-s` : kind;
+  return shiny === "s" && SHINY_OPEN ? `${kind}-s` : kind;
 }
 
 /** The kind without its shiny mark: "art", "pixel" or "anim". */

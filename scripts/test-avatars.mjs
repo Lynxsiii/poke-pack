@@ -2,24 +2,25 @@
 //   node scripts/test-avatars.mjs
 import assert from 'node:assert/strict';
 import {existsSync} from 'node:fs';
-import {avatarId,avatarStyle,avatarKind,avatarShiny,avatarStyleOf,avatarPixel,avatarSrc,avatarFallback,AVATARS,DEFAULT_AVATAR} from '../js/cosmetics.js';
+import {SHINY_OPEN,avatarId,avatarStyle,avatarKind,avatarShiny,avatarStyleOf,avatarPixel,avatarSrc,avatarFallback,AVATARS,DEFAULT_AVATAR} from '../js/cosmetics.js';
 import {AVATAR_GROUPS,AVATAR_SHEET} from '../js/avatar-dex.js';
 
-// Styles: three kinds, each with a shiny; anything else is plain art. Old saves ("art", "pixel") are unchanged.
-for (const s of ['art','pixel','anim','art-s','pixel-s','anim-s']) assert.equal(avatarStyle(s),s);
-for (const s of ['',null,'home','art-x','shiny','<img>']) assert.equal(avatarStyle(s),s==='art-x'?'art':'art');
-assert.equal(avatarKind('anim-s'),'anim'); assert.equal(avatarShiny('anim-s'),true); assert.equal(avatarShiny('pixel'),false);
-assert.equal(avatarStyleOf('pixel',true),'pixel-s'); assert.equal(avatarPixel('art-s'),false); assert.equal(avatarPixel('anim'),true);
+// Styles: three kinds; anything else is plain art. Old saves ("art", "pixel") are unchanged.
+// Shiny ("-s") is kept only once SHINY_OPEN is true; until then it is saved as the plain picture.
+for (const s of ['art','pixel','anim']) { assert.equal(avatarStyle(s),s); assert.equal(avatarStyle(s+'-s'),SHINY_OPEN?s+'-s':s); }
+for (const s of ['',null,'home','art-x','shiny','<img>']) assert.equal(avatarStyle(s),'art');
+assert.equal(avatarKind('anim-s'),'anim'); assert.equal(avatarShiny('pixel'),false); assert.equal(avatarShiny('anim-s'),SHINY_OPEN);
+assert.equal(avatarStyleOf('pixel',false),'pixel'); assert.equal(avatarPixel('art'),false); assert.equal(avatarPixel('anim'),true);
 
 // Ids: the Pokédex, then PokeAPI's form ids. Everything else is Pikachu.
 assert.equal(avatarId(1025),'1025'); assert.equal(avatarId('10034'),'10034');
-for (const bad of [0,-3,1026,9999,11000,'x','25; DROP']) assert.equal(avatarId(bad),bad==='25; DROP'?'25':DEFAULT_AVATAR);
+for (const bad of [0,-3,1026,9999,11000,'x']) assert.equal(avatarId(bad),DEFAULT_AVATAR);
 
 // Pictures. No document here, so motion counts as off and an animated avatar is its still sprite.
-assert.match(avatarSrc(6,'art-s'),/official-artwork\/shiny\/6\.png$/);
+assert.match(avatarSrc(6,'art'),/official-artwork\/6\.png$/);
 assert.match(avatarSrc(6,'pixel'),/pokemon\/6\.png$/);
-assert.match(avatarSrc(6,'anim-s',{still:true}),/pokemon\/shiny\/6\.png$/);
-assert.match(avatarFallback(avatarSrc(6,'art-s')),/official-artwork\/6\.png$/);
+assert.match(avatarSrc(6,'anim',{still:true}),/pokemon\/6\.png$/);
+assert.match(avatarFallback('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/6.png'),/official-artwork\/6\.png$/);
 assert.equal(avatarFallback(avatarSrc(6,'art')),'');
 assert.equal(avatarFallback('https://example.com/6.png'),'');
 

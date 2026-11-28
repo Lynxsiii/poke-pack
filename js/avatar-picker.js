@@ -10,7 +10,7 @@
  * and nothing else on the page moves. (The old picker repainted the whole
  * account page on every pick, which threw the page and the grid back to the top.)
  */
-import { AVATARS, avatarId, avatarKind, avatarShiny, avatarStyleOf, avatarIcon } from "./cosmetics.js";
+import { AVATARS, SHINY_OPEN, avatarId, avatarKind, avatarShiny, avatarStyleOf, avatarIcon } from "./cosmetics.js";
 
 const KINDS = [
   { id: "art", name: "Art", bit: 1, shinyBit: 2, none: "official art" },
@@ -61,7 +61,7 @@ function has(entry, kind, shiny) {
 /** What the picker is showing: the trainer's saved style until they flip a switch. */
 function view(trainer) {
   const kind = ui.kind || avatarKind(trainer.avatarStyle);
-  const shiny = ui.shiny ?? avatarShiny(trainer.avatarStyle);
+  const shiny = SHINY_OPEN && (ui.shiny ?? avatarShiny(trainer.avatarStyle));
   return { kind, shiny };
 }
 
@@ -133,7 +133,11 @@ export function avatarPickerHtml(trainer) {
       <div class="seg av-kinds" role="group" aria-label="Picture style">${KINDS.map(
         (row) => `<button type="button" class="seg-btn${row.id === v.kind ? " on" : ""}" data-av-kind="${row.id}" aria-pressed="${row.id === v.kind}">${row.name}</button>`
       ).join("")}</div>
-      <button type="button" class="av-shiny${v.shiny ? " on" : ""}" data-av-shiny aria-pressed="${v.shiny}"><i aria-hidden="true"></i>Shiny</button>
+      ${
+        SHINY_OPEN
+          ? `<button type="button" class="av-shiny${v.shiny ? " on" : ""}" data-av-shiny aria-pressed="${v.shiny}"><i aria-hidden="true"></i>Shiny</button>`
+          : `<button type="button" class="av-shiny is-soon" data-av-shiny-soon aria-disabled="true"><i aria-hidden="true"></i>Shiny<small>Soon</small></button>`
+      }
     </div>
     <label class="field av-search"><span class="sr-only">Search Pokémon</span>
       <input id="av-search" type="search" value="${esc(ui.query)}" placeholder="Search ${dex.byId.size.toLocaleString()} Pokémon by name or number" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" />
@@ -218,6 +222,7 @@ export function initAvatarPicker(d) {
     if (tileEl) return pick(tileEl);
     const kind = e.target.closest("[data-av-kind]");
     if (kind) return restyle({ kind: kind.dataset.avKind });
+    if (e.target.closest("[data-av-shiny-soon]")) return deps.toast("Shiny pictures are coming. You'll have to earn them.");
     const shiny = e.target.closest("[data-av-shiny]");
     if (shiny) return restyle({ shiny: shiny.getAttribute("aria-pressed") !== "true" });
     const group = e.target.closest("[data-av-group]");

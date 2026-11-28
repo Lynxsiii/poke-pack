@@ -46,6 +46,10 @@
 .av-shiny.on { border-color: var(--k); background: var(--k); color: var(--on-k); }
 .av-shiny.on i { background: var(--yel-k, var(--yel)); transform: rotate(90deg) scale(1.15); }
 .av-shiny:active { transform: translateY(1px); }
+/* Not earnable yet: dashed like every empty place, with a small tag. */
+.av-shiny.is-soon { border-style: dashed; color: var(--k-3); cursor: default; }
+.av-shiny.is-soon:hover { color: var(--k-3); border-color: var(--rule-2); }
+.av-shiny small { margin-left: 2px; padding: 0 5px; border-radius: 3px; background: var(--k); color: var(--on-k); font: italic 700 11px/1.6 var(--font-h); }
 
 #view-account .look-controls .field.av-search, .av-search { margin: 14px 0 0; max-width: 460px; }
 .av-groups {
