@@ -46,7 +46,7 @@ assert.equal(fresh.level, 1);
 assert.equal(fresh.total, 0);
 assert.deepEqual(fresh.claimable, []);
 assert.deepEqual(fresh.pending, { coins: 0, gear: [], levels: 0 });
-assert.equal(fresh.parts.length, 12, "every source is listed even at zero");
+assert.equal(fresh.parts.length, 13, "every source is listed even at zero");
 assert.equal(xpOf(null).level, 1, "null save reads as a fresh one");
 assert.equal(xpOf(undefined).claimable.length, 0);
 
@@ -131,7 +131,7 @@ assert.deepEqual(unlocksBetween(10, 10), []);
 for (const row of fresh.parts) assert.ok(SOURCES[row.id], `source ${row.id} needs plain wording`);
 const srcFresh = sourceRows(fresh);
 assert.equal(srcFresh.earned.length, 0);
-assert.equal(srcFresh.fresh.length, 12);
+assert.equal(srcFresh.fresh.length, 12, "the card game, still hidden, is not suggested until it pays");
 assert.ok(srcFresh.fresh.find((r) => r.id === "casino").opensAt > 1, "the casino is gated");
 assert.equal(srcFresh.fresh.find((r) => r.id === "packs").opensAt, 0);
 const srcVet = sourceRows(vx);

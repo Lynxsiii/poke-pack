@@ -7,7 +7,8 @@
 
    The page only asks and shows. Every stake, roll and payout is the Worker's. */
 import { api, esc, coinTag, uuid } from "./casino-kit.js";
-import { BETA_GAMES, BETA_RULES, GRASS, ROCKET, TIN_MAX_OPEN, rocketAt, grassMultiplier } from "./beta-rules.js?v=3";
+import { BETA_GAMES, BETA_RULES, GRASS, ROCKET, TIN_MAX_OPEN, TIN_TIERS, rocketAt, grassMultiplier } from "./beta-rules.js?v=4";
+import { slabHTML } from "./slab.js?v=3";
 
 const fmtX = (m) => `${Number(m || 0).toFixed(2)}x`;
 const num = (v) => Number(v).toLocaleString("en-US", { maximumFractionDigits: 2 });
@@ -496,20 +497,42 @@ function rocketPage(ctx, root) {
 }
 
 // ---- Mystery Tins ------------------------------------------------------------------------
-/* The chase cards are the show. On the shelf a tin is its three best cards standing in an open tin; a tin's own
-   page (/casino/tins/<id>) lines up the chase cards as real faces, then every card with its odds. Opening spins
-   a reel of the tin's cards that stops on yours, and the card grows where it landed. */
+/* The chase cards are the show. Tins sit on five shelves by price (TIN_TIERS), one shelf on screen at a time. On a
+   shelf a tin is its three best cards standing in an open tin with its price on the front; a tin's own page
+   (/casino/tins/<id>) lines up the chase cards as real faces, then every card with its odds. Opening spins a reel
+   of the tin's cards that stops on yours, and the card grows where it landed. A slab tin holds graded slabs. */
 const paintOf = (t) => (/^#[0-9a-f]{6}$/i.test(t.color || "") ? t.color : "#00b4c8");
-/** Ink that reads on a tin's paint: dark on the light paints, white on the rest. */
-const paintInk = (hex) => { const n = parseInt(hex.slice(1), 16); return 0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255) > 150 ? "var(--k0)" : "#fff"; };
-const tinStyle = (t) => `--paint:${paintOf(t)};--paint-ink:${paintInk(paintOf(t))}`;
 const TIN_CHASE = 6; // how many cards a tin's page shows off as faces
+/* The tin itself, drawn here (never a real product's art). The shelf decides the metal: the bargain bin is bare,
+   dented steel, then a painted lip, riveted silver, chrome corners, and gold with a latch for the high rollers.
+   A slab tin is a hard case with ribs. Lines keep their weight at any size (non-scaling-stroke). */
+const NS = `vector-effect="non-scaling-stroke"`;
+const TIN_TRIM = {
+  bargain: `<path d="M194 10v22l-16-22z" class="bz-t-bare"/><path d="M160 26q12 9 3 22M22 46q8 5 4 14M148 58l24 3M44 24l16 3" class="bz-t-dent" ${NS}/>`,
+  budget: `<rect x="62" y="27" width="76" height="30" rx="15" class="bz-t-press" ${NS}/>`,
+  mid: `<rect x="62" y="27" width="76" height="30" rx="15" class="bz-t-press" ${NS}/><g class="bz-t-metal" ${NS}><circle cx="18" cy="28" r="3.2"/><circle cx="18" cy="52" r="3.2"/><circle cx="182" cy="28" r="3.2"/><circle cx="182" cy="52" r="3.2"/></g>`,
+  high: `<g class="bz-t-metal" ${NS}><path d="M6 44v18a8 8 0 0 0 8 8h22v-9H19a4 4 0 0 1-4-4V44zM194 44v18a8 8 0 0 1-8 8h-22v-9h17a4 4 0 0 0 4-4V44z"/></g><path d="M100 24l5 13 13 5-13 5-5 13-5-13-13-5 13-5z" class="bz-t-press" ${NS}/>`,
+  roller: `<path d="M12 22h176M12 58h176" class="bz-t-pin" ${NS}/><g class="bz-t-metal" ${NS}><path d="M6 44v18a8 8 0 0 0 8 8h22v-9H19a4 4 0 0 1-4-4V44zM194 44v18a8 8 0 0 1-8 8h-22v-9h17a4 4 0 0 0 4-4V44z"/></g>`,
+};
+const tinFront = (t) => `<svg class="bz-tin-front" viewBox="0 0 200 74" preserveAspectRatio="none" aria-hidden="true">
+  <path d="M6 9h188v53a8 8 0 0 1-8 8H14a8 8 0 0 1-8-8z" class="bz-t-body" ${NS}/>
+  ${t.slab ? `<path d="M6 30h188v20H6z" class="bz-t-band"/><path d="M34 16v50M56 16v50M144 16v50M166 16v50" class="bz-t-rib" ${NS}/>` : `<path d="M28 9h15L27 70H12z" class="bz-t-sheen"/>`}
+  <path d="M6 56h188v6a8 8 0 0 1-8 8H14a8 8 0 0 1-8-8z" class="bz-t-shade"/>
+  ${TIN_TRIM[t.tier] || ""}
+  <rect x="2" y="2" width="196" height="12" rx="3.5" class="bz-t-rim" ${NS}/><path d="M10 6.5h52" class="bz-t-glint" ${NS}/>
+  ${t.tier === "roller" ? `<path d="M86 3h28v17a6 6 0 0 1-6 6H92a6 6 0 0 1-6-6z" class="bz-t-latch" ${NS}/><circle cx="100" cy="15" r="3.4" class="bz-t-key" ${NS}/>` : ""}</svg>`;
+const tinLid = () => `<svg class="bz-tin-lid" viewBox="0 0 200 124" preserveAspectRatio="none" aria-hidden="true">
+  <path d="M10 122L24 9a7 7 0 0 1 7-6h138a7 7 0 0 1 7 6l14 113z" class="bz-t-lid" ${NS}/><path d="M26 112L37 17h126l11 95" class="bz-t-lidline" ${NS}/>
+  <rect x="20" y="1.5" width="160" height="10" rx="3.5" class="bz-t-rim" ${NS}/></svg>`;
+/** The hub's picture of the game: a tin with three cards standing in it. */
+ART.tins = `<svg viewBox="0 0 70 70" aria-hidden="true"><g stroke="var(--k0)" stroke-width="2.5" stroke-linejoin="round"><path d="M11 60L15 26h40l4 34z" fill="var(--k-3)"/><rect x="9" y="17" width="20" height="28" rx="2" fill="var(--box)" transform="rotate(-12 19 31)"/><rect x="41" y="17" width="20" height="28" rx="2" fill="var(--box)" transform="rotate(12 51 31)"/><rect x="23" y="6" width="24" height="34" rx="2" fill="var(--box)"/><rect x="27" y="11" width="16" height="12" fill="var(--cy)" stroke-width="2"/><path d="M6 44h58v15a5 5 0 0 1-5 5H11a5 5 0 0 1-5-5z" fill="var(--yel)"/><rect x="4" y="40" width="62" height="7" rx="2" fill="var(--box)"/></g></svg>`;
 
 function tinsPage(ctx, root) {
   return page(ctx, root, "tins", (p) => {
     let tins = null;
     let recent = [];
-    let viewId = ""; // the tin whose page is open ("" = the shelf)
+    let viewId = ""; // the tin whose page is open ("" = the shelves)
+    let shelf = TIN_TIERS[0].id; // the shelf on screen
     let stage = null; // { phase: 'reel'|'landed', cards } while tins are being opened
     let count = 1; // how many tins the key opens at once (up to TIN_MAX_OPEN)
     const full = new Map(); // card id -> the catalog's card, once its set has loaded (ctx.cardsById)
@@ -519,13 +542,19 @@ function tinsPage(ctx, root) {
     const big = (t, c) => c.price >= t.price * 3;
     const shortName = (t) => t.name.replace(/( high roller)? tin$/i, "");
     const tinOf = (id) => tins?.find((t) => t.id === id) || null;
+    const tierOf = (t) => TIN_TIERS.find((x) => x.id === t.tier) || TIN_TIERS[TIN_TIERS.length - 1];
+    const backOf = (t) => Math.round((t.back || 0) * 100);
+    /** What a card in a tin is called: a slab says its grade. */
+    const label = (c) => (c.grade ? `${c.name}, RIP ${c.grade}` : c.name);
 
-    /** A card on show: the real face with its foil when the catalog has it, the plain picture until then. */
+    /** A card on show: the real face with its foil when the catalog has it, the plain picture until then. A slab
+        tin's card sits in its slab. */
     const faceInner = (c, large) => {
       const card = full.get(c.id);
-      return card && ctx.tcgFace ? ctx.tcgFace(card, { small: !large, stamp: false }) : `<img class="bz-face-img" src="${esc(c.image)}" alt="${esc(c.name)}" decoding="async" />`;
+      const inner = card && ctx.tcgFace ? ctx.tcgFace(card, { small: !large, stamp: false }) : `<img class="bz-face-img" src="${esc(c.image || "")}" alt="${esc(c.name || "")}" decoding="async" />`;
+      return c.grade ? slabHTML({ face: inner, card: card || { name: c.name, number: c.number, rarity: c.rarity }, slab: { grade: c.grade }, size: "grid" }) : inner;
     };
-    const face = (c, large = false) => `<span class="bz-face" data-face="${esc(c.id)}"${large ? " data-large" : ""}>${faceInner(c, large)}</span>`;
+    const face = (c, large = false) => `<span class="bz-face" data-face="${esc(c.id)}"${c.grade ? ` data-grade="${c.grade}"` : ""} data-name="${esc(c.name)}" data-img="${esc(c.image || "")}"${large ? " data-large" : ""}>${faceInner(c, large)}</span>`;
     /** Fetch the real cards for these briefs, then swap the faces already on screen. */
     async function lightFaces(cards) {
       const ids = cards.map((c) => c.id).filter((id) => !asked.has(id));
@@ -534,79 +563,100 @@ function tinsPage(ctx, root) {
       try { for (const [id, card] of await ctx.cardsById(ids)) full.set(id, card); } catch { return; }
       for (const el of root.querySelectorAll("[data-face]")) {
         if (!ids.includes(el.dataset.face) || !full.has(el.dataset.face) || el.querySelector(".tcg")) continue;
-        const c = { id: el.dataset.face, name: "", image: "" };
+        const c = { id: el.dataset.face, name: el.dataset.name || "", image: el.dataset.img || "", grade: Number(el.dataset.grade) || 0 };
         el.innerHTML = faceInner(c, el.hasAttribute("data-large"));
       }
     }
 
-    // ---- The shelf: each tin is its three best cards standing in the open tin.
-    const fan = (t) => `<span class="bz-fan">
+    // ---- The shelves: a tin is its three best cards standing in the open tin, its price on the front.
+    const tinArt = (t) => `<span class="bz-tinart" data-tier="${esc(t.tier)}"${t.slab ? " data-slab" : ""} style="--paint:${paintOf(t)}">
+      ${tinLid()}
       ${t.cards[1] ? `<span class="bz-fan-card is-l">${face(t.cards[1])}</span>` : ""}
       ${t.cards[2] ? `<span class="bz-fan-card is-r">${face(t.cards[2])}</span>` : ""}
       <span class="bz-fan-card is-c">${face(t.cards[0])}</span>
-      <span class="bz-tinfront"><b>${esc(shortName(t))}</b><i>${t.risk === "high" ? "High roller tin" : "Mystery tin"}</i></span></span>`;
-    const tinBox = (t) => `<article class="rt-box bz-tin" style="${tinStyle(t)}">
-      <a class="bz-tin-well" href="/casino/tins/${esc(t.id)}" data-bt-link aria-label="${esc(t.name)}: see every card">${fan(t)}</a>
-      <div class="bz-tin-copy">
-        <p class="bz-tin-best"><small>Top card, ${oneIn(t.cards[0].odds)}</small><b>${esc(t.cards[0].name)}</b>${coinTag(t.cards[0].price)}</p>
-        <div class="bz-tin-keys"><a class="bz-tin-all" href="/casino/tins/${esc(t.id)}" data-bt-link>All ${t.cards.length} cards and odds</a>
-          <button type="button" class="ghost bz-open" data-open="${esc(t.id)}">Open for ${coinTag(t.price)}</button></div></div></article>`;
-    const recentHTML = () => (recent.length ? `<section class="cs-section bz-recent"><h2 class="cs-h">Your last tins</h2><div class="cs-rows">${recent.map((r) => `<div class="rt-row bz-row${r.card.price >= r.price ? " is-won" : ""}"><span class="rt-row-lab">${esc(r.tinName.replace(/ tin$/, ""))}</span><span class="rt-row-name">${esc(r.card.name)}<small>Paid ${num(r.price)}</small></span><span class="rt-row-val">${coinTag(r.card.price)}</span></div>`).join("")}</div></section>` : "");
-    /** Two shelves: the themed tins, then the high rollers that cost more and swing harder. */
-    const shelves = () => {
-      const high = tins.filter((t) => t.risk === "high");
-      return `<div class="bz-tin-list">${tins.filter((t) => t.risk !== "high").map(tinBox).join("")}</div>
-        ${high.length ? `<section class="cs-section bz-rollers"><h2 class="cs-h">High rollers</h2><p class="bz-note">These cost more and swing harder: a pricey tin where every card is a hit, or bulk with a small shot at something huge. Each tin's page lists its odds and what comes back on average.</p>
-          <div class="bz-tin-list">${high.map(tinBox).join("")}</div></section>` : ""}`;
+      ${tinFront(t)}<span class="bz-tin-tag">${coinTag(t.price)}</span></span>`;
+    const tinTile = (t) => `<a class="rt-box bz-tin" href="/casino/tins/${esc(t.id)}" data-bt-link data-tier="${esc(t.tier)}" aria-label="${esc(t.name)}, ${num(t.price)} coins">
+      <span class="bz-tin-well">${tinArt(t)}</span>
+      <span class="bz-tin-copy"><b>${esc(shortName(t))}</b>
+        <span class="bz-tin-top"><small>Top card</small>${coinTag(t.cards[0].price)}</span>
+        <small class="bz-tin-odds">${oneIn(t.cards[0].odds)}</small></span></a>`;
+    const recentHTML = () => (recent.length ? `<section class="cs-section bz-recent"><h2 class="cs-h">Your last tins</h2><div class="cs-rows">${recent.map((r) => `<div class="rt-row bz-row${r.card.price >= r.price ? " is-won" : ""}"><span class="rt-row-lab">${esc(r.tinName.replace(/( high roller)? tin$/i, ""))}</span><span class="rt-row-name">${esc(label(r.card))}<small>Paid ${num(r.price)}</small></span><span class="rt-row-val">${coinTag(r.card.price)}</span></div>`).join("")}</div></section>` : "");
+    const tabWord = (tier) => tier.name.replace(/ bin$/, "").replace(/^High roller$/, "Roller");
+    /** One shelf: what it costs, what comes back, and its tins. */
+    const shelfBody = () => {
+      const tier = TIN_TIERS.find((x) => x.id === shelf) || TIN_TIERS[0];
+      const list = tins.filter((t) => t.tier === tier.id).sort((a, b) => a.price - b.price);
+      if (!list.length) return `<p class="rt-empty bz-note">Nothing on this shelf right now.</p>`;
+      const lo = Math.min(...list.map((t) => t.price));
+      const hi = Math.max(...list.map((t) => t.price));
+      const back = Math.round((list.reduce((sum, t) => sum + (t.back || 0), 0) / list.length) * 100);
+      return `<section class="bz-shelf" data-tier="${esc(tier.id)}" aria-label="${esc(tier.name)}">
+        <div class="bz-shelf-head"><h2 class="bz-shelf-name">${esc(tier.name)}</h2><span class="bz-shelf-odds">${esc(tier.odds)}</span>
+          <p class="bz-note">${lo === hi ? `${num(lo)} ${lo === 1 ? "coin" : "coins"}` : `${num(lo)} to ${num(hi)} coins`} a tin. ${esc(tier.line)}</p>
+          <div class="rt-hp bz-back" data-level="${back >= 88 ? "ok" : back >= 72 ? "mid" : "low"}"><em>${back}% comes back on average</em><span class="rt-track"><i style="--fill:${(back / 100).toFixed(2)}"></i></span></div></div>
+        <div class="bz-tin-list">${list.map(tinTile).join("")}</div></section>`;
     };
-    const shelfHTML = () => `<p class="bz-lede">Each tin is built around its chase cards. Pick one, spin it open, and the card you land on goes straight into your collection.</p>
-      ${!tins ? `<div class="rt-skel bz-skel"></div>` : shelves()}${recentHTML()}`;
+    const shelfHTML = () => `<p class="bz-lede">Pick a shelf, pick a tin, spin it open. The card you land on is yours.</p>
+      <div class="bz-tiers" role="tablist" aria-label="Shelves">${TIN_TIERS.map((tier) => `<button type="button" role="tab" class="rt-word${tier.id === shelf ? " on" : ""}" data-shelf="${esc(tier.id)}" aria-selected="${tier.id === shelf}">${esc(tabWord(tier))}</button>`).join("")}</div>
+      <div data-shelfbody>${!tins ? `<div class="rt-skel bz-skel"></div>` : shelfBody()}</div>${recentHTML()}`;
+    const lightShelf = () => { if (tins) lightFaces(tins.filter((t) => t.tier === shelf).flatMap((x) => x.cards.slice(0, 3))); };
 
-    // ---- A tin's page: the chase cards as faces, the key, every card and its odds.
-    const chaseHTML = (t) => `<div class="bz-chase" role="list">${t.cards.slice(0, TIN_CHASE).map((c, i) => `<figure class="bz-chase-card" role="listitem">
-        <button type="button" class="bz-chase-face" data-look="${esc(c.id)}" aria-label="Look at ${esc(c.name)}">${face(c, true)}</button>
-        <figcaption><b>${esc(c.name)}</b><span>${coinTag(c.price)}</span><small>${i === 0 ? "Top card, " : ""}${oneIn(c.odds)}</small></figcaption></figure>`).join("")}</div>`;
+    // ---- A tin's page: the chase cards as faces, the key, the odds in three figures, every card and its odds.
+    const chaseHTML = (t) => `<div class="bz-chase${t.slab ? " is-slabs" : ""}" role="list">${t.cards.slice(0, TIN_CHASE).map((c, i) => `<figure class="bz-chase-card" role="listitem">
+        <button type="button" class="bz-chase-face" data-look="${esc(c.id)}" aria-label="Look at ${esc(label(c))}">${face(c, true)}</button>
+        <figcaption><b>${esc(c.name)}</b><span>${coinTag(c.price)}</span><small>${i === 0 ? "Top card, " : ""}${c.grade ? `RIP ${c.grade}, ` : ""}${oneIn(c.odds)}</small></figcaption></figure>`).join("")}</div>`;
     /** What one landed card was: its plate and figure. Several cards get a row each and one total. */
     const revealHTML = (t, cards) => {
+      const where = t.slab ? "In your slab case" : "Added to your collection";
       if (cards.length === 1) {
         const card = cards[0];
         return `<div class="bz-reveal">
-          <div class="bz-reveal-plate${big(t, card) ? " is-hit" : ""}"><b>${esc(card.name)}</b><span>${esc(card.rarity || "")}${card.setName ? `, ${esc(card.setName)}` : ""}</span></div>
-          <p class="bz-reveal-fig">${coinTag(card.price)} <small>${card.price >= t.price ? `${(card.price / t.price).toFixed(1)}x what you paid` : "Added to your collection"}</small></p></div>`;
+          <div class="bz-reveal-plate${big(t, card) ? " is-hit" : ""}"><b>${esc(card.name)}</b><span>${card.grade ? `RIP ${card.grade}, ` : ""}${esc(card.rarity || "")}${card.setName ? `, ${esc(card.setName)}` : ""}</span></div>
+          <p class="bz-reveal-fig">${coinTag(card.price)} <small>${card.price >= t.price ? `${(card.price / t.price).toFixed(1)}x what you paid` : where}</small></p></div>`;
       }
       const total = cards.reduce((sum, c) => sum + c.price, 0);
       const paid = t.price * cards.length;
       return `<div class="bz-reveal is-many">
-        <div class="cs-rows bz-reveal-rows">${cards.map((c) => `<div class="rt-row bz-row${big(t, c) ? " is-hit" : c.price >= t.price ? " is-won" : ""}"><span class="rt-row-name">${esc(c.name)}<small>${esc(c.rarity || "")}</small></span><span class="rt-row-val">${coinTag(c.price)}</span></div>`).join("")}</div>
-        <p class="bz-reveal-fig">${coinTag(Math.round(total * 100) / 100)} <small>${total >= paid ? `${(total / paid).toFixed(1)}x what you paid` : `from ${cards.length} tins, all in your collection`}</small></p></div>`;
+        <div class="cs-rows bz-reveal-rows">${cards.map((c) => `<div class="rt-row bz-row${big(t, c) ? " is-hit" : c.price >= t.price ? " is-won" : ""}"><span class="rt-row-name">${esc(c.name)}<small>${c.grade ? `RIP ${c.grade}, ` : ""}${esc(c.rarity || "")}</small></span><span class="rt-row-val">${coinTag(c.price)}</span></div>`).join("")}</div>
+        <p class="bz-reveal-fig">${coinTag(Math.round(total * 100) / 100)} <small>${total >= paid ? `${(total / paid).toFixed(1)}x what you paid` : `from ${cards.length} tins, ${t.slab ? "all in your slab case" : "all in your collection"}`}</small></p></div>`;
     };
-    const stageHTML = (t) => (stage ? `<section class="bz-stage is-reel is-n${stage.cards.length}" aria-live="polite">${stage.cards.map(() => `<div class="bz-reel-wrap"><div class="bz-reel"></div></div>`).join("")}</section>` : chaseHTML(t));
+    const stageHTML = (t) => (stage ? `<section class="bz-stage is-reel is-n${stage.cards.length}${t.slab ? " is-slabs" : ""}" aria-live="polite">${stage.cards.map(() => `<div class="bz-reel-wrap"><div class="bz-reel"></div></div>`).join("")}</section>` : chaseHTML(t));
     const keysHTML = (t) => {
-      const beat = t.cards.filter((c) => c.price >= t.price);
-      const chance = beat.reduce((sum, c) => sum + c.odds, 0);
       const again = stage?.phase === "landed";
       const n = Math.min(count, TIN_MAX_OPEN);
       return `<div class="bz-view-keys">
         <div class="bz-count" role="group" aria-label="How many tins to open"><span>Open</span>${Array.from({ length: TIN_MAX_OPEN }, (_, i) => `<button type="button" class="rt-word${i + 1 === n ? " on" : ""}" data-count="${i + 1}" aria-pressed="${i + 1 === n}">${i + 1}</button>`).join("")}<span>at once</span></div>
         <button type="button" class="solid rt-go" data-open="${esc(t.id)}" data-n="${n}">${again ? "Open " + (n > 1 ? `${n} more` : "another") : n > 1 ? `Open ${n}` : "Open"} for ${coinTag(Math.round(t.price * n * 100) / 100)}</button>
-        ${again ? `<button type="button" class="ghost" data-close>Back to the chase cards</button>` : ""}
-        <p class="bz-note">${beat.length} of the ${t.cards.length} cards are worth more than the tin, a ${oneIn(chance)} chance. On average ${Math.round((t.back || 0.9) * 100)}% of the price comes back.</p></div>`;
+        ${again ? `<button type="button" class="ghost" data-close>Back to the chase cards</button>` : ""}</div>`;
     };
-    const cell = (c) => `<button type="button" class="bz-cell" data-look="${esc(c.id)}"><img src="${esc(c.image)}" alt="" loading="lazy" decoding="async" />
+    /** The odds, said three ways: what comes back, how often a tin pays for itself, how rare the top card is. */
+    const statsHTML = (t) => {
+      const beat = t.cards.filter((c) => c.price >= t.price);
+      const chance = beat.reduce((sum, c) => sum + c.odds, 0);
+      const tier = tierOf(t);
+      return `<dl class="rt-box bz-stats" aria-label="This tin's odds">
+        <div><dt>Comes back</dt><dd>${backOf(t)}%</dd></div>
+        <div><dt>Beats the price</dt><dd>${chance > 0 ? oneIn(chance) : "Never"}</dd></div>
+        <div><dt>Top card</dt><dd>${oneIn(t.cards[0].odds)}</dd></div></dl>
+        <p class="bz-note bz-stats-note">${esc(tier.name)} shelf, ${esc(tier.odds.toLowerCase())}. ${beat.length} of the ${t.cards.length} ${t.slab ? "slabs" : "cards"} inside are worth more than the tin.</p>`;
+    };
+    const cell = (c) => `<button type="button" class="bz-cell" data-look="${esc(c.id)}"><span class="bz-cell-pic"><img src="${esc(c.image)}" alt="" loading="lazy" decoding="async" />${c.grade ? `<i class="bz-grade" data-g="${c.grade}">${c.grade}</i>` : ""}</span>
       <b>${esc(c.name)}</b><small>${esc(c.setName || "")}${c.number ? ` ${esc(c.number)}` : ""}</small><span class="bz-cell-fig"><i>${pct(c.odds)}</i>${coinTag(c.price)}</span></button>`;
-    const viewHTML = (t) => `<div class="bz-view" style="${tinStyle(t)}">
+    const viewHTML = (t) => `<div class="bz-view" data-tier="${esc(t.tier)}" style="--paint:${paintOf(t)}">
       <div class="bz-view-head"><a class="bz-view-back" href="/casino/tins" data-bt-link>All tins</a>
-        <h2 class="bz-view-name">${esc(t.name)}</h2><p class="bz-note">${esc(t.line || "")} ${t.cards.length} cards inside.</p></div>
+        <h2 class="bz-view-name">${esc(t.name)}</h2><p class="bz-note">${esc(t.line || "")} ${t.cards.length} ${t.slab ? "slabs" : "cards"} inside.</p></div>
       <div class="bz-view-show" data-stage>${stageHTML(t)}</div>
       <div data-keys>${keysHTML(t)}</div>
-      <section class="cs-section bz-all"><h2 class="cs-h">All ${t.cards.length} cards and odds</h2><div class="bz-grid">${t.cards.map(cell).join("")}</div></section></div>`;
+      ${statsHTML(t)}
+      <section class="cs-section bz-all"><h2 class="cs-h">All ${t.cards.length} ${t.slab ? "slabs" : "cards"} and odds</h2><div class="bz-cards">${t.cards.map(cell).join("")}</div></section></div>`;
 
     function paint() {
       const t = viewId ? tinOf(viewId) : null;
+      if (t) shelf = t.tier; // "All tins" goes back to the shelf this tin sits on
       root.innerHTML = `<div class="cs-page bz-page bz-tins">${p.head("Mystery Tins")}
         ${viewId && !tins ? `<div class="rt-skel bz-skel"></div>` : t ? viewHTML(t) : shelfHTML()}</div>`;
       if (t) lightFaces(t.cards.slice(0, TIN_CHASE));
-      else if (tins) lightFaces(tins.flatMap((x) => x.cards.slice(0, 3)));
+      else lightShelf();
     }
     const paintView = () => {
       const t = tinOf(viewId);
@@ -634,7 +684,7 @@ function tinsPage(ctx, root) {
         strip[9] = tin.cards[Math.floor(Math.random() * Math.min(3, tin.cards.length))];
         strip[31] = tin.cards[Math.floor(Math.random() * Math.min(TIN_CHASE, tin.cards.length))];
         strip[30] = card;
-        reel.innerHTML = strip.map((c, i) => `<span class="bz-reel-card${i === 30 ? " is-won" : ""}"><img src="${esc(c.image)}" alt="" decoding="async" /></span>`).join("");
+        reel.innerHTML = strip.map((c, i) => `<span class="bz-reel-card${i === 30 ? " is-won" : ""}"><img src="${esc(c.image)}" alt="" decoding="async" />${c.grade ? `<i class="bz-grade" data-g="${c.grade}">${c.grade}</i>` : ""}</span>`).join("");
         return { reel, card, item: reel.children[30], n };
       });
       await Promise.all(reels.map(async ({ reel, card, item, n }) => {
@@ -646,7 +696,7 @@ function tinsPage(ctx, root) {
           await reel.animate([{ transform: `translateX(${-(target + off)}px)` }, { transform: `translateX(${-target}px)` }], { duration: 320, easing: "cubic-bezier(.2,.8,.2,1)", fill: "forwards" }).finished.catch(() => {});
         } else reel.style.transform = `translateX(${-target}px)`;
         // The card grows where it landed, as the real face with its foil, and lights itself.
-        item.innerHTML = `<button type="button" class="bz-chase-face" data-look="${esc(card.id)}" aria-label="Look at ${esc(card.name)}">${face(card, cards.length === 1)}</button>`;
+        item.innerHTML = `<button type="button" class="bz-chase-face" data-look="${esc(card.id)}" aria-label="Look at ${esc(label(card))}">${face(card, cards.length === 1)}</button>`;
         reel.parentElement.classList.add("is-landed");
         if (big(tin, card)) reel.parentElement.classList.add("is-hit");
         item.classList.add("is-land");
@@ -665,6 +715,14 @@ function tinsPage(ctx, root) {
       const look = e.target.closest("[data-look]");
       if (look) {
         try { await ctx.cardsById?.([look.dataset.look]); ctx.inspect?.({ id: look.dataset.look }); } catch { /* the picture is still there */ }
+        return;
+      }
+      const pickShelf = e.target.closest("[data-shelf]");
+      if (pickShelf && tins && !viewId) {
+        shelf = pickShelf.dataset.shelf;
+        for (const b of root.querySelectorAll("[data-shelf]")) { const on = b === pickShelf; b.classList.toggle("on", on); b.setAttribute("aria-selected", String(on)); }
+        root.querySelector("[data-shelfbody]").innerHTML = shelfBody();
+        lightShelf();
         return;
       }
       const pickCount = e.target.closest("[data-count]");

@@ -183,7 +183,14 @@ html[data-theme="dark"] {
 /* The ground is on html so the slab (body::after, z-index -1) shows over it. */
 html {
   font-synthesis: none; overflow-x: clip;
-  background-color: var(--bg); background-image: var(--dots); background-size: 14px 14px;
+  background-color: var(--bg); background-image: var(--dots); background-size: var(--dots-size, 14px 14px);
+}
+/* A theme's own ground art (css/themes.css --ground-art): slanted bands or a
+   foil sheet, fixed behind the page so every screen is composed the same way.
+   It never moves or animates. */
+html[data-palette]::before {
+  content: ""; position: fixed; inset: 0; z-index: -2; pointer-events: none;
+  background: var(--ground-art, none);
 }
 body, body.on-home, body.on-auth, body.on-collection, body.on-shop, body.on-social, body.on-casino, body.on-battles {
   position: relative; background: none;
@@ -203,7 +210,7 @@ b, strong { font-weight: 700; }
 body::after {
   content: ""; position: absolute; z-index: -1; pointer-events: none;
   top: -40px; right: -84px; width: min(250px, 56vw); height: 168px;
-  background-color: var(--slab); background-image: var(--dots-light); background-size: 14px 14px;
+  background-color: var(--slab); background-image: var(--dots-light); background-size: var(--dots-size, 14px 14px);
   transform: skewX(var(--skew)); transform-origin: 100% 0;
 }
 @media (min-width: 961px) {

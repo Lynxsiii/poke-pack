@@ -9,12 +9,13 @@
       name="description"
       content="Open Pokémon TCG booster packs with printed pull rates, real card scans, and market-based values. Free, fan-made, no real money."
     />
-    <meta name="theme-color" content="#eef2f3" />
-    <style>html{background:#eef2f3;color-scheme:light}</style>
+    <meta name="theme-color" content="#0d0d0e" />
+    <style>html{background:#0d0d0e;color-scheme:dark}</style>
     <script>
       // Paint the chosen look before anything draws (Settings, Look; js/app.js applyTheme keeps this copy).
       try {
-        var look = JSON.parse(localStorage.getItem("pp-look") || "null");
+        // No saved look yet: Rocket, the default theme (js/themes.js DEFAULT_THEME).
+        var look = JSON.parse(localStorage.getItem("pp-look") || "null") || { mode: "dark", palette: "rocket", light: "#0d0d0e", dark: "#0d0d0e" };
         if (look) {
           var dark = look.mode === "dark" || (look.mode === "device" && matchMedia("(prefers-color-scheme: dark)").matches);
           var ground = dark ? look.dark : look.light;
@@ -96,8 +97,8 @@
     <link rel="stylesheet" href="css/casino-coin.css?v=8" />
     <link rel="stylesheet" href="css/pages/casino.css?v=20" />
     <link rel="stylesheet" href="css/pages/upgrader.css?v=8" />
-    <link rel="stylesheet" href="css/pages/beta.css?v=8" />
-    <link rel="stylesheet" href="css/pages/tcg.css?v=23" />
+    <link rel="stylesheet" href="css/pages/beta.css?v=9" />
+    <link rel="stylesheet" href="css/pages/tcg.css?v=24" />
     <link rel="stylesheet" href="css/pages/target-picker.css?v=6" />
     <link rel="stylesheet" href="css/pages/gates.css?v=5" />
     <!-- grading -->
@@ -117,8 +118,8 @@
     <link rel="stylesheet" href="css/pages/inspect.css?v=5" />
     <link rel="stylesheet" href="css/pages/auth.css?v=4" />
     <link rel="stylesheet" href="css/pages/wishlist.css?v=1" />
-    <link rel="stylesheet" href="css/rotom.css?v=11" />
-    <link rel="stylesheet" href="css/themes.css?v=2" />
+    <link rel="stylesheet" href="css/rotom.css?v=12" />
+    <link rel="stylesheet" href="css/themes.css?v=3" />
     <!-- Holofoil, derived from pokemon-cards-css (GPL-3). Loaded after app.css
          so its body.fx-holo rules win; Settings → Card effects switches to
          body.fx-classic, which leaves the original system painting. -->
@@ -314,7 +315,7 @@
     <link rel="modulepreload" href="js/level-feed.js" />
     <link rel="modulepreload" href="js/liveprices.js?v=5" />
     <link rel="modulepreload" href="js/pricechart.js" />
-    <link rel="modulepreload" href="js/themes.js?v=1" />
+    <link rel="modulepreload" href="js/themes.js?v=2" />
     <link rel="modulepreload" href="js/gear.js?v=2" />
     <link rel="modulepreload" href="js/gear-page.js?v=16" />
     <link rel="modulepreload" href="js/coin.js?v=6" />
@@ -326,7 +327,7 @@
     <link rel="modulepreload" href="js/battle-table.js?v=10" />
     <link rel="modulepreload" href="js/battle-reveal.js" />
     <link rel="modulepreload" href="js/casino-winnings.js" />
-    <link rel="modulepreload" href="js/casino.js?v=31" />
+    <link rel="modulepreload" href="js/casino.js?v=32" />
     <link rel="modulepreload" href="js/stake-picker.js?v=12" />
     <link rel="modulepreload" href="js/casino-rules.js" />
     <link rel="modulepreload" href="js/coinflip.js?v=14" />
@@ -334,8 +335,8 @@
     <link rel="modulepreload" href="js/upgrader.js?v=10" />
     <link rel="modulepreload" href="js/upgrader-rules.js?v=3" />
     <link rel="modulepreload" href="js/target-picker.js?v=9" />
-    <link rel="modulepreload" href="js/beta.js?v=8" />
-    <link rel="modulepreload" href="js/beta-rules.js?v=3" />
+    <link rel="modulepreload" href="js/beta.js?v=9" />
+    <link rel="modulepreload" href="js/beta-rules.js?v=4" />
     <link rel="modulepreload" href="js/grading-page.js?v=21" />
     <link rel="modulepreload" href="js/grading-auto.js?v=1" />
     <link rel="modulepreload" href="js/grading-auto-rules.js" />
@@ -994,7 +995,7 @@
       </nav>
     </footer>
     <script type="module" src="js/etch.js?v=1"></script>
-    <script type="module" src="js/app.js?v=405"></script>
+    <script type="module" src="js/app.js?v=408"></script>
     <script type="module" src="js/rotom.js?v=3"></script>
   </body>
 </html>

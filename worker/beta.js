@@ -1,8 +1,10 @@
 import { PLAYABLE_SETS, ALL_SETS, sellValue } from '../js/catalog.js';
 import {
   BETA_RULES, BETA_ADMINS, stakeCents, payoutCents, GRASS, grassMultiplier,
-  ROCKET, rocketAt, rocketMsFor, rocketCrash, TINS, TIN_MAX_OPEN, tinWeight, tinPrice, isPieceCard,
+  ROCKET, rocketAt, rocketMsFor, rocketCrash, TINS, TIN_MAX_OPEN, TIN_MAX_LEAN, tinTier, tinWeight, tinReturn, tinLean, tinPrice, isPieceCard,
 } from '../js/beta-rules.js';
+import { GRADING_LIMITS, bandFor, gradedValueOf } from '../js/grading-rules.js';
+import { ensureGradingSchema } from './grading.js';
 import { gateResponse } from './gates.js';
 
 /* BETA TESTING (/api/casino/beta/...): invite codes, the tester flag, and three games against the house.
@@ -230,7 +232,8 @@ async function pricedCards(env, helpers, request, set) {
 }
 // ---- Mystery Tins ------------------------------------------------------------------------
 let tinCache = { at: 0, tins: null };
-/** Every tin with its cards, odds and price (90% of the price comes back on average, valued like selling). */
+/** Every tin with what is inside, the odds and the price. A tin's price is fixed (TINS); the lean of its odds is solved here so
+    that its shelf's share of the price comes back on average, valued like selling (a slab at what the slab sells for). */
 export async function loadTins(env, helpers, request) {
   if (tinCache.tins && Date.now() - tinCache.at < 10 * 60 * 1000) return tinCache.tins;
   const out = [];
@@ -252,15 +255,28 @@ export async function loadTins(env, helpers, request) {
         if (tin.min && p.cents < tin.min * 100) continue;
         if (tin.gap && p.cents > tin.gap[0] * 100 && p.cents < tin.gap[1] * 100) continue;
         seen.add(p.card.id);
-        cards.push({ ...cardBrief(p.card, p.cents), cents: p.cents, setName: set.name });
+        if (!tin.slab) { cards.push({ ...cardBrief(p.card, p.cents), cents: p.cents, setName: set.name }); continue; }
+        // A slab tin: the card once per grade, each worth what that slab sells for.
+        const band = bandFor(set);
+        for (const grade of tin.slab) {
+          const cents = Math.round(gradedValueOf(p.cents / 100, p.card.id, grade, set) * 100);
+          cards.push({ ...cardBrief(p.card, cents), cents, setName: set.name, grade, band: band.id });
+        }
       }
     }
     if (cards.length < 5) continue;
-    const total = cards.reduce((s, c) => s + tinWeight(c.cents, tin.pow), 0);
+    const tier = tinTier(tin.tier);
+    const back = Math.min(BETA_RULES.tinMaxEdge, tin.back || tier.back);
+    const values = cards.map((c) => c.cents);
+    let price = Math.round(tin.price * 100);
+    let pow = tinLean(values, price * back);
+    // The cheapest cards alone return more than the share: the price goes up, never the payback.
+    if (pow == null) { pow = TIN_MAX_LEAN; price = Math.max(price, tinPrice(tinReturn(values, pow), back)); }
+    const total = cards.reduce((s, c) => s + tinWeight(c.cents, pow), 0);
     let ev = 0;
-    for (const c of cards) { c.odds = tinWeight(c.cents, tin.pow) / total; ev += c.odds * c.cents; }
+    for (const c of cards) { c.odds = tinWeight(c.cents, pow) / total; ev += c.odds * c.cents; }
     cards.sort((a, b) => b.cents - a.cents);
-    out.push({ id: tin.id, name: tin.name, line: tin.line || '', color: tin.color || '', risk: tin.risk || '', price: tinPrice(ev, tin.back), ev, cards });
+    out.push({ id: tin.id, name: tin.name, line: tin.line || '', color: tin.color || '', tier: tier.id, slab: Boolean(tin.slab), price, ev, cards });
   }
   tinCache = { at: Date.now(), tins: out };
   return out;
@@ -270,7 +286,8 @@ const viewTinRun = (row) => {
   const d = parse(row.data) || {};
   return { id: row.id, game: 'tins', tin: d.tin, tinName: d.tinName, card: d.card, price: coins(row.stake), createdAt: row.created_at };
 };
-const publicTin = (t) => ({ id: t.id, name: t.name, line: t.line, color: t.color, risk: t.risk, back: Math.round((t.ev / t.price) * 1000) / 1000, price: coins(t.price), cards: t.cards.map(({ cents, ...c }) => c) });
+// `risk` is for a page loaded before the shelves: it only knew the high roller shelf.
+const publicTin = (t) => ({ id: t.id, name: t.name, line: t.line, color: t.color, tier: t.tier, slab: t.slab, risk: t.tier === 'roller' ? 'high' : '', back: Math.round((t.ev / t.price) * 1000) / 1000, price: coins(t.price), cards: t.cards.map(({ cents, band, ...c }) => c) });
 async function tins(env, helpers, user, action, body, method, request) {
   const list = await loadTins(env, helpers, request);
   if (method === 'GET') return helpers.json({ tins: list.map(publicTin), recent: (await recent(env, user.id, 'tins')).map(viewTinRun), serverNow: Date.now() });
@@ -292,6 +309,12 @@ async function tins(env, helpers, user, action, body, method, request) {
     return rows;
   };
   let rows = await mine();
+  if (!rows.length && tin.slab) {
+    // A slab tin fills the player's case, which holds so many.
+    await ensureGradingSchema(env);
+    const have = await env.DB.prepare("SELECT COUNT(*) AS n FROM graded_cards WHERE user_id = ? AND status = 'slabbed'").bind(user.id).first();
+    if (Number(have?.n || 0) + count > GRADING_LIMITS.maxSlabs) error(`You can keep ${GRADING_LIMITS.maxSlabs} slabs at once. Crack or sell one first.`, 409);
+  }
   if (!rows.length) {
     const now = Date.now();
     const sts = [takeStake(env, tin.price * count, user.id)];
@@ -299,12 +322,16 @@ async function tins(env, helpers, user, action, body, method, request) {
       let u = randUnit();
       let pick = tin.cards[tin.cards.length - 1];
       for (const c of tin.cards) { if (u < c.odds) { pick = c; break; } u -= c.odds; }
-      const { cents, odds, ...card } = pick;
+      const { cents, odds, band, ...card } = pick;
       // Each statement runs only if the one before it changed a row, so nothing lands unless the payment did.
       sts.push(env.DB.prepare(`INSERT INTO beta_runs (id, user_id, game, request_id, stake, state, data, mult, payout, created_at, ended_at)
         SELECT ?, ?, 'tins', ?, ?, 'won', ?, ?, 0, ?, ? WHERE changes() = 1`)
         .bind(newId(), user.id, rid, tin.price, JSON.stringify({ tin: tin.id, tinName: tin.name, card: { ...card, odds } }), cents / tin.price, now, now));
-      sts.push(env.DB.prepare(`INSERT INTO cards (user_id, card_id, qty, reverse_qty) SELECT ?, ?, 1, 0 WHERE changes() = 1
+      // A slab is minted like one won from the house anywhere else in the casino: no fee, no guard, request id 'casino:...'
+      // (so it earns no grading XP or quest credit), and unique per owner, so a replay can never mint twice.
+      if (card.grade) sts.push(env.DB.prepare(`INSERT INTO graded_cards (user_id, card_id, reverse, grade, band, fee_cents, request_id, guard, status, created_at, shown, locked, black_label)
+        SELECT ?, ?, 0, ?, ?, 0, ?, NULL, 'slabbed', ?, 0, NULL, 0 WHERE changes() = 1`).bind(user.id, card.id, card.grade, band, `casino:tins:${rid}:0`, now));
+      else sts.push(env.DB.prepare(`INSERT INTO cards (user_id, card_id, qty, reverse_qty) SELECT ?, ?, 1, 0 WHERE changes() = 1
         ON CONFLICT(user_id, card_id) DO UPDATE SET qty = cards.qty + 1`).bind(user.id, card.id));
     }
     try {

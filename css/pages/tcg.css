@@ -813,3 +813,6 @@ body.no-motion .tg-quick-scan i { animation: none !important; }
 .tg-clock:empty { display: none; }
 .tg-clock.is-mine { background: var(--yel); color: var(--k0); opacity: 1; }
 .tg-clock.is-low { background: var(--bad); color: var(--w0); }
+
+/* What a win against the house bot paid, or why it paid nothing. */
+.tg-over-note { margin: 0; color: var(--k-2); font: 500 13px/1.4 var(--font); }

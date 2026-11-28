@@ -124,11 +124,11 @@ import {
   trainerCode,
 } from "./accounts.js";
 import { api, ApiError } from "./api.js";
-import { THEMES, canUseTheme, resolveLook } from "./themes.js?v=1";
+import { THEMES, canUseTheme, resolveLook } from "./themes.js?v=2";
 import { equippedCoin, gearItem, normalizeGear } from "./gear.js?v=2";
 import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=16";
 import { initBattles } from "./battles.js?v=10";
-import { initCasino } from "./casino.js?v=31";
+import { initCasino } from "./casino.js?v=32";
 import { coinOf } from "./coin.js?v=6";
 // grading
 import { initGrading, GRADING_ROUTE, CERT_ROUTE } from "./grading-page.js?v=21";
@@ -5473,7 +5473,7 @@ function themeRow() {
   return `<div class="set-row look-row">
       <span class="set-copy">
         <b>Colours</b>
-        <small>Same menu, different colours. Each one works in light and dark.</small>
+        <small>Same menu, a whole new coat of paint. Rotom follows Light or dark above, the others bring their own.</small>
       </span>
       <div class="look-tiles" role="group" aria-label="Colours">${tiles}</div>
     </div>`;
@@ -5577,8 +5577,7 @@ function applyTheme() {
   root.style.backgroundColor = "";
   document.querySelector('meta[name="theme-color"]')?.setAttribute("content", look.ground);
   try {
-    if (look.mode === "light" && look.theme.id === "rotom") localStorage.removeItem("pp-look");
-    else localStorage.setItem("pp-look", JSON.stringify({ mode: look.mode, palette: look.theme.id, light: look.theme.ground.light, dark: look.theme.ground.dark }));
+    localStorage.setItem("pp-look", JSON.stringify({ mode: look.theme.mode || look.mode, palette: look.theme.id, light: look.theme.ground.light, dark: look.theme.ground.dark }));
   } catch {}
 }
 darkQuery.addEventListener?.("change", applyTheme);
@@ -10508,7 +10507,7 @@ let tcgLoading = null;
 function showTcg() {
   if (tcgPage) return tcgPage.show(tcgPath);
   els.viewTcg.innerHTML = `<div class="tg-page"><div class="rt-skel tg-loading">Loading</div></div>`;
-  tcgLoading ||= import("./tcg-page.js?v=41")
+  tcgLoading ||= import("./tcg-page.js?v=43")
     .then(({ initTcg }) => {
       tcgPage = initTcg({
         root: els.viewTcg,
@@ -10527,6 +10526,7 @@ function showTcg() {
         },
         playerName: () => (cloudUser?.handle ? `@${cloudUser.handle}` : "You"),
         signedIn: () => Boolean(cloudUser),
+        refreshSave: () => refreshSession(),
         storeKey: () => cloudUser?.id || cloudUser?.handle || "guest",
         owned: () => ownedMapNow(),
         findCard,

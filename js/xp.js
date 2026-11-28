@@ -40,6 +40,9 @@ export const XP_WEIGHTS = {
   battleWin: 50, // each pack battle won (on top of playing it)
   botBattle: 5, // each pack battle with no other human seat (free bots only), instead of `battle`
   botBattleWin: 10, // each one of those won, instead of `battleWin`
+  tcgEasy: 5, // each card game win against the house bot on Easy (at most 10 wins a day count, worker/tcg.js)
+  tcgNormal: 10, // ... on Normal
+  tcgHard: 20, // ... on Hard
   casino: 15, // each coinflip or jackpot played
   casinoWin: 30, // each one won (on top of playing it)
   graded: 40, // each card sent to grading
@@ -106,7 +109,7 @@ function count(value) {
 /** The raw tallies XP is made from. Stored as the starting point of a prestige cycle. */
 export const COUNT_KEYS = [
   "packs", "hits", "unique", "sealed", "quests", "chests", "ach1", "ach2", "ach3", "ach4", "crowns", "masteries",
-  "battles", "battleWins", "botBattles", "botBattleWins", "casino", "casinoWon", "graded", "gemMint", "friends", "hourly",
+  "battles", "battleWins", "botBattles", "botBattleWins", "tcgEasy", "tcgNormal", "tcgHard", "casino", "casinoWon", "graded", "gemMint", "friends", "hourly",
 ];
 
 /**
@@ -129,6 +132,9 @@ export function xpCounts(save) {
     battleWins: count(c.battleWins),
     botBattles: count(c.botBattles),
     botBattleWins: count(c.botBattleWins),
+    tcgEasy: count(c.tcgEasyWins),
+    tcgNormal: count(c.tcgNormalWins),
+    tcgHard: count(c.tcgHardWins),
     casino: count(c.casinoPlayed),
     casinoWon: count(c.casinoWon),
     graded: count(c.graded),
@@ -194,6 +200,7 @@ export function computeXp(save, start = null) {
     { id: "achievements", label: "Achievements", count: achievements, xp: achievementXp },
     { id: "mastery", label: "Set masteries", count: n.masteries, xp: n.masteries * w.mastery },
     { id: "battles", label: "Pack battles", count: n.battles, xp: battleXp(n, w) },
+    { id: "tcg", label: "Card game", count: n.tcgEasy + n.tcgNormal + n.tcgHard, xp: n.tcgEasy * w.tcgEasy + n.tcgNormal * w.tcgNormal + n.tcgHard * w.tcgHard },
     { id: "casino", label: "Casino", count: n.casino, xp: n.casino * w.casino + n.casinoWon * w.casinoWin },
     { id: "grading", label: "Grading", count: n.graded, xp: n.graded * w.graded + n.gemMint * w.gemMint },
     { id: "friends", label: "Friends", count: n.friends, xp: n.friends * w.friend },
