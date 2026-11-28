@@ -334,7 +334,7 @@ test("deck rules: size, copies, ownership, playable", () => {
   assert.equal(roomFor({ format: "unlimited", cards: { "base1-46": 4 } }, "base1-46", owned, defs), 0);
   assert.equal(roomFor({ format: "unlimited", cards: { "base1-46": 3 } }, "base1-46", owned, defs), 1);
   assert.equal(roomFor({ format: "unlimited", cards: { "base1-46": 1 } }, "base1-46", { "base1-46": 3 }, defs), 2); // owns three
-  assert.equal(roomFor({ format: "unlimited", cards: {} }, "me1-128", owned, defs), 0);
+  assert.equal(roomFor({ format: "unlimited", cards: {} }, "base1-86", owned, defs), 0);
   assert.equal(roomFor({ format: "unlimited", cards: { "base1-46": 2 } }, F, owned, defs), 58);
 });
 
