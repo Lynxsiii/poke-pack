@@ -5544,6 +5544,8 @@ const SETTING_GROUPS = [
   {
     title: "Look",
     rows: [
+      { type: "themes" },
+      // Only Rotom comes in light and dark, so this row shows only while Rotom is picked (syncLightDarkRow).
       {
         key: "theme",
         type: "choice",
@@ -5555,7 +5557,6 @@ const SETTING_GROUPS = [
           ["device", "Device"],
         ],
       },
-      { type: "themes" },
     ],
   },
   {
@@ -5680,10 +5681,16 @@ function themeRow() {
   return `<div class="set-row look-row">
       <span class="set-copy">
         <b>Colours</b>
-        <small>Rotom follows Light or dark above. Every other theme is light or dark by itself.</small>
+        <small>Rotom comes in light and dark. Every other theme is one or the other.</small>
       </span>
       <div class="look-tiles" role="group" aria-label="Colours">${tiles}</div>
     </div>`;
+}
+
+/** The Light or dark row means something only on Rotom: on any other theme a lit "Light" over a dark page reads as a bug. */
+function syncLightDarkRow() {
+  const row = els.settingsBody?.querySelector('[data-choice="theme"]')?.closest(".set-row");
+  if (row) row.hidden = resolveLook(state.settings, { unlocked: unlockedThemes() }).theme.id !== "rotom";
 }
 
 /** Theme ids this player has unlocked. Nothing is locked yet, so nothing is stored. */
@@ -5762,6 +5769,7 @@ function renderSettings() {
       <button class="tlink" id="reset-settings" type="button" ${changed ? "" : "disabled"}>Restore defaults</button>
     </div>
     <div class="set-groups">${groups}${community}${progress}</div>`;
+  syncLightDarkRow();
 }
 
 // The look: light or dark, and the colour theme. The choice is mirrored to
@@ -8980,6 +8988,7 @@ els.settingsBody.addEventListener("click", (e) => {
       btn.classList.toggle("on", on);
       btn.setAttribute("aria-pressed", String(on));
     });
+    syncLightDarkRow();
     updateSettingsSummary();
     return;
   }

@@ -1,5 +1,16 @@
 [
   {
+    "id": "2026-11-28-settings-light-dark",
+    "date": "2026-11-28",
+    "kind": "fix",
+    "title": "Settings no longer says Light on a dark theme",
+    "summary": "The Light or dark choice shows only on Rotom, the one theme that has both.",
+    "items": [
+      "Colours comes first in Settings. Pick Rotom and Light, Dark and Device appear under it.",
+      "Rankings: the signed-out line lost its ball too."
+    ]
+  },
+  {
     "id": "2026-11-28-rankings-plain",
     "date": "2026-11-28",
     "kind": "better",
