@@ -17,7 +17,7 @@ import { createJackpot } from "./jackpot.js?v=9";
 import { createUpgrader } from "./upgrader.js?v=10";
 import { chanceText } from "./upgrader-rules.js?v=3";
 import { gateLock, gateNoticeHTML } from "./gate-notice.js";
-import { createBetaPages, BETA_KEYS, BETA_ART } from "./beta.js?v=9";
+import { createBetaPages, BETA_KEYS, BETA_ART } from "./beta.js?v=10";
 
 const HUB_POLL_MS = 8000;
 const ROUTE = /^\/casino(?:\/(coinflip|jackpot|upgrader|beta|grass|rocket|tins)(?:\/([a-zA-Z0-9-]{1,80}))?)?$/;
@@ -32,7 +32,9 @@ export const CASINO_LINKS = [
   { key: "beta", href: "/casino/beta", label: "Beta" },
 ];
 /** The beta games light up the Beta word in the sub-nav. */
-const BAR_KEY = { grass: "beta", rocket: "beta", tins: "beta" };
+const BAR_KEY = { grass: "beta", tins: "beta" };
+/** Games that were taken down: an old link lands on the page that replaced them. */
+const GONE = { rocket: "beta" };
 
 export function initCasino(deps = {}) {
   const root = deps.root;
@@ -287,7 +289,7 @@ export function initCasino(deps = {}) {
       </header>
       ${ageShut ? gateNoticeHTML(ageLock) : ""}
       <ul class="hub-games" aria-label="The games">${tiles.join("")}</ul>
-      <a class="rt-box hub-beta" href="/casino/beta" data-hub-link><span class="hub-beta-art" aria-hidden="true">${BETA_ART.rocket}</span><span class="hub-beta-copy"><b>Beta testing <span class="rt-tag">Beta</span></b><span>New games for invited testers: Tall Grass, Rayquaza and Mystery Tins.</span></span><i class="hub-game-go" aria-hidden="true"></i></a>
+      <a class="rt-box hub-beta" href="/casino/beta" data-hub-link><span class="hub-beta-art" aria-hidden="true">${BETA_ART.grass}</span><span class="hub-beta-copy"><b>Beta testing <span class="rt-tag">Beta</span></b><span>New games for invited testers: Tall Grass and Mystery Tins.</span></span><i class="hub-game-go" aria-hidden="true"></i></a>
       <div class="cs-cols hub-live">${live}</div>
       ${recordHTML}
     </div>`;
@@ -323,7 +325,7 @@ export function initCasino(deps = {}) {
   function show(path = "/casino") {
     const clean = path.replace(/\/$/, "") || "/casino";
     const m = clean.match(ROUTE);
-    const game = m?.[1] || "hub";
+    const game = GONE[m?.[1]] || m?.[1] || "hub";
     const id = m?.[2] || "";
     visible = true;
     if (current !== game) {

@@ -2,12 +2,11 @@
 
    /casino/beta     join with an invite code, the perks, the games; the owner makes codes here
    /casino/grass    Tall Grass: clear tiles, dodge the Voltorb, cash out
-   /casino/rocket   Rayquaza: one shared round, cash out before it flies off
    /casino/tins     Mystery Tins: a themed tin, one card out
 
    The page only asks and shows. Every stake, roll and payout is the Worker's. */
 import { api, esc, coinTag, uuid } from "./casino-kit.js";
-import { BETA_GAMES, BETA_RULES, GRASS, ROCKET, TIN_MAX_OPEN, TIN_TIERS, rocketAt, grassMultiplier } from "./beta-rules.js?v=4";
+import { BETA_GAMES, BETA_RULES, GRASS, TIN_MAX_OPEN, TIN_TIERS, grassMultiplier } from "./beta-rules.js?v=5";
 import { slabHTML } from "./slab.js?v=3";
 
 const fmtX = (m) => `${Number(m || 0).toFixed(2)}x`;
@@ -18,7 +17,6 @@ const post = (path, body) => api(path, { method: "POST", body: JSON.stringify(bo
 const VOLTORB = `<svg class="bz-voltorb" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="16" fill="var(--hp-low)" stroke="var(--k0)" stroke-width="2.5"/><path d="M4 20a16 16 0 0 0 32 0z" fill="#fff" stroke="var(--k0)" stroke-width="2.5"/><path d="M11 15l7 3M29 15l-7 3" stroke="var(--k0)" stroke-width="2.5" stroke-linecap="round"/></svg>`;
 const ART = {
   grass: `<svg viewBox="0 0 70 70" aria-hidden="true"><g stroke="var(--k0)" stroke-width="2.5"><rect x="4" y="4" width="18" height="18" fill="var(--hp)"/><rect x="26" y="4" width="18" height="18" fill="var(--hp)"/><rect x="48" y="4" width="18" height="18" fill="var(--box)"/><rect x="4" y="26" width="18" height="18" fill="var(--box)"/><rect x="26" y="26" width="18" height="18" fill="var(--hp)"/><rect x="48" y="26" width="18" height="18" fill="var(--hp)"/><rect x="4" y="48" width="18" height="18" fill="var(--hp)"/><rect x="26" y="48" width="18" height="18" fill="var(--hp-low)"/><rect x="48" y="48" width="18" height="18" fill="var(--hp)"/></g></svg>`,
-  rocket: `<svg viewBox="0 0 70 70" aria-hidden="true"><path d="M6 64 C30 62 46 44 60 10" stroke="var(--cy-2)" stroke-width="3.5" fill="none"/><path d="M6 66H66M6 66V6" stroke="var(--k)" stroke-width="2.5"/><circle cx="60" cy="10" r="5" fill="var(--yel)" stroke="var(--k0)" stroke-width="2"/></svg>`,
   tins: `<svg viewBox="0 0 70 70" aria-hidden="true"><g stroke="var(--k0)" stroke-width="2.5"><rect x="8" y="22" width="54" height="34" fill="var(--cy)"/><rect x="5" y="14" width="60" height="10" fill="var(--yel)"/></g><circle cx="35" cy="39" r="7" fill="var(--box)" stroke="var(--k0)" stroke-width="2.5"/></svg>`,
 };
 
@@ -117,7 +115,7 @@ function homePage(ctx, root) {
           <form class="rt-box bz-box bz-join" data-join><label class="bz-field bz-wide"><span>Invite code</span><input class="bz-input bz-code" name="code" autocomplete="off" autocapitalize="characters" placeholder="BETA-XXXXXX" required /></label>
           <button class="solid rt-go" type="submit">Join the beta</button></form>
           <section class="rt-box bz-box"><h2 class="cs-h">What testers get</h2>${perks}
-          <p class="bz-note">Three games to try: ${BETA_GAMES.map((g) => esc(g.title)).join(", ")}. Free play with virtual coins, like the rest of the casino.</p></section>`}
+          <p class="bz-note">Games to try: ${BETA_GAMES.map((g) => esc(g.title)).join(", ")}. Free play with virtual coins, like the rest of the casino.</p></section>`}
         ${data?.member && data?.admin ? "" : ""}${admin()}</div>`;
     }
     root.addEventListener("submit", async (e) => {
@@ -310,190 +308,6 @@ function recentRows(rows) {
   return `<section class="cs-section bz-recent"><h2 class="cs-h">Your last rounds</h2><div class="cs-rows">${rows.map((r) => `<div class="rt-row bz-row${r.won ? " is-won" : ""}">
     <span class="rt-row-lab">${r.won ? fmtX(r.mult) : "Lost"}</span><span class="rt-row-name">${esc(r.line)}<small>Stake ${num(r.stake)}</small></span>
     <span class="rt-row-val">${r.won ? coinTag(r.payout) : ""}</span></div>`).join("")}</div></section>`;
-}
-
-// ---- Rocket ------------------------------------------------------------------------------
-/* Rayquaza. (The game's key, route and tables keep the name "rocket" from its first look.)
-   The sky is a scene and a chart at once. Rayquaza hovers over the hills through the countdown, then climbs a fixed
-   flight path as the multiplier grows (the far end is 10x), lighting the trail and the 1.5x, 2x, 3x, 5x and 10x
-   markers behind it. The ground falls away, clouds sink past and stars come down. Cash-outs plant flags on the path.
-   It is gone in a flash where the round ends. The sky is drawn once and only transforms, opacity and classes change after. */
-const SHIP = `<svg viewBox="0 0 114 56" aria-hidden="true"><g class="bz-seg" style="--s:12"><path d="M9.0 33.4l-8-6 2.500 6-2.500 6z" fill="var(--hp-low)" stroke="var(--k0)" stroke-width="2" stroke-linejoin="round"/></g><g class="bz-seg" style="--s:11"><circle cx="9.0" cy="33.4" r="4.3" fill="var(--k0)"/></g><g class="bz-seg" style="--s:10"><circle cx="16.2" cy="32.4" r="5.5" fill="var(--k0)"/></g><g class="bz-seg" style="--s:9"><circle cx="23.4" cy="28.6" r="6.8" fill="var(--k0)"/></g><g class="bz-seg" style="--s:8"><circle cx="30.6" cy="24.5" r="8.1" fill="var(--k0)"/></g><g class="bz-seg" style="--s:7"><path d="M34.8 16.5l-7-11 12 6zM34.8 28.5l-7 11 12-6z" fill="color-mix(in srgb, var(--hp) 76%, var(--k0))" stroke="var(--k0)" stroke-width="2.4" stroke-linejoin="round"/><path d="M29.2 8.1l-1.400-2.600 3.400 1.800zM29.2 36.9l-1.400 2.600 3.400-1.800z" fill="var(--hp-low)" stroke="var(--hp-low)" stroke-width="1.5" stroke-linejoin="round"/><circle cx="37.8" cy="22.5" r="9.3" fill="var(--k0)"/></g><g class="bz-seg" style="--s:6"><circle cx="45.0" cy="23.8" r="9.3" fill="var(--k0)"/></g><g class="bz-seg" style="--s:5"><circle cx="52.2" cy="27.7" r="9.3" fill="var(--k0)"/></g><g class="bz-seg" style="--s:4"><circle cx="59.4" cy="31.7" r="9.3" fill="var(--k0)"/></g><g class="bz-seg" style="--s:3"><path d="M63.599999999999994 27.5l-7-11 12 6zM63.599999999999994 39.5l-7 11 12-6z" fill="color-mix(in srgb, var(--hp) 76%, var(--k0))" stroke="var(--k0)" stroke-width="2.4" stroke-linejoin="round"/><path d="M58.0 19.1l-1.400-2.600 3.400 1.800zM58.0 47.9l-1.400 2.600 3.400-1.800z" fill="var(--hp-low)" stroke="var(--hp-low)" stroke-width="1.5" stroke-linejoin="round"/><circle cx="66.6" cy="33.5" r="9.3" fill="var(--k0)"/></g><g class="bz-seg" style="--s:2"><circle cx="73.8" cy="31.9" r="9.3" fill="var(--k0)"/></g><g class="bz-seg" style="--s:1"><circle cx="81.0" cy="28.0" r="9.3" fill="var(--k0)"/></g><g class="bz-seg" style="--s:11"><circle cx="9.0" cy="33.4" r="2.1" fill="color-mix(in srgb, var(--hp) 76%, var(--k0))"/></g><g class="bz-seg" style="--s:10"><circle cx="16.2" cy="32.4" r="3.3" fill="color-mix(in srgb, var(--hp) 76%, var(--k0))"/></g><g class="bz-seg" style="--s:9"><circle cx="23.4" cy="28.6" r="4.6" fill="color-mix(in srgb, var(--hp) 76%, var(--k0))"/><circle cx="23.4" cy="28.6" r="2.3" fill="none" stroke="var(--yel)" stroke-width="1.800"/></g><g class="bz-seg" style="--s:8"><circle cx="30.6" cy="24.5" r="5.9" fill="color-mix(in srgb, var(--hp) 76%, var(--k0))"/></g><g class="bz-seg" style="--s:7"><circle cx="37.8" cy="22.5" r="7.1" fill="color-mix(in srgb, var(--hp) 76%, var(--k0))"/><circle cx="37.8" cy="22.5" r="3.4" fill="none" stroke="var(--yel)" stroke-width="1.800"/></g><g class="bz-seg" style="--s:6"><circle cx="45.0" cy="23.8" r="7.1" fill="color-mix(in srgb, var(--hp) 76%, var(--k0))"/></g><g class="bz-seg" style="--s:5"><circle cx="52.2" cy="27.7" r="7.1" fill="color-mix(in srgb, var(--hp) 76%, var(--k0))"/><circle cx="52.2" cy="27.7" r="3.4" fill="none" stroke="var(--yel)" stroke-width="1.800"/></g><g class="bz-seg" style="--s:4"><circle cx="59.4" cy="31.7" r="7.1" fill="color-mix(in srgb, var(--hp) 76%, var(--k0))"/></g><g class="bz-seg" style="--s:3"><circle cx="66.6" cy="33.5" r="7.1" fill="color-mix(in srgb, var(--hp) 76%, var(--k0))"/><circle cx="66.6" cy="33.5" r="3.4" fill="none" stroke="var(--yel)" stroke-width="1.800"/></g><g class="bz-seg" style="--s:2"><circle cx="73.8" cy="31.9" r="7.1" fill="color-mix(in srgb, var(--hp) 76%, var(--k0))"/></g><g class="bz-seg" style="--s:1"><circle cx="81.0" cy="28.0" r="7.1" fill="color-mix(in srgb, var(--hp) 76%, var(--k0))"/><circle cx="81.0" cy="28.0" r="3.4" fill="none" stroke="var(--yel)" stroke-width="1.800"/></g><g class="bz-seg bz-head" style="--s:0"><path d="M88 19 68 3l10 17zM88 37 68 53l10-17z" fill="color-mix(in srgb, var(--hp) 76%, var(--k0))" stroke="var(--k0)" stroke-width="2.4" stroke-linejoin="round"/><path d="M71.500 6.500 68 3l5 2zM71.500 49.500 68 53l5-2z" fill="var(--hp-low)" stroke="var(--hp-low)" stroke-width="2" stroke-linejoin="round"/>
-  <path d="M95 20 85 8l2 12zM95 36 85 48l2-12z" fill="color-mix(in srgb, var(--hp) 76%, var(--k0))" stroke="var(--k0)" stroke-width="2.200" stroke-linejoin="round"/>
-  <path d="M79 19c10-4 22-1 32 7 1 1 1 3 0 4-9 7-22 10-32 7-3-1-5-5-5-9s2-8 5-9z" fill="color-mix(in srgb, var(--hp) 76%, var(--k0))" stroke="var(--k0)" stroke-width="2.500" stroke-linejoin="round"/>
-  <path d="M111 29.500c-5 .500-10 1.500-15 3.500" stroke="var(--k0)" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M80 24c4-2.500 9-3 13-2M79 33c3 1.500 7 2 10 1.500" stroke="var(--yel)" stroke-width="2" stroke-linecap="round" fill="none"/>
-  <path d="M95 22.500l8 2.500-7 2.500z" fill="var(--yel)" stroke="var(--k0)" stroke-width="1.500" stroke-linejoin="round"/><circle cx="98.500" cy="25" r="1.200" fill="var(--k0)"/></g></svg>`;
-const BURST = `<svg viewBox="0 0 60 60" aria-hidden="true"><path d="M30 2l6 14 13-8-4 15 14 3-12 8 9 12-15-2-2 15-9-12-9 12-2-15-15 2 9-12-12-8 14-3-4-15 13 8z" fill="var(--yel)" stroke="var(--k0)" stroke-width="2.500" stroke-linejoin="round"/></svg>`;
-const CLOUD = `<svg viewBox="0 0 80 40" aria-hidden="true"><path d="M14 35a10 10 0 0 1 2-20 14 14 0 0 1 26-5 12 12 0 0 1 22 7 9 9 0 0 1 0 18z"/></svg>`;
-const STAR = `<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0l1.600 4.400L12 6 7.600 7.600 6 12 4.400 7.600 0 6l4.400-1.600z"/></svg>`;
-const GROUND = `<svg viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden="true"><path class="bz-hill" d="M0 30V17c9-7 18-9 28-4 9-9 22-11 34-3 11-6 25-5 38 3v17z" vector-effect="non-scaling-stroke"/></svg>`;
-const ARC = [[37, 72], [70, 80], [91, 13]]; // the flight path, in % of the sky: the start, the pull, 10x
-const arcAt = (t) => ARC[0].map((_, k) => (1 - t) ** 2 * ARC[0][k] + 2 * t * (1 - t) * ARC[1][k] + t * t * ARC[2][k]);
-const arcT = (m) => Math.min(1, Math.log(Math.max(1, m)) / Math.log(10));
-const ARC_MARKS = [1.5, 2, 3, 5, 10];
-const ARC_DOTS = 44;
-// Fixed spots for the scenery, so the sky is the same sky every round: [left %, top %, width px].
-const CLOUDS = [[6, 46, 78], [58, 30, 96], [34, 8, 64], [78, 58, 70], [-4, 14, 60]];
-const STARS = [[8, 12], [22, 38], [31, 9], [44, 26], [52, 58], [61, 14], [70, 42], [83, 22], [90, 64], [14, 70], [38, 78], [76, 84], [95, 6], [3, 50]];
-function rocketPage(ctx, root) {
-  return page(ctx, root, "rocket", (p) => {
-    let data = null;
-    let timer = 0;
-    let raf = 0;
-    let stake = 10;
-    let auto = 2;
-    let cache = {};
-    let seen = { ph: "", lit: -1, marks: -1 };
-    const phase = () => {
-      if (!data) return "";
-      const now = ctx.clock.now();
-      if (data.round.phase === "popped") return "popped";
-      return now < data.round.launchAt ? "betting" : "flying";
-    };
-    /** Write a part of the page only when it changed, so typing and running animations are left alone. */
-    const set = (sel, html) => {
-      if (cache[sel] === html) return;
-      const el = root.querySelector(sel);
-      if (!el) return;
-      el.innerHTML = html;
-      cache[sel] = html;
-    };
-    const betRow = (b) => `<div class="rt-row bz-row${b.status === "won" ? " is-won" : ""}${b.mine ? " is-mine" : ""}"><span class="rt-row-lab">${b.cashed ? fmtX(b.cashed) : b.status === "lost" ? "Missed" : "In"}</span>
-      <span class="rt-row-name">${esc(b.name)}${b.mine ? " (you)" : ""}<small>Stake ${num(b.stake)}${b.mine && b.auto ? `, auto ${fmtX(b.auto)}` : ""}</small></span><span class="rt-row-val">${b.status === "won" ? coinTag(b.payout) : ""}</span></div>`;
-    function skeleton() {
-      const at = (xy) => `left:${xy[0].toFixed(1)}%;top:${xy[1].toFixed(1)}%`;
-      root.innerHTML = `<div class="cs-page bz-page bz-rocket">${p.head("Rayquaza")}
-        <div class="bz-play"><div class="bz-board-wrap">
-          <div class="bz-sky"><div class="bz-scene">
-            <span class="bz-stars" aria-hidden="true">${STARS.map(([x, y], i) => `<i style="left:${x}%;top:${y}%;--i:${i}">${STAR}</i>`).join("")}</span>
-            <span class="bz-clouds" aria-hidden="true">${CLOUDS.map(([x, y, w], i) => `<i style="left:${x}%;top:${y}%;width:${w}px;--i:${i}">${CLOUD}</i>`).join("")}</span>
-            <span class="bz-ground" aria-hidden="true">${GROUND}</span>
-            <svg class="bz-arc" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M${ARC[0]} Q${ARC[1]} ${ARC[2]}" vector-effect="non-scaling-stroke"/></svg>
-            <span class="bz-trail" aria-hidden="true">${Array.from({ length: ARC_DOTS }, (_, i) => `<i style="${at(arcAt((i + 1) / ARC_DOTS))}"></i>`).join("")}</span>
-            ${ARC_MARKS.map((m) => `<span class="bz-mark" style="${at(arcAt(arcT(m)))}"><i></i>${m}x</span>`).join("")}
-            <span data-rk-flags></span>
-            <span class="bz-ship" aria-hidden="true">${SHIP}</span>
-            <span class="bz-burst" aria-hidden="true">${BURST}<i></i><i></i><i></i><i></i><i></i></span></div>
-            <p class="bz-mult"><small data-rk-lab></small><b data-rk-fig>-</b></p>
-            <span class="bz-fuse" aria-hidden="true"><i data-rk-fuse></i></span></div>
-          <p class="bz-hist" aria-label="Last rounds" data-rk-hist></p>
-        </div>
-        <form class="rt-box bz-box bz-controls" data-go data-rk-controls></form></div>
-        <section class="cs-section bz-recent"><h2 class="cs-h">In this round</h2><div class="cs-rows" data-rk-bets></div></section></div>`;
-      cache = {};
-      seen = { ph: "", lit: -1, marks: -1 };
-    }
-    /** Everything around the sky: the controls, who is in, the last rounds, the cash-out flags. */
-    function parts() {
-      if (!root.querySelector(".bz-sky")) skeleton();
-      const ph = phase();
-      const mine = data?.mine;
-      const controls = !data ? "" : ph === "betting" && !mine ? `${stakeField("rk-stake", stake)}
-          <label class="bz-field bz-inline"><span>Auto cash-out at</span><input id="rk-auto" class="bz-input" type="number" inputmode="decimal" min="${ROCKET.minAuto}" max="${ROCKET.maxMult}" step="0.01" value="${auto}" /></label>
-          <div class="bz-autos" role="group" aria-label="Quick auto cash-out">${[1.5, 2, 3, 5, 10].map((a) => `<button type="button" class="rt-word${Number(auto) === a ? " on" : ""}" data-auto="${a}">${a}x</button>`).join("")}</div>
-          <button class="solid rt-go" type="submit">Join this round</button>`
-        : mine?.status === "open" && ph === "flying" ? `<button type="button" class="solid rt-go" data-rk-cash>Cash out</button><p class="bz-note">Auto cash-out at ${fmtX(mine.auto)}.</p>`
-        : mine ? `<p class="bz-status ${mine.status === "won" ? "is-good" : mine.status === "lost" ? "is-bad" : ""}">${mine.status === "won" ? `You cashed out at ${fmtX(mine.cashed)} for ${coinTag(mine.payout)}.` : mine.status === "lost" ? "Rayquaza flew off before you cashed out." : `You're in with ${coinTag(mine.stake)}, auto at ${fmtX(mine.auto)}.`}</p>`
-        : `<p class="bz-note">${ph === "flying" ? "This round is in the air. Bets open again when Rayquaza flies off." : "Next round soon."}</p>`;
-      set("[data-rk-controls]", controls);
-      set("[data-rk-bets]", (data?.bets || []).length ? data.bets.map(betRow).join("") : `<p class="bz-note">Nobody yet. Bets close at take-off.</p>`);
-      set("[data-rk-hist]", `<small>Last rounds</small>${(data?.history || []).map((h) => `<span class="${h.crash >= 2 ? "is-hi" : ""}">${fmtX(h.crash)}</span>`).join("")}`);
-      // A flag where each player got out: yours named, up to five others plain.
-      const out = (data?.bets || []).filter((b) => b.cashed).sort((a, b) => Number(b.mine || 0) - Number(a.mine || 0)).slice(0, 6);
-      set("[data-rk-flags]", out.map((b) => { const [x, y] = arcAt(arcT(b.cashed)); return `<span class="bz-flag${b.mine ? " is-mine" : ""}" style="left:${x.toFixed(1)}%;top:${y.toFixed(1)}%"><i></i>${b.mine ? `<b>You ${fmtX(b.cashed)}</b>` : ""}</span>`; }).join(""));
-    }
-    function figure() {
-      if (!p.visible()) return;
-      raf = requestAnimationFrame(figure);
-      const sky = root.querySelector(".bz-sky");
-      const el = root.querySelector("[data-rk-fig]");
-      if (!sky || !el || !data) return;
-      const ph = phase();
-      const now = ctx.clock.now();
-      let m = 1;
-      if (ph === "popped") m = data.round.crash;
-      else if (ph === "flying") m = rocketAt(now - data.round.launchAt);
-      const text = ph === "betting" ? `${Math.max(0, Math.ceil((data.round.launchAt - now) / 1000))}s` : fmtX(m);
-      if (el.textContent !== text) el.textContent = text;
-      const t = arcT(m);
-      if (ph !== seen.ph) {
-        seen.ph = ph;
-        sky.className = `bz-sky is-${ph}`;
-        root.querySelector("[data-rk-lab]").textContent = ph === "betting" ? "Takes off in" : ph === "popped" ? "Flew off at" : "Flying";
-        parts();
-      }
-      sky.classList.toggle("is-max", ph === "flying" && t >= 1);
-      // Rayquaza rides the flight path with the log of the multiplier, its head on the path and its nose along the curve.
-      const w = sky.clientWidth, hgt = sky.clientHeight;
-      const [x, y] = arcAt(t);
-      const [x2, y2] = arcAt(Math.min(1, t + 0.02)), [x1, y1] = arcAt(Math.max(0, t - 0.02));
-      const along = Math.atan2(((y2 - y1) * hgt) / 100, ((x2 - x1) * w) / 100);
-      const at = `translate(${((x * w) / 100).toFixed(1)}px, ${((y * hgt) / 100).toFixed(1)}px)`;
-      sky.querySelector(".bz-ship").style.transform = `${at} translate(-92%, -50%) rotate(${along.toFixed(3)}rad)`;
-      sky.querySelector(".bz-burst").style.transform = `${at} translate(-50%, -50%)`;
-      // The world sinks as it climbs: the ground first, then the clouds, and the stars come down.
-      const climb = ph === "betting" ? 0 : t;
-      sky.querySelector(".bz-ground").style.transform = `translateY(${(Math.min(1, climb * 5) * 130).toFixed(1)}%)`;
-      sky.querySelector(".bz-clouds").style.transform = `translateY(${(climb * 105).toFixed(1)}%)`;
-      sky.querySelector(".bz-stars").style.transform = `translateY(${(climb * 100).toFixed(1)}%)`;
-      // The trail lights dot by dot, the markers as it passes them.
-      const lit = ph === "betting" ? 0 : Math.floor(t * ARC_DOTS);
-      if (lit !== seen.lit) { seen.lit = lit; [...sky.querySelector(".bz-trail").children].forEach((d, i) => d.classList.toggle("on", i < lit)); }
-      const marks = ph === "betting" ? 0 : ARC_MARKS.filter((k) => m >= k).length;
-      if (marks !== seen.marks) {
-        if (marks > seen.marks && ph === "flying") { el.classList.remove("is-bump"); void el.offsetWidth; el.classList.add("is-bump"); }
-        seen.marks = marks;
-        sky.querySelectorAll(".bz-mark").forEach((d, i) => d.classList.toggle("on", i < marks));
-      }
-      const fuse = sky.querySelector("[data-rk-fuse]");
-      fuse.style.transform = `scaleX(${ph === "betting" ? Math.max(0, Math.min(1, (data.round.launchAt - now) / ROCKET.betMs)).toFixed(3) : 0})`;
-      const cash = root.querySelector("[data-rk-cash]");
-      if (cash && data.mine?.status === "open" && ph === "flying") {
-        const html = `Cash out ${coinTag(Math.floor(data.mine.stake * Math.min(m, data.mine.auto) * 100) / 100)}`;
-        if (cash._html !== html) { cash.innerHTML = html; cash._html = html; }
-      }
-    }
-    async function load() {
-      clearTimeout(timer);
-      try {
-        data = p.apply(await api("/api/casino/beta/rocket"));
-        if (p.visible() && !p.state.busy) parts();
-      } catch (err) { p.fail(err); }
-      if (!p.visible()) return;
-      const ph = phase();
-      const wait = ph === "flying" ? 450 : ph === "popped" ? Math.max(500, data.round.endAt - ctx.clock.now() + 50) : Math.min(1500, Math.max(300, data.round.launchAt - ctx.clock.now() + 30));
-      timer = setTimeout(load, wait);
-    }
-    root.addEventListener("submit", async (e) => {
-      if (!e.target.closest("[data-go]")) return;
-      e.preventDefault();
-      if (p.state.busy || !data) return;
-      stake = readStake(root, "rk-stake");
-      auto = Number(root.querySelector("#rk-auto")?.value) || auto;
-      p.state.busy = true;
-      try { data = p.apply(await post("/api/casino/beta/rocket/bet", { round: data.round.id, stake, auto, requestId: uuid() })); parts(); }
-      catch (err) { p.fail(err); } finally { p.state.busy = false; }
-    });
-    root.addEventListener("click", async (e) => {
-      const quick = e.target.closest("[data-auto]");
-      if (quick) {
-        auto = Number(quick.dataset.auto);
-        const input = root.querySelector("#rk-auto");
-        if (input) input.value = String(auto);
-        root.querySelectorAll("[data-auto]").forEach((x) => x.classList.toggle("on", x === quick));
-        cache["[data-rk-controls]"] = null; // the keys were changed by hand: the next write starts clean
-        return;
-      }
-      if (!e.target.closest("[data-rk-cash]") || p.state.busy) return;
-      p.state.busy = true;
-      try { data = p.apply(await post("/api/casino/beta/rocket/cash", {})); ctx.buzz?.(20); parts(); }
-      catch (err) { p.fail(err); } finally { p.state.busy = false; }
-    });
-    return {
-      show() { skeleton(); parts(); load(); cancelAnimationFrame(raf); raf = requestAnimationFrame(figure); },
-      hide() { clearTimeout(timer); cancelAnimationFrame(raf); },
-    };
-  });
 }
 
 // ---- Mystery Tins ------------------------------------------------------------------------
@@ -782,9 +596,8 @@ export function createBetaPages(ctx, roots) {
   return {
     beta: homePage(ctx, roots.beta),
     grass: grassPage(ctx, roots.grass),
-    rocket: rocketPage(ctx, roots.rocket),
     tins: tinsPage(ctx, roots.tins),
   };
 }
-export const BETA_KEYS = ["beta", "grass", "rocket", "tins"];
+export const BETA_KEYS = ["beta", "grass", "tins"];
 export { ART as BETA_ART };

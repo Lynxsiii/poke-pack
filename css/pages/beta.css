@@ -173,94 +173,12 @@
 .bz-ladder span + span::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 8px; border-top: 2px solid currentColor; border-right: 2px solid currentColor; transform: rotate(45deg) translateY(-1px); opacity: 0.6; }
 .bz-ladder .is-next { color: var(--k0); font-size: 17px; padding: 3px 9px; border: 2px solid var(--k0); border-radius: 4px; background: var(--yel); transform: skewX(var(--skew)); }
 
-/* ---- Rocket ------------------------------------------------------------------------- */
-/* A sky you fly up through: a field and a pad, clouds, then stars. Everything in it only moves by transform. */
-.bz-sky {
-  --day: color-mix(in srgb, var(--cy) 42%, #fff); --night: color-mix(in srgb, var(--k0) 84%, var(--cy));
-  position: relative; height: clamp(240px, 38vh, 380px); overflow: hidden; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--day);
-}
-.bz-scene { position: absolute; inset: 0; }
-.bz-sky.is-popped .bz-scene { animation: bz-quake 0.45s linear; }
-.bz-stars, .bz-clouds, .bz-ground { position: absolute; left: 0; right: 0; will-change: transform; }
-.bz-sky.is-betting :is(.bz-stars, .bz-clouds, .bz-ground) { transition: transform 0.7s var(--ease-out); }
-.bz-stars { top: -150%; height: 150%; background: linear-gradient(to bottom, var(--night) 55%, transparent); }
-.bz-stars i { position: absolute; width: 11px; height: 11px; animation: bz-twinkle 1.6s ease-in-out infinite alternate; animation-delay: calc(var(--i) * -0.37s); }
-.bz-stars i:nth-child(3n) { width: 7px; height: 7px; }
-.bz-stars svg { display: block; width: 100%; fill: #fff; }
-@keyframes bz-twinkle { from { opacity: 0.35; transform: scale(0.8); } to { opacity: 1; transform: none; } }
-.bz-clouds { top: 0; bottom: 0; }
-.bz-clouds i { position: absolute; animation: bz-drift 7s ease-in-out infinite alternate; animation-delay: calc(var(--i) * -1.7s); }
-.bz-clouds svg { display: block; width: 100%; overflow: visible; }
-.bz-clouds path { fill: #fff; stroke: var(--k0); stroke-width: 2.5; stroke-linejoin: round; }
-.bz-clouds i:nth-child(odd) { opacity: 0.8; }
-@keyframes bz-drift { from { transform: translateX(-8px); } to { transform: translateX(10px); } }
-.bz-ground { bottom: 0; height: 24%; }
-.bz-ground svg { display: block; width: 100%; height: 100%; overflow: visible; }
-.bz-hill { fill: var(--hp); stroke: var(--k0); stroke-width: 2.5; }
-.bz-arc { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.bz-arc path { fill: none; stroke: var(--k0); stroke-width: 2; stroke-dasharray: 2 7; stroke-linecap: round; opacity: 0.3; }
-.bz-trail i { position: absolute; width: 8px; height: 8px; margin: -4px 0 0 -4px; border: 2px solid var(--k0); border-radius: 50%; background: var(--yel); opacity: 0; transform: scale(0.3); transition: opacity 0.2s, transform 0.3s var(--ease-pop); }
-.bz-trail i.on { opacity: 1; transform: none; }
-.bz-mark { position: absolute; z-index: 1; display: grid; justify-items: center; transform: translate(-50%, 16px); padding: 2px 6px; border: 2px solid var(--k0); border-radius: 4px; background: #fff; color: var(--k0); font: 700 12.5px/1 var(--font-h); font-variant-numeric: tabular-nums; transition: transform 0.25s var(--ease-pop); }
-.bz-mark i { position: absolute; top: -22px; width: 10px; height: 10px; border: 2px solid var(--k0); border-radius: 50%; background: #fff; }
-.bz-mark.on { background: var(--yel); transform: translate(-50%, 16px) scale(1.12); }
-.bz-mark.on i { background: var(--yel); }
-/* Where players got out. */
-.bz-flag { position: absolute; z-index: 1; width: 2px; height: 22px; margin: -22px 0 0 -1px; background: var(--k0); animation: bz-plant 0.3s var(--ease-pop); transform-origin: 50% 100%; }
-.bz-flag i { position: absolute; left: 2px; top: 0; border: 6px solid transparent; border-left: 11px solid var(--k0); border-right: 0; }
-.bz-flag i::after { content: ""; position: absolute; left: -9px; top: -3.5px; border: 3.5px solid transparent; border-left: 6px solid #fff; border-right: 0; }
-.bz-flag.is-mine i::after { border-left-color: var(--hp); }
-.bz-flag b { position: absolute; left: 50%; bottom: 100%; transform: translate(-50%, -3px); padding: 2px 6px; border: 2px solid var(--k0); border-radius: 4px; background: var(--hp); color: var(--k0); font: 700 12px/1 var(--font-h); white-space: nowrap; font-variant-numeric: tabular-nums; }
-@keyframes bz-plant { from { transform: scaleY(0); } }
-.bz-ship, .bz-burst { position: absolute; left: 0; top: 0; z-index: 2; will-change: transform; }
-.bz-ship { width: 134px; transform-origin: 92% 50%; filter: drop-shadow(var(--drop-sm)); transition: opacity 0.2s; }
-.bz-ship svg, .bz-burst svg { display: block; width: 100%; overflow: visible; }
-/* Each bead of the body bobs a beat after the one ahead of it, so a wave runs from head to tail. */
-.bz-seg { animation: bz-snake 0.9s ease-in-out infinite alternate; animation-delay: calc(var(--s) * -0.11s); }
-.bz-sky.is-flying .bz-seg { animation-duration: 0.36s; animation-delay: calc(var(--s) * -0.05s); }
-.bz-sky.is-max .bz-seg { animation-duration: 0.2s; }
-@keyframes bz-snake { from { transform: translateY(-3.5px); } to { transform: translateY(3.5px); } }
-.bz-head { animation-name: bz-nod; }
-@keyframes bz-nod { from { transform: translateY(-1.5px); } to { transform: translateY(1.5px); } }
-/* The round is over: Rayquaza is off along its heading and gone. */
-.bz-sky.is-popped .bz-ship svg { animation: bz-dash 0.45s ease-in forwards; }
-@keyframes bz-dash { 60% { opacity: 1; } to { transform: translateX(460px) scaleX(1.3); opacity: 0; } }
-.bz-burst { width: 84px; opacity: 0; }
-.bz-sky.is-popped .bz-burst { opacity: 1; }
-.bz-sky.is-popped .bz-burst svg { animation: bz-burst 0.6s var(--ease-out) forwards; }
-@keyframes bz-burst { from { transform: scale(0.2) rotate(-30deg); opacity: 1; } 50% { opacity: 1; } to { transform: scale(1.1); opacity: 0; } }
-.bz-burst i { position: absolute; left: 50%; top: 50%; width: 10px; height: 10px; margin: -5px; border: 2px solid var(--k0); background: #fff; opacity: 0; }
-.bz-sky.is-popped .bz-burst i { animation: bz-fly 0.8s var(--ease-out); }
-.bz-burst i:nth-of-type(1) { --x: -66px; --y: -40px; --r: -260deg; }
-.bz-burst i:nth-of-type(2) { --x: 60px; --y: -52px; --r: 220deg; background: var(--hp-low); }
-.bz-burst i:nth-of-type(3) { --x: -52px; --y: 46px; --r: -180deg; background: var(--cy); }
-.bz-burst i:nth-of-type(4) { --x: 70px; --y: 30px; --r: 300deg; }
-.bz-burst i:nth-of-type(5) { --x: 4px; --y: 72px; --r: 140deg; background: var(--hp-low); }
-/* The figure: white with an ink outline, so it reads over day sky and night sky alike. */
-.bz-mult { position: absolute; z-index: 3; top: 12px; left: 14px; margin: 0; display: grid; justify-items: start; gap: 5px; }
-.bz-mult small { padding: 3px 8px; border-radius: 4px; background: var(--k0); color: #fff; font: 700 13px/1.2 var(--font-h); }
-.bz-mult b { font: italic 800 clamp(58px, 18vw, 80px)/0.95 var(--font-xc); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; color: #fff; -webkit-text-stroke: 7px var(--k0); paint-order: stroke fill; padding: 0 6px; transform-origin: 0 60%; }
-.bz-mult b.is-bump { animation: bz-bump 0.4s var(--ease-pop); }
-.bz-sky.is-flying .bz-mult b { color: var(--yel); }
-.bz-sky.is-popped .bz-mult b { color: var(--hp-low); animation: bz-bump 0.4s var(--ease-pop); }
-.bz-sky.is-popped .bz-mult small { background: var(--hp-low); }
-/* The countdown to launch: an HP bar that drains. */
-.bz-fuse { position: absolute; z-index: 3; left: 0; right: 0; bottom: 0; height: 9px; border-top: 2px solid var(--k0); background: var(--k0); }
-.bz-fuse i { display: block; height: 100%; background: var(--hp); transform-origin: 0 50%; transform: scaleX(0); }
-.bz-sky:not(.is-betting) .bz-fuse { opacity: 0; }
-.bz-hist { display: flex; overflow: hidden; white-space: nowrap; align-items: baseline; gap: 4px 12px; margin: 10px 0 0; font: 700 15px var(--font-h); color: var(--k-2); font-variant-numeric: tabular-nums; }
-.bz-hist small { font: inherit; font-size: 13px; }
-.bz-hist .is-hi { color: var(--k); }
-.bz-autos { display: flex; gap: 4px; flex-wrap: wrap; margin-top: -4px; }
-.bz-inline { grid-template-columns: minmax(0, 1fr) 120px; align-items: center; }
-.bz-inline .bz-input { height: 40px; }
 /* Tall Grass: how many Voltorb, as quick picks with a step either side. */
 .bz-volts { display: flex; align-items: center; justify-content: space-between; gap: 2px; padding: 4px 10px 4px 14px; border-bottom: var(--line-w) solid var(--k); }
 .bz-grass .bz-field:has(.bz-stake) { grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 12px; }
 .bz-volts .bz-safe-volt { min-width: 50px; font: 700 17px var(--font-h); }
 .bz-volts .rt-word { min-height: 40px; min-width: 34px; padding: 0 6px; font-size: 16px; justify-content: center; }
 .bz-volts .ghost { flex: 0 0 38px; min-width: 0; padding: 0; min-height: 40px; font-size: 20px; }
-.bz-autos .rt-word { min-height: 38px; padding: 0 12px; font-size: 15px; }
 
 /* ---- Mystery Tins ---------------------------------------------------------------- */
 /* The chase cards are the show (js/beta.js tinsPage). A tin's paint (--paint) is art: one slanted band and the tin itself. */
