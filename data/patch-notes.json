@@ -1,5 +1,19 @@
 [
   {
+    "id": "2026-11-28-binder-lock",
+    "date": "2026-11-28",
+    "kind": "new",
+    "big": 2,
+    "title": "Cards in your binder are locked",
+    "summary": "Put a card in your binder and it stays yours: it can't be sold, staked or traded until you take it out.",
+    "items": [
+      "Selling, Sell duplicates, Sell bulk, coin flips, jackpots, the Upgrader, sell all winnings and trades all leave binder cards alone.",
+      "Spare copies are still free to go. With three copies and one in the binder, two can be sold.",
+      "Grading a binder card is fine: the slab keeps the pocket filled. A slab in a pocket is locked the same way.",
+      "Cards already in your binder are locked now. Take a card out in Arrange to unlock it."
+    ]
+  },
+  {
     "id": "2026-11-28-steam-siege-photos",
     "date": "2026-11-28",
     "kind": "fix",
