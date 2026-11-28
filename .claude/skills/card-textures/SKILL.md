@@ -243,6 +243,22 @@ cure"). The surface gloss throws a soft highlight.
    run `node .claude/skills/card-textures/scripts/foil_coverage.mjs <sets>` (it must print nothing), and
    record what you learned in the finish's catalogue entry.
 
+## Shipping gate (Noah, 2026-11-28)
+
+Round 2 passed every fault check while most cards went flat ("does the site not have holos anymore?"). Before any
+holo change ships:
+
+1. **Shine gate.** Render the affected cards with `holo_check.py` twice: on a worktree of origin/master (the
+   baseline) and with the change. `scripts/shine_gate.py <base>/check.json <new>/check.json` fails any card whose
+   lit shine, lit texture or resting shine drops more than 15%. A drop is shipped only when the before/after sheet
+   below shows it was a wash Noah wants gone.
+2. **Side-by-side review.** Reviewers (Opus/Fable) see each card beside a real-card photo and its previous version,
+   rest and lit, and answer first "is it clearly, visibly holo?", then "any faults?". Quieter is never automatically
+   safer.
+3. **Noah's yes.** Per family, post him a 4-6 card before/after sheet (rest and lit) and ship only after his yes.
+4. **WebKit.** Holo renders belong in Safari's engine at phone size; when WebKit cannot be installed, say so and let
+   Noah's phone be the check.
+
 ## Pitfalls
 
 - **A mirror under ink: dodge the light in, never screen it on.** The Gold Stars, Pokémon-ex, EX refractor holos and sheen
