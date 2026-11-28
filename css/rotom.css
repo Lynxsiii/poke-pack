@@ -415,7 +415,7 @@ dialog::backdrop { background: rgb(20 23 27 / 0.62); }
 .rt-type[data-ty="holo"] { --ty: var(--ty-holo); } .rt-type[data-ty="double"] { --ty: var(--ty-double); }
 .rt-type[data-ty="ultra"] { --ty: var(--ty-ultra); } .rt-type[data-ty="illus"] { --ty: var(--ty-illus); }
 .rt-type[data-ty="sir"] { --ty: var(--ty-sir); } .rt-type[data-ty="hyper"] { --ty: var(--ty-hyper); }
-.rt-type[data-ty="promo"] { --ty: var(--ty-promo); } .rt-type[data-ty="secret"] { --ty: var(--ty-secret); }
+.rt-type[data-ty="promo"] { --ty: var(--ty-promo); } .rt-type[data-ty="secret"] { --ty: var(--ty-secret); color: var(--on-k, var(--w0)); }
 /* A Poké Ball pip: one step of a count. .e is a step not reached, .now the current one. */
 .rt-ball {
   display: inline-block; flex: none; width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--k);
@@ -564,7 +564,7 @@ a.rt-row, button.rt-row { transition: transform 0.14s var(--ease-out); }
   transition: transform 0.22s var(--ease-out), opacity 0.12s ease;
 }
 .nav-more-list .nav-btn.active::before, .site-header .nav > .nav-btn.active::before { transform: skewX(var(--skew)); opacity: 1; }
-.nav-more-list .nav-btn.active svg { stroke: var(--on-k); }
+.nav-more-list .nav-btn.active svg { stroke: var(--on-k); --ico: currentColor; }
 .nav-menu .nav-btn[href="/discord"] svg, .tabbar .nav-more-list .nav-btn[href="/discord"] svg { fill: currentColor; stroke: none; }
 
 /* ---- Phone: header and tab bar ------------------------------------------- */
@@ -587,7 +587,7 @@ a.rt-row, button.rt-row { transition: transform 0.14s var(--ease-out); }
   .tabbar .nav-btn, .tabbar .nav-more > summary { min-height: 62px; gap: 2px; color: var(--k-3); font: 600 11.5px var(--font-h); }
   .tabbar svg { stroke-width: 2.2; }
   .tabbar > .nav-btn.active { color: var(--k); }
-  .tabbar > .nav-btn.active svg { color: var(--cy-2); animation: rt-hop 0.36s var(--ease-out); }
+  .tabbar > .nav-btn.active svg { animation: rt-hop 0.36s var(--ease-out); }
   .tabbar > .nav-btn.active::before { display: none; }
   .tabbar > .nav-btn:active svg { transform: scale(0.88); }
   .tabbar > .nav-btn svg { transition: transform 0.1s var(--ease-out); }
@@ -994,3 +994,15 @@ body.no-motion .rt-track > i[style*="--fill"] { transition: none !important; }
 .nav-btn svg, .site-header .nav svg, .me-item svg, .tabbar svg, .tabbar .nav-more-list .menu-out svg { stroke-linecap: square; stroke-linejoin: miter; }
 /* Reading pages have no slab: it is wallpaper there. */
 body:is([data-view="legal"], [data-view="notes"], [data-view="settings"])::after { display: none; }
+
+/* The menu icons (the sprite at the top of index.html): two-tone. One rounded line in the icon's own
+   colour (--h, set on each <symbol>) and a lighter wash of the same colour inside it. `.n` is a line with
+   no wash, `.s` a solid dot. A place that wants them plain sets --ico (the resting tabs, Dot matrix). */
+.ic {
+  stroke: var(--ico, var(--h, currentColor)); stroke-linecap: round; stroke-linejoin: round;
+  fill: color-mix(in srgb, var(--ico, var(--h, currentColor)) 30%, transparent);
+}
+.ic.ic-n { fill: none; }
+.ic.ic-s { fill: var(--ico, var(--h, currentColor)); stroke: none; }
+.tabbar > .nav-btn:not(.active), [data-palette="dotmatrix"] .nav-btn, [data-palette="dotmatrix"] .me-item,
+[data-palette="dotmatrix"] .menu-out, .nav-more-label, .tabbar .nav-more-list .nav-area { --ico: currentColor; }
