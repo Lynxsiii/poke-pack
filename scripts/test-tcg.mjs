@@ -1031,6 +1031,39 @@ test("bot against bot: every set's deck finishes its matches", () => {
   assert.ok((reasons.prizes || 0) > games * 0.5, "most matches should end on prizes");
 });
 
+test("bot levels: Hard decks follow the rules, Easy and Hard finish their matches, and Hard beats Easy", () => {
+  const rand = mulberry(23);
+  let hardWins = 0, games = 0;
+  for (const [setId, list] of Object.entries(sets)) {
+    for (const format of ["unlimited", "standard"]) {
+      const hard = buildBotDeck(list.map((c) => defs(c.id)), format, rand, { level: "hard" });
+      if (!hard) continue;
+      assert.deepEqual(checkDeck({ format, cards: hard.cards }, hard.cards, defs).problems, [], `${setId} ${format} Hard deck follows the rules`);
+      assert.ok(hard.theme, `${setId} ${format} Hard deck has a name`);
+      if (rand() > 0.12) continue;
+      const easy = buildBotDeck(list.map((c) => defs(c.id)), format, rand, { level: "easy" });
+      if (!easy) continue;
+      // Seats alternate; each side thinks at its own level.
+      const hardSeat = games % 2;
+      const decks = hardSeat ? [deckList(easy), deckList(hard)] : [deckList(hard), deckList(easy)];
+      const state = createGame({ decks, format, seed: 500 + games }, defs);
+      const slips = mulberry(900 + games);
+      for (let steps = 0; state.phase !== "over"; steps += 1) {
+        assert.ok(steps < 4000, `${setId} Easy against Hard did not end`);
+        const waiting = state.pending[0];
+        const p = state.phase === "setup" ? (state.players[0].placed ? 1 : 0) : waiting ? waiting.player : state.current;
+        const action = botAction(state, p, defs, { level: p === hardSeat ? "hard" : "easy", random: slips });
+        assert.ok(action, "the bot had no move");
+        apply(state, action, defs);
+      }
+      games += 1;
+      if (state.winner === hardSeat) hardWins += 1;
+    }
+  }
+  console.log(`  Hard beat Easy in ${hardWins} of ${games} matches`);
+  assert.ok(games >= 20 && hardWins > games * 0.6, `Hard should beat Easy most of the time (${hardWins} of ${games})`);
+});
+
 test("a deck built from a small collection is legal", () => {
   const owned = { "base1-46": 3, "base1-24": 2, "base1-4": 1, "base1-63": 2, "base1-44": 1, "base1-30": 1, "base1-58": 2 };
   const pool = Object.entries(owned).map(([id, n]) => ({ def: defs(id), owned: n }));
