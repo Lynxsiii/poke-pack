@@ -150,8 +150,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-mega-attack.foil-mega-attack.has-foil-map
     calc((0.1 + var(--px, 0.5) * 0.8) * 100%) 50%;
   background-repeat: no-repeat;
   background-blend-mode: normal;
+  /* overlay since 2026-11-28 (per-card review: "even glitter greys the colours"): hard-light put the band's colour on
+     black ink too; overlaid, the manga blacks stay black */
   filter: saturate(0.85);
-  mix-blend-mode: hard-light;
+  mix-blend-mode: overlay;
   -webkit-mask-image: var(--art), var(--foil-map), var(--etch-map), var(--sir-floor);
   -webkit-mask-composite: source-in, source-in, source-over, source-over;
   mask-image: var(--art), var(--foil-map), var(--etch-map), var(--sir-floor);
@@ -174,11 +176,12 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-mega-attack.foil-mega-attack.has-foil-map
   background-position: var(--seed-pos), calc(var(--seed-x, 0.5) * -100%) calc(var(--seed-y, 0.5) * 100%);
   background-blend-mode: screen, normal;
   filter: saturate(0.3) brightness(1.45);
-  mix-blend-mode: screen;
+  /* overlaid and local (was screened over the whole face at half strength: a grey film on every colour) */
+  mix-blend-mode: overlay;
   -webkit-mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    #000 0%, hsla(0, 0%, 0%, 0.75) 40%, hsla(0, 0%, 0%, 0.5) 100%);
+    #000 0%, hsla(0, 0%, 0%, 0.5) 35%, hsla(0, 0%, 0%, 0.15) 100%);
   mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    #000 0%, hsla(0, 0%, 0%, 0.75) 40%, hsla(0, 0%, 0%, 0.5) 100%);
+    #000 0%, hsla(0, 0%, 0%, 0.5) 35%, hsla(0, 0%, 0%, 0.15) 100%);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.foil-mega-attack.foil-mega-attack.has-foil-map .foil::after {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
