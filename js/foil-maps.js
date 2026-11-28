@@ -405,7 +405,7 @@ export function eraFoilExtras(card, url, reverseKind) {
   if (/^[zrj]?sv\d/.test(String(card.id || ""))) classes.push("era-sv");
   // Mega Evolution prints (me1-me5, me2pt5; not the 30th Celebration, me55): the same finishes as
   // Scarlet & Violet's with their own retune (css/holo/me-finishes.css, sv-double-rare.css).
-  if (/^me\d(pt5)?-/.test(String(card.id || ""))) classes.push("era-me");
+  if (/^j?me\d(pt5)?[a-z]?-/.test(String(card.id || ""))) classes.push("era-me");
   // Sword & Shield prints (css/holo/swsh.css): the numbered sets, Champion's
   // Path, Shining Fates, Celebrations, Pokémon GO, Crown Zenith, the promos.
   if (card.era === "swsh" || /^(swsh|cel25|pgo)/.test(String(card.id || ""))) classes.push("era-swsh");

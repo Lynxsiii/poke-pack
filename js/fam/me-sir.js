@@ -23,7 +23,7 @@
  */
 
 // me55 too since 2026-11-28 (the shared SIR recipe hazed the 30th Celebration SIRs white); those use Live's map as it is
-const ME_ID = /^me(\d(pt5)?|55)-/;
+const ME_ID = /^j?me(\d(pt5)?[a-z]?|55)-/;
 const DIR = "assets/foil/fam/me-sir";
 
 /** Prints whose frame is printed as a rainbow, not silver (frame chroma over 0.4 in the scan; the only one of the 55 on

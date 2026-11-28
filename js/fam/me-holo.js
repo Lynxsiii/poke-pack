@@ -25,7 +25,7 @@
 // me55 too since 2026-11-28: the 30th Celebration's holo Rares and Cosmos promos print the
 // same TCG Live foils (SV_HOLO, SUN_PILLAR, COSMOS) and were still on celebration.css / promos.css, where the site
 // review failed all 18 Rares ("saturated rainbow wash plus grain") and all 7 Cosmos promos ("shows nothing lit").
-const ME_ID = /^me(\d(pt5)?|55)-/;
+const ME_ID = /^j?me(\d(pt5)?[a-z]?|55)-/;
 const COSMOS_DIR = "assets/foil/fam/me-holo/cosmos/";
 
 /* Pixel cosmos maps (scripts/fam/me-holo/cosmos_maps.py): drawn map min the plain print's TCG Live map where one exists
