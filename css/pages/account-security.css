@@ -1,0 +1,266 @@
+/* ---- Account, Security (js/app.js securityTab) and the sign-in steps that go
+   with it (two-step code, forgotten password) ---------------------------------
+   Link it with the other page sheets, after css/pages/auth.css and before
+   css/rotom.css. Every class here starts with sec-. Colours are the look's
+   tokens only (DESIGN.md), so all the colour themes and both modes work.
+
+   The idea: Security is a checklist, not a stack of forms. One box per group
+   holds quiet rows divided by thin rules. Each row says what it is and where
+   it stands ("Email, not added"), with a Poké Ball that fills once that thing
+   is in place. Tapping a row opens its detail under it, in place; the open row
+   takes the cursor's edge. An HP bar at the top counts what is set up.
+
+   Shapes follow the house rule: rows and panels hold information, so they are
+   straight; the keys inside them are the site's own (.solid, .ghost, .ghost.sm,
+   .text-btn, .danger-btn). Motion is transform and opacity only.
+
+   Markup, states and copy: account-security/design/spec.md. */
+
+/* ---- The page ------------------------------------------------------------ */
+.sec { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; max-width: 720px; min-width: 0; }
+.sec :is(.ghost, .solid) { min-width: 0; }
+.sec .text-btn, .sec-auth .text-btn {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0; margin: 0;
+  border: 0; background: none; box-shadow: none; font-size: 14.5px; text-align: left; text-decoration: underline;
+}
+.sec p { margin: 0; }
+
+/* The head: what is set up, as an HP bar, and the one next thing worth doing. */
+.sec-head { display: grid; gap: 8px; min-width: 0; }
+.sec-head h2 { margin: 0; font: italic 800 26px/1 var(--font-xc); letter-spacing: -0.015em; color: var(--k); }
+.sec-meter { display: grid; gap: 8px; max-width: 460px; }
+.sec-meter .rt-hp > em { min-width: 58px; text-align: center; font-style: italic; }
+.sec-meter-next { color: var(--k-2); font-size: 14.5px; font-weight: 500; line-height: 1.45; }
+.sec-meter-next b { color: var(--k); font-weight: 700; }
+
+/* A group: a small title and one box of rows. */
+.sec-group { display: grid; gap: 10px; min-width: 0; }
+.sec-group-h { margin: 0; color: var(--k); font: italic 800 20px/1.1 var(--font-xc); letter-spacing: -0.01em; }
+.sec-list {
+  min-width: 0; overflow: hidden;
+  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); color: var(--k);
+}
+.sec-item { position: relative; min-width: 0; }
+.sec-item + .sec-item { border-top: 2px solid var(--rule); }
+/* The cursor's edge on the open row: drawn once, grown from the top. */
+.sec-item::before {
+  content: ""; position: absolute; z-index: 1; left: 0; top: 0; bottom: 0; width: 5px; background: var(--yel);
+  transform: scaleY(0); transform-origin: 50% 0; transition: transform 0.2s var(--ease-out); pointer-events: none;
+}
+.sec-item.is-open::before { transform: none; }
+
+/* ---- A row --------------------------------------------------------------- */
+.sec-row {
+  display: grid; grid-template-columns: 24px minmax(0, 1fr) auto; align-items: center; gap: 0 14px;
+  width: 100%; min-width: 0; min-height: 64px; margin: 0; padding: 10px 16px;
+  border: 0; border-radius: 0; background: none; box-shadow: none; color: var(--k);
+  font: inherit; text-align: left; cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.sec-row:focus-visible { outline: 3px solid var(--cy-2); outline-offset: -5px; border-radius: 6px; }
+.sec-row-mark { display: grid; place-items: center; width: 24px; height: 24px; color: var(--k); }
+.sec-row-mark.rt-ball { width: 20px; height: 20px; margin: 0 2px; }
+.sec-row-mark svg { display: block; width: 22px; height: 22px; }
+/* A figure in the mark's place: how many devices. */
+.sec-row-mark.is-count { font: 700 19px/1 var(--font-h); font-variant-numeric: tabular-nums; }
+.sec-row-mark.is-off { color: var(--rule-2); }
+.sec-row-text { display: grid; gap: 3px; min-width: 0; transition: transform 0.14s var(--ease-out); }
+.sec-row-name { font: 600 17px/1.15 var(--font-h); color: var(--k); }
+.sec-row-status { color: var(--k-2); font: 500 14px/1.35 var(--font); overflow-wrap: anywhere; }
+.sec-row-status b { color: var(--k); font-weight: 700; }
+.sec-item[data-state="warn"] .sec-row-status { color: var(--red-text); font-weight: 700; }
+/* The menu arrow. It points at the row, and turns down when the row is open. */
+.sec-row-arrow {
+  display: block; width: 0; height: 0; margin: 0 4px 0 2px;
+  border-left: 10px solid var(--k); border-top: 7px solid transparent; border-bottom: 7px solid transparent;
+  transition: transform 0.2s var(--ease-out);
+}
+.sec-item.is-open > .sec-row .sec-row-arrow, .sec-row[aria-expanded="true"] .sec-row-arrow { transform: rotate(90deg); }
+@media (hover: hover) {
+  .sec-row:hover .sec-row-text { transform: translateX(4px); }
+  .sec-row:hover .sec-row-status { color: var(--k); }
+}
+.sec-row:active .sec-row-text { transform: translateX(2px); }
+
+/* ---- The panel under an open row ----------------------------------------- */
+.sec-panel { display: grid; gap: 14px; min-width: 0; padding: 2px 16px 20px; }
+.sec-panel[hidden] { display: none; }
+/* Add .sec-in on the tap that opens it, not on a redraw, so it never replays. */
+@keyframes sec-in { from { opacity: 0; transform: translateY(-8px); } }
+.sec-panel.sec-in { animation: sec-in 0.24s var(--ease-out) backwards; }
+.sec-note { color: var(--k-2); font-size: 14.5px; font-weight: 500; line-height: 1.5; max-width: 56ch; }
+.sec-note b { color: var(--k); font-weight: 700; }
+/* What is on file: the value large, a line about it under. */
+.sec-value { display: grid; gap: 3px; min-width: 0; }
+.sec-value > b { color: var(--k); font: 600 19px/1.2 var(--font-h); overflow-wrap: anywhere; }
+.sec-value > span { color: var(--k-2); font-size: 14px; font-weight: 500; line-height: 1.4; }
+.sec-ok { color: var(--ok); font-weight: 700; }
+.sec-ok::before {
+  content: ""; display: inline-block; width: 11px; height: 6px; margin: 0 7px 3px 2px;
+  border-left: 2.5px solid currentColor; border-bottom: 2.5px solid currentColor; transform: rotate(-45deg);
+}
+
+/* Forms inside a panel use the site's .field; these only set the rhythm. */
+.sec-form { display: grid; gap: 14px; min-width: 0; max-width: 440px; margin: 0; }
+:is(#view-auth, #view-account) :is(.sec-form, .sec-auth) .field, .sec-form .field, .sec-auth .field { margin: 0; }
+.sec-form .form-error, .sec-auth .form-error { margin: 0; }
+.sec-form .form-error:not(:empty) { padding: 9px 12px; border-left: 5px solid var(--hp-low); background: var(--bad-wash); color: var(--red-text); }
+.sec-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; min-width: 0; }
+.sec-actions > .solid, .sec-actions > .ghost:not(.sm) { flex: 0 1 auto; }
+.sec-actions .text-btn { flex: none; }
+.sec-divide { height: 0; margin: 4px 0; border: 0; border-top: 2px solid var(--rule); }
+
+/* ---- The 6-digit code ----------------------------------------------------
+   One input, never six boxes: autofill from the keyboard and a paste both
+   land whole. Figures are the fixed-width Kanit, spaced wide. */
+:is(#view-auth, #view-account) .field input.sec-code-input, .sec-code-input {
+  width: 100%; max-width: 264px; min-height: 60px; padding: 6px 4px 8px 0.34em;
+  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); color: var(--k);
+  font: 700 30px/1 var(--font-h); font-variant-numeric: tabular-nums; letter-spacing: 0.34em; text-align: center;
+}
+:is(#view-auth, #view-account) .field input.sec-code-input::placeholder, .sec-code-input::placeholder { color: var(--rule-2); opacity: 1; }
+.sec-code-input:focus, .sec-code-input:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--cy); }
+.sec-code-input[aria-invalid="true"] { border-color: var(--hp-low); }
+@keyframes sec-shake { 0% { transform: translateX(-6px); } 60% { transform: translateX(3px); } 100% { transform: none; } }
+.sec-code-input.is-wrong { animation: sec-shake 0.28s var(--ease-out); }
+
+/* ---- Two-step set-up ------------------------------------------------------ */
+.sec-steps { display: grid; gap: 20px; min-width: 0; margin: 0; padding: 0; list-style: none; }
+.sec-step { display: grid; gap: 12px; min-width: 0; }
+.sec-step-h { display: flex; align-items: center; gap: 10px; margin: 0; color: var(--k); font: italic 800 18px/1.15 var(--font-xc); letter-spacing: -0.01em; }
+.sec-step-h .rt-ball { width: 18px; height: 18px; }
+/* The QR sits on white whatever the theme, with room around it to scan. */
+.sec-qr {
+  display: grid; place-items: center; width: 100%; max-width: 212px; aspect-ratio: 1; padding: 14px;
+  border: var(--line-w) solid var(--k); border-radius: 8px; background: var(--w0); color: var(--k0);
+}
+.sec-qr svg, .sec-qr img { display: block; width: 100%; height: auto; max-width: 180px; }
+/* A code to keep or type: the set-up key, the recovery code. */
+.sec-key {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 14px; min-width: 0; max-width: 440px;
+  padding: 12px 12px 12px 16px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box-2);
+}
+.sec-key-value {
+  display: flex; flex-wrap: wrap; gap: 4px 12px; min-width: 0; margin: 0; color: var(--k);
+  font: 700 20px/1.25 var(--font-h); font-variant-numeric: tabular-nums; letter-spacing: 0.06em;
+  overflow-wrap: anywhere; -webkit-user-select: all; user-select: all;
+}
+.sec-key .ghost.sm { flex: none; }
+
+/* ---- Devices ------------------------------------------------------------- */
+.sec-devices { display: grid; min-width: 0; margin: 0; padding: 0; list-style: none; }
+.sec-device {
+  display: grid; grid-template-columns: 26px minmax(0, 1fr) auto; align-items: center; gap: 4px 12px;
+  min-width: 0; padding: 12px 0;
+}
+.sec-device + .sec-device { border-top: 2px solid var(--rule); }
+.sec-device:first-child { padding-top: 0; }
+.sec-device-icon { display: block; width: 26px; height: 26px; color: var(--k); }
+.sec-device-icon svg { display: block; width: 100%; height: 100%; }
+.sec-device-text { display: grid; gap: 2px; min-width: 0; }
+.sec-device-name { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; color: var(--k); font: 600 16px/1.2 var(--font-h); }
+.sec-device-meta { color: var(--k-2); font-size: 13.5px; font-weight: 500; line-height: 1.4; }
+.sec-device-meta .is-now { color: var(--ok); font-weight: 700; }
+.sec-tag {
+  display: inline-block; flex: none; padding: 1px 8px 2px; border-radius: 3px; background: var(--k); color: var(--on-k);
+  font: italic 700 12.5px/1.4 var(--font-h); white-space: nowrap;
+}
+.sec-device .ghost.sm { flex: none; }
+
+/* Recent sign-ins: a plain log. A failed try is the only thing in colour. */
+.sec-history-h { margin: 6px 0 0; color: var(--k); font: 600 16px/1.2 var(--font-h); }
+.sec-history { display: grid; gap: 2px; min-width: 0; margin: 0; padding: 0; list-style: none; }
+.sec-visit {
+  display: grid; grid-template-columns: 118px minmax(0, 1fr); gap: 2px 12px; align-items: baseline;
+  min-width: 0; padding: 7px 10px 7px 0; border-left: 4px solid transparent; font-size: 14px; line-height: 1.4;
+}
+.sec-visit-time { color: var(--k-2); font: 600 14px/1.4 var(--font-h); font-variant-numeric: tabular-nums; }
+.sec-visit-what { min-width: 0; color: var(--k); font-weight: 500; overflow-wrap: anywhere; }
+.sec-visit-what small { display: block; color: var(--k-2); font-size: 13px; }
+.sec-visit.is-failed { padding-left: 10px; border-left-color: var(--hp-low); border-radius: 0 4px 4px 0; background: var(--bad-wash); }
+.sec-visit.is-failed .sec-visit-time { color: var(--red-text); }
+.sec-visit.is-failed .sec-visit-what, .sec-visit.is-failed .sec-visit-what small { color: var(--red-text); }
+.sec-visit.is-failed .sec-visit-what b { font-weight: 700; }
+
+/* ---- Discord ------------------------------------------------------------- */
+.sec-discord-mark { display: block; flex: none; width: 22px; height: 22px; }
+.sec-discord { display: grid; grid-template-columns: 48px minmax(0, 1fr); align-items: center; gap: 0 14px; min-width: 0; }
+.sec-discord-face {
+  display: grid; place-items: center; width: 48px; height: 48px; overflow: hidden; border-radius: 50%;
+  border: var(--line-w) solid var(--k); background: var(--box-2); color: var(--k);
+}
+.sec-discord-face img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.sec-discord-face svg { width: 24px; height: 24px; }
+/* The switch is the site's own (.toggle-row > input + .switch); this keeps it one clean line in a panel. */
+.sec-switch.toggle-row { max-width: 440px; margin: 0; padding: 14px 0 0; border-top: 2px solid var(--rule); }
+.sec-switch.toggle-row:first-child { padding-top: 14px; border-top: 2px solid var(--rule); }
+
+/* ---- Delete account: last, and the only red line on the page -------------- */
+.sec-danger .sec-list { border-color: var(--hp-low); }
+.sec-danger .sec-item::before { background: var(--hp-low); }
+.sec-danger .sec-row-arrow { border-left-color: var(--red-text); }
+.sec-danger .sec-row-name { color: var(--red-text); }
+.sec-danger .danger-btn { color: var(--red-text); }
+.sec-danger .danger-btn::before { background: var(--bad-wash); }
+.sec-danger .danger-btn:hover:not(:disabled)::before { background: var(--bad-wash-2); }
+
+/* ---- Sign-in page: the two-step code and the two ways back in ------------- */
+.sec-auth { display: grid; gap: 16px; min-width: 0; margin: 0; }
+.sec-auth-h { margin: 0; color: var(--k); font: italic 800 22px/1.1 var(--font-xc); letter-spacing: -0.01em; }
+.sec-auth-note { margin: 0; color: var(--k-2); font-size: 14.5px; font-weight: 500; line-height: 1.5; }
+.sec-auth-note b { color: var(--k); font-weight: 700; }
+#view-auth .sec-auth .field input.sec-code-input, .sec-auth .sec-code-input { max-width: none; min-height: 64px; font-size: 32px; }
+.sec-auth > .solid { width: 100%; }
+.sec-auth-links { display: grid; justify-items: center; gap: 0; margin-top: -4px; }
+/* Two ways to reset: two plain choices, the chosen one with the ink line and the cursor's edge. */
+.sec-ways { display: grid; gap: 8px; min-width: 0; margin: 0; padding: 0; border: 0; }
+.sec-way {
+  position: relative; display: grid; gap: 2px; width: 100%; min-width: 0; min-height: 60px; margin: 0; padding: 10px 14px 11px 18px; overflow: hidden;
+  border: 2px solid var(--rule-2); border-radius: 6px; background: none; box-shadow: none; color: var(--k);
+  font: inherit; text-align: left; cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.sec-way::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: var(--yel);
+  transform: scaleX(0); transform-origin: 0 50%; transition: transform 0.18s var(--ease-out);
+}
+.sec-way b { font: 600 16.5px/1.2 var(--font-h); color: var(--k); }
+.sec-way small { color: var(--k-2); font: 500 13.5px/1.4 var(--font); }
+.sec-way[aria-pressed="true"], .sec-way.on { border-color: var(--k); background: var(--box-2); }
+.sec-way[aria-pressed="true"]::before, .sec-way.on::before { transform: none; }
+@media (hover: hover) { .sec-way:hover { border-color: var(--k); } }
+
+/* ---- Phone --------------------------------------------------------------- */
+@media (max-width: 720px) {
+  /* 44px is the least a thumb needs. */
+  .sec .ghost.sm, .sec .solid.sm { min-height: 44px; }
+  .sec-actions > .solid { flex: 1 1 100%; }
+  .sec-head h2 { font-size: 24px; }
+}
+@media (max-width: 400px) {
+  .sec-row { padding-inline: 14px; gap: 0 12px; }
+  .sec-panel { padding-inline: 14px; }
+  .sec-visit { grid-template-columns: 112px minmax(0, 1fr); gap: 2px 10px; }
+  .sec-key-value { font-size: 18px; gap: 4px 10px; }
+}
+
+/* ---- Wider --------------------------------------------------------------- */
+@media (min-width: 600px) {
+  /* The panel lines up under the row's name, past the mark. */
+  .sec-panel { padding: 2px 20px 22px 54px; }
+  .sec-row { padding-inline: 16px 18px; }
+}
+@media (min-width: 1040px) {
+  /* Two columns: sign-in and recovery on the left; devices, Discord and the red row on the right. */
+  .sec { max-width: 1080px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 22px 28px; align-items: start; }
+  .sec-head { grid-column: 1 / -1; }
+  .sec-group:nth-of-type(1) { grid-column: 1; grid-row: 2 / span 2; }
+  .sec-group:nth-of-type(2) { grid-column: 2; grid-row: 2; }
+  .sec-danger { grid-column: 2; grid-row: 3; }
+}
+
+/* ---- Less motion --------------------------------------------------------- */
+body.no-motion .sec-panel.sec-in, body.no-motion .sec-code-input.is-wrong { animation: none; }
+body.no-motion .sec-item::before, body.no-motion .sec-row-arrow, body.no-motion .sec-row-text, body.no-motion .sec-way::before { transition: none; }
+@media (prefers-reduced-motion: reduce) {
+  .sec-panel.sec-in, .sec-code-input.is-wrong { animation: none; }
+  .sec-item::before, .sec-row-arrow, .sec-row-text, .sec-way::before { transition: none; }
+}

@@ -146,6 +146,7 @@ import { initBatchOpen } from "./batch-open.js?v=6";
 import { cartEligible } from "./orders-rules.js?v=1";
 import { initSearch } from "./search.js?v=7";
 import { initWishlist } from "./wishlist.js?v=2";
+import { initSecurity, securityTabHtml, resetSecurity, securityChanged, finishDiscordReturn, startTwoStep, inTwoStep, endTwoStep, twoStepAuthHtml, twoStepHandle } from "./account-security.js?v=1";
 import { createShareSheet, pullUrl } from "./share-pull.js?v=3";
 // binder looks: the /binder cover, the customiser and the owner's look on a profile
 import { binderObjectHtml, applyBinderLook } from "./binder-object.js";
@@ -155,7 +156,7 @@ import { hexToHsl, hslToHex, mixHex } from "./card-accent.js";
 import { cachedCardAccents, sampleCardAccents } from "./card-art-accent.js?v=1";
 import { initBinderEditor } from "./binder-editor.js?v=4";
 import { renderNotesPage } from "./notes-page.js?v=3";
-import { renderLegalPage, LEGAL_TITLES } from "./legal-page.js?v=5";
+import { renderLegalPage, LEGAL_TITLES } from "./legal-page.js?v=6";
 import { ageFieldsHtml, agreeRowHtml, readAgeFields, ageBlocked, blockAge, UNDERAGE_HTML, syncTermsSheet } from "./terms-sheet.js?v=1";
 
 const state = loadState();
@@ -4168,6 +4169,7 @@ function returnAfterAuth() {
 
 async function hydrateAfterAccountChange() {
   recoveryInfo = { loaded: false, createdAt: 0, code: "" };
+  resetSecurity();
   applySettings();
   await activateSet(state.activeSetId || DEFAULT_SET_ID, true);
   renderHeader();
@@ -4243,7 +4245,7 @@ function welcomeHtml(trainer) {
         <dl class="welcome-facts">
           <div class="rt-row"><dt class="rt-row-lab">Claim</dt><dd class="rt-row-name">${num(hourly)} coins every hour, from the top of the screen</dd></div>
           <div class="rt-row"><dt class="rt-row-lab">Your link</dt><dd class="rt-row-name">poke-pack.rip/u/${esc(trainer.handle)}</dd></div>
-          <div class="rt-row"><dt class="rt-row-lab">Password</dt><dd class="rt-row-name">There's no email to reset it. <button class="text-btn" type="button" data-welcome-recovery>Make a recovery code</button> in case you forget it.</dd></div>
+          <div class="rt-row"><dt class="rt-row-lab">Password</dt><dd class="rt-row-name"><button class="text-btn" type="button" data-welcome-recovery>Make a recovery code</button> in Account, Security, in case you forget it. You can turn on two-step sign-in there too.</dd></div>
           <div class="rt-row"><dt class="rt-row-lab">New here?</dt><dd class="rt-row-name"><button class="text-btn" type="button" data-tour-start>Take the 30-second tour</button></dd></div>
         </dl>
         ${
@@ -4262,6 +4264,20 @@ function renderAuth() {
     return;
   }
   if (authTab === "welcome") authTab = "signup";
+  if (authTab === "twostep" && !inTwoStep()) authTab = "signin";
+  if (authTab === "twostep") {
+    els.authBody.innerHTML = `
+    <div class="auth-page is-signin is-twostep">
+      ${authHeroHtml()}
+      <div class="auth-copy">
+        <p class="au-kicker"><img class="auth-mark" src="assets/mark-v2.png" width="256" height="256" alt="" /><span class="au-plate">Two-step</span></p>
+        <h1>One more step</h1>
+        <p class="lede">Signing in as @${esc(twoStepHandle())}.</p>
+      </div>
+      ${twoStepAuthHtml()}
+    </div>`;
+    return;
+  }
   const keepDefault = !signed && guestHasProgress();
   const recover = authTab === "recover";
   const signin = authTab === "signin" || recover;
@@ -4311,15 +4327,15 @@ function renderAuth() {
       <button class="text-btn auth-forgot" type="button" data-auth-tab="recover">Forgot your password?</button>
     </form>`;
 
-  const recoverForm = `<form id="recover-form" class="auth-form" autocomplete="on">
-      <p class="auth-note">Accounts have no email, so a recovery code is the way back in. You make one in Account, under Security. Without one the password can't be reset.</p>
+  const recoverForm = `<form id="recover-form" class="auth-form sec-auth" autocomplete="on">
+      <p class="auth-note">A recovery code is the way back in. You make one in Account, under Security. Without one the password can't be reset.</p>
       <label class="field">
         <span>Handle</span>
         <span class="field-at"><input name="handle" maxlength="16" required placeholder="ripper" autocapitalize="off" spellcheck="false" autocomplete="username" /></span>
       </label>
       <label class="field">
         <span>Recovery code</span>
-        <input name="code" required maxlength="24" placeholder="XXXX-XXXX-XXXX-XXXX" autocapitalize="characters" autocorrect="off" spellcheck="false" autocomplete="one-time-code" />
+        <input name="code" required maxlength="24" placeholder="XXXX-XXXX-XXXX-XXXX" autocapitalize="characters" autocorrect="off" spellcheck="false" autocomplete="off" />
       </label>
       <label class="field">
         <span>New password</span>
@@ -4327,8 +4343,8 @@ function renderAuth() {
         <span class="hint">At least 6 characters.</span>
       </label>
       <p class="form-error" id="auth-error" role="alert"></p>
-      <button class="solid rt-go" type="submit">Reset password and sign in</button>
-      <button class="text-btn auth-forgot" type="button" data-auth-tab="signin">Back to sign in</button>
+      <button class="solid rt-go" type="submit">Save and sign in</button>
+      <div class="sec-auth-links"><button class="text-btn" type="button" data-auth-tab="signin">Back to sign in</button></div>
     </form>`;
 
   els.authBody.innerHTML = `
@@ -5003,62 +5019,9 @@ async function loadRecoveryInfo() {
   if (view === "account" && accountTab === "security") renderAccount();
 }
 
-function recoveryHtml() {
-  if (!recoveryInfo.loaded) {
-    loadRecoveryInfo();
-    return `<p class="panel-empty">Checking for a recovery code.</p>`;
-  }
-  if (recoveryInfo.code) {
-    return `<div class="recovery-code">
-        <p class="recovery-value" id="recovery-value">${esc(recoveryInfo.code)}</p>
-        <button class="ghost sm" type="button" data-copy-recovery>Copy</button>
-      </div>
-      <p class="recovery-note">Save it in your notes or a password manager now. It won't be shown again.</p>`;
-  }
-  return `${
-    recoveryInfo.createdAt
-      ? `<p class="recovery-note">You made one on ${esc(new Date(recoveryInfo.createdAt).toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" }))}. A new one replaces it.</p>`
-      : `<p class="recovery-note">You don't have one yet.</p>`
-  }
-    <button class="ghost" type="button" data-make-recovery>${recoveryInfo.createdAt ? "Make a new code" : "Make a recovery code"}</button>`;
-}
-
+/* The tab itself is js/account-security.js; the recovery code state above stays here. */
 function securityTab(trainer) {
-  return `<div class="acct-cols">
-    <section class="acct-sec acct-recovery">
-      <div class="acct-sec-head">
-        <div>
-          <h2>Recovery code</h2>
-          <p>There's no email on your account. If you forget your password, this code and your handle let you set a new one.</p>
-        </div>
-      </div>
-      ${recoveryHtml()}
-    </section>
-    <section class="acct-sec">
-      <div class="acct-sec-head">
-        <div>
-          <h2>Password</h2>
-        </div>
-      </div>
-      <form id="password-form" class="acct-form">
-        <label class="field"><span>Current password</span><input name="current" type="password" maxlength="64" required autocomplete="current-password" /></label>
-        <label class="field"><span>New password</span><input name="password" type="password" minlength="6" maxlength="64" required autocomplete="new-password" />
-          <span class="hint">At least 6 characters.</span>
-        </label>
-        <p class="form-error" id="password-error" role="alert"></p>
-        <button class="solid" type="submit">Update password</button>
-      </form>
-    </section>
-    <section class="acct-sec acct-danger">
-      <div class="acct-sec-head">
-        <div>
-          <h2>Delete account</h2>
-          <p>Removes @${esc(trainer.handle)}, every card, every badge, the binder, and your chat messages, DMs and comments. There's no undo.</p>
-        </div>
-      </div>
-      <button class="ghost danger-btn" type="button" id="delete-trainer">Delete ${esc(trainer.name)}</button>
-    </section>
-  </div>`;
+  return securityTabHtml(trainer);
 }
 
 async function renderProfile() {
@@ -5908,6 +5871,11 @@ function viewFromPath(pathname) {
   if (TCG_ROUTE.test(path)) {
     tcgPath = path;
     return "tcg";
+  }
+  // Account > Security, and the way back from linking Discord (js/account-security.js finishes it).
+  if (path === "/account/security" || path === "/account/discord") {
+    accountTab = "security";
+    return "account";
   }
   const legal = path.match(/^\/(terms|privacy|legal)$/);
   if (legal) {
@@ -9518,6 +9486,7 @@ els.accountBody.addEventListener("submit", async (e) => {
         password: String(data.get("password") || ""),
       }),
     });
+    securityChanged();
     renderAccount();
     toast("Password updated.");
   } catch (error) {
@@ -9530,6 +9499,7 @@ els.authBody?.addEventListener("click", (e) => {
   const tab = e.target.closest("[data-auth-tab]");
   if (tab) {
     authTab = ["signin", "recover"].includes(tab.dataset.authTab) ? tab.dataset.authTab : "signup";
+    endTwoStep();
     renderAuth();
     // Switching forms: only the title and the form swap in (css/pages/auth.css), the packs stay put.
     els.authBody.querySelector(".auth-page")?.classList.add("is-swap");
@@ -9774,6 +9744,14 @@ els.authBody?.addEventListener("submit", async (e) => {
         password: String(data.get("password") || ""),
       }),
     });
+    // Two-step on (js/account-security.js): the password was right, now the app's code.
+    if (result.twoStep) {
+      startTwoStep(result.ticket, String(data.get("handle") || "").replace(/^@/, "").toLowerCase());
+      authTab = "twostep";
+      renderAuth();
+      els.authBody.querySelector("#signin-totp-form input")?.focus({ preventScroll: true });
+      return;
+    }
     cloudUser = result.user;
     pendingClaim = null;
     localStorage.setItem(CLOUD_SEEN_KEY, "1");
@@ -11313,6 +11291,8 @@ async function boot() {
     }
     await Promise.all([loadSealedPrices(), loadPatchNotes(), loadGearCatalog()]);
     await refreshSession(me);
+    // Back from Discord's consent screen: link it (js/account-security.js), then land on Security.
+    finishDiscordReturn().catch(() => {});
     // Friends and requests load now rather than on the next 5s poll, so the
     // Social page and the Friends badge are right on first paint.
     if (cloudUser) notifySignedIn();
@@ -11370,6 +11350,31 @@ function revealSite() {
   }
   requestAnimationFrame(() => requestAnimationFrame(go));
 }
+
+// Account > Security and the sign-in page's two-step step (js/account-security.js).
+initSecurity({
+  api,
+  toast,
+  esc,
+  rerender: () => renderAccount(),
+  onSecurityTab: () => view === "account" && accountTab === "security",
+  getRecovery: () => recoveryInfo,
+  loadRecovery: () => loadRecoveryInfo(),
+  renderAuth: () => renderAuth(),
+  backToSignin: () => {
+    authTab = "signin";
+    renderAuth();
+  },
+  onSignedIn: async (result) => {
+    cloudUser = result.user;
+    pendingClaim = null;
+    localStorage.setItem(CLOUD_SEEN_KEY, "1");
+    applyCloudSave(result.save);
+    await hydrateAfterAccountChange();
+    returnAfterAuth();
+    toast(`Signed in as ${result.user.name}.`);
+  },
+});
 
 boot().catch((err) => {
   console.error(err);

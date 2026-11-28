@@ -78,6 +78,7 @@ import {
 } from "../js/achievements.js";
 import { handleRankings, maintainRankings, ensureRankSchema, clearRankStmts, CLAIM_STAT } from "./rankings.js";
 import { makeRecoveryCode, recoverAccount, hasRecoveryCode } from "./recovery.js";
+import { handleSecurity, signinBlocked, signinFailed, signinSucceeded, makeSigninTicket, totpOn, logEvent, tagSession, touchSession, ensureSecuritySchema, discordReady, TOO_MANY } from "./security.js";
 
 const SESSION_DAYS = 30;
 const SESSION_MS = SESSION_DAYS * 24 * 60 * 60 * 1000;
@@ -243,7 +244,7 @@ export async function handleApi(request, env, url) {
   }
   if (path === "/api/health" && method === "GET") {
     // Whether the Discord feed webhooks are set (worker/discord.js), never their values.
-    return json({ ok: true, discord: { pulls: Boolean(env.DISCORD_PULLS_WEBHOOK), notes: Boolean(env.DISCORD_NOTES_WEBHOOK) } });
+    return json({ ok: true, discord: { pulls: Boolean(env.DISCORD_PULLS_WEBHOOK), notes: Boolean(env.DISCORD_NOTES_WEBHOOK), linking: discordReady(env) } });
   }
 
   if (path === "/api/prices/latest" && method === "GET") {
@@ -254,6 +255,13 @@ export async function handleApi(request, env, url) {
     return handlePrices(request, env, url, decodeURIComponent(path.slice("/api/prices/".length)));
   }
 
+  // Account security (worker/security.js): two-step sign-in, devices, history, email, Discord.
+  if (path.startsWith("/api/me/security") || path === "/api/auth/signin/code" || path.startsWith("/api/auth/reset/")) {
+    return handleSecurity(path, method, request, env, {
+      json, readJson, requireUser, readCookie, COOKIE, verifyPassword, hashPassword, normalizeHandle,
+      createSession, sessionCookie, loadSave, trainerUser,
+    });
+  }
   if (path === "/api/auth/handle" && method === "GET") {
     // The signup form asks while you type: is this handle free? One indexed read.
     const handle = normalizeHandle(url.searchParams.get("h"));
@@ -442,7 +450,8 @@ async function signup(request, env) {
     const claimed = Object.values(claim?.collection || {}).reduce((sum, n) => sum + (Number(n) || 0), 0);
     if (claimed > 0) await setStatStmt(env, id, CLAIM_STAT, claimed).run();
   }
-  const token = await createSession(env, id, now);
+  const token = await createSession(env, id, now, request);
+  await logEvent(env, request, id, "signup");
   const user = await env.DB.prepare("SELECT * FROM users WHERE id = ?").bind(id).first();
   const save = await loadSave(env, id);
   return json({ user: await trainerUser(env, user, save), save }, 201, sessionCookie(request, token));
@@ -453,13 +462,22 @@ async function signin(request, env) {
   if (!body) return json({ error: "Expected JSON." }, 400);
   const handle = normalizeHandle(body.handle);
   const password = String(body.password || "");
+  // Too many wrong passwords for this handle or from this network: wait (worker/security.js).
+  if (await signinBlocked(env, request, handle)) return json({ error: TOO_MANY }, 429);
   const user = await env.DB.prepare("SELECT * FROM users WHERE handle = ?").bind(handle).first();
   if (!user || !(await verifyPassword(password, user.password_hash))) {
+    await signinFailed(env, request, handle, user?.id);
     return json({ error: "Wrong handle or password." }, 401);
   }
+  // Two-step on: the password was right, now the app's code (POST /api/auth/signin/code).
+  if (await totpOn(env, user.id)) {
+    return json({ twoStep: true, ticket: await makeSigninTicket(env, user.id) });
+  }
+  await signinSucceeded(env, request, handle);
   const now = Date.now();
   await env.DB.prepare("UPDATE users SET last_played = ? WHERE id = ?").bind(now, user.id).run();
-  const token = await createSession(env, user.id, now);
+  const token = await createSession(env, user.id, now, request);
+  await logEvent(env, request, user.id, "signin");
   const save = await loadSave(env, user.id);
   return json({ user: await trainerUser(env, { ...user, last_played: now }, save), save }, 200, sessionCookie(request, token));
 }
@@ -674,6 +692,12 @@ async function patchMe(request, env) {
       user.id
     )
     .run();
+
+  // A new password signs every other device out, and goes in the sign-in history.
+  if (passwordHash !== user.password_hash) {
+    await env.DB.prepare("DELETE FROM sessions WHERE user_id = ? AND id != ?").bind(user.id, readCookie(request, COOKIE)).run();
+    await logEvent(env, request, user.id, "password");
+  }
 
   // Whether big pulls and Black Labels are shared to the Discord feed (on unless the trainer turns it off).
   if (typeof body.feedShare === "boolean") {
@@ -1324,16 +1348,20 @@ async function requireUser(request, env) {
     return { response: json({ error: "Sign in first." }, 401, clearCookie(request)) };
   }
   const { sid: _s, expires_at: _e, ...user } = row;
+  await ensureSecuritySchema(env);
+  await touchSession(env, sid).catch(() => null);
   return { user };
 }
 
-async function createSession(env, userId, now) {
+async function createSession(env, userId, now, request = null) {
   const token = hex(crypto.getRandomValues(new Uint8Array(32)));
   await env.DB.prepare(
     "INSERT INTO sessions (id, user_id, created_at, expires_at) VALUES (?, ?, ?, ?)"
   )
     .bind(token, userId, now, now + SESSION_MS)
     .run();
+  // Which device and roughly where, for Account > Security > Devices.
+  await tagSession(env, request, token).catch(() => null);
   return token;
 }
 
