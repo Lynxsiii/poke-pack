@@ -255,7 +255,9 @@ cure"). The surface gloss throws a soft highlight.
 - **A hand-hinted matte goes stale when the scan is replaced.** Neo Discovery's mattes were drawn from hints on older scans
   and sat 30 to 60 px off the print (a ghost silhouette beside the Pokémon); it was not a placement fault. Cut the Pokémon
   from the shipped scan itself (`make_figure_masks.figure_mask` with SAM; `scripts/cut_figure_from_maps.py` multiplies the
-  cut into existing maps under a new version), view every preview, and keep the old map where the cut is wrong.
+  cut into existing maps under a new version), view every preview, and keep the old map where the cut is wrong. Where the grain cut
+  fails (a plain-print scan, a dark figure on a dark sky), prompt SAM on the figure itself: `make_figure_masks.point_mask`,
+  `cut_figure_from_maps.py --points "x,y;x,y"`.
 
 - **A window holo lights round the lamp, not over the window.** The WotC Team Rocket, Legendary Collection, Gym and promo
   recipes screened a spectrum, a silver floor and a 0.55 rest sheen over the whole foil map, so every black or navy

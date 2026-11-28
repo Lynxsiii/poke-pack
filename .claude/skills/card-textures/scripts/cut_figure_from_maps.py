@@ -44,6 +44,7 @@ def main():
     ap.add_argument("--preview")
     ap.add_argument("--max-cover", type=float, default=0.7)
     ap.add_argument("--dry", action="store_true")
+    ap.add_argument("--points", default="", help='points on the figure, "x,y;x,y" scan px: cut by SAM prompt alone (one card)')
     ap.add_argument("--panels", type=int, default=1, help="the map is a sprite of this many equal panels side by side")
     a = ap.parse_args()
     crop = tuple(int(v) for v in a.crop.split(",")) if a.crop else None
@@ -55,7 +56,10 @@ def main():
     bad = []
     for n in a.cards.split(","):
         scan = np.asarray(Image.open(os.path.join(ROOT, f"assets/cards/{a.set}/{n}.webp")).convert("RGB").resize((600, 838), Image.LANCZOS))
-        fig, info = FIG.figure_mask(scan, zone, window, False, sam)
+        if a.points:  # prompt SAM on the figure directly (one card): "x,y;x,y" in scan pixels
+            fig, info = FIG.point_mask(scan, zone, [tuple(int(v) for v in q.split(",")) for q in a.points.split(";")], sam)
+        else:
+            fig, info = FIG.figure_mask(scan, zone, window, False, sam)
         ok = info["cover"] <= a.max_cover
         print(f"{a.set}-{n}: {info}{'' if ok else '  <-- refused'}", flush=True)
         if a.preview:

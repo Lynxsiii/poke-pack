@@ -25,7 +25,7 @@ const DIR = "assets/foil/fam/wotc-neo-genesis";
 const V = 2;
 /** v3 (site review 2): the Pokémon cut out of the ground and both fleck maps from the scan itself (cut_figure_from_maps.py):
  * the v2 ground let confetti and haze onto the matte Pokémon. */
-const V3 = new Set([5, 9, 15, 17]);
+const V3 = new Set([5, 9, 15, 16, 17]);
 const ver = (n) => (V3.has(Number(n)) ? 3 : V);
 /** The Rare Holo numbers whose maps are drawn (the 18 Pokémon and Metal Energy 19). */
 const MAPPED = new Set(Array.from({ length: 19 }, (_, i) => String(i + 1)));

@@ -193,6 +193,9 @@ def fleck_colours(alpha, lab, k, n):
     return col
 
 
+SAM_POINTS = {5: [(355, 250), (330, 330), (300, 300)]}
+
+
 def sam_matte(n, win, sam):
     """The matte from the scan itself (v2, 2026-11-28): the hand hints were drawn on an earlier scan of each card and sat
     30-60 px off the print the site ships now, so half of each Pokemon was lit as foil beside an unlit copy of its shape
@@ -201,7 +204,10 @@ def sam_matte(n, win, sam):
     wfull = np.zeros((838, 600), np.float32)
     x0, y0, x1, y1 = BOX
     wfull[y0:y1, x0:x1] = win
-    m, info = FIG.figure_mask(full, BOX, wfull, False, sam)
+    if n in SAM_POINTS:  # the grain cut failed here: SAM prompted on the Pokemon itself (scan pixels)
+        m, info = FIG.point_mask(full, BOX, SAM_POINTS[n], sam)
+    else:
+        m, info = FIG.figure_mask(full, BOX, wfull, False, sam)
     return m[y0:y1, x0:x1] > 0.5, info
 
 
