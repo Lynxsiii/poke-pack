@@ -42,8 +42,21 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full
   --xyf-cols-pos: calc(50% + (var(--background-x) - 50%) * 0.35 + (var(--background-y) - 50%) * 0.07) 0;
   --xyf-cols-pos-b: calc(50% - (var(--background-x) - 50%) * 0.26 - (var(--background-y) - 50%) * 0.047) 0;
   --xyf-near: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsl(0, 0%, 100%) 0%, hsl(0, 0%, 82%) 30%, hsl(0, 0%, 58%) 75%, hsl(0, 0%, 46%) 110%);
-  --xyf-floor: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+    hsl(0, 0%, 100%) 0%, hsl(0, 0%, 74%) 16%, hsl(0, 0%, 42%) 38%, hsl(0, 0%, 26%) 70%, hsl(0, 0%, 22%) 110%);
+  /* 2026-11-28 round 2: the pool fell only to 46 % at the far corner, so the lit dodge lifted and tinted the whole
+     face (per-card review: "milky / teal / lavender wash over whole art", 40 cards). It now falls to 22 %: a pool of
+     colour round the lamp, the rest of the card close to its resting look. The floor between the ridges rose from
+     0.5 to 0.7: at 0.5 the etch cut the sheen into a line screen at phone size (Zapdos g1-29, Steelix xy11-108). */
+  --xyf-floor: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+  /* the lamp's reach, as a mask: full at the light, nothing past 60 % of the way to the far corner */
+  --xyf-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #000 0%, rgba(0, 0, 0, 0.75) 14%, rgba(0, 0, 0, 0.3) 34%, rgba(0, 0, 0, 0.06) 60%, transparent 85%);
+  /* the shared relief and shine (css/holo/etch-shine.css): soft-light white on every ridge over the ink lifted the
+     darks edge to edge ("darks lifted and grainy"); a touch only, and only near the lamp */
+  --relief: 0.3;
+  --relief-reach: 48%;
+  --shine-line: 0.22;
+  --shine-glit: 0;
   --xyf-lift: max(1, var(--foil-strength, 1));
 }
 
@@ -134,6 +147,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full
   filter: brightness(calc(0.28 + var(--pointer-from-center) * 0.16)) contrast(1.35) saturate(0.65) contrast(0.8);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art:not(.xyf-silver).has-foil-map:not(.lit):not(.settling) .foil {
+  /* at rest the pool is flat (the pointer rests at the centre: the lit pool would draw a bright middle) */
+  background-image: var(--xyf-cols), linear-gradient(hsl(0, 0%, 66%), hsl(0, 0%, 66%));
   filter: brightness(0.62) contrast(1.35) saturate(1.1) contrast(0.8);
 }
 
@@ -163,7 +178,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full
 /* the lamp on the ridges */
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art:not(.xyf-silver).has-foil-map.xyf-etched .glare::after {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(0, 0%, 100%, 0.7) 0%, hsla(0, 0%, 100%, 0.32) 28%, hsla(0, 0%, 100%, 0.1) 70%, hsla(0, 0%, 100%, 0) 100%);
+    hsla(0, 0%, 100%, 0.6) 0%, hsla(0, 0%, 100%, 0.24) 16%, hsla(0, 0%, 100%, 0.05) 36%, hsla(0, 0%, 100%, 0) 55%);
+  mix-blend-mode: overlay;
   -webkit-mask-image: var(--xyf-etch), var(--foil-map);
   -webkit-mask-composite: source-in, source-over;
   mask-image: var(--xyf-etch), var(--foil-map);
@@ -178,8 +194,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full
 /* ---- The lamp: a hot spot in overlay, its far end clear (never a dark side) -------------------------------- */
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art:not(.xyf-silver).has-foil-map .glare {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(0, 0%, 100%, 0.55) 0%, hsla(0, 0%, 100%, 0.22) 25%, hsla(0, 0%, 100%, 0) 60%);
-  opacity: calc(var(--card-opacity) * 0.55);
+    hsla(0, 0%, 100%, 0.5) 0%, hsla(0, 0%, 100%, 0.18) 20%, hsla(0, 0%, 100%, 0) 48%);
+  opacity: calc(var(--card-opacity) * 0.5);
 }
 
 /* ---- The stripe: gold Mega secrets, gold Items and the promos (`xyf-cure`, module `cure: true`) ------------------
@@ -217,17 +233,19 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full
   opacity: calc(var(--card-opacity) * 0.24 * var(--xyf-lift));
   /* art silhouette, the card's Live foil map, and the scan's own luminance over a 55% floor: hard-light turns black
      ink coloured, so near-black lettering gets only the floor's share of the stripe and stays readable and matte */
-  -webkit-mask-image: var(--art), var(--foil-map), var(--art), var(--xyf-floor-lt);
-  -webkit-mask-composite: source-in, source-in, source-over, source-over;
-  mask-image: var(--art), var(--foil-map), var(--art), var(--xyf-floor-lt);
-  mask-composite: intersect, intersect, add, add;
-  mask-mode: alpha, alpha, luminance, alpha;
-  -webkit-mask-size: contain, 100% 100%, contain, 100% 100%;
-  mask-size: contain, 100% 100%, contain, 100% 100%;
-  -webkit-mask-position: center, center, center, center;
-  mask-position: center, center, center, center;
-  -webkit-mask-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
-  mask-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+  /* round 2: and the lamp's pool first, so the stripe is a patch of colour by the light, not a band down the card
+     (Mew g1-xyp110: "vertical rainbow band across Mew") */
+  -webkit-mask-image: var(--xyf-pool), var(--art), var(--foil-map), var(--art), var(--xyf-floor-lt);
+  -webkit-mask-composite: source-in, source-in, source-in, source-over, source-over;
+  mask-image: var(--xyf-pool), var(--art), var(--foil-map), var(--art), var(--xyf-floor-lt);
+  mask-composite: intersect, intersect, intersect, add, add;
+  mask-mode: alpha, alpha, alpha, luminance, alpha;
+  -webkit-mask-size: 100% 100%, contain, 100% 100%, contain, 100% 100%;
+  mask-size: 100% 100%, contain, 100% 100%, contain, 100% 100%;
+  -webkit-mask-position: center, center, center, center, center;
+  mask-position: center, center, center, center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
 }
 
 /* ---- Pale full arts (`xyf-pale`): the dodge at half strength, the stripe carries the colour ------------------------ */
