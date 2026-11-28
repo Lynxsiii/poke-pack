@@ -27,6 +27,15 @@
             document.querySelector('meta[name="theme-color"]').content = ground;
           }
         }
+        // The loading screen stays still for Lite, or motion switched off (js/app.js applySettings keeps this key).
+        if (localStorage.getItem("pp-calm") === "1") document.documentElement.dataset.calm = "1";
+      } catch (e) {}
+      // The loading screen's percentage: note each of the site's files as it arrives (read by the script under .boot-veil).
+      var ppBoot = (window.ppBoot = { seen: {}, step: 0, at: function (n) { if (n > this.step) this.step = n; } });
+      try {
+        new PerformanceObserver(function (list) {
+          list.getEntries().forEach(function (e) { ppBoot.seen[e.name] = 1; });
+        }).observe({ type: "resource", buffered: true });
       } catch (e) {}
     </script>
     <!-- Impact-Site-Verification: 23749cf9-1a5a-401e-9b6e-481a379791d2 -->
@@ -59,7 +68,7 @@
     </noscript>
     <link rel="preload" href="assets/fonts/mplus-rounded-1c-500-latin-v1.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="assets/fonts/kanit-800i-latin-v1.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="stylesheet" href="css/app.css?v=69" />
+    <link rel="stylesheet" href="css/app.css?v=70" />
     <link rel="stylesheet" href="css/theme.css?v=28" />
     <link rel="stylesheet" href="css/counter.css?v=4" />
     <link rel="stylesheet" href="css/pages/home.css?v=14" />
@@ -298,7 +307,6 @@
     <link rel="modulepreload" href="js/social.js?v=7" />
     <link rel="modulepreload" href="js/api.js" />
     <link rel="modulepreload" href="js/accounts.js" />
-    <link rel="modulepreload" href="js/avatar-picker.js" />
     <link rel="modulepreload" href="js/state.js" />
     <link rel="modulepreload" href="js/level-badge.js" />
     <link rel="modulepreload" href="js/levels.js" />
@@ -316,6 +324,7 @@
     <link rel="modulepreload" href="js/quest-area.js?v=10" />
     <link rel="modulepreload" href="js/level-ui.js" />
     <link rel="modulepreload" href="js/acct-motion.js" />
+    <link rel="modulepreload" href="js/avatar-picker.js" />
     <link rel="modulepreload" href="js/level-feed.js" />
     <link rel="modulepreload" href="js/liveprices.js?v=5" />
     <link rel="modulepreload" href="js/pricechart.js" />
@@ -356,6 +365,8 @@
     <link rel="modulepreload" href="js/batch-open.js?v=6" />
     <link rel="modulepreload" href="js/search.js?v=7" />
     <link rel="modulepreload" href="js/wishlist.js?v=2" />
+    <link rel="modulepreload" href="js/account-security.js?v=1" />
+    <link rel="modulepreload" href="js/qr.js?v=1" />
     <link rel="modulepreload" href="js/share-pull.js?v=3" />
     <link rel="modulepreload" href="js/binder-object.js" />
     <link rel="modulepreload" href="js/binder-editions.js" />
@@ -474,7 +485,44 @@
       <symbol id="i-profile" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="11" r="2"/><path d="M5.5 16c.5-1.5 1.6-2.2 3-2.200s2.5.7 3 2.200M14 10h4.500M14 13.500h3"/></symbol>
     </svg>
     <a class="skip-link" href="#main-content">Skip to content</a>
-    <div class="boot-veil" aria-hidden="true"></div>
+    <div class="boot-veil" aria-hidden="true">
+      <div class="boot-fan">
+        <span class="boot-slot"><span class="boot-deal"><span class="boot-flip"><i class="boot-card"><u>R</u></i><i class="boot-card boot-back"></i></span></span></span>
+        <span class="boot-slot"><span class="boot-deal"><span class="boot-flip"><i class="boot-card"><u>I</u></i><i class="boot-card boot-back"></i></span></span></span>
+        <span class="boot-slot"><span class="boot-deal"><span class="boot-flip"><i class="boot-card"><u>P</u></i><i class="boot-card boot-back"></i></span></span></span>
+      </div>
+      <div class="boot-name">POKE PACK</div>
+      <div class="boot-meter"><span class="boot-bar"><i id="boot-bar"></i></span><b id="boot-num">0%</b></div>
+    </div>
+    <script>
+      // The loading screen's percentage, from real progress: the share of the site's script files that have
+      // arrived (0 to 70), then the start-up steps js/app.js reports through ppBoot.at (70 to 100).
+      (function () {
+        var boot = window.ppBoot, num = document.getElementById("boot-num"), bar = document.getElementById("boot-bar");
+        if (!boot || !num) return;
+        var want = [], links = document.querySelectorAll('link[rel="modulepreload"]');
+        for (var i = 0; i < links.length; i++) want.push(links[i].href);
+        var STEPS = 5, shown = -1, best = 0;
+        function real() {
+          var got = 0;
+          for (var i = 0; i < want.length; i++) if (boot.seen[want[i]]) got++;
+          var now = boot.step ? 70 + (30 * Math.min(boot.step, STEPS)) / STEPS : want.length ? (70 * got) / want.length : 0;
+          if (now > best) best = now;
+          return best;
+        }
+        function paint() {
+          var ready = document.body.classList.contains("is-ready"), to = ready ? 100 : Math.floor(real());
+          if (to !== shown) {
+            shown = to;
+            num.textContent = to + "%";
+            bar.style.transform = "scaleX(" + to / 100 + ")";
+          }
+          if (!ready) requestAnimationFrame(paint);
+        }
+        boot.paint = paint;
+        paint();
+      })();
+    </script>
     <header class="site-header">
       <a class="brand" href="/home">
         <img class="brand-logo" src="assets/mark-v3.png" width="256" height="256" alt="" />
@@ -1002,7 +1050,7 @@
       </nav>
     </footer>
     <script type="module" src="js/etch.js?v=1"></script>
-    <script type="module" src="js/app.js?v=414"></script>
+    <script type="module" src="js/app.js?v=415"></script>
     <script type="module" src="js/rotom.js?v=3"></script>
   </body>
 </html>

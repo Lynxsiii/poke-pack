@@ -1,5 +1,16 @@
 [
   {
+    "id": "2026-11-28-loading-screen",
+    "date": "2026-11-28",
+    "title": "New loading screen",
+    "summary": "The three logo cards flip over to spell RIP, with a real loading percentage.",
+    "items": [
+      "While the site loads, three face-down cards turn over one by one to spell R, I, P, then get dealt off the top.",
+      "The percentage under them is real. It follows the site's files as they arrive and each step of start-up.",
+      "It takes the colours of your theme, and it stays still with Lite on, motion off, or Reduce Motion set on your device."
+    ]
+  },
+  {
     "id": "2026-11-28-rip-logo",
     "date": "2026-11-28",
     "title": "New logo",
