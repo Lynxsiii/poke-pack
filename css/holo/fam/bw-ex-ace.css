@@ -306,7 +306,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-ex-a
   filter: hue-rotate(calc(var(--pointer-from-top) * 120deg + var(--pointer-from-left) * 60deg)) saturate(0.45);
   mix-blend-mode: hard-light;
   /* 2026-11-28: 0.85 -> 0.6 held (Life Dew and Rock Guard: "heavy horizontal line screen on the frame") */
-  opacity: min(1, calc((0.3 + var(--card-opacity) * 0.3) * var(--foil-strength, 1)));
+  opacity: min(1, calc((0.3 + var(--card-opacity) * 0.16) * var(--foil-strength, 1)));
 }
 /* At rest (room light): neutral silver lines only, no hue (the dash mask twice, as before the light). */
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-ex-ace.fam-bw-ex-ace.fam-bw-ex-ace.fam-bw-ex-ace.bw-ace:not(.lit):not(.settling) .foil {
