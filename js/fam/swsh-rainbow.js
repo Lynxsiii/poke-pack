@@ -33,8 +33,14 @@ function swshRainbow(card) {
   if (!isSwsh(card) || (card.foilAs && card.era !== "swsh")) return false;
   if (card.gallery === "cc" || card.gallery === "sv") return false;
   if (String(card.id || "").startsWith("cel25-") && (card.rarity === "Rare" || card.rarity === "Rare Holo")) return false;
-  if (card.rarity === "Rare Rainbow") return true;
+  if (card.rarity === "Rare Rainbow" || altVmax(card)) return true;
   return card.rarity === "Rare Secret" && String(card.id || "") === "swsh12pt5-160";
+}
+
+/** An alternate-art VMAX / VSTAR filed "Rare Ultra" (the Japanese SAR and CSR prints): swshPattern()'s `swsh-alt` branch. */
+function altVmax(card) {
+  const subs = card.subtypes || [];
+  return card.rarity === "Rare Ultra" && card.supertype !== "Trainer" && (subs.includes("VMAX") || subs.includes("VSTAR"));
 }
 
 const ALT = new Set([
@@ -51,7 +57,7 @@ export function famExtras(card, url, base) {
   if (!claims(card, base)) return null;
   const id = String(card.id || "");
   const classes = ["fam-swsh-rainbow"];
-  if (ALT.has(id)) classes.push("srb-alt");
+  if (ALT.has(id) || altVmax(card)) classes.push("srb-alt");
   if (id === "swsh12pt5-160") classes.push("srb-show");
   const style = `--srb-grain:url('${url(`${DIR}/grain-v1.webp`)}')`;
   return { classes: classes.join(" "), style, cure: false };

@@ -49,8 +49,9 @@ export function claims(card, base) {
 
 /** The mask's path: `<set>/<number>` from the id (sv10-229-stamp -> sv10/229-stamp). */
 function maskPath(card) {
-  // A Japanese print of the same art (scripts/build_jp_set.py `foilTwin`) wears the English card's mask.
-  const id = String(card.foilTwin || card.id);
+  // A Japanese print draws its own (make_sir_masks.py, 2026-11-27): the English twin's mask held the English
+  // lettering and the English scan's keep-dark cut, so "Invitation", "TRAINER" showed through the foil.
+  const id = String(card.id);
   const cut = id.indexOf("-");
   return `${DIR}/${id.slice(0, cut)}/${id.slice(cut + 1)}-map-v1.webp`;
 }

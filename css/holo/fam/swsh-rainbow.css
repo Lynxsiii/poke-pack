@@ -164,3 +164,14 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.f
   --srb-light: 0.6;
   --srb-cast: linear-gradient(rgb(228, 230, 234), rgb(228, 230, 234));
 }
+
+/* ---- srb-alt with a drawn etch (the Japanese SAR VSTAR and CSR VMAX, 2026-11-27) -------------------------------------
+   No TCG Live map: the foil map is the all-white fallback, so the glitter grain lay over the Pokémon as hard speckle
+   (Simisear VSTAR js12a-214, Noah: "it's just wavy lines it's not the correct texture"; the per-card review). Their
+   etch is drawn from the card's own scan and follows the painting: dodge the engraving itself, no grain, quieter. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-rainbow.fam-swsh-rainbow.fam-swsh-rainbow.fam-swsh-rainbow.foil-ir.has-foil-map.srb-alt.has-etch-drawn {
+  --srb-grain: linear-gradient(rgb(150, 150, 150), rgb(150, 150, 150));
+  --srb-rest: 0.18;
+  --srb-lit: 0.5;
+  --srb-light: 0.4;
+}

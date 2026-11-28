@@ -173,3 +173,33 @@ body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map.fam-xy-full-art.fam-xy-full-art {
   --shine-line: 0.3;
   --shine-glit: 0.2;
 }
+
+/* ---- A drawn etch with no foil map (2026-11-27) -----------------------------------------------------------------------
+   Prints TCG Live never mapped (the Japanese SARs, CSRs and full arts) carry an etch drawn from their own scan
+   (make_card_etch.py, `has-etch-drawn`) and the all-white fallback foil map. Every layer above leaned on that map: the
+   glitter covered faces and Pokémon edge to edge (Simisear VSTAR js12a-214, Cook js8b-260: speckle over the figure),
+   and the relief, which subtracts the foil map, subtracted all of it, so the engraving never caught the light (the
+   per-card review of 2026-11-27). Here the glitter follows the engraving instead of the white map, and the relief
+   takes the engraving in full, nothing subtracted. */
+body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map.has-etch-drawn.has-etch-drawn.has-etch-drawn {
+  --relief: 0.5;
+  --relief-era: 1;
+  --shine-line: 0.6;
+  --shine-glit: 0.4;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map.has-etch-drawn:is(.lit, .settling) .shine::after {
+  -webkit-mask-image: var(--art), var(--shine-etch, var(--etch-map)), var(--shine-etch, var(--etch-map));
+  mask-image: var(--art), var(--shine-etch, var(--etch-map)), var(--shine-etch, var(--etch-map));
+  -webkit-mask-composite: source-in, source-in, source-over;
+  mask-composite: intersect, intersect, add;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map.has-etch-drawn:is(.lit, .settling) .relief {
+  -webkit-mask-image: var(--art), var(--shine-etch, var(--etch-map)), var(--shine-etch, var(--etch-map));
+  mask-image: var(--art), var(--shine-etch, var(--etch-map)), var(--shine-etch, var(--etch-map));
+  -webkit-mask-composite: source-in, source-in, source-over;
+  mask-composite: intersect, intersect, add;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
+}

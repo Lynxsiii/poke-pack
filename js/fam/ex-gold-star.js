@@ -24,7 +24,7 @@
  * adds the `.cure` layer that lights the dots. A face with no map keeps the era's recipe. Reference:
  * .claude/skills/card-textures/reference/fam-ex-gold-star.md.
  */
-import { isEx, exPattern } from "../ex-foil.js?v=9";
+import { isEx, exPattern } from "../ex-foil.js?v=10";
 
 const has = (pattern, cls) => ` ${pattern || ""} `.includes(` ${cls} `);
 

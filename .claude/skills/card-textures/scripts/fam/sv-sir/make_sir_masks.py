@@ -28,7 +28,7 @@ from scipy import ndimage
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[5]
 OUT = ROOT / "assets" / "foil" / "fam" / "sv-sir"
-SV_ID = re.compile(r"^[zr]?sv\d")
+SV_ID = re.compile(r"^[zrj]?sv\d")  # j: Japanese prints draw their own (their scan and their cleaned twin map)
 
 # Ink: value (max channel) under V_HI fades in to fully ink at V_LO; chroma (max - min) under C_HI fades in at C_LO.
 V_LO, V_HI = 0.10, 0.22

@@ -475,8 +475,8 @@
     "image": "assets/cards/jsv4a/9.webp",
     "imageSmall": "assets/cards/jsv4a/9-sm.webp",
     "tcgplayerId": 567359,
-    "foilMap": "assets/foil/maps/sv4pt5/2.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/2-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/2-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/2-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-2",
     "market": 0.25,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-9/large"
@@ -1029,7 +1029,7 @@
     "image": "assets/cards/jsv4a/19.webp",
     "imageSmall": "assets/cards/jsv4a/19-sm.webp",
     "tcgplayerId": 567371,
-    "foilMap": "assets/foil/maps/sv4pt5/5.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/5-a1-t1.webp",
     "foilTwin": "sv4pt5-5",
     "market": 0.27,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-19/large"
@@ -1249,8 +1249,8 @@
     "image": "assets/cards/jsv4a/23.webp",
     "imageSmall": "assets/cards/jsv4a/23-sm.webp",
     "tcgplayerId": 567377,
-    "foilMap": "assets/foil/maps/sv4pt5/6.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/6-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/6-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/6-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-6",
     "market": 0.27,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-23/large"
@@ -1319,7 +1319,9 @@
     "imageSmall": "assets/cards/jsv4a/24-sm.webp",
     "tcgplayerId": 567379,
     "market": 0.28,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-24/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-24/large",
+    "foilMap": "assets/foil/maps/sv2/27-a1-t1.webp",
+    "foilTwin": "sv2-27"
   },
   {
     "id": "jsv4a-25",
@@ -1929,7 +1931,9 @@
     "imageSmall": "assets/cards/jsv4a/35-sm.webp",
     "tcgplayerId": 567396,
     "market": 0.27,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-35/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-35/large",
+    "foilMap": "assets/foil/maps/sv2/40-a1-t1.webp",
+    "foilTwin": "sv2-40"
   },
   {
     "id": "jsv4a-36",
@@ -4205,7 +4209,9 @@
     "imageSmall": "assets/cards/jsv4a/76-sm.webp",
     "tcgplayerId": 567466,
     "market": 2.01,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-76/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-76/large",
+    "foilMap": "assets/foil/maps/sv3pt5/151-a2-t1.webp",
+    "foilTwin": "sv3pt5-151"
   },
   {
     "id": "jsv4a-77",
@@ -4542,7 +4548,7 @@
     "image": "assets/cards/jsv4a/82.webp",
     "imageSmall": "assets/cards/jsv4a/82-sm.webp",
     "tcgplayerId": 567477,
-    "foilMap": "assets/foil/maps/sv4pt5/29.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/29-a1-t1.webp",
     "foilTwin": "sv4pt5-29",
     "market": 0.34,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-82/large"
@@ -6153,7 +6159,9 @@
     "imageSmall": "assets/cards/jsv4a/111-sm.webp",
     "tcgplayerId": 567512,
     "market": 0.28,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-111/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-111/large",
+    "foilMap": "assets/foil/maps/sv3/123-a1-t1.webp",
+    "foilTwin": "sv3-123"
   },
   {
     "id": "jsv4a-112",
@@ -6216,7 +6224,7 @@
     "image": "assets/cards/jsv4a/112.webp",
     "imageSmall": "assets/cards/jsv4a/112-sm.webp",
     "tcgplayerId": 567513,
-    "foilMap": "assets/foil/maps/sv4pt5/53.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/53-a1-t1.webp",
     "foilTwin": "sv4pt5-53",
     "market": 0.29,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-112/large"
@@ -6281,7 +6289,9 @@
     "imageSmall": "assets/cards/jsv4a/113-sm.webp",
     "tcgplayerId": 567514,
     "market": 0.26,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-113/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-113/large",
+    "foilMap": "assets/foil/maps/sv2/127-a1-t1.webp",
+    "foilTwin": "sv2-127"
   },
   {
     "id": "jsv4a-114",
@@ -6402,8 +6412,8 @@
     "image": "assets/cards/jsv4a/115.webp",
     "imageSmall": "assets/cards/jsv4a/115-sm.webp",
     "tcgplayerId": 567516,
-    "foilMap": "assets/foil/maps/sv4pt5/54.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/54-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/54-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/54-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-54",
     "market": 2.01,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-115/large"
@@ -6522,7 +6532,7 @@
     "image": "assets/cards/jsv4a/117.webp",
     "imageSmall": "assets/cards/jsv4a/117-sm.webp",
     "tcgplayerId": 567518,
-    "foilMap": "assets/foil/maps/sv4pt5/59.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/59-a1-t1.webp",
     "foilTwin": "sv4pt5-59",
     "market": 0.29,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-117/large"
@@ -7369,7 +7379,7 @@
     "image": "assets/cards/jsv4a/132.webp",
     "imageSmall": "assets/cards/jsv4a/132-sm.webp",
     "tcgplayerId": 567533,
-    "foilMap": "assets/foil/maps/sv4pt5/66.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/66-a1-t1.webp",
     "foilTwin": "sv4pt5-66",
     "market": 0.27,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-132/large"
@@ -7528,7 +7538,7 @@
     "image": "assets/cards/jsv4a/135.webp",
     "imageSmall": "assets/cards/jsv4a/135-sm.webp",
     "tcgplayerId": 567536,
-    "foilMap": "assets/foil/maps/sv4pt5/69.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/69-a1-t1.webp",
     "foilTwin": "sv4pt5-69",
     "market": 0.29,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-135/large"
@@ -7746,7 +7756,9 @@
     "imageSmall": "assets/cards/jsv4a/139-sm.webp",
     "tcgplayerId": 567540,
     "market": 0.33,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-139/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-139/large",
+    "foilMap": "assets/foil/maps/sv3/164-a1-t1.webp",
+    "foilTwin": "sv3-164"
   },
   {
     "id": "jsv4a-140",
@@ -7863,7 +7875,9 @@
     "imageSmall": "assets/cards/jsv4a/141-sm.webp",
     "tcgplayerId": 567542,
     "market": 0.32,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-141/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-141/large",
+    "foilMap": "assets/foil/maps/sv3pt5/40-a2-t1.webp",
+    "foilTwin": "sv3pt5-40"
   },
   {
     "id": "jsv4a-142",
@@ -8596,7 +8610,7 @@
     "image": "assets/cards/jsv4a/154.webp",
     "imageSmall": "assets/cards/jsv4a/154-sm.webp",
     "tcgplayerId": 567555,
-    "foilMap": "assets/foil/maps/sv4pt5/75.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/75-a1-t1.webp",
     "foilTwin": "sv4pt5-75",
     "market": 0.29,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-154/large"
@@ -9539,8 +9553,8 @@
     "image": "assets/cards/jsv4a/191.webp",
     "imageSmall": "assets/cards/jsv4a/191-sm.webp",
     "tcgplayerId": 567592,
-    "foilMap": "assets/foil/maps/sv4pt5/92.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/92-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/92-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/92-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-92",
     "market": 2.54,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-191/large"
@@ -9597,8 +9611,8 @@
     "image": "assets/cards/jsv4a/192.webp",
     "imageSmall": "assets/cards/jsv4a/192-sm.webp",
     "tcgplayerId": 567593,
-    "foilMap": "assets/foil/maps/sv4pt5/93.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/93-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/93-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/93-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-93",
     "market": 1.61,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-192/large"
@@ -9657,8 +9671,8 @@
     "image": "assets/cards/jsv4a/193.webp",
     "imageSmall": "assets/cards/jsv4a/193-sm.webp",
     "tcgplayerId": 567594,
-    "foilMap": "assets/foil/maps/sv4pt5/94.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/94-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/94-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/94-etch-t1.webp",
     "foilTwin": "sv4pt5-94",
     "market": 2.03,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-193/large"
@@ -9715,8 +9729,8 @@
     "image": "assets/cards/jsv4a/194.webp",
     "imageSmall": "assets/cards/jsv4a/194-sm.webp",
     "tcgplayerId": 567595,
-    "foilMap": "assets/foil/maps/sv4pt5/95.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/95-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/95-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/95-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-95",
     "market": 2.9,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-194/large"
@@ -9764,8 +9778,8 @@
     "image": "assets/cards/jsv4a/195.webp",
     "imageSmall": "assets/cards/jsv4a/195-sm.webp",
     "tcgplayerId": 567596,
-    "foilMap": "assets/foil/maps/sv4pt5/96.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/96-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/96-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/96-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-96",
     "market": 1.5,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-195/large"
@@ -9821,8 +9835,8 @@
     "image": "assets/cards/jsv4a/196.webp",
     "imageSmall": "assets/cards/jsv4a/196-sm.webp",
     "tcgplayerId": 567597,
-    "foilMap": "assets/foil/maps/sv4pt5/97.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/97-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/97-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/97-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-97",
     "market": 1.3,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-196/large"
@@ -9878,8 +9892,8 @@
     "image": "assets/cards/jsv4a/197.webp",
     "imageSmall": "assets/cards/jsv4a/197-sm.webp",
     "tcgplayerId": 567598,
-    "foilMap": "assets/foil/maps/sv4pt5/98.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/98-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/98-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/98-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-98",
     "market": 2.0,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-197/large"
@@ -9929,8 +9943,8 @@
     "image": "assets/cards/jsv4a/198.webp",
     "imageSmall": "assets/cards/jsv4a/198-sm.webp",
     "tcgplayerId": 567599,
-    "foilMap": "assets/foil/maps/sv4pt5/99.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/99-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/99-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/99-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-99",
     "market": 1.0,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-198/large"
@@ -9981,8 +9995,8 @@
     "image": "assets/cards/jsv4a/199.webp",
     "imageSmall": "assets/cards/jsv4a/199-sm.webp",
     "tcgplayerId": 567600,
-    "foilMap": "assets/foil/maps/sv4pt5/100.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/100-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/100-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/100-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-100",
     "market": 1.1,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-199/large"
@@ -10042,8 +10056,8 @@
     "image": "assets/cards/jsv4a/200.webp",
     "imageSmall": "assets/cards/jsv4a/200-sm.webp",
     "tcgplayerId": 567601,
-    "foilMap": "assets/foil/maps/sv4pt5/101.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/101-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/101-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/101-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-101",
     "market": 0.88,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-200/large"
@@ -10100,7 +10114,10 @@
     "imageSmall": "assets/cards/jsv4a/201-sm.webp",
     "tcgplayerId": 567602,
     "market": 6.38,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-201/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-201/large",
+    "foilMap": "assets/foil/maps/sv4pt5/svp076-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/svp076-etch-a1-t1.webp",
+    "foilTwin": "sv4pt5-svp076"
   },
   {
     "id": "jsv4a-202",
@@ -10156,7 +10173,10 @@
     "imageSmall": "assets/cards/jsv4a/202-sm.webp",
     "tcgplayerId": 567603,
     "market": 1.29,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-202/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-202/large",
+    "foilMap": "assets/foil/maps/sv4pt5/svp077-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/svp077-etch-a1-t1.webp",
+    "foilTwin": "sv4pt5-svp077"
   },
   {
     "id": "jsv4a-203",
@@ -10210,8 +10230,8 @@
     "image": "assets/cards/jsv4a/203.webp",
     "imageSmall": "assets/cards/jsv4a/203-sm.webp",
     "tcgplayerId": 567604,
-    "foilMap": "assets/foil/maps/sv4pt5/102.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/102-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/102-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/102-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-102",
     "market": 1.79,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-203/large"
@@ -10269,8 +10289,8 @@
     "image": "assets/cards/jsv4a/204.webp",
     "imageSmall": "assets/cards/jsv4a/204-sm.webp",
     "tcgplayerId": 567605,
-    "foilMap": "assets/foil/maps/sv4pt5/103.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/103-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/103-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/103-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-103",
     "market": 1.13,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-204/large"
@@ -10329,8 +10349,8 @@
     "image": "assets/cards/jsv4a/205.webp",
     "imageSmall": "assets/cards/jsv4a/205-sm.webp",
     "tcgplayerId": 567606,
-    "foilMap": "assets/foil/maps/sv4pt5/104.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/104-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/104-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/104-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-104",
     "market": 1.02,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-205/large"
@@ -10378,8 +10398,8 @@
     "image": "assets/cards/jsv4a/206.webp",
     "imageSmall": "assets/cards/jsv4a/206-sm.webp",
     "tcgplayerId": 567607,
-    "foilMap": "assets/foil/maps/sv4pt5/105.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/105-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/105-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/105-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-105",
     "market": 1.17,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-206/large"
@@ -10437,8 +10457,8 @@
     "image": "assets/cards/jsv4a/207.webp",
     "imageSmall": "assets/cards/jsv4a/207-sm.webp",
     "tcgplayerId": 567608,
-    "foilMap": "assets/foil/maps/sv4pt5/106.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/106-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/106-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/106-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-106",
     "market": 0.72,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-207/large"
@@ -10497,8 +10517,8 @@
     "image": "assets/cards/jsv4a/208.webp",
     "imageSmall": "assets/cards/jsv4a/208-sm.webp",
     "tcgplayerId": 567609,
-    "foilMap": "assets/foil/maps/sv4pt5/107.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/107-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/107-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/107-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-107",
     "market": 0.83,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-208/large"
@@ -10547,8 +10567,8 @@
     "image": "assets/cards/jsv4a/209.webp",
     "imageSmall": "assets/cards/jsv4a/209-sm.webp",
     "tcgplayerId": 567610,
-    "foilMap": "assets/foil/maps/sv4pt5/108.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/108-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/108-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/108-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-108",
     "market": 0.92,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-209/large"
@@ -10605,8 +10625,8 @@
     "image": "assets/cards/jsv4a/210.webp",
     "imageSmall": "assets/cards/jsv4a/210-sm.webp",
     "tcgplayerId": 567611,
-    "foilMap": "assets/foil/maps/sv4pt5/109.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/109-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/109-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/109-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-109",
     "market": 12.1,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-210/large"
@@ -10664,8 +10684,8 @@
     "image": "assets/cards/jsv4a/211.webp",
     "imageSmall": "assets/cards/jsv4a/211-sm.webp",
     "tcgplayerId": 567612,
-    "foilMap": "assets/foil/maps/sv4pt5/110.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/110-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/110-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/110-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-110",
     "market": 6.38,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-211/large"
@@ -10725,8 +10745,8 @@
     "image": "assets/cards/jsv4a/212.webp",
     "imageSmall": "assets/cards/jsv4a/212-sm.webp",
     "tcgplayerId": 567613,
-    "foilMap": "assets/foil/maps/sv4pt5/111.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/111-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/111-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/111-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-111",
     "market": 1.22,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-212/large"
@@ -10784,8 +10804,8 @@
     "image": "assets/cards/jsv4a/213.webp",
     "imageSmall": "assets/cards/jsv4a/213-sm.webp",
     "tcgplayerId": 567614,
-    "foilMap": "assets/foil/maps/sv4pt5/112.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/112-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/112-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/112-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-112",
     "market": 5.74,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-213/large"
@@ -10841,8 +10861,8 @@
     "image": "assets/cards/jsv4a/214.webp",
     "imageSmall": "assets/cards/jsv4a/214-sm.webp",
     "tcgplayerId": 567615,
-    "foilMap": "assets/foil/maps/sv4pt5/113.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/113-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/113-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/113-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-113",
     "market": 1.28,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-214/large"
@@ -10892,7 +10912,10 @@
     "imageSmall": "assets/cards/jsv4a/215-sm.webp",
     "tcgplayerId": 567616,
     "market": 2.24,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-215/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-215/large",
+    "foilMap": "assets/foil/maps/sv4pt5/svp079-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/svp079-etch-a1-t1.webp",
+    "foilTwin": "sv4pt5-svp079"
   },
   {
     "id": "jsv4a-216",
@@ -10950,7 +10973,10 @@
     "imageSmall": "assets/cards/jsv4a/216-sm.webp",
     "tcgplayerId": 567617,
     "market": 1.14,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-216/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-216/large",
+    "foilMap": "assets/foil/maps/sv4pt5/svp080-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/svp080-etch-a1-t1.webp",
+    "foilTwin": "sv4pt5-svp080"
   },
   {
     "id": "jsv4a-217",
@@ -10997,8 +11023,8 @@
     "image": "assets/cards/jsv4a/217.webp",
     "imageSmall": "assets/cards/jsv4a/217-sm.webp",
     "tcgplayerId": 567618,
-    "foilMap": "assets/foil/maps/sv4pt5/114.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/114-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/114-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/114-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-114",
     "market": 1.81,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-217/large"
@@ -11057,8 +11083,8 @@
     "image": "assets/cards/jsv4a/218.webp",
     "imageSmall": "assets/cards/jsv4a/218-sm.webp",
     "tcgplayerId": 567619,
-    "foilMap": "assets/foil/maps/sv4pt5/115.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/115-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/115-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/115-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-115",
     "market": 1.65,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-218/large"
@@ -11116,8 +11142,8 @@
     "image": "assets/cards/jsv4a/219.webp",
     "imageSmall": "assets/cards/jsv4a/219-sm.webp",
     "tcgplayerId": 567620,
-    "foilMap": "assets/foil/maps/sv4pt5/116.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/116-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/116-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/116-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-116",
     "market": 9.22,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-219/large"
@@ -11176,8 +11202,8 @@
     "image": "assets/cards/jsv4a/220.webp",
     "imageSmall": "assets/cards/jsv4a/220-sm.webp",
     "tcgplayerId": 567621,
-    "foilMap": "assets/foil/maps/sv4pt5/117.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/117-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/117-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/117-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-117",
     "market": 5.73,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-220/large"
@@ -11226,8 +11252,8 @@
     "image": "assets/cards/jsv4a/221.webp",
     "imageSmall": "assets/cards/jsv4a/221-sm.webp",
     "tcgplayerId": 567622,
-    "foilMap": "assets/foil/maps/sv4pt5/118.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/118-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/118-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/118-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-118",
     "market": 1.47,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-221/large"
@@ -11284,8 +11310,8 @@
     "image": "assets/cards/jsv4a/222.webp",
     "imageSmall": "assets/cards/jsv4a/222-sm.webp",
     "tcgplayerId": 567623,
-    "foilMap": "assets/foil/maps/sv4pt5/119.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/119-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/119-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/119-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-119",
     "market": 1.65,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-222/large"
@@ -11345,8 +11371,8 @@
     "image": "assets/cards/jsv4a/223.webp",
     "imageSmall": "assets/cards/jsv4a/223-sm.webp",
     "tcgplayerId": 567624,
-    "foilMap": "assets/foil/maps/sv4pt5/120.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/120-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/120-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/120-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-120",
     "market": 1.31,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-223/large"
@@ -11395,7 +11421,10 @@
     "imageSmall": "assets/cards/jsv4a/224-sm.webp",
     "tcgplayerId": 567625,
     "market": 0.93,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-224/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-224/large",
+    "foilMap": "assets/foil/maps/sv4pt5/svp082-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/svp082-etch-a1-t1.webp",
+    "foilTwin": "sv4pt5-svp082"
   },
   {
     "id": "jsv4a-225",
@@ -11451,7 +11480,10 @@
     "imageSmall": "assets/cards/jsv4a/225-sm.webp",
     "tcgplayerId": 567626,
     "market": 0.99,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-225/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-225/large",
+    "foilMap": "assets/foil/maps/sv4pt5/svp083-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/svp083-etch-a1-t1.webp",
+    "foilTwin": "sv4pt5-svp083"
   },
   {
     "id": "jsv4a-226",
@@ -11496,8 +11528,8 @@
     "image": "assets/cards/jsv4a/226.webp",
     "imageSmall": "assets/cards/jsv4a/226-sm.webp",
     "tcgplayerId": 567627,
-    "foilMap": "assets/foil/maps/sv4pt5/121.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/121-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/121-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/121-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-121",
     "market": 1.36,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-226/large"
@@ -11557,8 +11589,8 @@
     "image": "assets/cards/jsv4a/227.webp",
     "imageSmall": "assets/cards/jsv4a/227-sm.webp",
     "tcgplayerId": 567628,
-    "foilMap": "assets/foil/maps/sv4pt5/122.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/122-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/122-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/122-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-122",
     "market": 1.15,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-227/large"
@@ -11615,8 +11647,8 @@
     "image": "assets/cards/jsv4a/228.webp",
     "imageSmall": "assets/cards/jsv4a/228-sm.webp",
     "tcgplayerId": 567629,
-    "foilMap": "assets/foil/maps/sv4pt5/123.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/123-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/123-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/123-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-123",
     "market": 1.39,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-228/large"
@@ -11675,8 +11707,8 @@
     "image": "assets/cards/jsv4a/229.webp",
     "imageSmall": "assets/cards/jsv4a/229-sm.webp",
     "tcgplayerId": 567630,
-    "foilMap": "assets/foil/maps/sv4pt5/124.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/124-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/124-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/124-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-124",
     "market": 1.13,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-229/large"
@@ -11736,8 +11768,8 @@
     "image": "assets/cards/jsv4a/230.webp",
     "imageSmall": "assets/cards/jsv4a/230-sm.webp",
     "tcgplayerId": 567631,
-    "foilMap": "assets/foil/maps/sv4pt5/125.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/125-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/125-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/125-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-125",
     "market": 0.94,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-230/large"
@@ -11800,8 +11832,8 @@
     "image": "assets/cards/jsv4a/231.webp",
     "imageSmall": "assets/cards/jsv4a/231-sm.webp",
     "tcgplayerId": 567632,
-    "foilMap": "assets/foil/maps/sv4pt5/126.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/126-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/126-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/126-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-126",
     "market": 1.0,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-231/large"
@@ -11857,8 +11889,8 @@
     "image": "assets/cards/jsv4a/232.webp",
     "imageSmall": "assets/cards/jsv4a/232-sm.webp",
     "tcgplayerId": 567633,
-    "foilMap": "assets/foil/maps/sv4pt5/127.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/127-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/127-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/127-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-127",
     "market": 2.2,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-232/large"
@@ -11916,8 +11948,8 @@
     "image": "assets/cards/jsv4a/233.webp",
     "imageSmall": "assets/cards/jsv4a/233-sm.webp",
     "tcgplayerId": 567634,
-    "foilMap": "assets/foil/maps/sv4pt5/128.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/128-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/128-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/128-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-128",
     "market": 1.36,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-233/large"
@@ -11978,8 +12010,8 @@
     "image": "assets/cards/jsv4a/234.webp",
     "imageSmall": "assets/cards/jsv4a/234-sm.webp",
     "tcgplayerId": 567635,
-    "foilMap": "assets/foil/maps/sv4pt5/129.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/129-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/129-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/129-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-129",
     "market": 1.15,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-234/large"
@@ -12038,8 +12070,8 @@
     "image": "assets/cards/jsv4a/235.webp",
     "imageSmall": "assets/cards/jsv4a/235-sm.webp",
     "tcgplayerId": 567636,
-    "foilMap": "assets/foil/maps/sv4pt5/130.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/130-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/130-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/130-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-130",
     "market": 1.26,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-235/large"
@@ -12096,8 +12128,8 @@
     "image": "assets/cards/jsv4a/236.webp",
     "imageSmall": "assets/cards/jsv4a/236-sm.webp",
     "tcgplayerId": 567637,
-    "foilMap": "assets/foil/maps/sv4pt5/131.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/131-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/131-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/131-etch-t1.webp",
     "foilTwin": "sv4pt5-131",
     "market": 37.31,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-236/large"
@@ -12155,8 +12187,8 @@
     "image": "assets/cards/jsv4a/237.webp",
     "imageSmall": "assets/cards/jsv4a/237-sm.webp",
     "tcgplayerId": 567638,
-    "foilMap": "assets/foil/maps/sv4pt5/132.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/132-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/132-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/132-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-132",
     "market": 8.11,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-237/large"
@@ -12204,8 +12236,8 @@
     "image": "assets/cards/jsv4a/238.webp",
     "imageSmall": "assets/cards/jsv4a/238-sm.webp",
     "tcgplayerId": 567639,
-    "foilMap": "assets/foil/maps/sv4pt5/133.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/133-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/133-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/133-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-133",
     "market": 1.32,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-238/large"
@@ -12263,8 +12295,8 @@
     "image": "assets/cards/jsv4a/239.webp",
     "imageSmall": "assets/cards/jsv4a/239-sm.webp",
     "tcgplayerId": 567640,
-    "foilMap": "assets/foil/maps/sv4pt5/134.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/134-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/134-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/134-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-134",
     "market": 1.55,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-239/large"
@@ -12312,8 +12344,8 @@
     "image": "assets/cards/jsv4a/240.webp",
     "imageSmall": "assets/cards/jsv4a/240-sm.webp",
     "tcgplayerId": 567641,
-    "foilMap": "assets/foil/maps/sv4pt5/135.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/135-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/135-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/135-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-135",
     "market": 4.47,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-240/large"
@@ -12372,8 +12404,8 @@
     "image": "assets/cards/jsv4a/241.webp",
     "imageSmall": "assets/cards/jsv4a/241-sm.webp",
     "tcgplayerId": 567642,
-    "foilMap": "assets/foil/maps/sv4pt5/136.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/136-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/136-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/136-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-136",
     "market": 1.85,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-241/large"
@@ -12431,8 +12463,8 @@
     "image": "assets/cards/jsv4a/242.webp",
     "imageSmall": "assets/cards/jsv4a/242-sm.webp",
     "tcgplayerId": 567643,
-    "foilMap": "assets/foil/maps/sv4pt5/137.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/137-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/137-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/137-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-137",
     "market": 3.78,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-242/large"
@@ -12488,8 +12520,8 @@
     "image": "assets/cards/jsv4a/243.webp",
     "imageSmall": "assets/cards/jsv4a/243-sm.webp",
     "tcgplayerId": 567644,
-    "foilMap": "assets/foil/maps/sv4pt5/138.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/138-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/138-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/138-etch-t1.webp",
     "foilTwin": "sv4pt5-138",
     "market": 3.54,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-243/large"
@@ -12546,8 +12578,8 @@
     "image": "assets/cards/jsv4a/244.webp",
     "imageSmall": "assets/cards/jsv4a/244-sm.webp",
     "tcgplayerId": 567645,
-    "foilMap": "assets/foil/maps/sv4pt5/139.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/139-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/139-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/139-etch-t1.webp",
     "foilTwin": "sv4pt5-139",
     "market": 1.17,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-244/large"
@@ -12595,8 +12627,8 @@
     "image": "assets/cards/jsv4a/245.webp",
     "imageSmall": "assets/cards/jsv4a/245-sm.webp",
     "tcgplayerId": 567646,
-    "foilMap": "assets/foil/maps/sv4pt5/140.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/140-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/140-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/140-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-140",
     "market": 1.13,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-245/large"
@@ -12655,8 +12687,8 @@
     "image": "assets/cards/jsv4a/246.webp",
     "imageSmall": "assets/cards/jsv4a/246-sm.webp",
     "tcgplayerId": 567647,
-    "foilMap": "assets/foil/maps/sv4pt5/141.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/141-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/141-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/141-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-141",
     "market": 1.04,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-246/large"
@@ -12713,8 +12745,8 @@
     "image": "assets/cards/jsv4a/247.webp",
     "imageSmall": "assets/cards/jsv4a/247-sm.webp",
     "tcgplayerId": 567648,
-    "foilMap": "assets/foil/maps/sv4pt5/142.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/142-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/142-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/142-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-142",
     "market": 1.21,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-247/large"
@@ -12773,8 +12805,8 @@
     "image": "assets/cards/jsv4a/248.webp",
     "imageSmall": "assets/cards/jsv4a/248-sm.webp",
     "tcgplayerId": 567649,
-    "foilMap": "assets/foil/maps/sv4pt5/143.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/143-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/143-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/143-etch-t1.webp",
     "foilTwin": "sv4pt5-143",
     "market": 1.4,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-248/large"
@@ -12829,8 +12861,8 @@
     "image": "assets/cards/jsv4a/249.webp",
     "imageSmall": "assets/cards/jsv4a/249-sm.webp",
     "tcgplayerId": 567650,
-    "foilMap": "assets/foil/maps/sv4pt5/144.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/144-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/144-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/144-etch-t1.webp",
     "foilTwin": "sv4pt5-144",
     "market": 1.58,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-249/large"
@@ -12893,8 +12925,8 @@
     "image": "assets/cards/jsv4a/250.webp",
     "imageSmall": "assets/cards/jsv4a/250-sm.webp",
     "tcgplayerId": 567651,
-    "foilMap": "assets/foil/maps/sv4pt5/145.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/145-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/145-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/145-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-145",
     "market": 1.1,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-250/large"
@@ -12956,8 +12988,8 @@
     "image": "assets/cards/jsv4a/251.webp",
     "imageSmall": "assets/cards/jsv4a/251-sm.webp",
     "tcgplayerId": 567652,
-    "foilMap": "assets/foil/maps/sv4pt5/146.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/146-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/146-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/146-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-146",
     "market": 1.07,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-251/large"
@@ -13016,8 +13048,8 @@
     "image": "assets/cards/jsv4a/252.webp",
     "imageSmall": "assets/cards/jsv4a/252-sm.webp",
     "tcgplayerId": 567653,
-    "foilMap": "assets/foil/maps/sv4pt5/147.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/147-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/147-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/147-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-147",
     "market": 1.96,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-252/large"
@@ -13071,8 +13103,8 @@
     "image": "assets/cards/jsv4a/253.webp",
     "imageSmall": "assets/cards/jsv4a/253-sm.webp",
     "tcgplayerId": 567654,
-    "foilMap": "assets/foil/maps/sv4pt5/148.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/148-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/148-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/148-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-148",
     "market": 2.75,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-253/large"
@@ -13127,8 +13159,8 @@
     "image": "assets/cards/jsv4a/254.webp",
     "imageSmall": "assets/cards/jsv4a/254-sm.webp",
     "tcgplayerId": 567655,
-    "foilMap": "assets/foil/maps/sv4pt5/149.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/149-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/149-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/149-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-149",
     "market": 2.38,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-254/large"
@@ -13170,8 +13202,8 @@
     "image": "assets/cards/jsv4a/255.webp",
     "imageSmall": "assets/cards/jsv4a/255-sm.webp",
     "tcgplayerId": 567656,
-    "foilMap": "assets/foil/maps/sv4pt5/150.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/150-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/150-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/150-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-150",
     "market": 4.17,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-255/large"
@@ -13225,8 +13257,8 @@
     "image": "assets/cards/jsv4a/256.webp",
     "imageSmall": "assets/cards/jsv4a/256-sm.webp",
     "tcgplayerId": 567657,
-    "foilMap": "assets/foil/maps/sv4pt5/151.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/151-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/151-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/151-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-151",
     "market": 1.19,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-256/large"
@@ -13290,8 +13322,8 @@
     "image": "assets/cards/jsv4a/257.webp",
     "imageSmall": "assets/cards/jsv4a/257-sm.webp",
     "tcgplayerId": 567658,
-    "foilMap": "assets/foil/maps/sv4pt5/152.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/152-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/152-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/152-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-152",
     "market": 0.83,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-257/large"
@@ -13346,8 +13378,8 @@
     "image": "assets/cards/jsv4a/258.webp",
     "imageSmall": "assets/cards/jsv4a/258-sm.webp",
     "tcgplayerId": 567659,
-    "foilMap": "assets/foil/maps/sv4pt5/153.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/153-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/153-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/153-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-153",
     "market": 4.24,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-258/large"
@@ -13413,8 +13445,8 @@
     "image": "assets/cards/jsv4a/259.webp",
     "imageSmall": "assets/cards/jsv4a/259-sm.webp",
     "tcgplayerId": 567660,
-    "foilMap": "assets/foil/maps/sv4pt5/154.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/154-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/154-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/154-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-154",
     "market": 3.81,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-259/large"
@@ -13478,8 +13510,8 @@
     "image": "assets/cards/jsv4a/260.webp",
     "imageSmall": "assets/cards/jsv4a/260-sm.webp",
     "tcgplayerId": 567661,
-    "foilMap": "assets/foil/maps/sv4pt5/155.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/155-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/155-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/155-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-155",
     "market": 1.77,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-260/large"
@@ -13545,8 +13577,8 @@
     "image": "assets/cards/jsv4a/261.webp",
     "imageSmall": "assets/cards/jsv4a/261-sm.webp",
     "tcgplayerId": 567662,
-    "foilMap": "assets/foil/maps/sv4pt5/156.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/156-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/156-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/156-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-156",
     "market": 1.1,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-261/large"
@@ -13594,8 +13626,8 @@
     "image": "assets/cards/jsv4a/262.webp",
     "imageSmall": "assets/cards/jsv4a/262-sm.webp",
     "tcgplayerId": 567663,
-    "foilMap": "assets/foil/maps/sv4pt5/157.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/157-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/157-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/157-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-157",
     "market": 1.58,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-262/large"
@@ -13656,8 +13688,8 @@
     "image": "assets/cards/jsv4a/263.webp",
     "imageSmall": "assets/cards/jsv4a/263-sm.webp",
     "tcgplayerId": 567664,
-    "foilMap": "assets/foil/maps/sv4pt5/158.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/158-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/158-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/158-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-158",
     "market": 1.84,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-263/large"
@@ -13712,8 +13744,8 @@
     "image": "assets/cards/jsv4a/264.webp",
     "imageSmall": "assets/cards/jsv4a/264-sm.webp",
     "tcgplayerId": 567665,
-    "foilMap": "assets/foil/maps/sv4pt5/159.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/159-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/159-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/159-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-159",
     "market": 1.06,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-264/large"
@@ -13769,8 +13801,8 @@
     "image": "assets/cards/jsv4a/265.webp",
     "imageSmall": "assets/cards/jsv4a/265-sm.webp",
     "tcgplayerId": 567666,
-    "foilMap": "assets/foil/maps/sv4pt5/160.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/160-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/160-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/160-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-160",
     "market": 18.75,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-265/large"
@@ -13820,7 +13852,10 @@
     "imageSmall": "assets/cards/jsv4a/266-sm.webp",
     "tcgplayerId": 567667,
     "market": 1.5,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-266/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-266/large",
+    "foilMap": "assets/foil/maps/sv4pt5/svp069-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/svp069-etch-a1-t1.webp",
+    "foilTwin": "sv4pt5-svp069"
   },
   {
     "id": "jsv4a-267",
@@ -13875,8 +13910,8 @@
     "image": "assets/cards/jsv4a/267.webp",
     "imageSmall": "assets/cards/jsv4a/267-sm.webp",
     "tcgplayerId": 567668,
-    "foilMap": "assets/foil/maps/sv4pt5/161.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/161-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/161-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/161-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-161",
     "market": 4.57,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-267/large"
@@ -13943,8 +13978,8 @@
     "image": "assets/cards/jsv4a/268.webp",
     "imageSmall": "assets/cards/jsv4a/268-sm.webp",
     "tcgplayerId": 567669,
-    "foilMap": "assets/foil/maps/sv4pt5/162.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/162-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/162-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/162-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-162",
     "market": 4.46,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-268/large"
@@ -14008,8 +14043,8 @@
     "image": "assets/cards/jsv4a/269.webp",
     "imageSmall": "assets/cards/jsv4a/269-sm.webp",
     "tcgplayerId": 567670,
-    "foilMap": "assets/foil/maps/sv4pt5/163.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/163-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/163-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/163-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-163",
     "market": 0.77,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-269/large"
@@ -14064,8 +14099,8 @@
     "image": "assets/cards/jsv4a/270.webp",
     "imageSmall": "assets/cards/jsv4a/270-sm.webp",
     "tcgplayerId": 567671,
-    "foilMap": "assets/foil/maps/sv4pt5/164.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/164-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/164-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/164-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-164",
     "market": 0.82,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-270/large"
@@ -14123,8 +14158,8 @@
     "image": "assets/cards/jsv4a/271.webp",
     "imageSmall": "assets/cards/jsv4a/271-sm.webp",
     "tcgplayerId": 567672,
-    "foilMap": "assets/foil/maps/sv4pt5/165.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/165-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/165-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/165-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-165",
     "market": 2.38,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-271/large"
@@ -14185,8 +14220,8 @@
     "image": "assets/cards/jsv4a/272.webp",
     "imageSmall": "assets/cards/jsv4a/272-sm.webp",
     "tcgplayerId": 567673,
-    "foilMap": "assets/foil/maps/sv4pt5/166.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/166-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/166-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/166-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-166",
     "market": 1.78,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-272/large"
@@ -14244,8 +14279,8 @@
     "image": "assets/cards/jsv4a/273.webp",
     "imageSmall": "assets/cards/jsv4a/273-sm.webp",
     "tcgplayerId": 567674,
-    "foilMap": "assets/foil/maps/sv4pt5/167.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/167-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/167-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/167-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-167",
     "market": 5.5,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-273/large"
@@ -14301,7 +14336,10 @@
     "imageSmall": "assets/cards/jsv4a/274-sm.webp",
     "tcgplayerId": 567675,
     "market": 0.85,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-274/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-274/large",
+    "foilMap": "assets/foil/maps/sv4pt5/svp070-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/svp070-etch-a1-t1.webp",
+    "foilTwin": "sv4pt5-svp070"
   },
   {
     "id": "jsv4a-275",
@@ -14356,8 +14394,8 @@
     "image": "assets/cards/jsv4a/275.webp",
     "imageSmall": "assets/cards/jsv4a/275-sm.webp",
     "tcgplayerId": 567676,
-    "foilMap": "assets/foil/maps/sv4pt5/168.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/168-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/168-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/168-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-168",
     "market": 0.89,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-275/large"
@@ -14405,8 +14443,8 @@
     "image": "assets/cards/jsv4a/276.webp",
     "imageSmall": "assets/cards/jsv4a/276-sm.webp",
     "tcgplayerId": 567677,
-    "foilMap": "assets/foil/maps/sv4pt5/169.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/169-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/169-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/169-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-169",
     "market": 1.23,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-276/large"
@@ -14455,8 +14493,8 @@
     "image": "assets/cards/jsv4a/277.webp",
     "imageSmall": "assets/cards/jsv4a/277-sm.webp",
     "tcgplayerId": 567678,
-    "foilMap": "assets/foil/maps/sv4pt5/170.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/170-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/170-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/170-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-170",
     "market": 0.99,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-277/large"
@@ -14515,8 +14553,8 @@
     "image": "assets/cards/jsv4a/278.webp",
     "imageSmall": "assets/cards/jsv4a/278-sm.webp",
     "tcgplayerId": 567679,
-    "foilMap": "assets/foil/maps/sv4pt5/171.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/171-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/171-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/171-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-171",
     "market": 1.18,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-278/large"
@@ -14576,8 +14614,8 @@
     "image": "assets/cards/jsv4a/279.webp",
     "imageSmall": "assets/cards/jsv4a/279-sm.webp",
     "tcgplayerId": 567680,
-    "foilMap": "assets/foil/maps/sv4pt5/172.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/172-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/172-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/172-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-172",
     "market": 1.15,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-279/large"
@@ -14634,8 +14672,8 @@
     "image": "assets/cards/jsv4a/280.webp",
     "imageSmall": "assets/cards/jsv4a/280-sm.webp",
     "tcgplayerId": 567681,
-    "foilMap": "assets/foil/maps/sv4pt5/173.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/173-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/173-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/173-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-173",
     "market": 5.0,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-280/large"
@@ -14695,8 +14733,8 @@
     "image": "assets/cards/jsv4a/281.webp",
     "imageSmall": "assets/cards/jsv4a/281-sm.webp",
     "tcgplayerId": 567682,
-    "foilMap": "assets/foil/maps/sv4pt5/174.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/174-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/174-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/174-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-174",
     "market": 9.32,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-281/large"
@@ -14753,8 +14791,8 @@
     "image": "assets/cards/jsv4a/282.webp",
     "imageSmall": "assets/cards/jsv4a/282-sm.webp",
     "tcgplayerId": 567683,
-    "foilMap": "assets/foil/maps/sv4pt5/175.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/175-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/175-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/175-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-175",
     "market": 1.59,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-282/large"
@@ -14813,8 +14851,8 @@
     "image": "assets/cards/jsv4a/283.webp",
     "imageSmall": "assets/cards/jsv4a/283-sm.webp",
     "tcgplayerId": 567684,
-    "foilMap": "assets/foil/maps/sv4pt5/176.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/176-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/176-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/176-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-176",
     "market": 0.97,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-283/large"
@@ -14866,8 +14904,8 @@
     "image": "assets/cards/jsv4a/284.webp",
     "imageSmall": "assets/cards/jsv4a/284-sm.webp",
     "tcgplayerId": 567685,
-    "foilMap": "assets/foil/maps/sv4pt5/177.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/177-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/177-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/177-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-177",
     "market": 0.8,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-284/large"
@@ -14926,8 +14964,8 @@
     "image": "assets/cards/jsv4a/285.webp",
     "imageSmall": "assets/cards/jsv4a/285-sm.webp",
     "tcgplayerId": 567686,
-    "foilMap": "assets/foil/maps/sv4pt5/178.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/178-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/178-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/178-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-178",
     "market": 0.85,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-285/large"
@@ -14975,8 +15013,8 @@
     "image": "assets/cards/jsv4a/286.webp",
     "imageSmall": "assets/cards/jsv4a/286-sm.webp",
     "tcgplayerId": 567687,
-    "foilMap": "assets/foil/maps/sv4pt5/179.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/179-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/179-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/179-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-179",
     "market": 0.77,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-286/large"
@@ -15033,8 +15071,8 @@
     "image": "assets/cards/jsv4a/287.webp",
     "imageSmall": "assets/cards/jsv4a/287-sm.webp",
     "tcgplayerId": 567688,
-    "foilMap": "assets/foil/maps/sv4pt5/180.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/180-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/180-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/180-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-180",
     "market": 6.65,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-287/large"
@@ -15096,8 +15134,8 @@
     "image": "assets/cards/jsv4a/288.webp",
     "imageSmall": "assets/cards/jsv4a/288-sm.webp",
     "tcgplayerId": 567689,
-    "foilMap": "assets/foil/maps/sv4pt5/181.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/181-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/181-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/181-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-181",
     "market": 1.46,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-288/large"
@@ -15145,8 +15183,8 @@
     "image": "assets/cards/jsv4a/289.webp",
     "imageSmall": "assets/cards/jsv4a/289-sm.webp",
     "tcgplayerId": 567690,
-    "foilMap": "assets/foil/maps/sv4pt5/182.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/182-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/182-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/182-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-182",
     "market": 1.27,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-289/large"
@@ -15203,8 +15241,8 @@
     "image": "assets/cards/jsv4a/290.webp",
     "imageSmall": "assets/cards/jsv4a/290-sm.webp",
     "tcgplayerId": 567691,
-    "foilMap": "assets/foil/maps/sv4pt5/183.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/183-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/183-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/183-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-183",
     "market": 1.2,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-290/large"
@@ -15260,8 +15298,8 @@
     "image": "assets/cards/jsv4a/291.webp",
     "imageSmall": "assets/cards/jsv4a/291-sm.webp",
     "tcgplayerId": 567692,
-    "foilMap": "assets/foil/maps/sv4pt5/184.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/184-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/184-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/184-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-184",
     "market": 2.25,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-291/large"
@@ -15318,8 +15356,8 @@
     "image": "assets/cards/jsv4a/292.webp",
     "imageSmall": "assets/cards/jsv4a/292-sm.webp",
     "tcgplayerId": 567694,
-    "foilMap": "assets/foil/maps/sv4pt5/185.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/185-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/185-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/185-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-185",
     "market": 0.98,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-292/large"
@@ -15377,8 +15415,8 @@
     "image": "assets/cards/jsv4a/293.webp",
     "imageSmall": "assets/cards/jsv4a/293-sm.webp",
     "tcgplayerId": 567695,
-    "foilMap": "assets/foil/maps/sv4pt5/186.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/186-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/186-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/186-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-186",
     "market": 1.05,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-293/large"
@@ -15438,8 +15476,8 @@
     "image": "assets/cards/jsv4a/294.webp",
     "imageSmall": "assets/cards/jsv4a/294-sm.webp",
     "tcgplayerId": 567696,
-    "foilMap": "assets/foil/maps/sv4pt5/187.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/187-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/187-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/187-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-187",
     "market": 1.0,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-294/large"
@@ -15488,7 +15526,10 @@
     "imageSmall": "assets/cards/jsv4a/295-sm.webp",
     "tcgplayerId": 567697,
     "market": 0.77,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-295/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-295/large",
+    "foilMap": "assets/foil/maps/sv4pt5/svp071-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/svp071-etch-a1-t1.webp",
+    "foilTwin": "sv4pt5-svp071"
   },
   {
     "id": "jsv4a-296",
@@ -15545,8 +15586,8 @@
     "image": "assets/cards/jsv4a/296.webp",
     "imageSmall": "assets/cards/jsv4a/296-sm.webp",
     "tcgplayerId": 567698,
-    "foilMap": "assets/foil/maps/sv4pt5/188.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/188-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/188-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/188-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-188",
     "market": 0.82,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-296/large"
@@ -15602,8 +15643,8 @@
     "image": "assets/cards/jsv4a/297.webp",
     "imageSmall": "assets/cards/jsv4a/297-sm.webp",
     "tcgplayerId": 567693,
-    "foilMap": "assets/foil/maps/sv4pt5/189.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/189-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/189-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/189-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-189",
     "market": 1.03,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-297/large"
@@ -15660,8 +15701,8 @@
     "image": "assets/cards/jsv4a/298.webp",
     "imageSmall": "assets/cards/jsv4a/298-sm.webp",
     "tcgplayerId": 567699,
-    "foilMap": "assets/foil/maps/sv4pt5/190.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/190-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/190-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/190-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-190",
     "market": 0.91,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-298/large"
@@ -15726,8 +15767,8 @@
     "image": "assets/cards/jsv4a/299.webp",
     "imageSmall": "assets/cards/jsv4a/299-sm.webp",
     "tcgplayerId": 567700,
-    "foilMap": "assets/foil/maps/sv4pt5/191.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/191-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/191-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/191-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-191",
     "market": 2.46,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-299/large"
@@ -15790,8 +15831,8 @@
     "image": "assets/cards/jsv4a/300.webp",
     "imageSmall": "assets/cards/jsv4a/300-sm.webp",
     "tcgplayerId": 567701,
-    "foilMap": "assets/foil/maps/sv4pt5/192.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/192-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/192-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/192-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-192",
     "market": 0.75,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-300/large"
@@ -15857,8 +15898,8 @@
     "image": "assets/cards/jsv4a/301.webp",
     "imageSmall": "assets/cards/jsv4a/301-sm.webp",
     "tcgplayerId": 567702,
-    "foilMap": "assets/foil/maps/sv4pt5/193.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/193-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/193-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/193-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-193",
     "market": 0.72,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-301/large"
@@ -15901,8 +15942,8 @@
     "image": "assets/cards/jsv4a/302.webp",
     "imageSmall": "assets/cards/jsv4a/302-sm.webp",
     "tcgplayerId": 567703,
-    "foilMap": "assets/foil/maps/sv4pt5/194.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/194-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/194-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/194-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-194",
     "market": 1.45,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-302/large"
@@ -15946,8 +15987,8 @@
     "image": "assets/cards/jsv4a/303.webp",
     "imageSmall": "assets/cards/jsv4a/303-sm.webp",
     "tcgplayerId": 567704,
-    "foilMap": "assets/foil/maps/sv4pt5/195.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/195-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/195-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/195-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-195",
     "market": 1.18,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-303/large"
@@ -16010,8 +16051,8 @@
     "image": "assets/cards/jsv4a/304.webp",
     "imageSmall": "assets/cards/jsv4a/304-sm.webp",
     "tcgplayerId": 567705,
-    "foilMap": "assets/foil/maps/sv4pt5/196.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/196-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/196-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/196-etch-t1.webp",
     "foilTwin": "sv4pt5-196",
     "market": 2.46,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-304/large"
@@ -16063,8 +16104,8 @@
     "image": "assets/cards/jsv4a/305.webp",
     "imageSmall": "assets/cards/jsv4a/305-sm.webp",
     "tcgplayerId": 567706,
-    "foilMap": "assets/foil/maps/sv4pt5/197.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/197-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/197-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/197-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-197",
     "market": 1.42,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-305/large"
@@ -16121,8 +16162,8 @@
     "image": "assets/cards/jsv4a/306.webp",
     "imageSmall": "assets/cards/jsv4a/306-sm.webp",
     "tcgplayerId": 567707,
-    "foilMap": "assets/foil/maps/sv4pt5/198.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/198-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/198-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/198-etch-t1.webp",
     "foilTwin": "sv4pt5-198",
     "market": 6.51,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-306/large"
@@ -16176,8 +16217,8 @@
     "image": "assets/cards/jsv4a/307.webp",
     "imageSmall": "assets/cards/jsv4a/307-sm.webp",
     "tcgplayerId": 567708,
-    "foilMap": "assets/foil/maps/sv4pt5/199.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/199-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/199-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/199-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-199",
     "market": 1.41,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-307/large"
@@ -16239,8 +16280,8 @@
     "image": "assets/cards/jsv4a/308.webp",
     "imageSmall": "assets/cards/jsv4a/308-sm.webp",
     "tcgplayerId": 567709,
-    "foilMap": "assets/foil/maps/sv4pt5/200.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/200-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/200-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/200-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-200",
     "market": 0.95,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-308/large"
@@ -16295,8 +16336,8 @@
     "image": "assets/cards/jsv4a/309.webp",
     "imageSmall": "assets/cards/jsv4a/309-sm.webp",
     "tcgplayerId": 567710,
-    "foilMap": "assets/foil/maps/sv4pt5/201.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/201-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/201-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/201-etch-t1.webp",
     "foilTwin": "sv4pt5-201",
     "market": 17.2,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-309/large"
@@ -16356,8 +16397,8 @@
     "image": "assets/cards/jsv4a/310.webp",
     "imageSmall": "assets/cards/jsv4a/310-sm.webp",
     "tcgplayerId": 567711,
-    "foilMap": "assets/foil/maps/sv4pt5/202.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/202-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/202-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/202-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-202",
     "market": 17.47,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-310/large"
@@ -16412,8 +16453,8 @@
     "image": "assets/cards/jsv4a/311.webp",
     "imageSmall": "assets/cards/jsv4a/311-sm.webp",
     "tcgplayerId": 567712,
-    "foilMap": "assets/foil/maps/sv4pt5/203.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/203-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/203-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/203-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-203",
     "market": 1.18,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-311/large"
@@ -16478,8 +16519,8 @@
     "image": "assets/cards/jsv4a/312.webp",
     "imageSmall": "assets/cards/jsv4a/312-sm.webp",
     "tcgplayerId": 567713,
-    "foilMap": "assets/foil/maps/sv4pt5/204.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/204-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/204-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/204-etch-t1.webp",
     "foilTwin": "sv4pt5-204",
     "market": 0.99,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-312/large"
@@ -16535,8 +16576,8 @@
     "image": "assets/cards/jsv4a/313.webp",
     "imageSmall": "assets/cards/jsv4a/313-sm.webp",
     "tcgplayerId": 567714,
-    "foilMap": "assets/foil/maps/sv4pt5/205.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/205-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/205-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/205-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-205",
     "market": 0.91,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-313/large"
@@ -16597,8 +16638,8 @@
     "image": "assets/cards/jsv4a/314.webp",
     "imageSmall": "assets/cards/jsv4a/314-sm.webp",
     "tcgplayerId": 567715,
-    "foilMap": "assets/foil/maps/sv4pt5/206.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/206-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/206-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/206-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-206",
     "market": 0.94,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-314/large"
@@ -16648,8 +16689,8 @@
     "image": "assets/cards/jsv4a/315.webp",
     "imageSmall": "assets/cards/jsv4a/315-sm.webp",
     "tcgplayerId": 567716,
-    "foilMap": "assets/foil/maps/sv4pt5/207.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/207-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/207-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/207-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-207",
     "market": 2.8,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-315/large"
@@ -16710,8 +16751,8 @@
     "image": "assets/cards/jsv4a/316.webp",
     "imageSmall": "assets/cards/jsv4a/316-sm.webp",
     "tcgplayerId": 577564,
-    "foilMap": "assets/foil/maps/sv4pt5/208.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/208-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/208-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/208-etch-t1.webp",
     "foilTwin": "sv4pt5-208",
     "market": 1.44,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-316/large"
@@ -16769,8 +16810,8 @@
     "image": "assets/cards/jsv4a/317.webp",
     "imageSmall": "assets/cards/jsv4a/317-sm.webp",
     "tcgplayerId": 567717,
-    "foilMap": "assets/foil/maps/sv4pt5/209.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/209-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/209-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/209-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-209",
     "market": 14.13,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-317/large"
@@ -16828,8 +16869,8 @@
     "image": "assets/cards/jsv4a/318.webp",
     "imageSmall": "assets/cards/jsv4a/318-sm.webp",
     "tcgplayerId": 567718,
-    "foilMap": "assets/foil/maps/sv4pt5/210.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/210-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/210-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/210-etch-t1.webp",
     "foilTwin": "sv4pt5-210",
     "market": 17.7,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-318/large"
@@ -16891,8 +16932,8 @@
     "image": "assets/cards/jsv4a/319.webp",
     "imageSmall": "assets/cards/jsv4a/319-sm.webp",
     "tcgplayerId": 567719,
-    "foilMap": "assets/foil/maps/sv4pt5/211.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/211-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/211-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/211-etch-t1.webp",
     "foilTwin": "sv4pt5-211",
     "market": 0.98,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-319/large"
@@ -16956,8 +16997,8 @@
     "image": "assets/cards/jsv4a/320.webp",
     "imageSmall": "assets/cards/jsv4a/320-sm.webp",
     "tcgplayerId": 567720,
-    "foilMap": "assets/foil/maps/sv4pt5/212.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/212-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/212-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/212-etch-t1.webp",
     "foilTwin": "sv4pt5-212",
     "market": 0.7,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-320/large"
@@ -17020,7 +17061,10 @@
     "imageSmall": "assets/cards/jsv4a/321-sm.webp",
     "tcgplayerId": 567721,
     "market": 1.49,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-321/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-321/large",
+    "foilMap": "assets/foil/maps/sv4pt5/svp078-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/svp078-etch-a1-t1.webp",
+    "foilTwin": "sv4pt5-svp078"
   },
   {
     "id": "jsv4a-322",
@@ -17079,8 +17123,8 @@
     "image": "assets/cards/jsv4a/322.webp",
     "imageSmall": "assets/cards/jsv4a/322-sm.webp",
     "tcgplayerId": 567722,
-    "foilMap": "assets/foil/maps/sv4pt5/213.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/213-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/213-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/213-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-213",
     "market": 0.72,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-322/large"
@@ -17141,8 +17185,8 @@
     "image": "assets/cards/jsv4a/323.webp",
     "imageSmall": "assets/cards/jsv4a/323-sm.webp",
     "tcgplayerId": 567723,
-    "foilMap": "assets/foil/maps/sv4pt5/214.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/214-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/214-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/214-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-214",
     "market": 0.73,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-323/large"
@@ -17207,7 +17251,10 @@
     "imageSmall": "assets/cards/jsv4a/324-sm.webp",
     "tcgplayerId": 567724,
     "market": 1.07,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-324/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-324/large",
+    "foilMap": "assets/foil/maps/sv4pt5/svp081-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/svp081-etch-a1-t1.webp",
+    "foilTwin": "sv4pt5-svp081"
   },
   {
     "id": "jsv4a-325",
@@ -17268,7 +17315,10 @@
     "imageSmall": "assets/cards/jsv4a/325-sm.webp",
     "tcgplayerId": 567725,
     "market": 0.95,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-325/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-325/large",
+    "foilMap": "assets/foil/maps/sv4pt5/svp084-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/svp084-etch-a1-t1.webp",
+    "foilTwin": "sv4pt5-svp084"
   },
   {
     "id": "jsv4a-326",
@@ -17334,8 +17384,8 @@
     "image": "assets/cards/jsv4a/326.webp",
     "imageSmall": "assets/cards/jsv4a/326-sm.webp",
     "tcgplayerId": 567726,
-    "foilMap": "assets/foil/maps/sv4pt5/215.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/215-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/215-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/215-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-215",
     "market": 1.99,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-326/large"
@@ -17399,8 +17449,8 @@
     "image": "assets/cards/jsv4a/327.webp",
     "imageSmall": "assets/cards/jsv4a/327-sm.webp",
     "tcgplayerId": 567727,
-    "foilMap": "assets/foil/maps/sv4pt5/216.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/216-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/216-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/216-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-216",
     "market": 18.16,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-327/large"
@@ -17469,8 +17519,8 @@
     "image": "assets/cards/jsv4a/328.webp",
     "imageSmall": "assets/cards/jsv4a/328-sm.webp",
     "tcgplayerId": 567728,
-    "foilMap": "assets/foil/maps/sv4pt5/217.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/217-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/217-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/217-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-217",
     "market": 4.84,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-328/large"
@@ -17533,8 +17583,8 @@
     "image": "assets/cards/jsv4a/329.webp",
     "imageSmall": "assets/cards/jsv4a/329-sm.webp",
     "tcgplayerId": 567729,
-    "foilMap": "assets/foil/maps/sv4pt5/218.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/218-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/218-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/218-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-218",
     "market": 0.71,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-329/large"
@@ -17600,7 +17650,10 @@
     "imageSmall": "assets/cards/jsv4a/330-sm.webp",
     "tcgplayerId": 567730,
     "market": 0.66,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-330/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-330/large",
+    "foilMap": "assets/foil/maps/sv4pt5/svp072-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/svp072-etch-a1-t1.webp",
+    "foilTwin": "sv4pt5-svp072"
   },
   {
     "id": "jsv4a-331",
@@ -17661,7 +17714,10 @@
     "imageSmall": "assets/cards/jsv4a/331-sm.webp",
     "tcgplayerId": 567731,
     "market": 12.11,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-331/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-331/large",
+    "foilMap": "assets/foil/maps/sv4pt5/svp074-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/svp074-etch-a1-t1.webp",
+    "foilTwin": "sv4pt5-svp074"
   },
   {
     "id": "jsv4a-332",
@@ -17722,8 +17778,8 @@
     "image": "assets/cards/jsv4a/332.webp",
     "imageSmall": "assets/cards/jsv4a/332-sm.webp",
     "tcgplayerId": 567732,
-    "foilMap": "assets/foil/maps/sv4pt5/219.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/219-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/219-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/219-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-219",
     "market": 1.55,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-332/large"
@@ -17786,7 +17842,10 @@
     "imageSmall": "assets/cards/jsv4a/333-sm.webp",
     "tcgplayerId": 567733,
     "market": 0.72,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-333/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-333/large",
+    "foilMap": "assets/foil/maps/sv4pt5/svp073-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/svp073-etch-a1-t1.webp",
+    "foilTwin": "sv4pt5-svp073"
   },
   {
     "id": "jsv4a-334",
@@ -17837,8 +17896,8 @@
     "image": "assets/cards/jsv4a/334.webp",
     "imageSmall": "assets/cards/jsv4a/334-sm.webp",
     "tcgplayerId": 567734,
-    "foilMap": "assets/foil/maps/sv4pt5/220.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/220-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/220-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/220-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-220",
     "market": 1.17,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-334/large"
@@ -17902,8 +17961,8 @@
     "image": "assets/cards/jsv4a/335.webp",
     "imageSmall": "assets/cards/jsv4a/335-sm.webp",
     "tcgplayerId": 567735,
-    "foilMap": "assets/foil/maps/sv4pt5/221.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/221-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/221-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/221-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-221",
     "market": 1.17,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-335/large"
@@ -17967,8 +18026,8 @@
     "image": "assets/cards/jsv4a/336.webp",
     "imageSmall": "assets/cards/jsv4a/336-sm.webp",
     "tcgplayerId": 567736,
-    "foilMap": "assets/foil/maps/sv4pt5/222.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/222-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/222-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/222-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-222",
     "market": 1.38,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-336/large"
@@ -18033,8 +18092,8 @@
     "image": "assets/cards/jsv4a/337.webp",
     "imageSmall": "assets/cards/jsv4a/337-sm.webp",
     "tcgplayerId": 567737,
-    "foilMap": "assets/foil/maps/sv4pt5/223.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/223-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/223-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/223-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-223",
     "market": 0.64,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-337/large"
@@ -18094,7 +18153,7 @@
     "image": "assets/cards/jsv4a/338.webp",
     "imageSmall": "assets/cards/jsv4a/338-sm.webp",
     "tcgplayerId": 567738,
-    "foilMap": "assets/foil/maps/sv4pt5/224.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/224-a1-t1.webp",
     "foilTwin": "sv4pt5-224",
     "market": 2.44,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-338/large"
@@ -18153,7 +18212,7 @@
     "image": "assets/cards/jsv4a/339.webp",
     "imageSmall": "assets/cards/jsv4a/339-sm.webp",
     "tcgplayerId": 567739,
-    "foilMap": "assets/foil/maps/sv4pt5/225.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/225-a1-t1.webp",
     "foilTwin": "sv4pt5-225",
     "market": 2.25,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-339/large"
@@ -18210,7 +18269,7 @@
     "image": "assets/cards/jsv4a/340.webp",
     "imageSmall": "assets/cards/jsv4a/340-sm.webp",
     "tcgplayerId": 567740,
-    "foilMap": "assets/foil/maps/sv4pt5/226.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/226-a1-t1.webp",
     "foilTwin": "sv4pt5-226",
     "market": 5.68,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-340/large"
@@ -18290,8 +18349,8 @@
     "image": "assets/cards/jsv4a/342.webp",
     "imageSmall": "assets/cards/jsv4a/342-sm.webp",
     "tcgplayerId": 567742,
-    "foilMap": "assets/foil/maps/sv4pt5/228.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/228-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/228-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/228-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-228",
     "market": 0.62,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-342/large"
@@ -18317,8 +18376,8 @@
     "image": "assets/cards/jsv4a/343.webp",
     "imageSmall": "assets/cards/jsv4a/343-sm.webp",
     "tcgplayerId": 577565,
-    "foilMap": "assets/foil/maps/sv4pt5/229.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/229-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/229-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/229-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-229",
     "market": 0.83,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-343/large"
@@ -18344,8 +18403,8 @@
     "image": "assets/cards/jsv4a/344.webp",
     "imageSmall": "assets/cards/jsv4a/344-sm.webp",
     "tcgplayerId": 567743,
-    "foilMap": "assets/foil/maps/sv4pt5/227.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/227-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/227-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/227-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-227",
     "market": 0.44,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-344/large"
@@ -18371,8 +18430,8 @@
     "image": "assets/cards/jsv4a/345.webp",
     "imageSmall": "assets/cards/jsv4a/345-sm.webp",
     "tcgplayerId": 567744,
-    "foilMap": "assets/foil/maps/sv4pt5/230.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/230-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/230-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/230-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-230",
     "market": 0.58,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-345/large"
@@ -18398,8 +18457,8 @@
     "image": "assets/cards/jsv4a/346.webp",
     "imageSmall": "assets/cards/jsv4a/346-sm.webp",
     "tcgplayerId": 567745,
-    "foilMap": "assets/foil/maps/sv4pt5/231.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/231-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/231-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/231-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-231",
     "market": 0.44,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-346/large"
@@ -18463,8 +18522,8 @@
     "image": "assets/cards/jsv4a/347.webp",
     "imageSmall": "assets/cards/jsv4a/347-sm.webp",
     "tcgplayerId": 567746,
-    "foilMap": "assets/foil/maps/sv4pt5/232.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/232-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/232-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/232-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-232",
     "market": 492.25,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-347/large"
@@ -18533,8 +18592,8 @@
     "image": "assets/cards/jsv4a/348.webp",
     "imageSmall": "assets/cards/jsv4a/348-sm.webp",
     "tcgplayerId": 567747,
-    "foilMap": "assets/foil/maps/sv4pt5/233.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/233-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/233-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/233-etch-t1.webp",
     "foilTwin": "sv4pt5-233",
     "market": 129.74,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-348/large"
@@ -18598,8 +18657,8 @@
     "image": "assets/cards/jsv4a/349.webp",
     "imageSmall": "assets/cards/jsv4a/349-sm.webp",
     "tcgplayerId": 567748,
-    "foilMap": "assets/foil/maps/sv4pt5/234.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/234-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/234-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/234-etch-t1.webp",
     "foilTwin": "sv4pt5-234",
     "market": 220.25,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-349/large"
@@ -18625,8 +18684,8 @@
     "image": "assets/cards/jsv4a/350.webp",
     "imageSmall": "assets/cards/jsv4a/350-sm.webp",
     "tcgplayerId": 567749,
-    "foilMap": "assets/foil/maps/sv4pt5/237.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/237-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/237-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/237-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-237",
     "market": 32.9,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-350/large"
@@ -18652,8 +18711,8 @@
     "image": "assets/cards/jsv4a/351.webp",
     "imageSmall": "assets/cards/jsv4a/351-sm.webp",
     "tcgplayerId": 577566,
-    "foilMap": "assets/foil/maps/sv4pt5/238.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/238-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/238-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/238-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-238",
     "market": 4.87,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-351/large"
@@ -18679,8 +18738,8 @@
     "image": "assets/cards/jsv4a/352.webp",
     "imageSmall": "assets/cards/jsv4a/352-sm.webp",
     "tcgplayerId": 567750,
-    "foilMap": "assets/foil/maps/sv4pt5/236.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/236-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/236-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/236-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-236",
     "market": 20.19,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-352/large"
@@ -18706,8 +18765,8 @@
     "image": "assets/cards/jsv4a/353.webp",
     "imageSmall": "assets/cards/jsv4a/353-sm.webp",
     "tcgplayerId": 567751,
-    "foilMap": "assets/foil/maps/sv4pt5/235.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/235-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/235-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/235-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-235",
     "market": 6.66,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-353/large"
@@ -18733,8 +18792,8 @@
     "image": "assets/cards/jsv4a/354.webp",
     "imageSmall": "assets/cards/jsv4a/354-sm.webp",
     "tcgplayerId": 577567,
-    "foilMap": "assets/foil/maps/sv4pt5/239.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/239-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/239-a1-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/239-etch-a1-t1.webp",
     "foilTwin": "sv4pt5-239",
     "market": 13.14,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-354/large"
@@ -18802,8 +18861,8 @@
     "image": "assets/cards/jsv4a/355.webp",
     "imageSmall": "assets/cards/jsv4a/355-sm.webp",
     "tcgplayerId": 567752,
-    "foilMap": "assets/foil/maps/sv4pt5/240.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/240-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/240-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/240-etch-t1.webp",
     "foilTwin": "sv4pt5-240",
     "market": 3.49,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-355/large"
@@ -18864,8 +18923,8 @@
     "image": "assets/cards/jsv4a/356.webp",
     "imageSmall": "assets/cards/jsv4a/356-sm.webp",
     "tcgplayerId": 567753,
-    "foilMap": "assets/foil/maps/sv4pt5/241.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/241-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/241-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/241-etch-t1.webp",
     "foilTwin": "sv4pt5-241",
     "market": 7.18,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-356/large"
@@ -18926,8 +18985,8 @@
     "image": "assets/cards/jsv4a/357.webp",
     "imageSmall": "assets/cards/jsv4a/357-sm.webp",
     "tcgplayerId": 567754,
-    "foilMap": "assets/foil/maps/sv4pt5/242.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/242-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/242-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/242-etch-t1.webp",
     "foilTwin": "sv4pt5-242",
     "market": 4.94,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-357/large"
@@ -18988,8 +19047,8 @@
     "image": "assets/cards/jsv4a/358.webp",
     "imageSmall": "assets/cards/jsv4a/358-sm.webp",
     "tcgplayerId": 567755,
-    "foilMap": "assets/foil/maps/sv4pt5/243.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/243-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/243-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/243-etch-t1.webp",
     "foilTwin": "sv4pt5-243",
     "market": 7.71,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-358/large"
@@ -19053,8 +19112,8 @@
     "image": "assets/cards/jsv4a/359.webp",
     "imageSmall": "assets/cards/jsv4a/359-sm.webp",
     "tcgplayerId": 567756,
-    "foilMap": "assets/foil/maps/sv4pt5/244.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/244-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/244-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/244-etch-t1.webp",
     "foilTwin": "sv4pt5-244",
     "market": 2.94,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-359/large"
@@ -19116,8 +19175,8 @@
     "image": "assets/cards/jsv4a/360.webp",
     "imageSmall": "assets/cards/jsv4a/360-sm.webp",
     "tcgplayerId": 567757,
-    "foilMap": "assets/foil/maps/sv4pt5/245.webp",
-    "etchMap": "assets/foil/maps/sv4pt5/245-etch.webp",
+    "foilMap": "assets/foil/maps/sv4pt5/245-t1.webp",
+    "etchMap": "assets/foil/maps/sv4pt5/245-etch-t1.webp",
     "foilTwin": "sv4pt5-245",
     "market": 5.98,
     "imageRemote": "https://images.scrydex.com/pokemon/sv4a_ja-360/large"
