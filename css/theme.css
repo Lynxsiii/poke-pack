@@ -195,7 +195,7 @@ b, strong { font-weight: 650; }
 }
 /* Badges are small, inert and rare: a square tag on graphite. */
 .soon, .live-tag {
-  padding: 3px 6px; border-radius: 2px; border: 1px solid var(--line);
+  padding: 3px 6px; border-radius: var(--r-tag); border: 1px solid var(--line);
   background: var(--graphite); color: var(--ink); font-size: 12px; font-weight: 600;
 }
 .live-tag { display: inline-flex; align-items: center; gap: 6px; border-color: transparent; background: transparent; padding-inline: 0; color: var(--muted); }
@@ -287,7 +287,7 @@ b, strong { font-weight: 650; }
   border: 1px solid var(--line-2); border-radius: var(--r-sm);
   background: var(--carbon); box-shadow: var(--shadow);
 }
-.nav-more-list .nav-btn { justify-content: flex-start; width: 100%; min-height: 44px; padding: 0 12px; border-radius: 2px; font-size: 15px; color: var(--ink-2); }
+.nav-more-list .nav-btn { justify-content: flex-start; width: 100%; min-height: 44px; padding: 0 12px; border-radius: var(--r-tag); font-size: 15px; color: var(--ink-2); }
 .nav-more-list .nav-btn:hover { background: var(--graphite); color: var(--ink); }
 .nav-more-list .nav-btn.active { background: var(--graphite); color: var(--ink); box-shadow: inset 2px 0 0 var(--red); }
 
@@ -356,7 +356,7 @@ b, strong { font-weight: 650; }
 .lite-sw { position: relative; flex: none; width: 38px; height: 22px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--graphite); }
 .lite-sw::after {
   content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px;
-  border-radius: 2px; background: var(--paper); transition: transform 0.15s var(--ease-out);
+  border-radius: var(--r-tag); background: var(--paper); transition: transform 0.15s var(--ease-out);
 }
 .lite-switch input:checked + .lite-sw { border-color: var(--red); background: var(--red); }
 .lite-switch input:checked + .lite-sw::after { transform: translateX(16px); background: #fff; }
@@ -418,7 +418,7 @@ b, strong { font-weight: 650; }
 }
 .tabbar .nav-more-list .nav-btn {
   flex-direction: row; justify-content: flex-start; gap: 12px;
-  min-height: 48px; padding: 0 12px; border-radius: 2px;
+  min-height: 48px; padding: 0 12px; border-radius: var(--r-tag);
   font-size: 15px; font-weight: 500; text-align: left; white-space: normal;
 }
 /* Friends and the radio, for when the header has no room for their icons. */
@@ -524,7 +524,7 @@ select.filter option { background: var(--carbon); color: var(--ink); }
   background: var(--well);
 }
 .seg-btn, .auth-tab, .friends-tabs button, .pc-range {
-  border: 0; border-radius: 2px; background: transparent; min-height: 38px; padding: 0 14px;
+  border: 0; border-radius: var(--r-tag); background: transparent; min-height: 38px; padding: 0 14px;
   color: var(--muted); font-weight: 600; font-size: 14px; box-shadow: none;
   transition: color 0.14s ease-out, background-color 0.14s ease-out;
 }
@@ -552,7 +552,7 @@ select.filter option { background: var(--carbon); color: var(--ink); }
 
 /* Switches: a square graphite track; red with a white key when on. */
 .switch { border-radius: var(--r-sm); background: var(--graphite); border: 1px solid var(--line); box-shadow: none; }
-.switch::after { border-radius: 2px; background: var(--ink-2); box-shadow: none; }
+.switch::after { border-radius: var(--r-tag); background: var(--ink-2); box-shadow: none; }
 .toggle-row input:checked ~ .switch { background: var(--red); border-color: var(--red); }
 .toggle-row input:checked ~ .switch::after { background: #fff; }
 .check-row input, .radio-vol input { accent-color: var(--red); }
@@ -635,7 +635,7 @@ select.filter option { background: var(--carbon); color: var(--ink); }
 .tlink:hover { color: var(--on-k); }
 /* "In binder": a graphite tag. */
 .own {
-  padding: 3px 5px; border: 1px solid var(--line); border-radius: 2px;
+  padding: 3px 5px; border: 1px solid var(--line); border-radius: var(--r-tag);
   background: var(--graphite); color: var(--ink);
   font-size: 12px; font-weight: 600; line-height: 1; white-space: nowrap;
 }
@@ -670,7 +670,7 @@ select.filter option { background: var(--carbon); color: var(--ink); }
 .chase-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px 10px; margin: 0; padding: 4px 0 0; list-style: none; }
 :is(.chase, .chase-grid) > li { position: relative; min-width: 0; }
 .chase-card { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: pointer; }
-.chase-card:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 6px; }
+.chase-card:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: var(--r); }
 :is(.chase, .chase-grid) .nm { min-height: 36px; margin: 9px 0 0; font-size: 15px; font-weight: 600; line-height: 1.2; overflow-wrap: anywhere; }
 :is(.chase, .chase-grid) .vl { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 4px 6px; margin: 3px 0 0; }
 .chase .price { font-size: 16px; }
@@ -693,7 +693,7 @@ select.filter option { background: var(--carbon); color: var(--ink); }
 }
 .st:hover { background: none; color: var(--ink); }
 .st.active { border-bottom-color: var(--red); color: var(--ink); }
-.st-th { flex: none; display: block; width: 30px; height: 30px; overflow: hidden; border: 1px solid var(--line); border-radius: 2px; background: var(--carbon); }
+.st-th { flex: none; display: block; width: 30px; height: 30px; overflow: hidden; border: 1px solid var(--line); border-radius: var(--r-tag); background: var(--carbon); }
 .st-th picture { display: contents; }
 .st-th img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 34%; }
 .st-th.is-symbol img { padding: 4px; object-fit: contain; }
@@ -714,12 +714,12 @@ select.filter option { background: var(--carbon); color: var(--ink); }
 .keys[hidden] { display: none; }
 .seg-thumb {
   position: absolute; top: 3px; bottom: 3px; left: 3px; width: calc((100% - 6px) / var(--n, 2));
-  border-radius: 2px; background: var(--paper);
+  border-radius: var(--r-tag); background: var(--paper);
   transform: translateX(calc(var(--i, 0) * 100%)); transition: transform 0.14s ease-out;
 }
 .seg-key {
   position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
-  min-width: 0; min-height: 44px; padding: 0 2px; border: 0; border-radius: 2px; background: none; box-shadow: none;
+  min-width: 0; min-height: 44px; padding: 0 2px; border: 0; border-radius: var(--r-tag); background: none; box-shadow: none;
   color: var(--muted); font-size: 13px; font-weight: 600; line-height: 1.1; cursor: pointer;
   transition: color 0.14s ease-out;
 }
@@ -742,7 +742,7 @@ body.no-motion :is(.seg-thumb, .seg-key) { transition: none; }
 @media (max-width: 960px) { .row-btn { padding: 14px 0; } .kv { padding-top: 14px; } }
 .row-btn .th, .row-btn .card-th { flex: none; }
 .row-btn .th picture { display: contents; }
-.row-btn .th img { display: block; width: 30px; height: 55px; object-fit: contain; border-radius: 2px; }
+.row-btn .th img { display: block; width: 30px; height: 55px; object-fit: contain; border-radius: var(--r-tag); }
 .row-btn .card-th { width: 40px; }
 .row-btn .tx { flex: 1; min-width: 0; }
 .row-btn .tx b { display: block; font-size: 15px; font-weight: 600; line-height: 1.25; }
@@ -776,7 +776,7 @@ body.no-motion :is(.seg-thumb, .seg-key) { transition: none; }
 .overlay .spread-head h2 { text-wrap: balance; }
 .spread-card { border-radius: var(--r-sm); }
 /* "New": a red block with white capitals and square corners. */
-.chip { border-radius: 2px; font-weight: 700; font-size: 11px; }
+.chip { border-radius: var(--r-tag); font-weight: 700; font-size: 11px; }
 .chip.new {
   background: var(--red); color: var(--on-red);
   font-family: var(--font-xc); font-size: 13px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
@@ -795,7 +795,7 @@ body.no-motion :is(.seg-thumb, .seg-key) { transition: none; }
    <span class="price-sticker">6 <small>coins</small></span> */
 .price-sticker, .price-tag {
   display: inline-flex; align-items: baseline; gap: 0.18em;
-  padding: 0.22em 0.36em 0.16em; border-radius: 2px;
+  padding: 0.22em 0.36em 0.16em; border-radius: var(--r-tag);
   font-family: var(--font-sc); font-size: 20px; font-weight: 700; line-height: 1;
   letter-spacing: 0; font-variant-numeric: tabular-nums; white-space: nowrap;
   box-shadow: none;
@@ -922,7 +922,7 @@ body.no-motion :is(.ghost, .solid, .buy, .claim, .tab-rip-face) { transition: no
   .hud-me.is-guest .hud-face { background: var(--graphite); padding: 7px; }
   .hud-lv {
     position: absolute; left: 50%; bottom: -4px; transform: translateX(-50%);
-    padding: 2px 5px; border: 1px solid var(--line); border-radius: 2px;
+    padding: 2px 5px; border: 1px solid var(--line); border-radius: var(--r-tag);
     background: var(--graphite); color: var(--paper);
     font-family: var(--font-sc); font-size: 12px; font-weight: 700; line-height: 1; white-space: nowrap;
   }

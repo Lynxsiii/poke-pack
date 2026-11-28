@@ -72,7 +72,7 @@
   min-height: 62px;
   height: 100%;
   padding: 5px 7px 5px;
-  border-radius: 2px;
+  border-radius: var(--r-tag);
   background: var(--label);
   color: var(--print);
   text-decoration: none;
@@ -142,7 +142,7 @@ a.shelf-label:hover .shelf-name { text-decoration: underline; text-underline-off
   width: 100%;
   padding: 18px 6px 6px;
   border: 1px solid rgba(255, 255, 255, 0.26);
-  border-radius: 3px;
+  border-radius: var(--r-tag);
   background: rgb(var(--box-rgb) / 0.04);
   color: inherit;
   cursor: zoom-in;

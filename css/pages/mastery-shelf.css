@@ -9,18 +9,18 @@
 .msh .acct-sec-head p b { color: var(--k); font-family: var(--font-h); font-weight: 700; font-variant-numeric: tabular-nums; }
 .msh-empty .acct-sec-head { margin-bottom: 0; }
 
-.msh-meter { height: 12px; padding: 2.5px; border-radius: 6px; background: var(--k); overflow: hidden; }
-.msh-meter i { display: block; height: 100%; border-radius: 4px; background: var(--hp); }
+.msh-meter { height: 12px; padding: 2.5px; border-radius: var(--r); background: var(--k); overflow: hidden; }
+.msh-meter i { display: block; height: 100%; border-radius: var(--r-tag); background: var(--hp); }
 
 /* The newest set's banner, when the header is not already showing one. */
 .msh-banner { margin: 18px 0 0; }
-.msh-art { display: block; height: 112px; border-radius: 6px; box-shadow: 0 0 0 var(--line-w) var(--k); }
+.msh-art { display: block; height: 112px; border-radius: var(--r); box-shadow: 0 0 0 var(--line-w) var(--k); }
 
 /* The rail: an ink bar along the top of the sheet. Ribbons run up behind it. */
 .msh-row {
   position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 4px;
   margin: 18px 0 0; padding: 0 6px 10px; list-style: none;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); background-image: var(--dots); overflow: hidden;
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); background-image: var(--dots); overflow: hidden;
 }
 .msh-row::before {
   content: ""; position: absolute; z-index: 2; left: 0; right: 0; top: 0; height: 9px;

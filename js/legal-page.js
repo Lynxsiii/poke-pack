@@ -144,7 +144,7 @@ const DOCS = {
 
   legal: {
     title: "Legal",
-    lede: "Who's behind poke-pack.rip, what it isn't, and how to reach us.",
+    lede: "Who runs poke-pack.rip and how to reach us.",
     body: `
       <h2>A fan project</h2>
       <p>${FAN_LINE}</p>

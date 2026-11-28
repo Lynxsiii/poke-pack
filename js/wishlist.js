@@ -17,7 +17,7 @@
      deps.sourceOf(entry)    -> { kind: "pack"|"product"|"none", setId, products: [name] }
      deps.setInfo(setId)     -> { name, symbol } or null
      deps.onChange()         the list changed (the app repaints filters that count hearts) */
-import { loadCardIndex, numberText } from "./search.js?v=7";
+import { loadCardIndex, numberText } from "./search.js?v=9";
 
 const LOCAL_KEY = "pokepack.wishlist";
 const MAX = 500;
@@ -205,7 +205,7 @@ export function initWishlist(deps) {
         <p><b>Nothing hearted yet.</b> Tap the heart on any card, in a set, in search or on the card itself, and it lands here with the set and pack it comes from.</p>
         <button type="button" class="ghost" data-wish-search>Search for a card</button>
       </div>`;
-      root.querySelector("#wish-fact").textContent = "Cards you want, and where to find them.";
+      root.querySelector("#wish-fact").textContent = "";
       return;
     }
     if (!root.querySelector(".wish-list")) {
