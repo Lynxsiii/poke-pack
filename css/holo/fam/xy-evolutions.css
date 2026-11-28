@@ -318,3 +318,101 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evol
   filter: none;
   opacity: 1;
 }
+
+/* ---- Cracked Ice (`xy12-ice`: the theme-deck reprints Pikachu 35 and Mewtwo 51, ids ending -cracked-ice; 2026-11-28) ----
+   They drew as the set's star holo: stars over Pikachu's face, the window darkened (holo check: "no cracked-ice
+   shards"). The deck prints are Cracked Ice: large flat angular shards, each a small silver-blue mirror, over the whole
+   window, Pokemon included. The recipe and textures are bw-tinsel-holo's `bwt-ice` (make_cracked_ice.py), as on
+   xy-sheen-holo's `xysh-ice`: `.foil` the shards in overlay, `.cure` the shards the lamp picks out, colour-dodged. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-ice {
+  --xy12-ice-win: url("/assets/foil/xy-win/evo12-pokemon.webp");
+  --xy12-ice-tint: url("/assets/foil/fam/bw-tinsel-holo/ice-tint-v2.webp");
+  --xy12-ice-facets: url("/assets/foil/fam/bw-tinsel-holo/ice-facets-v2.webp");
+  --xy12-ice-g: calc(var(--pointer-from-left, 0.5) * 50% + var(--pointer-from-top, 0.5) * 50%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-ice .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-ice:not(.lit):not(.settling) .foil {
+  background-color: transparent;
+  background-image: var(--xy12-ice-tint);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: overlay;
+  filter: none;
+  opacity: calc(0.94 * var(--foil-strength, 1));
+  -webkit-mask-image: var(--art), var(--xy12-ice-win);
+  mask-image: var(--art), var(--xy12-ice-win);
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: none;
+  border-radius: 0;
+  transform: none;
+  animation: none;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-ice .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-ice .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-ice .glare::after {
+  display: none;
+  background-image: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 0;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-ice .cure {
+  background-color: transparent;
+  background-image:
+    var(--xy12-ice-facets),
+    linear-gradient(hsl(0, 0%, var(--xy12-ice-g)), hsl(0, 0%, var(--xy12-ice-g)));
+  background-size: 100% 100%, 100% 100%;
+  background-position: center, center;
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: difference, normal;
+  mix-blend-mode: color-dodge;
+  filter: invert(1) brightness(0.5263) contrast(19) brightness(0.42);
+  opacity: calc(var(--card-opacity, 0) * var(--foil-strength, 1));
+  -webkit-mask-image: var(--art), var(--xy12-ice-win);
+  mask-image: var(--art), var(--xy12-ice-win);
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: none;
+  border-radius: 0;
+  transform: none;
+  animation: none;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.fam-xy-evolutions.xy12-ice .glare {
+  background-color: transparent;
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.4) 0%, hsla(0, 0%, 100%, 0.12) 28%, hsla(0, 0%, 100%, 0) 60%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: soft-light;
+  filter: none;
+  opacity: calc(var(--card-opacity, 0) * 0.6);
+  -webkit-mask-image: var(--art);
+  mask-image: var(--art);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  clip-path: none;
+  border-radius: 0;
+}
