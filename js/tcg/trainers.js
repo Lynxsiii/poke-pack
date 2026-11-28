@@ -445,8 +445,9 @@ export const T_OPS = {
   },
   evolveDeck: {
     ready: (ctx, { how = {}, where = "", self = false }) => hasDeck(ctx) && inPlay(ctx.state, ctx.player).some(([slot, spot]) => (where !== "active" || spot === ACTIVE) && (!self || spot === ctx.spot) && mayEvolve(ctx.state, slot, ctx.defs, how)),
-    run(ctx, { how = {}, where = "", self = false, what = "" }) {
-      const at = self ? ctx.spot : null;
+    run(ctx, { how = {}, where = "", self = false, what = "", uid = "" }) {
+      // `uid`: onto that one Pokémon (Dark Awakening's choice).
+      const at = self ? ctx.spot : uid ? (inPlay(ctx.state, ctx.player).find(([slot]) => slot.uid === uid)?.[1] ?? -9) : null;
       const uids = mine(ctx).deck.filter((uid) => (!what || fits(defOf(ctx.state, uid, ctx.defs), what)) && evolveSpots(ctx.state, ctx.player, defOf(ctx.state, uid, ctx.defs), ctx.defs, how, where).some((s) => at == null || s === at));
       askChoose(ctx.state, { player: ctx.player, zone: "deck", what: "evolution", uids, min: 0, max: 1, effect: { op: "evolveFrom", how, ...(where ? { where } : {}), ...(at != null ? { at } : {}) }, shuffle: true });
     },

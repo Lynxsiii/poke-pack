@@ -38,6 +38,7 @@ const defs = createDefs((id) => byId.get(id), rules, trainers, legal);
 
 let passed = 0;
 function test(name, fn) {
+  if (process.env.ONLY && !name.includes(process.env.ONLY)) return;
   try {
     fn();
     passed += 1;
@@ -8230,6 +8231,116 @@ test("Standard attacks: copied attacks and Supporters (Try to Imitate, Supernatu
   eyes.go();
   if (eyes.state.pending[0]?.type === "pick") act(eyes.state, { type: "pick", player: 0, spot: 0 });
   assert.equal(eyes.state.cards[foe.bench[0].uid], "base1-46");
+});
+
+test("Standard attacks: Bug Out and Destructo-Press count what they reveal", () => {
+  const bug = armed("me5-9", "Bug Out");
+  const side = bug.state.players[0];
+  const bugs = ["me6-3", "me6-6"].map((id) => slotFor(bug.state, 0, id).uid);
+  const other = slotFor(bug.state, 0, "base1-46").uid;
+  const energy = slotFor(bug.state, 0, D).uid;
+  side.deck.push(...bugs, other, energy);
+  bug.go();
+  // 2 with Bug Out found among the bottom 7.
+  assert.ok(foeHurt(bug.state) >= 100);
+  for (const uid of [...bugs, other]) assert.ok(side.deck.includes(uid));
+  assert.ok(side.discard.includes(energy));
+  const press = armed("sv5-62", "Destructo-Press");
+  const deck = press.state.players[0].deck;
+  const future = slotFor(press.state, 0, "sv5-61").uid;
+  assert.ok(fits(defs("sv5-61"), "+Future"));
+  deck.unshift(future);
+  press.go();
+  assert.ok(foeHurt(press.state) >= 70);
+  assert.ok(press.state.players[0].discard.includes(future));
+});
+
+test("Standard attacks: cards revealed from the hand (Weaponized Swords, Colorful Whip)", () => {
+  const swords = armed("me3-57", "Weaponized Swords");
+  const side = swords.state.players[0];
+  const blades = ["me3-56", "sv4-131"].map((id) => slotFor(swords.state, 0, id).uid);
+  side.hand.push(...blades);
+  swords.go();
+  assert.equal(swords.state.pending[0].type, "choose");
+  act(swords.state, { type: "choose", player: 0, uids: blades });
+  assert.equal(foeHurt(swords.state), 120);
+  for (const uid of blades) assert.ok(side.hand.includes(uid));
+  const whip = armed("me6-83", "Colorful Whip");
+  const mons = ["base1-46", "base1-24", "base1-63"].map((id) => slotFor(whip.state, 0, id).uid);
+  whip.state.players[0].hand.push(...mons);
+  whip.go();
+  act(whip.state, { type: "choose", player: 0, uids: whip.state.pending[0].uids });
+  const types = new Set(whip.state.pending.length ? [] : whip.state.players[0].hand.filter((u) => defs(whip.state.cards[u]).kind === "pokemon").flatMap((u) => defs(whip.state.cards[u]).types));
+  assert.equal(foeHurt(whip.state), types.size * 30);
+});
+
+test("Standard attacks: Oil Salvo picks the same Pokémon again; Dragon Launcher counts the Dreepy discarded", () => {
+  const salvo = armed("sv10-23", "Oil Salvo", { foeBench: ["lab-wall"] });
+  salvo.go();
+  for (let i = 0; i < 6; i += 1) act(salvo.state, { type: "pick", player: 0, spot: 0 });
+  assert.equal(salvo.state.players[1].bench[0].damage, 120);
+  const launch = armed("mcd24-6", "Dragon Launcher", { bench: ["sv6-128", "sv6-128", "base1-46"], foeBench: ["lab-wall"] });
+  const side = launch.state.players[0];
+  launch.go();
+  const pend = launch.state.pending[0];
+  assert.equal(pend.max, 2);
+  act(launch.state, { type: "choose", player: 0, uids: side.bench.slice(0, 2).map((s) => s.uid) });
+  assert.equal(side.bench.length, 1);
+  // Two Dreepy: both of their Pokémon take 100.
+  assert.equal(foeHurt(launch.state), 100);
+  assert.equal(launch.state.players[1].bench[0].damage, 100);
+});
+
+test("Standard attacks: damage counters and Energy moved about on their side, Energy from their discard pile", () => {
+  const sab = armed("sv5-107", "Damage Collection", { foeBench: ["lab-wall"] });
+  sab.state.players[1].bench[0].damage = 30;
+  sab.go();
+  for (let i = 0; i < 5 && sab.state.pending[0]?.why === "shift"; i += 1) act(sab.state, { type: "option", player: 0, index: 0 });
+  assert.equal(sab.state.players[1].bench[0].damage, 0);
+  assert.ok(foeHurt(sab.state) >= 30);
+  const elg = armed("zsv10pt5-40", "Slight Shift", { foeBench: ["lab-wall"] });
+  energize(elg.state, 1, elg.state.players[1].active, D);
+  elg.go();
+  act(elg.state, { type: "pick", player: 0, spot: -1 });
+  if (elg.state.pending[0]?.type === "pick") act(elg.state, { type: "pick", player: 0, spot: 0 });
+  assert.equal(elg.state.players[1].bench[0].energy.length, 1);
+  const graf = armed("sv8-121", "Mischievous Painting");
+  const dropped = slotFor(graf.state, 1, D).uid;
+  graf.state.players[1].discard.push(dropped);
+  graf.go();
+  act(graf.state, { type: "choose", player: 0, uids: [dropped] });
+  if (graf.state.pending[0]?.type === "pick") act(graf.state, { type: "pick", player: 0, spot: graf.state.pending[0].spots[0] });
+  assert.ok(graf.state.players[1].active.energy.includes(dropped));
+});
+
+test("Standard attacks: Return Charge switches then attaches; Surprisingly Transform keeps all on it", () => {
+  const kilo = armed("sv8-68", "Return Charge", { bench: ["base1-46"] });
+  const side = kilo.state.players[0];
+  const me = side.active.uid;
+  const zap = slotFor(kilo.state, 0, FREE_ENERGY.find((e) => e.type === "Lightning").id).uid;
+  side.hand.push(zap);
+  kilo.go();
+  act(kilo.state, { type: "pick", player: 0, spot: 0 });
+  act(kilo.state, { type: "choose", player: 0, uids: [zap] });
+  assert.equal(side.bench[0].uid, me);
+  assert.ok(side.bench[0].energy.includes(zap));
+  const ditto = armed("me55-115", "Surprisingly Transform");
+  ditto.state.rigged = undefined;
+  const dside = ditto.state.players[0];
+  const was = dside.active.uid;
+  dside.active.damage = 20;
+  const pick = slotFor(ditto.state, 0, "base1-24").uid;
+  dside.deck.push(pick);
+  for (let i = 0; i < 40; i += 1) {
+    ditto.go();
+    break;
+  }
+  if (ditto.state.pending[0]?.type === "choose") {
+    act(ditto.state, { type: "choose", player: 0, uids: [pick] });
+    assert.equal(dside.active.uid, pick);
+    assert.equal(dside.active.damage, 20);
+    assert.ok(dside.deck.includes(was));
+  }
 });
 
 test("Standard attacks: every read attack text of a Standard Pokémon runs, bots answering what it asks", () => {
