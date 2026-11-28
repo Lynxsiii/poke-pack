@@ -21780,5 +21780,17 @@
       "tcgplayerId": 565222,
       "image": "assets/products/jsv5m/boosterBox-v3.webp"
     }
+  ],
+  "jme3": [
+    {
+      "id": "boosterBox",
+      "name": "Booster Box",
+      "kind": "box",
+      "packs": 30,
+      "promos": [],
+      "price": 74.45,
+      "tcgplayerId": 674449,
+      "image": "assets/products/jme3/boosterBox-v3.webp"
+    }
   ]
 }

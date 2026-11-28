@@ -3673,6 +3673,60 @@ export const JP_CYBER_JUDGE = {
     },
   ],
 };
+export const JP_NIHIL_ZERO = {
+  id: "jme3",
+  tcgId: "jme3",
+  lang: "ja",
+  code: "M3",
+  name: "Nihil Zero",
+  edition: "Mega Evolution",
+  era: "Japanese",
+  released: "January 23, 2026",
+  live: true,
+  printedTotal: 80,
+  totalCount: 117,
+  packSize: 5,
+  cost: 2.48,
+  dataFile: "data/jme3.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Japanese, January 2026. Five cards a pack and Mega Zygarde ex, the Japanese Perfect Order.",
+  oddsLine: "ex 1/7 · AR 1/10 · SR 1/37 · SAR 1/150 · MUR 1/200 (estimates)",
+  lede: "Mega Zygarde ex is the Mega Hyper Rare, with Meowth ex and Rosa's Encouragement among the Special Art Rares.",
+  slots: [
+    { pool: "common", count: 2 },
+    { pool: "uncommon", count: 1 },
+    {
+      pool: "art-slot",
+      count: 1,
+      table: [
+        ["reverse", 0.9],
+        ["ir", 0.1],
+      ],
+    },
+    {
+      pool: "rare-slot",
+      count: 1,
+      table: [
+        ["rare", 0.8216],
+        ["double", 0.14],
+        ["ultra", 0.0267],
+        ["sir", 0.0067],
+        ["hyper", 0.005],
+      ],
+    },
+  ],
+  heroIds: ["jme3-117", "jme3-114", "jme3-115", "jme3-113"],
+  wrappers: [
+    {
+      id: "nihil-zero",
+      name: "Nihil Zero",
+      cardId: "jme3-117",
+      tag: "Japan only",
+      art: "assets/packs/jme3/nihil-zero.avif",
+      artFallback: "assets/packs/jme3/nihil-zero.png",
+    },
+  ],
+};
 export const JP_TERASTAL_FESTIVAL = {
   id: "jsv8a",
   tcgId: "jsv8a",
@@ -8312,6 +8366,7 @@ export const PLAYABLE_SETS = [
   JP_FUTURE_FLASH,
   JP_WILD_FORCE,
   JP_CYBER_JUDGE,
+  JP_NIHIL_ZERO,
   JP_151,
   JP_TAG_ALL_STARS,
   BLACK_BOLT,
