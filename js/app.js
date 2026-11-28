@@ -3184,7 +3184,7 @@ function renderBinder() {
   const hint = binderArranging
     ? binderHolding != null
       ? "Now tap the pocket it should go in."
-      : "Tap a card to pick it up, × to take it out (that unlocks it), an empty pocket to add one."
+      : "Tap a card to pick it up, × takes it out and unlocks it, an empty pocket adds one."
     : closed
       ? "Tap the cover to open your binder."
       : wide ? "Use the keys to turn the page. Click a card to look closer." : "Swipe to turn the page. Tap a card to look closer.";
