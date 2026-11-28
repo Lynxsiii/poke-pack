@@ -55,7 +55,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.f
   --svm-pos-a: calc(100% - var(--background-x)) var(--background-y);
   --svm-pos-b: var(--background-x) calc(100% - var(--background-y));
   --svm-break-size: 150% 150%;
-  --svm-band: clamp(0, calc(0.35 + var(--pointer-from-center) * 1.1), 1);
+  /* 2026-11-28: capped at 0.8 and the shared flecks at a third: a pale Pokémon (Lycanroc VMAX) washed white-purple */
+  --svm-band: clamp(0, calc(0.3 + var(--pointer-from-center) * 0.9), 0.8);
+  --shine-glit: 0.2;
   --svm-etch-lit: linear-gradient(rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.42));
   --svm-etch-rest: linear-gradient(rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.62));
   /* where the colour is: round the pointer only, so two or three soft bands cross a large Pokémon with print between

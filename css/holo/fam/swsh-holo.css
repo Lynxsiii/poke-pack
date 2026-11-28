@@ -29,18 +29,19 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-
   /* One cycle of pastel bands, 0.8 of a card width long (26.667% of the 300% layer), as hard-light sources: each channel sits
      within about 0.4 of neutral grey and the three balance, so a band tints the print (one channel screened, another
      multiplied) instead of lifting it to white. Pink, peach, mint, sky, lavender, gold, silver gaps between. */
+  /* 2026-11-28: every band pulled 38% toward the silver: the saturated set read as a magenta / green wash */
   --swh-bands: repeating-linear-gradient(93deg,
     rgb(134, 135, 139) 0.0%,
-    rgb(220, 96, 178) 2.56%,
-    rgb(214, 160, 104) 4.8%,
+    rgb(187, 111, 163) 2.56%,
+    rgb(184, 150, 117) 4.8%,
     rgb(134, 135, 139) 7.2%,
-    rgb(96, 205, 160) 10.4%,
-    rgb(92, 165, 222) 13.04%,
+    rgb(110, 178, 152) 10.4%,
+    rgb(108, 154, 190) 13.04%,
     rgb(134, 135, 139) 15.6%,
-    rgb(172, 112, 226) 18.4%,
-    rgb(220, 96, 178) 20.48%,
+    rgb(158, 121, 193) 18.4%,
+    rgb(187, 111, 163) 20.48%,
     rgb(134, 135, 139) 22.72%,
-    rgb(214, 186, 92) 24.64%,
+    rgb(184, 167, 110) 24.64%,
     rgb(134, 135, 139) 26.67%);
   --swh-flecks: url("/assets/foil/glitter-flecks.webp");
 }
@@ -55,7 +56,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-
   background-blend-mode: soft-light, normal;
   filter: none;
   mix-blend-mode: hard-light;
-  opacity: calc((0.32 + var(--card-opacity, 0) * 0.43) * var(--foil-strength, 1));
+  opacity: calc((0.3 + var(--card-opacity, 0) * 0.36) * var(--foil-strength, 1));
   animation: none;
 }
 /* Where the foil shows through: the scan and the foil map (maps.css) and, new here, the print's own lightness. Ink sits
@@ -116,7 +117,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-
 /* The hot spot: away from the light the foil goes back to neutral grey (plain lines, no colour). */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo.fam-swsh-holo .foil::after {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x, 50%) var(--pointer-y, 50%),
-    rgba(132, 133, 136, 0) 0%, rgba(132, 133, 136, 0.05) 35%, rgba(132, 133, 136, 0.35) 80%, rgba(132, 133, 136, 0.45) 100%);
+    rgba(132, 133, 136, 0) 0%, rgba(132, 133, 136, 0.08) 30%, rgba(132, 133, 136, 0.5) 70%, rgba(132, 133, 136, 0.66) 100%);
   background-size: 100% 100%;
 }
 /* The varnish: a neutral white gloss at the pointer, about half the era's. */
