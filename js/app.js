@@ -5703,6 +5703,12 @@ function applySettings() {
   document.body.classList.toggle("no-tilt", !tilt || Boolean(lite));
   document.body.classList.toggle("no-stamps", !stamps);
   document.body.classList.toggle("no-motion", !motion || Boolean(lite));
+  // The loading screen reads this before anything else runs (index.html), so it can lie still too.
+  try {
+    localStorage.setItem("pp-calm", !motion || lite ? "1" : "0");
+  } catch {
+    /* private mode */
+  }
   document.body.classList.toggle("no-flash", !flash || Boolean(lite));
   document.body.style.setProperty("--foil-strength", FOIL_STRENGTH[foil] ?? 1);
   document.body.style.setProperty("--binder-min", BINDER_MIN[binder] ?? BINDER_MIN.cosy);
@@ -11254,7 +11260,11 @@ const vaultPage = initVault({
   toast,
 });
 
+// The loading screen's percentage (index.html, ppBoot): boot reports each step as it finishes.
+const bootAt = (step) => window.ppBoot?.at(step);
+
 async function boot() {
+  bootAt(1); // every script is in
   try {
     // The session is asked for alongside the shop files, not after them (one round trip less before first paint);
     // it is still applied after them, as before.
@@ -11266,7 +11276,9 @@ async function boot() {
       /* only a head start */
     }
     await Promise.all([loadSealedPrices(), loadPatchNotes(), loadGearCatalog()]);
+    bootAt(2); // shop files
     await refreshSession(me);
+    bootAt(3); // who is signed in
     // Back from Discord's consent screen: link it (js/account-security.js), then land on Security.
     finishDiscordReturn().catch(() => {});
     // Friends and requests load now rather than on the next 5s poll, so the
@@ -11279,12 +11291,14 @@ async function boot() {
       const saved = state.activeSetId || DEFAULT_SET_ID;
       if (saved === linkedSet || !(await activateSet(saved))) await activateSet(DEFAULT_SET_ID);
     }
+    bootAt(4); // the set's cards
     applySettings();
     renderHeader();
     scheduleDailyTick();
     const back = new Image();
     back.src = backSrc();
     await routeFromLocation();
+    bootAt(5); // the page is drawn
 
     // Not awaited: the page is usable without it, and it refreshes home when done.
     loadAllSets();
@@ -11319,6 +11333,7 @@ function revealSite() {
   const go = () => {
     document.body.classList.add("is-ready");
     document.body.classList.remove("is-booting");
+    window.ppBoot?.paint?.(); // the loading screen ends on 100%
   };
   if (reduceMotion()) {
     go();

@@ -44,9 +44,15 @@ button { cursor: pointer; touch-action: manipulation; }
 img { max-width: 100%; display: block; }
 .hidden { display: none !important; }
 
-/* The boot veil: the dotted ground, the mark in its ink ring, and a small
-   slanted ink plate that runs to and fro under it while the app loads. It
-   fades once js/app.js marks the body ready. Transform and opacity only. */
+/* The boot veil (the loading screen): the three cards of the logo lie face
+   down and turn over one by one to spell R I P, over the site's name and a
+   percentage. The number is real: the inline scripts in index.html count the
+   site's script files as they arrive (0 to 70) and js/app.js reports each
+   step of its start-up (70 to 100). The veil fades once app.js marks the body
+   ready. Drawn in CSS, no pictures. Transform and opacity only; under Lite,
+   Reduce Motion or motion switched off (html[data-calm], set before first
+   paint from the pp-calm key that applySettings keeps) the cards lie still,
+   face up, and the veil cuts instead of fading. */
 .boot-veil {
   position: fixed;
   inset: 0;
@@ -55,41 +61,95 @@ img { max-width: 100%; display: block; }
   place-content: center;
   justify-items: center;
   gap: 22px;
-  background-color: var(--bg, #eef2f3);
-  background-image: var(--dots, radial-gradient(rgb(20 23 27 / 0.09) 1.6px, transparent 1.7px));
-  background-size: 14px 14px;
+  padding-bottom: 8vh;
+  background-color: var(--bg, #0d0d0e);
+  background-image: var(--dots, none);
+  background-size: var(--dots-size, 14px 14px);
+  color: var(--k, #ffffff);
   pointer-events: auto;
   opacity: 1;
-  transition: opacity 0.4s ease, visibility 0.4s ease;
+  transition: opacity 0.24s ease 0.1s, visibility 0s linear 0.34s;
 }
-.boot-veil::before {
-  content: "";
-  width: 76px;
-  height: 76px;
-  border-radius: 16px;
-  background: #14171b url("../assets/mark-v3.png") center / cover no-repeat;
-  box-shadow: 0 0 0 2.5px var(--k, #14171b), var(--drop, 6px 8px 0 rgb(0 40 50 / 0.2));
-  animation: boot-mark 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+/* The theme's slanted bands, as behind the page (css/rotom.css html::before). */
+.boot-veil::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--ground-art, none); }
+.boot-fan { display: flex; align-items: center; font-size: clamp(72px, 24vw, 104px); line-height: 1; }
+.boot-slot { display: block; flex: none; perspective: 6em; }
+.boot-slot:nth-child(1) { transform: rotate(-13deg) translateY(0.08em); }
+.boot-slot:nth-child(2) { margin-left: -0.1em; z-index: 1; transform: translateY(-0.04em); }
+.boot-slot:nth-child(3) { margin-left: -0.1em; transform: rotate(13deg) translateY(0.08em); }
+.boot-deal, .boot-flip { display: block; }
+.boot-flip { position: relative; width: 0.72em; height: 1em; animation: boot-flip 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+.boot-card {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 0.09em;
+  border: 0.055em solid #ffffff;
+  background:
+    repeating-linear-gradient(118deg, rgb(255 255 255 / 0.16) 0 0.03em, transparent 0.03em 0.11em),
+    radial-gradient(circle at 50% 38%, #ff5d66 0, #e3202b 55%, #b3121b 100%);
+  box-shadow: 0 0 0 0.03em #14171b, 0.07em 0.08em 0 rgb(0 0 0 / 0.42);
+  font-style: normal;
+  animation: boot-face 2.5s step-end infinite;
 }
-.boot-veil::after {
-  content: "";
-  width: 34px;
-  height: 12px;
-  border-radius: 3px;
-  background: var(--k, #14171b);
-  box-shadow: -7px 0 0 var(--yel, #ffd21f);
-  transform: translateX(-34px) skewX(-14deg);
-  animation: boot-run 0.9s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+.boot-card u {
+  margin-left: -0.06em;
+  color: #ffffff;
+  font: italic 800 0.6em/1 "Kanit", "Arial Black", sans-serif;
+  text-decoration: none;
+  -webkit-text-stroke: 0.14em #14171b;
+  paint-order: stroke fill;
 }
-@keyframes boot-mark { from { opacity: 0; transform: translateY(10px) scale(0.92); } }
-@keyframes boot-run { to { transform: translateX(34px) skewX(-14deg); } }
+/* The back: an ink card with the slab's slanted stripe. It is drawn mirrored
+   because it shows while the card is turned away. */
+.boot-back {
+  background: linear-gradient(76deg, transparent 0 38%, var(--slab, #e3202b) 38% 62%, transparent 62%), #14171b;
+  animation-name: boot-back;
+}
+.boot-slot:nth-child(2) .boot-flip, .boot-slot:nth-child(2) .boot-card { animation-delay: 0.13s; }
+.boot-slot:nth-child(3) .boot-flip, .boot-slot:nth-child(3) .boot-card { animation-delay: 0.26s; }
+@keyframes boot-flip {
+  0% { transform: rotateY(180deg); }
+  7% { transform: translateY(-0.1em) rotateY(90deg); }
+  14%, 74% { transform: rotateY(0deg); }
+  81% { transform: translateY(-0.1em) rotateY(90deg); }
+  88%, 100% { transform: rotateY(180deg); }
+}
+@keyframes boot-face { 0% { opacity: 0; } 7% { opacity: 1; } 81%, 100% { opacity: 0; } }
+@keyframes boot-back { 0% { opacity: 1; } 7% { opacity: 0; } 81%, 100% { opacity: 1; } }
+.boot-name { font: italic 800 28px/1 "Kanit", "Arial Black", sans-serif; letter-spacing: 0.01em; }
+.boot-meter { display: flex; align-items: center; gap: 12px; }
+.boot-bar { display: block; width: 132px; height: 10px; overflow: hidden; background: var(--rule, #35353a); transform: skewX(-14deg); }
+.boot-bar i { display: block; height: 100%; background: var(--yel, #ff3640); transform: scaleX(0); transform-origin: 0 50%; transition: transform 0.18s linear; }
+.boot-meter b {
+  min-width: 3.1em;
+  font: italic 800 20px/1 "Kanit", "Arial Black", sans-serif;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
 body.is-ready .boot-veil {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
 }
-body.is-ready .boot-veil::after { animation-play-state: paused; }
-@media (prefers-reduced-motion: reduce) { .boot-veil::before, .boot-veil::after { animation: none; } .boot-veil::after { transform: skewX(-14deg); } }
+/* Ready: the three cards are dealt off the top while the veil fades. */
+body.is-ready .boot-flip, body.is-ready .boot-card { animation-play-state: paused; }
+body.is-ready .boot-deal { transition: transform 0.32s cubic-bezier(0.5, 0, 0.9, 0.5); }
+body.is-ready .boot-slot:nth-child(1) .boot-deal { transform: translate(-0.9em, -5.4em) rotate(-30deg); }
+body.is-ready .boot-slot:nth-child(2) .boot-deal { transform: translateY(-5.8em); transition-delay: 0.04s; }
+body.is-ready .boot-slot:nth-child(3) .boot-deal { transform: translate(0.9em, -5.4em) rotate(30deg); transition-delay: 0.08s; }
+html[data-calm] .boot-flip, html[data-calm] .boot-card { animation: none; }
+html[data-calm] .boot-back { opacity: 0; }
+html[data-calm] .boot-veil, html[data-calm] .boot-deal, html[data-calm] .boot-bar i { transition: none !important; }
+html[data-calm] body.is-ready .boot-deal { transform: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .boot-flip, .boot-card { animation: none; }
+  .boot-back { opacity: 0; }
+  .boot-veil, .boot-deal, .boot-bar i { transition: none !important; }
+  body.is-ready .boot-deal { transform: none !important; }
+}
 
 .noise {
   pointer-events: none;
