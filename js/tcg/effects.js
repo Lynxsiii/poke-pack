@@ -840,6 +840,46 @@ export const OPS = {
     events.push({ t: "discard", p: player, uids: gone, from: "hand" });
     ctx.hit.paid = [...(ctx.hit.paid || []), ...gone];
   },
+  /**
+   * A lock on a whole side for one turn (engine.js reads side.sideLocks): "attack" (`mine`: your own next turn, "your
+   * Pokémon can't attack"), "lowAttack" (their Pokémon with k or less Energy can't attack), "trainerFlip" (Quaking Fist).
+   */
+  sideLock(ctx, { kind, mine = false, k = 0 }) {
+    const p = mine ? ctx.player : other(ctx.player);
+    const side = ctx.state.players[p];
+    side.sideLocks = { ...(side.sideLocks || {}), [kind]: { turn: ctx.state.turn + (mine ? 2 : 1), ...(k ? { k } : {}) } };
+    ctx.events.push({ t: "lock", p, kinds: [kind] });
+  },
+  /** "Use the effect of that card as the effect of this attack": a Supporter off the top of the deck, or one in their hand. */
+  useSupporter(ctx, { from }) {
+    const { state, player, defs, events } = ctx;
+    const usable = (uid) => {
+      const def = defOf(state, uid, defs);
+      return def.kind === "trainer" && def.sub === "supporter" && def.playable && trainerReady(def.fx, trainerCtx(ctx));
+    };
+    if (from === "deckTop") {
+      const own = state.players[player];
+      const top = own.deck.splice(0, 1);
+      if (!top.length) return;
+      own.discard.push(...top);
+      events.push({ t: "mill", p: player, uids: top });
+      if (usable(top[0])) OPS.trainer(ctx, { steps: defOf(state, top[0], defs).fx });
+      return;
+    }
+    const hand = state.players[other(player)].hand.slice();
+    if (!hand.length) return;
+    events.push({ t: "reveal-hand", p: other(player), uids: hand });
+    const names = [...new Map(hand.filter(usable).map((uid) => [defOf(state, uid, defs).name, uid])).values()];
+    if (!names.length) return;
+    state.pending.push({ type: "option", player, why: "supporter", prompt: "Use the effect of one of their Supporter cards?", labels: [...names.map((uid) => defOf(state, uid, defs).name), "None"], options: [...names.map((uid) => [{ op: "fx", steps: [{ op: "trainer", steps: defOf(state, uid, defs).fx }], uid: ctx.slot.uid }]), []] });
+  },
+  /** "Devolve 1 of your opponent's evolved Pokémon": the attacker picks which; the top card goes to their hand. */
+  devolveFoeAny(ctx) {
+    const { state, player, defs } = ctx;
+    const foe = other(player);
+    const spots = inPlay(state, foe).filter(([slot, spot]) => slot.under.length && !(spot === ACTIVE && ctx.shielded) && !warded(state, slot, { player, src: "attack" }, defs) && defOf(state, slot.uid, defs).stage === "evolution").map(([, spot]) => spot);
+    if (spots.length) askPick(state, { player, side: foe, spots, left: 1, effect: { op: "devolve" } });
+  },
   /** "Put 6 damage counters on each Pokémon that has an Ability (both yours and your opponent's)". */
   countersAll(ctx, { n, ability = false }) {
     const { state, player, defs, events } = ctx;
@@ -1086,15 +1126,32 @@ export const OPS = {
    * "Choose 1 of your opponent's Active Pokémon's attacks and use it as this attack": its damage and its effects,
    * as if it were the attacker's own (`tera`: only a Tera Pokémon's). A GX attack copied counts as this player's.
    */
-  copyAttack(ctx, { tera = false, any = false, bench = false, who = "", free = false, paid = false }) {
+  copyAttack(ctx, { tera = false, any = false, bench = false, who = "", free = false, paid = false, foeTop = 0, optional = false, milled = false }) {
     const { state, player, defs } = ctx;
     // A coin before it said the attack does nothing: there is nothing to copy (the damage step still follows, and does nothing).
     if (ctx.hit.cancelled) return;
     const target = state.players[other(player)].active;
+    // `foeTop`: "Reveal the top 10 cards of your opponent's deck ... a Pokémon you find there" (shuffled back after);
+    // `milled`: "Discard the top card of your deck, and if that card is a Pokémon that doesn't have a Rule Box".
+    let cards = null;
+    if (foeTop) {
+      const foeSide = state.players[other(player)];
+      cards = foeSide.deck.slice(0, foeTop);
+      if (cards.length) ctx.events.push({ t: "reveal", p: other(player), uids: cards.slice() });
+      shuffle(state, foeSide.deck);
+    } else if (milled) {
+      const own = state.players[player];
+      const top = own.deck.splice(0, 1);
+      if (!top.length) return;
+      own.discard.push(...top);
+      ctx.events.push({ t: "mill", p: player, uids: top });
+      const def = defOf(state, top[0], defs);
+      cards = def.kind === "pokemon" && !def.rule ? top : [];
+    }
     // `any`: "Choose 1 of your opponent's Pokémon's attacks": their Benched Pokémon's too.
     // `bench`: "Choose 1 of your Benched Fusion Strike Pokémon's attacks" (`who` the kind, trainers.js fits).
     const from = bench ? state.players[player].bench : any ? inPlay(state, other(player)).map(([slot]) => slot) : target ? [target] : [];
-    const mons = from.map((slot) => defOf(state, slot.uid, defs)).filter((def) => (!tera || def.tera) && (!who || fits(def, who)));
+    const mons = (cards ? cards.map((uid) => defOf(state, uid, defs)).filter((def) => def.kind === "pokemon") : from.map((slot) => defOf(state, slot.uid, defs))).filter((def) => (!tera || def.tera) && (!who || fits(def, who)));
     const side = state.players[player];
     const can = [];
     const seen = new Set();
@@ -1109,7 +1166,8 @@ export const OPS = {
     if (!can.length) return;
     // `free`: "except for ... anything else required in order to use that attack, such as discarding Energy cards".
     const extra = free ? { free } : {};
-    if (can.length === 1) OPS.useAttack(ctx, { card: can[0].card, index: can[0].index, ...extra });
+    if (can.length === 1 && !optional) OPS.useAttack(ctx, { card: can[0].card, index: can[0].index, ...extra });
+    else if (optional) state.pending.push({ type: "option", player, why: "copy", prompt: "Choose an attack to use, or none.", labels: [...can.map((c) => c.name), "None"], options: [...can.map((c) => [{ op: "fx", steps: [{ op: "useAttack", card: c.card, index: c.index, ...extra }], uid: ctx.slot.uid, hit: ctx.hit, atk: ctx.atk }]), []] });
     else state.pending.push({ type: "option", player, why: "copy", prompt: "Choose the attack to use.", labels: can.map((c) => c.name), options: can.map((c) => [{ op: "fx", steps: [{ op: "useAttack", card: c.card, index: c.index, ...extra }], uid: ctx.slot.uid, hit: ctx.hit, atk: ctx.atk }]) });
     // This attack's own damage doesn't follow: the copied one's has (or will, once it is chosen).
     ctx.detached = true;
@@ -3594,6 +3652,32 @@ const BATCH_STD3 = [
   [/^Search your deck for up to (\d+) Basic (\w+) Energy cards and attach them to this Pokémon\. Then, shuffle your deck\. If you attached Energy to a Pokémon in this way, this Pokémon is now Poisoned\.$/, (m) => fromDeck([{ op: "fetchEnergy", what: `basicEnergy:${m[2]}`, n: Number(m[1]), to: "self", poison: true }])],
 ];
 PATTERNS.push(...BATCH_STD3);
+
+/** The last Standard attacks, batch 4: effects that last a turn, attacks and Supporters used as this attack. */
+const BATCH_STD4 = [
+  [/^At the end of your opponent's next turn, discard the Defending Pokémon and all attached cards\.$/, () => [mark("doomDiscard", { on: "foe" })]],
+  [/^During your next turn, your Pokémon can't attack\. \(This includes new Pokémon that come into play\.\)$/, () => [{ op: "sideLock", when: "after", kind: "attack", mine: true }]],
+  [/^During your opponent's next turn, Pokémon that have (\d+) or less Energy attached can't attack\. \(This includes new Pokémon that come into play\.\)$/, (m) => [{ op: "sideLock", when: "after", kind: "lowAttack", k: Number(m[1]) }]],
+  [/^During your opponent's next turn, they can't play any Pokémon from their hand to evolve their Pokémon\.$/, () => [{ op: "lockHand", when: "after", kinds: ["evolve"] }]],
+  [/^During your opponent's next turn, Energy cards can't be attached from your opponent's hand to that Pokémon\.$/, () => [mark("noEnergy", { on: "foe" })]],
+  [/^During your opponent's next turn, whenever they attach an Energy card from their hand to the Defending Pokémon, (?:place|put) (\d+) damage counters on that Pokémon\.$/, (m) => [mark("zapAttach", { on: "foe", n: Number(m[1]) * 10 })]],
+  [/^During your opponent's next turn, whenever they try to use a Trainer card from their hand, they flip a coin\. If tails, your opponent discards that Trainer card instead of using it\.$/, () => [{ op: "sideLock", when: "after", kind: "trainerFlip" }]],
+  [new RegExp(`^The Defending Pokémon's Weakness is now ${POKE_TYPE} until the end of your next turn\\. \\(Apply Weakness as x2\\.\\)$`), (m) => [mark("weakAs", { on: "foe", mine: true, name: m[1] })]],
+  [new RegExp(`^Until the end of your next turn, the Defending Pokémon's Weakness is now ${POKE_TYPE}\\. \\(The amount of Weakness doesn't change\\.\\)$`), (m) => [mark("weakAs", { on: "foe", mine: true, name: m[1], from: "keep" })]],
+  // Attacks and Supporters used as this attack.
+  [/^Flip a coin\. If heads, choose 1 of your opponent's Active Pokémon's attacks and use it as this attack\.$/, () => [{ op: "flipOrNothing", when: "before" }, { op: "copyAttack", when: "before" }]],
+  [/^If you have no cards in your hand, choose an attack from 1 of your opponent's Pokémon in play and use it as this attack\.$/, () => [{ op: "cancelIf", when: "before", test: "hands", how: "none", not: true }, { op: "copyAttack", when: "before", any: true }]],
+  [/^Reveal the top (\d+) cards of your opponent's deck\. You may choose an attack from a Pokémon you find there and use it as this attack\. Shuffle the revealed cards into your opponent's deck\.$/, (m) => [{ op: "copyAttack", when: "before", foeTop: Number(m[1]), optional: true }]],
+  [/^Discard the top card of your deck, and if that card is a Pokémon that doesn't have a Rule Box, choose 1 of its attacks and use it as this attack\. \(Pokémon ex, Pokémon V, etc\. have Rule Boxes\.\)$/, () => [{ op: "copyAttack", when: "before", milled: true }]],
+  [/^Discard the top card of your deck, and if that card is a Supporter card, use the effect of that card as the effect of this attack\.$/, () => [{ op: "useSupporter", when: "after", from: "deckTop" }]],
+  [/^Your opponent reveals their hand\. You may use the effect of a Supporter card you find there as the effect of this attack\.$/, () => [{ op: "useSupporter", when: "after", from: "foeHand" }]],
+  // Switching first.
+  [/^Switch out your opponent's Active Pokémon to the Bench\. \(Your opponent chooses the new Active Pokémon\.\) If you do, this attack does (\d+) damage to the new Active Pokémon\.$/, (m) => [{ op: "cancelIf", when: "before", test: "foeBenchEmpty" }, { op: "trainer", when: "before", steps: [{ op: "foeSwitch" }] }, { op: "setDamage", when: "before", n: Number(m[1]) }]],
+  [/^Switch in 1 of your opponent's Benched Pokémon to the Active Spot\. If you do, this attack does (\d+) damage to the new Active Pokémon\. If you didn't play ([A-Z][\w'.é-]*(?: [A-Z][\w'.é-]*)*) from your hand during this turn, this attack does nothing\.$/, (m) => [{ op: "cancelIf", when: "before", test: "played", what: `trainer=${m[2]}`, not: true }, { op: "cancelIf", when: "before", test: "foeBenchEmpty" }, { op: "trainer", when: "before", steps: [{ op: "gust" }] }, { op: "setDamage", when: "before", n: Number(m[1]) }]],
+  [/^You may put (\d+) Energy attached to your opponent's Active Stage (1|2) Pokémon into their hand\.$/, (m) => [{ op: "when", when: "after", test: "foeLine", line: Number(m[2]), steps: [{ op: "may", steps: [{ op: "foeEnergyToHand", n: Number(m[1]) }], prompt: `Put ${m[1]} Energy attached to their Active Pokémon into their hand?` }] }]],
+  [/^Devolve 1 of your opponent's evolved Pokémon by putting the highest Stage Evolution card on it into your opponent's hand\.$/, () => [{ op: "devolveFoeAny", when: "after" }]],
+];
+PATTERNS.push(...BATCH_STD4);
 
 /** Basic Pokémon an old search puts onto the Bench, as trainers.js fits reads them, or "". */
 function benchWhat(words) {

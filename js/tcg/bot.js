@@ -377,12 +377,17 @@ function thinkAction(state, player, defs) {
     if (waiting.why === "mayDo") return simulating ? actions[1] : best(state, player, actions, defs);
     // "Choose 1 of your opponent's Active Pokémon's attacks and use it as this attack": the one that hits hardest.
     if (waiting.why === "copy") {
+      // "None" (an optional copy) is worth nothing.
       const hits = waiting.options.map((steps) => {
-        const use = steps[0].steps[0];
-        return defs(use.card).attacks[use.index].damage;
+        const use = steps[0]?.steps[0];
+        return use ? defs(use.card).attacks[use.index].damage : -1;
       });
       return actions[hits.indexOf(Math.max(...hits))];
     }
+    // A Supporter of theirs to use as this attack: the first one (any is better than none).
+    if (waiting.why === "supporter") return actions[0];
+    // Bring Down with a tie: one of theirs before one of yours.
+    if (waiting.why === "koLeast") return actions[Math.max(0, waiting.labels.findIndex((l) => l.startsWith("Their")))];
     // Rock-Paper-Scissors: a throw that can't be read off the table (not the other player's, which it doesn't look at).
     if (waiting.why === "rps") {
       const h = Math.imul((state.rng ^ Math.imul(player + 1, 0x9e3779b1) ^ Math.imul(state.rps?.round || 0, 0x85ebca6b)) | 0, 0xc2b2ae35);
