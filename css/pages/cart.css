@@ -13,7 +13,7 @@
 .cart-link b {
   position: absolute; top: 2px; right: -2px; display: grid; place-items: center; min-width: 20px; height: 19px; padding: 0 5px;
   border: 2px solid var(--box); border-radius: var(--r-tag); background: var(--k); color: var(--yel-k);
-  font: italic 800 11.5px/1 var(--font-xc); font-variant-numeric: tabular-nums;
+  font: 700 11.5px/1 var(--font-h); font-variant-numeric: tabular-nums;
 }
 .cart-link b.is-pop { animation: cart-pop 0.36s var(--ease-pop); }
 @keyframes cart-pop { 0% { transform: scale(1); } 40% { transform: scale(1.45) rotate(-8deg); } 100% { transform: scale(1); } }
@@ -187,7 +187,7 @@
 .ct-lines li, .ct-row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 0; padding: 3px 0; color: var(--k-2); font-size: 13.5px; font-weight: 700; }
 .ct-nm { min-width: 0; overflow-wrap: anywhere; }
 .ct-v, .ct-row > span:last-child { flex: none; color: var(--k); font: 700 15px var(--font-h); font-variant-numeric: tabular-nums; }
-.ct-tag { margin-left: 4px; padding: 0 6px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k); font: italic 700 11px/1.5 var(--font-h); }
+.ct-tag { margin-left: 4px; padding: 0 6px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k); font: 700 11px/1.5 var(--font-h); }
 .ct-sums { padding: 6px 0; border-top: 1.5px solid var(--rule); }
 .ct-total { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0; padding: 10px 0; border-top: var(--line-w) solid var(--k); border-bottom: var(--line-w) solid var(--k); }
 .ct-total span { font: italic 800 20px var(--font-xc); }

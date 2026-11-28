@@ -1,5 +1,6 @@
 import { PLAYABLE_SETS, sealedOffers, promoOffers, offerPackSets, money, sellValue } from '../js/catalog.js';
-import { ripPack, drawPromos } from '../js/engine.js';
+import { ripPack, drawPromos, withRandom } from '../js/engine.js';
+import { gameSeed, gameRoll, clientSeedOf, fairOf } from './fair.js';
 import { BATTLE_LIMITS, BATTLE_TIMING, BOT_PERSONAS, battleSettings, battleResult, roundScores } from '../js/battle-rules.js';
 import { avatarId, avatarStyle } from '../js/cosmetics.js';
 import { gateResponse } from './gates.js';
@@ -345,16 +346,22 @@ async function startBattle(env, request, row, helpers) {
   const seats = await getSeats(env, row.id);
   const settings = parse(row.settings);
   if (seats.length !== settings.players) error('Fill every seat before starting.');
+  // Every pack comes from the battle's own seed (hashed since the lobby opened) and each seat's client seed, round by
+  // round and seat by seat; the tie-break order is one more draw per seat (worker/fair.js).
+  const seeds = [];
+  for (const seat of seats) seeds.push(seat.bot ? 'bot' : await clientSeedOf(env, seat.userId));
+  const fair = await gameRoll(env, 'battle', row.id, seeds);
+  const draw = fn => withRandom(fair.stream.unit, fn);
   const outcomes = [];
   for (const round of parse(row.plan)) {
     const set = PLAYABLE_SETS.find(s => s.id === round.setId);
     const catalog = await helpers.loadSetCards(env, request, set);
     const pulls = seats.map(seat => {
-      const cards = round.kind === 'promo' ? drawPromos(round._offer).map(id => {
+      const cards = round.kind === 'promo' ? draw(() => drawPromos(round._offer)).map(id => {
         const card = catalog.find(c => c.id === id);
         if (!card) error(`Missing promo card ${id}.`, 500);
         return { ...card, reverse: false };
-      }) : ripPack(round.specialKey ? { ...set, slots: set.specialPacks[round.specialKey].slots } : set, catalog);
+      }) : draw(() => ripPack(round.specialKey ? { ...set, slots: set.specialPacks[round.specialKey].slots } : set, catalog));
       const valued = cards.map(c => ({ id: c.id, name: c.name, number: c.number, rarity: c.rarity,
         image: c.image, reverse: Boolean(c.reverse), value: sellValue(c),
         ...(c.reverseKind ? { reverseKind: c.reverseKind } : {}),
@@ -364,7 +371,7 @@ async function startBattle(env, request, row, helpers) {
     });
     outcomes.push({ index: round.index, pulls });
   }
-  const order = new Uint32Array(settings.players); crypto.getRandomValues(order);
+  const order = Array.from({ length: settings.players }, () => fair.stream.raw());
   const result = battleResult(outcomes, settings, seats, seat => order[seat]);
   // Award receipts only need IDs and finish flags; do not duplicate scan metadata
   // in the persisted pot. D1 limits an entire row to 2 MB.
@@ -383,7 +390,9 @@ async function startBattle(env, request, row, helpers) {
       SELECT json_group_array(json_array(seat, user_id, payer_id, name, bot)) FROM
       (SELECT * FROM battle_seats WHERE battle_id = ? ORDER BY seat)) = ?`)
     .bind(startsAt, startsAt + outcomes.length * roundMs, roundMs, outcomeJSON, resultJSON, row.id, Date.now(), row.id, seatSnapshot).run();
-  if (!updated.meta?.changes) {
+  if (updated.meta?.changes) {
+    await fair.finish({ seats: seats.map(s => s.seat), rounds: outcomes.length }, { draws: fair.stream.used(), winners: result.winners }).run();
+  } else {
     const current = await getRow(env, row.id);
     if (current.status === 'lobby') error('The seats changed. Start again.', 409);
   }
@@ -433,7 +442,7 @@ async function battleRoute(path, method, request, env, helpers) {
     const match = path.match(new RegExp(`^/api/battles/([a-zA-Z0-9-]{1,80})(?:/(${ACTIONS}))?$`));
     // serverNow is the instant the view was computed at, so a client never sees
     // a round boundary fall between revealedRounds and its clock.
-    if (match && !match[2] && method === 'GET') { const at = Date.now(); return helpers.json({ battle: await viewBattle(env, match[1], at), serverNow: at }); }
+    if (match && !match[2] && method === 'GET') { const at = Date.now(); return helpers.json({ battle: await viewBattle(env, match[1], at), fair: await fairOf(env, 'battle', match[1]), serverNow: at }); }
     if (method !== 'POST' || (path !== '/api/battles' && !match?.[2])) return helpers.json({ error: 'Not found.' }, 404);
     const origin = request.headers.get('origin');
     if (origin && origin !== new URL(request.url).origin) error('Use this site to manage battles.', 403);
@@ -546,6 +555,7 @@ async function createBattle(env, request, helpers, user, body) {
       if (!raced) throw err;
       id = raced.id;
     }
+    await gameSeed(env, 'battle', id); // fixed, and its hash shown, before the battle starts
   }
   if (!quick) return id;
   let row = await getRow(env, id);

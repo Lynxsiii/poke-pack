@@ -945,3 +945,16 @@ body.no-motion .rt-track > i[style*="--fill"] { transition: none !important; }
 .is-decided.you-lost .cf-result, .ug-line.is-lost > span, .gd-plate[data-tier="cracked"] { color: var(--on-k); }
 .gd-plate[data-tier="black"] { color: var(--yel-k); }
 .gd-plate[data-tier="mid"], .gd-plate[data-tier="low"] { color: var(--k); }
+
+/* ── House style, 2026-11-28 (DESIGN.md) ─────────────────────────────────────
+   An empty list is a plain line under a rule, not a dashed box with a ball.
+   Slots that wait for a card (.slot-ghost, .ug-empty, ghost slabs) keep the dashed outline:
+   there the outline is the thing itself, empty. */
+:is(.cs-empty-box, .wish-empty, .cart-empty, .vt-empty, .gear-empty, .nt-empty, .tr-empty-box, .bulk-empty, .gd-pick-empty, .search-note.is-none).rt-empty,
+#view-cart .cart-empty.rt-empty, .tr-empty-box {
+  border: 0; border-top: var(--line-w) solid var(--rule); border-radius: 0; background: none; padding-inline: 0; box-shadow: none;
+}
+:is(.cs-empty-box, .wish-empty, .cart-empty, .vt-empty, .gear-empty, .nt-empty, .tr-empty-box, .bulk-empty, .gd-pick-empty)
+  > :is(.rt-ball, .cart-empty-ball, .vt-ball, .tr-ball, .wish-empty-ico, .coll-ball) { display: none; }
+/* The menu arrow is for the one main key, never for rows. */
+.hub-game-go { display: none; }

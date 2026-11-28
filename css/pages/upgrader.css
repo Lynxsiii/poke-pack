@@ -24,7 +24,7 @@
 /* The slot's label: a small slanted ink tag. */
 .ug-label {
   position: relative; isolation: isolate; align-self: center; margin-bottom: 4px; padding: 1px 10px 2px;
-  color: var(--on-k); font: italic 700 13px/1.4 var(--font-h);
+  color: var(--on-k); font: 700 13px/1.4 var(--font-h);
 }
 .ug-label::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: var(--r-tag); background: var(--k); transform: skewX(var(--skew)); }
 .ug-slot {
@@ -68,7 +68,7 @@ button.ug-slot:hover .ug-empty { border-color: var(--k); background: var(--box);
 .ug-more {
   position: absolute; z-index: 5; right: -6px; bottom: -6px; max-width: calc(100% + 6px); padding: 1px 7px; overflow: hidden;
   border-radius: var(--r-tag); background: var(--k); color: var(--on-k);
-  font: italic 700 13px/1.4 var(--font-h); font-variant-numeric: tabular-nums; white-space: nowrap;
+  font: 700 13px/1.4 var(--font-h); font-variant-numeric: tabular-nums; white-space: nowrap;
 }
 .ug-gone {
   position: absolute; z-index: 6; left: 50%; top: 50%; padding: 3px 12px 4px; white-space: nowrap;
@@ -195,7 +195,7 @@ button.ug-slot:hover .ug-change { color: var(--cy-2); }
 .ug-btns .bt-icon { width: 1.1em; height: 1.1em; stroke-width: 2.4; }
 
 /* ---- The feed ------------------------------------------------------------------------ */
-.ug-out { padding: 1px 8px 2px; border-radius: var(--r-tag); background: var(--box-2); color: var(--k-2); font: italic 700 13px/1.35 var(--font-h); }
+.ug-out { padding: 1px 8px 2px; border-radius: var(--r-tag); background: var(--box-2); color: var(--k-2); font: 700 13px/1.35 var(--font-h); }
 .ug-out.is-won { background: var(--hp); color: var(--k0); }
 .ug-record { margin: -4px 0 10px; }
 .ug-row .cs-row-line { gap: 3px; }

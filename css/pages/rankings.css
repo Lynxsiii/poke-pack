@@ -131,7 +131,7 @@
 .rk-name small { overflow: hidden; color: var(--k-2); font: 700 12.5px var(--font); text-overflow: ellipsis; white-space: nowrap; }
 .rk-you {
   display: inline-block; flex: none; padding: 0 6px; border-radius: var(--r-tag); background: var(--yel); color: var(--k0);
-  font: italic 700 11.5px/1.5 var(--font-h); letter-spacing: 0; text-transform: none;
+  font: 700 11.5px/1.5 var(--font-h); letter-spacing: 0; text-transform: none;
 }
 .rk-card { flex: none; width: 34px; height: 47px; margin-left: 8px; border-radius: var(--r-tag); object-fit: cover; background: var(--box-2); filter: drop-shadow(var(--drop-sm)); }
 .rk-value {
