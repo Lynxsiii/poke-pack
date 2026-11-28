@@ -33,15 +33,15 @@
 .tp-val { color: var(--k); font: 700 15px var(--font-h); font-variant-numeric: tabular-nums; }
 /* The odds: a small ink tag beside the value. */
 .tp-odds {
-  margin-left: auto; padding: 0 6px; border-radius: 3px; background: var(--k); color: var(--yel-k);
-  font: italic 800 12.5px/1.5 var(--font-xc); font-variant-numeric: tabular-nums; white-space: nowrap;
+  margin-left: auto; padding: 0 6px; border-radius: var(--r-tag); background: var(--k); color: var(--yel-k);
+  font: 700 12.5px/1.5 var(--font-h); font-variant-numeric: tabular-nums; white-space: nowrap;
 }
 .tp-pick.is-far .tp-odds { background: var(--rule); color: var(--k-2); }
 
 /* A sealed product: the photo fitted inside a card-shaped place, so a tall box and a flat bundle line up. */
 .tp-photo {
   display: grid; place-items: center; width: 100%; aspect-ratio: 63 / 88; overflow: hidden;
-  border: 2px solid var(--rule); border-radius: 5px; background: var(--box);
+  border: 2px solid var(--rule); border-radius: var(--r-tag); background: var(--box);
 }
 .tp-photo img { width: 86%; height: 86%; aspect-ratio: auto; object-fit: contain; border-radius: 0; background: none; box-shadow: none; filter: drop-shadow(3px 4px 0 rgb(0 40 50 / 0.2)); transition: transform 0.15s var(--ease-out); }
 .tp-sealed .cs-pick-art:active .tp-photo img { transform: scale(0.97); }

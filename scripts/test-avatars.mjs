@@ -49,3 +49,15 @@ assert.equal(avatarSpecies(25),25); assert.equal(avatarSpecies(10034),6); assert
 assert.deepEqual(speciesInCards([{name:'Mew ex',supertype:'Pokémon'},{name:'Bulbasaur'},{name:'Mewtwo',supertype:'Trainer'}]),[1,151]);
 for (const group of AVATAR_GROUPS) for (const [id,,,of] of group.list) assert.ok(id<=10000 ? of===undefined : of>=1&&of<=1025,`form ${id} names its Pokémon`);
 console.log('shiny rules ok');
+
+// Every sprite has a measure (js/avatar-fit.js) that centres it in a round face; official art needs none.
+const {avatarFit} = await import('../js/cosmetics.js');
+const {AVATAR_FIT} = await import('../js/avatar-fit.js');
+assert.equal(avatarFit(25,'art'),''); assert.equal(avatarFit(25,'art-s'),'');
+assert.match(avatarFit(25,'pixel'),/^ class="av-fit" style="--ax:-?\d+%;--ay:-?\d+%;--as:[\d.]+"$/);
+assert.equal(avatarFit(10238,'anim',{still:true}),avatarFit(10238,'pixel'));
+for (const group of AVATAR_GROUPS) for (const [id] of group.list) {
+  const row = AVATAR_FIT[id]; assert.ok(row && row.length===6,`fit for ${id}`);
+  for (const at of [0,3]) assert.ok(Math.abs(row[at])<=30 && Math.abs(row[at+1])<=30 && row[at+2]>=70 && row[at+2]<=260,`sane fit for ${id}`);
+}
+console.log('fit ok');

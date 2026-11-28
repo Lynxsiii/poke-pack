@@ -8,12 +8,27 @@ function weightOf(card) {
   return weight > 0 ? weight : 1;
 }
 
+/* Every draw the engine makes goes through rand(). It is Math.random unless a caller wraps the work in withRandom, which
+   the Worker does with a provably fair seed stream (js/fair.js), so a pack's pulls can be replayed from its seeds. */
+let rand = Math.random;
+
+/** Run `fn` (synchronously) with every engine draw taken from `unit` (a function returning [0, 1)). */
+export function withRandom(unit, fn) {
+  const before = rand;
+  rand = unit || Math.random;
+  try {
+    return fn();
+  } finally {
+    rand = before;
+  }
+}
+
 function pick(list, used) {
   const available = list.filter((card) => !used.has(card.id));
   const source = available.length ? available : list;
-  let card = source[Math.floor(Math.random() * source.length)];
+  let card = source[Math.floor(rand() * source.length)];
   if (source.some((c) => c.pullWeight)) {
-    let roll = Math.random() * source.reduce((sum, c) => sum + weightOf(c), 0);
+    let roll = rand() * source.reduce((sum, c) => sum + weightOf(c), 0);
     card = source.find((c) => (roll -= weightOf(c)) < 0) || source[source.length - 1];
   }
   used.add(card.id);
@@ -21,7 +36,7 @@ function pick(list, used) {
 }
 
 function rollTable(table) {
-  const roll = Math.random();
+  const roll = rand();
   let acc = 0;
   for (const [key, weight] of table) {
     acc += weight;
@@ -351,8 +366,8 @@ const GOD_SLOTS = new Set(["reverse", "rare-slot", "art-slot"]);
  */
 function rollGodPack(set, cards) {
   const god = set.godPack;
-  if (!god || !(Math.random() < god.rate)) return null;
-  const line = god.lines[Math.floor(Math.random() * god.lines.length)];
+  if (!god || !(rand() < god.rate)) return null;
+  const line = god.lines[Math.floor(rand() * god.lines.length)];
   const picked = line.map((id) => cards.find((card) => card.id === id));
   return picked.every(Boolean) ? picked.map((card) => ({ ...card })) : null;
 }
@@ -409,11 +424,11 @@ export function drawPromos(offer) {
   if (!offer?.pick) return promos;
   const size = Math.floor(Number(offer.groupOf) || 0);
   if (size > 1 && size === offer.pick && promos.length % size === 0) {
-    const start = Math.floor(Math.random() * (promos.length / size)) * size;
+    const start = Math.floor(rand() * (promos.length / size)) * size;
     return promos.slice(start, start + size);
   }
   for (let i = promos.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = Math.floor(rand() * (i + 1));
     [promos[i], promos[j]] = [promos[j], promos[i]];
   }
   return promos.slice(0, offer.pick);

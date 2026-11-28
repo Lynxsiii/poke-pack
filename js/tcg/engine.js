@@ -53,7 +53,7 @@
  */
 
 import { altCost, attackBlock, runAttackEffects } from "./effects.js";
-import { T_OPS, boostOf, energyCards, energyIn, fieldFits, fits, holds, moveTargets, prizesLeft, runTrainer, stripEnergy, toolFits, trainerReady } from "./trainers.js";
+import { T_OPS, boostOf, energyCards, energyIn, fieldFits, fits, holds, moveTargets, offerDevolve, prizesLeft, runTrainer, stripEnergy, toolFits, trainerReady } from "./trainers.js";
 
 /**
  * The official Constructed formats (Play! Pokémon Tournament Handbook, section 4): 60 cards,
@@ -199,6 +199,8 @@ function ownAbility(state, slot, defs) {
   if (when?.status && statusOf(slot).main !== when.status) return null;
   if (when?.special && !slot.energy.some((uid) => defOf(state, uid, defs)?.kind === "energy" && !defOf(state, uid, defs).basic)) return null;
   if (when?.tool && !slot.tool) return null;
+  // Iron Treads' Dual Core: "As long as this Pokémon has a Future Booster Energy Capsule attached".
+  if (when?.toolNamed && !toolsIn(slot).some((uid) => defOf(state, uid, defs)?.name === when.toolNamed)) return null;
   if (when?.stadium && (!state.stadium || defOf(state, state.stadium.uid, defs)?.name !== when.stadium)) return null;
   // Terms worded as a Trainer's ("If you have any Tera Pokémon in play", "If your opponent has exactly 4 cards in their hand").
   if (ability.term) {
@@ -321,6 +323,9 @@ function teamWarded(state, slot, defs) {
 function teamWalled(state, target, attacker, defs) {
   const owner = ownerOf(state, target);
   if (owner < 0 || !attacker) return false;
+  // Neutralization Zone: no damage to Pokémon without a Rule Box from the opponent's Pokémon ex and Pokémon V.
+  const zone = state.stadium && defOf(state, state.stadium.uid, defs)?.stadium?.neutral;
+  if (zone && !defOf(state, target.uid, defs).rule && zone.boxes.includes(defOf(state, attacker.uid, defs).box)) return true;
   return inPlay(state, owner).some(([mate]) => {
     const wall = abilityOn(state, mate, defs)?.teamWall;
     return wall && energyOf(state, attacker, defs).length <= wall.energyMax;
@@ -346,6 +351,7 @@ export function abilityBlock(state, player, spot, defs) {
   if (use.vstar && side.vstarUsed) return "You've already used your VSTAR Power this game.";
   const need = use.need || {};
   if (need.first && !firstTurnFor(state, player)) return `${ability.name} works only during your first turn.`;
+  if (need.notFirst && firstTurnFor(state, player)) return `${ability.name} can't be used during your first turn.`;
   if (need.lost && !(side.lostOn || []).includes(state.turn - 1)) return "None of your Pokémon were Knocked Out during your opponent's last turn.";
   if (need.stadium && !state.stadium) return "It needs a Stadium in play.";
   if (need.activeAbility && abilityOn(state, side.active, defs)?.name !== need.activeAbility) return `Your Active Pokémon needs the ${need.activeAbility} Ability.`;
@@ -438,9 +444,12 @@ export function toolOf(state, slot, defs) {
  * and Weakness ×3 for both Active Pokémon (Illumise, with Volbeat in play).
  */
 export function typedDef(state, slot, defs) {
-  const def = defOf(state, slot.uid, defs);
+  const def = playedAs(state, slot, defs);
   const as = toolOf(state, slot, defs).weakAs;
   let weakness = as ? { type: as, op: "x", n: 2 } : def.weakness;
+  // "The Defending Pokémon's Weakness is now Lightning" (a mark; `from` "keep": "The amount of Weakness doesn't change").
+  const now = markOn(state, slot, "weakAs");
+  if (now) weakness = now.from === "keep" ? (def.weakness ? { ...def.weakness, type: now.name } : null) : { type: now.name, op: "x", n: 2 };
   if (weakness?.op === "x" && [state.players[0].active, state.players[1].active].includes(slot)) {
     for (const p of [0, 1]) for (const [mate] of inPlay(state, p)) {
       const times = abilityOn(state, mate, defs)?.weakTimes;
@@ -451,14 +460,34 @@ export function typedDef(state, slot, defs) {
 }
 
 /** The Pokémon in this slot, as the rules see it: one put on the Bench "as a Basic Pokémon" (Strange Cave) is one. */
-function playedAs(state, slot, defs) {
+export function playedAs(state, slot, defs) {
   const def = defOf(state, slot.uid, defs);
-  return slot.asBasic ? { ...def, stage: "basic" } : def;
+  // Double Type (Carbink, Scovillain ex, Iron Treads): "As long as this Pokémon is in play, it is Fighting and Psychic type."
+  const types = def.ability?.types && abilityOn(state, slot, defs)?.types;
+  if (!slot.asBasic && !types) return def;
+  return { ...def, ...(slot.asBasic ? { stage: "basic" } : {}), ...(types ? { types } : {}) };
 }
 
 /** The Tool on this Pokémon while it does something there (some work only on a Basic or a Darkness Pokémon), or null. */
 export function toolOn(state, slot, defs) {
-  const tool = (slot?.tool && defOf(state, slot.tool, defs)?.tool) || null;
+  const tools = toolsIn(slot).map((uid) => toolWorks(state, slot, uid, defs)).filter(Boolean);
+  if (tools.length < 2) return tools[0] || null;
+  // Rotom ex's Multi Adapter: two Tools at once. Numbers add up; anything else is the first that says it.
+  const out = {};
+  for (const tool of tools) {
+    for (const [key, value] of Object.entries(tool)) {
+      if (key === "retreat" && (value === "all" || out.retreat === "all")) out.retreat = "all";
+      else if (typeof value === "number" && typeof out[key] === "number") out[key] += value;
+      else if (Array.isArray(value) && Array.isArray(out[key])) out[key] = [...out[key], ...value];
+      else if (out[key] == null || out[key] === false) out[key] = value;
+    }
+  }
+  return out;
+}
+
+/** One Tool card on this Pokémon, if it does something there right now. */
+function toolWorks(state, slot, uid, defs) {
+  const tool = defOf(state, uid, defs)?.tool || null;
   if (!tool) return null;
   // Jamming Tower: Tools have no effect.
   if (state.stadium && defOf(state, state.stadium.uid, defs)?.stadium?.toolLock) return null;
@@ -466,6 +495,52 @@ export function toolOn(state, slot, defs) {
   // Binding Mochi: only while the Pokémon is Poisoned.
   if (tool.poisoned && !conditionsOn(slot).includes("poisoned")) return null;
   return (!tool.who || fieldFits(tool.who, def)) && toolFits(tool, def) ? tool : null;
+}
+
+/** Every Tool card on this Pokémon: `slot.tool`, then any more (`slot.extraTools`, Multi Adapter). */
+export const toolsIn = (slot) => (slot?.tool ? [slot.tool, ...(slot.extraTools || [])] : []);
+
+/** The Tool on this Pokémon that does `key` (which one to name or discard when two are attached). */
+export function toolWith(state, slot, defs, key) {
+  return toolsIn(slot).find((uid) => toolWorks(state, slot, uid, defs)?.[key]) || slot?.tool || null;
+}
+
+/** Take one Tool card off a Pokémon (it goes wherever the caller puts it). */
+export function takeTool(slot, uid) {
+  if (slot.tool === uid) {
+    const next = (slot.extraTools || []).shift();
+    if (next) slot.tool = next;
+    else {
+      delete slot.tool;
+      delete slot.toolOn;
+    }
+  } else if (slot.extraTools?.includes(uid)) slot.extraTools.splice(slot.extraTools.indexOf(uid), 1);
+  if (slot.extraTools && !slot.extraTools.length) delete slot.extraTools;
+}
+
+/** Take every Tool off a Pokémon: their uids. */
+export function takeTools(slot) {
+  const uids = toolsIn(slot);
+  delete slot.tool;
+  delete slot.toolOn;
+  delete slot.extraTools;
+  return uids;
+}
+
+/**
+ * How many Tools this Pokémon may have attached: 1, or more while an Ability says so
+ * (Rotom ex's Multi Adapter: "Each of your Pokémon that has "Rotom" in its name may have up to 2").
+ */
+export function toolRoom(state, slot, defs) {
+  const owner = ownerOf(state, slot);
+  let room = 1;
+  if (owner < 0) return room;
+  const def = defOf(state, slot.uid, defs);
+  for (const [mate] of inPlay(state, owner)) {
+    const more = abilityOn(state, mate, defs)?.toolRoom;
+    if (more && (!more.named || def.name.includes(more.named))) room = Math.max(room, more.n);
+  }
+  return room;
 }
 
 /** The attackers a Tool's `lessVs` holds against: `ability` (one with an Ability), `mega` (a Mega Evolution Pokémon ex), types. */
@@ -478,11 +553,9 @@ export function toolGone(state, p, uid, defs) {
 }
 
 /** Discard the Tool on this slot (it lapsed, or did its once-only job). */
-function dropTool(state, p, spot, slot, defs, events) {
-  if (!slot.tool) return;
-  const uid = slot.tool;
-  delete slot.tool;
-  delete slot.toolOn;
+function dropTool(state, p, spot, slot, defs, events, uid = slot.tool) {
+  if (!uid || !toolsIn(slot).includes(uid)) return;
+  takeTool(slot, uid);
   toolGone(state, p, uid, defs);
   events.push({ t: "discard-tool", p, spot, uid });
 }
@@ -751,6 +824,45 @@ function healLocked(state, slot) {
   return inPlay(state, other(owner)).some(([rival]) => abilityOn(state, rival, liveDefs)?.noHealFoe) && !warded(state, slot, { player: other(owner), src: "ability" }, liveDefs);
 }
 
+/**
+ * How many Pokémon this player may have on their Bench: 5, or 8 with Area Zero Underdepths in play
+ * while they have a Tera Pokémon in play ("Each player who has any Tera Pokémon in play can have up to 8").
+ */
+export function benchMax(state, p) {
+  const base = state.rules.bench;
+  if (!liveDefs || !state.stadium) return base;
+  const more = defOf(state, state.stadium.uid, liveDefs)?.stadium?.benchTo;
+  if (!more) return base;
+  return inPlay(state, p).some(([slot]) => defOf(state, slot.uid, liveDefs)?.tera) ? Math.max(base, more.n) : base;
+}
+
+/**
+ * Battle Cage: "Prevent all damage counters from being placed on Benched Pokémon (both yours and your opponent's) by
+ * effects of attacks and Abilities from the opponent's Pokémon." `by`: the player whose attack or Ability it is.
+ */
+export function caged(state, p, spot, by) {
+  if (spot === ACTIVE || p === by || !liveDefs || !state.stadium) return false;
+  return Boolean(defOf(state, state.stadium.uid, liveDefs)?.stadium?.benchCage);
+}
+
+/** Patrat's Watchful Eye: "Damage counters on each Pokémon (both yours and your opponent's) can't be moved to other Pokémon." */
+export function countersStay(state) {
+  if (!liveDefs) return false;
+  return [0, 1].some((p) => inPlay(state, p).some(([slot]) => abilityOn(state, slot, liveDefs)?.countersStay));
+}
+
+/** Milotic's Mentally Calm: this player's Pokémon in play, and what is attached to them, can't be put into their hand. */
+export function keptInPlay(state, p) {
+  if (!liveDefs) return false;
+  return inPlay(state, other(p)).some(([slot]) => abilityOn(state, slot, liveDefs)?.noBounce);
+}
+
+/** Legendary Trench: "Whenever a Pokémon (yours or your opponent's) is healed, double the amount of damage healed." */
+export function healMore(state, n) {
+  const times = liveDefs && state.stadium ? defOf(state, state.stadium.uid, liveDefs)?.stadium?.healTimes || 1 : 1;
+  return n * times;
+}
+
 /** Marks in force now or waiting for their turn, for the screen. */
 export const marksOn = (state, slot) => (slot?.marks || []).filter((m) => m.turn >= state.turn);
 
@@ -758,13 +870,15 @@ export const marksOn = (state, slot) => (slot?.marks || []).filter((m) => m.turn
 const markSum = (state, slot, kind, name = "") => (slot?.marks || []).filter((m) => m.kind === kind && m.turn === state.turn && (!m.name || m.name === name)).reduce((n, m) => n + (m.n || 0), 0);
 
 /** A guard mark that stops this attacker's damage: some guard only against Basic or Evolution Pokémon. */
-const GUARD_FROM = { basic: (d) => d.stage === "basic", evolution: (d) => d.stage === "evolution", basicNonColorless: (d) => d.stage === "basic" && !d.types.includes("Colorless"), ability: (d) => d.abilityKind === "Ability" };
+const GUARD_FROM = { burned: (d, s) => conditionsOn(s).includes("burned"), basic: (d) => d.stage === "basic", evolution: (d) => d.stage === "evolution", basicNonColorless: (d) => d.stage === "basic" && !d.types.includes("Colorless"), ability: (d) => d.abilityKind === "Ability" };
 /** Does a mark's `from` ("box:GX,EX", "tag:TAG TEAM", or a GUARD_FROM key) take in this attacker? */
 const fromFits = (from, def) => !from || (def ? (from.startsWith("box:") ? from.slice(4).split(",").includes(def.box) : from.startsWith("tag:") ? (def.tags || []).includes(from.slice(4)) : GUARD_FROM[from](def)) : false);
 /** A shield an earlier attack left in force against this attacker ("by your opponent's Pokémon-ex": only some). */
 export const shieldOn = (state, slot, attackerDef) => (slot?.marks || []).some((m) => m.kind === "shield" && m.turn === state.turn && fromFits(m.from, attackerDef));
 // "box:GX,EX": only against Pokémon with those rule boxes ("by attacks from Pokémon-GX and Pokémon-EX").
-const guardedFrom = (state, slot, attackerDef) => (slot?.marks || []).some((m) => m.kind === "guard" && m.turn === state.turn && (!m.from || (m.from.startsWith("box:") ? m.from.slice(4).split(",").includes(attackerDef.box) : m.from.startsWith("tag:") ? (attackerDef.tags || []).includes(m.from.slice(4)) : GUARD_FROM[m.from](attackerDef))));
+const guardedFrom = (state, slot, attackerDef, attacker = null, defs = null) => (slot?.marks || []).some((m) => m.kind === "guard" && m.turn === state.turn && (!m.from || (m.from.startsWith("box:") ? m.from.slice(4).split(",").includes(attackerDef.box) : m.from.startsWith("tag:") ? (attackerDef.tags || []).includes(m.from.slice(4)) : GUARD_FROM[m.from](attackerDef, attacker))))
+  // Miraidon's C.O.D.E.: Protect: a mark on the side's Active Pokémon that keeps some of its Pokémon from some attackers.
+  || (defs && state.players.some((side) => (side.active === slot || side.bench.includes(slot)) && (side.active?.marks || []).some((m) => m.kind === "guardTeam" && m.turn === state.turn && fits(defOf(state, slot.uid, defs), m.who) && fromFits(m.from, attackerDef))));
 
 /**
  * Damage from an attack landed on this Pokémon: `hit` the turn (cleared before the checkup), and kept past it
@@ -861,7 +975,7 @@ function checkup(state, defs, events) {
     for (const [slot, spot] of inPlay(state, p)) {
       const mend = abilityOn(state, slot, defs)?.mend;
       if (!mend || !slot.damage || hpLeft(state, slot, defs) <= 0) continue;
-      const healed = Math.min(mend, healRoom(state, slot));
+      const healed = Math.min(healMore(state, mend), healRoom(state, slot));
       if (!healed) continue;
       slot.damage -= healed;
       slot.healedOn = state.turn;
@@ -887,9 +1001,10 @@ function berries(state, defs, events) {
       const between = toolOn(state, slot, defs)?.between;
       if (!between || hpLeft(state, slot, defs) <= 0) continue;
       if (between.heal && healRoom(state, slot) >= between.heal) {
-        slot.damage -= between.heal;
+        const healed = Math.min(healMore(state, between.heal), healRoom(state, slot));
+        slot.damage -= healed;
         slot.healedOn = state.turn;
-        events.push({ t: "heal", p, spot, n: between.heal, why: "tool" });
+        events.push({ t: "heal", p, spot, n: healed, why: "tool" });
       } else if (between.cure && conditionsOn(slot).length) {
         for (const kind of conditionsOn(slot)) events.push({ t: "cure", p, spot, kind });
         delete slot.status;
@@ -924,11 +1039,12 @@ function endOfTurn(state, defs, events) {
     if (uids.length) askChoose(state, { player: p, zone: "discard", what: end.attach, uids, min: 0, max: 1, effect: { op: "attach", to: "one", spot: ACTIVE }, prompt: "Powerglass: attach a Basic Energy from your discard pile to your Active Pokémon?" });
   }
   if (end?.heal && healRoom(state, front)) {
-    const healed = Math.min(end.heal, healRoom(state, front));
+    const healed = Math.min(healMore(state, end.heal), healRoom(state, front));
     front.damage -= healed;
     front.healedOn = state.turn;
     events.push({ t: "heal", p, spot: ACTIVE, n: healed, why: "tool" });
   }
+  const doomed = [];
   for (const q of [0, 1]) {
     for (const [slot, spot] of inPlay(state, q)) {
       // "At the end of your opponent's next turn, put 6 damage counters on the Defending Pokémon."
@@ -939,14 +1055,31 @@ function endOfTurn(state, defs, events) {
         slot.damage += doom.n;
         events.push({ t: "damage", p: q, spot, n: doom.n, why: "doom" });
       }
+      // "At the end of your opponent's next turn, discard the Defending Pokémon and all attached cards."
+      if (markOn(state, slot, "doomDiscard")) {
+        doomed.push([q, slot]);
+        continue;
+      }
       // "At the end of your opponent's next turn, the Defending Pokémon is now Asleep."
       const later = markOn(state, slot, "doomCond");
       if (later && spot === ACTIVE && addCondition(state, slot, later.name, defs)) events.push({ t: "condition", p: q, kind: later.name });
-      const lapse = slot.tool && defOf(state, slot.tool, defs)?.tool?.lapse;
       // Strength Charm: the turn it attacked. Buffer Piece: the opponent's turn after it was played.
       // Technical Machine: Fluorite: the end of its owner's turn.
-      if ((lapse === "attack" && slot.toolSpent === state.turn) || (lapse === "foe" && q !== p && slot.toolOn < state.turn) || (lapse === "turn" && q === p)) dropTool(state, q, spot, slot, defs, events);
+      for (const uid of toolsIn(slot)) {
+        const lapse = defOf(state, uid, defs)?.tool?.lapse;
+        if ((lapse === "attack" && slot.toolSpent === state.turn) || (lapse === "foe" && q !== p && slot.toolOn < state.turn) || (lapse === "turn" && q === p)) dropTool(state, q, spot, slot, defs, events, uid);
+      }
     }
+  }
+  // Discarded with all attached once the marks are read, so no Bench place moves while they are.
+  for (const [q, slot] of doomed) {
+    const side = state.players[q];
+    const spot = side.active === slot ? ACTIVE : side.bench.indexOf(slot);
+    if (spot !== ACTIVE && spot < 0) continue;
+    side.discard.push(slot.uid, ...slot.under, ...slot.energy, ...toolsIn(slot), ...heldOn(slot));
+    if (spot === ACTIVE) side.active = null;
+    else side.bench.splice(spot, 1);
+    events.push({ t: "discard-mon", p: q, spot, uid: slot.uid });
   }
 }
 
@@ -1006,12 +1139,14 @@ export function evolveSlot(state, player, spot, uid, defs, events, from = "hand"
   clearConditions(slot, keptOnEvolve(state, defs));
   events.push({ t: "evolve", p: player, uid, spot, ...(from !== "hand" ? { from } : {}) });
   // A Tool that may not stay on what it became (Protective Orb on a Pokémon-ex) is discarded.
-  const tool = slot.tool && defOf(state, slot.tool, defs)?.tool;
-  if (tool?.only?.drop && !toolFits(tool, defOf(state, uid, defs))) dropTool(state, player, spot, slot, defs, events);
+  for (const held of toolsIn(slot)) {
+    const tool = defOf(state, held, defs)?.tool;
+    if (tool?.only?.drop && !toolFits(tool, defOf(state, uid, defs))) dropTool(state, player, spot, slot, defs, events, held);
+  }
   // Viridian City Gym: a Pokémon with Giovanni in its name that evolves sheds 2 damage counters.
   const mend = state.stadium && defOf(state, state.stadium.uid, defs)?.stadium?.evolveHeal;
   if (mend && healRoom(state, slot) && fieldFits(mend.who, defOf(state, uid, defs))) {
-    const healed = Math.min(mend.n, healRoom(state, slot));
+    const healed = Math.min(healMore(state, mend.n), healRoom(state, slot));
     slot.damage -= healed;
     slot.healedOn = state.turn;
     events.push({ t: "heal", p: player, spot, n: healed, why: "stadium" });
@@ -1069,7 +1204,7 @@ export function attacksOf(state, slot, defs) {
   const lend = (card, from) => (defs(card)?.attacks || []).forEach((attack, index) => out.push({ ...attack, lent: { card, index, from } }));
   for (const h of slot.held || []) if (h.tm) lend(state.cards[h.uid], "tm");
   // A Tool with an attack printed on it (Core Memory), for the Pokémon it names.
-  if (slot.tool && toolOn(state, slot, defs)?.lendSelf) lend(state.cards[slot.tool], "tool");
+  for (const uid of toolsIn(slot)) if (toolWorks(state, slot, uid, defs)?.lendSelf) lend(state.cards[uid], "tool");
   const owner = ownerOf(state, slot);
   const lent = state.stadium && defOf(state, state.stadium.uid, defs)?.stadium?.lend;
   if (lent?.who && fieldFits(lent.who, def)) lend(state.cards[state.stadium.uid], "stadium");
@@ -1091,10 +1226,18 @@ export function attacksOf(state, slot, defs) {
   return out.length ? [...def.attacks, ...out] : def.attacks;
 }
 
+/** A whole side kept from attacking this turn (effects.js OPS.sideLock): "" or why. */
+function sideAttackLock(state, player, slot, defs) {
+  const locks = state.players[player].sideLocks || {};
+  if (locks.attack?.turn === state.turn) return "Your Pokémon can't attack this turn.";
+  if (locks.lowAttack?.turn === state.turn && energyOf(state, slot, defs).length <= locks.lowAttack.k) return `Pokémon with ${locks.lowAttack.k} or less Energy attached can't attack this turn.`;
+  return "";
+}
+
 export function usableAttacks(state, player, defs) {
   const slot = state.players[player].active;
   if (!slot || state.phase !== "main" || state.current !== player || state.pending.length) return [];
-  if (markOn(state, slot, "noAttack")) return [];
+  if (markOn(state, slot, "noAttack") || sideAttackLock(state, player, slot, defs)) return [];
   const def = defOf(state, slot.uid, defs);
   const side = state.players[player];
   const spent = (attack) => (attack.once === "gx" && (side.gxUsed || side.gxBarred)) || (attack.once === "vstar" && side.vstarUsed);
@@ -1141,6 +1284,22 @@ function draw(state, player, n, events) {
   side.hand.push(...drawn);
   if (drawn.length) events.push({ t: "draw", p: player, uids: drawn });
   return drawn.length;
+}
+
+/**
+ * An Ability that works from the hand: "Once during your turn, if this Pokémon is in your hand, and if you have any
+ * Colorless Mega Evolution Pokémon ex in play ... Put this Pokémon onto your Bench" (Talonflame ex), "and your opponent
+ * has any Stage 2 Pokémon in play" (Klinklang). The Ability, when it may be used now, or null.
+ */
+export function handLeap(state, player, uid, defs) {
+  const def = defOf(state, uid, defs);
+  const leap = def?.kind === "pokemon" && def.ability?.fromHand;
+  if (!leap || state.phase !== "main" || state.current !== player) return null;
+  if (!state.players[player].hand.includes(uid)) return null;
+  // Abilities taken away in the hand too (a lock that says so) aren't checked here: none in Standard reaches the hand.
+  if (leap.mine && !inPlay(state, player).some(([slot]) => fits(playedAs(state, slot, defs), leap.mine))) return null;
+  if (leap.foe && !inPlay(state, other(player)).some(([slot]) => fits(playedAs(state, slot, defs), leap.foe))) return null;
+  return def.ability;
 }
 
 const isBasic = (state, uid, defs) => {
@@ -1296,7 +1455,7 @@ function settle(state, defs, events) {
 
 function discardSlot(state, player, slot, defs) {
   state.players[player].discard.push(slot.uid, ...slot.under, ...slot.energy, ...heldOn(slot));
-  if (slot.tool) toolGone(state, player, slot.tool, defs);
+  for (const uid of toolsIn(slot)) toolGone(state, player, uid, defs);
 }
 
 /**
@@ -1386,28 +1545,40 @@ export function resolveKnockOuts(state, defs, events, { between = false } = {}) 
       const ko = koTool(slot, spot, p);
       // Rescue Scarf: "Knocked Out by damage from an attack", anyone's attack, this turn.
       const rescued = ko?.toHand || (tool?.ko?.any && tool.ko.toHand && slot.hit === state.turn && !between);
+      // Huntail's Diver's Catch: a Pokémon of that type Knocked Out by their attack's damage keeps its Basic Energy of that type, to the hand.
+      const diver = byAttack(slot, p) && inPlay(state, p).find(([mate]) => abilityOn(state, mate, defs)?.catchEnergy && playedAs(state, slot, defs).types.includes(abilityOn(state, mate, defs).catchEnergy.type));
+      if (diver) {
+        const type = abilityOn(state, diver[0], defs).catchEnergy.type;
+        const caught = slot.energy.filter((uid) => defOf(state, uid, defs).basic && (defOf(state, uid, defs).provides || []).includes(type));
+        if (caught.length) {
+          slot.energy = slot.energy.filter((uid) => !caught.includes(uid));
+          side.hand.push(...caught);
+          events.push({ t: "ability", p, spot: diver[1], uid: diver[0].uid, name: abilityOn(state, diver[0], defs).name });
+          events.push({ t: "energy-to-hand", p, spot, uids: caught });
+        }
+      }
       const basics = slot.energy.filter((uid) => defOf(state, uid, defs).basic);
       events.push({ t: "ko", p, spot, uid: slot.uid });
       if (ability?.ko.toHand || rescued) {
         // "Put it into your hand instead of the discard pile. (Discard all attached cards.)"
-        events.push(ability?.ko.toHand ? { t: "ability", p, spot, uid: slot.uid, name: ability.name } : { t: "tool-effect", p, spot, uid: slot.tool });
+        events.push(ability?.ko.toHand ? { t: "ability", p, spot, uid: slot.uid, name: ability.name } : { t: "tool-effect", p, spot, uid: toolWith(state, slot, defs, "ko") });
         side.hand.push(slot.uid);
         side.discard.push(...slot.under, ...slot.energy, ...heldOn(slot));
-        if (slot.tool) toolGone(state, p, slot.tool, defs);
+        for (const uid of toolsIn(slot)) toolGone(state, p, uid, defs);
         events.push({ t: "ko-hand", p, uid: slot.uid });
       } else if (ko?.energyToHand && basics.length) {
         // Energy Pouch: the basic Energy goes to the hand, the rest to the discard pile.
-        events.push({ t: "tool-effect", p, spot, uid: slot.tool });
+        events.push({ t: "tool-effect", p, spot, uid: toolWith(state, slot, defs, "ko") });
         side.hand.push(...basics);
         side.discard.push(slot.uid, ...slot.under, ...slot.energy.filter((uid) => !basics.includes(uid)));
-        if (slot.tool) toolGone(state, p, slot.tool, defs);
+        for (const uid of toolsIn(slot)) toolGone(state, p, uid, defs);
         events.push({ t: "energy-to-hand", p, spot, uids: basics });
       } else if (byAttack(slot, p) && markOn(state, slot, "lostKo")) {
         // "If it is Knocked Out by damage from this attack, put it and all cards attached to it in the Lost Zone instead."
-        toLost(state, p, [slot.uid, ...slot.under, ...slot.energy, ...(slot.tool ? [slot.tool] : []), ...heldOn(slot)], events);
+        toLost(state, p, [slot.uid, ...slot.under, ...slot.energy, ...toolsIn(slot), ...heldOn(slot)], events);
       } else discardSlot(state, p, slot, defs);
       if (ability?.ko.steps) after.push([p, spot, slot.uid, ability.name, ability.ko.steps]);
-      if (ko?.steps) after.push([p, spot, slot.uid, defOf(state, slot.tool, defs).name, ko.steps]);
+      if (ko?.steps) after.push([p, spot, slot.uid, defOf(state, toolWith(state, slot, defs, "ko"), defs).name, ko.steps]);
       // A Fossil whose Knock Out "doesn't count as a Knocked Out Pokémon" is only discarded: no Prize card, nothing that asks about a Knock Out.
       const counts = !def.fossil?.noKo;
       if (spot === ACTIVE && byAttack(slot, p) && basics.length && counts) left.push([p, basics, ko?.baton || 0, false, Boolean(ko?.spread)]);
@@ -1432,7 +1603,7 @@ export function resolveKnockOuts(state, defs, events, { between = false } = {}) 
         events.push({ t: "flip", p: other(p), results: [heads], why: "ability", name: abilityOn(state, kiss[other(p)], defs)?.name || defOf(state, kiss[other(p)].uid, defs).ability.name });
         kissed = heads ? 1 : 0;
       }
-      if (!def.fossil?.noPrize && !shift.none) took[other(p)] += Math.max(0, (def.prizes ?? 1) + (tool?.prize || 0) + shift.n + kissed + (byAttack(slot, p) ? (markOn(state, slot, "bounty")?.n || 0) + prizeUp(state, other(p), spot, defs) - fewer : 0));
+      if (!def.fossil?.noPrize && !shift.none) took[other(p)] += Math.max(0, (def.prizes ?? 1) + (tool?.prize || 0) + shift.n + kissed + (byAttack(slot, p) ? (markOn(state, slot, "bounty") && !markOn(state, slot, "bounty").any ? markOn(state, slot, "bounty").n || 0 : 0) + prizeUp(state, other(p), spot, defs) - fewer : 0) + (markOn(state, slot, "bounty")?.any ? markOn(state, slot, "bounty").n || 0 : 0));
       if (!counts) continue;
       // Remembered by turn for "if any of your Pokémon were Knocked Out during your opponent's last turn"
       // (the checkup between turns is no one's turn).
@@ -1570,7 +1741,8 @@ function benched(state, player, slot, defs, events, fromHand = false) {
  */
 export function strike(ctx) {
   const { state, defs, events, player, slot, attack, hit } = ctx;
-  const def = defOf(state, slot.uid, defs);
+  // As its types stand in play (Double Type), for Weakness and Resistance.
+  const def = playedAs(state, slot, defs);
   const foe = other(player);
   const target = state.players[foe].active;
   ctx.target = target;
@@ -1603,8 +1775,8 @@ export function strike(ctx) {
     // Thick Fat: less from attackers of some types.
     const fat = power?.guardLess && power.guardLess.types.some((t) => def.types.includes(t)) ? power.guardLess.n : 0;
     const less = (lessMark && (!lessMark.from || GUARD_FROM[lessMark.from](def)) ? lessMark.n || 0 : 0) + (theirs.less || 0) + (noFx ? 0 : heldSum(target, "less")) + soak + fat;
-    if (soak && vs.spent) hit.spentTool = true;
-    let guarded = (!noFx && marked) || (!noFx && guardedFrom(state, target, def));
+    if (soak && vs.spent) hit.spentTool = toolWith(state, target, defs, "lessVs");
+    let guarded = (!noFx && marked) || (!noFx && guardedFrom(state, target, def, slot, defs));
     // The target's Ability: no damage from this kind of attacker, or a coin flip to take none.
     if (!guarded && dealt.amount > 0 && power?.wall && walled(power.wall, def, state, slot, defs, dealt.amount - less)) guarded = true;
     if (!guarded && dealt.amount > 0 && !noFx && teamWalled(state, target, slot, defs)) guarded = true;
@@ -1630,7 +1802,7 @@ export function strike(ctx) {
     }
     // Haban Berry is used up once it has soaked an attack.
     if (hit.spentTool && target.tool) {
-      dropTool(state, foe, ACTIVE, target, defs, events);
+      dropTool(state, foe, ACTIVE, target, defs, events, hit.spentTool);
       delete hit.spentTool;
     }
     // "Prevent that attack's damage if that damage is 30 or less": judged on what would land.
@@ -1651,8 +1823,9 @@ export function strike(ctx) {
     const brace = toolOn(state, target, defs)?.sturdy;
     if (brace && target.damage === 0 && amount >= maxHp(state, target, defs) && maxHp(state, target, defs) > brace) {
       amount = maxHp(state, target, defs) - brace;
-      events.push({ t: "tool-effect", p: foe, spot: ACTIVE, uid: target.tool });
-      dropTool(state, foe, ACTIVE, target, defs, events);
+      const braced = toolWith(state, target, defs, "sturdy");
+      events.push({ t: "tool-effect", p: foe, spot: ACTIVE, uid: braced });
+      dropTool(state, foe, ACTIVE, target, defs, events, braced);
     }
     // Or a coin flip decides it, from any HP.
     if (power?.hangOn && amount > 0 && amount >= hpLeft(state, target, defs) && hpLeft(state, target, defs) > power.hangOn) {
@@ -1685,7 +1858,8 @@ export function strike(ctx) {
       // Adversity Policy: only when the holder has Weakness to the attacker's type.
       const weakTo = defOf(state, target.uid, defs).weakness?.type;
       if (spikes && (!spikes.weak || (weakTo && def.types.includes(weakTo))) && (!spikes.min || amount >= spikes.min) && (!spikes.mega || (def.box === "ex" && /^Mega /.test(def.name)))) {
-        events.push({ t: "tool-effect", p: foe, spot: ACTIVE, uid: target.tool });
+        const spiked = toolWith(state, target, defs, "thorns");
+        events.push({ t: "tool-effect", p: foe, spot: ACTIVE, uid: spiked });
         const heads = spikes.flip ? flip(state, foe) : true;
         if (spikes.flip) events.push({ t: "flip", p: foe, results: [heads], why: "tool" });
         if (spikes.n && heads) {
@@ -1693,10 +1867,10 @@ export function strike(ctx) {
           events.push({ t: "damage", p: player, spot: ACTIVE, n: spikes.n, self: true, why: "tool" });
         }
         if (spikes.draw) draw(state, foe, spikes.draw, events);
-        if (spikes.fan) (state.afterHit ||= []).push({ p: foe, uid: target.tool, name: defOf(state, target.tool, defs).name, thorns: { fan: true }, attacker: slot.uid, tool: true });
+        if (spikes.fan) (state.afterHit ||= []).push({ p: foe, uid: spiked, name: defOf(state, spiked, defs).name, thorns: { fan: true }, attacker: slot.uid, tool: true });
         // Team Rocket's Hypnotizer: the Attacking Pokémon is now Asleep.
         if (spikes.status && addCondition(state, slot, spikes.status, defs)) events.push({ t: "condition", p: player, kind: spikes.status });
-        if (spikes.spent) dropTool(state, foe, ACTIVE, target, defs, events);
+        if (spikes.spent) dropTool(state, foe, ACTIVE, target, defs, events, spiked);
       }
       // Spiky Energy: damage counters on the Attacking Pokémon, each one attached.
       const holder = defOf(state, target.uid, defs);
@@ -1826,7 +2000,8 @@ const HANDLERS = {
     if (bench.length > state.rules.bench) fail("The Bench is full.");
     for (const uid of all) {
       if (!side.hand.includes(uid)) fail("That card isn't in your hand.");
-      if (!isBasic(state, uid, defs)) fail("Only Basic Pokémon can start in play.");
+      // Cinderace's Explosiveness: it may start face down in the Active Spot (not on the Bench).
+      if (!isBasic(state, uid, defs) && !(uid === action.active && defOf(state, uid, defs).ability?.setupActive)) fail("Only Basic Pokémon can start in play.");
     }
     for (const uid of all) takeFromHand(state, player, uid);
     side.active = newSlot(state, action.active);
@@ -1848,8 +2023,14 @@ const HANDLERS = {
   bench(state, { player, uid }, defs, events) {
     const side = state.players[player];
     if (!side.hand.includes(uid)) fail("That card isn't in your hand.");
-    if (!isBasic(state, uid, defs)) fail("Only a Basic Pokémon can go straight to the Bench.");
-    if (side.bench.length >= state.rules.bench) fail("Your Bench is full.");
+    const leap = !isBasic(state, uid, defs) && handLeap(state, player, uid, defs);
+    if (!isBasic(state, uid, defs) && !leap) fail("Only a Basic Pokémon can go straight to the Bench.");
+    if (side.bench.length >= benchMax(state, player)) fail("Your Bench is full.");
+    if (leap) {
+      // Talonflame ex's Excited Dive, Klinklang's Emergency Rotation: its Ability puts it there from the hand.
+      (side.abilitiesUsed ||= []).push(leap.name);
+      events.push({ t: "ability", p: player, uid, name: leap.name, from: "hand" });
+    }
     if (handLock(state, player, defOf(state, uid, defs), defs)) fail(handLock(state, player, defOf(state, uid, defs), defs));
     takeFromHand(state, player, uid);
     const slot = newSlot(state, uid);
@@ -1884,6 +2065,7 @@ const HANDLERS = {
     const def = defOf(state, uid, defs);
     const why = trainerBlock(state, player, def, defs);
     if (why) fail(why);
+    if (trainerFlipped(state, player, uid, events)) return;
     takeFromHand(state, player, uid);
     if (def.fossil) {
       // "Play it as if it were a Basic Pokémon": onto the Bench, a Pokémon while it is in play.
@@ -1896,7 +2078,10 @@ const HANDLERS = {
     }
     if (def.sub === "stadium") {
       // It stays in play for both players; the one it replaces goes to its owner's discard pile.
-      if (state.stadium) state.players[state.stadium.owner].discard.push(state.stadium.uid);
+      if (state.stadium) {
+        state.players[state.stadium.owner].discard.push(state.stadium.uid);
+        state.trimFirst = state.stadium.owner;
+      }
       state.stadium = { uid, owner: player };
       side.stadiumPlayed = true;
       events.push({ t: "stadium", p: player, uid });
@@ -1943,10 +2128,17 @@ const HANDLERS = {
       events.push({ t: "mark", p: player, kind: "attachEnded" });
       state.ending = true;
     }
+    // Electrified Incisors: "whenever they attach an Energy card from their hand to the Defending Pokémon, place 8 damage counters".
+    const zap = markOn(state, slot, "zapAttach");
+    if (zap) {
+      slot.damage += zap.n;
+      events.push({ t: "damage", p: player, spot, n: zap.n, why: "mark" });
+      if (!state.pending.length && hpLeft(state, slot, defs) <= 0) resolveKnockOuts(state, defs, events);
+    }
     // Healing Scarf: an Energy card from the hand heals the Pokémon it goes on.
     const scarf = toolOn(state, slot, defs)?.attachHeal;
     if (scarf && healRoom(state, slot)) {
-      const healed = Math.min(scarf, healRoom(state, slot));
+      const healed = Math.min(healMore(state, scarf), healRoom(state, slot));
       slot.damage -= healed;
       slot.healedOn = state.turn;
       events.push({ t: "heal", p: player, spot, n: healed, why: "tool" });
@@ -1954,7 +2146,7 @@ const HANDLERS = {
     // Magearna's Auto Heal: from the Active Spot, an Energy card from the hand heals the Pokémon it goes on.
     const autoHeal = side.active && abilityOn(state, side.active, defs)?.attachHealAll;
     if (autoHeal && healRoom(state, slot)) {
-      const healed = Math.min(autoHeal, healRoom(state, slot));
+      const healed = Math.min(healMore(state, autoHeal), healRoom(state, slot));
       slot.damage -= healed;
       slot.healedOn = state.turn;
       events.push({ t: "heal", p: player, spot, n: healed, why: "ability" });
@@ -2029,12 +2221,17 @@ const HANDLERS = {
     if (handLock(state, player, def, defs)) fail(handLock(state, player, def, defs));
     const slot = slotAt(state, player, spot);
     if (!slot) fail("There's no Pokémon there.");
-    if (slot.tool) fail("That Pokémon already has a Tool.");
+    if (toolsIn(slot).length >= toolRoom(state, slot, defs)) fail("That Pokémon already has a Tool.");
     if (!toolFits(def.tool, playedAs(state, slot, defs))) fail(`${def.name} can't be attached to that Pokémon.`);
+    if (trainerFlipped(state, player, uid, events)) return;
     takeFromHand(state, player, uid);
-    slot.tool = uid;
-    // When it went on, for a Tool that lapses at the end of the opponent's next turn (Buffer Piece).
-    slot.toolOn = state.turn;
+    // A second Tool (Multi Adapter) rides beside the first.
+    if (slot.tool) (slot.extraTools ||= []).push(uid);
+    else {
+      slot.tool = uid;
+      // When it went on, for a Tool that lapses at the end of the opponent's next turn (Buffer Piece).
+      slot.toolOn = state.turn;
+    }
     events.push({ t: "tool", p: player, uid, spot });
   },
 
@@ -2050,7 +2247,20 @@ const HANDLERS = {
     if (defOf(state, slot.uid, defs).fossil?.noRetreat) fail(`${defOf(state, slot.uid, defs).name} can't retreat.`);
     const cost = retreatCost(state, slot, defs);
     const gone = [];
-    if (balloonOn(state, slot, defs)) {
+    // Goodra's Slimy Sliding: a coin flip first (once the Energy that pays is known); tails, nothing is paid and nobody moves.
+    const slider = inPlay(state, other(player)).find(([rival]) => abilityOn(state, rival, defs)?.slip);
+    const balloon = balloonOn(state, slot, defs);
+    if (slider && (balloon || energyOf(state, slot, defs).length >= cost) && (balloon || discard?.length || !retreatChoice(state, slot, cost, defs))) {
+      const heads = flip(state, player);
+      events.push({ t: "flip", p: player, results: [heads], why: "ability", name: abilityOn(state, slider[0], defs).name });
+      if (!heads) {
+        side.retreated = true;
+        events.push({ t: "ability", p: other(player), spot: slider[1], uid: slider[0].uid, name: abilityOn(state, slider[0], defs).name });
+        events.push({ t: "retreat-stopped", p: player });
+        return;
+      }
+    }
+    if (balloon) {
       // Balloon Berry is discarded instead of the Energy.
       dropTool(state, player, ACTIVE, slot, defs, events);
     } else {
@@ -2094,6 +2304,7 @@ const HANDLERS = {
     if (!canPay(state, slot, costFor(state, slot, attack, defs), defs)) fail("Not enough Energy for that attack.");
     if (stuckAttack(slot, attack)) fail(`${def.name} is ${statusOf(slot).main === "asleep" ? "Asleep" : "Paralyzed"} and can't attack.`);
     if (markOn(state, slot, "noAttack")) fail(`${def.name} can't attack this turn.`);
+    if (sideAttackLock(state, player, slot, defs)) fail(sideAttackLock(state, player, slot, defs));
     if (barredAttack(state, slot, attack.name)) fail(`${def.name} can't use ${attack.name} now.`);
     if (attack.once === "gx" && side.gxUsed) fail("You've already used your GX attack this game.");
     if (attack.once === "gx" && side.gxBarred) fail("You can't use GX attacks for the rest of this game.");
@@ -2134,8 +2345,10 @@ const HANDLERS = {
       }
     }
     if (markOn(state, slot, "mustFlip")) {
-      const heads = flip(state);
-      events.push({ t: "flip", p: player, results: [heads], why: "mustFlip" });
+      // "your opponent flips 2 coins. If either of them is tails, that attack doesn't happen."
+      const results = Array.from({ length: markOn(state, slot, "mustFlip").n || 1 }, () => flip(state));
+      const heads = results.every(Boolean);
+      events.push({ t: "flip", p: player, results, why: "mustFlip" });
       if (!heads) {
         events.push({ t: "miss", p: player });
         state.ending = true;
@@ -2187,7 +2400,16 @@ const HANDLERS = {
     const present = picked.filter((uid) => pile.includes(uid));
     for (const uid of picked) if (pile.includes(uid)) pile.splice(pile.indexOf(uid), 1);
     const { op } = waiting.effect;
-    if (op === "share") {
+    if (op === "tyme") {
+      // Tyme: the Pokémon is set aside and goes back to the hand; the other player guesses its HP, a range first.
+      side.hand.push(...present);
+      const uid = picked[0];
+      if (uid) {
+        events.push({ t: "tyme", p: player });
+        const ranges = [10, 100, 200, 300];
+        state.pending.splice(1, 0, { type: "option", player: other(player), by: player, why: "guess", prompt: "Tyme: guess the HP of the Pokémon they set aside. First, which range?", labels: ["10 to 90", "100 to 190", "200 to 290", "300 or more"], options: ranges.map((from) => [{ op: "tymeRange", from, uid, n: waiting.effect.n }]) });
+      }
+    } else if (op === "share") {
       const hit = inPlay(state, player).find(([slot]) => slot.uid === waiting.effect.to);
       if (hit) {
         hit[0].energy.push(...present);
@@ -2238,22 +2460,24 @@ const HANDLERS = {
         if (state.stadium?.uid === uid) {
           state.players[state.stadium.owner].discard.push(uid);
           events.push({ t: "stadium-gone", p: state.stadium.owner, uid });
+          state.trimFirst = state.stadium.owner;
           state.stadium = null;
           continue;
         }
         for (const p of [0, 1]) {
-          const hit = inPlay(state, p).find(([slot]) => slot.tool === uid || slot.energy.includes(uid));
+          const hit = inPlay(state, p).find(([slot]) => toolsIn(slot).includes(uid) || slot.energy.includes(uid));
           if (!hit) continue;
           const [slot, spot] = hit;
           const lost = Boolean(waiting.effect.lost);
-          if (slot.tool === uid) toolGone(state, p, uid, defs);
+          const isTool = toolsIn(slot).includes(uid);
+          if (isTool) toolGone(state, p, uid, defs);
           else if (lost) toLost(state, p, [uid], events);
           else {
             state.players[p].discard.push(uid);
             noteShed(state, p, spot, [uid]);
           }
-          if (slot.tool === uid) {
-            delete slot.tool;
+          if (isTool) {
+            takeTool(slot, uid);
             events.push({ t: "discard-tool", p, spot, uid });
           } else {
             slot.energy.splice(slot.energy.indexOf(uid), 1);
@@ -2263,12 +2487,20 @@ const HANDLERS = {
       }
     } else if (op === "evolveFrom") {
       // A card that evolves one of your Pokémon (Rare Candy from the hand, Evosoda from the deck): onto which one.
-      const uid = picked[0];
+      // Only a card still there (an earlier search of the same attack may have taken it).
+      const uid = present[0];
       const spots = uid ? evolveSpots(state, player, defOf(state, uid, defs), defs, waiting.effect.how, waiting.effect.where).filter((s) => waiting.effect.at == null || s === waiting.effect.at) : [];
       if (uid && !spots.length) pile.push(uid);
-      else if (spots.length === 1) evolveSlot(state, player, spots[0], uid, defs, events, waiting.zone);
-      else if (spots.length) {
-        askPick(state, { player, side: player, spots, left: 1, effect: { op: "evolveHeld", uid, zone: waiting.zone }, ...(waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) });
+      else if (spots.length === 1) {
+        evolveSlot(state, player, spots[0], uid, defs, events, waiting.zone);
+        // Phantump's Spiteful Evolution: damage counters on what it became.
+        if (waiting.effect.hurt) {
+          slotAt(state, player, spots[0]).damage += waiting.effect.hurt;
+          events.push({ t: "damage", p: player, spot: spots[0], n: waiting.effect.hurt, self: true, why: "ability" });
+        }
+        if (waiting.effect.tree) treeAgain(state, player, spots[0], defs);
+      } else if (spots.length) {
+        askPick(state, { player, side: player, spots, left: 1, effect: { op: "evolveHeld", uid, zone: waiting.zone, ...(waiting.effect.tree ? { tree: true } : {}) }, ...(waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) });
         waiting.then = null;
       } else if (waiting.zone === "deck") events.push({ t: "search", p: player, uids: [], from: "deck", to: "hand" });
     } else if (op === "swapTop") {
@@ -2300,6 +2532,8 @@ const HANDLERS = {
         slot.energy.push(...picked);
         for (const uid of picked) events.push({ t: "attach", p: player, uid, spot: waiting.effect.spot, from: "deck" });
         if (heal.heal) healAt(state, player, waiting.effect.spot, heal.each ? heal.heal * picked.length : heal.heal, events);
+        // "If you attached Energy to a Pokémon in this way, this Pokémon is now Poisoned."
+        if (heal.poison && addCondition(state, slot, "poisoned", defs)) events.push({ t: "condition", p: player, spot: waiting.effect.spot, kind: "poisoned" });
       } else if (picked.length && to === "each") {
         // "For each of your Benched Pokémon, ... attach it to that Pokémon": a different Pokémon for each card, one pick at a time.
         askPick(state, { player, side: player, spots, left: 1, effect: { op: "attachHeld", uids: [picked[0]], chain: picked.slice(1), ...(waiting.zone !== "deck" ? { zone: waiting.zone } : {}), ...heal }, ...(waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) });
@@ -2328,9 +2562,12 @@ const HANDLERS = {
     } else if (op === "toolOn") {
       // A Pokémon Tool from the deck onto the Pokémon the effect names (Farfetch'd's Impromptu Carrier).
       const slot = slotAt(state, player, waiting.effect.spot);
-      if (picked.length && slot && !slot.tool) {
-        slot.tool = picked[0];
-        slot.toolOn = state.turn;
+      if (picked.length && slot && toolsIn(slot).length < toolRoom(state, slot, defs)) {
+        if (slot.tool) (slot.extraTools ||= []).push(picked[0]);
+        else {
+          slot.tool = picked[0];
+          slot.toolOn = state.turn;
+        }
         events.push({ t: "tool", p: player, uid: picked[0], spot: waiting.effect.spot, from: "deck" });
         side.deck.push(...picked.slice(1));
       } else side.deck.push(...picked);
@@ -2372,7 +2609,7 @@ const HANDLERS = {
       if (rest.length) events.push({ t: "shuffle-hand", p: owner });
     } else if (op === "toActive") {
       // Lt. Surge: a Basic Pokémon from the hand becomes the Active Pokémon, the old one goes to the Bench.
-      if (picked.length && side.active && side.bench.length < state.rules.bench) {
+      if (picked.length && side.active && side.bench.length < benchMax(state, owner)) {
         clearConditions(side.active);
         side.bench.push(side.active);
         side.active = newSlot(state, picked[0]);
@@ -2406,10 +2643,10 @@ const HANDLERS = {
           else side.discard.push(uid);
           continue;
         }
-        const at = inPlay(state, player).find(([slot]) => slot.energy.includes(uid) || slot.tool === uid);
+        const at = inPlay(state, player).find(([slot]) => slot.energy.includes(uid) || toolsIn(slot).includes(uid));
         if (!at) continue;
-        if (at[0].tool === uid) {
-          dropTool(state, player, at[1], at[0], defs, events);
+        if (toolsIn(at[0]).includes(uid)) {
+          dropTool(state, player, at[1], at[0], defs, events, uid);
           continue;
         }
         if (lost) toLost(state, player, [uid], events);
@@ -2515,7 +2752,7 @@ const HANDLERS = {
     else side.bench.splice(spot, 1);
     if (how === "bottom") {
       side.discard.push(...slot.under, ...slot.energy, ...heldOn(slot));
-      if (slot.tool) toolGone(state, player, slot.tool, defs);
+      for (const uid of toolsIn(slot)) toolGone(state, player, uid, defs);
       side.deck.push(slot.uid);
     } else discardSlot(state, player, slot, defs);
     events.push({ t: "drop", p: player, spot, uid: slot.uid, ...(how === "bottom" ? { to: "deck" } : {}) });
@@ -2543,6 +2780,19 @@ const HANDLERS = {
  * Cards an attack keeps in the hand this turn ("During your opponent's next turn, they can't play any Item
  * cards from their hand"): side.locks { item, supporter, stadium, special, trainer } hold the turn they bar.
  */
+/** Quaking Fist: a coin to use a Trainer card from the hand this turn; tails, it is discarded instead (true). */
+function trainerFlipped(state, player, uid, events) {
+  const side = state.players[player];
+  if (side.sideLocks?.trainerFlip?.turn !== state.turn) return false;
+  const heads = flip(state, player);
+  events.push({ t: "flip", p: player, results: [heads], why: "trainerFlip" });
+  if (heads) return false;
+  takeFromHand(state, player, uid);
+  side.discard.push(uid);
+  events.push({ t: "discard", p: player, uids: [uid], from: "hand", why: "trainerFlip" });
+  return true;
+}
+
 export function handLock(state, player, def, defs) {
   const locks = state.players[player].locks || {};
   const barred = (kind) => locks[kind] === state.turn;
@@ -2555,6 +2805,8 @@ export function handLock(state, player, def, defs) {
     if (barred(kind)) return `You can't play ${{ supporter: "Supporter", stadium: "Stadium" }[kind] || "Item"} cards this turn.`;
   }
   if (def?.kind === "energy" && !def.basic && barred("special")) return "You can't play Special Energy cards this turn.";
+  // Evolution Jammer: "they can't play any Pokémon from their hand to evolve their Pokémon".
+  if (def?.kind === "pokemon" && def.stage === "evolution" && barred("evolve")) return "You can't evolve Pokémon from your hand this turn.";
   // The other player's Abilities: "As long as this Pokémon is in the Active Spot, your opponent can't play any Item cards from their hand."
   if (def && defs) {
     for (const [rival] of inPlay(state, other(player))) {
@@ -2592,7 +2844,7 @@ export function trainerBlock(state, player, def, defs) {
     return "";
   }
   // Played as a Basic Pokémon: it needs a place on the Bench.
-  if (def.fossil) return side.bench.length >= state.rules.bench ? "Your Bench is full." : "";
+  if (def.fossil) return side.bench.length >= benchMax(state, player) ? "Your Bench is full." : "";
   if (!trainerReady(def.fx, { state, defs, events: [], player, src: "trainer" })) return `${def.name} would do nothing right now.`;
   return "";
 }
@@ -2772,6 +3024,15 @@ function applyPick(state, waiting, spot, defs, events) {
   const p = waiting.side;
   const side = state.players[p];
   const { effect } = waiting;
+  if (effect.op === "trimBench") {
+    // Area Zero Underdepths: one Benched Pokémon over the Bench's size, discarded with all attached (not Knocked Out).
+    const slot = side.bench[spot];
+    discardSlot(state, p, slot, defs);
+    side.bench.splice(spot, 1);
+    events.push({ t: "bounce", p, spot, uid: slot.uid, discard: true });
+    waiting.left = 0;
+    return;
+  }
   if (effect.op === "breedMark") {
     // Pokémon Breeder Fields: 1 or 2 Pokémon, the second one if the player likes.
     (state.breeder ||= []).push(slotAt(state, p, spot).uid);
@@ -2790,6 +3051,7 @@ function applyPick(state, waiting, spot, defs, events) {
   } else if (effect.op === "evolveHeld") {
     // The card chosen to evolve with (it rides on the pick) goes on the Pokémon picked.
     evolveSlot(state, p, spot, effect.uid, defs, events, effect.zone);
+    if (effect.tree) treeAgain(state, p, spot, defs);
   } else if (effect.op === "gatherFrom") {
     // "Move any amount of Energy from your other Pokémon to it": one card a pick, until the player stops.
     const slot = slotAt(state, p, spot);
@@ -2856,7 +3118,7 @@ function applyPick(state, waiting, spot, defs, events) {
       n = effect.night ? (heads === effect.flips ? 9990 : 0) : heads * effect.per;
       if (effect.night && !heads) stripEnergy({ state, events }, p, spot);
     }
-    const healed = Math.min(n, healRoom(state, slot));
+    const healed = Math.min(healMore(state, n), healRoom(state, slot));
     slot.damage -= healed;
     if (healed) slot.healedOn = state.turn;
     if (healed) events.push({ t: "heal", p, spot, n: healed });
@@ -2891,6 +3153,7 @@ function applyPick(state, waiting, spot, defs, events) {
     events.push({ t: "lift", p, spot });
   } else if (effect.op === "devolve") {
     devolveSlot(state, p, spot, events);
+    if (effect.deep) offerDevolve(state, p, spot, 1);
   } else if (effect.op === "swapFrom") {
     // Ninja Boy: a Basic Pokémon from the deck takes this one's place, with all it had.
     const uids = side.deck.filter((uid) => isBasic(state, uid, defs));
@@ -2925,14 +3188,16 @@ function applyPick(state, waiting, spot, defs, events) {
     moveEnergy(state, p, spot, spots[0], cards[cards.length - 1], events);
     offerAgain(state, waiting, p, effect, defs);
   } else if (effect.op === "bounce") {
+    if (keptInPlay(state, p)) return void events.push({ t: "blocked", p, spot });
     // Back to the hand: its Pokémon cards (all of them, or only the Basic one), and what was attached when `keep` is "all".
     const slot = slotAt(state, p, spot);
     const mons = [slot.uid, ...slot.under];
-    const all = [...mons, ...slot.energy, ...(slot.tool ? [slot.tool] : []), ...heldOn(slot)];
+    const tools = toolsIn(slot);
+    const all = [...mons, ...slot.energy, ...tools, ...heldOn(slot)];
     const back = effect.keep === "all" ? all : effect.keep === "basic" ? [mons[mons.length - 1]] : mons;
     side.hand.push(...back);
-    side.discard.push(...all.filter((uid) => !back.includes(uid) && uid !== slot.tool));
-    if (slot.tool && !back.includes(slot.tool)) toolGone(state, p, slot.tool, defs);
+    side.discard.push(...all.filter((uid) => !back.includes(uid) && !tools.includes(uid)));
+    for (const uid of tools) if (!back.includes(uid)) toolGone(state, p, uid, defs);
     if (spot === ACTIVE) side.active = null;
     else side.bench.splice(spot, 1);
     events.push({ t: "bounce", p, spot, uid: slot.uid });
@@ -2946,11 +3211,16 @@ function applyPick(state, waiting, spot, defs, events) {
   } else if (effect.op === "shuffleIn") {
     // Fuchsia City Gym: the Pokémon and everything on it go into its owner's deck, shuffled.
     const slot = slotAt(state, p, spot);
-    side.deck.push(slot.uid, ...slot.under, ...slot.energy, ...(slot.tool ? [slot.tool] : []), ...heldOn(slot));
+    side.deck.push(slot.uid, ...slot.under, ...slot.energy, ...toolsIn(slot), ...heldOn(slot));
     shuffle(state, side.deck);
     if (spot === ACTIVE) side.active = null;
     else side.bench.splice(spot, 1);
     events.push({ t: "shuffle-in", p, spot, uid: slot.uid });
+    // "Choose 2 of your opponent's Benched Pokémon": the next one, from the Bench as it is now.
+    if (effect.again > 0) {
+      const spots = inPlay(state, p).filter(([s, at]) => (effect.where === "any" || at !== ACTIVE) && !warded(state, s, { player: effect.by, src: "attack" }, defs)).map(([, at]) => at);
+      if (spots.length) follow(state, waiting, { player: effect.by, side: p, spots, left: 1, effect: { op: "shuffleIn", ...(effect.again > 1 ? { again: effect.again - 1, where: effect.where, by: effect.by } : {}) } });
+    }
   } else if (effect.op === "moveEnergyFrom") {
     // Which Energy: the last attached of the kind asked for. Then, where it goes.
     const slot = slotAt(state, p, spot);
@@ -2972,6 +3242,7 @@ function applyPick(state, waiting, spot, defs, events) {
   } else if (effect.op === "moveEnergyTo") {
     moveEnergy(state, p, effect.from, spot, effect.uid, events);
   } else if (effect.op === "moveCountersFrom") {
+    if (countersStay(state)) return void events.push({ t: "blocked", p, spot });
     const slot = slotAt(state, p, spot);
     const n = Math.min(effect.n, slot.damage);
     const to = effect.to === "foe" ? other(p) : p;
@@ -3018,9 +3289,10 @@ function applyPick(state, waiting, spot, defs, events) {
     const slot = slotAt(state, p, spot);
     // "Discard a Pokémon Tool and a Special Energy from 1 of your opponent's Pokémon": the Tool goes too.
     if (effect.tool && slot.tool) {
-      toolGone(state, p, slot.tool, defs);
-      events.push({ t: "discard-tool", p, spot, uid: slot.tool });
-      delete slot.tool;
+      const uid = slot.tool;
+      toolGone(state, p, uid, defs);
+      events.push({ t: "discard-tool", p, spot, uid });
+      takeTool(slot, uid);
     }
     // A Special Energy only, or any. Which card(s), when they differ, is the choice of the player whose card it is.
     // "Put an Energy attached to 1 of your opponent's Pokémon into their hand": to the hand.
@@ -3168,7 +3440,7 @@ export function chooseBlock(state, waiting, picked, defs) {
 /** Heal damage from one Pokémon (as much as it has, and none while it can't be healed). */
 function healAt(state, p, spot, n, events) {
   const slot = slotAt(state, p, spot);
-  const healed = slot ? Math.min(n, healRoom(state, slot)) : 0;
+  const healed = slot ? Math.min(healMore(state, n), healRoom(state, slot)) : 0;
   if (!healed) return;
   slot.damage -= healed;
   slot.healedOn = state.turn;
@@ -3255,6 +3527,21 @@ function offerFall(state, p, slot, defs) {
 }
 
 /** Leave a choice for a player; the turn waits on it. */
+/**
+ * Grand Tree, its second step: "If that Pokémon was evolved in this way, that player may search their deck for a
+ * Stage 2 Pokémon that evolves from that Pokémon and put it onto that Pokémon to evolve it." It evolved this turn, and may again.
+ */
+function treeAgain(state, p, spot, defs) {
+  const slot = slotAt(state, p, spot);
+  const uids = state.players[p].deck.filter((uid) => {
+    const def = defOf(state, uid, defs);
+    return def?.line === 2 && canEvolveOnto(state, slot, def, defs, { lift: true });
+  });
+  // Ahead of anything already waiting, the search goes on.
+  // Called while the choice or pick that evolved it is still first in line.
+  state.pending.splice(1, 0, { type: "choose", player: p, zone: "deck", what: "evolution", uids, min: 0, max: Math.min(1, uids.length), effect: { op: "evolveFrom", how: { lift: true }, at: spot }, shuffle: true });
+}
+
 export function askPick(state, pick) {
   state.pending.push({ type: "pick", optional: false, ...pick });
 }
@@ -3264,7 +3551,14 @@ export function askPick(state, pick) {
  * { player, zone, what, uids: the cards that may be chosen, min, max, effect: { op }, shuffle }
  * effect.op: "toHand", "toBench" (Basic Pokémon, from the deck), "discard" (from the hand).
  */
+/** Choices that take cards from the discard pile to the hand or the deck: a card that "can't be put into your hand or deck from the discard pile" isn't offered. */
+const RECOVER_OPS = new Set(["toHand", "toDeck", "fromDiscardTop", "toTop", "swapTop", "deckTop", "keepOne"]);
 export function askChoose(state, choice) {
+  if (choice.zone === "discard" && liveDefs && RECOVER_OPS.has(choice.effect?.op)) {
+    const uids = choice.uids.filter((uid) => !defOf(state, uid, liveDefs)?.noRecover);
+    if (!uids.length && choice.uids.length && !choice.then?.length) return;
+    choice = { ...choice, uids };
+  }
   state.pending.push({ type: "choose", ...choice, min: Math.min(choice.min, choice.uids.length), max: Math.min(choice.max, choice.uids.length) });
 }
 
@@ -3319,12 +3613,65 @@ export function apply(state, action, defs) {
   }
   // Trick Coin: the choices made during the attack before its first coin, to make again if it is flipped again.
   if (state.trick && !state.trick.offered && !state.trick.flips && waiting) state.trick.log.push(action);
+  const from = events.length;
   handler(state, action, defs, events);
+  startlingDrop(state, defs, events, from);
   sweepConditions(state, defs, events);
+  overflow(state, defs, events);
   toLostZone(state, defs);
   settle(state, defs, events);
   toLostZone(state, defs);
   return events;
+}
+
+/**
+ * Ferrothorn's Startling Drop: discarded from its owner's deck by the other player's attack, Ability, Item or Supporter
+ * during that player's turn, it discards the top cards of their deck. Read off the cards milled by this action.
+ */
+function startlingDrop(state, defs, events, from) {
+  const mover = state.current;
+  for (let i = from; i < events.length; i += 1) {
+    const e = events[i];
+    if (e.t !== "mill" || e.p === mover) continue;
+    for (const uid of e.uids || []) {
+      const drop = defOf(state, uid, defs)?.kind === "pokemon" && defOf(state, uid, defs).ability?.milled;
+      if (!drop || !state.players[e.p].discard.includes(uid)) continue;
+      const gone = state.players[mover].deck.splice(0, drop.n);
+      state.players[mover].discard.push(...gone);
+      events.push({ t: "ability", p: e.p, uid, name: defOf(state, uid, defs).ability.name, from: "discard" });
+      if (gone.length) events.push({ t: "mill", p: mover, uids: gone });
+    }
+  }
+}
+
+/**
+ * More in play than the rules now allow, once nothing else is waiting: a Pokémon with more Tools than it may hold
+ * (Multi Adapter went away: "discard Pokémon Tools from those Pokémon until only 1 remains on each"), a Bench
+ * over its size (Area Zero Underdepths left play, or its player has no Tera Pokémon left). The owner chooses what goes;
+ * the player who played a Stadium that left play goes first.
+ */
+function overflow(state, defs, events) {
+  if (state.phase !== "main" || state.pending.length) return;
+  const first = state.trimFirst ?? state.current;
+  for (const p of [first, other(first)]) {
+    for (const [slot, spot] of inPlay(state, p)) {
+      const extra = toolsIn(slot).length - toolRoom(state, slot, defs);
+      if (extra > 0) return void askChoose(state, { player: p, zone: "play", what: "tool", uids: toolsIn(slot), min: extra, max: extra, effect: { op: "dropInPlay" }, prompt: `Only ${toolRoom(state, slot, defs)} Pokémon Tool may stay on ${defOf(state, slot.uid, defs).name}: choose what to discard.` });
+      void spot;
+    }
+    const side = state.players[p];
+    if (side.bench.length > benchMax(state, p)) return void askPick(state, { player: p, side: p, spots: side.bench.map((_, i) => i), left: 1, effect: { op: "trimBench" }, prompt: `Your Bench holds ${benchMax(state, p)} now: discard a Benched Pokémon.` });
+  }
+  delete state.trimFirst;
+  for (const p of [0, 1]) {
+    // A face-up Prize card that was taken isn't a Prize card any more.
+    const side = state.players[p];
+    if (side.prizesUp) side.prizesUp = side.prizesUp.filter((uid) => side.prizes.includes(uid));
+    if (side.prizesUp && !side.prizesUp.length) delete side.prizesUp;
+    const max = benchMax(state, p);
+    if (max === state.rules.bench) delete state.players[p].benchMax;
+    else state.players[p].benchMax = max;
+  }
 }
 
 /** A Special Condition a Pokémon now can't be affected by goes (Festival Grounds "recovers from all Special Conditions"). */
@@ -3383,7 +3730,7 @@ export function legalActions(state, player, defs) {
     if (seen.has(def.id)) continue;
     seen.add(def.id);
     if (def.kind === "pokemon" && handLock(state, player, def, defs)) continue;
-    if (def.kind === "pokemon" && def.stage === "basic" && side.bench.length < state.rules.bench) out.push({ type: "bench", player, uid });
+    if (def.kind === "pokemon" && (def.stage === "basic" || handLeap(state, player, uid, defs)) && side.bench.length < benchMax(state, player)) out.push({ type: "bench", player, uid });
     if (def.kind === "pokemon" && def.evolvesFrom) {
       for (const [slot, spot] of spots) if (canEvolveOnto(state, slot, def, defs, { hand: true }) && !markOn(state, slot, "noEvolve")) out.push({ type: "evolve", player, uid, spot });
     }
@@ -3391,7 +3738,7 @@ export function legalActions(state, player, defs) {
       for (const [slot, spot] of spots) if (energyFits(def, defOf(state, slot.uid, defs)) && !markOn(state, slot, "noEnergy")) out.push({ type: "attach", player, uid, spot });
     }
     if (def.kind === "trainer" && def.sub === "tool") {
-      if (def.playable && side.noTrainers !== state.turn && !handLock(state, player, def, defs)) for (const [slot, spot] of spots) if (!slot.tool && toolFits(def.tool, playedAs(state, slot, defs))) out.push({ type: "tool", player, uid, spot });
+      if (def.playable && side.noTrainers !== state.turn && !handLock(state, player, def, defs)) for (const [slot, spot] of spots) if (toolsIn(slot).length < toolRoom(state, slot, defs) && toolFits(def.tool, playedAs(state, slot, defs))) out.push({ type: "tool", player, uid, spot });
       continue;
     }
     if (def.kind === "trainer" && !trainerBlock(state, player, def, defs)) out.push({ type: "play", player, uid });
@@ -3418,7 +3765,7 @@ export function viewFor(state, player) {
     (side.lost || []).forEach((uid) => shown.add(uid));
     for (const slot of [side.active, ...side.bench]) {
       if (!slot || (state.phase === "setup" && p !== player)) continue;
-      [slot.uid, ...slot.under, ...slot.energy, ...(slot.tool ? [slot.tool] : []), ...heldOn(slot)].forEach((uid) => shown.add(uid));
+      [slot.uid, ...slot.under, ...slot.energy, ...toolsIn(slot), ...heldOn(slot)].forEach((uid) => shown.add(uid));
     }
     if (p !== player) {
       side.hand = side.hand.length;
@@ -3427,6 +3774,7 @@ export function viewFor(state, player) {
         side.bench = side.bench.map(() => ({}));
       }
     }
+    (side.prizesUp || []).forEach((uid) => shown.add(uid));
     side.deck = side.deck.length;
     side.prizes = side.prizes.length;
   });

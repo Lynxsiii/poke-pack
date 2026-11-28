@@ -7,7 +7,7 @@
   position: relative; overflow: hidden;
   display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: stretch;
   max-width: 620px; margin: 0 0 24px;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); color: var(--k);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); color: var(--k);
   box-shadow: var(--drop-sm);
   animation: gate-in 0.34s var(--ease-out) backwards;
 }
@@ -19,7 +19,7 @@
   clip-path: polygon(0 0, 100% 0, calc(100% - 18px) 100%, 0 100%);
 }
 .gate-lock-stub::before, .gate-lock-stub::after { content: none; }
-.gate-lock-stub small { color: var(--on-k); font: italic 700 13px/1.2 var(--font-h); }
+.gate-lock-stub small { color: var(--on-k); font: 700 13px/1.2 var(--font-h); }
 .gate-lock-stub b {
   color: var(--yel-k); font: italic 800 46px/0.95 var(--font-xc); letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums;

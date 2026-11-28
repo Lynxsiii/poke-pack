@@ -17,7 +17,7 @@
 .rk-board.rt-word:hover { background: none; }
 .rk-board.rt-word.on { color: var(--on-k); box-shadow: none; }
 .rk-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 18px; margin: 12px 0 0; }
-.rk-seg { display: inline-flex; width: auto; gap: 2px; padding: 3px 4px; border: 2px solid var(--k); border-radius: 6px; background: var(--box); }
+.rk-seg { display: inline-flex; width: auto; gap: 2px; padding: 3px 4px; border: 2px solid var(--k); border-radius: var(--r); background: var(--box); }
 .rk-seg .seg-btn { flex: none; min-height: 34px; padding: 3px 13px 4px; font-size: 14.5px; }
 .rk-blurb { margin: 12px 0 0; max-width: 60ch; color: var(--k-2); font-size: 14.5px; line-height: 1.45; }
 
@@ -28,7 +28,7 @@
 /* ---- Your rank: a box with the yellow cursor edge ------------------------------- */
 .rk-me {
   position: relative; display: flex; align-items: center; gap: 14px; min-height: 84px; padding: 0 18px 0 0; overflow: hidden;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box);
 }
 .rk-me-tag {
   align-self: stretch; flex: none; display: flex; align-items: center; padding: 0 26px 0 20px;
@@ -37,7 +37,7 @@
 }
 .rk-me p { margin: 0; color: var(--k); font-size: 15px; line-height: 1.45; }
 .rk-me-out, .rk-me-none {
-  flex-wrap: wrap; gap: 12px 16px; padding: 16px 18px; border-style: dashed; border-color: var(--rule-2); background: rgb(var(--box-rgb) / 0.88);
+  flex-wrap: wrap; gap: 12px 16px; min-height: 0; padding: 0; border: 0; background: none; overflow: visible;
 }
 .rk-me-out p, .rk-me-none p { flex: 1 1 220px; color: var(--k-2); }
 .rk-me-out .ghost { flex: none; min-width: 0; }
@@ -84,7 +84,7 @@
 }
 .rk-plate > span { display: block; animation: rk-num 0.3s var(--ease-out) backwards; animation-delay: inherit; }
 .rk-plate::before {
-  content: ""; position: absolute; inset: 0; z-index: -1; border: var(--line-w) solid var(--k); border-bottom-width: 7px; border-radius: 6px;
+  content: ""; position: absolute; inset: 0; z-index: -1; border: var(--line-w) solid var(--k); border-bottom-width: 7px; border-radius: var(--r);
   background: var(--k); transform: skewX(var(--skew));
 }
 .rk-seat[data-place="1"] .rk-plate { height: 104px; color: var(--k); font-size: 58px; }
@@ -109,7 +109,7 @@
 .rk-list, .rk-last-list { display: grid; gap: 8px; margin: 16px 0 0; padding: 0; list-style: none; }
 .rk-row, .rk-last-list li {
   display: flex; align-items: center; gap: 0; min-height: 60px; padding: 0 14px 0 0; overflow: hidden;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box);
   transition: transform 0.14s var(--ease-out);
 }
 .rk-place {
@@ -130,10 +130,10 @@
 .rk-nm { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .rk-name small { overflow: hidden; color: var(--k-2); font: 700 12.5px var(--font); text-overflow: ellipsis; white-space: nowrap; }
 .rk-you {
-  display: inline-block; flex: none; padding: 0 6px; border-radius: 3px; background: var(--yel); color: var(--k0);
-  font: italic 700 11.5px/1.5 var(--font-h); letter-spacing: 0; text-transform: none;
+  display: inline-block; flex: none; padding: 0 6px; border-radius: var(--r-tag); background: var(--yel); color: var(--k0);
+  font: 700 11.5px/1.5 var(--font-h); letter-spacing: 0; text-transform: none;
 }
-.rk-card { flex: none; width: 34px; height: 47px; margin-left: 8px; border-radius: 3px; object-fit: cover; background: var(--box-2); filter: drop-shadow(var(--drop-sm)); }
+.rk-card { flex: none; width: 34px; height: 47px; margin-left: 8px; border-radius: var(--r-tag); object-fit: cover; background: var(--box-2); filter: drop-shadow(var(--drop-sm)); }
 .rk-value {
   flex: none; min-width: 0; margin-left: 10px; color: var(--k); text-align: right; white-space: nowrap;
   font: 700 18px var(--font-h); font-variant-numeric: tabular-nums;
@@ -141,7 +141,7 @@
 .rk-value small { color: var(--k-2); font: 600 13px var(--font-h); }
 .rk-coins { display: inline-flex; align-items: center; justify-content: flex-end; gap: 5px; }
 .rk-coins .coin-i { width: 18px; height: 18px; margin: 0; }
-.rk-lv { display: inline-block; padding: 1px 8px 2px; border-radius: 3px; background: var(--k); color: var(--yel-k); font: italic 800 15px var(--font-xc); }
+.rk-lv { display: inline-block; padding: 1px 8px 2px; border-radius: var(--r-tag); background: var(--k); color: var(--yel-k); font: italic 800 15px var(--font-xc); }
 /* Your own row: the yellow cursor edge on its label, nudged toward you. */
 .rk-row.is-me { background: var(--cy-3); }
 .rk-row.is-me .rk-place { box-shadow: inset 7px 0 0 var(--yel); }
@@ -154,16 +154,18 @@
 
 /* Nothing yet, or still loading. */
 .rk-empty { margin: 0; color: var(--k-2); font-size: 15px; }
+/* House style: an empty board is a plain line under a rule, no dashed box and no ball. */
 .rk-empty-box {
-  display: flex; align-items: center; gap: 14px; margin-top: 18px; padding: 18px 16px;
-  border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: rgb(var(--box-rgb) / 0.88);
+  display: block; margin-top: 18px; padding: 16px 0 0;
+  border: 0; border-top: var(--line-w) solid var(--rule);
 }
+.rk-empty-box .rk-ball, .rk-me-none .rk-ball, .rk-me-out .rk-ball { display: none; }
 .rk-empty-box p { margin: 0; line-height: 1.45; }
 .rk-ghosts { display: grid; gap: 8px; }
 /* Loading: dashed places with the cyan band crossing them (rotom.css .rt-skel). */
 .rk-ghosts i {
   position: relative; display: block; height: 60px; overflow: hidden;
-  border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: rgb(var(--box-rgb) / 0.5);
+  border: var(--line-w) dashed var(--rule-2); border-radius: var(--r); background: rgb(var(--box-rgb) / 0.5);
 }
 .rk-ghosts i::after {
   content: ""; position: absolute; top: 0; bottom: 0; left: -40%; width: 34%;
@@ -179,7 +181,7 @@
 .rk-last-list li[data-place="1"] .rk-place { background: var(--yel); color: var(--k0); }
 
 /* ---- How it is counted ----------------------------------------------------------- */
-.rk-how { margin: 32px 0 8px; padding: 0 16px; border: 2px solid var(--k); border-radius: 6px; background: var(--box); color: var(--k-2); font-size: 14.5px; }
+.rk-how { margin: 32px 0 8px; padding: 0 16px; border: 2px solid var(--k); border-radius: var(--r); background: var(--box); color: var(--k-2); font-size: 14.5px; }
 .rk-how summary { display: flex; align-items: center; min-height: 48px; color: var(--k); font: italic 800 17px var(--font-xc); cursor: pointer; list-style: none; }
 .rk-how summary::-webkit-details-marker { display: none; }
 .rk-how summary::before {
@@ -244,7 +246,7 @@ body.no-motion :is(.rk-body, .rk-row, .rk-how summary::before) { transition: non
 .nav-more-label:first-child { margin-top: 2px; }
 .tabbar .nav-more-list .nav-more-label { grid-column: 1 / -1; }
 .tabbar .nav-more-list .tab-search { grid-column: 1 / -1; }
-.rk-who:focus-visible { outline-offset: -2px; border-radius: 4px; }
+.rk-who:focus-visible { outline-offset: -2px; border-radius: var(--r-tag); }
 
 /* pseudo-elements can't sit inside :is(), so they are named on their own */
 body.no-motion .rk-ghosts i::after { animation: none !important; }

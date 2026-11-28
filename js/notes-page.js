@@ -97,7 +97,8 @@ export function renderNotesPage(body, notes, factEl, state = {}) {
   if (factEl) {
     const oldest = dayParts(notes[notes.length - 1].date);
     const newest = dayParts(notes[0].date);
-    factEl.textContent = `${notes.length} updates since ${oldest.full || oldest.day}. The latest is from ${newest.full || newest.day}.`;
+    // No running total: a count in the hundreds reads as machine output, and the dates say enough.
+    factEl.textContent = `Every change since ${oldest.full || oldest.day}. The latest is from ${newest.full || newest.day}.`;
   }
 
   const month = months.some((m) => m.key === state.month) ? state.month : "all";

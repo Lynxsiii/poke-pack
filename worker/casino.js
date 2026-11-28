@@ -1,3 +1,5 @@
+import { takeRoll, gameSeed, gameRoll, clientSeedOf, fairOf } from './fair.js';
+import { flipWinner } from '../js/fair.js';
 import { PLAYABLE_SETS, ALL_SETS, money, sellValue } from '../js/catalog.js';
 import { gradedValue, gradeMultiplier, bandFor, rollGrade, GRADES, GRADE_BANDS, BLACK_LABEL } from '../js/grading-rules.js';
 import { slabTargetValue } from '../js/upgrader-rules.js';
@@ -393,7 +395,7 @@ export async function handleCasino(path, method, request, env, helpers) {
       if (id) {
         const row = await getFlip(env, id);
         if (!row) error('Flip not found.', 404);
-        return helpers.json({ flip: viewFlip(row, now), serverNow: now });
+        return helpers.json({ flip: viewFlip(row, now), fair: await fairOf(env, 'coinflip', row.id), serverNow: now });
       }
       const open = (await env.DB.prepare(`${USER_SELECT} WHERE f.status = 'open' AND f.expires_at > ? ORDER BY f.created_at DESC LIMIT 40`).bind(now).all()).results || [];
       const done = (await env.DB.prepare(`${USER_SELECT} WHERE f.status = 'done' ORDER BY f.flipped_at DESC LIMIT 20`).all()).results || [];
@@ -454,10 +456,15 @@ async function createFlip(env, request, helpers, user, body, withBot) {
     const pool = await botPool(env, request, helpers, stake, slabs);
     const bot = buildBotStake(pool, value, { hostSlabs: slabs, rules: COINFLIP_RULES });
     if (!bot) error('The bot could not match that stake. Try a slightly different one.', 409);
-    const persona = pick(BOT_PERSONAS); const winner = crypto.getRandomValues(new Uint8Array(1))[0] & 1 ? 'host' : 'guest';
+    // Against the house the flip is the next nonce of the player's own seeds (worker/fair.js).
+    const fair = await takeRoll(env, user.id);
+    const persona = pick(BOT_PERSONAS); const winner = flipWinner(fair.stream);
+    statements.push(fair.log('coinflip', id, { bot: true }, { winner }, now));
     statements.push(env.DB.prepare(`UPDATE coinflips SET status = 'done', guest_id = ?, guest_stake = ?, guest_slabs = ?, guest_value = ?, bot_persona = ?,
       winner = ?, flipped_at = ? WHERE id = ? AND status = 'open'`).bind(HOUSE, JSON.stringify(bot.stake), bot.slabs.length ? JSON.stringify(bot.slabs) : null, bot.value, persona.id, winner, now, id));
   }
+  // A flip against players gets its own seed now, so its hash is fixed before anyone joins.
+  if (!withBot) await gameSeed(env, 'coinflip', id);
   statements.push(await binderStatement(env, helpers, user.id, collection, stake, { sql: 'AND EXISTS(SELECT 1 FROM coinflips WHERE id = ?)', args: [id] }, slabs));
   try { await env.DB.batch(statements); }
   catch (err) {
@@ -479,7 +486,9 @@ async function joinFlip(env, request, helpers, user, id, body) {
   const { stake, slabs, value, collection } = await buildStake(env, request, helpers, user.id, body.cards, COINFLIP_RULES, 'flip', body.slabs);
   const { min, max } = matchWindow(row.host_value);
   if (value < min || value > max) error(`Match the stake: between ${centsToCoins(min)} and ${centsToCoins(max)} coins of cards.`);
-  const winner = crypto.getRandomValues(new Uint8Array(1))[0] & 1 ? 'host' : 'guest';
+  // The flip's own seed (shown hashed since it opened), with both players' client seeds.
+  const fair = await gameRoll(env, 'coinflip', id, [await clientSeedOf(env, row.host_id), await clientSeedOf(env, user.id)]);
+  const winner = flipWinner(fair.stream);
   const guestCoin = await equippedCoin(env, user.id);
   const results = await env.DB.batch([
     env.DB.prepare(`UPDATE coinflips SET status = 'done', guest_id = ?, guest_stake = ?, guest_slabs = ?, guest_value = ?, guest_coin = ?, winner = ?, flipped_at = ?
@@ -487,6 +496,7 @@ async function joinFlip(env, request, helpers, user, id, body) {
       .bind(user.id, JSON.stringify(stake), slabs.length ? JSON.stringify(slabs) : null, value, guestCoin, winner, now, id, user.id, now),
     await binderStatement(env, helpers, user.id, collection, stake,
       { sql: "AND EXISTS(SELECT 1 FROM coinflips WHERE id = ? AND guest_id = ? AND status = 'done')", args: [id, user.id] }, slabs),
+    fair.finish({ host: row.host_id, guest: user.id }, { winner }, "EXISTS(SELECT 1 FROM coinflips WHERE id = ? AND guest_id = ? AND status = 'done' AND winner = ?)", [id, user.id, winner], now),
   ]);
   if (!results[0]?.meta?.changes) error('Someone else got there first.', 409);
   return id;

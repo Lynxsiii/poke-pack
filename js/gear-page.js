@@ -11,9 +11,9 @@
      cardBackHtml(gear, fallback) a face-down card, the equipped sleeve's foil included
      giftHtml(granted, gear)      the "in the box" strip on the opening spread */
 import { ALL_SETS } from "./catalog.js";
-import { HOUSE_COIN, equippedCoin, equippedSleeve, gearItem, gearPrice, normalizeGear, ownedItems } from "./gear.js?v=2";
-import { coinAmount, coinText } from "./money.js?v=2";
-import { coinFaceHTML, coinOf, coinStageHTML, flipCoin, glintCoin, tiltCoin } from "./coin.js?v=7";
+import { HOUSE_COIN, equippedCoin, equippedSleeve, gearItem, gearPrice, normalizeGear, ownedItems } from "./gear.js?v=3";
+import { coinAmount, coinText } from "./money.js?v=4";
+import { coinFaceHTML, coinOf, coinStageHTML, flipCoin, glintCoin, tiltCoin } from "./coin.js?v=9";
 
 let catalog = { sleeves: {}, coins: {}, products: {} };
 

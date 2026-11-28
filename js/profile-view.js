@@ -20,7 +20,7 @@ import { holdAmbient } from "./fx.js";
 import { dominantAccents, hexToHsl, hexToRgb, hslToHex } from "./card-accent.js";
 import { colorHex, COLOR_FROM_CARDS } from "./binder-looks.js";
 import { normalizeProfileLook } from "./profile-look.js";
-import { coinAmount, coinText } from "./money.js?v=2";
+import { coinAmount, coinText } from "./money.js?v=4";
 import { DEFAULT_AVATAR, DEFAULT_BANNER } from "./cosmetics.js";
 
 /* ---- Room ---------------------------------------------------------------- */

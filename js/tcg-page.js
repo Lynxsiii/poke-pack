@@ -29,7 +29,7 @@ import { botAction } from "./tcg/bot.js";
 import { MAX_DECKS, buildBotDeck, buildDeck, checkDeck, deckList, deckSize, notLegal, roomFor, rulesOf } from "./tcg/decks.js";
 import { BOT_FALLBACK, DECK_FORMATS, FORMAT_NOTES } from "./tcg/formats.js";
 import { LESSON, LESSON_CARDS, LESSON_SET, createLesson } from "./tcg/tutorial.js";
-import { coinStageHTML, flipCoin } from "./coin.js?v=7";
+import { coinStageHTML, flipCoin } from "./coin.js?v=9";
 import { api } from "./api.js";
 import { XP_WEIGHTS } from "./xp.js";
 
@@ -780,7 +780,7 @@ export function initTcg(deps) {
     const toolName = slot.tool ? defOf(state, slot.tool, defs).name : "";
     const ready = p === ME && state.phase === "main" && !match.busy && myTurn() && !state.pending.length && !abilityWhy(state, spot);
     const label = `${p === ME ? "Your" : "Their"} ${def.name}, ${left} of ${full} HP${toolName ? `, holding ${toolName}` : ""}${ready ? `, ${def.ability.name} ready` : ""}`;
-    return `<button type="button" class="tg-mon${ready ? " has-ability" : ""}${big ? " big" : ""}${target ? " is-target" : ""}${chosen ? " is-chosen" : ""}" data-p="${p}" data-spot="${spot}" aria-label="${esc(label)}">
+    return `<button type="button" class="tg-mon${ready ? " has-ability" : ""}${big ? " big" : ""}${target ? " is-target" : ""}${chosen ? " is-chosen" : ""}" data-p="${p}" data-spot="${spot}"${big && conditionsOn(slot).length ? ` data-conds="${conditionsOn(slot).join(" ")}"` : ""} aria-label="${esc(label)}">
       <img src="${img(state.cards[slot.uid], big)}" alt="" draggable="false" decoding="async" />
       ${slot.damage ? `<span class="tg-dmg">${slot.damage}</span>` : ""}
       ${big ? "" : `${hpBar(left, full)}<span class="tg-pips">${pipRow(energyOf(state, slot, defs), toolName ? 2 : 3)}${toolName ? `<i class="tg-en tg-toolpip" title="${esc(toolName)}">T</i>` : ""}</span>`}
@@ -811,8 +811,10 @@ export function initTcg(deps) {
   function prizesHtml(state, p) {
     const left = state.phase === "setup" ? state.rules.prizes : state.players[p].prizes.length;
     const all = Math.max(state.rules.prizes, left);
+    // Prize cards turned face up (Team Rocket's Bother-Bot) show what they are.
+    const up = state.phase === "setup" ? [] : (state.players[p].prizesUp || []).filter((uid) => state.cards[uid]);
     return `<span class="tg-pile tg-prizes" data-p="${p}" style="--rows:${Math.ceil(all / 2)}" aria-label="${p === ME ? "Your" : "Their"} prize cards: ${left} left">
-      <span class="tg-prize-grid">${Array.from({ length: all }, (_, i) => `<i${i < left ? "" : ` class="e"`}></i>`).join("")}</span>
+      <span class="tg-prize-grid">${Array.from({ length: all }, (_, i) => (i < up.length ? `<i class="up" title="${esc(d(up[i]).name)}, face up" style="background:center/cover url(${img(state.cards[up[i]])})"></i>` : `<i${i < left ? "" : ` class="e"`}></i>`)).join("")}</span>
       <b class="tg-pile-n">${left}</b>
     </span>`;
   }
@@ -855,6 +857,8 @@ export function initTcg(deps) {
         const asked = d(slotOf(ME, waiting.spots[0]).uid);
         return { text: `Use ${asked.name}'s ${asked.ability.name}?`, keys: `<button type="button" class="solid sm" data-act="ability-yes">Use it</button><button type="button" class="ghost sm" data-act="pick-skip">Not now</button>` };
       }
+      // A pick that says what it is for (Area Zero Underdepths' Bench, Spiteful Evolution).
+      if (waiting.prompt) return { text: waiting.prompt, keys: waiting.optional ? `<button type="button" class="ghost sm" data-act="pick-skip">Not now</button>` : "" };
       const fx = waiting.effect;
       const moving = {
         moveEnergyFrom: () => `Choose the Pokémon to move ${fx.type ? `a ${fx.type}` : "an"} Energy from.`,
@@ -982,9 +986,9 @@ export function initTcg(deps) {
         <div class="tg-half tg-half-foe">
           <div class="tg-row">
             ${prizesHtml(state, BOT)}
-            <div class="tg-bench tg-bench-foe" style="--slots:${Math.max(state.rules.bench, foeBench.length)}">
+            <div class="tg-bench tg-bench-foe" style="--slots:${Math.max(state.players[BOT].benchMax || state.rules.bench, foeBench.length)}">
               ${foeBench.map((slot, i) => (setup ? foeBack : monHtml(state, BOT, slot, i, { target: foeTargets.has(i) }))).join("")}
-              ${places(Math.max(0, state.rules.bench - foeBench.length))}
+              ${places(Math.max(0, (state.players[BOT].benchMax || state.rules.bench) - foeBench.length))}
             </div>
             ${deckHtml(state, BOT, foeBack)}
           </div>
@@ -1006,9 +1010,9 @@ export function initTcg(deps) {
           </div>
           <div class="tg-row">
             ${prizesHtml(state, ME)}
-            <div class="tg-bench tg-bench-me${benchOpen ? " is-open" : ""}" data-bench style="--slots:${Math.max(state.rules.bench, myBench.length)}">
+            <div class="tg-bench tg-bench-me${benchOpen ? " is-open" : ""}" data-bench style="--slots:${Math.max(state.players[ME].benchMax || state.rules.bench, myBench.length)}">
               ${myBench.map((slot, i) => monHtml(state, ME, slot, i, { target: targets.has(i) })).join("")}
-              ${myBench.length < state.rules.bench ? `<span class="tg-hole${benchOpen ? " is-target" : ""}" data-bench>${benchOpen ? "Play here" : "Bench"}</span>${places(state.rules.bench - myBench.length - 1)}` : ""}
+              ${myBench.length < (state.players[ME].benchMax || state.rules.bench) ? `<span class="tg-hole${benchOpen ? " is-target" : ""}" data-bench>${benchOpen ? "Play here" : "Bench"}</span>${places((state.players[ME].benchMax || state.rules.bench) - myBench.length - 1)}` : ""}
             </div>
             ${deckHtml(state, ME, back)}
           </div>
@@ -1368,6 +1372,8 @@ export function initTcg(deps) {
     if (!shown || (route.name !== "match" && route.name !== "online")) return;
     const scroll = root.querySelector(".tg-hand")?.scrollLeft || 0;
     fxLayer(true);
+    // Looping motion (a Special Condition on a card) picks up where it was, however often the table is repainted.
+    root.style.setProperty("--tg-now", `-${Math.round(performance.now() % 12000)}ms`);
     root.innerHTML = tableHtml();
     const hand = root.querySelector(".tg-hand");
     if (hand) hand.scrollLeft = scroll;
@@ -1385,6 +1391,7 @@ export function initTcg(deps) {
     if (!match?.opening) return;
     match.openingDone = true;
     openingLanded();
+    coinLanded(root.querySelector(".tg-opening .cf-coin"), mine);
   }
 
   /** The flip has landed: say who won and let the keys work. Again after a repaint (a friend's move can repaint the table mid-flip). */
@@ -1536,6 +1543,7 @@ export function initTcg(deps) {
      opacity and filter only. */
 
   let fx = null;
+  let fxTop = null;
   const EASE = "cubic-bezier(0.2, 0.8, 0.2, 1)";
   const still = () => deps.reduceMotion();
   const rectOf = (selector) => root.querySelector(selector)?.getBoundingClientRect() || null;
@@ -1548,9 +1556,16 @@ export function initTcg(deps) {
       fx.className = "tg-fx rt-dark";
       fx.setAttribute("aria-hidden", "true");
       document.body.appendChild(fx);
+      // A second layer over the sheets, for what happens on a coin.
+      fxTop = document.createElement("div");
+      fxTop.className = "tg-fx tg-fx-top rt-dark";
+      fxTop.setAttribute("aria-hidden", "true");
+      document.body.appendChild(fxTop);
     } else if (!on && fx) {
       fx.remove();
+      fxTop?.remove();
       fx = null;
+      fxTop = null;
     }
   }
 
@@ -1576,6 +1591,11 @@ export function initTcg(deps) {
       el.animate([{ transform: from0 }, { transform: `${mid} rotateY(90deg)` }], { duration: ms * 0.5, delay, easing: "cubic-bezier(0.4, 0, 0.7, 0.4)", fill: "both" }).finished.catch(() => {}).then(() => {
         el.src = src;
         return el.animate([{ transform: `${mid} rotateY(-90deg)` }, { transform: "none" }], { duration: ms * 0.5, easing: EASE, fill: "both" }).finished;
+      }).then(() => {
+        // Shown, held for a beat, then on to where it belongs.
+        if (!opts.then) return null;
+        const c = centre(opts.then.to);
+        return el.animate([{ transform: "none", opacity: 1 }, { transform: "scale(1.04)", opacity: 1, offset: 0.12 }, { transform: `translate(${c.x - b.x}px, ${c.y - b.y}px) scale(${(opts.then.to.width / w).toFixed(3)})`, opacity: 0.4 }], { duration: 380, delay: opts.then.hold, easing: "cubic-bezier(0.5, 0, 0.7, 0.3)", fill: "both" }).finished;
       }).catch(() => {}).then(() => el.remove());
       return;
     }
@@ -1598,7 +1618,7 @@ export function initTcg(deps) {
    * A tap anywhere puts it away early. Resolves once it has gone.
    */
   let showing = null;
-  function showCard(src, from, to, hold) {
+  function showCard(src, from, to, hold, { label = "", out = null, stadium = false, p = ME } = {}) {
     if (!src || !from || !to || !fx || still() || !to.width) return null;
     const w = to.width;
     const h = w * 1.4;
@@ -1611,14 +1631,31 @@ export function initTcg(deps) {
     el.style.cssText = `left:${b.x - w / 2}px;top:${b.y - h / 2}px;width:${w}px;height:${h}px`;
     fx.appendChild(el);
     const from0 = `translate(${a.x - b.x}px, ${a.y - b.y}px) scale(${Math.max(0.16, Math.min(1.4, from.width / w)).toFixed(3)})`;
-    el.animate([{ transform: from0 }, { transform: "none" }], { duration: 300, easing: EASE, fill: "both" });
+    el.animate([{ transform: `${from0} rotate(${p === ME ? -14 : 14}deg)` }, { transform: "scale(1.07) rotate(1.5deg)", offset: 0.7 }, { transform: "none" }], { duration: 340, easing: EASE, fill: "both" });
+    // A slanted band crosses behind the card and says what kind of card it is.
+    const band = label ? fxEl(`tg-f-band${p === ME ? "" : " foe"}`, 0, b.y, "", "", 300 + hold + 400) : null;
+    if (band) {
+      band.innerHTML = `<b>${esc(label)}</b>`;
+      fx.insertBefore(band, el);
+    }
+    setTimeout(() => bits({ x: b.x, y: b.y }, 10, "", { shape: "shard", reach: w * 0.85, size: 9, ms: 520 }), 240);
     return new Promise((resolve) => {
       let timer = 0;
       const done = () => {
         clearTimeout(timer);
         document.removeEventListener("pointerdown", done, true);
-        el.animate([{ transform: "none", opacity: 1 }, { transform: "scale(1.05)", opacity: 0 }], { duration: 220, easing: EASE, fill: "both" })
-          .finished.catch(() => {}).then(() => (el.remove(), resolve()));
+        band?.classList.add("out");
+        const c = out ? centre(out) : null;
+        const leave = c
+          ? [{ transform: "none", opacity: 1 }, { transform: `translate(${c.x - b.x}px, ${c.y - b.y}px) scale(${Math.max(0.08, (stadium ? out.width : 24) / w).toFixed(3)}) rotate(${stadium ? 0 : 16}deg)`, opacity: stadium ? 1 : 0.25 }]
+          : [{ transform: "none", opacity: 1 }, { transform: "scale(1.05)", opacity: 0 }];
+        el.animate(leave, { duration: c ? 300 : 220, easing: c ? "cubic-bezier(0.5, 0, 0.7, 0.4)" : EASE, fill: "both" })
+          .finished.catch(() => {}).then(() => {
+            el.remove();
+            if (c && stadium) cue(".tg-arena", "stadium-in", 700);
+            else if (c) cue(`.tg-deckpile[data-p="${p}"] .tg-bin`, "bump", 400);
+            resolve();
+          });
       };
       timer = setTimeout(done, 300 + hold);
       // A press only counts once the card has landed, so the tap that played it doesn't close it.
@@ -1658,6 +1695,166 @@ export function initTcg(deps) {
     el.innerHTML = "<i></i><i></i>";
     fx.appendChild(el);
     setTimeout(() => el.remove(), 620);
+  }
+
+  /* ----- small effects, all drawn in the layer above the table -----
+     Each is a few plain shapes moved with transform and opacity. None is made when motion is off. */
+
+  /** How an attack of each type lands. */
+  const STRIKE = { Fire: "ember", Water: "splash", Lightning: "bolt", Grass: "leaf", Psychic: "rings", Fairy: "rings", Darkness: "slash", Metal: "slash", Dragon: "ember", Fighting: "impact", Colorless: "impact" };
+  const rand = (a, b) => a + Math.random() * (b - a);
+
+  function fxEl(cls, x, y, en, css = "", ms = 700, top = false) {
+    const layer = top ? fxTop : fx;
+    if (!layer || still()) return null;
+    const el = document.createElement("span");
+    el.className = `tg-tint ${cls}`;
+    if (en) el.dataset.en = en;
+    el.style.cssText = `left:${x}px;top:${y}px;${css}`;
+    layer.appendChild(el);
+    setTimeout(() => el.remove(), ms);
+    return el;
+  }
+
+  /** Rings that open out from a point (or close in on it). */
+  function rings(c, size, en, { n = 1, gap = 110, inward = false, top = false } = {}) {
+    for (let i = 0; i < n; i += 1) fxEl(`tg-f-ring${inward ? " in" : ""}`, c.x, c.y, en, `--s:${Math.round(size)}px;animation-delay:${i * gap}ms`, 620 + i * gap, top);
+  }
+
+  /**
+   * Bits thrown out from a point. `shape`: dot, shard, leaf, star, drop, plus, z.
+   * `lift` pulls them upward as they go (embers, bubbles); `inward` gathers them instead.
+   */
+  function bits(c, n, en, { shape = "shard", reach = 60, size = 8, lift = 0, ms = 560, inward = false, spread = Math.PI * 2, aim = 0, top = false, stagger = 0 } = {}) {
+    for (let i = 0; i < n; i += 1) {
+      const el = fxEl(`tg-f-bit ${shape}`, c.x, c.y, en, `--s:${Math.round(size * 1.6 * rand(0.7, 1.3))}px`, ms + stagger * n + 80, top);
+      if (!el) return;
+      const angle = aim + (i / n) * spread + rand(-0.3, 0.3) - (spread < 6 ? spread / 2 : 0);
+      const far = reach * rand(0.55, 1.05);
+      const x = Math.cos(angle) * far;
+      const y = Math.sin(angle) * far - lift * rand(0.6, 1.2);
+      const turn = shape === "dot" || shape === "drop" || shape === "plus" || shape === "z" ? 0 : rand(-240, 240);
+      const out = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) rotate(${turn.toFixed(0)}deg) scale(${shape === "z" ? 1.3 : 0.3})`;
+      const frames = inward
+        ? [{ transform: `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) scale(1)`, opacity: 0 }, { opacity: 1, offset: 0.3 }, { transform: "translate(0, 0) scale(0.2)", opacity: 0.9 }]
+        : [{ transform: "translate(0, 0) scale(1)", opacity: 1 }, { opacity: 1, offset: 0.6 }, { transform: out, opacity: 0 }];
+      el.animate(frames, { duration: ms * rand(0.8, 1.1), delay: i * stagger, easing: inward ? "cubic-bezier(0.5, 0, 0.9, 0.5)" : "cubic-bezier(0.1, 0.7, 0.3, 1)", fill: "both" });
+    }
+  }
+
+  /** A streak from the attacker to what it hits, in the attack's colour. */
+  function streak(a, b, en) {
+    const len = Math.hypot(b.x - a.x, b.y - a.y);
+    if (len < 8) return;
+    fxEl("tg-f-streak", a.x, a.y, en, `--len:${len.toFixed(0)}px;--a:${Math.atan2(b.y - a.y, b.x - a.x).toFixed(3)}rad`, 420);
+  }
+
+  /** The whole screen blinks in a colour: a heavy hit, a Knock Out. */
+  const flash = (en, strong = false) => fxEl(`tg-f-flash${strong ? " strong" : ""}`, 0, 0, en, "", 420);
+
+  /** A short slanted word that rises off a Pokémon: a Special Condition landing, a cure. */
+  function word(rect, text, tone = "") {
+    const el = fxEl(`tg-f-word ${tone}`, rect.left + rect.width / 2, rect.top + rect.height * 0.04, "", "", 1100);
+    if (el) el.textContent = text;
+  }
+
+  /** The attacker gathers itself before it moves. */
+  function windUp(p, type) {
+    const at = rectOf(`.tg-spot[data-p="${p}"] .tg-mon > img`);
+    if (!at) return;
+    const c = centre(at);
+    rings(c, at.width * 1.5, type, { inward: true });
+    bits(c, 9, type, { shape: "dot", reach: at.width * 0.95, size: 7, inward: true, ms: 400 });
+  }
+
+  /** What the attack looks like as it lands, by type. `heavy` adds the screen blink and more of everything. */
+  function strike(p, type, heavy) {
+    const at = rectOf(`.tg-spot[data-p="${p}"] .tg-mon > img`) || rectOf(`.tg-spot[data-p="${p}"]`);
+    if (!at || still()) return;
+    const c = centre(at);
+    const w = at.width;
+    const kind = STRIKE[type] || "impact";
+    const more = heavy ? 1.5 : 1;
+    if (heavy) flash(type);
+    if (kind === "ember") {
+      rings(c, w * 1.5, type);
+      bits(c, Math.round(12 * more), type, { shape: "dot", reach: w * 0.6, size: 9, lift: w * 0.9, ms: 720, stagger: 12 });
+      bits(c, 5, type, { shape: "shard", reach: w * 0.9, size: 10 });
+    } else if (kind === "splash") {
+      rings(c, w * 1.7, type, { n: heavy ? 3 : 2 });
+      bits(c, Math.round(10 * more), type, { shape: "drop", reach: w * 0.9, size: 9, lift: w * 0.25, ms: 620 });
+    } else if (kind === "bolt") {
+      fxEl("tg-f-bolt", c.x, c.y, type, `--h:${Math.round(at.height * 1.5)}px;--w:${Math.round(w * 0.5)}px`, 460);
+      if (heavy) fxEl("tg-f-bolt two", c.x + w * 0.22, c.y, type, `--h:${Math.round(at.height * 1.3)}px;--w:${Math.round(w * 0.4)}px`, 520);
+      bits(c, Math.round(8 * more), type, { shape: "shard", reach: w * 0.85, size: 8, ms: 420 });
+    } else if (kind === "leaf") {
+      rings(c, w * 1.4, type);
+      bits(c, Math.round(11 * more), type, { shape: "leaf", reach: w * 0.95, size: 12, lift: w * 0.15, ms: 760, stagger: 14 });
+    } else if (kind === "rings") {
+      rings(c, w * 1.8, type, { n: 3, gap: 90 });
+      bits(c, Math.round(7 * more), type, { shape: "star", reach: w * 0.9, size: 11, ms: 680 });
+    } else if (kind === "slash") {
+      for (let i = 0; i < 3; i += 1) fxEl("tg-f-slash", c.x + (i - 1) * w * 0.2, c.y + (i - 1) * w * 0.06, type, `--len:${Math.round(w * 1.25)}px;animation-delay:${i * 55}ms`, 480);
+      bits(c, Math.round(6 * more), type, { shape: "shard", reach: w * 0.8, size: 8, ms: 460 });
+    } else {
+      burst(p, type, heavy);
+      bits(c, Math.round(9 * more), type, { shape: "shard", reach: w * 0.9, size: 9, ms: 480 });
+    }
+    if (kind !== "impact") burst(p, type, false);
+  }
+
+  /** A Knocked Out Pokémon breaks apart. */
+  function shatter(p, spot) {
+    const at = rectOf(`${monSel(p, spot)} > img`);
+    if (!at) return;
+    const c = centre(at);
+    flash("", true);
+    rings(c, at.width * 2, "", { n: 2 });
+    bits(c, 16, "", { shape: "shard", reach: at.width * 1.1, size: 12, ms: 700 });
+  }
+
+  /** A Special Condition lands on an Active Pokémon. */
+  const COND_EN = { poisoned: "Psychic", burned: "Fire", asleep: "Water", paralyzed: "Lightning", confused: "Fairy" };
+  function afflict(p, kind) {
+    const at = rectOf(`.tg-spot[data-p="${p}"] .tg-mon > img`);
+    if (!at) return;
+    const c = centre(at);
+    const en = COND_EN[kind] || "";
+    word(at, COND_NAME[kind] || "", kind);
+    if (kind === "poisoned") bits({ x: c.x, y: c.y + at.height * 0.3 }, 10, en, { shape: "dot", reach: at.width * 0.45, size: 10, lift: at.height * 0.7, ms: 900, stagger: 40 });
+    else if (kind === "burned") bits({ x: c.x, y: c.y + at.height * 0.3 }, 12, en, { shape: "dot", reach: at.width * 0.4, size: 8, lift: at.height * 0.8, ms: 760, stagger: 25 });
+    else if (kind === "asleep") bits({ x: c.x + at.width * 0.2, y: c.y - at.height * 0.25 }, 3, en, { shape: "z", reach: at.width * 0.3, size: 16, lift: at.height * 0.5, ms: 1100, stagger: 200, spread: 0.8, aim: -0.6 });
+    else if (kind === "paralyzed") {
+      fxEl("tg-f-bolt", c.x, c.y, en, `--h:${Math.round(at.height * 1.2)}px;--w:${Math.round(at.width * 0.4)}px`, 460);
+      bits(c, 8, en, { shape: "shard", reach: at.width * 0.8, size: 7, ms: 420 });
+    } else if (kind === "confused") fxEl("tg-f-orbit", c.x, c.y - at.height * 0.42, en, `--s:${Math.round(at.width * 0.7)}px`, 1250);
+    cue(`.tg-spot[data-p="${p}"] .tg-mon`, "hit", 420);
+  }
+
+  /** Something good happens to a Pokémon: healed, cured. */
+  function mend(p, spot = ACTIVE) {
+    const at = rectOf(`${monSel(p, spot >= 0 ? spot : ACTIVE)} > img`);
+    if (!at) return;
+    const c = centre(at);
+    rings(c, at.width * 1.5, "Grass");
+    bits({ x: c.x, y: c.y + at.height * 0.2 }, 6, "Grass", { shape: "plus", reach: at.width * 0.4, size: 11, lift: at.height * 0.6, ms: 800, stagger: 50 });
+  }
+
+  /** A Pokémon sets down on the mat. */
+  function land(p, spot) {
+    const at = rectOf(`${monSel(p, spot)} > img`);
+    if (!at) return;
+    cue(monSel(p, spot), "thud", 380);
+    fxEl("tg-f-dust", at.left + at.width / 2, at.bottom - at.height * 0.06, "", `--s:${Math.round(at.width * 1.5)}px`, 460);
+  }
+
+  /** Cards leave a deck for its discard pile, face down. */
+  function millCards(p, n) {
+    const from = deckSpot(p);
+    const bin = rectOf(`.tg-deckpile[data-p="${p}"] .tg-bin`);
+    if (!from || !bin) return;
+    for (let i = 0; i < Math.min(n, 4); i += 1) ghost("assets/cards/shared/card-back-sm.webp", from, { left: bin.left + bin.width / 2 - 12, top: bin.top - 8, width: 24, height: 34 }, { ms: 360, width: from.width, toss: true, delay: i * 90 });
+    setTimeout(() => cue(`.tg-deckpile[data-p="${p}"] .tg-bin`, "bump", 400), 320);
   }
 
   /** The HP bar on a name plate runs down (or up) from where it stood. */
@@ -1701,13 +1898,22 @@ export function initTcg(deps) {
     const src = from || (event.from === "deck" ? deckSpot(event.p) : handSpot(event.p));
     if (event.t === "bench") {
       flyIn(src, root.querySelector(monSel(event.p, event.spot)), { ms: 300 });
-      return 300;
+      setTimeout(() => land(event.p, event.spot), 290);
+      return 420;
     }
     if (event.t === "evolve") {
       const el = root.querySelector(monSel(event.p, event.spot));
       flyIn(src, el, { ms: 300 });
-      setTimeout(() => cue(monSel(event.p, event.spot), "evolved", 560), 290);
-      return 620;
+      setTimeout(() => {
+        cue(monSel(event.p, event.spot), "evolved", 700);
+        const at = rectOf(`${monSel(event.p, event.spot)} > img`);
+        if (!at) return;
+        const c = centre(at);
+        fxEl("tg-f-rays", c.x, c.y, "", `--s:${Math.round(at.width * 2.4)}px`, 760);
+        rings(c, at.width * 1.9, "", { n: 2 });
+        bits({ x: c.x, y: c.y + at.height * 0.25 }, 12, "Lightning", { shape: "star", reach: at.width * 0.6, size: 10, lift: at.height * 0.7, ms: 820, stagger: 22 });
+      }, 290);
+      return 780;
     }
     if (event.t === "play" || event.t === "stadium") {
       // The card is shown large over the arena for a beat, so both players read what was played.
@@ -1715,7 +1921,11 @@ export function initTcg(deps) {
       if (!arena) return 0;
       const w = Math.min(arena.width * 0.5, arena.height * 0.62);
       const to = { left: arena.left + arena.width / 2 - w / 2, top: arena.top + arena.height / 2 - w * 0.7, width: w, height: w * 1.4 };
-      showing = showCard(img(match.state.cards[event.uid]), src, to, event.p === ME ? 1300 : 2600);
+      const def = d(event.uid);
+      const label = event.t === "stadium" ? "Stadium" : { supporter: "Supporter", item: "Item", tool: "Pokémon Tool" }[def?.sub] || (def?.kind === "trainer" ? "Trainer" : "");
+      // It leaves for where it really goes: the discard pile, or the Stadium's place on the mat.
+      const out = event.t === "stadium" ? rectOf(".tg-stadium img") : rectOf(`.tg-deckpile[data-p="${event.p}"] .tg-bin`);
+      showing = showCard(img(match.state.cards[event.uid]), src, to, event.p === ME ? 1300 : 2600, { label, out, stadium: event.t === "stadium", p: event.p });
       return 0;
     }
     if (event.t === "move-energy") {
@@ -1732,14 +1942,23 @@ export function initTcg(deps) {
     if (event.t === "attach" || event.t === "tool") {
       const to = rectOf(`${monSel(event.p, event.spot)} img`);
       if (to) ghost(img(match.state.cards[event.uid]), src, to, { ms: 360, width: to.width * 0.62, absorb: true });
-      setTimeout(() => cue(monSel(event.p, event.spot), "charged", 460), 260);
+      setTimeout(() => {
+        cue(monSel(event.p, event.spot), "charged", 460);
+        const at = rectOf(`${monSel(event.p, event.spot)} > img`);
+        if (!at) return;
+        // The Pokémon takes the Energy in: a ring and a few motes in that Energy's colour.
+        const kind = event.t === "attach" ? d(event.uid)?.provides?.[0] || "Colorless" : "";
+        rings(centre(at), at.width * 1.45, kind);
+        bits(centre(at), 7, kind, { shape: "dot", reach: at.width * 0.75, size: 7, ms: 520 });
+      }, 260);
       // The new symbol lands on the name plate (or under a Benched Pokémon) as the card sinks in.
       if (event.t === "attach") cue(event.spot === ACTIVE ? `.tg-hud[data-p="${event.p}"] .tg-pips > :last-child` : `${monSel(event.p, event.spot)} .tg-pips > :last-child`, "landed", 700);
       return 460;
     }
     if (event.t === "promote" || event.t === "retreat" || event.t === "switch") {
       flyIn(benchSpot(event.p), root.querySelector(monSel(event.p, ACTIVE)), { ms: 320 });
-      return 320;
+      setTimeout(() => land(event.p, ACTIVE), 310);
+      return 440;
     }
     if (event.t === "prize") {
       const to = handSpot(event.p);
@@ -1751,10 +1970,12 @@ export function initTcg(deps) {
         const w = Math.min(arena.width * (n > 1 ? 0.3 : 0.4), arena.height * 0.5);
         event.uids.forEach((uid, i) => {
           const left = arena.left + arena.width / 2 + (i - (n - 1) / 2) * (w + 8) - w / 2;
-          ghost(img(match.state.cards[uid]), at, { left, top: arena.top + arena.height / 2 - w * 0.7, width: w, height: w * 1.4 }, { ms: 950, width: w, show: true, delay: i * 90 });
+          const mid = { left, top: arena.top + arena.height / 2 - w * 0.7, width: w, height: w * 1.4 };
+          ghost(img(match.state.cards[uid]), at, mid, { ms: 520, width: w, flip: true, delay: i * 110, then: to ? { to: { left: to.left + to.width / 2 - w * 0.25, top: to.top, width: w * 0.5, height: w * 0.7 }, hold: 520 } : null });
+          setTimeout(() => { rings(centre(mid), w * 1.5, "Lightning"); bits(centre(mid), 8, "Lightning", { shape: "star", reach: w * 0.8, size: 10, ms: 620 }); }, 500 + i * 110);
         });
         cue(`.tg-prizes[data-p="${ME}"] .tg-pile-n`, "bump", 420);
-        return 900 + (n - 1) * 90;
+        return 1300 + (n - 1) * 110;
       }
       if (to && at) {
         const width = event.p === ME ? to.height / 1.6 : 26;
@@ -1766,11 +1987,43 @@ export function initTcg(deps) {
     if (event.t === "ability") {
       banner(event.name, event.p === ME ? "me" : "foe", d(event.uid).name);
       cue(monSel(event.p, event.spot), "charged", 460);
+      const at = rectOf(`${monSel(event.p, event.spot)} > img`);
+      if (at) {
+        rings(centre(at), at.width * 1.7, "Lightning", { n: 2 });
+        bits(centre(at), 8, "Lightning", { shape: "star", reach: at.width * 0.8, size: 9, ms: 620 });
+      }
       return 620;
     }
-    if (event.t === "condition") cue(`.tg-hud[data-p="${event.p}"] .tg-cond[data-cond="${event.kind}"]`, "bump", 420);
+    if (event.t === "condition") {
+      cue(`.tg-hud[data-p="${event.p}"] .tg-cond[data-cond="${event.kind}"]`, "bump", 420);
+      afflict(event.p, event.kind);
+    }
+    if (event.t === "cure") {
+      mend(event.p);
+      const at = rectOf(`.tg-spot[data-p="${event.p}"] .tg-mon > img`);
+      if (at) word(at, "Cured", "heal");
+    }
+    if (event.t === "mill") millCards(event.p, event.uids.length);
+    if (event.t === "shuffle" || event.t === "recycle" || event.t === "shuffle-hand" || event.t === "shuffle-in" || event.t === "energy-to-deck" || event.t === "hand-to-deck") cue(`.tg-deckpile[data-p="${event.p}"] .tg-stack`, "riffle", 620);
+    if (event.t === "discard-hand" || event.t === "discard-tool" || event.t === "stadium-gone") cue(`.tg-deckpile[data-p="${event.p}"] .tg-bin`, "bump", 400);
+    if (event.t === "bounce" || event.t === "devolve" || event.t === "ko-hand" || event.t === "energy-to-hand") cue(event.p === ME ? ".tg-hand" : ".tg-foe-hand", "bump", 400);
+    if (event.t === "discard-energy") {
+      const at = rectOf(`${monSel(event.p, event.spot >= 0 ? event.spot : ACTIVE)} > img`);
+      const bin = rectOf(`.tg-deckpile[data-p="${event.p}"] .tg-bin`);
+      if (at && bin) event.uids.slice(0, 4).forEach((uid, i) => ghost(img(match.state.cards[uid]), { left: at.left + at.width * 0.25, top: at.top + at.height * 0.25, width: at.width * 0.5, height: at.height * 0.5 }, { left: bin.left + bin.width / 2 - 12, top: bin.top - 8, width: 24, height: 34 }, { ms: 380, width: at.width * 0.5, toss: true, delay: i * 90 }));
+      setTimeout(() => cue(`.tg-deckpile[data-p="${event.p}"] .tg-bin`, "bump", 400), 340);
+    }
     if (event.t === "mark") cue(`.tg-hud[data-p="${event.p}"] .tg-cond[data-mark="${event.kind}"]`, "bump", 420);
     return 0;
+  }
+
+  /** A coin comes to rest: a ring off its rim, and sparks when it is heads. */
+  function coinLanded(coin, heads) {
+    const at = coin?.getBoundingClientRect();
+    if (!at?.width) return;
+    const c = centre(at);
+    rings(c, at.width * 1.5, heads ? "Lightning" : "", { top: true });
+    if (heads) bits(c, 12, "Lightning", { shape: "star", reach: at.width * 0.95, size: 11, ms: 700, top: true });
   }
 
   async function showFlips(results) {
@@ -1782,6 +2035,7 @@ export function initTcg(deps) {
       const text = root.querySelector("#tg-flip-text");
       if (text) text.textContent = heads ? "Heads" : "Tails";
       root.querySelector(".tg-flip")?.classList.add("is-landed");
+      coinLanded(coin, heads);
       await sleep(420);
     }
     match.sheet = "";
@@ -1838,11 +2092,17 @@ export function initTcg(deps) {
         const user = before.players[p].active;
         const used = user && defOf(before, user.uid, defs);
         const called = user && attacksOf(before, user, defs)[action.index];
+        const kind = used?.types?.[0] || "Colorless";
         if (called) {
           banner(called.name, p === ME ? "me" : "foe", used.name);
+          windUp(p, kind);
           await wait(430);
         }
         cue(`.tg-spot[data-p="${p}"] .tg-mon`, p === ME ? "lunge-up" : "lunge-down", 420);
+        // The attack crosses the centre line as the attacker reaches the top of its lunge.
+        const mine = rectOf(`.tg-spot[data-p="${p}"]`);
+        const theirs = rectOf(`.tg-spot[data-p="${other(p)}"]`);
+        if (mine && theirs && events.some((e) => e.t === "damage" && e.p !== p && !(e.spot >= 0))) setTimeout(() => streak(centre(mine), centre(theirs), kind), 170);
         await wait(380);
       }
       for (const flips of events.filter((e) => e.t === "flip")) {
@@ -1860,11 +2120,18 @@ export function initTcg(deps) {
           say(event);
           paintTable();
           if (slot && !benched) slideHp(event.p, was, Math.max(0, max - slot.damage), max);
-          popDamage(event.p, event.t === "heal" ? `+${event.n}` : `-${event.n}`, event.t === "heal" ? "heal" : event.weak ? "weak" : "", event.spot);
+          popDamage(event.p, event.t === "heal" ? `+${event.n}` : `-${event.n}`, `${event.t === "heal" ? "heal" : event.weak ? "weak" : ""}${event.n >= 200 ? " huge" : event.n >= 100 ? " big" : ""}`, event.spot);
+          if (event.t === "heal") mend(event.p, event.spot);
           if (event.t === "damage") {
             const heavy = !benched && (event.weak || (max && event.n * 2 >= max));
-            if (!event.self && !event.why && !benched) burst(event.p, defOf(before, before.players[p].active.uid, defs).types?.[0], heavy);
+            const kind = defOf(before, before.players[p].active.uid, defs).types?.[0];
+            if (!event.self && !event.why && !benched) strike(event.p, kind, heavy);
+            else if (benched) {
+              const at = rectOf(`${monSel(event.p, event.spot)} > img`);
+              if (at) bits(centre(at), 6, kind, { shape: "shard", reach: at.width * 0.8, size: 6, ms: 420 });
+            }
             cue(monSel(event.p, benched ? event.spot : ACTIVE), "hit", 420);
+            if (!benched) cue(`.tg-hud[data-p="${event.p}"]`, "jolt", 420);
             if (heavy) cue(".tg-table", "shake", 420);
             deps.buzz?.(event.weak ? [18, 30, 18] : 14);
           }
@@ -1878,6 +2145,8 @@ export function initTcg(deps) {
           paintTable();
           const fallen = monSel(event.p, event.spot === ACTIVE ? ACTIVE : event.spot);
           cue(fallen, "ko", 900);
+          shatter(event.p, event.spot);
+          cue(".tg-table", "shake", 420);
           banner("Knocked Out", event.p === ME ? "foe" : "me");
           deps.buzz?.([24, 40, 24]);
           await wait(520);
@@ -1918,12 +2187,15 @@ export function initTcg(deps) {
         if (event.t === "damage") {
           cue(`.tg-spot[data-p="${event.p}"] .tg-mon`, "hit", 420);
           popDamage(event.p, `-${event.n}`, event.why);
+          const at = rectOf(`.tg-spot[data-p="${event.p}"] .tg-mon > img`);
+          if (at) bits({ x: at.left + at.width / 2, y: at.top + at.height * 0.8 }, 9, COND_EN[event.why] || "", { shape: "dot", reach: at.width * 0.45, size: 9, lift: at.height * 0.7, ms: 800, stagger: 30 });
         }
         await wait(620);
       } else if (event.t === "flip") {
         await showFlips(event.results);
       } else if (event.t === "heal") {
         popDamage(event.p, `+${event.n}`, "heal", event.spot);
+        mend(event.p, event.spot);
         await wait(520);
       } else if (showing) {
         const shown = showing;
@@ -2593,7 +2865,9 @@ export function initTcg(deps) {
     if (state.phase === "setup" && match.online && state.players[ME].placed) return;
     if (state.phase === "setup") {
       const def = d(uid);
-      if (def.kind !== "pokemon" || def.stage !== "basic") return toast("Only Basic Pokémon can start in play.");
+      // Cinderace's Explosiveness: it may start in the Active Spot, not on the Bench.
+      const leadOnly = def.kind === "pokemon" && def.ability?.setupActive && def.stage !== "basic";
+      if ((def.kind !== "pokemon" || def.stage !== "basic") && !(leadOnly && !match.setup.active)) return toast(leadOnly ? `${def.name} can only start in the Active Spot.` : "Only Basic Pokémon can start in play.");
       const step = lessonStep();
       if (step && !step.pick?.(def)) return toast(step.pick || step.want ? step.nudge : "Tap Next when you've read it.");
       if (step) lessonNext();
