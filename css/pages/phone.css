@@ -191,7 +191,7 @@
   #view-shop .odds-rows { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
   #view-shop .odds-rows li, #view-shop .odds-rows li:first-child {
     flex-direction: column-reverse; align-items: flex-start; justify-content: flex-end; gap: 5px; min-height: 0; padding: 8px 8px 9px;
-    border: 0; border-radius: 4px; background: var(--box-2);
+    border: 0; border-radius: var(--r-tag); background: var(--box-2);
   }
   #view-shop .odds-rows .rt-type { max-width: 100%; padding-block: 3px; font-size: 10px; line-height: 1.15; white-space: normal; text-overflow: clip; }
   #view-shop .odds-v { font: 700 19px var(--font-h); font-variant-numeric: tabular-nums; }
@@ -202,8 +202,9 @@
   }
   #view-shop .chase-grid::-webkit-scrollbar { display: none; }
   #view-shop .chase-grid > li { flex: 0 0 112px; }
-  #view-shop .chase-row { flex-direction: column; align-items: stretch; height: auto; min-height: 0; overflow: hidden; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); }
+  #view-shop .chase-row { flex-direction: column; align-items: stretch; height: auto; min-height: 0; overflow: hidden; border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); }
   #view-shop .chase-row .rt-row-lab, #view-shop .chase-row .rt-row-name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  /* A card's picture keeps the card's own corner. */
   #view-shop .chase-th { width: auto; height: auto; margin: 8px 10px 4px; border-radius: 4px; }
   #view-shop .chase-row .rt-row-val { justify-content: center; padding: 2px 0 8px; font-size: 15px; }
   #view-shop .chase-row .rt-row-val .coin-i { width: 15px; height: 15px; }
@@ -264,6 +265,39 @@
   .trades-view .tr-rules:not(.is-open) .tr-lines { display: none; }
 }
 
+
+/* ==========================================================================
+   Batch three (2026-11-28): sleeves and coins, the lounge.
+   ========================================================================== */
+@media (max-width: 640px) {
+  /* ---- Sleeves and coins: a small hero beside its name, each set a swipe shelf -- */
+  #view-gear .gear-lede, #view-gear .gear-hero-hint, #view-gear .gear-hero-note { display: none; }
+  #view-gear .gear-hero { grid-template-columns: 150px minmax(0, 1fr); align-items: center; column-gap: 12px; }
+  #view-gear .gear-hero-stage { grid-row: 1 / 3; height: 160px; min-height: 0; }
+  #view-gear .gear-hero-obj { margin: -64px; transform: scale(0.52); transform-origin: 50% 50%; }
+  #view-gear .gear-hero-slab { top: -6px; bottom: -6px; left: 10%; right: 10%; width: auto; }
+  #view-gear .gear-hero-info { display: contents; }
+  #view-gear .gear-hero-kicker, #view-gear .gear-hero-name { grid-column: 2; }
+  #view-gear .gear-hero-kicker { align-self: end; }
+  #view-gear .gear-hero-name { align-self: start; font-size: 26px; }
+  #view-gear .gear-progress { grid-column: 1 / -1; margin-top: 10px; }
+  #view-gear .gear-group { margin-top: 0; padding-top: 14px; }
+  #view-gear .gear-grid {
+    display: flex; gap: 10px; margin: 0 calc(-1 * var(--gutter, 20px)); padding: 4px var(--gutter, 20px) 10px;
+    overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none;
+  }
+  #view-gear .gear-grid::-webkit-scrollbar { display: none; }
+  #view-gear .gear-grid .gear-tile { flex: 0 0 138px; }
+
+  /* ---- Lounge: who is on as one line, then the chat fills the screen ------------ */
+  #social-body:has(.hub-lounge) .hub-head .page-title { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  #view-social .hub-lounge { display: flex; flex-direction: column; gap: 8px; }
+  #view-social .hub-lounge .hub-online { order: -1; flex-direction: row; align-items: center; gap: 10px; min-height: 0; padding: 0; border: 0; background: none; box-shadow: none; }
+  #view-social .hub-lounge .hub-online .lounge-head { flex: none; width: auto; min-height: 0; padding: 0; border: 0; background: none; }
+  #view-social .hub-lounge .hub-online .online-list { flex-direction: row; gap: 8px; min-height: 0; padding: 0; }
+  #view-social .hub-lounge .hub-chat { height: calc(100dvh - 318px); min-height: 200px; }
+  #view-social .hub-lounge .hub-chat .chat-log { flex: 1 1 auto; min-height: 0; }
+}
 
 /* Short phones (iPhone SE with Safari's bars): the pack and its art strip stay above the tab bar. */
 @media (max-width: 640px) and (max-height: 600px) {
