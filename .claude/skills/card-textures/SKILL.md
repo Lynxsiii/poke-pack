@@ -285,6 +285,18 @@ cure"). The surface gloss throws a soft highlight.
   light on the ridges) at `--shine-glit` 0.6 by default, and the star coat is a clear coat that fades out 55% of the
   way from the light. `holo_check.py` reports `speck` (fine grain the foil adds over the art, as a ratio of the
   print's own) and flags it over 0.45: watch it after touching any glitter, fleck or sparkle layer.
+- **The shared etch shine is a saturated spectrum in `overlay`: it olive-tints dark ink and blotches a blurred etch.**
+  The 2026-11-28 full-site review of Sword & Shield traced four "different" faults to `.shine` (etch-shine.css) riding
+  on every `has-etch-map` face: black coats and hair gone olive/brown on full-art Supporters (overlay doubles two
+  channels of a dark grey and zeroes the third), a uniform diagonal rainbow stripe on their silver frames, cloud
+  blotches over every Radiant (their etch is a blurred `-etch-v3` map) and tinted wavy lines on Amazing Rares and VMAX.
+  A family that draws its own colour sets `--shine-line: 0; --shine-glit: 0` (and a small `--relief`) on its own
+  selector. Also: a periodic line strip, however band-limited, reads as a line screen at phone size (the SWSH Rare Holo:
+  use `scripts/fam/swsh-holo/make_grain.py`, noise with no period); a dodged etch needs the map squared and a low
+  opacity or its grey ground is a milky wash and its maze/diamond fields show white (rainbow rares); a `-etch-v3`
+  map is blotches, never ridges: give those faces a `-soft` class and nearly no relief; gold gets no glitter tile at
+  all, and lit etch lines multiplied by the scan (`var(--art)` as the top background layer, `multiply`) leave black
+  ink black.
 - **A Japanese full art with no map is foil edge to edge.** With no foilMap a full art gets the white `full.webp`, so
   skin and faces take every band and tint (Supporter full arts read as a diagonal hatch over the face). Since the
   English lettering can be painted out (`jp_twin_maps.py --clean-text`), full arts take their English twin's foil
