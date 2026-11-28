@@ -1,6 +1,6 @@
 /* The BETA TESTING casino games: the numbers the page and the Worker share (worker/beta.js settles everything).
 
-   Every game is solo against the house (Rocket shares one round between everyone), stakes play coins only,
+   Every game is solo against the house, stakes play coins only,
    and pays at most 95% of the stake back on average (Mystery Tins 65% to 94% by shelf). Amounts in the Worker are cents. */
 
 export const BETA_RULES = {
@@ -17,7 +17,6 @@ export const BETA_ADMINS = ["polar"];
 
 export const BETA_GAMES = [
   { key: "grass", href: "/casino/grass", title: "Tall Grass", line: "Clear the patch, dodge the Voltorb." },
-  { key: "rocket", href: "/casino/rocket", title: "Rayquaza", line: "Cash out before it flies off." },
   { key: "tins", href: "/casino/tins", title: "Mystery Tins", line: "Crack a themed tin of cards." },
 ];
 
@@ -49,21 +48,6 @@ export function grassMultiplier(mines, safe) {
   const fair = choose(GRASS.tiles, safe) / choose(GRASS.tiles - mines, safe);
   return Math.floor(BETA_RULES.edge * fair * 100 + 1e-9) / 100;
 }
-
-// ---- Rocket -------------------------------------------------------------------
-export const ROCKET = {
-  betMs: 7000, // the betting window before launch
-  afterMs: 3500, // the pop stays on screen
-  rate: 0.11, // the multiplier is e^(rate * seconds)
-  maxMult: 100,
-  minAuto: 1.01,
-};
-/** The multiplier `ms` after launch, floored to two decimals. */
-export const rocketAt = (ms) => Math.floor(Math.exp((ROCKET.rate * Math.max(0, ms)) / 1000) * 100 + 1e-9) / 100;
-/** How long after launch the multiplier reaches `mult`. */
-export const rocketMsFor = (mult) => (Math.log(Math.max(1, mult)) / ROCKET.rate) * 1000;
-/** The pop point from a uniform draw u in [0,1): P(crash >= m) = 0.95 / m, capped at 100. */
-export const rocketCrash = (u) => Math.min(ROCKET.maxMult, Math.max(1, Math.floor((BETA_RULES.edge / (1 - u)) * 100) / 100));
 
 // ---- Mystery Tins -------------------------------------------------------------
 /* A tin is never about a set (anyone can just open that set). It is a Pokémon, an evolution line, a type or a kind
@@ -107,6 +91,9 @@ const PIKACHU = /\b(pichu|pikachu|raichu)\b/i;
 const GENGAR = /\b(gastly|haunter|gengar)\b/i;
 const MEWS = /\b(mew|mewtwo)\b/i;
 const DRAGONS = /\b(dragonite|garchomp|salamence|dragapult|giratina|latias|latios|hydreigon|haxorus|rayquaza)\b/i;
+const STARTERS = /\b(bulbasaur|ivysaur|venusaur|squirtle|wartortle|blastoise)\b/i;
+const MEGAS = /^(mega |m )/i;
+const SLEEPY = /\b(snorlax|munchlax|psyduck|slowpoke|mimikyu)\b/i;
 const LEGENDS = /\b(mew|mewtwo|lugia|ho-oh|rayquaza|giratina)\b/i;
 const tin = (tier, price, id, name, line, color, rule) => ({ id, name, line, color, tier, price, sets: POOL, ...rule });
 const typeTin = (id, type, color) => tin("high", 50, id, `${type} type tin`, `${type} Pokémon worth 25 coins or more.`, color, { types: [type], hits: true, min: 25 });
@@ -129,8 +116,8 @@ export const TINS = [
   tin("budget", 5, "greninja", "Greninja tin", "Froakie, Frogadier and Greninja.", "#31508f", { names: /\b(froakie|frogadier|greninja)\b/i }),
   tin("budget", 5, "gardevoir", "Gardevoir tin", "Ralts, Kirlia, Gardevoir and Gallade.", "#59b98c", { names: /\b(ralts|kirlia|gardevoir|gallade)\b/i }),
   tin("budget", 5, "lucario", "Lucario tin", "Riolu and Lucario.", "#3c6fb0", { names: /\b(riolu|lucario)\b/i }),
-  tin("budget", 5, "starters", "Kanto starters tin", "Bulbasaur and Squirtle lines.", "#3aa6a0", { names: /\b(bulbasaur|ivysaur|venusaur|squirtle|wartortle|blastoise)\b/i }),
-  tin("budget", 5, "snorlax", "Sleepy favourites tin", "Snorlax, Psyduck, Slowpoke and Mimikyu.", "#3d7c86", { names: /\b(snorlax|munchlax|psyduck|slowpoke|mimikyu)\b/i }),
+  tin("budget", 5, "starters", "Kanto starters tin", "Bulbasaur and Squirtle lines.", "#3aa6a0", { names: STARTERS }),
+  tin("budget", 5, "snorlax", "Sleepy favourites tin", "Snorlax, Psyduck, Slowpoke and Mimikyu.", "#3d7c86", { names: SLEEPY }),
   // Mid: a group of Pokémon, nothing under 2 coins.
   tin("mid", 25, "rayquaza", "Rayquaza tin", "The sky dragon, every print.", "#2f8a5e", { names: /\brayquaza\b/i, min: 2 }),
   tin("mid", 25, "dragons", "Dragon tin", "Dragonite, Giratina, Garchomp and more.", "#7a63c9", { names: DRAGONS, min: 2 }),
@@ -139,7 +126,7 @@ export const TINS = [
   tin("mid", 25, "towers", "Lugia and Ho-Oh tin", "The two tower guardians.", "#b9c4d6", { names: /\b(lugia|ho-oh)\b/i, min: 2 }),
   tin("mid", 25, "creation", "Sinnoh legends tin", "Dialga, Palkia, Giratina and Arceus.", "#566a9c", { names: /\b(dialga|palkia|giratina|arceus)\b/i, min: 2 }),
   tin("mid", 25, "night", "Umbreon and Darkrai tin", "Dark types after midnight.", "#2b3046", { names: /\b(umbreon|darkrai|zoroark|tyranitar)\b/i, min: 2 }),
-  tin("mid", 25, "mega", "Mega Evolution tin", "Only Mega Pokémon.", "#c44a8a", { names: /^(mega |m )/i, min: 2 }),
+  tin("mid", 25, "mega", "Mega Evolution tin", "Only Mega Pokémon.", "#c44a8a", { names: MEGAS, min: 2 }),
   tin("mid", 25, "supporters", "Supporter tin", "Trainers of every region, 5 coins and up.", "#d9577a", { kind: "supporter", min: 5 }),
   tin("mid", 30, "slab-pikachu", "Graded Pikachu tin", "A Pikachu in a slab: RIP 8, 9 or 10.", "#d8a90e", { names: PIKACHU, min: 3, slab: [8, 9, 10] }),
   // High: hits only.
@@ -164,6 +151,74 @@ export const TINS = [
   tin("roller", 350, "tagteam-roller", "Tag Team high roller tin", "Only Tag Teams worth 100 coins or more.", "#b87a17", { kind: "tagteam", min: 100 }),
   tin("roller", 400, "grails", "Grail tin", "Every card inside is worth 150 coins or more.", "#b08a1e", { min: 150 }),
   tin("roller", 650, "slab-gems", "Gem mint tin", "Every slab is a RIP 10 of a card worth 100 coins or more.", "#1d1d22", { min: 100, slab: [10] }),
+  // ---- 2026-11-28, second batch (Noah: "add like 50 more mystery tins, maybe more expensive ones maybe cheaper up to you").
+  // Bargain bin.
+  tin("bargain", 1, "ray-bust", "Rayquaza or bust tin", "Bulk, or a dragon worth 100 coins or more.", "#1f6e49", { names: /\b(rayquaza|dragonite|dratini|dragonair)\b/i, gap: [1, 100] }),
+  tin("bargain", 1, "lugia-bust", "Lugia or bust tin", "Bulk, or a Lugia or Ho-Oh worth 50 coins or more.", "#8f9db5", { names: /\b(lugia|ho-oh|articuno|zapdos|moltres)\b/i, gap: [1, 50] }),
+  tin("bargain", 1, "giratina-bust", "Giratina or bust tin", "Bulk, or a Sinnoh legend worth 100 coins or more.", "#44506f", { names: /\b(dialga|palkia|giratina|arceus)\b/i, gap: [1, 100] }),
+  tin("bargain", 1, "gyarados-bust", "Gyarados or bust tin", "Magikarp bulk, or a Gyarados worth 50 coins or more.", "#24579a", { names: /\b(magikarp|gyarados)\b/i, gap: [1, 50] }),
+  tin("bargain", 1, "gardevoir-bust", "Gardevoir or bust tin", "Bulk, or a Gardevoir worth 50 coins or more.", "#3f9770", { names: /\b(ralts|kirlia|gardevoir|gallade)\b/i, gap: [1, 50] }),
+  tin("bargain", 1, "greninja-bust", "Greninja or bust tin", "Bulk, or a Greninja worth 50 coins or more.", "#263f73", { names: /\b(froakie|frogadier|greninja)\b/i, gap: [1, 50] }),
+  tin("bargain", 1, "blastoise-bust", "Starter or bust tin", "Bulk, or a Kanto starter worth 75 coins or more.", "#2e8782", { names: STARTERS, gap: [1, 75] }),
+  tin("bargain", 1, "mega-bust", "Mega or bust tin", "Bulk, or a Mega worth 100 coins or more.", "#9c3a6e", { names: MEGAS, gap: [0.5, 100] }),
+  tin("bargain", 2, "supporter-bust", "Supporter or bust tin", "Bulk Trainers, or a Supporter worth 50 coins or more.", "#b0435f", { kind: "supporter", gap: [0.5, 50] }),
+  tin("bargain", 2, "tagteam-bust", "Tag Team or bust tin", "A cheap Tag Team, or one worth 100 coins or more.", "#b87a17", { kind: "tagteam", gap: [8, 100] }),
+  tin("bargain", 2, "sleepy-bust", "Snorlax or bust tin", "Bulk, or a sleepy favourite worth 100 coins or more.", "#2f626a", { names: SLEEPY, gap: [1, 100] }),
+  // Budget: more lines.
+  tin("budget", 5, "dragonite", "Dragonite tin", "Dratini, Dragonair and Dragonite.", "#e0913a", { names: /\b(dratini|dragonair|dragonite)\b/i }),
+  tin("budget", 5, "garchomp", "Garchomp tin", "Gible, Gabite and Garchomp.", "#3b4f9a", { names: /\b(gible|gabite|garchomp)\b/i }),
+  tin("budget", 5, "tyranitar", "Tyranitar tin", "Larvitar, Pupitar and Tyranitar.", "#6f8a4c", { names: /\b(larvitar|pupitar|tyranitar)\b/i }),
+  tin("budget", 5, "blastoise", "Blastoise tin", "Squirtle, Wartortle and Blastoise.", "#3f86c9", { names: /\b(squirtle|wartortle|blastoise)\b/i }),
+  tin("budget", 5, "venusaur", "Venusaur tin", "Bulbasaur, Ivysaur and Venusaur.", "#4d9f6a", { names: /\b(bulbasaur|ivysaur|venusaur)\b/i }),
+  tin("budget", 5, "alakazam", "Alakazam tin", "Abra, Kadabra and Alakazam.", "#c9a03a", { names: /\b(abra|kadabra|alakazam)\b/i }),
+  tin("budget", 5, "machamp", "Machamp tin", "Machop, Machoke and Machamp.", "#7f8fa6", { names: /\b(machop|machoke|machamp)\b/i }),
+  tin("budget", 5, "arcanine", "Fire dogs tin", "Growlithe, Arcanine, Vulpix and Ninetales.", "#e07a2e", { names: /\b(growlithe|arcanine|vulpix|ninetales)\b/i }),
+  tin("budget", 5, "zoroark", "Zoroark tin", "Zorua and Zoroark, every form.", "#7a2f3d", { names: /\b(zorua|zoroark)\b/i }),
+  tin("budget", 5, "mimikyu", "Mimikyu tin", "Mimikyu, every print.", "#c9b56a", { names: /\bmimikyu\b/i }),
+  tin("budget", 5, "dragapult", "Dragapult tin", "Dreepy, Drakloak and Dragapult.", "#4a6a8f", { names: /\b(dreepy|drakloak|dragapult)\b/i }),
+  tin("budget", 5, "blaziken", "Hoenn starters tin", "Blaziken, Sceptile and Swampert lines.", "#d9552e", { names: /\b(torchic|combusken|blaziken|treecko|grovyle|sceptile|mudkip|marshtomp|swampert)\b/i }),
+  tin("budget", 4, "johto", "Johto starters tin", "Typhlosion, Feraligatr and Meganium lines.", "#b8892f", { names: /\b(cyndaquil|quilava|typhlosion|totodile|croconaw|feraligatr|chikorita|bayleef|meganium)\b/i }),
+  tin("budget", 5, "sinnoh", "Sinnoh starters tin", "Infernape, Empoleon and Torterra lines.", "#3d74a8", { names: /\b(chimchar|monferno|infernape|piplup|prinplup|empoleon|turtwig|grotle|torterra)\b/i }),
+  tin("budget", 5, "paldea", "Paldea starters tin", "Meowscarada, Skeledirge and Quaquaval lines.", "#5aa860", { names: /\b(sprigatito|floragato|meowscarada|fuecoco|crocalor|skeledirge|quaxly|quaxwell|quaquaval)\b/i }),
+  tin("budget", 4, "cats", "Cats tin", "Meowth, Persian, Espeon, Luxray and more.", "#c7a96b", { names: /\b(meowth|persian|skitty|delcatty|glameow|purugly|purrloin|liepard|litten|torracat|incineroar|shinx|luxio|luxray|espurr|meowstic|sprigatito|floragato|meowscarada)\b/i }),
+  tin("budget", 5, "ghosts", "Ghosts tin", "Chandelure, Banette, Dusknoir and friends.", "#5a4a86", { names: /\b(litwick|lampent|chandelure|shuppet|banette|duskull|dusclops|dusknoir|misdreavus|mismagius|sableye|spiritomb|greavard|houndstone|gholdengo|gimmighoul)\b/i }),
+  // Mid.
+  tin("mid", 25, "pseudo", "Powerhouse tin", "Dragonite, Tyranitar, Metagross, Garchomp and the other heavy hitters.", "#6a5c8f", { names: /\b(dragonite|tyranitar|salamence|metagross|garchomp|hydreigon|goodra|kommo-o|dragapult|baxcalibur)\b/i, min: 2 }),
+  tin("mid", 25, "regional", "Regional forms tin", "Alolan, Galarian, Hisuian and Paldean Pokémon.", "#4a9a94", { names: /\b(alolan|galarian|hisuian|paldean)\b/i, min: 2 }),
+  tin("mid", 15, "paradox", "Paradox tin", "Ancient and Future Pokémon.", "#8a4fb0", { names: /\b(iron (valiant|hands|bundle|treads|moth|thorns|jugulis|leaves|boulder|crown)|roaring moon|great tusk|scream tail|brute bonnet|flutter mane|slither wing|sandy shocks|walking wake|raging bolt|gouging fire|koraidon|miraidon)\b/i, min: 2 }),
+  tin("mid", 12, "beasts-ultra", "Ultra Beast tin", "Visitors from Ultra Space.", "#3fa6c4", { names: /\b(nihilego|buzzwole|pheromosa|xurkitree|celesteela|kartana|guzzlord|poipole|naganadel|stakataka|blacephalon|necrozma)\b/i, min: 2 }),
+  tin("mid", 25, "hoenn-legends", "Hoenn legends tin", "Kyogre, Groudon, Rayquaza, Latias and Latios.", "#2f7fa8", { names: /\b(kyogre|groudon|rayquaza|latias|latios|deoxys|jirachi)\b/i, min: 2 }),
+  tin("mid", 25, "unova-legends", "Unova legends tin", "Reshiram, Zekrom and Kyurem.", "#4b4f58", { names: /\b(reshiram|zekrom|kyurem|victini|keldeo|genesect)\b/i, min: 2 }),
+  tin("mid", 12, "galar-legends", "Galar legends tin", "Zacian, Zamazenta, Eternatus and Calyrex.", "#b03a5a", { names: /\b(zacian|zamazenta|eternatus|calyrex|urshifu|regieleki|regidrago)\b/i, min: 2 }),
+  tin("mid", 25, "mythical", "Mythical tin", "Mew, Celebi, Jirachi, Darkrai and more.", "#5fb07a", { names: /\b(mew|celebi|jirachi|manaphy|darkrai|shaymin|arceus|victini|meloetta|genesect|diancie|hoopa|volcanion|marshadow|zeraora|pecharunt)\b/i, min: 2 }),
+  tin("mid", 25, "pika-mid", "Pikachu picks tin", "Pikachu line, nothing under 2 coins.", "#e0b416", { names: PIKACHU, min: 2 }),
+  tin("mid", 25, "eevee-mid", "Eeveelution picks tin", "Eeveelutions, nothing under 2 coins.", "#b97c40", { names: EEVEES, min: 2 }),
+  tin("mid", 30, "slab-gengar", "Graded Gengar tin", "A Gengar in a slab: RIP 8, 9 or 10.", "#5b4399", { names: GENGAR, min: 3, slab: [8, 9, 10] }),
+  tin("mid", 30, "slab-starters", "Graded starters tin", "A Kanto starter in a slab: RIP 8, 9 or 10.", "#2f8f8a", { names: STARTERS, min: 3, slab: [8, 9, 10] }),
+  // High.
+  tin("high", 75, "dragon", "Dragon type tin", "Dragon Pokémon worth 25 coins or more.", "#6a58b8", { types: ["Dragon"], hits: true, min: 25 }),
+  typeTin("colorless", "Colorless", "#a8a39a"),
+  tin("high", 50, "supporter-hits", "Supporter hits tin", "Only Supporters worth 25 coins or more.", "#c44868", { kind: "supporter", min: 25 }),
+  tin("high", 75, "pika-hits", "Pikachu hits tin", "Only Pikachu line cards worth 25 coins or more.", "#d9a90e", { names: PIKACHU, min: 25 }),
+  tin("high", 100, "mega-hits", "Mega hits tin", "Only Megas worth 25 coins or more.", "#b03f7c", { names: MEGAS, min: 25 }),
+  tin("high", 100, "dragon-hits", "Dragon hits tin", "Rayquaza, Giratina, Dragonite and more, 25 coins and up.", "#5b47a8", { names: DRAGONS, min: 25 }),
+  tin("high", 100, "gengar-hits", "Gengar hits tin", "Only Gengars worth 25 coins or more.", "#57408f", { names: GENGAR, min: 25 }),
+  tin("high", 100, "starter-hits", "Starter hits tin", "Kanto starters worth 25 coins or more.", "#2a807b", { names: STARTERS, min: 25 }),
+  tin("high", 150, "slab-legends", "Graded legends tin", "Mew, Mewtwo, Lugia, Rayquaza or Giratina in a slab: RIP 9 or 10.", "#43377f", { names: LEGENDS, min: 10, slab: [9, 10] }),
+  tin("high", 150, "slab-tagteam", "Graded Tag Team tin", "A Tag Team in a slab: RIP 9 or 10.", "#c7861f", { kind: "tagteam", min: 10, slab: [9, 10] }),
+  tin("high", 75, "slab-supporter", "Graded Supporter tin", "A Supporter in a slab: RIP 9 or 10.", "#b54060", { kind: "supporter", min: 10, slab: [9, 10] }),
+  // High rollers.
+  tin("roller", 175, "pika-roller", "Pikachu high roller tin", "Only Pikachu line cards worth 100 coins or more.", "#b88f0a", { names: PIKACHU, min: 100 }),
+  tin("roller", 250, "mega-roller", "Mega high roller tin", "Only Megas worth 100 coins or more.", "#8f2f63", { names: MEGAS, min: 100 }),
+  tin("roller", 175, "supporter-roller", "Supporter high roller tin", "Only Supporters worth 100 coins or more.", "#9c3350", { kind: "supporter", min: 100 }),
+  tin("roller", 275, "fire-roller", "Fire high roller tin", "Fire Pokémon worth 100 coins or more.", "#b53d1f", { types: ["Fire"], min: 100 }),
+  tin("roller", 225, "water-roller", "Water high roller tin", "Water Pokémon worth 100 coins or more.", "#2a6fb0", { types: ["Water"], min: 100 }),
+  tin("roller", 300, "psychic-roller", "Psychic high roller tin", "Psychic Pokémon worth 100 coins or more.", "#7a479c", { types: ["Psychic"], min: 100 }),
+  tin("roller", 400, "dragon-roller", "Dragon high roller tin", "Dragons worth 100 coins or more.", "#473690", { names: DRAGONS, min: 100 }),
+  tin("roller", 450, "dark-roller", "Darkness high roller tin", "Darkness Pokémon worth 100 coins or more.", "#2c3245", { types: ["Darkness"], min: 100 }),
+  tin("roller", 450, "slab-zard-gems", "Gem mint Charizard tin", "Every slab is a RIP 10 Charizard.", "#7a1d0f", { names: /\bcharizard\b/i, min: 65, slab: [10] }),
+  tin("roller", 450, "slab-eevee-gems", "Gem mint Eeveelution tin", "Every slab is a RIP 10 Eeveelution.", "#5f3a18", { names: EEVEES, min: 65, slab: [10] }),
+  tin("roller", 650, "vault", "Vault tin", "Every card inside is worth 300 coins or more.", "#14161b", { min: 300 }),
 ];
 /** A card that is only one piece of a bigger one: a V-UNION quarter, a LEGEND half. Noah, 2026-11-26: never in a tin. */
 export const isPieceCard = (card) => /\bV-UNION\b|\bLEGEND$/.test(card?.name || "") || (card?.subtypes || []).some((x) => /^(v-union|legend)$/i.test(x));

@@ -52,8 +52,8 @@ body.on-battle-table .casino-bar { display: none; }
   color: var(--k); font: italic 800 24px/1 var(--font-xc); letter-spacing: -0.015em;
 }
 .cs-h span, .cs-tag {
-  display: inline-block; padding: 2px 9px 3px; border-radius: 3px; background: var(--k); color: var(--on-k);
-  font: italic 700 13px/1.3 var(--font-h); letter-spacing: 0; font-variant-numeric: tabular-nums;
+  display: inline-block; padding: 2px 9px 3px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k);
+  font: 700 13px/1.3 var(--font-h); letter-spacing: 0; font-variant-numeric: tabular-nums;
 }
 .cs-empty { margin: 0; padding: 14px 0 6px; max-width: 46ch; color: var(--k-2); font-size: 15px; line-height: 1.45; }
 /* An empty list: a dashed place, a hollow ball, one line and maybe a key. */
@@ -180,7 +180,7 @@ a.cs-row-lab:hover { color: var(--on-k); }
 /* A pile of cards as overlapping thumbnails, each on a thin white edge. */
 .cs-stack { position: relative; display: inline-flex; align-items: center; flex: none; }
 .cs-stack > img {
-  display: block; width: 30px; height: 42px; object-fit: cover; border-radius: 2px; background: var(--well);
+  display: block; width: 30px; height: 42px; object-fit: cover; border-radius: var(--r-tag); background: var(--well);
   margin-left: -14px; box-shadow: 0 0 0 1.5px var(--box);
 }
 .cs-stack > :first-child { margin-left: 0; }
@@ -188,8 +188,8 @@ a.cs-row-lab:hover { color: var(--on-k); }
 .cs-stack.is-lg > .cs-slab { width: 34px; margin-left: -14px; }
 .cs-stack.is-lg > :first-child { margin-left: 0; }
 .cs-stack-more {
-  align-self: center; margin-left: 6px; padding: 1px 6px; border-radius: 3px; background: var(--k); color: var(--on-k);
-  font: italic 700 12.5px/1.4 var(--font-h); font-variant-numeric: tabular-nums;
+  align-self: center; margin-left: 6px; padding: 1px 6px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k);
+  font: 700 12.5px/1.4 var(--font-h); font-variant-numeric: tabular-nums;
 }
 
 /* A receipt: rows of Kanit figures; the win is the yellow row. */
@@ -209,12 +209,12 @@ a.cs-row-lab:hover { color: var(--on-k); }
 .cs-receipt > .is-total { border-bottom: 0; }
 .cs-receipt > .is-total dt { color: var(--k); font: italic 700 16px var(--font-h); }
 .cs-receipt > .is-total dd { font-size: 22px; }
-.cs-receipt > .is-hit { margin-top: 6px; padding-inline: 12px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--yel); }
+.cs-receipt > .is-hit { margin-top: 6px; padding-inline: 12px; border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--yel); }
 .cs-receipt > .is-hit dt, .cs-receipt > .is-hit dd, .cs-receipt > .is-hit dt small { color: var(--k); }
 .cs-receipt > .is-out dt, .cs-receipt > .is-out dd { color: var(--k-3); }
 
 /* "How it stays fair": a white box that opens at the foot of the page. */
-.cs-how { margin-top: 28px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); }
+.cs-how { margin-top: 28px; border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); }
 .cs-how summary {
   display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 52px; padding: 0 16px;
   cursor: pointer; list-style: none; color: var(--k); font: italic 700 17px var(--font-h);
@@ -292,7 +292,7 @@ a.cs-row-lab:hover { color: var(--on-k); }
 .hub-tile { min-width: 0; }
 .hub-game {
   position: relative; display: flex; flex-direction: column; height: 100%; overflow: hidden;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); color: var(--k);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); color: var(--k);
   transition: transform 0.16s var(--ease-out), box-shadow 0.16s var(--ease-out);
   -webkit-tap-highlight-color: transparent;
 }
@@ -314,8 +314,8 @@ a.cs-row-lab:hover { color: var(--on-k); }
 .hub-game-copy span { padding-right: 18px; color: var(--k-2); font-size: 13.5px; font-weight: 500; line-height: 1.35; }
 /* The live figure: a small ink tag in the well's corner. */
 .hub-game-fig {
-  position: absolute; z-index: 2; top: 9px; left: 9px; padding: 2px 9px 3px; border-radius: 3px;
-  background: var(--k); color: var(--on-k); font: italic 700 13px/1.3 var(--font-h); font-variant-numeric: tabular-nums;
+  position: absolute; z-index: 2; top: 9px; left: 9px; padding: 2px 9px 3px; border-radius: var(--r-tag);
+  background: var(--k); color: var(--on-k); font: 700 13px/1.3 var(--font-h); font-variant-numeric: tabular-nums;
 }
 .hub-game-fig.is-bump, .cs-h span.is-bump { animation: cs-bump 0.4s var(--ease-pop); }
 @keyframes cs-bump { from { transform: translateY(-6px) scale(1.2); } }
@@ -437,7 +437,7 @@ a.cs-row-lab:hover { color: var(--on-k); }
 .cs-art-clash .cs-clash-mark .bt-icon { width: 76%; height: 76%; stroke-width: 2.6; }
 /* the hall's light sweep rides inside the front pack, so it does not turn with the stage's own tilt */
 .cs-art-clash .cs-clash-pack .hl-glint { rotate: 0deg; }
-.cs-art-clash.is-empty { border-radius: 6px; border: var(--line-w) dashed var(--rule-2); width: calc(var(--s) * 0.6); }
+.cs-art-clash.is-empty { border-radius: var(--r); border: var(--line-w) dashed var(--rule-2); width: calc(var(--s) * 0.6); }
 
 /* ---- Coinflip: the versus screen -------------------------------------------------
    Two players on slanted halves facing each other, the coin large between them,
@@ -462,7 +462,7 @@ a.cs-row-lab:hover { color: var(--on-k); }
   padding: 2px 12px 4px 10px; color: var(--k); font: italic 800 34px/1 var(--font-xc); letter-spacing: -0.03em;
   pointer-events: none;
 }
-.cf-vs::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 4px; background: var(--yel); box-shadow: 0 0 0 var(--line-w) var(--k); transform: skewX(var(--skew)); }
+.cf-vs::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: var(--r-tag); background: var(--yel); box-shadow: 0 0 0 var(--line-w) var(--k); transform: skewX(var(--skew)); }
 .cf-half {
   position: relative; isolation: isolate; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; min-width: 0;
   padding: 16px 20px 18px 22px;
@@ -471,7 +471,7 @@ a.cs-row-lab:hover { color: var(--on-k); }
 .cf-half.is-guest { grid-area: guest; align-items: flex-end; padding: 16px 22px 18px 20px; text-align: right; }
 .cf-half::before {
   content: ""; position: absolute; inset: 0; z-index: -1;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box);
   transform: skewX(var(--skew));
   transition: background-color 0.2s ease;
 }
@@ -493,15 +493,15 @@ a.cs-row-lab:hover { color: var(--on-k); }
 .cf-half .cs-player .bt-avatar { --size: 36px; }
 .cf-half .cs-player-copy b { font-size: 15.5px; }
 .cf-face-tag {
-  display: inline-block; padding: 1px 9px 2px; border-radius: 3px; background: var(--k); color: var(--yel-k);
-  font: italic 800 12.5px/1.4 var(--font-xc);
+  display: inline-block; padding: 1px 9px 2px; border-radius: var(--r-tag); background: var(--k); color: var(--yel-k);
+  font: 700 12.5px/1.4 var(--font-h);
 }
 .cf-half-pile { display: flex; min-height: 50px; align-items: center; }
 .cf-half.is-guest .cf-half-pile { justify-content: flex-end; }
 .cf-half-stack > img { width: 34px; height: 48px; margin-left: -18px; }
 .cf-half-stack > .cs-slab { width: 32px; margin-left: -16px; }
 .cf-half-stack > :first-child { margin-left: 0; }
-.cf-half-slot { display: block; width: 34px; height: 48px; border: 2px dashed var(--rule-2); border-radius: 3px; }
+.cf-half-slot { display: block; width: 34px; height: 48px; border: 2px dashed var(--rule-2); border-radius: var(--r-tag); }
 .cf-half-val .bt-coins, .cf-half-val {
   display: inline-flex; align-items: center; gap: 6px; color: var(--k);
   font: 700 clamp(21px, 6vw, 30px)/1 var(--font-h); font-variant-numeric: tabular-nums; white-space: nowrap;
@@ -562,7 +562,7 @@ a.cs-row-lab:hover { color: var(--on-k); }
 .cf-result { max-width: calc(100% - 24px); }
 @media (max-width: 400px) { .cf-result { font-size: clamp(24px, 7.4vw, 30px); padding-inline: 22px; } }
 .cf-result::before {
-  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 6px;
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: var(--r);
   transform: skewX(var(--skew)); opacity: 0;
 }
 .is-decided .cf-result::before { opacity: 1; background: var(--yel); border: var(--line-w) solid var(--k); border-bottom-width: 7px; }
@@ -615,12 +615,12 @@ a.cs-row-lab:hover { color: var(--on-k); }
 @media (hover: hover) { .cs-card:hover { transform: translateY(-3px); } }
 .cs-card-qty {
   position: absolute; top: -5px; right: -5px; max-width: calc(100% - 8px); padding: 2px 7px; white-space: nowrap; overflow: hidden;
-  border-radius: 3px; background: var(--k); color: var(--on-k);
-  font: italic 700 13px/1.3 var(--font-h); font-variant-numeric: tabular-nums;
+  border-radius: var(--r-tag); background: var(--k); color: var(--on-k);
+  font: 700 13px/1.3 var(--font-h); font-variant-numeric: tabular-nums;
 }
 .cs-card-value { display: block; margin-top: 7px; }
 .cs-card-value .price-tag { font: 700 15px var(--font-h); }
-.cs-card:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 3px; border-radius: 4px; }
+.cs-card:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 3px; border-radius: var(--r-tag); }
 .cs-slab-btn .cs-card-value { margin-top: 7px; }
 .cf-table.is-decided.host-won .cf-side.is-guest,
 .cf-table.is-decided.guest-won .cf-side.is-host { opacity: 0.45; }
@@ -641,21 +641,21 @@ body.cs-locked { overflow: hidden; }
 .cs-sheet {
   position: relative; display: flex; flex-direction: column;
   width: min(780px, 100%); height: min(92vh, 92dvh); max-height: 900px;
-  border: var(--line-w) solid var(--k); border-bottom: 0; border-radius: 10px 10px 0 0;
+  border: var(--line-w) solid var(--k); border-bottom: 0; border-radius: var(--r) var(--r) 0 0;
   background: var(--box); color: var(--k); outline: none;
   animation: cs-sheet-in 0.26s var(--ease-out);
 }
 @keyframes cs-sheet-in { from { transform: translateY(40px); opacity: 0; } }
 @media (min-width: 820px) {
   .cs-sheet-wrap { align-items: center; padding: 20px; }
-  .cs-sheet { height: min(84vh, 800px); border-bottom: var(--line-w) solid var(--k); border-radius: 10px; box-shadow: var(--drop); }
+  .cs-sheet { height: min(84vh, 800px); border-bottom: var(--line-w) solid var(--k); border-radius: var(--r); box-shadow: var(--drop); }
 }
 .cs-sheet-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 18px 12px 6px 20px; }
 .cs-sheet-head h2 { margin: 2px 0 0; font: italic 800 30px/1 var(--font-xc); letter-spacing: -0.02em; }
 .cs-sheet-head p { margin: 8px 0 0; max-width: 46ch; color: var(--k-2); font-size: 14px; line-height: 1.45; }
 .cs-x {
   display: grid; place-items: center; flex: none; width: 44px; height: 44px; margin: -4px 0 0;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); color: var(--k); cursor: pointer;
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); color: var(--k); cursor: pointer;
   transition: transform 0.1s var(--ease-out), background-color 0.12s ease;
 }
 .cs-x .bt-icon { width: 22px; height: 22px; stroke-width: 2.6; }
@@ -666,7 +666,7 @@ body.cs-locked { overflow: hidden; }
 .cs-meter-fig { display: flex; align-items: baseline; flex-wrap: wrap; gap: 2px 12px; min-width: 0; }
 /* The figure is a field: Kanit figures, an ink line under them. The coin is a pseudo-element so it can never become part of the value. */
 .cs-fig { display: inline-flex; align-items: baseline; min-width: 0; max-width: 100%; color: var(--k); }
-.cs-fig::before { content: ""; flex: none; align-self: center; width: 28px; height: 28px; margin-right: 8px; background: url("../../assets/coins/pp-coin-v1.svg") center / contain no-repeat; }
+.cs-fig::before { content: ""; flex: none; align-self: center; width: 28px; height: 28px; margin-right: 8px; background: url("../../assets/coins/pp-coin-v2.svg") center / contain no-repeat; }
 .cs-fig-field {
   display: inline-grid; min-width: 3ch; max-width: 100%; padding-bottom: 1px; border-bottom: var(--line-w) solid var(--rule-2); cursor: text;
   color: var(--k); font: 700 40px/1.05 var(--font-h); font-variant-numeric: tabular-nums;
@@ -694,7 +694,7 @@ body.cs-locked { overflow: hidden; }
 /* Quick amounts: small white keys with the ink line and a ledge. */
 .cs-amt-tile, .cs-amounts [data-amt="match"] {
   flex: 1 1 54px; min-width: 50px; height: 42px; padding: 0 12px;
-  border: 2px solid var(--k) !important; border-bottom-width: 4px !important; border-radius: 5px;
+  border: 2px solid var(--k) !important; border-bottom-width: 4px !important; border-radius: var(--r-tag);
   background: var(--box); color: var(--k);
   font: 600 17px var(--font-h) !important; font-variant-numeric: tabular-nums;
   transition: transform 0.1s var(--ease-out), background-color 0.12s ease;
@@ -715,15 +715,15 @@ body.cs-locked { overflow: hidden; }
 .cs-amounts button:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 2px; }
 /* The match window: an ink track, the window in green, the stake as the yellow marker. */
 /* Both are full-width layers moved by transform (stake-picker.js sets --lo, --w and --at), so nothing relays out. */
-.cs-meter-bar { position: relative; height: 14px; margin: 14px 0 10px; border-radius: 7px; background: var(--k); }
+.cs-meter-bar { position: relative; height: 14px; margin: 14px 0 10px; border-radius: var(--r); background: var(--k); }
 .cs-win {
-  position: absolute; top: 3px; bottom: 3px; left: 0; right: 0; border-radius: 3px; background: var(--hp);
+  position: absolute; top: 3px; bottom: 3px; left: 0; right: 0; border-radius: var(--r-tag); background: var(--hp);
   transform-origin: 0 50%; transform: translateX(var(--lo, 0%)) scaleX(var(--w, 0));
 }
 .cs-dot { position: absolute; top: -5px; bottom: -5px; left: 0; right: 0; transform: translateX(var(--at, 0%)); transition: transform 0.26s var(--ease-out); pointer-events: none; }
 .cs-dot::before {
   content: ""; position: absolute; top: 0; bottom: 0; left: -5px; width: 10px;
-  border: 2px solid var(--k); border-radius: 3px; background: var(--yel); transition: background-color 0.15s ease;
+  border: 2px solid var(--k); border-radius: var(--r-tag); background: var(--yel); transition: background-color 0.15s ease;
 }
 .cs-meter[data-state="high"] .cs-dot::before { background: var(--hp-low); }
 .cs-meter[data-state="in"] .cs-dot::before { animation: cs-in-window 0.3s var(--ease-pop); }
@@ -738,7 +738,7 @@ body.cs-locked { overflow: hidden; }
 .cs-tools { display: grid; gap: 10px; padding: 6px 20px 10px; border-bottom: var(--line-w) solid var(--k); }
 .cs-search {
   display: flex; align-items: center; gap: 8px; min-height: 46px; padding: 0 12px;
-  border: 2px solid var(--k); border-radius: 6px; background: var(--box); color: var(--k-2);
+  border: 2px solid var(--k); border-radius: var(--r); background: var(--box); color: var(--k-2);
 }
 .cs-search:focus-within { box-shadow: 0 0 0 3px var(--cy); color: var(--k); }
 .cs-search .bt-icon { stroke-width: 2.4; }
@@ -772,15 +772,15 @@ body.cs-locked { overflow: hidden; }
 /* Nothing to show in the grid: the dashed empty place with a hollow ball, like every empty list. */
 .cs-grid > .cs-empty {
   display: flex; align-items: center; gap: 14px; max-width: none; padding: 18px 16px;
-  border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: var(--box); color: var(--k-2); font-weight: 500;
+  border: var(--line-w) dashed var(--rule-2); border-radius: var(--r); background: var(--box); color: var(--k-2); font-weight: 500;
 }
 .cs-grid > .cs-empty::before { content: ""; flex: none; width: 22px; height: 22px; border: 2.5px solid var(--rule-2); border-radius: 50%; }
 /* Cards still loading: card-shaped places with the loading band; only the first screen, and they go when the cards come. */
-.cs-pick-skel { display: block; aspect-ratio: 63 / 88; border-radius: 5px; }
+.cs-pick-skel { display: block; aspect-ratio: 63 / 88; border-radius: var(--r-tag); }
 .cs-pick-skel:nth-child(n + 8) { opacity: 0.6; }
 .cs-pick-skel.rt-skel::after { animation-delay: calc(var(--i, 0) * 0.06s); }
 .cs-more {
-  min-height: 46px; border: 2px solid var(--k); border-bottom-width: 4px; border-radius: 6px; background: var(--box); color: var(--k); cursor: pointer;
+  min-height: 46px; border: 2px solid var(--k); border-bottom-width: 4px; border-radius: var(--r); background: var(--box); color: var(--k); cursor: pointer;
   font: italic 700 16px var(--font-h);
   transition: transform 0.1s var(--ease-out);
 }
@@ -788,19 +788,19 @@ body.cs-locked { overflow: hidden; }
 .cs-more:active { transform: translateY(2px); }
 /* A tile: the card, its name, what you own and its value. */
 .cs-pick { position: relative; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-.cs-pick-art { position: relative; display: block; padding: 0; border: 0; border-radius: 5px; background: none; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.cs-pick-art { position: relative; display: block; padding: 0; border: 0; border-radius: var(--r-tag); background: none; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .cs-pick-art img { display: block; width: 100%; aspect-ratio: 63 / 88; object-fit: cover; border-radius: 4.5% / 3.2%; background: var(--well); transition: transform 0.14s var(--ease-out); }
 .cs-pick-art:active img { transform: translateY(2px); }
 .cs-pick-art:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 4px; }
 /* Picked: an ink frame drawn on the wrapper around the card, and the count on a yellow tag. */
 .cs-pick-art::after, .cs-slabtile-art::after {
-  content: ""; position: absolute; inset: -5px; border: 3px solid var(--k); border-radius: 8px; pointer-events: none;
+  content: ""; position: absolute; inset: -5px; border: 3px solid var(--k); border-radius: var(--r); pointer-events: none;
   opacity: 0; transform: scale(1.06); transition: opacity 0.12s ease, transform 0.2s var(--ease-pop);
 }
 .cs-pick.is-on .cs-pick-art::after, .cs-slabtile.is-on .cs-slabtile-art::after { opacity: 1; transform: none; }
 .cs-pick-badge {
   position: absolute; z-index: 9; top: -10px; right: -10px; display: grid; place-items: center; min-width: 28px; height: 28px; padding: 0 6px;
-  border: 2px solid var(--k); border-radius: 4px; background: var(--yel); color: var(--k0);
+  border: 2px solid var(--k); border-radius: var(--r-tag); background: var(--yel); color: var(--k0);
   font: 700 15px var(--font-h); font-variant-numeric: tabular-nums;
 }
 @keyframes cs-badge { from { transform: scale(0.4) rotate(-12deg); opacity: 0; } }
@@ -818,7 +818,7 @@ body.cs-locked { overflow: hidden; }
 .cs-pick-meta { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; color: var(--k-2); font-size: 12.5px; font-weight: 700; font-variant-numeric: tabular-nums; }
 .cs-pick-meta b { color: var(--k); font: 700 15px var(--font-h); }
 .cs-pick-hint { min-height: 34px; color: var(--k-3); font-size: 12.5px; font-weight: 700; }
-.cs-step { display: flex; align-items: center; justify-content: space-between; height: 34px; border: 2px solid var(--k); border-radius: 5px; background: var(--box); }
+.cs-step { display: flex; align-items: center; justify-content: space-between; height: 34px; border: 2px solid var(--k); border-radius: var(--r-tag); background: var(--box); }
 .cs-step button { display: grid; flex: none; place-items: center; width: 38px; height: 100%; border: 0; background: none; color: var(--k); cursor: pointer; }
 .cs-step button .bt-icon { stroke-width: 2.6; }
 .cs-step button:active:not(:disabled) { background: var(--cy-3); }
@@ -836,7 +836,7 @@ body.cs-locked { overflow: hidden; }
 .cs-slabnote b { font-weight: 700; color: var(--k); }
 .cs-slabnote b[hidden] { display: none; }
 .cs-slabtile-art {
-  position: relative; display: block; width: 100%; padding: 0; border: 0; border-radius: 5px; background: none; color: inherit;
+  position: relative; display: block; width: 100%; padding: 0; border: 0; border-radius: var(--r-tag); background: none; color: inherit;
   font: inherit; text-align: left; cursor: pointer; -webkit-tap-highlight-color: transparent;
   transition: transform 0.12s var(--ease-out), opacity 0.15s ease;
 }
@@ -909,7 +909,7 @@ body.cs-locked { overflow: hidden; }
   transform: translateX(-50%) skewX(var(--skew));
 }
 .jp-head-copy { display: flex; flex-direction: column; align-items: center; min-width: 0; }
-.jp-kicker { padding: 1px 9px 2px; border-radius: 3px; background: var(--k); color: var(--yel-k); font: italic 800 13px/1.4 var(--font-xc); }
+.jp-kicker { padding: 1px 9px 2px; border-radius: var(--r-tag); background: var(--k); color: var(--yel-k); font: 700 13px/1.4 var(--font-h); }
 .jp-total { margin: 6px 0 0; line-height: 1; }
 .jp-total .bt-coins {
   display: inline-flex; align-items: center; gap: 0.14em; color: var(--k);
@@ -926,7 +926,7 @@ body.cs-locked { overflow: hidden; }
 .jp-entry {
   position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto auto; grid-template-areas: "who stake figs" "share share share";
   align-items: center; gap: 10px 14px; padding: 12px 14px 14px;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box);
   transition: transform 0.12s var(--ease-out), opacity 0.3s ease;
 }
 .jp-entry > .cs-player { grid-area: who; }
@@ -938,11 +938,11 @@ body.cs-locked { overflow: hidden; }
 /* The share: an HP bar in ten segments, the chance on its label. */
 .jp-share { grid-area: share; display: flex; align-items: center; gap: 8px; min-width: 0; }
 .jp-odds {
-  flex: none; min-width: 54px; padding: 1px 7px; border-radius: 3px; background: var(--k); color: var(--yel-k); text-align: center;
-  font: italic 800 13px/1.5 var(--font-xc); font-variant-numeric: tabular-nums;
+  flex: none; min-width: 54px; padding: 1px 7px; border-radius: var(--r-tag); background: var(--k); color: var(--yel-k); text-align: center;
+  font: 700 13px/1.5 var(--font-h); font-variant-numeric: tabular-nums;
 }
-.jp-bar { position: relative; flex: 1; display: block; height: 14px; padding: 3px; border-radius: 7px; background: var(--k); overflow: hidden; }
-.jp-bar b { position: relative; display: block; height: 100%; border-radius: 4px; background: var(--hp); transform-origin: 0 50%; }
+.jp-bar { position: relative; flex: 1; display: block; height: 14px; padding: 3px; border-radius: var(--r); background: var(--k); overflow: hidden; }
+.jp-bar b { position: relative; display: block; height: 100%; border-radius: var(--r-tag); background: var(--hp); transform-origin: 0 50%; }
 .jp-bar::after {
   content: ""; position: absolute; inset: 3px; pointer-events: none;
   background: repeating-linear-gradient(90deg, transparent 0 calc(10% - 2px), var(--k) calc(10% - 2px) 10%);
@@ -959,7 +959,7 @@ body.cs-locked { overflow: hidden; }
 .jp-entry.is-open-seat .bt-avatar { --size: 34px; }
 /* The draw: the cursor runs down the seats, a yellow edge and a nudge. */
 .jp-entry::before {
-  content: ""; position: absolute; left: -2.5px; top: -2.5px; bottom: -2.5px; width: 12px; border-radius: 6px 0 0 6px;
+  content: ""; position: absolute; left: -2.5px; top: -2.5px; bottom: -2.5px; width: 12px; border-radius: var(--r) 0 0 var(--r);
   background: var(--yel); box-shadow: inset -2.5px 0 0 var(--k); opacity: 0; transition: opacity 0.06s linear;
 }
 .jp-entry.is-lit { transform: translateX(6px); background: var(--cy-3); }

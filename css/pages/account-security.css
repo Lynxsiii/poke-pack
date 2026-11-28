@@ -38,7 +38,7 @@
 .sec-group-h { margin: 0; color: var(--k); font: italic 800 20px/1.1 var(--font-xc); letter-spacing: -0.01em; }
 .sec-list {
   min-width: 0; overflow: hidden;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); color: var(--k);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); color: var(--k);
 }
 .sec-item { position: relative; min-width: 0; }
 .sec-item + .sec-item { border-top: 2px solid var(--rule); }
@@ -56,7 +56,7 @@
   border: 0; border-radius: 0; background: none; box-shadow: none; color: var(--k);
   font: inherit; text-align: left; cursor: pointer; -webkit-tap-highlight-color: transparent;
 }
-.sec-row:focus-visible { outline: 3px solid var(--cy-2); outline-offset: -5px; border-radius: 6px; }
+.sec-row:focus-visible { outline: 3px solid var(--cy-2); outline-offset: -5px; border-radius: var(--r); }
 .sec-row-mark { display: grid; place-items: center; width: 24px; height: 24px; color: var(--k); }
 .sec-row-mark.rt-ball { width: 20px; height: 20px; margin: 0 2px; }
 .sec-row-mark svg { display: block; width: 22px; height: 22px; }
@@ -114,7 +114,7 @@
    land whole. Figures are the fixed-width Kanit, spaced wide. */
 :is(#view-auth, #view-account) .field input.sec-code-input, .sec-code-input {
   width: 100%; max-width: 264px; min-height: 60px; padding: 6px 4px 8px 0.34em;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); color: var(--k);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); color: var(--k);
   font: 700 30px/1 var(--font-h); font-variant-numeric: tabular-nums; letter-spacing: 0.34em; text-align: center;
 }
 :is(#view-auth, #view-account) .field input.sec-code-input::placeholder, .sec-code-input::placeholder { color: var(--rule-2); opacity: 1; }
@@ -131,13 +131,13 @@
 /* The QR sits on white whatever the theme, with room around it to scan. */
 .sec-qr {
   display: grid; place-items: center; width: 100%; max-width: 212px; aspect-ratio: 1; padding: 14px;
-  border: var(--line-w) solid var(--k); border-radius: 8px; background: var(--w0); color: var(--k0);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--w0); color: var(--k0);
 }
 .sec-qr svg, .sec-qr img { display: block; width: 100%; height: auto; max-width: 180px; }
 /* A code to keep or type: the set-up key, the recovery code. */
 .sec-key {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 14px; min-width: 0; max-width: 440px;
-  padding: 12px 12px 12px 16px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box-2);
+  padding: 12px 12px 12px 16px; border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box-2);
 }
 .sec-key-value {
   display: flex; flex-wrap: wrap; gap: 4px 12px; min-width: 0; margin: 0; color: var(--k);
@@ -161,7 +161,7 @@
 .sec-device-meta { color: var(--k-2); font-size: 13.5px; font-weight: 500; line-height: 1.4; }
 .sec-device-meta .is-now { color: var(--ok); font-weight: 700; }
 .sec-tag {
-  display: inline-block; flex: none; padding: 1px 8px 2px; border-radius: 3px; background: var(--k); color: var(--on-k);
+  display: inline-block; flex: none; padding: 1px 8px 2px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k);
   font: italic 700 12.5px/1.4 var(--font-h); white-space: nowrap;
 }
 .sec-device .ghost.sm { flex: none; }
@@ -176,7 +176,7 @@
 .sec-visit-time { color: var(--k-2); font: 600 14px/1.4 var(--font-h); font-variant-numeric: tabular-nums; }
 .sec-visit-what { min-width: 0; color: var(--k); font-weight: 500; overflow-wrap: anywhere; }
 .sec-visit-what small { display: block; color: var(--k-2); font-size: 13px; }
-.sec-visit.is-failed { padding-left: 10px; border-left-color: var(--hp-low); border-radius: 0 4px 4px 0; background: var(--bad-wash); }
+.sec-visit.is-failed { padding-left: 10px; border-left-color: var(--hp-low); border-radius: 0 var(--r-tag) var(--r-tag) 0; background: var(--bad-wash); }
 .sec-visit.is-failed .sec-visit-time { color: var(--red-text); }
 .sec-visit.is-failed .sec-visit-what, .sec-visit.is-failed .sec-visit-what small { color: var(--red-text); }
 .sec-visit.is-failed .sec-visit-what b { font-weight: 700; }
@@ -215,7 +215,7 @@
 .sec-ways { display: grid; gap: 8px; min-width: 0; margin: 0; padding: 0; border: 0; }
 .sec-way {
   position: relative; display: grid; gap: 2px; width: 100%; min-width: 0; min-height: 60px; margin: 0; padding: 10px 14px 11px 18px; overflow: hidden;
-  border: 2px solid var(--rule-2); border-radius: 6px; background: none; box-shadow: none; color: var(--k);
+  border: 2px solid var(--rule-2); border-radius: var(--r); background: none; box-shadow: none; color: var(--k);
   font: inherit; text-align: left; cursor: pointer; -webkit-tap-highlight-color: transparent;
 }
 .sec-way::before {

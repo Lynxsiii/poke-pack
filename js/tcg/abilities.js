@@ -131,6 +131,28 @@ const FROM_FOE = "(?:from (?:your opponent's )?attacks|from attacks from your op
 
 /** Newer standing wordings: auras on all or some of your Pokémon, numbers that grow, and walls with terms. */
 const STANDING_MORE = [
+  // Rotom ex's Multi Adapter: two Tools on each Rotom (engine.js toolRoom; the extra ones go when it goes away, overflow).
+  [/^Each of your Pokémon that has "([^"]+)" in its name may have up to (\d+) Pokémon Tool cards attached\. If this Ability goes away, discard Pokémon Tools from those Pokémon until only 1 remains on each\.$/, (m) => ({ toolRoom: { named: m[1], n: Number(m[2]) } })],
+  // Double Type (Carbink, Scovillain ex) and Iron Treads' Dual Core: two types in play (engine.js playedAs).
+  [new RegExp(`^As long as this Pokémon is in play, it is (${TYPE}) and (${TYPE}) type\\.$`), (m) => ({ types: [m[1], m[2]] })],
+  [new RegExp(`^As long as this Pokémon has an? (.+?) attached, it is (${TYPE}) and (${TYPE}) type\\.$`), (m) => ({ types: [m[2], m[3]], when: { toolNamed: m[1] } })],
+  // Cinderace's Explosiveness: it may start face down in the Active Spot (engine.js place).
+  [/^If this Pokémon is in your hand when you are setting up to play, you may put it face down in the Active Spot\.$/, () => ({ setupActive: true })],
+  // Ferrothorn's Startling Drop (engine.js milledBack).
+  [/^During your opponent's turn, if this Pokémon is discarded from your deck by an effect of an attack or Ability from your opponent's Pokémon, or by an effect of your opponent's Item or Supporter cards, discard the top (\d+) cards of your opponent's deck\.$/, (m) => ({ milled: { n: Number(m[1]) } })],
+  // Goodra's Slimy Sliding (engine.js retreat).
+  [/^When your opponent's Active Pokémon retreats, your opponent flips a coin\. If tails, Energy for its Retreat Cost is not discarded, and they don't switch Pokémon\.$/, () => ({ slip: true })],
+  // Patrat's Watchful Eye (engine.js countersStay).
+  [/^Damage counters on each Pokémon \(both yours and your opponent's\) can't be moved to other Pokémon\.$/, () => ({ countersStay: true })],
+  // Huntail's Diver's Catch (engine.js resolveKnockOuts).
+  [new RegExp(`^When 1 of your (${TYPE}) Pokémon is Knocked Out by damage from an attack from your opponent's Pokémon, you may put all Basic \\1 Energy attached to that Pokémon into your hand instead of the discard pile\\.$`), (m) => ({ catchEnergy: { type: m[1] } })],
+  // Milotic's Mentally Calm (engine.js keptInPlay).
+  [/^Your opponent's Pokémon in play and all attached cards can't be put into your opponent's hand\.$/, () => ({ noBounce: true })],
+  // Talonflame ex, Klinklang: from the hand onto the Bench, Evolution card or not (engine.js benchFromHand).
+  [/^Once during your turn, if this Pokémon is in your hand, and if you have any (.+?) in play, you may use this Ability\. Put this Pokémon onto your Bench\.$/, (m) => ({ fromHand: { mine: whatOf(m[1]) } })],
+  [/^Once during your turn, if this Pokémon is in your hand and your opponent has any (.+?) in play, you may put this Pokémon onto your Bench\.$/, (m) => ({ fromHand: { foe: whatOf(m[1]) } })],
+  // Phantump's Spiteful Evolution: a card from the hand evolves it, and damage counters on what it became.
+  [/^Once during your turn, you may use this Ability\. Choose a card in your hand that evolves from this Pokémon and put it onto this Pokémon to evolve it\. If you do, place (\d+) damage counters on the Pokémon you evolved in this way\. You can't use this Ability during your first turn\.$/, (m) => ({ use: { steps: [{ op: "selfEvolve", hurt: Number(m[1]) * 10 }], where: "", often: false, single: false, need: { notFirst: true } } })],
   // Meganium's Wild Growth: each Basic Grass Energy on its owner's Pokémon provides 2 (engine.js unitsOn).
   [new RegExp(`^Each Basic (${TYPE}) Energy attached to all of your Pokémon provides \\1 ?\\1 Energy\\.$`), (m) => ({ growth: m[1] })],
   // Relicanth, Mew ex: attacks of other cards (engine.js attacksOf).
@@ -557,7 +579,7 @@ function readAbility(ability, cardName, named) {
   text = text.replace(/ The effect of (?:.+?) doesn't stack\.$/, () => ((noStack = true), ""));
   const base = { name: ability.name || kind, kind, text: String(ability.text || "").replace(/\s+/g, " ").trim() };
   // Only what toolOf and the Prize count read is kept to one; anything else that says so waits.
-  const stacked = (got) => (!noStack ? got : got && (got.aura || got.foeAura || got.prizes || got.foeEvolve || got.growth) ? { ...got, noStack } : null);
+  const stacked = (got) => (!noStack ? got : got && (got.aura || got.foeAura || got.prizes || got.foeEvolve || got.growth || got.slip) ? { ...got, noStack } : null);
 
   const front = text.match(FRONT_FIRST);
   if (front) {

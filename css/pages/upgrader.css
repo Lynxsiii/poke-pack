@@ -24,9 +24,9 @@
 /* The slot's label: a small slanted ink tag. */
 .ug-label {
   position: relative; isolation: isolate; align-self: center; margin-bottom: 4px; padding: 1px 10px 2px;
-  color: var(--on-k); font: italic 700 13px/1.4 var(--font-h);
+  color: var(--on-k); font: 700 13px/1.4 var(--font-h);
 }
-.ug-label::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 3px; background: var(--k); transform: skewX(var(--skew)); }
+.ug-label::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: var(--r-tag); background: var(--k); transform: skewX(var(--skew)); }
 .ug-slot {
   display: flex; flex-direction: column; align-items: center; align-self: stretch; gap: 5px; min-width: 0;
   padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: center;
@@ -34,7 +34,7 @@
 }
 button.ug-slot { cursor: pointer; }
 button.ug-slot:disabled { cursor: default; }
-button.ug-slot:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 4px; border-radius: 6px; }
+button.ug-slot:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 4px; border-radius: var(--r); }
 .ug-art-wrap {
   position: relative; display: block; width: var(--tile); aspect-ratio: 63 / 88;
   transition: transform 0.55s var(--ease-out), opacity 0.5s ease;
@@ -45,7 +45,7 @@ button.ug-slot:active:not(:disabled) .ug-art-wrap { transform: translateY(2px); 
 /* An empty slot: a dashed place the shape of a card, and what it is for. */
 .ug-empty {
   display: grid; place-content: center; justify-items: center; gap: 8px; width: 100%; height: 100%; padding: 6px;
-  border-radius: 6px; color: var(--k); font: italic 700 14px/1.15 var(--font-h);
+  border-radius: var(--r); color: var(--k); font: italic 700 14px/1.15 var(--font-h);
   transition: border-color 0.12s ease, background-color 0.12s ease;
 }
 .ug-empty .bt-icon { width: 30px; height: 30px; padding: 5px; border-radius: 50%; background: var(--k); color: var(--yel-k); stroke-width: 3; }
@@ -67,15 +67,15 @@ button.ug-slot:hover .ug-empty { border-color: var(--k); background: var(--box);
 .ug-fan-i:nth-child(3) { z-index: 1; transform: translate(11%, 3%) rotate(7deg); }
 .ug-more {
   position: absolute; z-index: 5; right: -6px; bottom: -6px; max-width: calc(100% + 6px); padding: 1px 7px; overflow: hidden;
-  border-radius: 3px; background: var(--k); color: var(--on-k);
-  font: italic 700 13px/1.4 var(--font-h); font-variant-numeric: tabular-nums; white-space: nowrap;
+  border-radius: var(--r-tag); background: var(--k); color: var(--on-k);
+  font: 700 13px/1.4 var(--font-h); font-variant-numeric: tabular-nums; white-space: nowrap;
 }
 .ug-gone {
   position: absolute; z-index: 6; left: 50%; top: 50%; padding: 3px 12px 4px; white-space: nowrap;
   color: var(--on-k); font: italic 800 15px/1.2 var(--font-xc);
   opacity: 0; transform: translate(-50%, -50%) scale(1.4); transition: opacity 0.3s ease 0.1s, transform 0.4s var(--ease-pop) 0.1s;
 }
-.ug-gone::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 4px; background: var(--k); transform: skewX(var(--skew)); }
+.ug-gone::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: var(--r-tag); background: var(--k); transform: skewX(var(--skew)); }
 
 /* The target's picture; a sealed product sits on a card-shaped tile. */
 .ug-pic { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 4.5% / 3.2%; background: var(--well); }
@@ -119,7 +119,7 @@ button.ug-slot:hover .ug-change { color: var(--cy-2); }
 .ug-needle { position: absolute; inset: 0; display: block; transform-origin: 50% 50%; pointer-events: none; will-change: transform; }
 .ug-needle i {
   position: absolute; left: 50%; top: 2%; width: 9%; height: 14%; margin-left: -4.5%;
-  border: 2.5px solid var(--k); border-radius: 3px; background: var(--yel);
+  border: 2.5px solid var(--k); border-radius: var(--r-tag); background: var(--yel);
 }
 .ug-needle::before {
   content: ""; position: absolute; left: 50%; top: -8%; margin-left: -7px;
@@ -149,7 +149,7 @@ button.ug-slot:hover .ug-change { color: var(--cy-2); }
 /* A win: a yellow plate grows under the target, the way a cursor plate grows under the chosen thing. */
 .ug-targetslot .ug-art-wrap { isolation: isolate; }
 .ug-targetslot .ug-art-wrap::before {
-  content: ""; position: absolute; z-index: -1; inset: -7px -9px; border: var(--line-w) solid var(--k); border-radius: 6px;
+  content: ""; position: absolute; z-index: -1; inset: -7px -9px; border: var(--line-w) solid var(--k); border-radius: var(--r);
   background: var(--yel); transform: skewX(var(--skew)) scale(0.4); opacity: 0;
   transition: transform 0.4s var(--ease-pop) 0.08s, opacity 0.2s ease 0.08s;
 }
@@ -180,7 +180,7 @@ button.ug-slot:hover .ug-change { color: var(--cy-2); }
   color: var(--k); font: italic 800 clamp(28px, 8vw, 40px)/1 var(--font-xc); letter-spacing: -0.02em;
 }
 .ug-line > span::before {
-  content: ""; position: absolute; inset: 0; z-index: -1; border: var(--line-w) solid var(--k); border-bottom-width: 7px; border-radius: 6px;
+  content: ""; position: absolute; inset: 0; z-index: -1; border: var(--line-w) solid var(--k); border-bottom-width: 7px; border-radius: var(--r);
   background: var(--yel); transform: skewX(var(--skew));
 }
 .ug-line.is-lost > span { color: var(--on-k); }
@@ -195,7 +195,7 @@ button.ug-slot:hover .ug-change { color: var(--cy-2); }
 .ug-btns .bt-icon { width: 1.1em; height: 1.1em; stroke-width: 2.4; }
 
 /* ---- The feed ------------------------------------------------------------------------ */
-.ug-out { padding: 1px 8px 2px; border-radius: 3px; background: var(--box-2); color: var(--k-2); font: italic 700 13px/1.35 var(--font-h); }
+.ug-out { padding: 1px 8px 2px; border-radius: var(--r-tag); background: var(--box-2); color: var(--k-2); font: 700 13px/1.35 var(--font-h); }
 .ug-out.is-won { background: var(--hp); color: var(--k0); }
 .ug-record { margin: -4px 0 10px; }
 .ug-row .cs-row-line { gap: 3px; }
@@ -252,7 +252,7 @@ body.no-motion .ug-art-wrap, body.no-motion .ug-art-wrap::before, body.no-motion
   background: var(--yel); box-shadow: inset 0 0 0 2px var(--k);
 }
 .cs-art-upgrade .ug-art-card.is-big::after {
-  content: ""; position: absolute; left: 12%; right: 30%; bottom: 18%; height: 7%; border-radius: 2px; background: var(--k);
+  content: ""; position: absolute; left: 12%; right: 30%; bottom: 18%; height: 7%; border-radius: var(--r-tag); background: var(--k);
 }
 .cs-art-upgrade .ug-art-card.is-small { left: 6%; bottom: 7%; height: 57.5%; z-index: 2; transform: rotate(-9deg); }
 .cs-art-upgrade .ug-art-arc { position: absolute; inset: 0; z-index: 3; width: 100%; height: 100%; overflow: visible; color: var(--k); }

@@ -1,3 +1,5 @@
+import { gameSeed, gameRoll, clientSeedOf, fairOf } from './fair.js';
+import { jackpotTicket, jackpotSeat } from '../js/fair.js';
 import { money } from '../js/catalog.js';
 import { BOT_PERSONAS } from '../js/battle-rules.js';
 import { avatarId, avatarStyle } from '../js/cosmetics.js';
@@ -114,8 +116,25 @@ const drawStatement = (env, id, winnerSeat, now, count, sum) =>
       AND (SELECT COUNT(*) FROM jackpot_entries WHERE jackpot_id = ?) = ?
       AND (SELECT COALESCE(SUM(value), 0) FROM jackpot_entries WHERE jackpot_id = ?) = ?`)
     .bind(winnerSeat, now, id, now, id, count, id, sum);
-const drawWith = (env, id, entries, now) =>
-  drawStatement(env, id, weightedWinner(entries), now, entries.length, entries.reduce((s, e) => s + e.value, 0));
+/**
+ * The draw's statements: the pot's own seed (worker/fair.js, hashed since the pot opened) with every seat's client seed
+ * in seat order, one ticket in [0, total cents), and the seed revealed once the draw has landed. `entries` are
+ * [{ seat, value, user_id }] (user_id null for a bot).
+ */
+async function drawWith(env, id, entries, now) {
+  const seats = [...entries].sort((a, b) => a.seat - b.seat);
+  const total = seats.reduce((s, e) => s + e.value, 0);
+  const seeds = [];
+  for (const e of seats) seeds.push(await clientSeedOf(env, e.user_id || null));
+  const fair = await gameRoll(env, 'jackpot', id, seeds);
+  const ticket = jackpotTicket(fair.stream, total);
+  const winnerSeat = jackpotSeat(seats, ticket);
+  return [
+    drawStatement(env, id, winnerSeat, now, seats.length, total),
+    fair.finish({ seats: seats.map((e) => ({ seat: e.seat, value: e.value })), total }, { ticket, winnerSeat },
+      "EXISTS(SELECT 1 FROM jackpots WHERE id = ? AND status = 'done' AND winner_seat = ? AND drawn_at = ?)", [id, winnerSeat, now], now),
+  ];
+}
 
 /** Draw the pot now if it is full (or `early` and it has enough entries). True when this call drew it. */
 async function drawPot(env, id, { early = false, now = Date.now() } = {}) {
@@ -123,7 +142,7 @@ async function drawPot(env, id, { early = false, now = Date.now() } = {}) {
     const { row, entries } = await getPot(env, id);
     if (!row || row.status !== 'open' || row.expires_at <= now) return false;
     if (entries.length < row.max_players && !(early && entries.length >= JACKPOT_RULES.earlyDrawMin)) return false;
-    const done = await drawWith(env, id, entries, now).run();
+    const [done] = await env.DB.batch(await drawWith(env, id, entries, now));
     if (done.meta?.changes) return true; // else the table changed under us: read it again
   }
   return false;
@@ -146,7 +165,7 @@ async function createPot(env, request, helpers, shared, user, body, quick) {
   }
   const { stake, slabs, value, collection } = await shared.buildStake(env, request, helpers, user.id, body.cards, JACKPOT_RULES, 'jackpot', body.slabs);
   const now = Date.now(); const id = crypto.randomUUID();
-  const entries = [{ seat: 0, value }];
+  const entries = [{ seat: 0, value, user_id: user.id }];
   const statements = [
     env.DB.prepare(`INSERT INTO jackpots(id, host_id, request_id, max_players, min_value, created_at, expires_at) VALUES(?, ?, ?, ?, ?, ?, ?)`)
       .bind(id, user.id, requestId, players, value, now, now + JACKPOT_RULES.openHours * 3600000),
@@ -154,8 +173,10 @@ async function createPot(env, request, helpers, shared, user, body, quick) {
   ];
   if (quick) {
     const bots = await botEntries(env, request, helpers, shared, stake, slabs, value, players - 1, []);
-    bots.forEach((bot, i) => { statements.push(entryInsert(env, id, i + 1, null, bot.persona, bot.stake, bot.value, now, bot.slabs)); entries.push({ seat: i + 1, value: bot.value }); });
-    statements.push(drawWith(env, id, entries, now));
+    bots.forEach((bot, i) => { statements.push(entryInsert(env, id, i + 1, null, bot.persona, bot.stake, bot.value, now, bot.slabs)); entries.push({ seat: i + 1, value: bot.value, user_id: null }); });
+    statements.push(...await drawWith(env, id, entries, now));
+  } else {
+    await gameSeed(env, 'jackpot', id); // the pot's seed is fixed (and its hash shown) before anyone joins
   }
   statements.push(await shared.binderStatement(env, helpers, user.id, collection, stake,
     { sql: 'AND EXISTS(SELECT 1 FROM jackpot_entries WHERE jackpot_id = ? AND user_id = ?)', args: [id, user.id] }, slabs));
@@ -199,9 +220,9 @@ async function joinPot(env, request, helpers, shared, user, id, body) {
     const { stake, slabs, value, collection } = built;
     const { min, max } = jackpotWindow(row.min_value);
     if (value < min || value > max) error(`Put up between ${centsToCoins(min)} and ${centsToCoins(max)} coins of cards to join.`);
-    const seat = seats[0]; const all = [...entries, { seat, value }];
+    const seat = seats[0]; const all = [...entries, { seat, value, user_id: user.id }];
     const statements = [entryInsert(env, id, seat, user.id, null, stake, value, now, slabs)];
-    if (all.length >= row.max_players) statements.push(drawWith(env, id, all, now)); // the last seat: settle in the same transaction
+    if (all.length >= row.max_players) statements.push(...await drawWith(env, id, all, now)); // the last seat: settle in the same transaction
     statements.push(await shared.binderStatement(env, helpers, user.id, collection, stake,
       { sql: 'AND EXISTS(SELECT 1 FROM jackpot_entries WHERE jackpot_id = ? AND user_id = ?)', args: [id, user.id] }, slabs));
     try { await env.DB.batch(statements); }
@@ -265,7 +286,7 @@ async function addBots(env, request, helpers, shared, user, id, body) {
     const added = bots.map((bot, i) => ({ seat: seats[i], ...bot }));
     const all = [...entries, ...added];
     const statements = added.map(b => entryInsert(env, id, b.seat, null, b.persona, b.stake, b.value, now, b.slabs));
-    if (all.length >= row.max_players) statements.push(drawWith(env, id, all, now));
+    if (all.length >= row.max_players) statements.push(...await drawWith(env, id, all, now));
     try { await env.DB.batch(statements); }
     catch (err) { if (raceClash(err)) continue; throw err; }
     if (all.length >= row.max_players) await drawPot(env, id, { now });
@@ -289,7 +310,7 @@ export async function handleJackpots(path, method, request, env, helpers, shared
       if (id) {
         const { row, entries } = await getPot(env, id);
         if (!row) error('Jackpot not found.', 404);
-        return helpers.json({ jackpot: viewJackpot(row, entries, now), serverNow: now });
+        return helpers.json({ jackpot: viewJackpot(row, entries, now), fair: await fairOf(env, 'jackpot', row.id), serverNow: now });
       }
       const open = (await env.DB.prepare("SELECT * FROM jackpots WHERE status = 'open' AND expires_at > ? ORDER BY created_at DESC LIMIT 40").bind(now).all()).results || [];
       const done = (await env.DB.prepare("SELECT * FROM jackpots WHERE status = 'done' ORDER BY drawn_at DESC LIMIT 20").all()).results || [];

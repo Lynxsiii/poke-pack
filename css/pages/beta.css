@@ -6,7 +6,7 @@
   margin-top: 16px; padding: 12px 40px 12px 12px; color: var(--k);
   transition: transform 0.16s var(--ease-out), box-shadow 0.16s var(--ease-out);
 }
-.hub-beta-art { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 4px; background: var(--cy-3); }
+.hub-beta-art { display: grid; place-items: center; width: 64px; height: 64px; border-radius: var(--r-tag); background: var(--cy-3); }
 .hub-beta-art svg { width: 46px; height: 46px; }
 .hub-beta-copy { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .hub-beta-copy b { display: flex; align-items: center; gap: 8px; font: italic 800 21px/1.1 var(--font-xc); letter-spacing: -0.02em; }
@@ -30,7 +30,7 @@
 .bz-field > span:first-child { font: 700 14px var(--font-h); color: var(--k-2); }
 .bz-field b { color: var(--k); font-variant-numeric: tabular-nums; }
 .bz-input {
-  width: 100%; min-width: 0; height: 44px; padding: 0 12px; border: var(--line-w) solid var(--k); border-radius: 6px;
+  width: 100%; min-width: 0; height: 44px; padding: 0 12px; border: var(--line-w) solid var(--k); border-radius: var(--r);
   background: var(--box); color: var(--k); font: 700 17px var(--font-h); font-variant-numeric: tabular-nums;
 }
 .bz-input:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 2px; }
@@ -44,7 +44,7 @@
 .bz-status { margin: 0 0 12px; min-height: 1.4em; font-weight: 700; line-height: 1.4; }
 .bz-status.is-good { color: var(--k); }
 .bz-status.is-good::before, .bz-status.is-bad::before {
-  content: ""; display: inline-block; width: 10px; height: 10px; margin-right: 8px; border: 2px solid var(--k); border-radius: 2px; background: var(--hp); vertical-align: 1px;
+  content: ""; display: inline-block; width: 10px; height: 10px; margin-right: 8px; border: 2px solid var(--k); border-radius: var(--r-tag); background: var(--hp); vertical-align: 1px;
 }
 .bz-status.is-bad::before { background: var(--hp-low); }
 .bz-play { display: grid; gap: 16px; }
@@ -80,7 +80,7 @@
 
 /* ---- Tall Grass ------------------------------------------------------------------ */
 /* A framed patch of grass: the payout over it, an HP bar for the next step, the tiles, what comes next. */
-.bz-patch { max-width: 480px; border: var(--line-w) solid var(--k); border-radius: 6px; overflow: hidden; background: var(--box); }
+.bz-patch { max-width: 480px; border: var(--line-w) solid var(--k); border-radius: var(--r); overflow: hidden; background: var(--box); }
 .bz-patch.is-boom { animation: bz-quake 0.45s linear; }
 @keyframes bz-quake { 15% { transform: translate(-5px, 2px) rotate(-0.6deg); } 30% { transform: translate(5px, -2px) rotate(0.6deg); } 45% { transform: translate(-4px, -1px); } 60% { transform: translate(3px, 2px); } 80% { transform: translate(-2px, 0); } }
 .bz-hud { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; padding: 9px 14px 8px; border-bottom: var(--line-w) solid var(--k); }
@@ -100,7 +100,7 @@
 .bz-safe { display: flex; align-items: center; gap: 10px; margin: 0; padding: 6px 14px; border-bottom: var(--line-w) solid var(--k); font: 700 13px var(--font-h); color: var(--k-2); }
 .bz-safe small { font: inherit; flex: 1; white-space: nowrap; }
 .bz-safe small b { color: var(--k); font-size: 15px; font-variant-numeric: tabular-nums; }
-.bz-safe-bar { flex: 0 0 34%; height: 11px; border: 2px solid var(--k0); border-radius: 6px; background: var(--k0); overflow: hidden; }
+.bz-safe-bar { flex: 0 0 34%; height: 11px; border: 2px solid var(--k0); border-radius: var(--r); background: var(--k0); overflow: hidden; }
 .bz-safe-bar i { display: block; height: 100%; background: var(--hp); transform-origin: 0 50%; transition: transform 0.35s var(--ease-out); }
 .bz-safe.is-mid .bz-safe-bar i { background: var(--hp-mid); }
 .bz-safe.is-low .bz-safe-bar i { background: var(--hp-low); }
@@ -112,7 +112,7 @@
   background-color: var(--soil); background-image: var(--dots); background-size: 14px 14px;
 }
 .bz-tile {
-  position: relative; aspect-ratio: 1; border: var(--line-w) solid var(--k0); border-radius: 6px; padding: 0; overflow: hidden;
+  position: relative; aspect-ratio: 1; border: var(--line-w) solid var(--k0); border-radius: var(--r); padding: 0; overflow: hidden;
   background: var(--grass); color: var(--k0); cursor: pointer;
   transition: transform 0.14s var(--ease-out); -webkit-tap-highlight-color: transparent;
 }
@@ -171,96 +171,14 @@
 .bz-ladder { display: flex; align-items: center; gap: 4px 6px; overflow: hidden; white-space: nowrap; margin: 0; padding: 7px 14px 8px; border-top: var(--line-w) solid var(--k); font: 700 15px var(--font-h); font-variant-numeric: tabular-nums; color: var(--k-2); }
 .bz-ladder small { font: inherit; font-size: 13px; margin-right: 6px; }
 .bz-ladder span + span::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 8px; border-top: 2px solid currentColor; border-right: 2px solid currentColor; transform: rotate(45deg) translateY(-1px); opacity: 0.6; }
-.bz-ladder .is-next { color: var(--k0); font-size: 17px; padding: 3px 9px; border: 2px solid var(--k0); border-radius: 4px; background: var(--yel); transform: skewX(var(--skew)); }
+.bz-ladder .is-next { color: var(--k0); font-size: 17px; padding: 3px 9px; border: 2px solid var(--k0); border-radius: var(--r-tag); background: var(--yel); transform: skewX(var(--skew)); }
 
-/* ---- Rocket ------------------------------------------------------------------------- */
-/* A sky you fly up through: a field and a pad, clouds, then stars. Everything in it only moves by transform. */
-.bz-sky {
-  --day: color-mix(in srgb, var(--cy) 42%, #fff); --night: color-mix(in srgb, var(--k0) 84%, var(--cy));
-  position: relative; height: clamp(240px, 38vh, 380px); overflow: hidden; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--day);
-}
-.bz-scene { position: absolute; inset: 0; }
-.bz-sky.is-popped .bz-scene { animation: bz-quake 0.45s linear; }
-.bz-stars, .bz-clouds, .bz-ground { position: absolute; left: 0; right: 0; will-change: transform; }
-.bz-sky.is-betting :is(.bz-stars, .bz-clouds, .bz-ground) { transition: transform 0.7s var(--ease-out); }
-.bz-stars { top: -150%; height: 150%; background: linear-gradient(to bottom, var(--night) 55%, transparent); }
-.bz-stars i { position: absolute; width: 11px; height: 11px; animation: bz-twinkle 1.6s ease-in-out infinite alternate; animation-delay: calc(var(--i) * -0.37s); }
-.bz-stars i:nth-child(3n) { width: 7px; height: 7px; }
-.bz-stars svg { display: block; width: 100%; fill: #fff; }
-@keyframes bz-twinkle { from { opacity: 0.35; transform: scale(0.8); } to { opacity: 1; transform: none; } }
-.bz-clouds { top: 0; bottom: 0; }
-.bz-clouds i { position: absolute; animation: bz-drift 7s ease-in-out infinite alternate; animation-delay: calc(var(--i) * -1.7s); }
-.bz-clouds svg { display: block; width: 100%; overflow: visible; }
-.bz-clouds path { fill: #fff; stroke: var(--k0); stroke-width: 2.5; stroke-linejoin: round; }
-.bz-clouds i:nth-child(odd) { opacity: 0.8; }
-@keyframes bz-drift { from { transform: translateX(-8px); } to { transform: translateX(10px); } }
-.bz-ground { bottom: 0; height: 24%; }
-.bz-ground svg { display: block; width: 100%; height: 100%; overflow: visible; }
-.bz-hill { fill: var(--hp); stroke: var(--k0); stroke-width: 2.5; }
-.bz-arc { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.bz-arc path { fill: none; stroke: var(--k0); stroke-width: 2; stroke-dasharray: 2 7; stroke-linecap: round; opacity: 0.3; }
-.bz-trail i { position: absolute; width: 8px; height: 8px; margin: -4px 0 0 -4px; border: 2px solid var(--k0); border-radius: 50%; background: var(--yel); opacity: 0; transform: scale(0.3); transition: opacity 0.2s, transform 0.3s var(--ease-pop); }
-.bz-trail i.on { opacity: 1; transform: none; }
-.bz-mark { position: absolute; z-index: 1; display: grid; justify-items: center; transform: translate(-50%, 16px); padding: 2px 6px; border: 2px solid var(--k0); border-radius: 4px; background: #fff; color: var(--k0); font: 700 12.5px/1 var(--font-h); font-variant-numeric: tabular-nums; transition: transform 0.25s var(--ease-pop); }
-.bz-mark i { position: absolute; top: -22px; width: 10px; height: 10px; border: 2px solid var(--k0); border-radius: 50%; background: #fff; }
-.bz-mark.on { background: var(--yel); transform: translate(-50%, 16px) scale(1.12); }
-.bz-mark.on i { background: var(--yel); }
-/* Where players got out. */
-.bz-flag { position: absolute; z-index: 1; width: 2px; height: 22px; margin: -22px 0 0 -1px; background: var(--k0); animation: bz-plant 0.3s var(--ease-pop); transform-origin: 50% 100%; }
-.bz-flag i { position: absolute; left: 2px; top: 0; border: 6px solid transparent; border-left: 11px solid var(--k0); border-right: 0; }
-.bz-flag i::after { content: ""; position: absolute; left: -9px; top: -3.5px; border: 3.5px solid transparent; border-left: 6px solid #fff; border-right: 0; }
-.bz-flag.is-mine i::after { border-left-color: var(--hp); }
-.bz-flag b { position: absolute; left: 50%; bottom: 100%; transform: translate(-50%, -3px); padding: 2px 6px; border: 2px solid var(--k0); border-radius: 4px; background: var(--hp); color: var(--k0); font: 700 12px/1 var(--font-h); white-space: nowrap; font-variant-numeric: tabular-nums; }
-@keyframes bz-plant { from { transform: scaleY(0); } }
-.bz-ship, .bz-burst { position: absolute; left: 0; top: 0; z-index: 2; will-change: transform; }
-.bz-ship { width: 134px; transform-origin: 92% 50%; filter: drop-shadow(var(--drop-sm)); transition: opacity 0.2s; }
-.bz-ship svg, .bz-burst svg { display: block; width: 100%; overflow: visible; }
-/* Each bead of the body bobs a beat after the one ahead of it, so a wave runs from head to tail. */
-.bz-seg { animation: bz-snake 0.9s ease-in-out infinite alternate; animation-delay: calc(var(--s) * -0.11s); }
-.bz-sky.is-flying .bz-seg { animation-duration: 0.36s; animation-delay: calc(var(--s) * -0.05s); }
-.bz-sky.is-max .bz-seg { animation-duration: 0.2s; }
-@keyframes bz-snake { from { transform: translateY(-3.5px); } to { transform: translateY(3.5px); } }
-.bz-head { animation-name: bz-nod; }
-@keyframes bz-nod { from { transform: translateY(-1.5px); } to { transform: translateY(1.5px); } }
-/* The round is over: Rayquaza is off along its heading and gone. */
-.bz-sky.is-popped .bz-ship svg { animation: bz-dash 0.45s ease-in forwards; }
-@keyframes bz-dash { 60% { opacity: 1; } to { transform: translateX(460px) scaleX(1.3); opacity: 0; } }
-.bz-burst { width: 84px; opacity: 0; }
-.bz-sky.is-popped .bz-burst { opacity: 1; }
-.bz-sky.is-popped .bz-burst svg { animation: bz-burst 0.6s var(--ease-out) forwards; }
-@keyframes bz-burst { from { transform: scale(0.2) rotate(-30deg); opacity: 1; } 50% { opacity: 1; } to { transform: scale(1.1); opacity: 0; } }
-.bz-burst i { position: absolute; left: 50%; top: 50%; width: 10px; height: 10px; margin: -5px; border: 2px solid var(--k0); background: #fff; opacity: 0; }
-.bz-sky.is-popped .bz-burst i { animation: bz-fly 0.8s var(--ease-out); }
-.bz-burst i:nth-of-type(1) { --x: -66px; --y: -40px; --r: -260deg; }
-.bz-burst i:nth-of-type(2) { --x: 60px; --y: -52px; --r: 220deg; background: var(--hp-low); }
-.bz-burst i:nth-of-type(3) { --x: -52px; --y: 46px; --r: -180deg; background: var(--cy); }
-.bz-burst i:nth-of-type(4) { --x: 70px; --y: 30px; --r: 300deg; }
-.bz-burst i:nth-of-type(5) { --x: 4px; --y: 72px; --r: 140deg; background: var(--hp-low); }
-/* The figure: white with an ink outline, so it reads over day sky and night sky alike. */
-.bz-mult { position: absolute; z-index: 3; top: 12px; left: 14px; margin: 0; display: grid; justify-items: start; gap: 5px; }
-.bz-mult small { padding: 3px 8px; border-radius: 4px; background: var(--k0); color: #fff; font: 700 13px/1.2 var(--font-h); }
-.bz-mult b { font: italic 800 clamp(58px, 18vw, 80px)/0.95 var(--font-xc); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; color: #fff; -webkit-text-stroke: 7px var(--k0); paint-order: stroke fill; padding: 0 6px; transform-origin: 0 60%; }
-.bz-mult b.is-bump { animation: bz-bump 0.4s var(--ease-pop); }
-.bz-sky.is-flying .bz-mult b { color: var(--yel); }
-.bz-sky.is-popped .bz-mult b { color: var(--hp-low); animation: bz-bump 0.4s var(--ease-pop); }
-.bz-sky.is-popped .bz-mult small { background: var(--hp-low); }
-/* The countdown to launch: an HP bar that drains. */
-.bz-fuse { position: absolute; z-index: 3; left: 0; right: 0; bottom: 0; height: 9px; border-top: 2px solid var(--k0); background: var(--k0); }
-.bz-fuse i { display: block; height: 100%; background: var(--hp); transform-origin: 0 50%; transform: scaleX(0); }
-.bz-sky:not(.is-betting) .bz-fuse { opacity: 0; }
-.bz-hist { display: flex; overflow: hidden; white-space: nowrap; align-items: baseline; gap: 4px 12px; margin: 10px 0 0; font: 700 15px var(--font-h); color: var(--k-2); font-variant-numeric: tabular-nums; }
-.bz-hist small { font: inherit; font-size: 13px; }
-.bz-hist .is-hi { color: var(--k); }
-.bz-autos { display: flex; gap: 4px; flex-wrap: wrap; margin-top: -4px; }
-.bz-inline { grid-template-columns: minmax(0, 1fr) 120px; align-items: center; }
-.bz-inline .bz-input { height: 40px; }
 /* Tall Grass: how many Voltorb, as quick picks with a step either side. */
 .bz-volts { display: flex; align-items: center; justify-content: space-between; gap: 2px; padding: 4px 10px 4px 14px; border-bottom: var(--line-w) solid var(--k); }
 .bz-grass .bz-field:has(.bz-stake) { grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 12px; }
 .bz-volts .bz-safe-volt { min-width: 50px; font: 700 17px var(--font-h); }
 .bz-volts .rt-word { min-height: 40px; min-width: 34px; padding: 0 6px; font-size: 16px; justify-content: center; }
 .bz-volts .ghost { flex: 0 0 38px; min-width: 0; padding: 0; min-height: 40px; font-size: 20px; }
-.bz-autos .rt-word { min-height: 38px; padding: 0 12px; font-size: 15px; }
 
 /* ---- Mystery Tins ---------------------------------------------------------------- */
 /* The chase cards are the show (js/beta.js tinsPage). A tin's paint (--paint) is art: one slanted band and the tin itself. */
@@ -342,7 +260,7 @@
 /* The price, stuck on the tin like a shop sticker. A high roller's is a gold plate. */
 .bz-tin-tag {
   position: absolute; z-index: 3; left: 50%; bottom: 7cqw; transform: translateX(-50%) rotate(-3deg);
-  display: inline-flex; align-items: center; padding: 1px 9px 2px 6px; border: 2px solid var(--k0); border-radius: 4px;
+  display: inline-flex; align-items: center; padding: 1px 9px 2px 6px; border: 2px solid var(--k0); border-radius: var(--r-tag);
   background: var(--w0); color: var(--k0); font: 700 16px/1.3 var(--font-h); font-variant-numeric: tabular-nums; white-space: nowrap;
 }
 .bz-tin-tag :is(.coin-tag, .cs-coin) { color: inherit; }
@@ -352,7 +270,7 @@
 /* A slab's grade, on a plain picture of its card (the reel, the list of everything inside). */
 .bz-cell-pic { position: relative; display: block; }
 .bz-grade {
-  position: absolute; top: 4%; right: 5%; min-width: 1.75em; padding: 0 0.3em; border: 2px solid var(--k0); border-radius: 4px;
+  position: absolute; top: 4%; right: 5%; min-width: 1.75em; padding: 0 0.3em; border: 2px solid var(--k0); border-radius: var(--r-tag);
   background: var(--w0); color: var(--k0); font: 800 13px/1.45 var(--font-h); font-style: normal; text-align: center;
 }
 .bz-grade[data-g="10"] { background: #f0bf2c; }
@@ -372,7 +290,7 @@
 .bz-view-head { display: grid; gap: 4px; margin: 0 0 14px; }
 .bz-view-back { justify-self: start; padding: 6px 0; }
 .bz-view-name { margin: 0; font: italic 800 30px/1.05 var(--font-xc); letter-spacing: -0.02em; }
-.bz-view-show { border: var(--line-w) solid var(--k); border-radius: 6px; }
+.bz-view-show { border: var(--line-w) solid var(--k); border-radius: var(--r); }
 .bz-chase {
   display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
   padding: 22px max(18px, calc(50% - min(104px, 27vw))) 16px; -webkit-overflow-scrolling: touch;
@@ -434,7 +352,7 @@
 /* How many to open: slanted words in a row above the key. */
 .bz-count { display: flex; align-items: center; justify-content: center; gap: 6px; font: 700 14px var(--font-h); color: var(--k-2); }
 .bz-count .rt-word { min-width: 40px; min-height: 40px; padding: 0 10px; font-size: 17px; }
-.bz-reveal-plate { display: grid; justify-items: center; gap: 2px; padding: 6px 18px 7px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); text-align: center; animation: bz-rise 0.3s var(--ease-out) backwards; }
+.bz-reveal-plate { display: grid; justify-items: center; gap: 2px; padding: 6px 18px 7px; border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); text-align: center; animation: bz-rise 0.3s var(--ease-out) backwards; }
 .bz-reveal-plate b { font: italic 800 23px/1.1 var(--font-xc); letter-spacing: -0.02em; }
 .bz-reveal-plate span { color: var(--k-2); font-size: 13px; font-weight: 700; }
 .bz-reveal-plate.is-hit { background: var(--yel); border-color: var(--k0); }

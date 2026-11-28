@@ -24,6 +24,7 @@
  *    last chunk flips the order to 'done'. A pure "keep sealed" checkout has no
  *    phase 2.
  */
+import { takeRoll } from "./fair.js";
 import { money } from "../js/catalog.js";
 import { ORDER_LIMITS, cartEligible, lineCents, normalizeLines } from "../js/orders-rules.js";
 import { ensureGearSchema, prepareGrant } from "./gear.js";
@@ -224,7 +225,11 @@ async function planOpen(env, request, userId, openLines, deps, at) {
   const rolled = [];
   for (const line of openLines) {
     for (let i = 0; i < line.qty; i += 1) {
-      rolled.push(await rollSealedProduct(env, request, line.setId, line.productId, deps, line.resolved));
+      // Each copy takes one nonce of the player's seeds (worker/fair.js); the roll is logged as it is drawn.
+      const fair = await takeRoll(env, userId);
+      const box = await rollSealedProduct(env, request, line.setId, line.productId, deps, line.resolved, fair.stream.unit);
+      await fair.log("packs", null, { setId: line.setId, product: line.productId }, { draws: fair.stream.used(), packs: box.packs.length }, at).run();
+      rolled.push(box);
     }
   }
 
