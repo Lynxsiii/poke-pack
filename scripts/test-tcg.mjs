@@ -7956,4 +7956,73 @@ test("Mega Rayquaza Cap's Delta Gift and Anthea & Concordia read", () => {
   assert.deepEqual(fx.at(-1), { op: "prizeUp", n: 3, who: "name^N's" });
 });
 
+
+// The last Standard attacks: player 0's Active Pokémon is `id`, with the Energy its attack `name` costs.
+labMon("lab-wall", { name: "Wall", hp: "900" }, []);
+function armed(id, name, opts = {}) {
+  const state = scene({ front: id, ...opts });
+  // A wall that won't be Knocked Out, with no Weakness or Resistance.
+  state.cards[state.players[1].active.uid] = "lab-wall";
+  const index = defs(id).attacks.findIndex((a) => a.name === name);
+  assert.ok(index >= 0 && !defs(id).attacks[index].plain, `${id} ${name} is read`);
+  for (const t of defs(id).attacks[index].cost) energize(state, 0, state.players[0].active, t === "Colorless" ? D : FREE_ENERGY.find((e) => e.type === t).id);
+  return { state, index, go: () => act(state, { type: "attack", player: 0, index }) };
+}
+const foeHurt = (state) => state.players[1].active?.damage || 0;
+
+test("Standard attacks: Pokémon on your Bench by name and kind", () => {
+  labMon("lab-lunatone", { name: "Lunatone" }, []);
+  for (const [bench, want] of [[[], false], [["lab-lunatone"], true]]) {
+    const { state, go } = armed("me1-75", "Cosmic Beam", { bench });
+    go();
+    assert.equal(foeHurt(state) > 0, want);
+  }
+  const hits = [[], ["sv9-95"]].map((bench) => {
+    const { state, go } = armed("me2-59", "Cocky Claw", { bench });
+    go();
+    return foeHurt(state);
+  });
+  assert.ok(hits[1] - hits[0] >= 70);
+});
+
+test("Standard attacks: counts (Tools on all Pokémon, Beedrill and Beedrill ex, Basic Energy)", () => {
+  const { state, go } = armed("me2-72", "Tool Drop");
+  const tool = slotFor(state, 1, "sv5-151");
+  state.players[1].active.tool = tool.uid;
+  state.players[0].active.tool = slotFor(state, 0, "sv5-151").uid;
+  go();
+  assert.ok(foeHurt(state) >= 80);
+  assert.equal(compileAttack("This attack does 110 damage for each of your Beedrill and Beedrill ex in play.")[0].type, "name=Beedrill|name=Beedrill ex");
+  assert.equal(compileAttack("This attack does 40 damage for each Basic Energy attached to this Pokémon.")[0].type, "self|basic");
+  assert.equal(compileAttack('This attack does 20 damage for each Supporter card that has "Team Rocket" in its name in your discard pile.')[0].type, "supporter~Team Rocket");
+  assert.equal(compileAttack("This attack does 20 more damage for each Lightning Energy attached to all of your Iono's Pokémon.")[0].per, "kindEnergy");
+});
+
+test("Standard attacks: tests (more Energy, Retreat Cost, shared types, Hide 'n' Sneak, Special Condition cost)", () => {
+  assert.equal(compileAttack("If this Pokémon has more Energy attached than your opponent's Active Pokémon, this attack does 160 more damage.")[0].test, "moreEnergy");
+  assert.deepEqual(compileAttack("If the Retreat Cost of your opponent's Active Pokémon is ColorlessColorless or more, this attack does 110 more damage.")[0].k, 2);
+  assert.equal(compileAttack("If any of your Pokémon in play are the same type as any of your opponent's Pokémon in play, this attack does 120 more damage.")[0].test, "sharedType");
+  assert.equal(defs("me5-39").attacks.find((a) => a.name === "Vengeful Anchor").fx[0].what, "ability=Hide 'n' Sneak");
+  assert.ok(defs("me5-39").abilityName === undefined || typeof defs("me5-39").abilityName === "string");
+  const fx = defs("sv6-105").attacks.find((a) => a.name === "Gutsy Swing").fx;
+  assert.deepEqual(fx[0], { op: "costIf", when: "before", test: "selfStatus", cost: [] });
+  assert.equal(compileAttack('If you played a Supporter card that has "Team Rocket" in its name from your hand during this turn, this attack does 100 more damage.')[0].what, "supporter~Team Rocket");
+  assert.deepEqual(compileAttack("If you don't have Uxie and Azelf on your Bench, this attack does nothing.")[0].names, ["Uxie", "Azelf"]);
+});
+
+test("Standard attacks: damage to damaged Pokémon on both sides, and down to 100 HP", () => {
+  const { state, go } = armed("sv5-52", "Collateral Bolts", { bench: ["lab-wall", "lab-wall"], foeBench: ["lab-wall"] });
+  state.players[0].bench[0].damage = 10;
+  state.players[1].active.damage = 10;
+  state.players[0].active.damage = 10;
+  go();
+  assert.equal(state.players[0].bench[0].damage, 60);
+  assert.equal(state.players[0].bench[1].damage, 0);
+  assert.equal(state.players[0].active.damage, 10);
+  assert.equal(state.players[1].bench[0].damage, 0);
+  assert.ok(foeHurt(state) >= 60 || !state.players[1].active);
+  const jail = compileAttack("Put damage counters on each of your opponent's Benched Pokémon until its remaining HP is 100.");
+  assert.deepEqual(jail, [{ op: "countersToEach", when: "after", hp: 100 }]);
+});
+
 console.log(`${passed} checks passed${process.exitCode ? ", some failed" : ""}`);

@@ -336,7 +336,7 @@ function defineRules(card, row, text, lines, print) {
     retreat: Number(row?.[2]) || 0,
     prizes: prizesFor(card, row),
     box: boxOf(card),
-    ...(printed.length ? { abilityKind: printed[0].type || "Ability" } : {}),
+    ...(printed.length ? { abilityKind: printed[0].type || "Ability", abilityName: printed[0].name } : {}),
     // The Baby Pokémon rule (attacking it takes a coin flip), and Team Plasma for the cards that ask.
     ...(subs.includes("Baby") ? { baby: true } : {}),
     ...(subs.includes("Team Plasma") ? { plasma: true } : {}),
