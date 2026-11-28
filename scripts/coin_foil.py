@@ -19,8 +19,24 @@ By material (what the real coin is):
            and any bright metallic accent reflects, the coloured enamel and the
            black field stay flat (they only get the plastic gloss)
 
+Every coin also gets a `look`: what its surface does to light. The site lights
+each look its own way (css/casino-coin.css `.cf-look-*`); the photo keeps its own
+colours, and a spectrum is only laid where the real coin throws one.
+
+  struck   embossed metal, no holo: a mirror band over the relief
+  mirror   smooth mirror foil in the coin's colour: a bright band, no rainbow
+  rainbow  rainbow holofoil / iridescent: the band plus a broad pastel spectrum
+  sheen    sheen foil: the band and a faint spectrum
+  ice      cracked ice: shards that flash, a little spectrum
+  glitter  glitter, pixel and sparkle foil: flecks that twinkle under the light
+  pearl    marbled, frosted or pearlescent: a soft glow
+  gloss    plain glossy plastic: varnish only
+
+The look is read from the coin's blurb (look_of) and decides the map mode:
+struck = metal, gloss and pearl = plastic, the foils = foil.
+
 Per coin overrides in scripts/gear/coin-foil.json:
-  { "<id>": { "mode": "metal|foil|plastic|off", "gain": 1.0, "floor": 0.0, "mv": 1 } }
+  { "<id>": { "look": "...", "mode": "metal|foil|plastic|off", "gain": 1.0, "floor": 0.0, "mv": 1 } }
 
   python3 scripts/coin_foil.py                  # every coin
   python3 scripts/coin_foil.py <id> [<id> ...]  # some
@@ -112,16 +128,57 @@ def map_path(cid: str, coin: dict, spec: dict) -> Path:
     return OUT / f"{cid}-m{v * 10 + mv}.webp"
 
 
-def finish_of(coin: dict, spec: dict) -> str:
+def foil_row(coin: dict, spec: dict, path: Path) -> dict:
+    return {"finish": finish_of(coin, spec), "look": look_of(coin, spec), "map": path.relative_to(ROOT).as_posix()}
+
+
+LOOKS = ("struck", "mirror", "rainbow", "sheen", "ice", "glitter", "pearl", "gloss")
+LOOK_MODE = {"struck": "metal", "gloss": "plastic", "pearl": "plastic"}
+
+
+def look_of(coin: dict, spec: dict) -> str:
+    """What the coin's surface does to light, from its blurb (or the override)."""
     conf = spec.get(coin["id"], {})
-    return conf.get("mode") or {"metal": "metal", "foil": "foil"}.get(coin.get("material"), "plastic")
+    if conf.get("look"):
+        return conf["look"]
+    t = (coin.get("blurb") or "").lower().replace("-", " ")
+    if "cracked ice" in t:
+        return "ice"
+    if any(k in t for k in ("glitter", "pixel", "sparkle", "confetti")):
+        return "glitter"
+    if any(k in t for k in ("marbled", "pearlescent", "frosted")):
+        return "pearl"
+    if "sheen foil" in t:
+        return "sheen"
+    if any(k in t for k in ("rainbow", "iridescent")):
+        return "rainbow"
+    if "mirror" in t:
+        return "mirror"
+    if "holo" in t:
+        return "rainbow"
+    if coin.get("material") == "foil":
+        return "mirror"
+    if coin.get("material") == "plastic":
+        return "gloss"
+    return "struck"
+
+
+def mode_of(coin: dict, spec: dict) -> str:
+    """How the map is drawn: metal | foil | plastic | off."""
+    conf = spec.get(coin["id"], {})
+    return conf.get("mode") or LOOK_MODE.get(look_of(coin, spec), "foil")
+
+
+def finish_of(coin: dict, spec: dict) -> str:
+    """What the coin is made of (its rim and edge): metal | foil | plastic."""
+    return {"metal": "metal", "foil": "foil"}.get(coin.get("material"), "plastic")
 
 
 def render(coin: dict, spec: dict):
     art = Image.open(ROOT / coin["front"]).convert("RGBA")
     w, h = art.size
     conf = spec.get(coin["id"], {})
-    mode = finish_of(coin, spec)
+    mode = mode_of(coin, spec)
     gain = float(conf.get("gain", 1.0))
     floor = float(conf.get("floor", 0.0))
     out = np.zeros((h, w), dtype=np.float32)
@@ -170,7 +227,7 @@ def main() -> int:
                     print(f"NOTE {cid}: {rel} exists with different pixels; bump mv in {SPEC.name}", file=sys.stderr)
             else:
                 img.save(path, "WEBP", quality=88, method=6)
-        row = {"finish": mode, "map": rel}
+        row = foil_row(coin, spec, path)
         if coin.get("foil") != row:
             coin["foil"] = row
             changed = True
