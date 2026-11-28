@@ -19,7 +19,7 @@
  *        shielded (the target takes no effects this turn) }
  */
 
-import { ACTIVE, abilityOn, hitBack, typedDef, noteShed, shieldOn, sideHit, addCondition, addMark, askChoose, askPick, benchSafe, canPay, conditionsOn, damageAfterTyping, defOf, devolveSlot, energyAlike, energyToDeck, energyFits, energyMod, energyOf, flip, healMore, healRoom, heldOn, hpLeft, inPlay, markOn, maxHp, other, rand, retreatCost, shedEnergy, shuffle, slotAt, strike, struck, switchActive, toLost, takeTool, takeTools, toolGone, toolsIn, unpaid, warded, win } from "./engine.js";
+import { ACTIVE, abilityOn, benchMax, hitBack, typedDef, noteShed, shieldOn, sideHit, addCondition, addMark, askChoose, askPick, benchSafe, canPay, conditionsOn, damageAfterTyping, defOf, devolveSlot, energyAlike, energyToDeck, energyFits, energyMod, energyOf, flip, healMore, healRoom, heldOn, hpLeft, inPlay, markOn, maxHp, other, rand, retreatCost, shedEnergy, shuffle, slotAt, strike, struck, switchActive, toLost, takeTool, takeTools, toolGone, toolsIn, unpaid, warded, win } from "./engine.js";
 import { T_OPS, compileTrainer, fits, runTrainer, trainerReady, whatOf } from "./trainers.js";
 
 const WORDS = { a: 1, an: 1, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6 };
@@ -253,7 +253,7 @@ const TESTS = {
   discardAtLeast: (ctx, { k, what }) => sideOf(ctx, true).discard.filter((uid) => fits(defOf(ctx.state, uid, ctx.defs), what)).length >= k,
   foeNoRetreat: (ctx) => Boolean(ctx.target) && retreatCost(ctx.state, ctx.target, ctx.defs) === 0,
   foeHasSpecial: (ctx) => Boolean(ctx.target) && ctx.target.energy.some((uid) => !defOf(ctx.state, uid, ctx.defs).basic),
-  ownBenchFull: (ctx) => sideOf(ctx, true).bench.length >= ctx.state.rules.bench,
+  ownBenchFull: (ctx) => sideOf(ctx, true).bench.length >= benchMax(ctx.state, ctx.player),
   bothPrizesAtMost: (ctx, { k }) => sideOf(ctx, true).prizes.length + sideOf(ctx).prizes.length <= k,
   prizesIn: (ctx, { ks, foe = false }) => ks.includes(sideOf(ctx, !foe).prizes.length),
   // When an attack may be used at all (OPS.onlyIf).

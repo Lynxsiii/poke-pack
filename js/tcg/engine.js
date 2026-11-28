@@ -812,6 +812,18 @@ function healLocked(state, slot) {
   return inPlay(state, other(owner)).some(([rival]) => abilityOn(state, rival, liveDefs)?.noHealFoe) && !warded(state, slot, { player: other(owner), src: "ability" }, liveDefs);
 }
 
+/**
+ * How many Pokémon this player may have on their Bench: 5, or 8 with Area Zero Underdepths in play
+ * while they have a Tera Pokémon in play ("Each player who has any Tera Pokémon in play can have up to 8").
+ */
+export function benchMax(state, p) {
+  const base = state.rules.bench;
+  if (!liveDefs || !state.stadium) return base;
+  const more = defOf(state, state.stadium.uid, liveDefs)?.stadium?.benchTo;
+  if (!more) return base;
+  return inPlay(state, p).some(([slot]) => defOf(state, slot.uid, liveDefs)?.tera) ? Math.max(base, more.n) : base;
+}
+
 /** Legendary Trench: "Whenever a Pokémon (yours or your opponent's) is healed, double the amount of damage healed." */
 export function healMore(state, n) {
   const times = liveDefs && state.stadium ? defOf(state, state.stadium.uid, liveDefs)?.stadium?.healTimes || 1 : 1;
@@ -1923,7 +1935,7 @@ const HANDLERS = {
     const side = state.players[player];
     if (!side.hand.includes(uid)) fail("That card isn't in your hand.");
     if (!isBasic(state, uid, defs)) fail("Only a Basic Pokémon can go straight to the Bench.");
-    if (side.bench.length >= state.rules.bench) fail("Your Bench is full.");
+    if (side.bench.length >= benchMax(state, player)) fail("Your Bench is full.");
     if (handLock(state, player, defOf(state, uid, defs), defs)) fail(handLock(state, player, defOf(state, uid, defs), defs));
     takeFromHand(state, player, uid);
     const slot = newSlot(state, uid);
@@ -1970,7 +1982,10 @@ const HANDLERS = {
     }
     if (def.sub === "stadium") {
       // It stays in play for both players; the one it replaces goes to its owner's discard pile.
-      if (state.stadium) state.players[state.stadium.owner].discard.push(state.stadium.uid);
+      if (state.stadium) {
+        state.players[state.stadium.owner].discard.push(state.stadium.uid);
+        state.trimFirst = state.stadium.owner;
+      }
       state.stadium = { uid, owner: player };
       side.stadiumPlayed = true;
       events.push({ t: "stadium", p: player, uid });
@@ -2316,6 +2331,7 @@ const HANDLERS = {
         if (state.stadium?.uid === uid) {
           state.players[state.stadium.owner].discard.push(uid);
           events.push({ t: "stadium-gone", p: state.stadium.owner, uid });
+          state.trimFirst = state.stadium.owner;
           state.stadium = null;
           continue;
         }
@@ -2454,7 +2470,7 @@ const HANDLERS = {
       if (rest.length) events.push({ t: "shuffle-hand", p: owner });
     } else if (op === "toActive") {
       // Lt. Surge: a Basic Pokémon from the hand becomes the Active Pokémon, the old one goes to the Bench.
-      if (picked.length && side.active && side.bench.length < state.rules.bench) {
+      if (picked.length && side.active && side.bench.length < benchMax(state, owner)) {
         clearConditions(side.active);
         side.bench.push(side.active);
         side.active = newSlot(state, picked[0]);
@@ -2674,7 +2690,7 @@ export function trainerBlock(state, player, def, defs) {
     return "";
   }
   // Played as a Basic Pokémon: it needs a place on the Bench.
-  if (def.fossil) return side.bench.length >= state.rules.bench ? "Your Bench is full." : "";
+  if (def.fossil) return side.bench.length >= benchMax(state, player) ? "Your Bench is full." : "";
   if (!trainerReady(def.fx, { state, defs, events: [], player, src: "trainer" })) return `${def.name} would do nothing right now.`;
   return "";
 }
@@ -2854,6 +2870,15 @@ function applyPick(state, waiting, spot, defs, events) {
   const p = waiting.side;
   const side = state.players[p];
   const { effect } = waiting;
+  if (effect.op === "trimBench") {
+    // Area Zero Underdepths: one Benched Pokémon over the Bench's size, discarded with all attached (not Knocked Out).
+    const slot = side.bench[spot];
+    discardSlot(state, p, slot, defs);
+    side.bench.splice(spot, 1);
+    events.push({ t: "bounce", p, spot, uid: slot.uid, discard: true });
+    waiting.left = 0;
+    return;
+  }
   if (effect.op === "breedMark") {
     // Pokémon Breeder Fields: 1 or 2 Pokémon, the second one if the player likes.
     (state.breeder ||= []).push(slotAt(state, p, spot).uid);
@@ -3412,10 +3437,37 @@ export function apply(state, action, defs) {
   if (state.trick && !state.trick.offered && !state.trick.flips && waiting) state.trick.log.push(action);
   handler(state, action, defs, events);
   sweepConditions(state, defs, events);
+  overflow(state, defs, events);
   toLostZone(state, defs);
   settle(state, defs, events);
   toLostZone(state, defs);
   return events;
+}
+
+/**
+ * More in play than the rules now allow, once nothing else is waiting: a Pokémon with more Tools than it may hold
+ * (Multi Adapter went away: "discard Pokémon Tools from those Pokémon until only 1 remains on each"), a Bench
+ * over its size (Area Zero Underdepths left play, or its player has no Tera Pokémon left). The owner chooses what goes;
+ * the player who played a Stadium that left play goes first.
+ */
+function overflow(state, defs, events) {
+  if (state.phase !== "main" || state.pending.length) return;
+  const first = state.trimFirst ?? state.current;
+  for (const p of [first, other(first)]) {
+    for (const [slot, spot] of inPlay(state, p)) {
+      const extra = toolsIn(slot).length - toolRoom(state, slot, defs);
+      if (extra > 0) return void askChoose(state, { player: p, zone: "play", what: "tool", uids: toolsIn(slot), min: extra, max: extra, effect: { op: "dropInPlay" }, prompt: `Only ${toolRoom(state, slot, defs)} Pokémon Tool may stay on ${defOf(state, slot.uid, defs).name}: choose what to discard.` });
+      void spot;
+    }
+    const side = state.players[p];
+    if (side.bench.length > benchMax(state, p)) return void askPick(state, { player: p, side: p, spots: side.bench.map((_, i) => i), left: 1, effect: { op: "trimBench" }, prompt: `Your Bench holds ${benchMax(state, p)} now: discard a Benched Pokémon.` });
+  }
+  delete state.trimFirst;
+  for (const p of [0, 1]) {
+    const max = benchMax(state, p);
+    if (max === state.rules.bench) delete state.players[p].benchMax;
+    else state.players[p].benchMax = max;
+  }
 }
 
 /** A Special Condition a Pokémon now can't be affected by goes (Festival Grounds "recovers from all Special Conditions"). */
@@ -3474,7 +3526,7 @@ export function legalActions(state, player, defs) {
     if (seen.has(def.id)) continue;
     seen.add(def.id);
     if (def.kind === "pokemon" && handLock(state, player, def, defs)) continue;
-    if (def.kind === "pokemon" && def.stage === "basic" && side.bench.length < state.rules.bench) out.push({ type: "bench", player, uid });
+    if (def.kind === "pokemon" && def.stage === "basic" && side.bench.length < benchMax(state, player)) out.push({ type: "bench", player, uid });
     if (def.kind === "pokemon" && def.evolvesFrom) {
       for (const [slot, spot] of spots) if (canEvolveOnto(state, slot, def, defs, { hand: true }) && !markOn(state, slot, "noEvolve")) out.push({ type: "evolve", player, uid, spot });
     }

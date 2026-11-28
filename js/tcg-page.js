@@ -855,6 +855,8 @@ export function initTcg(deps) {
         const asked = d(slotOf(ME, waiting.spots[0]).uid);
         return { text: `Use ${asked.name}'s ${asked.ability.name}?`, keys: `<button type="button" class="solid sm" data-act="ability-yes">Use it</button><button type="button" class="ghost sm" data-act="pick-skip">Not now</button>` };
       }
+      // A pick that says what it is for (Area Zero Underdepths' Bench, Spiteful Evolution).
+      if (waiting.prompt) return { text: waiting.prompt, keys: waiting.optional ? `<button type="button" class="ghost sm" data-act="pick-skip">Not now</button>` : "" };
       const fx = waiting.effect;
       const moving = {
         moveEnergyFrom: () => `Choose the Pokémon to move ${fx.type ? `a ${fx.type}` : "an"} Energy from.`,
@@ -982,9 +984,9 @@ export function initTcg(deps) {
         <div class="tg-half tg-half-foe">
           <div class="tg-row">
             ${prizesHtml(state, BOT)}
-            <div class="tg-bench tg-bench-foe" style="--slots:${Math.max(state.rules.bench, foeBench.length)}">
+            <div class="tg-bench tg-bench-foe" style="--slots:${Math.max(state.players[BOT].benchMax || state.rules.bench, foeBench.length)}">
               ${foeBench.map((slot, i) => (setup ? foeBack : monHtml(state, BOT, slot, i, { target: foeTargets.has(i) }))).join("")}
-              ${places(Math.max(0, state.rules.bench - foeBench.length))}
+              ${places(Math.max(0, (state.players[BOT].benchMax || state.rules.bench) - foeBench.length))}
             </div>
             ${deckHtml(state, BOT, foeBack)}
           </div>
@@ -1006,9 +1008,9 @@ export function initTcg(deps) {
           </div>
           <div class="tg-row">
             ${prizesHtml(state, ME)}
-            <div class="tg-bench tg-bench-me${benchOpen ? " is-open" : ""}" data-bench style="--slots:${Math.max(state.rules.bench, myBench.length)}">
+            <div class="tg-bench tg-bench-me${benchOpen ? " is-open" : ""}" data-bench style="--slots:${Math.max(state.players[ME].benchMax || state.rules.bench, myBench.length)}">
               ${myBench.map((slot, i) => monHtml(state, ME, slot, i, { target: targets.has(i) })).join("")}
-              ${myBench.length < state.rules.bench ? `<span class="tg-hole${benchOpen ? " is-target" : ""}" data-bench>${benchOpen ? "Play here" : "Bench"}</span>${places(state.rules.bench - myBench.length - 1)}` : ""}
+              ${myBench.length < (state.players[ME].benchMax || state.rules.bench) ? `<span class="tg-hole${benchOpen ? " is-target" : ""}" data-bench>${benchOpen ? "Play here" : "Bench"}</span>${places((state.players[ME].benchMax || state.rules.bench) - myBench.length - 1)}` : ""}
             </div>
             ${deckHtml(state, ME, back)}
           </div>

@@ -15,7 +15,7 @@
  * ctx: { state, defs, events, player }
  */
 
-import { ACTIVE, abilityOn, noteShed, addCondition, takeTools, toolOn, toolGone, toolRoom, toolsIn, trainerBlock, win, askChoose, askPick, conditionsOn, damageAfterTyping, defOf, energyOf, evolveSpots, flip, healMore, healRoom, heldOn, hpLeft, inPlay, mayEvolve, other, rand, shedEnergy, shuffle, slotAt, switchActive, toolOf, warded } from "./engine.js";
+import { ACTIVE, abilityOn, benchMax, noteShed, addCondition, takeTools, toolOn, toolGone, toolRoom, toolsIn, trainerBlock, win, askChoose, askPick, conditionsOn, damageAfterTyping, defOf, energyOf, evolveSpots, flip, healMore, healRoom, heldOn, hpLeft, inPlay, mayEvolve, other, rand, shedEnergy, shuffle, slotAt, switchActive, toolOf, warded } from "./engine.js";
 import { runFx } from "./effects.js";
 
 export const RPS = ["Rock", "Paper", "Scissors"];
@@ -192,12 +192,12 @@ export const T_OPS = {
    * `rule`: what the cards taken together must keep (see chooseBlock); `rest: "bottom"`: the others go to the bottom.
    */
   search: {
-    ready: (ctx, { to = "hand" }) => hasDeck(ctx) && (to !== "bench" || mine(ctx).bench.length < ctx.state.rules.bench),
+    ready: (ctx, { to = "hand" }) => hasDeck(ctx) && (to !== "bench" || mine(ctx).bench.length < benchMax(ctx.state, ctx.player)),
     run(ctx, { what, n = 1, to = "hand", top = 0, bottom = 0, rule = null, rest = "", skipTop = 0, asBasic = false }) {
       const side = mine(ctx);
       const look = top === "prizes" ? side.prizes.length + theirs(ctx).prizes.length : top;
       const pool = look ? side.deck.slice(0, look) : bottom ? side.deck.slice(-bottom) : side.deck.slice(skipTop);
-      const room = to === "bench" ? ctx.state.rules.bench - side.bench.length : Infinity;
+      const room = to === "bench" ? benchMax(ctx.state, ctx.player) - side.bench.length : Infinity;
       const many = n === "all" ? pool.length : n;
       askChoose(ctx.state, { player: ctx.player, zone: "deck", what, uids: fitting(ctx, pool, what), min: 0, max: Math.min(many, room), effect: { op: to === "bench" ? "toBench" : to === "top" ? "deckTop" : "toHand", ...(asBasic ? { asBasic } : {}) }, ...(rule ? { rule } : {}), ...(rest ? { restBottom: look } : { shuffle: true }) });
     },
@@ -208,11 +208,11 @@ export const T_OPS = {
    * of the deck). `paid`: cards just discarded to pay for this card, which it can't take back. `half`: Revive's damage.
    */
   recover: {
-    ready: (ctx, { what, to = "hand" }) => fitting(ctx, mine(ctx).discard, what).some((uid) => uid !== ctx.uid) && (to !== "bench" || mine(ctx).bench.length < ctx.state.rules.bench),
+    ready: (ctx, { what, to = "hand" }) => fitting(ctx, mine(ctx).discard, what).some((uid) => uid !== ctx.uid) && (to !== "bench" || mine(ctx).bench.length < benchMax(ctx.state, ctx.player)),
     run(ctx, { what, n = 1, upTo = false, to = "hand", paid = [], half = false }) {
       // Not the card being played: it only reaches the discard pile once it is done.
       const uids = fitting(ctx, mine(ctx).discard, what).filter((uid) => !paid.includes(uid) && uid !== ctx.uid);
-      const max = to === "bench" ? Math.min(n, ctx.state.rules.bench - mine(ctx).bench.length) : n;
+      const max = to === "bench" ? Math.min(n, benchMax(ctx.state, ctx.player) - mine(ctx).bench.length) : n;
       if (uids.length && max > 0) askChoose(ctx.state, { player: ctx.player, zone: "discard", what, uids, min: upTo ? 0 : Math.min(max, uids.length), max, effect: { op: to === "bench" ? "toBench" : to === "top" ? "fromDiscardTop" : "toHand", ...(half ? { half } : {}) } });
     },
   },
@@ -223,6 +223,7 @@ export const T_OPS = {
       const { stadium } = ctx.state;
       if (!stadium) return;
       ctx.state.players[stadium.owner].discard.push(stadium.uid);
+      ctx.state.trimFirst = stadium.owner;
       ctx.state.stadium = null;
       ctx.events.push({ t: "stadium-gone", p: stadium.owner, uid: stadium.uid });
     },
@@ -806,9 +807,9 @@ export const T_OPS = {
    * until both are done, then go onto the Benches face up and the decks are shuffled.
    */
   challenge: {
-    ready: (ctx) => hasDeck(ctx) || [0, 1].some((p) => ctx.state.players[p].bench.length < ctx.state.rules.bench),
+    ready: (ctx) => hasDeck(ctx) || [0, 1].some((p) => ctx.state.players[p].bench.length < benchMax(ctx.state, p)),
     run(ctx) {
-      const full = [0, 1].every((p) => ctx.state.players[p].bench.length >= ctx.state.rules.bench);
+      const full = [0, 1].every((p) => ctx.state.players[p].bench.length >= benchMax(ctx.state, p));
       if (full) return T_OPS.draw.run(ctx, { n: 2 });
       ctx.state.pending.push({ type: "option", player: other(ctx.player), by: ctx.player, why: "challenge", prompt: "Your opponent's Challenge!: do you accept? If you do, each player puts any number of Basic Pokémon from their deck face down onto their Bench. If you decline, they draw 2 cards.", labels: ["Accept", "Decline"], options: [[{ op: "challengeGo" }], [{ op: "draw", n: 2 }]] });
     },
@@ -817,12 +818,12 @@ export const T_OPS = {
     ready: () => true,
     run(ctx) {
       const { state } = ctx;
-      const order = [ctx.player, other(ctx.player)].filter((p) => state.players[p].bench.length < state.rules.bench);
+      const order = [ctx.player, other(ctx.player)].filter((p) => state.players[p].bench.length < benchMax(state, p));
       state.challenge = { by: ctx.player, wait: order.length, cards: [[], []] };
       for (const p of order) {
         const side = state.players[p];
         const uids = side.deck.filter((uid) => fits(defOf(state, uid, ctx.defs), "basic"));
-        state.pending.push({ type: "choose", player: p, zone: "deck", what: "basic", uids, min: 0, max: Math.min(uids.length, state.rules.bench - side.bench.length), effect: { op: "challengeHold" }, prompt: "Challenge!: Basic Pokémon from your deck, face down onto your Bench (any number)." });
+        state.pending.push({ type: "choose", player: p, zone: "deck", what: "basic", uids, min: 0, max: Math.min(uids.length, benchMax(state, p) - side.bench.length), effect: { op: "challengeHold" }, prompt: "Challenge!: Basic Pokémon from your deck, face down onto your Bench (any number)." });
       }
     },
   },
@@ -1295,16 +1296,16 @@ export const T_OPS = {
       const side = theirs(ctx);
       const uids = fitting(ctx, side.hand, what);
       ctx.events.push({ t: "reveal-hand", p: other(ctx.player), uids: side.hand.slice() });
-      const room = Math.max(0, ctx.state.rules.bench - side.bench.length);
+      const room = Math.max(0, benchMax(ctx.state, other(ctx.player)) - side.bench.length);
       askChoose(ctx.state, { player: ctx.player, owner: other(ctx.player), zone: "hand", what, uids, min: 0, max: n ? Math.min(n, room) : room, effect: { op: "toBench" }, seen: side.hand.slice() });
     },
   },
   /** The other player may search their deck for a Basic Pokémon and put it onto their Bench (Pokémon March). */
   foeBenchSearch: {
-    ready: (ctx) => theirs(ctx).deck.length > 0 && theirs(ctx).bench.length < ctx.state.rules.bench,
+    ready: (ctx) => theirs(ctx).deck.length > 0 && theirs(ctx).bench.length < benchMax(ctx.state, other(ctx.player)),
     run(ctx) {
       const side = theirs(ctx);
-      if (!side.deck.length || side.bench.length >= ctx.state.rules.bench) return;
+      if (!side.deck.length || side.bench.length >= benchMax(ctx.state, other(ctx.player))) return;
       askChoose(ctx.state, { player: other(ctx.player), zone: "deck", what: "basic", uids: fitting(ctx, side.deck, "basic"), min: 0, max: 1, effect: { op: "toBench" }, shuffle: true });
     },
   },
@@ -1337,7 +1338,7 @@ export const T_OPS = {
   },
   /** Lt. Surge: a Basic Pokémon from the hand becomes the Active Pokémon; the old one goes to the Bench. */
   newActive: {
-    ready: (ctx) => Boolean(mine(ctx).active) && mine(ctx).bench.length < ctx.state.rules.bench && fitting(ctx, mine(ctx).hand, "basic").length > 0,
+    ready: (ctx) => Boolean(mine(ctx).active) && mine(ctx).bench.length < benchMax(ctx.state, ctx.player) && fitting(ctx, mine(ctx).hand, "basic").length > 0,
     run(ctx) {
       askChoose(ctx.state, { player: ctx.player, zone: "hand", what: "basic", uids: fitting(ctx, mine(ctx).hand, "basic"), min: 1, max: 1, effect: { op: "toActive" } });
     },
@@ -1501,10 +1502,10 @@ export const T_OPS = {
   },
   /** Fossil Egg: a card that fits `what` from the hand onto the Bench, played as a Basic Pokémon. */
   handToBench: {
-    ready: (ctx, { what }) => mine(ctx).bench.length < ctx.state.rules.bench && fitting(ctx, mine(ctx).hand, what).length > 0,
+    ready: (ctx, { what }) => mine(ctx).bench.length < benchMax(ctx.state, ctx.player) && fitting(ctx, mine(ctx).hand, what).length > 0,
     run(ctx, { what }) {
       const uids = fitting(ctx, mine(ctx).hand, what);
-      if (uids.length && mine(ctx).bench.length < ctx.state.rules.bench) askChoose(ctx.state, { player: ctx.player, zone: "hand", what, uids, min: 1, max: 1, effect: { op: "toBench", asBasic: true } });
+      if (uids.length && mine(ctx).bench.length < benchMax(ctx.state, ctx.player)) askChoose(ctx.state, { player: ctx.player, zone: "hand", what, uids, min: 1, max: 1, effect: { op: "toBench", asBasic: true } });
     },
   },
   /**
@@ -1523,7 +1524,7 @@ export const T_OPS = {
   },
   /** Strange Cave: a Pokémon of one of these names from the hand onto the Bench, played as a Basic Pokémon. */
   benchAs: {
-    ready: (ctx, { names }) => mine(ctx).bench.length < ctx.state.rules.bench && byNames(ctx, names).length > 0,
+    ready: (ctx, { names }) => mine(ctx).bench.length < benchMax(ctx.state, ctx.player) && byNames(ctx, names).length > 0,
     run(ctx, { names }) {
       askChoose(ctx.state, { player: ctx.player, zone: "hand", what: "pokemon", uids: byNames(ctx, names), min: 1, max: 1, effect: { op: "toBench", asBasic: true } });
     },
@@ -1587,7 +1588,7 @@ export const T_OPS = {
       const side = theirs(ctx);
       const shown = side.deck.slice(0, n);
       ctx.events.push({ t: "reveal-deck", p: other(ctx.player), uids: shown });
-      askChoose(ctx.state, { player: ctx.player, owner: other(ctx.player), zone: "deck", what: "basic", uids: fitting(ctx, shown, "basic"), min: 0, max: Math.max(0, ctx.state.rules.bench - side.bench.length), effect: { op: "toBench" }, seen: shown, shuffle: true });
+      askChoose(ctx.state, { player: ctx.player, owner: other(ctx.player), zone: "deck", what: "basic", uids: fitting(ctx, shown, "basic"), min: 0, max: Math.max(0, benchMax(ctx.state, other(ctx.player)) - side.bench.length), effect: { op: "toBench" }, seen: shown, shuffle: true });
     },
   },
   /** Love Ball: a Pokémon with the same name as 1 of your opponent's Pokémon in play. */
