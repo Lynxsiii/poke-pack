@@ -76,7 +76,7 @@ const DDL = [
     username TEXT NOT NULL,
     global_name TEXT,
     avatar TEXT,
-    shown INTEGER NOT NULL DEFAULT 1,
+    shown INTEGER NOT NULL DEFAULT 0,
     linked_at INTEGER NOT NULL
   )`,
 ];
@@ -852,7 +852,7 @@ async function discordLink(request, env, user, body, { json }) {
   if (other) return json({ error: "That Discord account is already linked to another trainer." }, 409);
   const now = Date.now();
   await env.DB.prepare(
-    `INSERT INTO user_discord (user_id, discord_id, username, global_name, avatar, shown, linked_at) VALUES (?, ?, ?, ?, ?, 1, ?)
+    `INSERT INTO user_discord (user_id, discord_id, username, global_name, avatar, shown, linked_at) VALUES (?, ?, ?, ?, ?, 0, ?)
      ON CONFLICT(user_id) DO UPDATE SET discord_id = excluded.discord_id, username = excluded.username,
        global_name = excluded.global_name, avatar = excluded.avatar, linked_at = excluded.linked_at`
   )

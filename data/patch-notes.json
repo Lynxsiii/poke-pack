@@ -1,5 +1,18 @@
 [
   {
+    "id": "2026-11-28-account-security",
+    "date": "2026-11-28",
+    "title": "Account security: two-step sign-in, your devices, and Discord linking",
+    "summary": "Account, Security is now a short checklist with a safety meter, and it has new ways to keep your trainer safe.",
+    "items": [
+      "Two-step sign-in: turn it on with any authenticator app (Google Authenticator, 1Password, Authy). After your password you enter the 6-digit code it shows. A recovery code works too if you lose your phone.",
+      "Devices: see every browser you're signed in on, roughly where, and when it was last used. Sign one out, or sign out everywhere else in one tap.",
+      "Recent sign-ins: your last sign-ins and security changes, with wrong passwords shown in red, so you can spot anyone who isn't you.",
+      "Link Discord: your own big pulls in our server's feed now mention you, and you can show your Discord name on your profile if you like.",
+      "Changing your password now signs you out on your other devices, and too many wrong passwords in a row make the site wait a few minutes before trying again."
+    ]
+  },
+  {
     "id": "2026-11-28-mystery-tin-shelves",
     "date": "2026-11-28",
     "title": "Mystery Tins move onto five shelves, with slab tins",

@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import {DatabaseSync} from 'node:sqlite';
 import {readFileSync,readdirSync} from 'node:fs';
 import worker from '../worker/index.js';
+import {pullMessage,blackLabelMessage} from '../worker/discord.js';
 import {totpAt,base32Decode,base32Encode,deviceLabel,maskEmail,sessionKey} from '../worker/security.js';
 // Account security (worker/security.js): two-step sign-in, devices, history,
 // throttling, email (off without a provider), Discord, and the delete clearing it all.
@@ -218,6 +219,14 @@ await check('deleting the account clears every security table', async()=>{
   for(const t of ['user_email','reset_codes','user_totp','signin_tickets','security_events','user_discord']){
     assert.equal(db.prepare(`SELECT COUNT(*) n FROM ${t} WHERE user_id=?`).get(id).n,0,t);
   }
+});
+
+await check('a linked trainer is mentioned on their own feed post, and only them', ()=>{
+  const m=pullMessage({handle:'a',cards:[{name:'X',rarity:'SIR',price:120,count:1}],more:0,discordId:'123456789012345678'});
+  assert.equal(m.content,'<@123456789012345678>');
+  assert.deepEqual(m.allowed_mentions,{users:['123456789012345678']});
+  assert.equal(pullMessage({handle:'a',cards:[{name:'X',rarity:'SIR',price:120,count:1}],more:0}).content,undefined);
+  assert.equal(blackLabelMessage({handle:'a',card:{name:'X',rarity:'SIR',slab:5},discordId:'<@everyone>'}).content,undefined);
 });
 
 console.log(`\nsecurity tests passed (${passed})`);

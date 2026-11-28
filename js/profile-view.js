@@ -332,6 +332,7 @@ function heroHtml({ data, user, look, friendBtn, deps }) {
         ${look.chasing ? `<p class="profile-chasing"><span>Chasing:</span> ${esc(look.chasing)}</p>` : ""}
         <p class="acct-meta">
           <span class="account-handle">@${esc(user.handle)}</span>
+          ${data.discord ? `<span class="account-discord" title="Discord">Discord @${esc(data.discord.username)}</span>` : ""}
           <span class="account-title">${esc(user.title || "Rookie")}</span>
           <span>${num(friends)} ${friends === 1 ? "friend" : "friends"}</span>
           ${user.createdAt ? `<span>Collecting since ${esc(joinedOn(user.createdAt))}</span>` : ""}
