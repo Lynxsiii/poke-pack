@@ -60,19 +60,22 @@ assert.equal((await request('/api/me','PATCH',{binderPages:[1,2,3]})).status,200
 assert.equal((await request('/api/u/pagetester','GET',null,false)).body.binderPages.length,3);
 assert.equal(validateProfilePages([0],Array(9).fill(null)), 'Add a card to the page before displaying it.');
 assert.deepEqual(selectedProfilePages([0],[{id:'unowned'}],{}),[]);
-// Bulk sale keeps one of each card, preserves binder pockets, and cannot be
-// claimed twice or used without a session.
+// Bulk sale keeps one of each card and every copy the binder holds (worker/binder-lock.js),
+// and cannot be claimed twice or used without a session.
+response=await request('/api/cards/sell-duplicates','POST',{setId:'me5'});
+assert.equal(response.status,409,'five me5-1 in five pockets: nothing is spare');
+assert.match(response.body.error,/binder/);
 db.prepare('INSERT INTO cards(user_id,card_id,qty,reverse_qty) VALUES(?,?,?,?)').run('test','me5-2',2,2);
+db.prepare("UPDATE cards SET qty=qty+4 WHERE user_id='test' AND card_id='me5-1'").run();
 assert.equal((await request('/api/cards/sell-duplicates','POST',{setId:'me5'},false)).status,401);
 assert.equal((await request('/api/cards/sell-duplicates','POST',{setId:'bogus'})).status,400);
 response=await request('/api/cards/sell-duplicates','POST',{setId:'me5'});
 assert.equal(response.status,200,JSON.stringify(response.body));
 assert.equal(response.body.copies,5);
 assert.ok(response.body.value>0);
-assert.deepEqual(db.prepare('SELECT card_id,qty,reverse_qty FROM cards WHERE user_id=? ORDER BY card_id').all('test').map(row=>[row.card_id,row.qty,row.reverse_qty]),[['me5-1',1,0],['me5-2',1,1]]);
-assert.equal(response.body.save.binder[1].id,'me5-1');
-assert.equal(response.body.save.binder.filter(slot=>slot?.id==='me5-1').length,1);
-assert.equal((await request('/api/cards/sell-duplicates','POST',{setId:'me5'})).status,400);
+assert.deepEqual(db.prepare('SELECT card_id,qty,reverse_qty FROM cards WHERE user_id=? ORDER BY card_id').all('test').map(row=>[row.card_id,row.qty,row.reverse_qty]),[['me5-1',5,0],['me5-2',1,1]]);
+assert.equal(response.body.save.binder.filter(slot=>slot?.id==='me5-1').length,5,'every pocket keeps its card');
+assert.equal((await request('/api/cards/sell-duplicates','POST',{setId:'me5'})).status,409);
 // The daily list rotates, so the sold quest is only there on some days.
 const quests=response.body.save.quests;
 assert.equal(response.body.save.stats.counters.sold,5);
