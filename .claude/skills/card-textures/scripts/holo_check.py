@@ -344,10 +344,17 @@ def main():
     by_key = {face_key(f): f for f in selected}
     jobs = plan(selected)
     print(f"{len(by_key)} faces in {len(jobs)} renders", file=sys.stderr)
-    if not args.score_only:
-        render(jobs, args)
-    with ThreadPoolExecutor(max_workers=4) as pool:
-        rows = [r for part in pool.map(lambda j: score_job(j, by_key, args), jobs) for r in part]
+    # Render and score in rounds of BATCH renders: each full-page render pair is about 90 MB, and a whole-site run
+    # rendered first and scored after filled a 37 GB disk (2026-11-28). Scoring deletes a round's renders.
+    BATCH = 60
+    rows = []
+    for start in range(0, len(jobs), BATCH):
+        part = jobs[start:start + BATCH]
+        if not args.score_only:
+            render(part, args)
+        with ThreadPoolExecutor(max_workers=4) as pool:
+            rows += [r for got in pool.map(lambda j: score_job(j, by_key, args), part) for r in got]
+        print(f"scored {min(start + BATCH, len(jobs))}/{len(jobs)} renders", file=sys.stderr)
     old = os.path.join(args.out, "check.json")
     if os.path.exists(old):  # merge with earlier scored parts of a resumed run
         seen = {r["key"] for r in rows}
