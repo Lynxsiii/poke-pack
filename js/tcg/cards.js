@@ -226,6 +226,8 @@ function fossilDef(base, card, text, fossil) {
  */
 export function defineCard(card, row, text = "", lines = null, print = null) {
   const def = defineRules(card, row, text, lines, print);
+  // The text is shown as printed, the sentence read off for `noRecover` too.
+  if (def.noRecover && text) def.text = text;
   // Which formats it may be played in (js/tcg/formats.js), as a reason to show the player.
   def.legal = legalityOf(def, print?.reprints);
   return def;
@@ -235,6 +237,8 @@ export function defineCard(card, row, text = "", lines = null, print = null) {
  * `print`: what data/tcg/legal.json says of this print, { mark, reprints }
  * (js/tcg/formats.js). Without it a card has no regulation mark.
  */
+const SUBTYPE_FIX = { "Adventure Lantern": ["Item"] };
+
 function defineRules(card, row, text, lines, print) {
   // Kinds some Trainers ask for by name: "a Team Plasma card", "Pokémon SP", "(excluding Pokémon LV.X)", "Baby Pokémon".
   const tags = (card.subtypes || []).filter((s) => TAGS.includes(s));
@@ -258,7 +262,14 @@ function defineRules(card, row, text, lines, print) {
     return { ...base, kind: "energy", provides: special.provides, basic: false, special, text, playable: true, why: "" };
   }
   if (card.supertype !== "Pokémon") {
-    const subs = card.subtypes || [];
+    // Poké Vital A, Neutralization Zone: "This card can't be put into your hand or deck from the discard pile." (engine.js askChoose).
+    const kept = / ?This card can't be put into your hand or deck from the discard pile\./;
+    if (kept.test(text || "")) {
+      text = text.replace(kept, "").trim();
+      base.noRecover = true;
+    }
+    // Adventure Lantern is an Item (Delta Reign 90, 126); the card data calls it a Pokémon Tool.
+    const subs = SUBTYPE_FIX[card.name] || card.subtypes || [];
     const sub = subs.includes("Supporter") ? "supporter" : subs.includes("Stadium") ? "stadium" : subs.some((x) => /Tool|Technical Machine/.test(x)) ? "tool" : "item";
     const fossil = sub === "item" ? compileFossil(text, card) : null;
     if (fossil) return fossilDef(base, card, text, fossil);

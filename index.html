@@ -81,10 +81,10 @@
     <link rel="stylesheet" href="css/binder/editor.css?v=6" />
     <link rel="stylesheet" href="css/binder/flipbook.css?v=2" />
     <link rel="stylesheet" href="css/pages/account.css?v=25" />
-    <link rel="stylesheet" href="css/pages/rankings.css?v=9" />
+    <link rel="stylesheet" href="css/pages/rankings.css?v=11" />
     <link rel="stylesheet" href="css/pages/events.css?v=1" />
     <link rel="stylesheet" href="css/pages/profile-look.css?v=13" />
-    <link rel="stylesheet" href="css/pages/extras.css?v=26" />
+    <link rel="stylesheet" href="css/pages/extras.css?v=27" />
     <link rel="stylesheet" href="css/pages/notes.css?v=7" />
     <link rel="stylesheet" href="css/pages/share.css?v=7" />
     <link rel="stylesheet" href="css/pages/discord.css?v=5" />
@@ -131,7 +131,7 @@
     <link rel="stylesheet" href="css/pages/auth.css?v=9" />
     <link rel="stylesheet" href="css/pages/account-security.css?v=3" />
     <link rel="stylesheet" href="css/pages/wishlist.css?v=5" />
-    <link rel="stylesheet" href="css/rotom.css?v=20" />
+    <link rel="stylesheet" href="css/rotom.css?v=21" />
     <link rel="stylesheet" href="css/themes.css?v=3" />
     <link rel="stylesheet" href="css/pages/phone.css?v=3" />
     <!-- Holofoil, derived from pokemon-cards-css (GPL-3). Loaded after app.css
@@ -343,7 +343,7 @@
     <link rel="modulepreload" href="js/battle-table.js?v=12" />
     <link rel="modulepreload" href="js/battle-reveal.js" />
     <link rel="modulepreload" href="js/casino-winnings.js" />
-    <link rel="modulepreload" href="js/casino.js?v=37" />
+    <link rel="modulepreload" href="js/casino.js?v=38" />
     <link rel="modulepreload" href="js/stake-picker.js?v=12" />
     <link rel="modulepreload" href="js/casino-rules.js" />
     <link rel="modulepreload" href="js/coinflip.js?v=17" />
@@ -543,30 +543,34 @@
         <details class="nav-more">
           <summary>More</summary>
           <div class="nav-more-list nav-menu">
+          <div class="nav-grp"><a class="nav-btn nav-area" data-area="packs" href="/packs" data-view="catalog"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-packs"/></svg>Packs</a><div class="nav-sub">
+            <a class="nav-btn" href="/cart" data-view="cart"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-cart"/></svg>Cart</a>
+          </div></div>
+          <div class="nav-grp"><a class="nav-btn nav-area" data-area="coll" href="/bulk" data-view="collection"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-coll"/></svg>Collection</a><div class="nav-sub">
+            <a class="nav-btn" href="/binder" data-view="binder"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-binder"/></svg>Binder</a>
+            <a class="nav-btn" href="/wishlist" data-view="wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-heart"/></svg>Wishlist</a>
+            <a class="nav-btn" href="/grading" data-view="grading"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-grading"/></svg>Grading</a>
+            <a class="nav-btn" href="/gear" data-view="gear"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-gear"/></svg>Sleeves &amp; coins</a>
+          </div></div>
+          <div class="nav-grp"><a class="nav-btn nav-area" data-area="casino" href="/casino" data-view="casino"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-casino"/></svg>Casino</a><div class="nav-sub">
+            <a class="nav-btn" href="/casino/coinflip" data-view="casino" data-casino="/casino/coinflip"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-coinflip"/></svg>Coinflip</a>
+            <a class="nav-btn" href="/casino/jackpot" data-view="casino" data-casino="/casino/jackpot"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-jackpot"/></svg>Jackpot</a>
+            <a class="nav-btn" href="/casino/upgrader" data-view="casino" data-casino="/casino/upgrader"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-upgrader"/></svg>Upgrader</a>
+            <a class="nav-btn" href="/battles" data-view="battles"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-battles"/></svg>Pack battles</a>
+          </div></div>
+          <div class="nav-grp"><a class="nav-btn nav-area" data-area="comm" href="/social" data-view="social"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-people"/></svg>Community</a><div class="nav-sub">
+            <a class="nav-btn" href="/rankings" data-view="rankings"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-rankings"/></svg>Rankings</a>
+            <a class="nav-btn" href="/trades" data-view="trades"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-trades"/></svg>Trades</a>
+            <button class="nav-btn more-dock" type="button" data-dock="friends" aria-controls="friends-panel"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-people"/></svg>Friends</button>
+            <a class="nav-btn" href="/discord" target="_blank" rel="noopener"><svg viewBox="-1.5 -1.5 27 27" aria-hidden="true"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>Discord</a>
+          </div></div>
+          <div class="nav-grp"><button class="nav-btn nav-area nav-grp-more" data-area="you" type="button" aria-haspopup="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-you"/></svg>More</button><div class="nav-sub">
+            <a class="nav-btn" href="/account" data-view="account"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-you"/></svg>Account</a>
+            <a class="nav-btn" href="/settings" data-view="settings"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-settings"/></svg>Settings</a>
+            <button class="nav-btn more-dock" type="button" data-dock="radio" aria-controls="radio-panel"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-radio"/></svg>Radio</button>
+            <a class="nav-btn" href="/notes" data-view="notes"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-updates"/></svg>Updates</a>
+          </div></div>
           <button class="nav-btn tab-search" data-search-open type="button" aria-label="Search cards and products" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-search"/></svg>Search</button>
-          <a class="nav-btn nav-area" data-area="packs" href="/packs" data-view="catalog"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-packs"/></svg>Packs</a>
-          <a class="nav-btn" href="/cart" data-view="cart"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-cart"/></svg>Cart</a>
-          <a class="nav-btn nav-area" data-area="coll" href="/bulk" data-view="collection"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-coll"/></svg>Collection</a>
-          <a class="nav-btn" href="/binder" data-view="binder"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-binder"/></svg>Binder</a>
-          <a class="nav-btn" href="/wishlist" data-view="wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-heart"/></svg>Wishlist</a>
-          <a class="nav-btn" href="/grading" data-view="grading"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-grading"/></svg>Grading</a>
-          <a class="nav-btn" href="/gear" data-view="gear"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-gear"/></svg>Sleeves &amp; coins</a>
-          <a class="nav-btn nav-area" data-area="casino" href="/casino" data-view="casino"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-casino"/></svg>Casino</a>
-          <a class="nav-btn" href="/casino/coinflip" data-view="casino" data-casino="/casino/coinflip"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-coinflip"/></svg>Coinflip</a>
-          <a class="nav-btn" href="/casino/jackpot" data-view="casino" data-casino="/casino/jackpot"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-jackpot"/></svg>Jackpot</a>
-          <a class="nav-btn" href="/casino/upgrader" data-view="casino" data-casino="/casino/upgrader"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-upgrader"/></svg>Upgrader</a>
-          <a class="nav-btn" href="/battles" data-view="battles"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-battles"/></svg>Pack battles</a>
-          <p class="nav-more-label" data-area="comm" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-people"/></svg>Community</p>
-          <a class="nav-btn" href="/social" data-view="social"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-social"/></svg>Social</a>
-          <a class="nav-btn" href="/rankings" data-view="rankings"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-rankings"/></svg>Rankings</a>
-          <a class="nav-btn" href="/trades" data-view="trades"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-trades"/></svg>Trades</a>
-          <button class="nav-btn more-dock" type="button" data-dock="friends" aria-controls="friends-panel"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-people"/></svg>Friends</button>
-          <a class="nav-btn" href="/discord" target="_blank" rel="noopener"><svg viewBox="-1.5 -1.5 27 27" aria-hidden="true"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>Discord</a>
-          <p class="nav-more-label" data-area="you" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-you"/></svg>You</p>
-          <a class="nav-btn" href="/account" data-view="account"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-you"/></svg>Account</a>
-          <a class="nav-btn" href="/settings" data-view="settings"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-settings"/></svg>Settings</a>
-          <button class="nav-btn more-dock" type="button" data-dock="radio" aria-controls="radio-panel"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-radio"/></svg>Radio</button>
-          <a class="nav-btn" href="/notes" data-view="notes"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-updates"/></svg>Updates</a>
           </div>
         </details>
       </nav>
@@ -1055,7 +1059,7 @@
       </nav>
     </footer>
     <script type="module" src="js/etch.js?v=1"></script>
-    <script type="module" src="js/app.js?v=427"></script>
+    <script type="module" src="js/app.js?v=430"></script>
     <script type="module" src="js/rotom.js?v=3"></script>
     <script type="module" src="js/phone-layout.js?v=2"></script>
   </body>

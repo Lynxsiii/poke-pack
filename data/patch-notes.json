@@ -14,6 +14,42 @@
     ]
   },
   {
+    "id": "2026-11-28-settings-light-dark",
+    "date": "2026-11-28",
+    "kind": "fix",
+    "title": "Settings no longer says Light on a dark theme",
+    "summary": "The Light or dark choice shows only on Rotom, the one theme that has both.",
+    "items": [
+      "Colours comes first in Settings. Pick Rotom and Light, Dark and Device appear under it.",
+      "Rankings: the signed-out line lost its ball too."
+    ]
+  },
+  {
+    "id": "2026-11-28-rankings-plain",
+    "date": "2026-11-28",
+    "kind": "better",
+    "title": "Quieter Rankings and casino lobby",
+    "summary": "An empty board is a plain line now, and the lobby stops counting zero.",
+    "items": [
+      "Rankings: the dashed boxes with a ball are gone. An empty board just says so.",
+      "Casino: a game shows how many tables are open only when there are some."
+    ]
+  },
+  {
+    "id": "2026-11-28-top-bar",
+    "date": "2026-11-28",
+    "kind": "better",
+    "big": 1,
+    "title": "A top bar on computers",
+    "summary": "The long side menu is gone. Five places sit in one bar across the top.",
+    "items": [
+      "Home, Packs, Collection, Casino and Community run along the top. Point at one and its other pages drop down.",
+      "Settings, Radio and Updates are under More.",
+      "Pages get the full width of the window back.",
+      "On a tablet the first tap on a place opens its list and the second goes there."
+    ]
+  },
+  {
     "id": "2026-11-28-first-pack-free",
     "date": "2026-11-28",
     "kind": "new",

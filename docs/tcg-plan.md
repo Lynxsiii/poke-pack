@@ -276,6 +276,20 @@ wordings the engine can't read. Work down that list:
    Holon Energy, "Discard a Special Energy" attacks. Then the odd card types: V-UNION, LEGEND,
    Restored, BREAK keeping its earlier attacks, Lv.X.
 
+   **Standard fully read (2026-11-28).** Every Standard Ability and Trainer is
+   now read. Engine features added for the last 26: more than one Tool on a
+   Pokémon (`slot.extraTools`, Multi Adapter/Dual Core room, `toolsIn`),
+   a Bench that grows and shrinks (`benchMax`: Area Zero Underdepths with a
+   Tera in play; extra Pokémon are discarded when it shrinks, owner picks),
+   Stadium rules (Legendary Trench double healing, Battle Cage, Neutralization
+   Zone, Grand Tree evolving twice), devolving (Strange Timepiece), Double Type,
+   face-up Prize cards (Bother-Bot), Tyme's two-step guess, "can't be put back
+   from the discard pile" cards (Adventure Lantern-style text), and Abilities
+   used from the hand or on a coin flip while retreating.
+   Calls made without asking: Huntail's "may" happens automatically, Bother-Bot
+   turns a random Prize face up, Prizes are still taken from the front.
+   Still open: about 160 Standard attacks with extra text do printed damage only.
+
 Rules for this work: one op per mechanic in `OPS`, wordings mapped to it in
 `PATTERNS`, a test per op. Text that isn't fully read stays "not live" rather
 than half-working. A card whose text would make it much stronger when ignored
