@@ -40,6 +40,7 @@ export const SET_CHASE = {
   "jsv4m": "assets/cards/jsv4m/89.webp",
   "jsv5k": "assets/cards/jsv5k/94.webp",
   "jsv5m": "assets/cards/jsv5m/93.webp",
+  "jme3": "assets/cards/jme3/117.webp",
   "jsv2a": "assets/cards/jsv2a/201.webp",
   "jsm12a": "assets/cards/jsm12a/182.webp",
   "zsv10pt5": "assets/cards/zsv10pt5/172.webp",

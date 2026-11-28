@@ -39,6 +39,7 @@ export const SET_ACCENTS = {
   "jsv4m": { a: "#4595d3", b: "#e873a1" },
   "jsv5k": { a: "#d39745", b: "#7373e8" },
   "jsv5m": { a: "#d3c245", b: "#59a4cf" },
+  "jme3": { a: "#d4a744", b: "#59a9cf" },
   "jsv2a": { a: "#e13843", b: "#53b3d5" },
   "jsm12a": { a: "#e0c539", b: "#9173e8" },
   "zsv10pt5": { a: "#5ab8ff", b: "#b48cff" },
