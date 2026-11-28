@@ -3035,7 +3035,9 @@ function stageBinderTurn(spread, leaving, turn) {
     el.querySelectorAll("[id]").forEach((node) => node.removeAttribute("id"));
     spread.append(el);
   };
-  if (leaving.length === 1 && fresh.length === 1) {
+  if (document.body.classList.contains("no-motion")) {
+    leaving.forEach((el) => ghost(el, "bd-fade-out")); // no swing: the old page fades off the new one
+  } else if (leaving.length === 1 && fresh.length === 1) {
     if (turn > 0) ghost(leaving[0], "bd-leaf-out");
     else { ghost(leaving[0], "bd-under"); fresh[0].classList.add("bd-leaf-in"); }
   } else if (leaving.length === 2 && fresh.length === 2) {
@@ -3055,7 +3057,7 @@ function stageBinderTurn(spread, leaving, turn) {
   binderTurnTimer = setTimeout(() => {
     spread.querySelectorAll(".bd-ghost").forEach((el) => el.remove());
     fresh.forEach((el) => el.classList.remove("bd-leaf-in", "bd-half-in-r", "bd-half-in-l", "bd-enter"));
-  }, 820);
+  }, 900);
 }
 
 function renderBinder() {
@@ -3144,9 +3146,7 @@ function renderBinder() {
   const mark = binderMark;
   binderTurn = 0;
   binderMark = null;
-  const leaving = turn && !reduceMotion() && !document.body.classList.contains("no-motion")
-    ? [...els.binderBody.querySelectorAll(".binder-spread > .binder-page:not(.bd-ghost)")]
-    : [];
+  const leaving = turn && !reduceMotion() ? [...els.binderBody.querySelectorAll(".binder-spread > .binder-page:not(.bd-ghost)")] : [];
   for (const el of leaving) el._bd = { l: el.offsetLeft, t: el.offsetTop, w: el.offsetWidth, h: el.offsetHeight };
   els.binderBody.innerHTML = `
     <p class="binder-sharing-note bd-edit-only">${onProfile} of ${room.cap} pages on your profile.${room.more}</p>
