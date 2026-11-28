@@ -44,6 +44,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.environ.get("ROOT") or os.path.abspath(os.path.join(HERE, "..", "..", "..", ".."))
 W, H = 600, 838
 # light dichroic colours: teal, cyan, sky, violet, magenta, pink, gold, lime, white-ish
+MIN_COVER = 0.03   # the least share of the foil area a card's flecks light (the DP1-DP6 scans give 0.03-0.05 on their own)
 HUES = [0.47, 0.52, 0.58, 0.72, 0.83, 0.92, 0.12, 0.30]
 
 
@@ -58,7 +59,8 @@ def colour(rng) -> np.ndarray:
     return np.array(colorsys.hsv_to_rgb(h % 1, rng.uniform(0.45, 0.8), 1.0), np.float32)
 
 
-def flecks(rgb: np.ndarray, area: np.ndarray, cid: str, synth: float = 1.0, scan: float = 1.0, floor: float = 0.1) -> np.ndarray:
+def flecks(rgb: np.ndarray, area: np.ndarray, cid: str, synth: float = 1.0, scan: float = 1.0, floor: float = 0.1,
+           min_cover: float = 0.0) -> np.ndarray:
     """rgb: scan (H, W, 3 uint8); area: float foil area 0..1. Returns float RGB (H, W, 3) 0..1, black where no fleck."""
     rng = np.random.default_rng(seed_of(cid))
     out = np.zeros(rgb.shape, np.float32)
@@ -84,7 +86,8 @@ def flecks(rgb: np.ndarray, area: np.ndarray, cid: str, synth: float = 1.0, scan
     free = np.clip(1 - dens / 0.06, 0.2, 1.0) * np.maximum(floor, proof)
     ys, xs = np.where(inside)
     k = int(synth * len(ys) / 520)
-    if k and len(ys):
+
+    def sprinkle(out, k, free):
         SS = 3
         big = np.zeros((rgb.shape[0] * SS, rgb.shape[1] * SS, 3), np.float32)
         pick = rng.integers(len(ys), size=k)
@@ -103,7 +106,19 @@ def flecks(rgb: np.ndarray, area: np.ndarray, cid: str, synth: float = 1.0, scan
             cx, cy = (x + rng.random()) * SS, (y + rng.random()) * SS
             cv2.circle(big, (int(cx), int(cy)), max(1, int(round(r * SS))), tuple(float(v) for v in c), -1, lineType=cv2.LINE_AA)
         big = cv2.GaussianBlur(big, (0, 0), 0.8 * SS)
-        out = np.maximum(out, cv2.resize(big, (rgb.shape[1], rgb.shape[0]), interpolation=cv2.INTER_AREA))
+        return np.maximum(out, cv2.resize(big, (rgb.shape[1], rgb.shape[0]), interpolation=cv2.INTER_AREA))
+
+    if k and len(ys):
+        out = sprinkle(out, k, free)
+    # Round 2 (2026-11-28, "holo shows nothing when lit" on Call of Legends, the Shiny Legends and several LV.X): a clean scan
+    # shows no grain, so both passes above leave the map nearly empty and the lit card looks like plain print. Top the map up
+    # to a minimum share of lit pixels with the same soft round dots, spread evenly over the foil area (the cut-out keeps
+    # them off the Pokemon).
+    for _ in range(6):
+        cover = float((out.max(axis=2)[inside] > 0.25).mean()) if len(ys) else 1.0
+        if cover >= min_cover:
+            break
+        out = sprinkle(out, max(8, int((min_cover - cover) * len(ys) / 9)), np.full(dens.shape, 1.0, np.float32))
     return np.clip(out, 0, 1) * (area[..., None] > 0.02)
 
 
@@ -115,13 +130,13 @@ def _rgba(path: str) -> np.ndarray:
 def r_cosmos_holo(face, args):
     s, n = face["id"].split("-", 1)
     src = f"assets/foil/fam/dp-cosmos-holo/{s}/{n}.webp"
-    return (_rgba(src)[..., 3], f"assets/foil/fam/dp-cosmos-holo/{s}/{n}-f2.webp", {}) if os.path.exists(os.path.join(ROOT, src)) else None
+    return (_rgba(src)[..., 3], f"assets/foil/fam/dp-cosmos-holo/{s}/{n}-f3.webp", {}) if os.path.exists(os.path.join(ROOT, src)) else None
 
 
 def r_sp(face, args):
     name = {"pl2-9": "pl2-9-v2"}.get(face["id"], face["id"])
     src = f"assets/foil/fam/dp-sp/{name}.webp"
-    return (_rgba(src)[..., 3], f"assets/foil/fam/dp-sp/{face['id']}-f2.webp", {}) if os.path.exists(os.path.join(ROOT, src)) else None
+    return (_rgba(src)[..., 3], f"assets/foil/fam/dp-sp/{face['id']}-f2.webp", {"min_cover": 0.0}) if os.path.exists(os.path.join(ROOT, src)) else None
 
 
 def r_special(face, args):
@@ -129,14 +144,14 @@ def r_special(face, args):
     for key in (face["id"].lower(), n.lower()):
         src = f"assets/foil/fam/dp-special-rares/cos-{key}-v2.webp"
         if os.path.exists(os.path.join(ROOT, src)):
-            return _rgba(src)[..., 3], f"assets/foil/fam/dp-special-rares/cos-{key}-v3.webp", {}
+            return _rgba(src)[..., 3], f"assets/foil/fam/dp-special-rares/cos-{key}-v4.webp", {}
     return None
 
 
 def r_legend(face, args):
     src = f"assets/foil/fam/dp-legend/legend-{face['id']}.webp"
     # a LEGEND is foil over the whole picture: fewer, finer dots (the scan's own grain is paint texture, not foil dots)
-    return (_rgba(src)[..., 3], f"assets/foil/fam/dp-legend/legend-{face['id']}-f2.webp", {"scan": 0.0, "synth": 1.0, "floor": 1.0}) if os.path.exists(os.path.join(ROOT, src)) else None
+    return (_rgba(src)[..., 3], f"assets/foil/fam/dp-legend/legend-{face['id']}-f2.webp", {"scan": 0.0, "synth": 1.0, "floor": 1.0, "min_cover": 0.0}) if os.path.exists(os.path.join(ROOT, src)) else None
 
 
 def r_lvx(face, args):
@@ -144,9 +159,13 @@ def r_lvx(face, args):
     m = _rgba(f"assets/foil/dp-special/{'lvx-sp' if sp else 'lvx'}.webp")
     fig = os.path.join(args.figures or "", face["id"] + ".png")
     if not os.path.exists(fig):
-        return None
+        # no figure masks at hand: keep the cut-out of the card's shipped map (its alpha is already softened and feathered)
+        old = f"assets/foil/fam/dp-lvx/{face['id']}.webp"
+        if not os.path.exists(os.path.join(ROOT, old)):
+            return None
+        return _rgba(old)[..., 3], f"assets/foil/fam/dp-lvx/{face['id']}-f2.webp", {"window": m[..., :3].mean(axis=2) * m[..., 3], "kept": True}
     f = np.asarray(Image.open(fig).convert("L").resize((W, H), Image.LANCZOS)).astype(np.float32) / 255
-    return m[..., 3] * (1 - f), f"assets/foil/fam/dp-lvx/{face['id']}.webp", {"window": m[..., :3].mean(axis=2) * m[..., 3], "soften": True}
+    return m[..., 3] * (1 - f), f"assets/foil/fam/dp-lvx/{face['id']}-f2.webp", {"window": m[..., :3].mean(axis=2) * m[..., 3], "soften": True}
 
 
 # a family whose module only claims mapped faces is found by its finish class too, so a first run can see its cards
@@ -184,13 +203,17 @@ def main():
             continue
         rgb = np.asarray(Image.open(os.path.join(ROOT, f["img"])).convert("RGB").resize((W, H), Image.LANCZOS))
         zone = area if "window" not in opt else area * (opt["window"] > 0.5)   # LV.X: coloured flecks in the art window only
-        fl = flecks(rgb, zone, f["id"], synth=opt.get("synth", 1.0), scan=opt.get("scan", 1.0), floor=opt.get("floor", 0.1))
+        if opt.get("kept"):
+            zone = np.clip(zone * 2.2, 0, 1)   # the shipped alpha is halved where the scan shows no grain: flecks go there too
+        fl = flecks(rgb, zone, f["id"], synth=opt.get("synth", 1.0), scan=opt.get("scan", 1.0), floor=opt.get("floor", 0.1),
+                    min_cover=opt.get("min_cover", MIN_COVER))
         if opt.get("soften"):
             # where the scan shows no grain at all the cut-out may have missed part of the Pokémon: half the foil there
             proof = np.clip(ndi.gaussian_filter(dot_map(rgb).astype(np.float32), 12) / 0.02, 0, 1)
             area = area * np.where(opt["window"] > 0.5, 0.5 + 0.5 * proof, 1.0)
         # feather the foil area toward the cut-out, so the sheen fades into the Pokémon instead of tracing the mask's edge
-        area = np.minimum(area, np.clip((ndi.gaussian_filter(area.astype(np.float32), 5) - 0.5) * 2.2, 0, 1))
+        if not opt.get("kept"):
+            area = np.minimum(area, np.clip((ndi.gaussian_filter(area.astype(np.float32), 5) - 0.5) * 2.2, 0, 1))
         rgba = np.dstack([fl, area])
         os.makedirs(os.path.dirname(dst), exist_ok=True)
         Image.fromarray((rgba * 255).round().astype(np.uint8), "RGBA").save(dst, lossless=True, method=4, exact=True)

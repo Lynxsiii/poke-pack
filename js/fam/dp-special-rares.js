@@ -74,7 +74,7 @@ export function famExtras(card, url, base) {
   }
   if (COSMOS_KINDS.has(finish)) {
     classes.push("dsr-cosmos", COSMOS_CLASS[finish], "has-foil-map");
-    style.push(`--foil-map:${file(`cos-${(finish === "secret" ? String(card.id) : num).toLowerCase()}-v3.webp`)}`);
+    style.push(`--foil-map:${file(`cos-${(finish === "secret" ? String(card.id) : num).toLowerCase()}-v4.webp`)}`);
     if (finish === "ar") style.push(`--dsr-win:url('${url("assets/foil/dp-win/dp-basic.webp")}')`);
     return { classes: classes.join(" "), style: style.join(";"), cure: true };
   }
