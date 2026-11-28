@@ -47,7 +47,7 @@
 .hub-word.rt-word.on { color: var(--on-k); box-shadow: none; }
 .hub-count {
   display: inline-grid; place-items: center; min-width: 21px; height: 20px; padding: 0 6px; border-radius: var(--r-tag);
-  background: var(--yel); color: var(--k0); font: italic 700 12.5px/1 var(--font-h); font-variant-numeric: tabular-nums;
+  background: var(--yel); color: var(--k0); font: 700 12.5px/1 var(--font-h); font-variant-numeric: tabular-nums;
 }
 .hub-word.on .hub-count { box-shadow: 0 0 0 1.5px var(--k); }
 @media (min-width: 961px) {
@@ -349,7 +349,7 @@
 }
 .friends .friends-trades b {
   display: grid; place-items: center; min-width: 24px; height: 22px; padding: 0 7px; border-radius: var(--r-tag); background: var(--yel); color: var(--k0);
-  box-shadow: 0 0 0 1.5px var(--k); font: italic 700 13px var(--font-h); font-variant-numeric: tabular-nums;
+  box-shadow: 0 0 0 1.5px var(--k); font: 700 13px var(--font-h); font-variant-numeric: tabular-nums;
 }
 .friends .friends-trades b[hidden] { display: none; }
 @media (hover: hover) { .friends .friends-trades:hover { transform: translateX(4px); background: var(--cy-3); } }
@@ -405,7 +405,7 @@
 .tip-id { position: relative; z-index: 1; display: flex; align-items: flex-start; gap: 12px; margin-top: -30px; padding: 0 16px; }
 .tip-id .user-face.md, .tip-id .user-face.md.on { width: 64px; height: 64px; box-shadow: 0 0 0 3px var(--box), 0 0 0 5.5px var(--k); }
 .tip-id > div { min-width: 0; padding: 38px 0 0; }
-.tip-id .account-title { min-height: 0; margin: 0 0 4px; padding: 1px 8px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k); font: italic 700 12px/1.5 var(--font-h); }
+.tip-id .account-title { min-height: 0; margin: 0 0 4px; padding: 1px 8px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k); font: 700 12px/1.5 var(--font-h); }
 .tip-id b { display: flex; align-items: center; gap: 6px; color: var(--k); font: 600 19px/1.15 var(--font-h); }
 .tip-id small { color: var(--k-2); font: 700 13px var(--font); }
 .tip-bio, .tip-stats { position: relative; z-index: 1; margin: 12px 16px 0; font-size: 14px; line-height: 1.45; }

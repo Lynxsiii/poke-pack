@@ -1,0 +1,79 @@
+/* The Events page (js/events-page.js): this week's event under Social.
+   Lists are rows with a divider. The only ink boxes are the board's rows,
+   which are the Rankings rows (css/pages/rankings.css). */
+.ev { max-width: 720px; }
+.ev-preview, .ev-none { margin: 0 0 14px; color: var(--k-2); font: 600 14px var(--font-h); }
+.ev-none { margin-top: 18px; font-size: 15px; }
+
+/* The event: the featured pack when there is one, the rule, the time left, the one key. */
+.ev-hero { display: flex; align-items: center; gap: 18px; margin-top: 14px; }
+.ev-pack { flex: none; display: block; width: 104px; filter: drop-shadow(var(--drop)); transform: rotate(-4deg); }
+.ev-pack img { display: block; width: 100%; height: auto; }
+.ev-hero-text { min-width: 0; }
+.ev-rule { margin: 0; max-width: 44ch; color: var(--k); font-size: 16px; line-height: 1.45; }
+.ev-ends { margin: 6px 0 0; color: var(--k-2); font: 600 14px var(--font-h); }
+.ev-ends b { color: var(--k); font-weight: 700; }
+.ev-go { display: inline-flex; margin-top: 16px; text-decoration: none; }
+
+.ev-part { margin-top: 34px; }
+.ev-part > h3 { margin: 0 0 10px; color: var(--k); font: 700 20px/1.15 var(--font-h); letter-spacing: 0; text-transform: none; }
+
+/* A count: the number big, what it counts beside it. */
+.ev-count { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px; margin: 0 0 8px; }
+.ev-count b { color: var(--k); font: 700 40px/1 var(--font-h); font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+.ev-count span { color: var(--k-2); font: 600 15px var(--font-h); }
+
+/* The HP bar, with a notch where each step sits. */
+.ev-bar { position: relative; }
+.ev-bar .rt-track { height: 16px; padding: 3px; border-radius: var(--r); background: var(--k); overflow: hidden; }
+.ev-bar > i { position: absolute; top: 0; bottom: 0; width: 3px; margin-left: -1.5px; background: var(--k); }
+
+.ev-steps, .ev-lines { margin: 10px 0 0; padding: 0; list-style: none; }
+.ev-line { display: flex; align-items: center; gap: 12px; min-height: 50px; border-bottom: 1px solid var(--rule); }
+.ev-line:last-child { border-bottom: 0; }
+.ev-line-name { flex: 1; min-width: 0; color: var(--k); font: 600 16px var(--font-h); }
+.ev-line.is-done .ev-line-name { color: var(--k-2); }
+.ev-coins { display: inline-flex; align-items: center; gap: 5px; color: var(--k); font: 700 16px var(--font-h); font-variant-numeric: tabular-nums; }
+.ev-coins .coin-i { width: 17px; height: 17px; margin: 0; }
+.ev-note { flex: none; min-width: 84px; color: var(--k-2); font: 600 13.5px var(--font-h); text-align: right; }
+.ev-note.is-done { color: var(--k); }
+.ev-line .solid.sm, .ev-all-line .solid.sm { flex: none; min-width: 84px; }
+.ev-signin { display: flex; align-items: center; gap: 8px; margin: 12px 0 0; color: var(--k-2); font-size: 15px; }
+
+.ev-all-line { display: flex; align-items: center; gap: 12px; margin: 10px 0 0; color: var(--k-2); font-size: 15px; line-height: 1.45; }
+.ev-all-line > span:first-child { flex: 1; min-width: 0; }
+
+.ev-board .rk-list { margin-top: 0; }
+.ev-open { background: transparent; border-style: dashed; border-color: var(--rule-2); }
+.ev-open .rk-place { background: var(--rule-2); }
+.ev-open-seat { margin-left: 14px; color: var(--k-3); font: 600 15px var(--font-h); }
+.ev-mine, .ev-more { margin: 12px 0 0; color: var(--k-2); font-size: 14.5px; line-height: 1.45; }
+.ev-mine { color: var(--k); font: 600 15px var(--font-h); }
+
+.ev-table { width: 100%; max-width: 360px; border-collapse: collapse; font: 600 16px var(--font-h); font-variant-numeric: tabular-nums; }
+.ev-table thead th { padding: 0 0 6px; border-bottom: var(--line-w) solid var(--k); color: var(--k-2); font-size: 13px; font-weight: 700; text-align: left; }
+.ev-table thead th:last-child, .ev-table td { text-align: right; }
+.ev-table tbody th, .ev-table td { padding: 10px 0; border-bottom: 1px solid var(--rule); color: var(--k); font-weight: 600; text-align: left; }
+.ev-table td { font-weight: 700; }
+.ev-table td .coin-i { width: 17px; height: 17px; margin: 0 5px 0 0; vertical-align: -3px; }
+.ev-rules { display: grid; gap: 6px; max-width: 60ch; margin: 14px 0 0; padding: 0 0 0 20px; color: var(--k-2); font-size: 14.5px; line-height: 1.5; }
+
+.ev-last-goal { margin: 0 0 12px; color: var(--k-2); font-size: 14.5px; }
+.ev-last-boards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px 28px; }
+.ev-last-board h4 { margin: 0 0 4px; padding-bottom: 6px; border-bottom: var(--line-w) solid var(--k); color: var(--k); font: 700 15px var(--font-h); letter-spacing: 0; text-transform: none; }
+.ev-last-board ol { margin: 0; padding: 0; list-style: none; }
+.ev-last-board li { display: flex; align-items: center; gap: 10px; min-height: 44px; border-bottom: 1px solid var(--rule); }
+.ev-last-board li:last-child { border-bottom: 0; }
+.ev-last-place { flex: none; width: 18px; color: var(--k-2); font: 700 15px var(--font-h); font-variant-numeric: tabular-nums; }
+.ev-last-who { display: flex; align-items: center; gap: 8px; min-width: 0; color: var(--k); font: 600 15px var(--font-h); text-decoration: none; }
+.ev-last-who .user-face { width: 28px; height: 28px; }
+.ev-last-who span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@media (hover: hover) { .ev-last-who:hover span { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; } }
+
+@media (max-width: 520px) {
+  .ev-hero { gap: 14px; }
+  .ev-pack { width: 84px; }
+  .ev-rule { font-size: 15px; }
+  .ev-count b { font-size: 34px; }
+  .ev-note, .ev-line .solid.sm, .ev-all-line .solid.sm { min-width: 72px; }
+}

@@ -188,9 +188,9 @@
     inset -2px -3px 3px rgb(30 16 2 / 0.4);
 }
 
-/* ---------- house coin artwork: the sparkle, struck (js/coin.js houseFace) ----------
+/* ---------- house coin artwork: a booster pack and three cards, struck (js/coin.js houseFace) ----------
    The beads, rings and legends are vector; the emblem is the relief sheet
-   assets/casino/house-coin-v2.webp (heads left, tails right), clipped to the
+   assets/casino/house-coin-v3.webp (heads left, tails right), clipped to the
    field and laid over it. */
 .cf-art-svg {
   position: absolute;

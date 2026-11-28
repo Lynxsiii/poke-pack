@@ -29,7 +29,7 @@
 .nt-day { padding: 24px 0 4px; border: 0; }
 .nt-date { display: flex; align-items: center; gap: 10px; margin: 0 0 10px; font: inherit; }
 .nt-date .rt-tag { font-size: 14px; font-variant-numeric: tabular-nums; }
-.nt-count { color: var(--k-2); font: italic 700 13px var(--font-h); }
+.nt-count { color: var(--k-2); font: 700 13px var(--font-h); }
 .nt-updates { display: grid; gap: 10px; }
 
 .nt-entry {

@@ -112,7 +112,7 @@
   color: var(--k); font-family: var(--font); font-size: inherit; font-weight: 700;
 }
 .acct-meta .account-title {
-  padding: 1px 8px 1px 7px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k); font: italic 700 12.5px/1.45 var(--font-h);
+  padding: 1px 8px 1px 7px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k); font: 700 12.5px/1.45 var(--font-h);
 }
 .acct-code { color: var(--k-2); font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
 .acct-facts { margin: 12px 0 0; color: var(--k); font-size: 15px; line-height: 1.45; }
@@ -189,7 +189,7 @@
 .pull-tags:empty { display: none; }
 .tag {
   padding: 1px 8px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k);
-  font: italic 700 12px/1.5 var(--font-h); letter-spacing: 0; text-transform: none;
+  font: 700 12px/1.5 var(--font-h); letter-spacing: 0; text-transform: none;
 }
 .tag.new { background: var(--hp-low); color: var(--w0); }
 .tag.rev { background: var(--cy-2); color: var(--on-k); }
@@ -247,7 +247,7 @@
 .look-id b { display: inline-flex; align-items: center; gap: 8px; font: italic 800 26px/1 var(--font-xc); letter-spacing: -0.02em; overflow-wrap: anywhere; }
 .look-id small { color: var(--k-2); font-size: 14px; font-weight: 700; }
 .look-id .account-title {
-  margin-top: 8px; padding: 1px 8px 1px 7px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k); font: italic 700 12.5px/1.45 var(--font-h);
+  margin-top: 8px; padding: 1px 8px 1px 7px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k); font: 700 12.5px/1.45 var(--font-h);
 }
 /* A pick lands on the preview (js/acct-motion.js landPreview): the card settles and the face pops into its frame.
    The tile you chose lands with a small overshoot (markPicks adds .rt-picked). */
@@ -456,7 +456,7 @@ body.no-motion .reward-flash.show span, body.no-motion .reward-flash.show span::
 #view-profile .profile-todo .plate-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 0 0 10px; }
 #view-profile .profile-todo .plate-head h2 { margin: 0; }
 #view-profile .profile-todo .plate-head > span {
-  padding: 1px 8px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k); font: italic 700 13px/1.45 var(--font-h);
+  padding: 1px 8px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k); font: 700 13px/1.45 var(--font-h);
 }
 #view-profile .profile-todo .rows { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
 #view-profile .profile-todo .row-btn {
@@ -544,7 +544,7 @@ body.no-motion .profile-case .loader-tag { animation: none; }
 #view-profile .profile-binder > .panel-empty { margin: 8px 0 14px; }
 #view-profile .profile-section-head { margin-bottom: 14px; }
 #view-profile .profile-section-head > span {
-  flex: none; padding: 1px 8px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k); font: italic 700 13px/1.45 var(--font-h); white-space: nowrap;
+  flex: none; padding: 1px 8px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k); font: 700 13px/1.45 var(--font-h); white-space: nowrap;
 }
 /* The page's own label and links sit on the owner's page tone, which is dark unless they chose cream: the site's
    ink would vanish there. */

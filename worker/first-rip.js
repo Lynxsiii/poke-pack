@@ -113,7 +113,11 @@ export async function handleFirstRip(request, env, deps) {
     if (picked.error) return json({ error: picked.error }, 400);
     const { live } = picked;
     const wrapper = live.wrappers.find((item) => item.id === body.wrapperId) || live.wrappers[0];
-    const pulls = ripPack(live, await loadSetCards(env, request, live));
+    // Rolled from the player's seed pair like any pack they open (worker/fair.js).
+    const catalog = await loadSetCards(env, request, live);
+    const fair = await deps.takeRoll(env, user.id);
+    const pulls = deps.withRandom(fair.stream.unit, () => ripPack(live, catalog));
+    const fairLog = fair.log("packs", null, { setId: live.id, product: "pack" }, { draws: fair.stream.used(), cards: pulls.map((card) => card.id) });
     const id = newId();
     const now = Date.now();
     try {
@@ -128,7 +132,7 @@ export async function handleFirstRip(request, env, deps) {
     }
     let opened;
     try {
-      opened = await openPacks(env, user.id, live, [{ wrapper, pulls }], 0);
+      opened = await openPacks(env, user.id, live, [{ wrapper, pulls }], 0, [], [], { extraStmts: [fairLog] });
     } catch (err) {
       await env.DB.prepare("DELETE FROM first_rips WHERE id = ?").bind(id).run();
       throw err;
