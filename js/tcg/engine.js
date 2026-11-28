@@ -2446,7 +2446,8 @@ const HANDLERS = {
       }
     } else if (op === "evolveFrom") {
       // A card that evolves one of your Pokémon (Rare Candy from the hand, Evosoda from the deck): onto which one.
-      const uid = picked[0];
+      // Only a card still there (an earlier search of the same attack may have taken it).
+      const uid = present[0];
       const spots = uid ? evolveSpots(state, player, defOf(state, uid, defs), defs, waiting.effect.how, waiting.effect.where).filter((s) => waiting.effect.at == null || s === waiting.effect.at) : [];
       if (uid && !spots.length) pile.push(uid);
       else if (spots.length === 1) {
