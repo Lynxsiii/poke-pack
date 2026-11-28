@@ -159,7 +159,8 @@ export function inPlay(state, player) {
   const side = state.players[player];
   const out = [];
   if (side.active) out.push([side.active, ACTIVE]);
-  side.bench.forEach((slot, i) => out.push([slot, i]));
+  // Knock Outs are cleared one by one, so a Bench can hold a gap until they are all counted.
+  side.bench.forEach((slot, i) => slot && out.push([slot, i]));
   return out;
 }
 

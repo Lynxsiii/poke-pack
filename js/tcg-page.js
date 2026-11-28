@@ -36,6 +36,13 @@ import { api } from "./api.js";
 let ME = 0;
 let BOT = 1;
 const BOT_NAME = "House bot";
+/** How hard the house bot plays (js/tcg/bot.js botAction, js/tcg/decks.js buildBotDeck). */
+const LEVELS = [
+  { id: "easy", name: "Easy", note: "The house bot plays a beginner's deck and misses plays." },
+  { id: "normal", name: "Normal", note: "The house bot plays a sound one-prize deck from your main set." },
+  { id: "hard", name: "Hard", note: "The house bot plays the best deck your main set can make, Pokémon ex and V included." },
+];
+const levelName = (id) => LEVELS.find((l) => l.id === id)?.name || "Normal";
 /** The move clock of a match against a friend (worker/tcg.js TCG_TIMING.DECISION_MS). */
 const TCG_MOVE_SECONDS = 90;
 /**
@@ -63,6 +70,8 @@ export function initTcg(deps) {
   let route = { name: "hub" };
   let decks = [];
   let record = { wins: 0, losses: 0 };
+  /** The bot's level for the next match, kept on the device. */
+  let level = "normal";
   let draft = { open: false, format: "standard" };
   let editor = { tab: "cards", query: "", type: "" };
   /** The match on the table: { state, deckId, botSet, sel, sheet, busy, line, setup, shownState, over } */
@@ -87,7 +96,7 @@ export function initTcg(deps) {
     }
   }
   const saveDecks = () => write("decks", decks);
-  const saveMatch = () => !match?.online && write("match", match && match.state.phase !== "over" ? { state: match.state, deckId: match.deckId, botSet: match.botSet, botTheme: match.botTheme || "", lesson: match.lesson ?? null } : null);
+  const saveMatch = () => !match?.online && write("match", match && match.state.phase !== "over" ? { state: match.state, deckId: match.deckId, botSet: match.botSet, botTheme: match.botTheme || "", level: match.level || "normal", lesson: match.lesson ?? null } : null);
 
   /* ---------- loading ---------- */
 
@@ -110,6 +119,8 @@ export function initTcg(deps) {
         d.v = 2;
       }
       record = read("record", record);
+      record.levels ||= {};
+      level = LEVELS.some((l) => l.id === read("level", "")) ? read("level", "") : "normal";
     })().catch((err) => {
       loading = null;
       throw err;
@@ -210,6 +221,7 @@ export function initTcg(deps) {
       </div>
       <section class="tg-block">
         <h2 class="tg-h2">Your decks</h2>
+        ${decks.length ? levelPickHtml() : ""}
         ${decks.length ? decks.map(deckRowHtml).join("") : `<p class="rt-empty tg-none">No decks yet. ${playable ? `You own ${playable} Pokémon you can play.` : "Rip a few packs first: a deck needs Pokémon you own."}</p>`}
         ${draft.open ? draftHtml(playable) : decks.length < MAX_DECKS ? `<button type="button" class="${decks.length ? "ghost" : "solid rt-go"} tg-new" data-new>New deck</button>` : ""}
       </section>
@@ -228,6 +240,19 @@ export function initTcg(deps) {
         ${read("learned", false) ? `<button type="button" class="tlink tg-relearn" data-lesson>Run the lesson again</button>` : ""}
       </section>
     </div>`;
+  }
+
+  /** The house bot's level for the next match: a segmented choice (`data-level`), with that level's record. */
+  function levelPickHtml() {
+    const now = LEVELS.find((l) => l.id === level) || LEVELS[1];
+    const at = record.levels?.[now.id];
+    const tally = at && at.wins + at.losses ? ` You've won ${at.wins} of ${plural(at.wins + at.losses, "match")} on ${now.name}${at.streak > 1 ? `, ${at.streak} in a row` : ""}.` : "";
+    return `<div class="tg-level">
+        <div class="seg tg-seg" role="group" aria-label="House bot level">
+          ${LEVELS.map((l) => `<button type="button" class="seg-btn${l.id === now.id ? " on" : ""}" data-level="${l.id}" aria-pressed="${l.id === now.id}">${l.name}</button>`).join("")}
+        </div>
+        <p class="tg-draft-note">${esc(now.note)}${tally}</p>
+      </div>`;
   }
 
   /** The three tournament formats (js/tcg/formats.js) as a segmented choice; `data-format` sets the draft's or the open deck's. */
@@ -536,7 +561,7 @@ export function initTcg(deps) {
     let botSet = "";
     for (const setId of sets) {
       const list = await deps.loadSet(setId).catch(() => null);
-      botDeck = list && buildBotDeck(list.map((c) => defs(c.id)), deck.format);
+      botDeck = list && buildBotDeck(list.map((c) => defs(c.id)), deck.format, Math.random, { level });
       if (botDeck) {
         botSet = setId;
         break;
@@ -547,13 +572,16 @@ export function initTcg(deps) {
     botSeats();
     // The flip comes before the deal: its winner chooses who goes first without seeing a hand.
     const state = createGame({ decks: [deckList(deck), deckList(botDeck)], names: [deps.playerName(), BOT_NAME], format: deck.format, seed, chooseFirst: true }, defs);
-    match = { state, deckId, botSet, botTheme: botDeck.theme || "", sel: null, sheet: "", busy: false, line: "", setup: { active: null, bench: [] }, opening: true, over: false };
-    if (state.flipWinner === BOT) apply(state, botAction(state, BOT, defs), defs);
+    match = { state, deckId, botSet, botTheme: botDeck.theme || "", level, sel: null, sheet: "", busy: false, line: "", setup: { active: null, bench: [] }, opening: true, over: false };
+    if (state.flipWinner === BOT) apply(state, botMove(state), defs);
     // The bot sets up as soon as there are hands; its cards stay face down until both are ready.
-    if (state.dealt !== false) apply(state, botAction(state, BOT, defs), defs);
+    if (state.dealt !== false) apply(state, botMove(state), defs);
     saveMatch();
     deps.navigate("/play/match");
   }
+
+  /** The bot's next action at the match's level (the lesson's bot always plays it straight). */
+  const botMove = (state) => botAction(state, BOT, defs, { level: match?.lesson != null ? "normal" : match?.level || "normal" });
 
   /** Against the bot you are always seat 0. */
   function botSeats() {
@@ -616,7 +644,7 @@ export function initTcg(deps) {
       return false;
     }
     botSeats();
-    match = { state: saved.state, deckId: saved.deckId, botSet: saved.botSet, botTheme: saved.botTheme || "", lesson: saved.lesson ?? null, sel: null, sheet: "", busy: false, line: "", setup: { active: null, bench: [] }, opening: saved.state.dealt === false, over: false };
+    match = { state: saved.state, deckId: saved.deckId, botSet: saved.botSet, botTheme: saved.botTheme || "", level: saved.level || "normal", lesson: saved.lesson ?? null, sel: null, sheet: "", busy: false, line: "", setup: { active: null, bench: [] }, opening: saved.state.dealt === false, over: false };
     return true;
   }
 
@@ -755,8 +783,10 @@ export function initTcg(deps) {
       return { text, keys: `<button type="button" class="ghost sm" data-act="look">View</button>` };
     }
     const canAttack = usableNow(state).length > 0;
+    // Nothing left but to end the turn (retreating aside): say so, so a turn doesn't stall on a hunt for a move.
+    const stuck = !canAttack && !legal().some((a) => a.type !== "end" && a.type !== "retreat");
     return {
-      text: state.turn === 1 ? "Going first: no attack this turn." : canAttack ? "Tap your Active Pokémon to attack." : "Play cards, then end your turn.",
+      text: state.turn === 1 && !stuck ? "Going first: no attack this turn." : canAttack ? "Tap your Active Pokémon to attack." : stuck ? "Nothing more to play. End your turn." : "Play cards, then end your turn.",
       keys: `<button type="button" class="${canAttack ? "ghost" : "solid"} sm" data-act="end">End turn</button>`,
     };
   }
@@ -805,7 +835,7 @@ export function initTcg(deps) {
     return `<div class="tg-table rt-dark rt-still${myTurn() ? " my-turn" : ""}${coach ? " has-coach" : ""}${pointHand ? " coach-hand" : ""}${pointActive ? " coach-active" : ""}${coach?.want?.({ type: "end" }) || coach?.want?.({ type: "place" }) ? " coach-key" : ""}" data-phase="${real.phase}">
       <div class="tg-bar tg-bar-foe">
         <button type="button" class="tg-leave" data-act="leave" aria-label="Leave the match">${match.leaving ? "Concede?" : "Leave"}</button>
-        <b class="tg-who">${esc(foe.name)}${match.botTheme && !setup ? `<small>${esc(match.botTheme)} deck</small>` : ""}</b>
+        <b class="tg-who">${esc(foe.name)}${match.botTheme && !setup ? `<small>${match.level && match.lesson == null ? `${levelName(match.level)}, ` : ""}${esc(match.botTheme)} deck</small>` : ""}</b>
         ${prizesHtml(state, BOT)}
         <span class="tg-count" title="Cards in hand"><i class="tg-ic hand"></i>${foe.hand.length}</span>
         <span class="tg-count" title="Cards in deck"><i class="tg-ic deck"></i>${foe.deck.length}</span>
@@ -984,7 +1014,7 @@ export function initTcg(deps) {
         <h2>${won ? "Lesson done" : "Lesson over"}</h2>
         <p>${esc(why)} ${won ? "That's the whole loop: Energy, evolve, attack, prizes. Build a deck from your own cards and play it for real." : "Run it again, or build a deck from your own cards and learn as you go."}</p>
         <div class="tg-sheet-keys">
-          <button type="button" class="solid rt-go" data-go="/play">Build a deck</button>
+          <button type="button" class="solid rt-go" data-act="lesson-build">Build a deck</button>
           <button type="button" class="ghost" data-act="again">Run it again</button>
         </div>
       </div>`;
@@ -1001,12 +1031,18 @@ export function initTcg(deps) {
         </div>
       </div>`;
     }
+    // Against the house bot: the level's record, and after a win, the next level up as the next match.
+    const lv = match.level || "normal";
+    const at = record.levels?.[lv];
+    const up = won && LEVELS[LEVELS.findIndex((l) => l.id === lv) + 1];
+    const tally = at && at.wins + at.losses ? `${levelName(lv)}: ${at.wins} won, ${at.losses} lost${at.streak > 1 ? `, ${at.streak} wins in a row` : ""}.` : "";
     return `<div class="tg-sheet-bg"></div>
       <div class="tg-sheet tg-over" role="dialog" aria-label="Match over">
         <h2>${tie ? "A tie" : won ? "You win" : "You lose"}</h2>
         <p>${esc(why)}${span}</p>
+        ${tally ? `<p class="tg-over-tally">${esc(tally)}</p>` : ""}
         <div class="tg-sheet-keys">
-          <button type="button" class="solid rt-go" data-act="again">Play again</button>
+          ${up ? `<button type="button" class="solid rt-go" data-act="again-up">Try ${up.name}</button><button type="button" class="ghost" data-act="again">Play again</button>` : `<button type="button" class="solid rt-go" data-act="again">Play again</button>`}
           <button type="button" class="ghost" data-go="/play">Decks</button>
         </div>
       </div>`;
@@ -1700,8 +1736,15 @@ export function initTcg(deps) {
       return true;
     }
     if (match.lesson != null) write("learned", true);
-    else if (match.state.winner === ME) record.wins += 1;
-    else if (match.state.winner === BOT) record.losses += 1;
+    else if (match.state.winner != null) {
+      // Kept per level too, for the hub and the end of the match. `streak` counts wins in a row at that level.
+      const won = match.state.winner === ME;
+      const at = (record.levels ||= {})[match.level || "normal"] ||= { wins: 0, losses: 0, streak: 0 };
+      if (won) record.wins += 1;
+      else record.losses += 1;
+      at[won ? "wins" : "losses"] += 1;
+      at.streak = won ? (at.streak || 0) + 1 : 0;
+    }
     write("record", record);
     write("match", null);
     paintTable();
@@ -1717,7 +1760,7 @@ export function initTcg(deps) {
       const waiting = state.pending[0];
       const botsMove = waiting ? waiting.player === BOT : state.current === BOT;
       if (!botsMove) return;
-      const action = botAction(state, BOT, defs);
+      const action = botMove(state);
       if (!action) return;
       match.busy = true;
       paintTable();
@@ -2545,7 +2588,7 @@ export function initTcg(deps) {
     }
     if (act === "go-first" || act === "go-second") {
       apply(state, { type: "order", player: ME, first: act === "go-first" }, defs);
-      if (!state.players[BOT].placed) apply(state, botAction(state, BOT, defs), defs);
+      if (!state.players[BOT].placed) apply(state, botMove(state), defs);
       saveMatch();
       match.line = [act === "go-first" ? "You go first." : `${foeName()} goes first.`, ...mulliganLines(state)].join(" ");
       match.opening = false;
@@ -2565,7 +2608,24 @@ export function initTcg(deps) {
     }
     if (act === "rematch" && match.online) return rematchAct("offer");
     if (act === "rematch-no" && match.online) return rematchAct("decline");
+    // From the lesson's end straight to a new deck, the next step.
+    if (act === "lesson-build") {
+      match = null;
+      draft.open = true;
+      return deps.navigate("/play");
+    }
+    if (act === "again-up") {
+      const next = LEVELS[LEVELS.findIndex((l) => l.id === (match.level || "normal")) + 1];
+      if (next) {
+        level = next.id;
+        write("level", level);
+      }
+      const id = match.deckId;
+      match = null;
+      return startMatch(id).then(() => paint());
+    }
     if (act === "again") {
+      level = match.level || level;
       const id = match.deckId;
       match = null;
       return startMatch(id).then(() => paint());
@@ -2691,6 +2751,12 @@ export function initTcg(deps) {
     }
     if (t.closest("[data-cancel]")) {
       draft.open = false;
+      return paint();
+    }
+    const pickLevel = t.closest("[data-level]");
+    if (pickLevel && LEVELS.some((l) => l.id === pickLevel.dataset.level)) {
+      level = pickLevel.dataset.level;
+      write("level", level);
       return paint();
     }
     const format = t.closest("[data-format]");
