@@ -82,7 +82,7 @@ export const FAMILIES = [
   ["swsh-rainbow", 3],
   ["swsh-gallery", 3],
   ["sv-gold", 3],
-  ["sv-shiny", 3],
+  ["sv-shiny", 4],
   ["sv-acespec", 3],
   ["sm-prism", 2],
   ["sm-rainbow", 2],
