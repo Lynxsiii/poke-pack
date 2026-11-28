@@ -90,6 +90,12 @@ export const FAMILIES = [
   ["sv-promo", 4],
   ["swsh-sf-shiny", 3],
   ["swsh-special", 2],
+  ["wotc-reverse", 1],
+  ["pop-reverse", 1],
+  ["me-reverse", 1],
+  ["sm-reverse", 1],
+  ["misc-reverse", 1],
+  ["ex-reverse-plain", 1],
 ];
 
 const search = typeof location !== "undefined" ? location.search : "";
