@@ -51,6 +51,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-shee
     clamp(0%, calc((50% - var(--background-y, 50%)) * 1.6 + 50%), 100%);
   --xysh-lit: max(1, var(--foil-strength, 1));
   --xysh-sand: url("/assets/foil/glitter-fine.webp");
+  --xysh-pool: radial-gradient(farthest-corner circle at var(--pointer-x, 50%) var(--pointer-y, 50%),
+    #000 0%, rgba(0, 0, 0, 0.75) 16%, rgba(0, 0, 0, 0.3) 40%, rgba(0, 0, 0, 0.08) 70%, rgba(0, 0, 0, 0.03) 100%);
 }
 
 /* ---- Sheen: the foil -----------------------------------------------------------------------------------------
@@ -60,7 +62,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-shee
   background-image:
     var(--xysh-spectrum),
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsl(0, 0%, 100%) 0%, hsl(0, 0%, 90%) 24%, hsl(0, 0%, 58%) 60%, hsl(0, 0%, 40%) 100%);
+      hsl(0, 0%, 100%) 0%, hsl(0, 0%, 84%) 18%, hsl(0, 0%, 46%) 44%, hsl(0, 0%, 26%) 75%, hsl(0, 0%, 20%) 100%);
+  /* round 2 (2026-11-28): the pool still held 40 % at the far corner and the per-card review found a pastel or milky
+     wash over the whole art box (Poliwrath xy3-17, Machamp xy3-46, the xy4 promos). It now falls to 20 %: the bands
+     show round the lamp and the far side of the window stays the print. */
   background-size: 300% 300%, 100% 100%;
   background-position: var(--xysh-sweep), center;
   background-repeat: no-repeat, no-repeat;
@@ -128,7 +133,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-shee
   background-repeat: repeat, repeat;
   mix-blend-mode: screen;
   filter: brightness(1.3) contrast(1.6);
-  opacity: calc((0.16 + var(--card-opacity, 0) * 0.34) * var(--xysh-lit));
+  /* round 2: 0.16 + 0.34 -> 0.07 + 0.11; the sand read as glitter specks on top of the art */
+  opacity: calc((0.07 + var(--card-opacity, 0) * 0.11) * var(--xysh-lit));
 }
 
 /* ---- Both finishes: pale art takes the pastel wash --------------------------------------------------------------
@@ -156,7 +162,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-shee
   mask-repeat: no-repeat;
   filter: none;
   mix-blend-mode: multiply;
-  opacity: calc(var(--card-opacity, 0) * 0.45);
+  opacity: calc(var(--card-opacity, 0) * 0.3);
 }
 
 /* ---- Both finishes: the gloss on the varnish -------------------------------------------------------------------
@@ -235,9 +241,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-shee
   mask-position: center;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-  filter: brightness(1.05) saturate(1.25);
+  /* round 2: 0.8 -> 0.42, less saturated: at rest the dots read as blurry coloured blobs on the art */
+  filter: brightness(1) saturate(0.85);
   mix-blend-mode: screen;
-  opacity: calc(0.8 * var(--foil-strength, 1));
+  opacity: calc(0.42 * var(--foil-strength, 1));
 }
 /* Fine sparkle (under the dots): two scales of the glitter tile, white, light only. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-cosmos .foil::before {
@@ -250,7 +257,13 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-shee
   background-blend-mode: normal;
   mix-blend-mode: screen;
   filter: brightness(1.45) contrast(1.7);
-  opacity: calc((0.34 + var(--card-opacity, 0) * 0.5) * var(--xysh-lit));
+  /* round 2: 0.34 + 0.5 -> 0.12 + 0.2, and only round the lamp (the mask): the sparkle covered the whole window as
+     glitter specks ("glitter specks scattered over art lit", 20 promos) and hid the round dots that ARE the pattern */
+  -webkit-mask-image: var(--xysh-pool);
+  mask-image: var(--xysh-pool);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  opacity: calc((0.12 + var(--card-opacity, 0) * 0.2) * var(--xysh-lit));
 }
 /* The round dots, one colour each: the spectrum through the dot texture, a white pool at the light. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-cosmos .foil::after {
@@ -275,7 +288,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-shee
   mask-composite: intersect, add;
   mask-mode: alpha;
   mix-blend-mode: screen;
-  opacity: calc((0.5 + var(--card-opacity, 0) * 0.5) * var(--xysh-lit));
+  /* round 2: 0.5 + 0.5 -> 0.42 + 0.3 */
+  opacity: calc((0.42 + var(--card-opacity, 0) * 0.3) * var(--xysh-lit));
 }
 
 /* ---- Cosmos on pale art (`xysh-pale`, 2026-10-02: Pikachu XY95, then Regirock XY49, Fearow XY57, Salamence XY59) -----
@@ -328,7 +342,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-shee
 }
 /* The sparkle is the photos' main texture on this card: about twice the Cosmos sheet's. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-cosmos.xysh-pale .foil::before {
-  opacity: calc((0.62 + var(--card-opacity, 0) * 0.38) * var(--xysh-lit));
+  opacity: calc((0.34 + var(--card-opacity, 0) * 0.26) * var(--xysh-lit));
 }
 
 /* ---- Cracked Ice (`xysh-ice`: the 24 theme-deck reprints, ids ending -cracked-ice; 2026-11-28) ---------------------
@@ -341,6 +355,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-shee
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-ice {
   --xysi-tint: url("/assets/foil/fam/bw-tinsel-holo/ice-tint-v2.webp");
   --xysi-facets: url("/assets/foil/fam/bw-tinsel-holo/ice-facets-v2.webp");
+  --xysi-pool: radial-gradient(farthest-corner circle at var(--pointer-x, 50%) var(--pointer-y, 50%),
+    #000 0%, rgba(0, 0, 0, 0.8) 18%, rgba(0, 0, 0, 0.35) 42%, rgba(0, 0, 0, 0.1) 70%, rgba(0, 0, 0, 0.04) 100%);
   --xysi-g: calc(var(--pointer-from-left, 0.5) * 50% + var(--pointer-from-top, 0.5) * 50%);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-ice .foil,
@@ -351,8 +367,11 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-shee
   background-repeat: no-repeat;
   background-blend-mode: normal;
   mix-blend-mode: overlay;
-  filter: none;
-  opacity: calc(0.94 * var(--foil-strength, 1));
+    /* 2026-11-28 round 2: the shards sat on the art at 0.94 in their own blue ("tint the Pokemon and sky
+     grey/blue/purple even at rest", "pale shards over Pikachu's face"). Now nearly colourless (saturate 0.2) and a
+     third as strong: a faint cut-glass pattern at rest, and the lamp's shards (.cure) only round the light. */
+  filter: saturate(0.2);
+  opacity: calc((0.3 + var(--card-opacity, 0) * 0.12) * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-ice .foil::before,
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-ice .foil::after {
@@ -369,5 +388,15 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-shee
   background-blend-mode: difference, normal;
   mix-blend-mode: color-dodge;
   filter: invert(1) brightness(0.5263) contrast(19) brightness(0.42);
-  opacity: calc(var(--card-opacity, 0) * var(--foil-strength, 1));
+  opacity: calc(var(--card-opacity, 0) * 0.7 * var(--foil-strength, 1));
+  -webkit-mask-image: var(--xysi-pool), var(--art), var(--foil-map);
+  mask-image: var(--xysi-pool), var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-in, source-over;
+  mask-composite: intersect, intersect, add;
+  -webkit-mask-size: 100% 100%, contain, 100% 100%;
+  mask-size: 100% 100%, contain, 100% 100%;
+  -webkit-mask-position: center, center, center;
+  mask-position: center, center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat, no-repeat;
 }
