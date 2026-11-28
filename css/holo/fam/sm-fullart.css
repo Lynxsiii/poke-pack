@@ -126,6 +126,11 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-full
   --smf-pos: calc(100% - var(--background-x)) var(--background-y);
   --smf-band: clamp(0, calc(0.4 + var(--pointer-from-center) * 1.1), 1);
   --smf-ring-lit: linear-gradient(rgb(96, 96, 100), rgb(96, 96, 100));
+  /* the Supporter's art is pale, so the dodge (pool + etch) clipped it to a milky pastel under the light (Lisia,
+     Diantha, Mina, Whitney): a smaller pool and a heavier veil on the etch than the GX */
+  --smf-hot: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    rgb(12, 12, 12) 0%, rgb(7, 7, 7) 22%, rgb(2, 2, 2) 50%, #000 75%);
+  --smf-etch-veil: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8));
   --smf-sparkle-a: calc(0.06 + var(--pointer-from-center) * 0.1);
   /* the rainbow tint well under full: the app keeps a held card lit, so a full-strength tint reads as a sheet, and at
      0.75 pale Supporters (Faba, Kahili, Mina) were a pastel rainbow wash from edge to edge (site review 2026-11-28) */
