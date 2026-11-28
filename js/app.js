@@ -20,6 +20,7 @@ import {
   BASIC_ENERGY,
   sellValue,
   money,
+  COINS_PER_USD,
   rarityKey,
   setIdentity,
   sealedOffers,
@@ -171,6 +172,8 @@ import { hexToHsl, hslToHex, mixHex } from "./card-accent.js";
 import { cachedCardAccents, sampleCardAccents } from "./card-art-accent.js?v=1";
 import { initBinderEditor } from "./binder-editor.js?v=6";
 import { renderNotesPage } from "./notes-page.js?v=4";
+import { initThisWeek } from "./this-week.js?v=1";
+import { initLiveRips } from "./live-rips.js?v=1";
 import { renderLegalPage, LEGAL_TITLES } from "./legal-page.js?v=9";
 import { ageFieldsHtml, agreeRowHtml, readAgeFields, ageBlocked, blockAge, UNDERAGE_HTML, syncTermsSheet } from "./terms-sheet.js?v=1";
 
@@ -2848,6 +2851,18 @@ function binderGo(target) {
   }
 }
 let binderMark = null;  // { i, kind: "in" | "out" }: the pocket a card just went into or came out of
+/** Open the binder on the page holding `cardId`, in Arrange, with its pocket marked (the inspector's "Take it out" link). */
+function openBinderAt(cardId) {
+  const ids = new Set(dexIds(cardId));
+  const at = (state.binder || []).findIndex((slot) => slot && ids.has(slot.id));
+  if (at < 0) return;
+  binderOpen = true;
+  binderSpread = binderViewOf(Math.floor(at / BINDER_PAGE));
+  binderArranging = true;
+  binderHolding = null;
+  binderMark = { i: at, kind: "in", reveal: true };
+  try { sessionStorage.setItem("pp-binder-open", "1"); } catch { /* not kept */ }
+}
 let binderPicking = null; // slot index awaiting a card, or null
 
 function binderPageCount() {
@@ -3229,6 +3244,7 @@ function renderBinder() {
   if (mark) {
     const at = els.binderBody.querySelector(mark.kind === "in" ? `[data-unpocket="${mark.i}"]` : `[data-pocket="${mark.i}"]`);
     (mark.kind === "in" ? at?.closest(".pocket") : at)?.classList.add(mark.kind === "in" ? "is-placed" : "is-cleared");
+    if (mark.reveal) requestAnimationFrame(() => at?.closest(".pocket")?.scrollIntoView({ block: "center", behavior: "auto" }));
   }
   if (binderPicking != null) {
     cardPicker.mount(els.binderBody);
@@ -4030,6 +4046,8 @@ function renderHome() {
   // the set on show and its chase cards, then the player's binder. Odds live on
   // the set page, older sets in All sets, pulls on the account page, chat on Social.
   els.homeBody.innerHTML = trainer ? `<div class="home-grid">${binder}</div>` : "";
+  liveRips.render();
+  thisWeek.render();
 }
 
 function formatWhen(ts) {
@@ -5760,8 +5778,8 @@ function renderSettings() {
   const feedRow = activeTrainer()
     ? `<label class="set-row toggle-row">
         <span class="set-copy">
-          <b>Share big pulls on Discord</b>
-          <small>A pull worth $100 or more, a Special Illustration Rare or better, or a Black Label 10 is posted in our Discord with your handle. Turn it off to stay out of the feed.</small>
+          <b>Share big pulls</b>
+          <small>A pull worth $100 or more, a Special Illustration Rare or better, or a Black Label 10 shows in Live rips on Home and is posted in our Discord, with your handle. Turn it off to stay out of both.</small>
         </span>
         <input type="checkbox" data-feed-share ${activeTrainer().feedShare === false ? "" : "checked"} />
         <i class="switch" aria-hidden="true"></i>
@@ -8380,13 +8398,13 @@ function inspectSellRow(card) {
   const free = freeRawQty(card.id);
   // Every raw copy pocketed: a plate stands where the Sell key was and says it all. Otherwise one line above the keys.
   const allLocked = count > 0 && free < 1;
-  const lockNote = pocketed && !allLocked ? binderLockNote(pocketed, count + slabs.length) : "";
+  const lockNote = pocketed && !allLocked ? binderLockNote(pocketed, count + slabs.length, card.id) : "";
   return `<div class="pc-sell${pocketed ? " is-pocketed" : ""}">
     <span class="pc-own">${own}</span>${lockNote}
     <span class="pc-actions">
       ${count > 0 ? `${free > 0 ? `<button type="button" class="solid pc-sell-btn" data-inspect-sell="${esc(heldId(card.id))}">
         Sell one for <span class="pc-sell-value">${coinAmount(value)}</span>
-      </button>` : `<span class="pc-locked" role="note"><i class="pc-locked-mark">${LOCK_GLYPH}</i><span class="pc-locked-words"><b>Locked in your binder</b><small><a href="/binder">Take ${count === 1 ? "it" : "one"} out</a> to sell, stake or trade it.</small></span></span>`}
+      </button>` : `<span class="pc-locked" role="note"><i class="pc-locked-mark">${LOCK_GLYPH}</i><span class="pc-locked-words"><b>Locked in your binder</b><small><a href="/binder" data-binder-card="${esc(card.id)}">Take ${count === 1 ? "it" : "one"} out</a> to sell, stake or trade it.</small></span></span>`}
       <a class="ghost pc-grade-btn" href="${esc(gradeHref)}">Send for grading</a>` : ""}
       ${inspectShowcaseBtn(card)}
     </span>
@@ -8395,11 +8413,11 @@ function inspectSellRow(card) {
 
 const LOCK_GLYPH = `<svg class="lock-glyph" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 7V5.2a3.5 3.5 0 0 1 7 0V7" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 7h10v7H3z" fill="currentColor"/></svg>`;
 /** "1 is locked in your binder", worded for how many of the copies the pockets hold. */
-function binderLockNote(pocketed, owned) {
+function binderLockNote(pocketed, owned, cardId = "") {
   const n = Math.min(pocketed, owned);
   const words = n >= owned ? (owned === 1 ? "It's in your binder, so it's locked" : "They're all in your binder, so they're locked")
     : `${num(n)} ${n === 1 ? "is" : "are"} in your binder, so ${n === 1 ? "it's" : "they're"} locked`;
-  return `<span class="pc-lock-note">${LOCK_GLYPH}<span>${words}. <a href="/binder">Take ${n === 1 ? "it" : "them"} out</a> to sell, stake or trade.</span></span>`;
+  return `<span class="pc-lock-note">${LOCK_GLYPH}<span>${words}. <a href="/binder"${cardId ? ` data-binder-card="${esc(cardId)}"` : ""}>Take ${n === 1 ? "it" : "them"} out</a> to sell, stake or trade.</span></span>`;
 }
 
 /** The player's slabs of this card, as small cases that open on the grading page. */
@@ -8850,7 +8868,11 @@ document.addEventListener("click", (e) => {
   e.preventDefault();
   if (next === "auth") openAuth();
   else if (setIdFromPath(url.pathname)) playSet(setIdFromPath(url.pathname));
-  else setView(next);
+  else {
+    // A link to one update (Home's "This week"): the notes page opens it once it is on screen.
+    if (next === "notes" && url.hash.startsWith("#note-")) notesState.jump = decodeURIComponent(url.hash.slice(1));
+    setView(next);
+  }
 });
 
 window.addEventListener("popstate", () => {
@@ -10593,7 +10615,14 @@ els.dexGrid.addEventListener("click", (e) => {
 els.inspectClose.addEventListener("click", () => closeDialog(els.inspect));
 els.inspect.addEventListener("click", (e) => {
   // The lock note's "Take it out" link: the binder is under this sheet, so the sheet closes and the link carries on.
-  if (e.target.closest('.pc-sell a[href="/binder"]')) { closeDialog(els.inspect); return; }
+  const takeOut = e.target.closest('.pc-sell a[href="/binder"]');
+  if (takeOut) {
+    // Straight to the page holding that card, in Arrange with the card marked, so the × is one tap away.
+    if (takeOut.dataset.binderCard) openBinderAt(takeOut.dataset.binderCard);
+    closeDialog(els.inspect);
+    if (view === "binder") renderBinder();
+    return;
+  }
   if (e.target !== els.inspect) return;
   if (Date.now() - inspectOpenedAt < 500) return;
   closeDialog(els.inspect);
@@ -11516,6 +11545,39 @@ async function openIndexedCard({ id, setId }) {
     toast("Couldn't open that card.");
   }
 }
+
+// Home's "This week" (js/this-week.js): the newest big update and the week's price moves.
+const thisWeek = initThisWeek({
+  root: document.getElementById("home-week"),
+  esc,
+  coinAmount,
+  coinText,
+  toCoins: (usd) => Math.max(0.01, money(Number(usd) * COINS_PER_USD)),
+  openCard: openIndexedCard,
+  loadMovers: () =>
+    fetch("/api/prices/movers").then((res) => {
+      if (!res.ok) throw new Error(res.status);
+      return res.json();
+    }),
+  notes: () => patchNotes,
+});
+
+// Home's "Live rips" (js/live-rips.js): the newest big pulls from trainers who share them.
+const liveRips = initLiveRips({
+  root: document.getElementById("home-rips"),
+  esc,
+  coinAmount,
+  coinText,
+  toCoins: (usd) => Math.max(0.01, money(Number(usd) * COINS_PER_USD)),
+  // A card's set file is named by the front of its id ("me5-116" is in data/me5.json).
+  openCard: (id) => openIndexedCard({ id, setId: getSet(String(id).split("-")[0]).id }),
+  load: () =>
+    fetch("/api/rips/live").then((res) => {
+      if (!res.ok) throw new Error(res.status);
+      return res.json();
+    }),
+  onScreen: () => view === "home" && document.visibilityState === "visible" && packPhase === "idle",
+});
 
 const siteSearch = initSearch({
   root: document.getElementById("site-search"),
