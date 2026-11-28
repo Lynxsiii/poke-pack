@@ -85,7 +85,7 @@ export const FAMILIES = [
   ["sv-shiny", 4],
   ["sv-acespec", 3],
   ["sm-prism", 2],
-  ["sm-rainbow", 2],
+  ["sm-rainbow", 3],
   ["sv-prismatic", 2],
   ["sv-promo", 4],
   ["swsh-sf-shiny", 3],
