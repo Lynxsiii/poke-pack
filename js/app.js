@@ -6102,6 +6102,30 @@ function keepRailOpen() {
 }
 railQuery.addEventListener?.("change", keepRailOpen);
 
+// The bar's places: hover drops a place's pages on a computer with a mouse. On a touch screen the
+// first tap on a place opens its list and the second goes there. "More" has no page, so it only opens.
+const barNav = document.querySelector(".site-header .nav");
+const noHover = window.matchMedia("(hover: none)");
+function closeBarGroups(except) {
+  barNav?.querySelectorAll(".nav-grp.is-open").forEach((grp) => { if (grp !== except) grp.classList.remove("is-open"); });
+}
+barNav?.addEventListener("click", (e) => {
+  if (!railQuery.matches) return;
+  const head = e.target.closest(".nav-grp > .nav-area");
+  if (!head) { closeBarGroups(); return; }
+  const grp = head.parentElement;
+  const isMore = head.classList.contains("nav-grp-more");
+  if (isMore) { closeBarGroups(grp); grp.classList.toggle("is-open"); return; }
+  if (noHover.matches && !grp.classList.contains("is-open")) {
+    e.preventDefault(); e.stopPropagation();
+    closeBarGroups(grp); grp.classList.add("is-open");
+    return;
+  }
+  closeBarGroups();
+}, true);
+document.addEventListener("click", (e) => { if (!e.target.closest?.(".site-header .nav-grp")) closeBarGroups(); });
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeBarGroups(); });
+
 function paintNav(current) {
   const navView =
     current === "auth" || current === "profile" ? "account" : current === "battles" ? "casino" : current === "vault" || current === "binder" ? "collection" : current === "shop" ? "catalog"
