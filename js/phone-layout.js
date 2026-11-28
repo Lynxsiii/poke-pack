@@ -129,3 +129,20 @@ document.addEventListener("click", (e) => {
   const head = e.target.closest(".trades-view .tr-rules .plate-head");
   if (head) head.closest(".tr-rules").classList.toggle("is-open");
 });
+
+// Your picture sits in the middle of the tab bar on a phone, where the thumb
+// rests, and opens the menu from there. It goes back to the top bar on wider screens.
+{
+  const me = document.getElementById("hud-me");
+  const bar = document.querySelector("nav.tabbar");
+  const rip = document.getElementById("tab-rip");
+  const head = document.querySelector(".site-header .header-right");
+  if (me && bar && rip && head) {
+    const place = () => {
+      if (phone.matches) { if (me.parentElement !== bar) bar.insertBefore(me, rip); }
+      else if (me.parentElement !== head) head.prepend(me);
+    };
+    phone.addEventListener("change", place);
+    place();
+  }
+}
