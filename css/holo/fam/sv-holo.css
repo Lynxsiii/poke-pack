@@ -37,10 +37,14 @@
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-holo.fam-sv-holo.fam-sv-holo.fam-sv-holo.foil-svholo.has-foil-map {
   /* The pool: full under the light, black 58% of the way to the far corner. */
   --svh-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    #fff 0%, #e0e0e0 14%, #9a9a9a 32%, #484848 50%, #000 68%);
+    #fff 0%, #ececec 16%, #b4b4b4 36%, #5c5c5c 56%, #000 76%);
   /* The bars: a 200%-tall layer, one soft bar every 5.75% of it (11.5% of the card), walking down with the tilt. */
   --svh-bars: repeating-linear-gradient(180deg,
-    #6a6a6a 0%, #8c8c8c 1.5%, #fff 2.875%, #8c8c8c 4.25%, #6a6a6a 5.75%);
+    #4c4c4c 0%, #7a7a7a 1.4%, #fff 2.875%, #7a7a7a 4.35%, #4c4c4c 5.75%);
+  /* The screened copy's bars: black between the bars, so the screen lifts the darks only on the bars (fine detail, not
+     a haze: 2026-11-28 follow-up). */
+  --svh-bars-g: repeating-linear-gradient(180deg,
+    #0c0c0c 0%, #444 1.4%, #fff 2.875%, #444 4.35%, #0c0c0c 5.75%);
   --svh-bars-y: calc((0.3 + var(--py, 0.5) * 0.115) * 100%);
   /* The hue runs along each bar; pale, so it reads as a sheen. */
   --svh-spectrum-x: calc((0.1 + var(--px, 0.5) * 0.8) * 100%);
@@ -59,7 +63,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-holo.fam-sv-holo.fam-sv-holo.fam-sv-hol
   background-blend-mode: screen, multiply, multiply, normal;
   filter: none;
   mix-blend-mode: overlay;
-  opacity: calc((0.25 + var(--card-opacity) * 0.6) * var(--foil-strength, 1));
+  opacity: calc((0.4 + var(--card-opacity) * 0.6) * var(--foil-strength, 1));
 }
 /* Resting: one faint pale band across the upper art, nothing else. */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-holo.fam-sv-holo.fam-sv-holo.fam-sv-holo.foil-svholo.has-foil-map:not(.lit):not(.settling) .foil {
@@ -79,21 +83,24 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-holo.fam-sv-holo.fam-sv-holo.fam-sv-hol
   background-position: var(--seed-pos), calc(var(--seed-x, 0.5) * -100%) calc(var(--seed-y, 0.5) * 100%);
   background-repeat: repeat;
   background-blend-mode: screen, normal;
-  filter: saturate(0.2);
-  mix-blend-mode: overlay;
-  opacity: 0.5;
+  /* 2026-11-28 follow-up: the grain was overlaid at half strength and could not be seen at phone size. `::before`
+     blends inside `.foil`'s own group, so a dark fleck there cancels the pool: the points are screened onto the group
+     (they only raise it above grey), near neutral (saturation 0.3), and still only inside the pool. */
+  filter: saturate(0.3) contrast(2.3) brightness(1.1);
+  mix-blend-mode: screen;
+  opacity: 1;
   -webkit-mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    #000 0%, hsla(0, 0%, 0%, 0.45) 30%, hsla(0, 0%, 0%, 0) 55%);
+    #000 0%, hsla(0, 0%, 0%, 0.7) 30%, hsla(0, 0%, 0%, 0.25) 52%, hsla(0, 0%, 0%, 0) 72%);
   mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    #000 0%, hsla(0, 0%, 0%, 0.45) 30%, hsla(0, 0%, 0%, 0) 55%);
+    #000 0%, hsla(0, 0%, 0%, 0.7) 30%, hsla(0, 0%, 0%, 0.25) 52%, hsla(0, 0%, 0%, 0) 72%);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-holo.fam-sv-holo.fam-sv-holo.fam-sv-holo.foil-svholo.has-foil-map.svh-late .foil::before {
-  opacity: 0.62;
+  opacity: 1;
 }
 /* A soft hot spot under the light. */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-holo.fam-sv-holo.fam-sv-holo.fam-sv-holo.foil-svholo.has-foil-map .foil::after {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(0, 0%, 100%, 0.22) 0%, hsla(0, 0%, 100%, 0.08) 22%, hsla(0, 0%, 100%, 0) 42%);
+    hsla(0, 0%, 100%, 0.14) 0%, hsla(0, 0%, 100%, 0.05) 20%, hsla(0, 0%, 100%, 0) 38%);
   background-size: 100% 100%;
   background-repeat: no-repeat;
   mix-blend-mode: normal;
@@ -110,14 +117,14 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-holo.fam-sv-holo.fam-sv-holo.fam-sv-hol
   mask-composite: intersect, add;
   -webkit-mask-size: contain, 100% 100%;
   mask-size: contain, 100% 100%;
-  background-image: var(--svh-pool), var(--svh-bars), var(--svh-spectrum);
+  background-image: var(--svh-pool), var(--svh-bars-g), var(--svh-spectrum);
   background-size: 100% 100%, 100% 200%, 170% 100%;
   background-position: center, 50% var(--svh-bars-y), var(--svh-spectrum-x) 50%;
   background-repeat: no-repeat, repeat-y, no-repeat;
   background-blend-mode: multiply, multiply, normal;
   mix-blend-mode: screen;
   filter: none;
-  opacity: calc(var(--card-opacity) * 0.26 * var(--foil-strength, 1));
+  opacity: calc(var(--card-opacity) * 0.95 * var(--foil-strength, 1));
 }
 
 /* ---- Faces whose assets fight the foil ---------------------------------------------------------------------------- */
@@ -127,5 +134,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-holo.fam-sv-holo.fam-sv-holo.fam-sv-hol
 }
 /* sv10-96-prerelease: the scan already holds the real card's sparkle. */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-holo.fam-sv-holo.fam-sv-holo.fam-sv-holo.foil-svholo.has-foil-map:is(.svh-rectmap, .svh-baked) .foil::before {
-  opacity: 0.15;
+  opacity: 0.9;
+}
+/* its black star border and dark window take little from the overlay: the screened bars a step stronger */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-holo.fam-sv-holo.fam-sv-holo.fam-sv-holo.foil-svholo.has-foil-map.svh-baked .glare {
+  opacity: calc(var(--card-opacity) * 1 * var(--foil-strength, 1));
 }
