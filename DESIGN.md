@@ -210,10 +210,12 @@ pseudo-element, or slant the element and counter-slant its one child
   raised ink Rip key, Collection, Casino). The active tab is ink with a cyan
   icon. Your picture at the top left opens the menu sheet: every other page,
   grouped.
-- Computers: a white side menu with an ink line down its right edge. Home,
-  Search, then each group's name with its pages under it. The page you are on
-  stands on a slanted ink plate with a yellow edge. Coins, Claim and you sit
-  at the top right of the page. The menu stays open (`keepRailOpen()`).
+- Computers: one top bar. The logo, then Home, Packs, Collection, Casino,
+  Community and More as plain words (no icons), Search, and coins, Claim and
+  you at the right end. A place's other pages drop under its name on hover,
+  on keyboard focus, or on a first tap on a touch screen (`.nav-grp`,
+  `.nav-sub`). The place you are in stands on a slanted ink plate. Never
+  bring back a side menu: a column of twenty links reads as an admin tool.
 - The groups have no colours. `body[data-area]` and `body[data-view]` (set by
   `js/app.js`) exist for layout only.
 
