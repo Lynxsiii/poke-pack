@@ -22,7 +22,10 @@
  * Research and what changed: .claude/skills/card-textures/reference/fam-me-holo.md.
  */
 
-const ME_ID = /^me\d(pt5)?-/;
+// me55 too since 2026-11-28: the 30th Celebration's holo Rares and Cosmos promos print the
+// same TCG Live foils (SV_HOLO, SUN_PILLAR, COSMOS) and were still on celebration.css / promos.css, where the site
+// review failed all 18 Rares ("saturated rainbow wash plus grain") and all 7 Cosmos promos ("shows nothing lit").
+const ME_ID = /^me(\d(pt5)?|55)-/;
 const COSMOS_DIR = "assets/foil/fam/me-holo/cosmos/";
 
 /* Pixel cosmos maps (scripts/fam/me-holo/cosmos_maps.py): drawn map min the plain print's TCG Live map where one exists
@@ -106,6 +109,8 @@ export function kindOf(card) {
   // Every ME-era cosmos promo is pixel cosmos (js/foil-maps.js pixelCosmos()).
   if (card.rarity === "Cosmos") return "cosmos";
   if (card.finish === "scodix") return "";
+  // The 30th Celebration's Double Rares stay on celebration.css (13 of 14 judged good there, 2026-11-28).
+  if (card.rarity === "Double Rare" && String(card.id).startsWith("me55-")) return "";
   if (card.rarity === "Double Rare") {
     // foil-ex foil-tera (isTeraFoil in js/app.js), then foil-ex foil-sunpillar: the etch map tells a Mega ex from a regular ex.
     if ((card.subtypes || []).includes("Tera")) return "mega";

@@ -18,6 +18,11 @@
    - stars-v1.webp: the Classic Collection border's puffy flat-colour stars (red, orange, yellow, green, cyan).
    - flecks-warm-v1.webp: the Classic border's coarse warm flecks (gold, orange, red, yellow; a little green, cyan).
    - dots-v1.webp: the Classic art background's round confetti, as a mask (the colour comes from the CSS bands).
+   - confetti-v2.webp (2026-11-28, replaces dots-v1 in the sheet): the same confetti as sparse, soft-edged round dots
+     each in its own light iridescent colour (gold, white-green, cyan, blue, orange, pink), big enough to read as
+     round at phone size (0.6-1.1% of the card when the tile is drawn at 44% of it) and covering about 6% of the
+     area, so the painting leads. The site review of 2026-11-28 read dots-v1 (a third of the area, 2-4 device pixels)
+     as dither noise burying the art.
 
     python3 .claude/skills/card-textures/scripts/fam/me55/make_me55_maps.py            # everything
     python3 .claude/skills/card-textures/scripts/fam/me55/make_me55_maps.py --tiles    # tiles only
@@ -290,6 +295,50 @@ def tile_dots(rng):
     rgba.save(os.path.join(OUT, "dots-v1.webp"), lossless=True)
 
 
+def tile_confetti(rng):
+    """Sparse round iridescent confetti, colour in the tile: every channel at or above 50% so a dot only adds light
+    in a hard-light group. Drawn at 44% of the card: 1% of the card is 11.6 px here."""
+    size = 512
+    ss = 4
+    big = np.zeros((size * ss, size * ss, 4), np.float32)
+    pal = [(48, 1.0, 0.80), (40, 1.0, 0.76), (80, 0.9, 0.82), (165, 0.9, 0.80), (195, 1.0, 0.78), (215, 1.0, 0.80),
+           (25, 1.0, 0.76), (330, 0.9, 0.84), (0, 0.0, 0.96)]
+    pw = [0.2, 0.1, 0.1, 0.12, 0.14, 0.08, 0.08, 0.08, 0.1]
+    pts = []
+    tries = 0
+    while len(pts) < 150 and tries < 20000:
+        tries += 1
+        x, y = rng.uniform(0, size), rng.uniform(0, size)
+        r = rng.uniform(3.4, 6.4)
+        if all(min(abs(x - a), size - abs(x - a)) ** 2 + min(abs(y - b), size - abs(y - b)) ** 2 > (r + c + 5) ** 2 for a, b, c in pts):
+            pts.append((x, y, r))
+    yy, xx = np.mgrid[0:size * ss, 0:size * ss].astype(np.float32)
+    for (x, y, r) in pts:
+        h, s_, l = pal[int(rng.choice(len(pal), p=pw))]
+        import colorsys
+        col = colorsys.hls_to_rgb(h / 360.0, l, s_)
+        a_peak = rng.uniform(0.55, 1.0)
+        for ox in (-size, 0, size):
+            for oy in (-size, 0, size):
+                cx, cy = (x + ox) * ss, (y + oy) * ss
+                R = r * ss
+                if cx < -R * 2 or cy < -R * 2 or cx > size * ss + R * 2 or cy > size * ss + R * 2:
+                    continue
+                x0, x1 = int(max(0, cx - R - 2)), int(min(size * ss, cx + R + 3))
+                y0, y1 = int(max(0, cy - R - 2)), int(min(size * ss, cy + R + 3))
+                if x1 <= x0 or y1 <= y0:
+                    continue
+                d = np.hypot(xx[y0:y1, x0:x1] - cx, yy[y0:y1, x0:x1] - cy)
+                # a soft-edged disc: full to 70% of the radius, feathered to the rim
+                a = np.clip((R - d) / (R * 0.3), 0, 1) * a_peak
+                sl = big[y0:y1, x0:x1]
+                m = a > sl[..., 3]
+                sl[m, 0], sl[m, 1], sl[m, 2] = col
+                sl[..., 3] = np.maximum(sl[..., 3], a)
+    img = Image.fromarray(np.round(np.clip(big, 0, 1) * 255).astype(np.uint8), "RGBA").resize((size, size), Image.LANCZOS)
+    img.save(os.path.join(OUT, "confetti-v2.webp"), lossless=True)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--tiles", action="store_true", help="tiles only")
@@ -303,7 +352,8 @@ def main():
     tile_stars(rng)
     tile_flecks_warm(rng)
     tile_dots(rng)
-    print("tiles: ice-v1, flakes-gold-v1, rings-v1, sparkle-v1, stars-v1, flecks-warm-v1, dots-v1")
+    tile_confetti(np.random.default_rng(5532))
+    print("tiles: ice-v1, flakes-gold-v1, rings-v1, sparkle-v1, stars-v1, flecks-warm-v1, dots-v1, confetti-v2")
     if not args.tiles:
         stretched_maps()
 
