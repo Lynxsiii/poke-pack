@@ -41,11 +41,11 @@ import {
   SET_CATEGORIES,
 } from "./catalog.js";
 import { dexId, dexIds, foldCopies, homeSetId, isBoxPromoId, promoHomeOf } from "./card-home.js";
-import { createCardPicker } from "./card-picker.js?v=3";
+import { createCardPicker } from "./card-picker.js?v=4";
 import { HIT_RARITIES, canPullReverse, isHit, tallyRarity } from "./engine.js";
-import { initRadio } from "./radio.js?v=5";
+import { initRadio } from "./radio.js?v=6";
 import { createTear } from "./tear.js?v=2";
-import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends, paintLounge } from "./social.js?v=7";
+import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends, paintLounge } from "./social.js?v=8";
 import { hubHeadHtml, socialTabFromPath, showEventsTab } from "./social-hub.js?v=4";
 import { renderEvents, eventsMayShow } from "./events-page.js?v=1";
 import { renderRankings, standingLine } from "./rankings.js?v=9";
@@ -99,7 +99,7 @@ function paintSetSlab(viewId, set) {
 }
 import { bannerBlockHtml } from "./mastery-banner.js";
 import { masteryShelfProfileHtml } from "./mastery-shelf.js";
-import * as questArea from "./quest-area.js?v=12";
+import * as questArea from "./quest-area.js?v=13";
 import * as levelUi from "./level-ui.js";
 import { rollFigures, growBars, flyCoins, markPicks, landPreview } from "./acct-motion.js";
 import { avatarPickerHtml, initAvatarPicker, resetAvatarPicker } from "./avatar-picker.js";
@@ -140,14 +140,14 @@ import {
 import { api, ApiError } from "./api.js";
 import { THEMES, canUseTheme, resolveLook } from "./themes.js?v=2";
 import { equippedCoin, gearItem, normalizeGear } from "./gear.js?v=3";
-import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=21";
+import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=22";
 import { initBattles } from "./battles.js?v=12";
 import { initCasino } from "./casino.js?v=38";
 import { coinOf } from "./coin.js?v=9";
 // grading
-import { initGrading, GRADING_ROUTE, CERT_ROUTE } from "./grading-page.js?v=23";
+import { initGrading, GRADING_ROUTE, CERT_ROUTE } from "./grading-page.js?v=24";
 // trades
-import { initTrades, TRADES_ROUTE } from "./trades-page.js?v=9";
+import { initTrades, TRADES_ROUTE } from "./trades-page.js?v=10";
 import { coinTag } from "./battle-kit.js";
 import { coinText, coinAmount, COIN_I } from "./money.js?v=4";
 import { receiptHtml, pullRow } from "./receipt.js?v=4";
@@ -160,8 +160,8 @@ import { initVault } from "./vault-page.js?v=11";
 import { initBatchOpen } from "./batch-open.js?v=8";
 import { cartEligible } from "./orders-rules.js?v=1";
 import { initSearch } from "./search.js?v=9";
-import { initWishlist } from "./wishlist.js?v=4";
-import { initSecurity, securityTabHtml, resetSecurity, securityChanged, finishDiscordReturn, startTwoStep, inTwoStep, endTwoStep, twoStepAuthHtml, twoStepHandle } from "./account-security.js?v=1";
+import { initWishlist } from "./wishlist.js?v=5";
+import { initSecurity, securityTabHtml, resetSecurity, securityChanged, finishDiscordReturn, startTwoStep, inTwoStep, endTwoStep, twoStepAuthHtml, twoStepHandle } from "./account-security.js?v=2";
 import { createShareSheet, pullUrl } from "./share-pull.js?v=5";
 // binder looks: the /binder cover, the customiser and the owner's look on a profile
 import { binderObjectHtml, applyBinderLook } from "./binder-object.js";

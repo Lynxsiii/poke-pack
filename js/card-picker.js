@@ -130,7 +130,7 @@ export function createCardPicker(deps) {
         ${head}
         <div class="picker-find">
         <label class="picker-search">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"/><path d="m15 15 5 5"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-search"/></svg>
           <input type="search" data-picker-q value="${esc(st.query)}" placeholder="Search name, set or number" aria-label="Search your spare cards"
             enterkeyhint="search" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" />
           <button type="button" class="picker-clear-x" data-picker-clear-q aria-label="Clear search"${st.query ? "" : " hidden"}>
@@ -138,7 +138,7 @@ export function createCardPicker(deps) {
           </button>
         </label>
         <button type="button" class="picker-filter-toggle" data-picker-filters aria-expanded="${filtersOpen}" aria-label="Filters"${narrowed() ? " data-active" : ""}>
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-settings"/></svg>
         </button>
         </div>
       </div>

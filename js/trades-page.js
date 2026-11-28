@@ -64,7 +64,7 @@ function slideThumb(keys, from) {
   keys.style.setProperty("--i", to);
 }
 
-const SWAP_ICON = '<svg class="tr-swap" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14M15.5 4.5 19 8l-3.5 3.5M19 16H5M8.5 12.5 5 16l3.5 3.5"/></svg>';
+const SWAP_ICON = '<svg class="tr-swap" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 8h14M15.5 4.5 19 8l-3.5 3.5M19 16H5M8.5 12.5 5 16l3.5 3.5"/></svg>';
 
 export function initTrades(deps) {
   const root = deps.root;
