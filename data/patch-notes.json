@@ -1,5 +1,34 @@
 [
   {
+    "id": "2026-11-28-profile-pictures-account",
+    "date": "2026-11-28",
+    "title": "Every Pokémon as your picture, and a simpler account page",
+    "summary": "Pick from 1,307 pictures in three styles, and edit your whole look on one screen.",
+    "groups": [
+      {
+        "title": "Profile pictures",
+        "items": [
+          "Your picture can now be any Pokémon, 1,025 of them, plus Megas, regional forms and other forms. That is 1,307 pictures, up from 200.",
+          "Shiny pictures are built and on the way. You will have to earn them, and the Shiny switch shows Soon until then.",
+          "Three styles: Art, Pixel and Animated. Animated pictures move on your profile and trainer card and hold still in lists and chat. They also hold still if you turned motion off.",
+          "Pictures are sorted by generation, with groups for Mega, Regional and Forms, and you can search by name or Pokédex number.",
+          "Fixed: picking a picture threw the page and the list back to the top. Now only the picture changes."
+        ]
+      },
+      {
+        "title": "Account page",
+        "items": [
+          "The account page has one row of five tabs: Overview, Levels, Quests, Badges and Mastery.",
+          "Profile, Look and Layout are now one Edit profile screen with a tab each for Picture, Frame, Banner, Name and Page. Your trainer card stays in view while you pick.",
+          "Security has its own screen, reached from your trainer card.",
+          "Edit profile is in the menu under your name.",
+          "Removed Surprise me, Swap banner colours and the extra Copy link buttons.",
+          "Fixed the picture turning egg shaped in the Page preview when you wear a frame."
+        ]
+      }
+    ]
+  },
+  {
     "id": "2026-11-28-account-security",
     "date": "2026-11-28",
     "title": "Account security: two-step sign-in, your devices, and Discord linking",

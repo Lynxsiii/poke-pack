@@ -73,7 +73,7 @@
     <link rel="stylesheet" href="css/binder/flipbook.css?v=1" />
     <link rel="stylesheet" href="css/pages/account.css?v=21" />
     <link rel="stylesheet" href="css/pages/rankings.css?v=5" />
-    <link rel="stylesheet" href="css/pages/profile-look.css?v=10" />
+    <link rel="stylesheet" href="css/pages/profile-look.css?v=11" />
     <link rel="stylesheet" href="css/pages/extras.css?v=22" />
     <link rel="stylesheet" href="css/pages/notes.css?v=3" />
     <link rel="stylesheet" href="css/pages/share.css?v=5" />
@@ -88,6 +88,7 @@
     <link rel="stylesheet" href="css/pages/banners.css?v=4" />
     <link rel="stylesheet" href="css/pages/mastery-shelf.css?v=3" />
     <link rel="stylesheet" href="css/pages/trainer-card.css?v=7" />
+    <link rel="stylesheet" href="css/pages/account-edit.css?v=1" />
     <link rel="stylesheet" href="css/opening.css?v=23" />
     <link rel="stylesheet" href="css/tear.css?v=2" />
     <link rel="stylesheet" href="css/promo-set.css?v=4" />
@@ -297,6 +298,7 @@
     <link rel="modulepreload" href="js/social.js?v=7" />
     <link rel="modulepreload" href="js/api.js" />
     <link rel="modulepreload" href="js/accounts.js" />
+    <link rel="modulepreload" href="js/avatar-picker.js" />
     <link rel="modulepreload" href="js/state.js" />
     <link rel="modulepreload" href="js/level-badge.js" />
     <link rel="modulepreload" href="js/levels.js" />
@@ -560,6 +562,7 @@
           </div>
           <div class="me-xp" id="me-xp" hidden><span class="rt-track"><i id="me-xp-fill"></i></span><small id="me-xp-note"></small></div>
           <button class="me-item" type="button" role="menuitem" data-me-go="account"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-you"/></svg><span>Account</span><small>Levels, quests, badges</small></button>
+          <button class="me-item" type="button" role="menuitem" data-me-edit><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-profile"/></svg><span>Edit profile</span><small>Picture, frame, banner, name</small></button>
           <a class="me-item" id="me-profile" role="menuitem" href="/account"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-profile"/></svg><span>Public profile</span><small id="me-profile-url">What other trainers see</small></a>
           <button class="me-item" type="button" role="menuitem" data-me-go="social"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-people"/></svg><span>Friends</span><small>Messages and requests</small></button>
           <button class="me-item" type="button" role="menuitem" data-me-go="settings"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-settings"/></svg><span>Settings</span><small>Effects, sound, motion</small></button>
@@ -999,7 +1002,7 @@
       </nav>
     </footer>
     <script type="module" src="js/etch.js?v=1"></script>
-    <script type="module" src="js/app.js?v=410"></script>
+    <script type="module" src="js/app.js?v=411"></script>
     <script type="module" src="js/rotom.js?v=3"></script>
   </body>
 </html>

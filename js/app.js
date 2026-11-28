@@ -55,11 +55,11 @@ import {
   AVATARS,
   avatarSrc,
   avatarStyle,
-  avatarIcon,
+  avatarPixel,
+  avatarFallback,
   bannerVars,
   parseBanner,
   BANNER_MOTIONS,
-  searchAvatars,
   STAT_KEYS,
   DEFAULT_STATS,
   SHOWCASE_MAX,
@@ -89,6 +89,7 @@ import { masteryShelfProfileHtml } from "./mastery-shelf.js";
 import * as questArea from "./quest-area.js?v=10";
 import * as levelUi from "./level-ui.js";
 import { rollFigures, growBars, flyCoins, markPicks, landPreview } from "./acct-motion.js";
+import { avatarPickerHtml, initAvatarPicker, resetAvatarPicker } from "./avatar-picker.js";
 import { createXpFeed } from "./level-feed.js";
 import { startLivePrices, applyCachedPrices, applyLatestSealed } from "./liveprices.js?v=5";
 import {
@@ -174,7 +175,6 @@ let dmSeen = { handle: "", n: 0 }; // social: how many lines of the open thread 
 let rankingsDrawnAt = 0; // social: when the rankings were last fetched, so the 5s social tick refreshes them once a minute
 let dmStick = false; // social: the next paint of the open thread goes to the newest line (a message was just sent)
 let socialTab = "friends"; // friends, rankings or lounge (js/social-hub.js)
-let avatarQuery = "";
 const CLOUD_SEEN_KEY = "poke-pack-rip-cloud-seen";
 let pendingClaim = localStorage.getItem(CLOUD_SEEN_KEY) ? null : snapshotIfProgress(state);
 let ripLock = false;
@@ -1070,9 +1070,9 @@ function paintHud(trainer) {
   me.classList.toggle("is-guest", !trainer);
   me.classList.toggle("has-wait", Boolean(xp && (xp.claimable.length || xp.canPrestige)));
   if (face) {
-    face.classList.toggle("pixel", Boolean(trainer) && avatarStyle(trainer.avatarStyle) === "pixel");
+    face.classList.toggle("pixel", Boolean(trainer) && avatarPixel(trainer.avatarStyle));
     face.innerHTML = trainer
-      ? `<img src="${esc(avatarSrc(trainer.avatar, trainer.avatarStyle))}" alt="" />`
+      ? `<img src="${esc(avatarSrc(trainer.avatar, trainer.avatarStyle, { still: true }))}" alt="" />`
       : `<img src="assets/mark-v2.png" alt="" />`;
     if (trainer) face.style.setProperty("--avatar", avatarColor(trainer.color).hex);
   }
@@ -1121,8 +1121,8 @@ function renderHeader() {
   if (trainer && els.trainerChip) {
     const color = avatarColor(trainer.color);
     els.trainerChip.style.setProperty("--avatar", color.hex);
-    els.trainerAvatar.innerHTML = `<img src="${esc(avatarSrc(trainer.avatar, trainer.avatarStyle))}" alt="" />`;
-    els.trainerAvatar.classList.toggle("pixel", avatarStyle(trainer.avatarStyle) === "pixel");
+    els.trainerAvatar.innerHTML = `<img src="${esc(avatarSrc(trainer.avatar, trainer.avatarStyle, { still: true }))}" alt="" />`;
+    els.trainerAvatar.classList.toggle("pixel", avatarPixel(trainer.avatarStyle));
     els.trainerChipName.textContent = trainer.name;
     els.trainerChipHandle.textContent = `@${trainer.handle}`;
   }
@@ -1133,9 +1133,9 @@ function renderHeader() {
 function paintMeMenus(trainer) {
   const xp = trainer && state.xp ? levelUi.xpOf(state) : null;
   const face = trainer
-    ? `<img src="${esc(avatarSrc(trainer.avatar, trainer.avatarStyle))}" alt="" />`
+    ? `<img src="${esc(avatarSrc(trainer.avatar, trainer.avatarStyle, { still: true }))}" alt="" />`
     : `<img src="assets/mark-v2.png" alt="" />`;
-  const pixel = Boolean(trainer) && avatarStyle(trainer.avatarStyle) === "pixel";
+  const pixel = Boolean(trainer) && avatarPixel(trainer.avatarStyle);
   const set = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; };
   for (const id of ["me-face", "menu-me-face"]) {
     const el = document.getElementById(id);
@@ -4109,7 +4109,7 @@ function colorPicks(selected, attr = "data-color", label = "Avatar colour") {
 
 function avatarMark(trainer, extraClass = "trainer-mark") {
   const color = avatarColor(trainer?.color);
-  const pixel = avatarStyle(trainer?.avatarStyle) === "pixel" ? " pixel" : "";
+  const pixel = avatarPixel(trainer?.avatarStyle) ? " pixel" : "";
   const mark = `<div class="${extraClass}${pixel}" style="--avatar:${esc(color.hex)}"><img src="${esc(avatarSrc(trainer?.avatar, trainer?.avatarStyle))}" alt="" /></div>`;
   const frame = userFrame(trainer);
   return frame ? frameHtml(mark, frame, { size: "xl", color: color.hex }) : mark;
@@ -4382,20 +4382,25 @@ function renderAuth() {
     </div>`;
 }
 
+/* The account page is two places. What you play: five tabs under your trainer card.
+   What you edit: "Edit profile", one screen with a live preview and a word for each
+   thing you can change, and Security on its own. Old tab names still land somewhere. */
 const ACCOUNT_TABS = [
   { id: "overview", name: "Overview", note: "Career, sets, and what you pulled." },
   { id: "levels", name: "Levels", note: "Your level, the road ahead and where your XP comes from." },
   { id: "quests", name: "Quests", note: "Daily, weekly and monthly coin rewards." },
-  { id: "achievements", name: "Achievements", note: "Badges, secrets, rewards and titles." },
+  { id: "achievements", name: "Badges", note: "Badges, secrets, rewards and titles." },
   { id: "mastery", name: "Mastery", note: "Complete a set for a title, an emblem and a banner." },
-  { id: "profile", name: "Profile", note: "Name, bio, and what the public sees.", edit: true },
-  { id: "look", name: "Look", note: "Avatar, banner, and title.", edit: true },
-  { id: "layout", name: "Layout", note: "Room colour, backdrop and the sections of your public profile.", edit: true },
-  { id: "security", name: "Security", note: "Password and deleting the account.", edit: true },
 ];
-
-/** The account tabs sit on two rows: what you play, then what you edit. */
-const ACCOUNT_TAB_GROUPS = ["play", "edit"];
+const EDIT_TABS = [
+  { id: "picture", name: "Picture", note: "Your Pokémon, its style and ring colour." },
+  { id: "frame", name: "Frame", note: "The frame around your picture." },
+  { id: "banner", name: "Banner", note: "The band behind your name." },
+  { id: "name", name: "Name", note: "Name, handle, bio and the title under your name." },
+  { id: "page", name: "Page", note: "Your public profile: room, sections, showcase and what it shares." },
+];
+const TAB_ALIASES = { look: "picture", profile: "name", about: "name", title: "name", layout: "page" };
+const isEditTab = (id) => EDIT_TABS.some((tab) => tab.id === id);
 
 /** Word rows scroll sideways on a phone: bring the chosen word into view, sideways only. */
 function bringIntoView(el) {
@@ -4446,49 +4451,85 @@ function renderAccount() {
   restoreFocus(focused);
 }
 
+function tabRowHtml(tabs, stats, label) {
+  return `<nav class="acct-tabs${tabs === EDIT_TABS ? " edit-tabs" : ""}" aria-label="${label}">
+      <div class="acct-tabrow">${tabs
+        .map(
+          (tab) => `<button type="button" class="acct-tab${tab.id === accountTab ? " on" : ""}"
+          aria-current="${tab.id === accountTab}" data-acct-tab="${esc(tab.id)}" title="${esc(tab.note)}">
+          ${esc(tab.name)}${stats ? tabDot(tab.id, stats) : ""}
+        </button>`
+        )
+        .join("")}</div>
+    </nav>`;
+}
+
+/** The head of Edit profile and Security: the way back, the screen's name, and the public page. */
+function editTopHtml(trainer, title) {
+  return `<header class="edit-top">
+      <button type="button" class="edit-back" data-acct-tab="overview"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>Account</button>
+      <h1 class="edit-h">${title}</h1>
+      <a class="tlink edit-view" href="/u/${esc(trainer.handle)}">View profile</a>
+    </header>`;
+}
+
+/** The small trainer card that stays in view while you edit: every pick lands on it. */
+function lookCardHtml(trainer) {
+  return `${bannerBlockHtml(trainer.banner, { className: "acct-banner" })}
+        <div class="look-id">
+          ${avatarMark(trainer, "trainer-mark look-face")}
+          <b>${esc(trainer.name)}${levelBadgeHtml(trainer.level, { size: "md", prestige: trainer.prestige })}</b>
+          <small>@${esc(trainer.handle)}</small>
+          <span class="account-title">${esc(trainer.title || "Rookie")}</span>
+        </div>`;
+}
+
 function renderAccountBody() {
   const trainer = activeTrainer();
   if (!trainer) {
     els.accountBody.innerHTML = signedOutAccount();
     return;
   }
-  if (!ACCOUNT_TABS.some((tab) => tab.id === accountTab)) accountTab = "overview";
+  accountTab = TAB_ALIASES[accountTab] || accountTab;
+  const editing = isEditTab(accountTab);
+  if (!editing && accountTab !== "security" && !ACCOUNT_TABS.some((tab) => tab.id === accountTab)) accountTab = "overview";
+  if (accountTab !== "picture") resetAvatarPicker();
   const stats = achievementStats();
-  const body =
-    accountTab === "levels"
-      ? levelsTab()
-      : accountTab === "quests"
-      ? questsTab()
-      : accountTab === "achievements"
-      ? achievementsTab(stats)
-      : accountTab === "mastery"
-      ? masteryTab(stats)
-      : accountTab === "profile"
-        ? profileTab(trainer)
-        : accountTab === "look"
-          ? lookTab(trainer, stats)
-          : accountTab === "layout"
-            ? profileEditor.layoutTab(trainer, layoutDeps())
-          : accountTab === "security"
-            ? securityTab(trainer)
-            : overviewTab(trainer, stats);
+  els.accountBody.dataset.mode = editing ? "edit" : accountTab === "security" ? "security" : "play";
 
-  els.accountBody.innerHTML = `
-    ${accountHero(trainer, stats)}
-    <nav class="acct-tabs" aria-label="Account sections">
-      ${ACCOUNT_TAB_GROUPS.map(
-        (group) => `<div class="acct-tabrow">${ACCOUNT_TABS.filter((tab) => (tab.edit ? "edit" : "play") === group)
-          .map(
-            (tab) => `<button type="button" class="acct-tab${tab.id === accountTab ? " on" : ""}"
-          aria-current="${tab.id === accountTab}" data-acct-tab="${esc(tab.id)}" title="${esc(tab.note)}">
-          ${esc(tab.name)}${tabDot(tab.id, stats)}
-        </button>`
-          )
-          .join("")}</div>`
-      ).join("")}
-    </nav>
-    <div class="acct-body">${body}</div>
-    ${historyOpen ? historySheet() : ""}`;
+  if (editing) {
+    // The Page tab brings its own preview (the room, js/profile-editor.js); the rest share the trainer card.
+    const body =
+      accountTab === "picture" ? pictureTab(trainer)
+      : accountTab === "frame" ? frameTab(trainer)
+      : accountTab === "banner" ? bannerTab(trainer, stats)
+      : accountTab === "name" ? `${aboutTab(trainer)}${titleTab(trainer)}`
+      : pageTab(trainer);
+    els.accountBody.innerHTML = `
+      ${editTopHtml(trainer, "Edit profile")}
+      ${
+        accountTab === "page"
+          ? `${tabRowHtml(EDIT_TABS, null, "Edit profile")}<div class="acct-body">${body}</div>`
+          : `<div class="look-layout">
+              <aside class="look-preview" aria-label="Preview"><div class="look-card">${lookCardHtml(trainer)}</div></aside>
+              <div class="look-controls">${tabRowHtml(EDIT_TABS, null, "Edit profile")}<div class="acct-body">${body}</div></div>
+            </div>`
+      }`;
+  } else if (accountTab === "security") {
+    els.accountBody.innerHTML = `${editTopHtml(trainer, "Security")}<div class="acct-body">${securityTab(trainer)}</div>`;
+  } else {
+    const body =
+      accountTab === "levels" ? levelsTab()
+      : accountTab === "quests" ? questsTab()
+      : accountTab === "achievements" ? achievementsTab(stats)
+      : accountTab === "mastery" ? masteryTab(stats)
+      : overviewTab(trainer, stats);
+    els.accountBody.innerHTML = `
+      ${accountHero(trainer, stats)}
+      ${tabRowHtml(ACCOUNT_TABS, stats, "Account sections")}
+      <div class="acct-body">${body}</div>
+      ${historyOpen ? historySheet() : ""}`;
+  }
 
   const chart = els.accountBody.querySelector("#acct-worth-chart");
   if (chart) renderWorthChart(chart, state.worthLog, state.granted);
@@ -4508,6 +4549,17 @@ function renderAccountBody() {
   acctTabShown = accountTab;
   freshClaims = new Set();
   freshLevels = new Set();
+}
+
+/** Redraw only the small trainer card on Edit profile (a picture was picked: nothing else may move). */
+function repaintLookCard() {
+  const trainer = activeTrainer();
+  const card = els.accountBody.querySelector(".look-card");
+  if (!trainer || !card) return;
+  card.innerHTML = lookCardHtml(trainer);
+  card.classList.remove("is-landing");
+  void card.offsetWidth;
+  landPreview(card);
 }
 
 function signedOutAccount() {
@@ -4585,9 +4637,11 @@ function accountHero(trainer, stats) {
           ? `<button class="solid claim-cta rt-go" type="button" data-acct-tab="achievements">Claim <span class="claim-amt">${coinAmount(stats.waiting)}</span></button>`
           : ""
       }
+      <button class="ghost" type="button" data-acct-tab="picture">Edit profile</button>
       <a class="ghost" href="/u/${esc(trainer.handle)}">Public profile</a>
       <span class="tcard-links">
         <button class="tlink" type="button" id="copy-profile-link">Copy link</button>
+        <button class="tlink" type="button" data-acct-tab="security">Security</button>
         <button class="tlink acct-signout" type="button" id="sign-out">Sign out</button>
       </span>
     </div>
@@ -4836,9 +4890,27 @@ function statLabel(key) {
   return { packs: "Packs ripped", pulls: "Cards pulled", unique: "Unique cards", coins: "Coins" }[key] || key;
 }
 
-function profileTab(trainer) {
+/** Name, handle and bio. */
+function aboutTab(trainer) {
+  return `<section class="acct-sec">
+      <div class="acct-sec-head"><h2>Name and bio</h2></div>
+      <form id="profile-form" class="acct-form">
+        <label class="field"><span>Trainer name</span><input name="name" minlength="2" maxlength="24" value="${esc(trainer.name)}" required /></label>
+        <label class="field"><span>Handle</span><span class="field-at"><input name="handle" minlength="3" maxlength="16" value="${esc(trainer.handle)}" required autocapitalize="off" spellcheck="false" /></span>
+          <span class="hint">Your profile lives at poke-pack.rip/u/${esc(trainer.handle)}.</span>
+        </label>
+        <label class="field"><span>Bio</span><textarea name="bio" maxlength="160" placeholder="What are you chasing?">${esc(trainer.bio || "")}</textarea></label>
+        <p class="form-error" id="profile-error" role="alert"></p>
+        <button class="solid" type="submit">Save</button>
+      </form>
+    </section>`;
+}
+
+/** The public page: its room and sections (js/profile-editor.js), then what it shares and the cards pinned to it. */
+function pageTab(trainer) {
   const shown = new Set(trainer.shownStats || DEFAULT_STATS);
   const showcase = trainer.showcase || [];
+  const room = roomLine("showcase", unlockOf(trainer), showcase.length, SHOWCASE_MAX);
   const pinned = showcase
     .map((slot) => {
       const card = findCard(slot.id);
@@ -4850,53 +4922,24 @@ function profileTab(trainer) {
       </div>`;
     })
     .join("");
-
-  return `<div class="acct-cols">
+  return `${profileEditor.layoutTab(trainer, layoutDeps())}
+  <div class="acct-cols page-extras">
     <section class="acct-sec">
-      <div class="acct-sec-head">
-        <div>
-          <h2>Name and bio</h2>
-        </div>
-      </div>
-      <form id="profile-form" class="acct-form">
-        <label class="field"><span>Trainer name</span><input name="name" minlength="2" maxlength="24" value="${esc(trainer.name)}" required /></label>
-        <label class="field"><span>Handle</span><span class="field-at"><input name="handle" minlength="3" maxlength="16" value="${esc(trainer.handle)}" required autocapitalize="off" spellcheck="false" /></span>
-          <span class="hint">Your profile lives at poke-pack.rip/u/${esc(trainer.handle)}.</span>
-        </label>
-        <label class="field"><span>Bio</span><textarea name="bio" maxlength="160" placeholder="What are you chasing?">${esc(trainer.bio || "")}</textarea></label>
-        <p class="form-error" id="profile-error" role="alert"></p>
-        <button class="solid" type="submit">Save profile</button>
-      </form>
-    </section>
-    <section class="acct-sec">
-      <div class="acct-sec-head">
-        <div>
-          <h2>What the public sees</h2>
-        </div>
-      </div>
+      <div class="acct-sec-head"><div><h2>Shared figures</h2><p>The numbers visitors see under your name. These save as you tick them.</p></div></div>
       <div class="stat-toggles">${STAT_KEYS.map(
         (key) => `<label><input type="checkbox" data-stat-toggle="${key}" ${shown.has(key) ? "checked" : ""} /> ${esc(statLabel(key))}</label>`
       ).join("")}</div>
-      <div class="share-row">
-        <span class="share-url">poke-pack.rip/u/${esc(trainer.handle)}</span>
-        <button class="ghost sm" type="button" id="copy-profile-link-2">Copy link</button>
-      </div>
-      <a class="text-btn share-open" href="/u/${esc(trainer.handle)}">Open your public profile</a>
     </section>
-  </div>
-  <section class="acct-sec acct-pins">
-    <div class="acct-sec-head">
-      <div>
-        <h2>Showcase</h2>
-        <p>${showcase.length} of ${roomLine("showcase", unlockOf(trainer), showcase.length, SHOWCASE_MAX).cap} pinned.${roomLine("showcase", unlockOf(trainer), showcase.length, SHOWCASE_MAX).more}</p>
+    <section class="acct-sec acct-pins">
+      <div class="acct-sec-head">
+        <div>
+          <h2>Showcase</h2>
+          <p>${showcase.length} of ${room.cap} pinned.${room.more}</p>
+        </div>
       </div>
-    </div>
-    ${
-      pinned
-        ? `<div class="pin-row">${pinned}</div>`
-        : `<p class="panel-empty">Open a card you own and choose Pin to showcase it here.</p>`
-    }
-  </section>`;
+      ${pinned ? `<div class="pin-row">${pinned}</div>` : `<p class="panel-empty">Open a card you own and choose Pin to showcase it here.</p>`}
+    </section>
+  </div>`;
 }
 
 /* ---- Look --------------------------------------------------------------- */
@@ -4910,98 +4953,64 @@ function bannerMotionRows() {
   return rows.sort((a, b) => a.level - b.level);
 }
 
-function lookTab(trainer, stats) {
-  const avatars = searchAvatars(avatarQuery);
+/** Your Pokémon (js/avatar-picker.js) and the colour of the ring behind it. */
+function pictureTab(trainer) {
+  return `<section class="acct-sec av-sec">
+      <div class="acct-sec-head"><h2>Picture</h2></div>
+      ${avatarPickerHtml(trainer)}
+    </section>
+    <section class="acct-sec">
+      <div class="acct-sec-head"><h2>Ring colour</h2></div>
+      ${colorPicks(trainer.color, "data-profile-color", "Ring colour")}
+    </section>`;
+}
+
+function frameTab(trainer) {
+  return `<section class="acct-sec">
+      <div class="acct-sec-head"><h2>Frame</h2></div>
+      ${framePicksHtml({
+        level: unlockOf(trainer),
+        prestige: trainer.prestige || 0,
+        beta: Boolean(trainer.beta || cloudUser?.beta),
+        frame: trainer.frame,
+        color: avatarColor(trainer.color).hex,
+        avatar: faceHtml({ ...trainer, online: false }, "md", { frame: false }),
+      })}
+    </section>`;
+}
+
+function bannerTab(trainer, stats) {
   const banner = parseBanner(trainer.banner);
-  const style = avatarStyle(trainer.avatarStyle);
+  const onMastery = Boolean(banner.set);
+  return `<section class="acct-sec">
+      <div class="acct-sec-head"><h2>Banner</h2></div>
+      <div class="qa-words qa-words-inline qa-words-wrap" role="group" aria-label="Banner motion">${bannerMotionRows()
+        .map((row) => {
+          const locked = unlockOf(trainer) < row.level;
+          const on = !onMastery && banner.motion === row.id;
+          return locked
+            ? `<button type="button" class="qa-word locked" data-motion-locked="${esc(row.id)}" aria-disabled="true"><span>${esc(row.name)}</span><small>Level ${row.level}</small></button>`
+            : `<button type="button" class="qa-word${on ? " on" : ""}" data-set-motion="${esc(row.id)}" aria-pressed="${on}"><span>${esc(row.name)}</span></button>`;
+        })
+        .join("")}</div>
+      <div class="field"><span>First colour</span>${colorPicks(onMastery ? "" : banner.colors[0], "data-banner-a", "First banner colour")}</div>
+      <div class="field"><span>Second colour</span>${colorPicks(onMastery ? "" : banner.colors[1], "data-banner-b", "Second banner colour")}</div>
+      ${questArea.masteryBannersHtml(banner.set ? masteryBannerId(banner.set) : "", stats.claimed, areaDeps)}
+    </section>`;
+}
+
+function titleTab(trainer) {
   const ctx = titleContext(state, { signed: true, findCard, rarities: ownedRarities(), level: state.xp?.peak ?? state.xp?.level ?? unlockOf(cloudUser) });
   const unlocked = new Set(unlockedTitles(ctx).map((row) => row.name));
-  const titleGroups = questArea.titleGroupsHtml(TITLES, trainer.title, unlocked, areaDeps);
-  const onMastery = Boolean(banner.set);
-
-  return `<div class="look-layout">
-    <aside class="look-preview" aria-label="Preview">
-      <div class="look-card">
-        ${bannerBlockHtml(trainer.banner, { className: "acct-banner" })}
-        <div class="look-id">
-          ${avatarMark(trainer, "trainer-mark look-face")}
-          <b>${esc(trainer.name)}${levelBadgeHtml(trainer.level, { size: "md", prestige: trainer.prestige })}</b>
-          <small>@${esc(trainer.handle)}</small>
-          <span class="account-title">${esc(trainer.title || "Rookie")}</span>
+  return `<section class="acct-sec">
+      <div class="acct-sec-head">
+        <div>
+          <h2>Title</h2>
+          <p>${unlocked.size} of ${TITLES.length - questArea.hiddenTitles(TITLES, unlocked, areaDeps).length} unlocked.</p>
         </div>
       </div>
-      <div class="look-actions">
-        <button class="ghost sm" type="button" id="look-random">Surprise me</button>
-        <button class="ghost sm" type="button" id="look-swap">Swap banner colours</button>
-      </div>
-    </aside>
-    <div class="look-controls">
-      <section class="acct-sec">
-        <div class="acct-sec-head">
-          <div>
-            <h2>Picture</h2>
-          </div>
-          <div class="seg style-picks" role="group" aria-label="Picture style">
-            <button type="button" class="seg-btn${style === "art" ? " on" : ""}" data-set-style="art" aria-pressed="${style === "art"}">Full art</button>
-            <button type="button" class="seg-btn${style === "pixel" ? " on" : ""}" data-set-style="pixel" aria-pressed="${style === "pixel"}">Pixel</button>
-          </div>
-        </div>
-        <label class="field avatar-search"><span>Search Pokémon</span>
-          <input id="avatar-search" type="search" value="${esc(avatarQuery)}" placeholder="Pikachu, 25, Darkrai" autocomplete="off" />
-        </label>
-        <div class="avatar-grid">${avatars
-          .map(
-            ([id, name]) => `<button type="button" class="pick${String(trainer.avatar) === String(id) ? " on" : ""}" data-set-avatar="${id}" title="${esc(name)}">
-            <img class="${style === "pixel" ? "pixel" : ""}" src="${esc(style === "pixel" ? avatarIcon(id) : avatarSrc(id, "art"))}" alt="${esc(name)}" loading="lazy" />
-            <small>${esc(name)}</small>
-          </button>`
-          )
-          .join("")}</div>
-        <div class="field"><span>Ring colour</span>${colorPicks(trainer.color, "data-profile-color", "Ring colour")}</div>
-      </section>
-      <section class="acct-sec">
-        <div class="acct-sec-head">
-          <h2>Frame</h2>
-        </div>
-        ${framePicksHtml({
-          level: unlockOf(trainer),
-          prestige: trainer.prestige || 0,
-          beta: Boolean(trainer.beta || cloudUser?.beta),
-          frame: trainer.frame,
-          color: avatarColor(trainer.color).hex,
-          avatar: faceHtml({ ...trainer, online: false }, "md", { frame: false }),
-        })}
-      </section>
-      <section class="acct-sec">
-        <div class="acct-sec-head">
-          <div>
-            <h2>Banner</h2>
-          </div>
-        </div>
-        <div class="qa-words qa-words-inline qa-words-wrap" role="group" aria-label="Banner motion">${bannerMotionRows()
-          .map((row) => {
-            const locked = unlockOf(trainer) < row.level;
-            const on = !onMastery && banner.motion === row.id;
-            return locked
-              ? `<button type="button" class="qa-word locked" data-motion-locked="${esc(row.id)}" aria-disabled="true"><span>${esc(row.name)}</span><small>Level ${row.level}</small></button>`
-              : `<button type="button" class="qa-word${on ? " on" : ""}" data-set-motion="${esc(row.id)}" aria-pressed="${on}"><span>${esc(row.name)}</span></button>`;
-          })
-          .join("")}</div>
-        <div class="field"><span>First colour</span>${colorPicks(onMastery ? "" : banner.colors[0], "data-banner-a", "First banner colour")}</div>
-        <div class="field"><span>Second colour</span>${colorPicks(onMastery ? "" : banner.colors[1], "data-banner-b", "Second banner colour")}</div>
-        ${questArea.masteryBannersHtml(banner.set ? masteryBannerId(banner.set) : "", stats.claimed, areaDeps)}
-      </section>
-      <section class="acct-sec">
-        <div class="acct-sec-head">
-          <div>
-            <h2>Title</h2>
-            <p>${unlocked.size} of ${TITLES.length - questArea.hiddenTitles(TITLES, unlocked, areaDeps).length} unlocked.</p>
-          </div>
-        </div>
-        <div class="title-groups">${titleGroups}</div>
-      </section>
-    </div>
-  </div>`;
+      <div class="title-groups">${questArea.titleGroupsHtml(TITLES, trainer.title, unlocked, areaDeps)}</div>
+    </section>`;
 }
 
 /* ---- Security ----------------------------------------------------------- */
@@ -5123,6 +5132,28 @@ function layoutDeps() {
   };
 }
 profileEditor.initProfileEditor(els.accountBody, layoutDeps());
+// The picture picker saves in place: only the header and the small trainer card are redrawn, so the grid never jumps.
+initAvatarPicker({
+  root: () => els.accountBody,
+  trainer: activeTrainer,
+  esc,
+  toast,
+  save: async (patch) => {
+    const data = await api("/api/me", { method: "PATCH", body: JSON.stringify(patch) });
+    cloudUser = data.user;
+    renderHeader();
+    repaintLookCard();
+  },
+});
+// A picture that fails to load (a sprite the art repo has lost) steps down to a plainer one of the same Pokémon.
+document.addEventListener("error", (e) => {
+  const img = e.target;
+  if (!(img instanceof HTMLImageElement) || img.dataset.avFell) return;
+  const next = avatarFallback(img.src);
+  if (!next) return;
+  img.dataset.avFell = "1";
+  img.src = next;
+}, true);
 
 /** What js/profile-view.js and js/profile-editor.js need from the app: helpers, never state. */
 function profileDeps() {
@@ -8659,6 +8690,12 @@ meMenu?.addEventListener("click", (e) => {
   if (!item) return;
   const go = item.dataset.meGo;
   closeMeMenu();
+  if (item.hasAttribute("data-me-edit")) {
+    accountTab = "picture";
+    if (view === "account") { renderAccount(); window.scrollTo({ top: 0, behavior: "auto" }); }
+    else setView("account");
+    return;
+  }
   if (go) document.querySelector(`.site-header .nav .nav-btn[data-view="${go}"]`)?.click();
 });
 document.addEventListener("pointerdown", (e) => {
@@ -8820,8 +8857,14 @@ els.accountBody.addEventListener("click", async (e) => {
   }
   const tab = e.target.closest("[data-acct-tab]");
   if (tab) {
+    const wasMode = els.accountBody.dataset.mode;
     accountTab = tab.dataset.acctTab;
     renderAccount();
+    if (els.accountBody.dataset.mode !== wasMode) {
+      // Edit profile and Security are screens of their own: arrive at their top, and come back to the trainer card.
+      window.scrollTo({ top: 0, behavior: "auto" });
+      return;
+    }
     // "nearest" left the tabs under the phone's tab bar, so a tap on Claim seemed
     // to do nothing; bring the tabs up under the header instead.
     const tabs = els.accountBody.querySelector(".acct-tabs");
@@ -8987,24 +9030,6 @@ els.accountBody.addEventListener("click", async (e) => {
     }
     return;
   }
-  const setAvatar = e.target.closest("[data-set-avatar]");
-  if (setAvatar) {
-    try {
-      await patchLook({ avatar: setAvatar.dataset.setAvatar });
-    } catch (err) {
-      toast(err.message || "Couldn't update avatar.");
-    }
-    return;
-  }
-  const setStyle = e.target.closest("[data-set-style]");
-  if (setStyle) {
-    try {
-      await patchLook({ avatarStyle: setStyle.dataset.setStyle });
-    } catch (err) {
-      toast(err.message || "Couldn't update picture style.");
-    }
-    return;
-  }
   const setFrame = e.target.closest("[data-set-frame]");
   if (setFrame) {
     try {
@@ -9079,22 +9104,7 @@ els.accountBody.addEventListener("click", async (e) => {
     await toggleShowcase(unpin.dataset.unpin);
     return;
   }
-  if (e.target.closest("#look-random")) {
-    await surpriseLook();
-    return;
-  }
-  if (e.target.closest("#look-swap")) {
-    const trainer = activeTrainer();
-    if (!trainer) return;
-    const banner = parseBanner(trainer.banner);
-    try {
-      await patchLook({ banner: `${banner.motion}:${banner.colors[1]}+${banner.colors[0]}` });
-    } catch (err) {
-      toast(err.message || "Couldn't swap the banner.");
-    }
-    return;
-  }
-  if (e.target.closest("#copy-profile-link") || e.target.closest("#copy-profile-link-2")) {
+  if (e.target.closest("#copy-profile-link")) {
     const trainer = activeTrainer();
     if (!trainer) return;
     copyText(`${location.origin}/u/${trainer.handle}`, "Profile link copied.");
@@ -9109,23 +9119,6 @@ function copyText(text, done) {
     .catch(() => toast(text));
 }
 
-/** One roll of the dice across picture, ring, and banner. */
-async function surpriseLook() {
-  const trainer = activeTrainer();
-  if (!trainer) return;
-  const pick = (list) => list[Math.floor(Math.random() * list.length)];
-  const [a, b] = [pick(AVATAR_COLORS).id, pick(AVATAR_COLORS).id];
-  try {
-    await patchLook({
-      avatar: String(pick(AVATARS)[0]),
-      color: pick(AVATAR_COLORS).id,
-      banner: `${pick(BANNER_MOTIONS.filter((m) => !m.level || unlockOf(trainer) >= m.level)).id}:${a}+${b === a ? pick(AVATAR_COLORS).id : b}`,
-    });
-    toast("New look rolled.");
-  } catch (err) {
-    toast(err.message || "Couldn't roll a new look.");
-  }
-}
 
 /**
  * Cash in one achievement, or every ready one. The reward comes back from the
@@ -9206,24 +9199,6 @@ window.addEventListener("resize", () => {
   masteryResize = window.setTimeout(() => {
     if (view === "account" && accountTab === "mastery") placeMasteryDetail();
   }, 120);
-});
-
-els.accountBody.addEventListener("input", (e) => {
-  if (e.target.id !== "avatar-search") return;
-  avatarQuery = e.target.value;
-  const trainer = activeTrainer();
-  const grid = els.accountBody.querySelector(".avatar-grid");
-  if (!trainer || !grid) return;
-  grid.innerHTML = searchAvatars(avatarQuery)
-    .map(([id, name]) => {
-      const style = avatarStyle(trainer.avatarStyle);
-      const src = style === "pixel" ? avatarIcon(id) : avatarSrc(id, "art");
-      return `<button type="button" class="pick${String(trainer.avatar) === String(id) ? " on" : ""}" data-set-avatar="${id}" title="${esc(name)}">
-      <img class="${style === "pixel" ? "pixel" : ""}" src="${esc(src)}" alt="${esc(name)}" loading="lazy" />
-      <small>${esc(name)}</small>
-    </button>`;
-    })
-    .join("");
 });
 
 els.accountBody.addEventListener("change", async (e) => {

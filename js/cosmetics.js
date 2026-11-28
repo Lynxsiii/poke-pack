@@ -1,13 +1,20 @@
 /**
- * Profile stills. PNGs only — animated sprites stay premium later.
- * Art is loaded from the public PokeAPI sprite repo (same scans-as-reference
- * idea as the TCG catalog). We do not hotlink Serebii.
+ * Profile pictures. Any Pokémon or form, as official art, a pixel sprite or an
+ * animated sprite, each with a shiny version where one exists. The pictures
+ * load from the public PokeAPI sprite repo; the full catalogue (names, which
+ * pictures exist) is js/avatar-dex.js, built by scripts/build_avatars.py and
+ * loaded only by the picker. AVATARS below is the short list of favourites.
  */
 import { avatarColor, COLOR_IDS } from "./palette.js";
 import { BANNER_MOTION_LEVELS, BANNER_MOTION_NAMES } from "./level-data.js";
 import { isMasteryBanner, isMasterySet, masteryBannerId, masteryBannerSet, setAccent } from "./mastery.js";
 
 export const AVATAR_MAX = 1025;
+/** Forms (Mega, regional and the rest) use PokeAPI's own ids, which start past 10000. */
+export const AVATAR_FORM_MIN = 10001;
+export const AVATAR_FORM_MAX = 10999;
+/** How a picture is drawn. A trailing "-s" is the shiny of the same kind. */
+export const AVATAR_KINDS = ["art", "pixel", "anim"];
 export const SHOWCASE_MAX = 6;
 export const STAT_KEYS = ["packs", "pulls", "unique", "coins"];
 export const DEFAULT_STATS = ["packs", "pulls", "unique"];
@@ -96,7 +103,8 @@ const MOTION_IDS = new Set(BANNER_MOTIONS.map((row) => row.id));
 
 export function avatarId(value) {
   const n = Number.parseInt(String(value || ""), 10);
-  if (!Number.isInteger(n) || n < 1 || n > AVATAR_MAX) return DEFAULT_AVATAR;
+  if (!Number.isInteger(n) || n < 1) return DEFAULT_AVATAR;
+  if (n > AVATAR_MAX && (n < AVATAR_FORM_MIN || n > AVATAR_FORM_MAX)) return DEFAULT_AVATAR;
   return String(n);
 }
 
@@ -105,20 +113,77 @@ export function avatarName(id) {
   return AVATAR_MAP.get(key) || `#${key}`;
 }
 
+/**
+ * Shiny pictures are built but not handed out yet: Noah wants them earned
+ * (2026-11-28), and the rule is still being chosen. While this is false a
+ * shiny style is saved and drawn as its plain picture, here and in the Worker.
+ */
+export const SHINY_OPEN = false;
+
 export function avatarStyle(value) {
-  return String(value || "") === "pixel" ? "pixel" : DEFAULT_STYLE;
+  const [kind, shiny] = String(value || "").split("-");
+  if (!AVATAR_KINDS.includes(kind)) return DEFAULT_STYLE;
+  return shiny === "s" && SHINY_OPEN ? `${kind}-s` : kind;
 }
 
-export function avatarArt(id) {
-  return `${SPRITE}/other/official-artwork/${avatarId(id)}.png`;
+/** The kind without its shiny mark: "art", "pixel" or "anim". */
+export function avatarKind(style) {
+  return avatarStyle(style).split("-")[0];
 }
 
-export function avatarIcon(id) {
-  return `${SPRITE}/${avatarId(id)}.png`;
+export function avatarShiny(style) {
+  return avatarStyle(style).endsWith("-s");
 }
 
-export function avatarSrc(id, style) {
-  return avatarStyle(style) === "pixel" ? avatarIcon(id) : avatarArt(id);
+export function avatarStyleOf(kind, shiny) {
+  return avatarStyle(shiny ? `${kind}-s` : kind);
+}
+
+function motionOff() {
+  if (typeof document === "undefined") return true;
+  return document.body.classList.contains("no-motion") || Boolean(globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches);
+}
+
+/** Sprites are small pixel art: they are drawn with hard edges. */
+export function avatarPixel(style) {
+  return avatarKind(style) !== "art";
+}
+
+export function avatarArt(id, shiny = false) {
+  return `${SPRITE}/other/official-artwork/${shiny ? "shiny/" : ""}${avatarId(id)}.png`;
+}
+
+export function avatarIcon(id, shiny = false) {
+  return `${SPRITE}/${shiny ? "shiny/" : ""}${avatarId(id)}.png`;
+}
+
+export function avatarAnim(id, shiny = false) {
+  return `${SPRITE}/other/showdown/${shiny ? "shiny/" : ""}${avatarId(id)}.gif`;
+}
+
+/**
+ * The picture for a saved avatar. `still` asks for a picture that does not
+ * move (small faces in lists, and anyone who turned motion off): an animated
+ * avatar is then drawn as its pixel sprite.
+ */
+export function avatarSrc(id, style, { still = false } = {}) {
+  const kind = avatarKind(style);
+  if (kind === "anim" && !still) still = motionOff();
+  const shiny = avatarShiny(style);
+  if (kind === "anim") return still ? avatarIcon(id, shiny) : avatarAnim(id, shiny);
+  return kind === "pixel" ? avatarIcon(id, shiny) : avatarArt(id, shiny);
+}
+
+/** What to show if a picture fails to load: the same Pokémon, one step plainer. */
+export function avatarFallback(src) {
+  const text = String(src || "");
+  if (!text.startsWith(SPRITE)) return "";
+  const id = (text.match(/\/(\d+)\.(?:png|gif)$/) || [])[1];
+  if (!id) return "";
+  if (text.endsWith(".gif")) return avatarIcon(id, text.includes("/shiny/"));
+  if (text.includes("/shiny/")) return text.includes("official-artwork") ? avatarArt(id) : avatarIcon(id);
+  if (!text.includes("official-artwork")) return avatarArt(id);
+  return "";
 }
 
 /**

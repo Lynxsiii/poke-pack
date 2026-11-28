@@ -90,7 +90,10 @@ drawings of the printed marks, cropped and resized by
 pokemontcg.io. Product photos
 in `assets/products/` are TCGplayer's catalogue images, cut out of their
 white backgrounds by `scripts/build_products.py`; product prices are
-TCGplayer market prices, read through [tcgcsv.com](https://tcgcsv.com). poke-pack.rip is a fan-made simulator and is not affiliated with
+TCGplayer market prices, read through [tcgcsv.com](https://tcgcsv.com). Profile pictures
+(official art, game sprites and animated sprites) load from the public
+[PokeAPI sprites](https://github.com/PokeAPI/sprites) repository; the thumbnail sheets in
+`assets/avatars/` are that art resized by `scripts/build_avatars.py`. poke-pack.rip is a fan-made simulator and is not affiliated with
 Nintendo, Game Freak, Wizards of the Coast, or The Pokémon Company. The GPL
 covers this project's own code; it makes no claim over Pokémon trademarks or
 card artwork.
