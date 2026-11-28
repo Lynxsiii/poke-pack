@@ -9,6 +9,8 @@ import { resolveSealedOffer } from './sealed-roll.js';
 import { stakeSlabView, setForCard } from './grading.js';
 import { GRADES, bandFor } from '../js/grading-rules.js';
 import { gateResponse } from './gates.js';
+import { takeRoll } from './fair.js';
+import { upgradeRoll } from '../js/fair.js';
 
 /* Casino Upgrader (migration 0028). Put up cards and/or graded slabs (valued like every casino stake) and pick a target worth
    more: any card of any set, or any sealed product the shop sells. One roll decides it:
@@ -201,7 +203,9 @@ async function createUpgrade(env, request, helpers, shared, user, body) {
     if (!Number.isInteger(body.expectedChance) || body.expectedChance < 0 || body.expectedChance > 1000000) error('Send the odds you saw as a whole number.');
     if (body.expectedChance !== chance) return { staleChance: chance }; // prices moved under the player
   }
-  const roll = rollUpgrade(); const won = roll < chance;
+  // The roll is the next nonce of the player's seeds (worker/fair.js), logged in the same batch.
+  const fair = await takeRoll(env, user.id);
+  const roll = upgradeRoll(fair.stream); const won = roll < chance;
   const now = Date.now(); const id = crypto.randomUUID();
   const insert = env.DB.prepare(`INSERT INTO upgrades(id, user_id, request_id, stake, slabs, stake_value, target_kind, target_id, target_set, target, target_value, chance, roll, won, created_at)
     VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`).bind(id, user.id, requestId, JSON.stringify(stake), slabs.length ? JSON.stringify(slabs) : null, stakeValue,
@@ -210,7 +214,8 @@ async function createUpgrade(env, request, helpers, shared, user, body) {
   const after = { ...collection };
   if (won && target.kind === 'card') after[target.id] = (after[target.id] || 0) + 1;
   const binder = await shared.binderStatement(env, helpers, user.id, after, stake, { sql: 'AND EXISTS(SELECT 1 FROM upgrades WHERE id = ?)', args: [id] }, slabs);
-  try { await env.DB.batch([insert, binder]); }
+  const fairLog = fair.log('upgrader', id, { chance }, { roll, won }, now);
+  try { await env.DB.batch([insert, binder, fairLog]); }
   catch (err) {
     // A double-tapped request that lost the race (or an answer that was lost after the batch committed): the row that exists is the answer.
     const raced = await findByRequest(env, user.id, requestId);

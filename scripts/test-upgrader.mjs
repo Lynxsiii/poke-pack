@@ -78,10 +78,8 @@ const rid = () => crypto.randomUUID();
 
 // Forced randomness: the roll is one Uint32. `rig.rolls` is a queue of raw 32-bit draws, consumed by the next requests.
 const rig = { rolls: [] };
-Object.defineProperty(globalThis.crypto, 'getRandomValues', { configurable: true, writable: true, value(array) {
-  if (rig.rolls.length && array instanceof Uint32Array && array.length === 1) { array[0] = rig.rolls.shift(); return array; }
-  return randomFillSync(array);
-} });
+// Rolls come from the provably fair stream (js/fair.js): its test rig hands it raw 32-bit draws.
+globalThis.__fairRig = () => (rig.rolls.length ? rig.rolls.shift() : undefined);
 
 // ---- Fixtures --------------------------------------------------------------------
 const up = {
