@@ -115,8 +115,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse.fam-misc-reverse.fam-misc-reverse
   clip-path: none;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse.fam-misc-reverse.fam-misc-reverse.fam-misc-reverse.fam-misc-reverse.fam-misc-reverse.fam-misc-reverse.fam-misc-reverse.fam-misc-reverse.foil-owner :is(.foil, .glare) {
-  -webkit-mask-image: var(--art), var(--win-owner);
-  mask-image: var(--art), var(--win-owner);
+  -webkit-mask-image: var(--art), var(--win-owner, var(--win-holo));
+  mask-image: var(--art), var(--win-owner, var(--win-holo));
   -webkit-mask-composite: source-out;
   mask-composite: subtract;
   mask-mode: alpha, alpha;

@@ -180,7 +180,7 @@ FAMILIES = {
         masks=[
             ("", MASK_WINDOW.format(var="--win-holo", clip="none")),
             (".foil-evo", MASK_WINDOW.format(var="--win-evo", clip="none")),
-            (".foil-owner", MASK_WINDOW.format(var="--win-owner", clip="none")),
+            (".foil-owner", MASK_WINDOW.format(var="--win-owner, var(--win-holo)", clip="none")),
             (".foil-energy", MASK_WINDOW.format(var="--win-holo-energy", clip="none")),
             (".foil-trainer", MASK_WINDOW.format(var="--win-holo-trainer", clip="none")),
         ],
@@ -195,7 +195,7 @@ FAMILIES = {
         masks=[
             ("", MASK_WINDOW.format(var="--win-holo", clip="none")),
             (".foil-evo", MASK_WINDOW.format(var="--win-evo", clip="none")),
-            (".foil-owner", MASK_WINDOW.format(var="--win-owner", clip="none")),
+            (".foil-owner", MASK_WINDOW.format(var="--win-owner, var(--win-holo)", clip="none")),
             (".foil-trainer", MASK_WINDOW.format(var="--win-holo-trainer", clip="none")),
             (".foil-energy", MASK_WINDOW.format(var="--win-holo-energy", clip="none")),
             (".foil-energy.mx-basic", MASK_ART.format(clip="inset(2.6% 3.6% 2.6% 3.6% round 3%)")),
@@ -215,7 +215,7 @@ FAMILIES = {
         masks=[
             ("", MASK_TILE.format(win="--win-holo")),
             (".foil-evo", MASK_TILE.format(win="--win-evo")),
-            (".foil-owner", MASK_TILE.format(win="--win-owner")),
+            (".foil-owner", MASK_TILE.format(win="--win-owner, var(--win-holo)")),
         ],
         glare_mask_mode="alpha, luminance, alpha",
     ),
