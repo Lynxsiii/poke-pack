@@ -12,6 +12,8 @@
  * worker/terms.js PERSONAL_TABLES deletes it with the account.
  */
 
+import { logEvent } from "./security.js";
+
 const DDL =
   "CREATE TABLE IF NOT EXISTS recovery_codes (user_id TEXT PRIMARY KEY, code_hash TEXT NOT NULL, created_at INTEGER NOT NULL)";
 // Crockford base32: no I, L, O or U, so a code read off a screenshot can't be misread.
@@ -96,7 +98,8 @@ export async function recoverAccount(request, env, deps) {
   ]);
   const fresh = await env.DB.prepare("SELECT * FROM users WHERE id = ?").bind(user.id).first();
   if (fresh.password_hash === user.password_hash) return json({ error: WRONG }, 401);
-  const token = await createSession(env, user.id, now);
+  const token = await createSession(env, user.id, now, request);
+  await logEvent(env, request, user.id, "recover");
   const save = await loadSave(env, user.id);
   return json({ user: await trainerUser(env, fresh, save), save }, 200, sessionCookie(request, token));
 }
