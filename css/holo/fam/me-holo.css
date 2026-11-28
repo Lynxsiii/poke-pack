@@ -49,9 +49,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-rare.meh-rare.has-
     calc((0.1 + var(--px, 0.5) * 0.8) * 100%) 50%;
   background-repeat: no-repeat;
   background-blend-mode: normal;
-  filter: saturate(0.85);
+  /* 2026-11-28: pale art (Reshiram 017, Aurorus 024) took the band as a lilac wash over the whole window */
+  filter: saturate(0.7);
   mix-blend-mode: overlay;
-  opacity: calc((0.3 + var(--card-opacity) * 0.6) * var(--foil-strength, 1));
+  opacity: calc((0.3 + var(--card-opacity) * 0.42) * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-rare.meh-rare.has-foil-map:not(.lit):not(.settling) .foil {
   opacity: calc(0.3 * var(--foil-strength, 1));
