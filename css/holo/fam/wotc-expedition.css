@@ -212,8 +212,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
     center;
   background-repeat: no-repeat, no-repeat, no-repeat;
   background-blend-mode: normal, normal, normal;
-  background-color: transparent;
-  mix-blend-mode: screen;
+  background-color: #000;
+  /* site review 2: screened, the band and pool lay a grey fog on the thinned-ink grounds (Venusaur 30, Vileplume 31, Cloyster 8).
+     Dodged over black the light goes into the print: bare foil and pale ink flash, dark ink and the drawing stay. */
+  mix-blend-mode: color-dodge;
   filter: none;
   opacity: min(1, calc((0.35 + var(--card-opacity) * 0.65) * max(1, var(--foil-strength, 1))));
   transform: none;
@@ -244,6 +246,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
   background-blend-mode: screen, normal;
   -webkit-mask-image: var(--art), var(--foil-map), linear-gradient(118deg, rgba(0, 0, 0, 0.25) 0%, #000 36%, rgba(0, 0, 0, 0.25) 62%, rgba(0, 0, 0, 0.5) 100%);
   mask-image: var(--art), var(--foil-map), linear-gradient(118deg, rgba(0, 0, 0, 0.25) 0%, #000 36%, rgba(0, 0, 0, 0.25) 62%, rgba(0, 0, 0, 0.5) 100%);
+  background-color: transparent;
+  mix-blend-mode: screen;
   opacity: calc(0.3 * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.fam-wotc-expedition.exp-holo .foil::before,
