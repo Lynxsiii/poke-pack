@@ -495,10 +495,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-rgb .foil {
   /* The reflection: one soft band sliding with the tilt, and a pool under the light, never far above grey. */
   background-image:
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsla(0, 0%, 72%, 0.9) 0%, hsla(0, 0%, 60%, 0.5) 22%, hsla(0, 0%, 50%, 0) 55%),
+      hsla(0, 0%, 64%, 0.85) 0%, hsla(0, 0%, 56%, 0.45) 22%, hsla(0, 0%, 50%, 0) 50%),
     linear-gradient(115deg,
-      hsl(0, 0%, 47%) 0%, hsl(0, 0%, 47%) 38%, hsl(0, 0%, 60%) 48%, hsl(0, 0%, 63%) 50%,
-      hsl(0, 0%, 60%) 52%, hsl(0, 0%, 47%) 62%, hsl(0, 0%, 47%) 100%);
+      hsl(0, 0%, 48%) 0%, hsl(0, 0%, 48%) 40%, hsl(0, 0%, 56%) 48%, hsl(0, 0%, 58%) 50%,
+      hsl(0, 0%, 56%) 52%, hsl(0, 0%, 48%) 60%, hsl(0, 0%, 48%) 100%);
   background-size: cover, 300% 300%;
   background-position: center, calc((1 - var(--px, 0.5)) * 100%) calc((1 - var(--py, 0.5)) * 100%);
   background-repeat: no-repeat;
@@ -682,4 +682,32 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-future.has-etch
   mix-blend-mode: overlay;
   filter: none;
   opacity: calc(var(--card-opacity) * 0.7);
+}
+
+/* ---- Double Rares (m55-dr): the sun-pillar bars only round the light ----------------------------------------------
+   2026-11-28 site review ("54 milky", diagonal rainbow stripes and a pale wash over the whole card on all fourteen):
+   celebration.css dodges its bars across the full card at every tilt and overlays a 92% white glare on top. The real
+   Double Rare shows its bars as a patch that follows the lamp, the rest of the card printed colour. The recipe is
+   kept; the family pools it (a mask on `.foil`, which carries both pseudos) and takes the glare down to a soft spot. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-dr:is(.lit, .settling) .foil {
+  -webkit-mask-image: var(--foil-map), radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #000 0%, rgba(0, 0, 0, 0.75) 22%, rgba(0, 0, 0, 0.25) 45%, rgba(0, 0, 0, 0) 64%);
+  mask-image: var(--foil-map), radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #000 0%, rgba(0, 0, 0, 0.75) 22%, rgba(0, 0, 0, 0.25) 45%, rgba(0, 0, 0, 0) 64%);
+  -webkit-mask-size: 100% 100%, 100% 100%;
+  mask-size: 100% 100%, 100% 100%;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  opacity: calc((0.18 + var(--card-opacity) * 0.5) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-dr .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 88%, 0.8) 0%, hsla(0, 0%, 70%, 0.4) 22%, hsla(0, 0%, 50%, 0) 50%);
+  opacity: calc(var(--card-opacity) * 0.4);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me55.fam-me55.fam-me55.m55-dr {
+  --shine-line: 0.2;
+  --shine-glit: 0.1;
 }

@@ -127,3 +127,13 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-me-ir.foil-ir.has-foil-map .glare::after {
   filter: none;
   opacity: 0;
 }
+
+/* ---- Flat poster-colour art (Ditto MEP 106): half strength ------------------------------------------------------
+   2026-11-28: a painting with no dark ink gives the overlaid bands nothing to sit under and the whole card went pale
+   and milky round the light. */
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me-ir.mir-flat.foil-ir.has-foil-map .foil {
+  opacity: calc((0.12 + var(--card-opacity) * 0.34) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-me-ir.mir-flat.foil-ir.has-foil-map .glare {
+  opacity: calc(var(--card-opacity) * 0.25);
+}

@@ -102,8 +102,12 @@ const COSMOS_MAPS = {
 const isExCard = (card) =>
   (card.subtypes || []).some((s) => String(s).toLowerCase() === "ex") || /(^|\s)ex$/i.test(card.name || "");
 
+/* Stamped reprints of a holo Rare that came without a Live map: they wear the unstamped print's map. */
+const STAMPED = { "me55-63-stamp": "assets/foil/maps/me55/63.webp" };
+
 /** The family's kind for a face ("rare", "mega", "ex", "cosmos"), or "" when the face is not this family's. */
 export function kindOf(card) {
+  if (card && STAMPED[card.id] && !card.reverse) return "rare";
   if (!card || card.reverse || card.pattern || !card.foilMap) return "";
   if (!ME_ID.test(String(card.id || ""))) return "";
   // Every ME-era cosmos promo is pixel cosmos (js/foil-maps.js pixelCosmos()).
@@ -133,6 +137,10 @@ export function famExtras(card, url, base) {
   const classes = ["fam-me-holo", `meh-${kind}`];
   if (kind === "rare" && (card.supertype === "Energy" || card.energy)) classes.push("meh-energy");
   const map = kind === "cosmos" && COSMOS_MAPS[card.id];
-  const style = map ? `--foil-map:url('${url(COSMOS_DIR + map)}')` : "";
+  let style = map ? `--foil-map:url('${url(COSMOS_DIR + map)}')` : "";
+  if (STAMPED[card.id] && !card.foilMap) {
+    classes.push("has-foil-map");
+    style = `--foil-map:url('${url(STAMPED[card.id])}')`;
+  }
   return { classes: classes.join(" "), style, cure: false };
 }

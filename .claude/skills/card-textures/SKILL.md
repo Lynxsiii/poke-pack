@@ -291,6 +291,17 @@ cure"). The surface gloss throws a soft highlight.
   map too (`FULL` in jp_twin_maps.py) and keep their own drawn etch; run `--write` then `--clean-text --write
   --only=<ids>` after adding any Japanese set, then `make_sir_masks.py --ids` for any face that turns sv-sir.
 
+- **Every layer that touches the art carries the lamp's pool, and a group over dark ink overlays.** The 2026-11-28 site
+  review failed the Mega Evolution era and the 30th Celebration the same way in six recipes: a band, glitter tile, etch
+  sheen or cast-and-cure pattern that ran to the far corner (the Pikachu Rare rings at 0.8 off the foil, the Classic
+  confetti at 0.3, the cosmos texture at rest, the SIR sheen and relief over a trainer's face), and hard-light or
+  colour-dodge groups that put pale band colours on black ink (IR eyes turned teal, Bulbasaur's black ground green).
+  Give each such layer a radial pool at the pointer as a mask layer, or a 50% grey veil closing over it in an overlay or
+  hard-light group, gone 60-66% of the way from the light; overlay the bands (black stays black) and let a small
+  screened silver pool in `.glare` answer on dark ink. A scan with dark engraved lines (the ME golds) loses them when
+  white is drawn on the etch: keep that under a quarter. A dot must read as round at phone size (4 device pixels or
+  more, 6% of the area), or a confetti field reads as dither noise. A set whose finish another family already draws
+  well joins that family by its id regex (me55 Rares, Cosmos promos and map-less IR promos).
 - **A refractor mask that covers the window lights the sky.** Holon Phantoms Rayquaza δ 016/110's silhouette was set to
   the whole art window on purpose ("its coils fill the window"), so the refractor's screened rainbow and rest sheen sat
   over the matte blue sky too, and on Noah's graded slab (2026-11-27) the art read as a blue-purple haze. The real card
