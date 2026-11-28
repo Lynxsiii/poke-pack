@@ -90,7 +90,14 @@ read it against this list.
   seats at a table), not a dashed box with an icon, a sentence and a button.
 - No four-point sparkle anywhere: it is the mark AI products use for
   themselves. The coin's face is a booster pack (`pp-coin-v2.svg`).
-- Icons are drawn for this site in the logo's thick line. No stock icon set.
+- Menu icons are drawn for this site, two-tone (Noah's pick, 2026-11-28): one
+  rounded 2px line in the icon's own colour with a lighter wash of the same
+  colour inside. Six colours, no two neighbours in the menu alike. Rounded
+  ends and joins here are his choice and the one exception to square corners.
+  They live in the sprite at the top of `index.html` (`#i-name`; paths carry
+  `.ic`, `.ic-n` for a line with no wash, `.ic-s` for a solid dot; the colour
+  is `--h` on the symbol's `<g>`). A place that wants them plain sets `--ico`
+  (resting tabs, Dot matrix). One clear object per icon, never official art.
 - Text never overlaps or runs under the tab bar, and a row of tabs that
   scrolls shows that it does.
 
@@ -207,8 +214,8 @@ pseudo-element, or slant the element and counter-slant its one child
 ## Navigation
 
 - Phones: a white tab bar with an ink line across its top (Home, Packs, the
-  raised ink Rip key, Collection, Casino). The active tab is ink with a cyan
-  icon. Your picture at the top left opens the menu sheet: every other page,
+  raised ink Rip key, Collection, Casino). The active tab is ink and its icon
+  shows in its own colour; resting tabs are plain. Your picture at the top left opens the menu sheet: every other page,
   grouped.
 - Computers: one top bar. The logo, then Home, Packs, Collection, Casino,
   Community and More as plain words (no icons), Search, and coins, Claim and
