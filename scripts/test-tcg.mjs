@@ -142,7 +142,7 @@ test("card definitions", () => {
   assert.equal(defs("me1-1").prizes, 1);
   assert.equal(defs(F).kind, "energy");
   assert.deepEqual(defs(F).provides, ["Fire"]);
-  assert.equal(defs("me1-128").playable, false);
+  assert.equal(defs("base1-86").playable, false);
 });
 
 test("energy costs", () => {
@@ -328,7 +328,7 @@ test("deck rules: size, copies, ownership, playable", () => {
   assert.match(check({ "base1-46": 5, [F]: 55 }).problems.join(" "), /5 copies of Charmander, the limit is 4/);
   assert.match(check({ "base1-46": 4, [F]: 56 }, {}).problems.join(" "), /You own 0 of Charmander/);
   assert.match(check({ "base1-46": 4, [F]: 56 }, { "base1-46": 1 }).problems.join(" "), /You own 1/);
-  assert.match(check({ "me1-128": 1, "base1-46": 4, [F]: 55 }).problems.join(" "), /can't be played yet/);
+  assert.match(check({ "base1-86": 1, "base1-46": 4, [F]: 55 }).problems.join(" "), /can't be played yet/);
   assert.match(check({ [F]: 60 }).problems.join(" "), /Basic Pokémon/);
   assert.deepEqual(check({ "base1-46": 1, [F]: 59 }).problems, [], "basic Energy has no copy limit");
   assert.equal(roomFor({ format: "unlimited", cards: { "base1-46": 4 } }, "base1-46", owned, defs), 0);

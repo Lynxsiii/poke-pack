@@ -53,7 +53,7 @@
  */
 
 import { altCost, attackBlock, runAttackEffects } from "./effects.js";
-import { T_OPS, boostOf, energyCards, energyIn, fieldFits, fits, holds, moveTargets, prizesLeft, runTrainer, stripEnergy, toolFits, trainerReady } from "./trainers.js";
+import { T_OPS, boostOf, energyCards, energyIn, fieldFits, fits, holds, moveTargets, offerDevolve, prizesLeft, runTrainer, stripEnergy, toolFits, trainerReady } from "./trainers.js";
 
 /**
  * The official Constructed formats (Play! Pokémon Tournament Handbook, section 4): 60 cards,
@@ -321,6 +321,9 @@ function teamWarded(state, slot, defs) {
 function teamWalled(state, target, attacker, defs) {
   const owner = ownerOf(state, target);
   if (owner < 0 || !attacker) return false;
+  // Neutralization Zone: no damage to Pokémon without a Rule Box from the opponent's Pokémon ex and Pokémon V.
+  const zone = state.stadium && defOf(state, state.stadium.uid, defs)?.stadium?.neutral;
+  if (zone && !defOf(state, target.uid, defs).rule && zone.boxes.includes(defOf(state, attacker.uid, defs).box)) return true;
   return inPlay(state, owner).some(([mate]) => {
     const wall = abilityOn(state, mate, defs)?.teamWall;
     return wall && energyOf(state, attacker, defs).length <= wall.energyMax;
@@ -822,6 +825,15 @@ export function benchMax(state, p) {
   const more = defOf(state, state.stadium.uid, liveDefs)?.stadium?.benchTo;
   if (!more) return base;
   return inPlay(state, p).some(([slot]) => defOf(state, slot.uid, liveDefs)?.tera) ? Math.max(base, more.n) : base;
+}
+
+/**
+ * Battle Cage: "Prevent all damage counters from being placed on Benched Pokémon (both yours and your opponent's) by
+ * effects of attacks and Abilities from the opponent's Pokémon." `by`: the player whose attack or Ability it is.
+ */
+export function caged(state, p, spot, by) {
+  if (spot === ACTIVE || p === by || !liveDefs || !state.stadium) return false;
+  return Boolean(defOf(state, state.stadium.uid, liveDefs)?.stadium?.benchCage);
 }
 
 /** Legendary Trench: "Whenever a Pokémon (yours or your opponent's) is healed, double the amount of damage healed." */
@@ -2280,7 +2292,16 @@ const HANDLERS = {
     const present = picked.filter((uid) => pile.includes(uid));
     for (const uid of picked) if (pile.includes(uid)) pile.splice(pile.indexOf(uid), 1);
     const { op } = waiting.effect;
-    if (op === "share") {
+    if (op === "tyme") {
+      // Tyme: the Pokémon is set aside and goes back to the hand; the other player guesses its HP, a range first.
+      side.hand.push(...present);
+      const uid = picked[0];
+      if (uid) {
+        events.push({ t: "tyme", p: player });
+        const ranges = [10, 100, 200, 300];
+        state.pending.splice(1, 0, { type: "option", player: other(player), by: player, why: "guess", prompt: "Tyme: guess the HP of the Pokémon they set aside. First, which range?", labels: ["10 to 90", "100 to 190", "200 to 290", "300 or more"], options: ranges.map((from) => [{ op: "tymeRange", from, uid, n: waiting.effect.n }]) });
+      }
+    } else if (op === "share") {
       const hit = inPlay(state, player).find(([slot]) => slot.uid === waiting.effect.to);
       if (hit) {
         hit[0].energy.push(...present);
@@ -2361,9 +2382,11 @@ const HANDLERS = {
       const uid = picked[0];
       const spots = uid ? evolveSpots(state, player, defOf(state, uid, defs), defs, waiting.effect.how, waiting.effect.where).filter((s) => waiting.effect.at == null || s === waiting.effect.at) : [];
       if (uid && !spots.length) pile.push(uid);
-      else if (spots.length === 1) evolveSlot(state, player, spots[0], uid, defs, events, waiting.zone);
-      else if (spots.length) {
-        askPick(state, { player, side: player, spots, left: 1, effect: { op: "evolveHeld", uid, zone: waiting.zone }, ...(waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) });
+      else if (spots.length === 1) {
+        evolveSlot(state, player, spots[0], uid, defs, events, waiting.zone);
+        if (waiting.effect.tree) treeAgain(state, player, spots[0], defs);
+      } else if (spots.length) {
+        askPick(state, { player, side: player, spots, left: 1, effect: { op: "evolveHeld", uid, zone: waiting.zone, ...(waiting.effect.tree ? { tree: true } : {}) }, ...(waiting.then ? { then: waiting.then, from: waiting.from, ...carry(waiting) } : {}) });
         waiting.then = null;
       } else if (waiting.zone === "deck") events.push({ t: "search", p: player, uids: [], from: "deck", to: "hand" });
     } else if (op === "swapTop") {
@@ -2897,6 +2920,7 @@ function applyPick(state, waiting, spot, defs, events) {
   } else if (effect.op === "evolveHeld") {
     // The card chosen to evolve with (it rides on the pick) goes on the Pokémon picked.
     evolveSlot(state, p, spot, effect.uid, defs, events, effect.zone);
+    if (effect.tree) treeAgain(state, p, spot, defs);
   } else if (effect.op === "gatherFrom") {
     // "Move any amount of Energy from your other Pokémon to it": one card a pick, until the player stops.
     const slot = slotAt(state, p, spot);
@@ -2998,6 +3022,7 @@ function applyPick(state, waiting, spot, defs, events) {
     events.push({ t: "lift", p, spot });
   } else if (effect.op === "devolve") {
     devolveSlot(state, p, spot, events);
+    if (effect.deep) offerDevolve(state, p, spot, 1);
   } else if (effect.op === "swapFrom") {
     // Ninja Boy: a Basic Pokémon from the deck takes this one's place, with all it had.
     const uids = side.deck.filter((uid) => isBasic(state, uid, defs));
@@ -3364,6 +3389,21 @@ function offerFall(state, p, slot, defs) {
 }
 
 /** Leave a choice for a player; the turn waits on it. */
+/**
+ * Grand Tree, its second step: "If that Pokémon was evolved in this way, that player may search their deck for a
+ * Stage 2 Pokémon that evolves from that Pokémon and put it onto that Pokémon to evolve it." It evolved this turn, and may again.
+ */
+function treeAgain(state, p, spot, defs) {
+  const slot = slotAt(state, p, spot);
+  const uids = state.players[p].deck.filter((uid) => {
+    const def = defOf(state, uid, defs);
+    return def?.line === 2 && canEvolveOnto(state, slot, def, defs, { lift: true });
+  });
+  // Ahead of anything already waiting, the search goes on.
+  // Called while the choice or pick that evolved it is still first in line.
+  state.pending.splice(1, 0, { type: "choose", player: p, zone: "deck", what: "evolution", uids, min: 0, max: Math.min(1, uids.length), effect: { op: "evolveFrom", how: { lift: true }, at: spot }, shuffle: true });
+}
+
 export function askPick(state, pick) {
   state.pending.push({ type: "pick", optional: false, ...pick });
 }

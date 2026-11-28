@@ -15,7 +15,7 @@
  * ctx: { state, defs, events, player }
  */
 
-import { ACTIVE, abilityOn, benchMax, noteShed, addCondition, takeTools, toolOn, toolGone, toolRoom, toolsIn, trainerBlock, win, askChoose, askPick, conditionsOn, damageAfterTyping, defOf, energyOf, evolveSpots, flip, healMore, healRoom, heldOn, hpLeft, inPlay, mayEvolve, other, rand, shedEnergy, shuffle, slotAt, switchActive, toolOf, warded } from "./engine.js";
+import { ACTIVE, abilityOn, benchMax, caged, devolveSlot, noteShed, addCondition, takeTools, toolOn, toolGone, toolRoom, toolsIn, trainerBlock, win, askChoose, askPick, conditionsOn, damageAfterTyping, defOf, energyOf, evolveSpots, flip, healMore, healRoom, heldOn, hpLeft, inPlay, mayEvolve, other, rand, shedEnergy, shuffle, slotAt, switchActive, toolOf, warded } from "./engine.js";
 import { runFx } from "./effects.js";
 
 export const RPS = ["Rock", "Paper", "Scissors"];
@@ -66,7 +66,7 @@ const energySpots = (ctx, { to, whoType, who = "", boxes = null }) =>
     .map(([, spot]) => spot);
 /** Their Pokémon this card may touch: not one whose Ability keeps off this kind of card (see `warded`). */
 const open = (ctx) => inPlay(ctx.state, other(ctx.player)).filter(([slot]) => !warded(ctx.state, slot, ctx, ctx.defs));
-const counterSpots = (ctx, where) => open(ctx).map(([, spot]) => spot).filter((spot) => (where === "bench" ? spot !== ACTIVE : where === "active" ? spot === ACTIVE : true));
+const counterSpots = (ctx, where) => open(ctx).map(([, spot]) => spot).filter((spot) => (where === "bench" ? spot !== ACTIVE : where === "active" ? spot === ACTIVE : true) && !(ctx.src === "ability" && caged(ctx.state, other(ctx.player), spot, ctx.player)));
 const gustSpots = (ctx, stage = "", hpMax = 0) => open(ctx).filter(([slot, spot]) => spot !== ACTIVE && (!stage || defOf(ctx.state, slot.uid, ctx.defs).stage === stage) && (!hpMax || hpLeft(ctx.state, slot, ctx.defs) <= hpMax)).map(([, spot]) => spot);
 const frontOpen = (ctx) => Boolean(theirs(ctx).active) && !warded(ctx.state, theirs(ctx).active, ctx, ctx.defs);
 /** After an attack's damage: their Active Pokémon it Knocked Out isn't switched about, it is gone once the attack is over. */
@@ -404,6 +404,23 @@ export const T_OPS = {
   },
   /** Evosoda, Wally: a card from the deck evolves one of your Pokémon (`where` "active": the Active one). */
   // `self`: the card's own Pokémon only; `what`: only these cards (Pidove's "an Unfezant or Unfezant ex").
+  /** Grand Tree: a Stage 1 from the deck onto a Basic Pokémon, then (engine.js treeAgain) a Stage 2 onto it. */
+  /** Mega Rayquaza Cap's Delta Gift: a Basic Energy from the deck onto each of your Pokémon that has this Tool attached. */
+  toolGift: {
+    ready: (ctx, { tool }) => hasDeck(ctx) && inPlay(ctx.state, ctx.player).some(([slot]) => toolsIn(slot).some((uid) => defOf(ctx.state, uid, ctx.defs).name === tool)),
+    run(ctx, { tool, what }) {
+      const spots = inPlay(ctx.state, ctx.player).filter(([slot]) => toolsIn(slot).some((uid) => defOf(ctx.state, uid, ctx.defs).name === tool)).map(([, spot]) => spot);
+      if (!spots.length) return;
+      askChoose(ctx.state, { player: ctx.player, zone: "deck", what, uids: fitting(ctx, mine(ctx).deck, what), min: 0, max: spots.length, effect: spots.length === 1 ? { op: "attach", to: "one", spot: spots[0] } : { op: "attach", to: "each", spots }, shuffle: true });
+    },
+  },
+  treeEvolve: {
+    ready: (ctx) => hasDeck(ctx) && mine(ctx).deck.some((uid) => defOf(ctx.state, uid, ctx.defs)?.line === 1 && evolveSpots(ctx.state, ctx.player, defOf(ctx.state, uid, ctx.defs), ctx.defs).length > 0),
+    run(ctx) {
+      const uids = mine(ctx).deck.filter((uid) => defOf(ctx.state, uid, ctx.defs)?.line === 1 && evolveSpots(ctx.state, ctx.player, defOf(ctx.state, uid, ctx.defs), ctx.defs).length > 0);
+      askChoose(ctx.state, { player: ctx.player, zone: "deck", what: "evolution", uids, min: 0, max: 1, effect: { op: "evolveFrom", how: {}, tree: true }, shuffle: true });
+    },
+  },
   evolveDeck: {
     ready: (ctx, { how = {}, where = "", self = false }) => hasDeck(ctx) && inPlay(ctx.state, ctx.player).some(([slot, spot]) => (where !== "active" || spot === ACTIVE) && (!self || spot === ctx.spot) && mayEvolve(ctx.state, slot, ctx.defs, how)),
     run(ctx, { how = {}, where = "", self = false, what = "" }) {
@@ -1367,10 +1384,98 @@ export const T_OPS = {
     ready: (ctx, { who }) => liftSpots(ctx, who).length > 0,
     run: (ctx, { who }) => askPick(ctx.state, { player: ctx.player, side: ctx.player, spots: liftSpots(ctx, who), left: 1, effect: { op: "lift" } }),
   },
-  /** Hyper Devolution Spray: the top Evolution card of one of your evolved Pokémon goes back to your hand. */
+  /**
+   * Hyper Devolution Spray: the top Evolution card of one of your evolved Pokémon goes back to your hand.
+   * Strange Timepiece: only an evolved Pokémon of `type`, and `deep`: any number of its Evolution cards (asked one at a time).
+   */
   devolve: {
-    ready: (ctx) => inPlay(ctx.state, ctx.player).some(([slot]) => slot.under.length),
-    run: (ctx) => askPick(ctx.state, { player: ctx.player, side: ctx.player, spots: inPlay(ctx.state, ctx.player).filter(([slot]) => slot.under.length).map(([, spot]) => spot), left: 1, effect: { op: "devolve" } }),
+    ready: (ctx, { type = "" } = {}) => devolveSpots(ctx, type).length > 0,
+    run: (ctx, { type = "", deep = false } = {}) => askPick(ctx.state, { player: ctx.player, side: ctx.player, spots: devolveSpots(ctx, type), left: 1, effect: { op: "devolve", ...(deep ? { deep } : {}) } }),
+  },
+  /** Strange Timepiece, after the first card: the next Evolution card on the same Pokémon too. */
+  devolveHere: {
+    ready: (ctx) => Boolean(slotAt(ctx.state, ctx.player, ctx.spot)?.under.length),
+    run(ctx) {
+      devolveSlot(ctx.state, ctx.player, ctx.spot, ctx.events);
+      offerDevolve(ctx.state, ctx.player, ctx.spot);
+    },
+  },
+  /** Transformation Tome: "You must play 2 Transformation Tome cards at once": the second copy goes with it. */
+  pair: {
+    must: true,
+    ready: (ctx) => mine(ctx).hand.filter((uid) => uid !== ctx.uid && defOf(ctx.state, uid, ctx.defs).name === defOf(ctx.state, ctx.uid || mine(ctx).hand.find((u) => defOf(ctx.state, u, ctx.defs).fx?.some((s) => s.op === "pair")), ctx.defs)?.name).length >= (ctx.uid ? 1 : 2),
+    run(ctx) {
+      const side = mine(ctx);
+      const name = defOf(ctx.state, ctx.uid, ctx.defs).name;
+      const twin = side.hand.find((uid) => uid !== ctx.uid && defOf(ctx.state, uid, ctx.defs).name === name);
+      if (!twin) return;
+      side.hand.splice(side.hand.indexOf(twin), 1);
+      side.discard.push(twin);
+      side.played = [...(side.played || []), twin];
+      ctx.events.push({ t: "play", p: ctx.player, uid: twin, sub: "item", pair: true });
+    },
+  },
+  /**
+   * Team Rocket's Bother-Bot: one of their face-down Prize cards turns face up (it stays so), a random card from their hand
+   * is shown, and the player may have them switch the two.
+   */
+  botherBot: {
+    ready: (ctx) => theirs(ctx).prizes.some((uid) => !(theirs(ctx).prizesUp || []).includes(uid)),
+    run(ctx) {
+      const side = theirs(ctx);
+      const down = side.prizes.filter((uid) => !(side.prizesUp || []).includes(uid));
+      if (!down.length) return;
+      const prize = down[Math.floor(rand(ctx.state) * down.length)];
+      side.prizesUp = [...(side.prizesUp || []), prize];
+      ctx.events.push({ t: "prize-up", p: other(ctx.player), uid: prize });
+      if (!side.hand.length) return;
+      const card = side.hand[Math.floor(rand(ctx.state) * side.hand.length)];
+      ctx.events.push({ t: "reveal-hand", p: other(ctx.player), uids: [card] });
+      const names = [defOf(ctx.state, prize, ctx.defs).name, defOf(ctx.state, card, ctx.defs).name];
+      ctx.state.pending.push({ type: "option", player: ctx.player, why: "botherBot", prompt: `Their face-up Prize card is ${names[0]}, and the card shown from their hand is ${names[1]}. Have them switch the two?`, labels: ["Switch them", "Leave them"], options: [[{ op: "prizeTrade", prize, card }], []], seen: [prize, card] });
+    },
+  },
+  /** Bother-Bot's switch: the card from their hand takes the face-up Prize card's place (face up), the Prize card goes to their hand. */
+  prizeTrade: {
+    ready: () => true,
+    run(ctx, { prize, card }) {
+      const side = theirs(ctx);
+      const at = side.prizes.indexOf(prize);
+      if (at < 0 || !side.hand.includes(card)) return;
+      side.prizes[at] = card;
+      side.hand.splice(side.hand.indexOf(card), 1, prize);
+      side.prizesUp = (side.prizesUp || []).map((uid) => (uid === prize ? card : uid));
+      ctx.events.push({ t: "prize-trade", p: other(ctx.player), uid: card, back: prize });
+    },
+  },
+  /**
+   * Tyme: a Pokémon from the hand, set aside face down; the other player guesses its HP (a range of 100, then the number),
+   * then it is shown. Right: they draw 4. Wrong: the player draws 4. It goes back to the hand.
+   */
+  tyme: {
+    ready: (ctx) => fitting(ctx, mine(ctx).hand, "pokemon").some((uid) => uid !== ctx.uid),
+    run(ctx, { n }) {
+      const uids = fitting(ctx, mine(ctx).hand, "pokemon").filter((uid) => uid !== ctx.uid);
+      if (uids.length) askChoose(ctx.state, { player: ctx.player, zone: "hand", what: "pokemon", uids, min: 1, max: 1, effect: { op: "tyme", n }, keep: true, prompt: "Tyme: choose a Pokémon from your hand. Your opponent guesses its HP." });
+    },
+  },
+  /** Tyme's guess, its second step: the HP itself, out of the range picked. */
+  tymeRange: {
+    ready: () => true,
+    run(ctx, { from, uid, n }) {
+      const hps = Array.from({ length: from >= 300 ? 11 : from === 10 ? 9 : 10 }, (_, i) => from + i * 10);
+      ctx.state.pending.unshift({ type: "option", player: other(ctx.player), by: ctx.player, why: "guess", prompt: `Guess the HP of their ${"Pokémon"} (${from} to ${hps[hps.length - 1]}).`, labels: hps.map(String), options: hps.map((hp) => [{ op: "tymeGuess", hp, uid, n }]) });
+    },
+  },
+  /** Tyme: the guess is checked, the card shown, and 4 cards drawn by whoever won the guess. */
+  tymeGuess: {
+    ready: () => true,
+    run(ctx, { hp, uid, n }) {
+      const real = defOf(ctx.state, uid, ctx.defs).hp;
+      const right = hp === real;
+      ctx.events.push({ t: "reveal-hand", p: ctx.player, uids: [uid], why: "tyme", guess: hp, right });
+      draw(ctx, right ? other(ctx.player) : ctx.player, n);
+    },
   },
   /** Ninja Boy: one of your Basic Pokémon (not evolved) is swapped for a Basic Pokémon from the deck, with all it had. */
   swapBasic: {
@@ -1727,6 +1832,14 @@ const blaineSpots = (ctx) => {
 };
 /** A card that evolves from a Pokémon of this name ("a later-Stage card that matches that Pokémon"). */
 const evolvesOnto = (def, name) => def?.kind === "pokemon" && def.stage === "evolution" && def.evolvesFrom === name;
+/** Your evolved Pokémon (of `type`, judged by the card on top) that a devolving card may pick. */
+const devolveSpots = (ctx, type = "") => inPlay(ctx.state, ctx.player).filter(([slot]) => slot.under.length && (!type || defOf(ctx.state, slot.uid, ctx.defs).types.includes(type))).map(([, spot]) => spot);
+/** Strange Timepiece: "any number of Evolution cards": with another one left on it, the player is asked about it. */
+export function offerDevolve(state, player, spot, at = 0) {
+  const slot = slotAt(state, player, spot);
+  if (!slot?.under.length) return;
+  state.pending.splice(at, 0, { type: "option", player, why: "devolve", from: spot, prompt: "Put the next Evolution card into your hand too?", labels: ["Yes", "No"], options: [[{ op: "devolveHere" }], []] });
+}
 /** Pokémon Breeder Fields: your non-Baby Pokémon that can evolve (a Basic Pokémon or a Stage 1). */
 const breederSpots = (ctx) =>
   inPlay(ctx.state, ctx.player)
@@ -2180,6 +2293,11 @@ const PATTERNS = [
   [/^Discard 1 Energy card attached to (?:1 of )?your own Pokémon in order to remove up to (\d+) damage counters from that Pokémon\.$/, (m) => [{ op: "heal", n: Number(m[1]) * 10, pay: "energy" }]],
   [/^Heal all damage from 1 of your Mega Evolution Pokémon ex\. If you healed any damage in this way, put all Energy attached to that Pokémon into your hand\.$/, () => [{ op: "heal", n: ALL, who: "mega", strip: "hand", ifHealed: true }]],
   [/^Put 1 of your Pokémon that has any damage counters on it and all cards attached to it into your hand\.$/, () => [{ op: "bounce", keep: "all", hurt: true }]],
+  [new RegExp(`^Devolve 1 of your evolved (${TYPE_WORD}) Pokémon by putting any number of Evolution cards on it into your hand\\. \\(That Pokémon can't evolve this turn\\.\\)$`), (m) => [{ op: "devolve", type: m[1], deep: true }]],
+  [/^You must play 2 ([A-Z][\w'é. -]+?) cards at once\. \(This effect works one time for 2 cards\.\) Choose a Basic Pokémon in your discard pile and switch it with 1 of your Basic Pokémon in play\. Any attached cards, damage counters, Special Conditions, turns in play, and any other effects remain on the new Pokémon\.$/, () => [{ op: "pair" }, { op: "swapPlay", what: "basic" }]],
+  [/^Turn 1 of your opponent's face-down Prize cards face up and choose a random card from your opponent's hand\. Your opponent reveals that card\. You may have your opponent switch those cards\. \(That Prize card remains face up for the rest of the game\.\)$/, () => [{ op: "botherBot" }]],
+  [/^Tell your opponent the name of a Pokémon in your hand and put that Pokémon face down in front of you\. Your opponent guesses that Pokémon's HP, and then you reveal it\. If your opponent guessed right, they draw (\d+) cards\. If they guessed wrong, you draw \1 cards\. Then, return the Pokémon to your hand\.$/, (m) => [{ op: "tyme", n: Number(m[1]) }]],
+  [/^During this turn, if your opponent's Active Pokémon is Knocked Out by damage from an attack used by your ((?:Team Rocket|[A-Z][a-zé]*)'s) Pokémon, take (\d+) more Prize cards?\.$/, (m) => [{ op: "prizeUp", n: Number(m[2]), who: `name^${m[1]}` }]],
   [/^Choose 1 of your evolved Pokémon\. Take the highest Stage Evolution card from that Pokémon and put it into your hand\. \(You can't evolve a Pokémon the turn you devolve it\.\)$/, () => [{ op: "devolve" }]],
   // Energy.
   [/^Discard 1 Energy card attached to 1 of your (?:own )?Pokémon in order to choose 1 of your opponent's Pokémon and up to 2 Energy cards attached to it\. Discard those Energy cards\.$/, () => [{ op: "payEnergy" }, { op: "energyOff", n: 2, upTo: true }]],
@@ -2685,7 +2803,8 @@ const TOOL_CLAUSES = [
   [/^If the Pokémon this card is attached to is a Basic Pokémon or Pokémon-ex, discard this card$/, (m, out) => out.only?.evolved && { only: { ...out.only, drop: true } }],
 ];
 export function compileTool(text, cardName = "") {
-  let clean = tidy(text).replace(/\s*\([^()]*have Rule Boxes\.\)/g, "");
+  // Mega Rayquaza Cap: our card data carries a Mega Evolution ex rule line the printed Tool doesn't have.
+  let clean = tidy(text).replace(/\s*\([^()]*have Rule Boxes\.\)/g, "").replace(/ ?Mega Evolution ex Rule: When your Mega Evolution Pokémon ex is Knocked Out, your opponent takes 3 Prize cards\./, "");
   if (!clean) return null;
   // Older Tools name themselves where newer ones say "this card".
   if (cardName) clean = clean.split(cardName).join("this card");
@@ -2800,6 +2919,12 @@ const STADIUM_TEXTS = [
   [new RegExp(`^During Pokémon Checkup, put (\\d+) more damage counters on each Poisoned non-(${TYPE_WORD}) Pokémon \\(both yours and your opponent's\\)\\.$`), (m) => ({ poisonMore: { n: Number(m[1]) * 10, who: { notTypes: [m[2]] } } })],
   // Lumiose City.
   [/^Once during each player's turn, that player may search their deck for a Basic Pokémon and put it onto their Bench\. Then, that player shuffles their deck\. If a player searches their deck in this way, their turn ends\.$/, () => ({ use: [{ op: "search", what: "basic", n: 1, to: "bench" }, { op: "endTurn" }] })],
+  // Legendary Trench (engine.js healMore), Battle Cage (caged), Neutralization Zone (teamWalled), Area Zero Underdepths (benchMax), Grand Tree.
+  [/^Whenever a Pokémon \(yours or your opponent's\) is healed, double the amount of damage healed\.$/, () => ({ healTimes: 2 })],
+  [/^Prevent all damage counters from being placed on Benched Pokémon \(both yours and your opponent's\) by effects of attacks and Abilities from the opponent's Pokémon\. \(Damage from attacks is still taken\.\)$/, () => ({ benchCage: true })],
+  [/^Prevent all damage done to Pokémon that don't have a Rule Box \(both yours and your opponent's\) by attacks from the opponent's Pokémon ex and Pokémon V\. \(Pokémon ex, Pokémon V, etc\. have Rule Boxes\.\)$/, () => ({ neutral: { boxes: ["ex", "V", "VSTAR", "VMAX"] } })],
+  [/^Each player who has any Tera Pokémon in play can have up to (\d+) Pokémon on their Bench\. If a player no longer has any Tera Pokémon in play, that player discards Pokémon from their Bench until they have 5\. When this card leaves play, both players discard Pokémon from their Bench until they have 5, and the player who played this card discards first\.$/, (m) => ({ benchTo: { n: Number(m[1]), tera: true } })],
+  [/^Once during each player's turn, that player may search their deck for a Stage 1 Pokémon that evolves from 1 of their Basic Pokémon and put it onto that Pokémon to evolve it\. If that Pokémon was evolved in this way, that player may search their deck for a Stage 2 Pokémon that evolves from that Pokémon and put it onto that Pokémon to evolve it\. Then, that player shuffles their deck\. \(Players can't evolve a Basic Pokémon during their first turn or a Basic Pokémon that was put into play this turn\.\)$/, () => ({ use: [{ op: "treeEvolve" }] })],
   // Fossil Quarry.
   [/^Once during each player's turn, that player may search their deck for up to (\d+) Item cards that have "(Antique)" in their name and put them onto their Bench\. Then, that player shuffles their deck\.$/, (m) => ({ use: [{ op: "search", what: `item~${m[2]}`, n: Number(m[1]), to: "bench" }] })],
   // Community Center, Team Rocket's Factory.
