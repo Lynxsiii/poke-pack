@@ -17,7 +17,7 @@ import { createJackpot } from "./jackpot.js?v=9";
 import { createUpgrader } from "./upgrader.js?v=10";
 import { chanceText } from "./upgrader-rules.js?v=3";
 import { gateLock, gateNoticeHTML } from "./gate-notice.js";
-import { createBetaPages, BETA_KEYS, BETA_ART } from "./beta.js?v=8";
+import { createBetaPages, BETA_KEYS, BETA_ART } from "./beta.js?v=9";
 
 const HUB_POLL_MS = 8000;
 const ROUTE = /^\/casino(?:\/(coinflip|jackpot|upgrader|beta|grass|rocket|tins)(?:\/([a-zA-Z0-9-]{1,80}))?)?$/;
