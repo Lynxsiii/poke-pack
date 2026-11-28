@@ -14,16 +14,32 @@
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px;
   margin: 0 0 6px; padding: 0 0 12px; border-bottom: var(--line-w) solid var(--k);
 }
-.nt-months { display: flex; flex-wrap: wrap; gap: 2px 4px; margin-left: 2px; }
-#view-notes .nt-month:not(.on) { color: var(--k); }
-#view-notes .nt-month { min-height: 38px; padding: 4px 15px 5px; font-size: 16px; box-shadow: none; }
+/* The week's big updates, above everything: rows that jump to their entry. */
+.nt-week { margin: 4px 0 22px; }
+.nt-week h3 { margin: 0 0 10px; color: var(--k); font: italic 800 25px/1 var(--font-xc); letter-spacing: -0.015em; }
+.nt-week-rows { display: grid; gap: 8px; }
+.nt-week-row { min-height: 52px; }
+.nt-week-row .rt-row-lab { min-width: 74px; font-variant-numeric: tabular-nums; }
+.nt-week-row .rt-row-name { padding: 8px 12px 8px 0; font-size: 15.5px; line-height: 1.15; text-wrap: balance; }
+.nt-week-row:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 2px; }
+@media (min-width: 720px) { .nt-week { max-width: 980px; } .nt-week-rows { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* What kind of update: the words are the page's main filter. The month is a small picker beside Expand all. */
+.nt-kinds { display: flex; flex-wrap: wrap; gap: 2px 2px; margin-left: 2px; }
+#view-notes .nt-pick:not(.on) { color: var(--k); }
+#view-notes .nt-pick { min-height: 40px; padding: 4px 14px 5px; font-size: 17px; box-shadow: none; }
+.nt-pick small { margin-left: 6px; font: 600 12.5px/1 var(--font-h); font-style: normal; font-variant-numeric: tabular-nums; opacity: 0.7; }
+.nt-tools { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex: 1 1 240px; }
+#view-notes .nt-month-pick { width: auto; min-width: 150px; min-height: 40px; padding-block: 6px; font-size: 14.5px; }
+.nt-none { margin: 22px 0 0; padding: 18px; color: var(--k-2); font: 700 15px var(--font); }
+.nt-none[hidden], .nt-count[hidden], .nt-entry[hidden], .nt-day[hidden] { display: none; }
 .nt-all {
   appearance: none; min-height: 44px; padding: 0 2px; border: 0; background: transparent; cursor: pointer;
   color: var(--k); font: 700 14.5px var(--font);
   text-decoration: underline; text-decoration-color: var(--cy-2); text-decoration-thickness: 2px; text-underline-offset: 4px;
 }
 .nt-all:hover { color: var(--cy-2); }
-.nt-month:focus-visible, .nt-all:focus-visible, .nt-entry > summary:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 2px; }
+.nt-pick:focus-visible, .nt-all:focus-visible, .nt-entry > summary:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 2px; }
 
 .nt-list { display: grid; gap: 0; }
 .nt-day { padding: 24px 0 4px; border: 0; }
@@ -44,6 +60,21 @@
 .nt-entry > summary::-webkit-details-marker { display: none; }
 @media (hover: hover) { .nt-entry:not([open]):hover { transform: translateX(4px); } }
 .nt-head { display: block; min-width: 0; }
+/* The kind of update, and the mark on one that arrived since the last visit. */
+.nt-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; margin: 0 0 7px; }
+.nt-kind {
+  display: inline-block; padding: 1px 9px 1px 8px; border: 2px solid var(--rule-2); border-radius: 3px;
+  color: var(--k-2); font: italic 700 12.5px/1.4 var(--font-h);
+}
+.nt-kind[data-kind="new"] { border-color: var(--hp-low); background: var(--hp-low); color: var(--w0); }
+.nt-kind[data-kind="better"] { border-color: var(--k); color: var(--k); }
+.nt-fresh { display: inline-flex; align-items: center; gap: 6px; color: var(--k); font: 700 12px/1.4 var(--font); }
+.nt-fresh::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--yel-k); }
+/* A big update: a heavier title and the slab's colour down its left edge. */
+.nt-entry.is-big { border-left-width: 9px; border-left-color: var(--slab); }
+.nt-entry.is-big .nt-title { font-size: 24px; }
+.nt-go { margin: 14px 0 0; }
+.nt-go .tlink { display: inline-flex; align-items: center; min-height: 40px; font-size: 15.5px; }
 .nt-title { display: block; color: var(--k); font: italic 800 20px/1.1 var(--font-xc); letter-spacing: -0.015em; overflow-wrap: break-word; text-wrap: balance; }
 .nt-sum { display: block; max-width: 70ch; margin-top: 5px; color: var(--k-2); font: 500 14.5px/1.45 var(--font); text-wrap: pretty; }
 .nt-body li { text-wrap: pretty; }
@@ -90,6 +121,8 @@
   .nt-updates { grid-column: 2; }
   .nt-entry > summary { min-height: 68px; padding: 14px 18px 14px 20px; }
   .nt-title { font-size: 23px; }
+  .nt-entry.is-big .nt-title { font-size: 28px; }
+  .nt-tools { flex: 0 0 auto; }
   .nt-sum { font-size: 15px; }
   .nt-body { margin: 0 20px; }
 }
@@ -100,3 +133,4 @@
 }
 body.no-motion :is(.nt-mark, .nt-entry) { transition: none; }
 body.no-motion :is(.nt-entry[style], .nt-entry[open] .nt-body, .nt-day .rt-tag, .nt-day.nt-in) { animation: none; }
+.nt-entry { scroll-margin-top: 84px; }

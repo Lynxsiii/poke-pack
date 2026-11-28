@@ -71,7 +71,7 @@
     <link rel="stylesheet" href="css/app.css?v=71" />
     <link rel="stylesheet" href="css/theme.css?v=28" />
     <link rel="stylesheet" href="css/counter.css?v=4" />
-    <link rel="stylesheet" href="css/pages/home.css?v=14" />
+    <link rel="stylesheet" href="css/pages/home.css?v=15" />
     <link rel="stylesheet" href="css/pages/packs.css?v=22" />
     <link rel="stylesheet" href="css/pages/collection.css?v=20" />
     <!-- binder object (materials, hardware, plate): css/binder/ -->
@@ -84,7 +84,7 @@
     <link rel="stylesheet" href="css/pages/rankings.css?v=5" />
     <link rel="stylesheet" href="css/pages/profile-look.css?v=11" />
     <link rel="stylesheet" href="css/pages/extras.css?v=22" />
-    <link rel="stylesheet" href="css/pages/notes.css?v=3" />
+    <link rel="stylesheet" href="css/pages/notes.css?v=4" />
     <link rel="stylesheet" href="css/pages/share.css?v=5" />
     <link rel="stylesheet" href="css/pages/discord.css?v=3" />
     <link rel="stylesheet" href="css/pages/legal.css?v=6" />
@@ -372,7 +372,8 @@
     <link rel="modulepreload" href="js/binder-editions.js" />
     <link rel="modulepreload" href="js/card-art-accent.js?v=1" />
     <link rel="modulepreload" href="js/binder-editor.js?v=4" />
-    <link rel="modulepreload" href="js/notes-page.js?v=3" />
+    <link rel="modulepreload" href="js/notes-page.js?v=4" />
+    <link rel="modulepreload" href="js/this-week.js?v=1" />
     <link rel="modulepreload" href="js/legal-page.js?v=6" />
     <link rel="modulepreload" href="js/terms-sheet.js?v=1" />
     <link rel="modulepreload" href="js/fam/mcd-promos.js?v=6" />
@@ -656,6 +657,8 @@
             </div>
           </div>
         </div>
+        <!-- This week (js/this-week.js): the newest big update and the cards whose price moved most -->
+        <section class="home-week" id="home-week" aria-labelledby="home-week-h" hidden></section>
         <div id="home-body"></div>
         <div class="home-lounge" id="home-lounge">
           <section class="lounge-panel plate" aria-labelledby="home-online-h">
@@ -1050,7 +1053,7 @@
       </nav>
     </footer>
     <script type="module" src="js/etch.js?v=1"></script>
-    <script type="module" src="js/app.js?v=416"></script>
+    <script type="module" src="js/app.js?v=417"></script>
     <script type="module" src="js/rotom.js?v=3"></script>
   </body>
 </html>

@@ -20,6 +20,7 @@ import {
   BASIC_ENERGY,
   sellValue,
   money,
+  COINS_PER_USD,
   rarityKey,
   setIdentity,
   sealedOffers,
@@ -157,7 +158,8 @@ import { normalizeBinderLook, resolveBinderLook, COLOR_FROM_CARDS } from "./bind
 import { hexToHsl, hslToHex, mixHex } from "./card-accent.js";
 import { cachedCardAccents, sampleCardAccents } from "./card-art-accent.js?v=1";
 import { initBinderEditor } from "./binder-editor.js?v=4";
-import { renderNotesPage } from "./notes-page.js?v=3";
+import { renderNotesPage } from "./notes-page.js?v=4";
+import { initThisWeek } from "./this-week.js?v=1";
 import { renderLegalPage, LEGAL_TITLES } from "./legal-page.js?v=6";
 import { ageFieldsHtml, agreeRowHtml, readAgeFields, ageBlocked, blockAge, UNDERAGE_HTML, syncTermsSheet } from "./terms-sheet.js?v=1";
 
@@ -3967,6 +3969,7 @@ function renderHome() {
   // the set on show and its chase cards, then the player's binder. Odds live on
   // the set page, older sets in All sets, pulls on the account page, chat on Social.
   els.homeBody.innerHTML = trainer ? `<div class="home-grid">${binder}</div>` : "";
+  thisWeek.render();
 }
 
 function formatWhen(ts) {
@@ -8589,7 +8592,11 @@ document.addEventListener("click", (e) => {
   e.preventDefault();
   if (next === "auth") openAuth();
   else if (setIdFromPath(url.pathname)) playSet(setIdFromPath(url.pathname));
-  else setView(next);
+  else {
+    // A link to one update (Home's "This week"): the notes page opens it once it is on screen.
+    if (next === "notes" && url.hash.startsWith("#note-")) notesState.jump = decodeURIComponent(url.hash.slice(1));
+    setView(next);
+  }
 });
 
 window.addEventListener("popstate", () => {
@@ -11222,6 +11229,22 @@ async function openIndexedCard({ id, setId }) {
     toast("Couldn't open that card.");
   }
 }
+
+// Home's "This week" (js/this-week.js): the newest big update and the week's price moves.
+const thisWeek = initThisWeek({
+  root: document.getElementById("home-week"),
+  esc,
+  coinAmount,
+  coinText,
+  toCoins: (usd) => Math.max(0.01, money(Number(usd) * COINS_PER_USD)),
+  openCard: openIndexedCard,
+  loadMovers: () =>
+    fetch("/api/prices/movers").then((res) => {
+      if (!res.ok) throw new Error(res.status);
+      return res.json();
+    }),
+  notes: () => patchNotes,
+});
 
 const siteSearch = initSearch({
   root: document.getElementById("site-search"),

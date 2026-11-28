@@ -34,6 +34,7 @@ import {
   overlaySealed,
   recordDailyPrices,
 } from "./prices.js";
+import { handleMovers } from "./movers.js";
 import { COLOR_IDS } from "../js/palette.js";
 import { TERMS_VERSION, ensureTermsSchema, readAgeAndAgreement, termsFields, personalDataStmts } from "./terms.js";
 import { isTitleUnlocked, ownedMap, titleContext } from "../js/titles.js";
@@ -250,6 +251,10 @@ export async function handleApi(request, env, url) {
 
   if (path === "/api/prices/latest" && method === "GET") {
     return handleLatestPrices(request, env, url);
+  }
+
+  if (path === "/api/prices/movers" && method === "GET") {
+    return handleMovers(request, env, url, getSet);
   }
 
   if (path.startsWith("/api/prices/") && method === "GET") {

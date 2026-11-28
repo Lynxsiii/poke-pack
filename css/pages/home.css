@@ -395,3 +395,103 @@ body.no-motion #view-home *, body.no-motion #view-home *::before, body.no-motion
    Home is the set on show, its key, the chase cards and the player's binder.
    The lounge and the Discord block moved to Social and the footer. */
 .home-page .home-lounge, .home-page .home-discord { display: none; }
+
+/* ---- This week (js/this-week.js) -------------------------------------------
+   Under the hero: the newest big update on an ink plate with the other new
+   things as rows, then the cards whose TCGplayer price moved most in a week.
+   Phone: one column, the cards as a row you swipe. Computer: news on the
+   left, the cards as a grid on the right. */
+.home-week { --wk-gutter: var(--gutter, 20px); position: relative; z-index: 3; margin-top: 44px; }
+.home-week[hidden] { display: none; }
+.wk-head { display: flex; align-items: baseline; gap: 12px; margin: 0 0 14px; }
+.wk-head h2 { margin: 0; color: var(--k); font: italic 800 36px/1 var(--font-xc); letter-spacing: -0.025em; }
+.wk-range { color: var(--k-2); font: 600 14px/1 var(--font-h); font-variant-numeric: tabular-nums; }
+.wk-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 30px; }
+.wk-news { min-width: 0; }
+
+/* The lead: an ink plate with the slab's colour cut down its right edge. */
+.wk-lead { position: relative; isolation: isolate; overflow: hidden; padding: 16px 56px 16px 18px; border-radius: 6px; background: var(--k); color: var(--on-k); }
+.wk-lead::after {
+  content: ""; position: absolute; z-index: -1; top: -4px; bottom: -4px; right: -22px; width: 58px;
+  background: var(--slab); transform: skewX(var(--skew));
+}
+.wk-lead-top { display: flex; align-items: center; gap: 10px; margin: 0; }
+.wk-lead-top time { font: 600 13px/1 var(--font-h); opacity: 0.72; }
+.wk-lead h3 { margin: 10px 0 0; font: italic 800 27px/1.04 var(--font-xc); letter-spacing: -0.02em; text-wrap: balance; }
+.wk-lead h3 a { color: inherit; text-decoration: none; }
+.wk-lead-sum { margin: 8px 0 0; font: 500 14.5px/1.45 var(--font); opacity: 0.86; text-wrap: pretty; }
+.wk-lead-links { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 10px 0 0; }
+.wk-lead-links a {
+  display: inline-flex; align-items: center; min-height: 40px; color: var(--on-k); font: 700 15px var(--font);
+  text-decoration: underline; text-decoration-color: var(--slab); text-decoration-thickness: 2.5px; text-underline-offset: 4px;
+}
+.wk-lead-links .wk-read { font-weight: 500; opacity: 0.86; }
+.wk-lead a:focus-visible { outline: 3px solid var(--slab); outline-offset: 3px; border-radius: 2px; }
+
+.wk-rows { display: grid; gap: 8px; margin-top: 10px; }
+.wk-row { min-height: 52px; }
+.wk-row .rt-row-lab { min-width: 74px; font-variant-numeric: tabular-nums; }
+.wk-row .rt-row-name { padding: 8px 12px 8px 0; font-size: 15.5px; line-height: 1.15; text-wrap: balance; }
+.wk-row:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 2px; }
+.wk-tail { display: flex; flex-wrap: wrap; align-items: center; gap: 0 14px; margin: 8px 0 0; color: var(--k-2); font: 700 13.5px/1.4 var(--font); }
+.wk-tail .tlink { display: inline-flex; align-items: center; min-height: 40px; }
+
+/* The movers. */
+.wk-movers { min-width: 0; }
+.wk-movers-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 38px; margin: 0 0 10px; }
+.wk-movers-head h3 { margin: 0; color: var(--k); font: italic 800 25px/1 var(--font-xc); letter-spacing: -0.015em; }
+/* With both sides to show, the two words are the heading. */
+.wk-movers-head:has(.wk-sides) h3 { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.wk-sides { display: flex; gap: 2px; margin-left: -4px; }
+.wk-sides .rt-word { min-height: 38px; font-size: 17px; }
+.wk-sides .rt-word:not(.on) { color: var(--k); }
+.wk-cards {
+  display: flex; gap: 14px; margin: 0 calc(var(--wk-gutter) * -1); padding: 6px var(--wk-gutter) 10px;
+  overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; scroll-padding-inline: var(--wk-gutter);
+  scrollbar-width: none; -webkit-overflow-scrolling: touch;
+}
+.wk-cards::-webkit-scrollbar { display: none; }
+.wk-card {
+  flex: 0 0 132px; display: grid; align-content: start; min-width: 0; padding: 0; border: 0; background: none;
+  color: var(--k); font: inherit; text-align: left; cursor: pointer; scroll-snap-align: start; -webkit-tap-highlight-color: transparent;
+}
+.wk-art { position: relative; display: block; aspect-ratio: 63 / 88; filter: drop-shadow(var(--drop-sm)); transition: transform 0.16s var(--ease-out); }
+.wk-art img { display: block; width: 100%; height: 100%; border-radius: 4.6% / 3.3%; background: var(--box-2); object-fit: cover; }
+.wk-pct {
+  position: absolute; left: -5px; bottom: 9px; padding: 1px 16px 1px 8px; background: var(--hp); color: var(--k0);
+  font: italic 800 16px/1.45 var(--font-h); font-variant-numeric: tabular-nums;
+  clip-path: polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+}
+.wk-pct.is-down { background: var(--hp-low); color: var(--w0); }
+.wk-nm { margin-top: 10px; font: 600 15px/1.15 var(--font-h); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.wk-set { margin-top: 2px; color: var(--k-2); font: 700 11.5px/1.3 var(--font); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.wk-price { display: flex; align-items: center; gap: 4px; margin-top: 3px; font: 700 16.5px/1.2 var(--font-h); font-variant-numeric: tabular-nums; }
+.wk-price .coin-i { width: 15px; height: 15px; }
+.wk-price s { margin-left: 4px; color: var(--k-3); font-weight: 600; font-size: 12.5px; }
+@media (hover: hover) { .wk-card:hover .wk-art { transform: translateY(-5px); } }
+.wk-card:active .wk-art { transform: translateY(1px); }
+.wk-card:focus-visible { outline: 0; }
+.wk-card:focus-visible .wk-art { outline: 3px solid var(--cy-2); outline-offset: 3px; border-radius: 6px; }
+.wk-ghost { aspect-ratio: 63 / 88; cursor: default; }
+.wk-foot { margin: 2px 0 0; color: var(--k-3); font: 700 12px/1.4 var(--font); }
+
+body.rt-enter #view-home .wk-card { animation: hh-rise 0.36s var(--ease-out) backwards; animation-delay: calc(0.2s + min(var(--i, 0), 7) * 40ms); }
+
+@media (min-width: 600px) and (max-width: 960px) {
+  .wk-card { flex-basis: 150px; }
+  .wk-rows { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 961px) {
+  .home-week { margin-top: 64px; }
+  .wk-head h2 { font-size: 48px; }
+  .wk-range { font-size: 16px; }
+  .wk-grid { grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr); gap: 44px; align-items: start; }
+  .wk-grid.is-solo { grid-template-columns: minmax(0, 640px); }
+  .wk-lead { padding: 22px 76px 20px 24px; }
+  .wk-lead::after { right: -26px; width: 78px; }
+  .wk-lead h3 { font-size: 34px; }
+  .wk-lead-sum { font-size: 15.5px; }
+  .wk-cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px 18px; margin: 0; padding: 0; overflow: visible; }
+  .wk-nm { font-size: 16px; }
+  .wk-foot { margin-top: 14px; }
+}

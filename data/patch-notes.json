@@ -1,7 +1,37 @@
 [
   {
+    "id": "2026-11-28-this-week",
+    "date": "2026-11-28",
+    "kind": "new",
+    "big": 1,
+    "title": "This week on Home, and patch notes you can skim",
+    "summary": "Home now shows the latest big update and the cards climbing in price, and every patch note says whether it is new, better or a fix.",
+    "groups": [
+      {
+        "title": "This week, on Home",
+        "items": [
+          "Under the pack, Home has a This week section. It leads with the newest big update, with a link straight to the thing, then lists the week's other new features. Bug fixes stay out of it.",
+          "Going up shows the eight cards whose TCGplayer market price rose most in the last seven days, with the old price beside the new one. Going down shows the biggest drops.",
+          "Tap any of those cards to open it with its price chart.",
+          "Cards under 5 coins are left out, so a 20 cent card that doubled doesn't crowd out real moves."
+        ]
+      },
+      {
+        "title": "Patch notes",
+        "items": [
+          "Every update is tagged New, Better or Fix, and the words at the top show only one kind.",
+          "The week's big updates are listed first. Tap one to jump to it.",
+          "Big updates have a coloured edge and a link that takes you to the feature.",
+          "Updates that arrived since you last looked are marked, and the line under the title counts them.",
+          "Months moved into a small picker, so the list starts higher on a phone."
+        ]
+      }
+    ]
+  },
+  {
     "id": "2026-11-28-picture-alignment",
     "date": "2026-11-28",
+    "kind": "fix",
     "title": "Pixel and animated pictures sit in the middle",
     "summary": "Sprites are now centred and sized the same in every round picture.",
     "groups": [
@@ -17,6 +47,7 @@
   {
     "id": "2026-11-28-loading-screen",
     "date": "2026-11-28",
+    "kind": "new",
     "title": "New loading screen",
     "summary": "The three logo cards flip over to spell RIP, with a real loading percentage.",
     "items": [
@@ -28,6 +59,8 @@
   {
     "id": "2026-11-28-rip-logo",
     "date": "2026-11-28",
+    "kind": "new",
+    "big": 1,
     "title": "New logo",
     "summary": "Three red cards that spell RIP, for the .rip in the address.",
     "items": [
@@ -38,6 +71,7 @@
   {
     "id": "2026-11-28-earned-shinies",
     "date": "2026-11-28",
+    "kind": "new",
     "title": "Shiny profile pictures, earned",
     "summary": "A Black Label unlocks that Pokémon's shiny, and every mastered set gives you one shiny pick.",
     "groups": [
@@ -56,8 +90,12 @@
   {
     "id": "2026-11-28-profile-pictures-account",
     "date": "2026-11-28",
+    "kind": "new",
+    "big": 2,
     "title": "Every Pokémon as your picture, and a simpler account page",
     "summary": "Pick from 1,307 pictures in three styles, and edit your whole look on one screen.",
+    "link": "/account",
+    "linkLabel": "Pick a picture",
     "groups": [
       {
         "title": "Profile pictures",
@@ -85,8 +123,12 @@
   {
     "id": "2026-11-28-account-security",
     "date": "2026-11-28",
+    "kind": "new",
+    "big": 2,
     "title": "Account security: two-step sign-in, your devices, and Discord linking",
     "summary": "Account, Security is now a short checklist with a safety meter, and it has new ways to keep your trainer safe.",
+    "link": "/account",
+    "linkLabel": "Check your security",
     "items": [
       "Two-step sign-in: turn it on with any authenticator app (Google Authenticator, 1Password, Authy). After your password you enter the 6-digit code it shows. A recovery code works too if you lose your phone.",
       "Devices: see every browser you're signed in on, roughly where, and when it was last used. Sign one out, or sign out everywhere else in one tap.",
@@ -98,8 +140,12 @@
   {
     "id": "2026-11-28-binder-flip-book",
     "date": "2026-11-28",
+    "kind": "new",
+    "big": 3,
     "title": "The binder is a flip book now",
     "summary": "Your binder starts closed on its cover, opens to real page turns, and all the editing moved into one Arrange mode.",
+    "link": "/binder",
+    "linkLabel": "Open your binder",
     "items": [
       "The binder starts closed, showing its cover with your card count and worth. Tap it to open.",
       "On a phone one page fills the screen. Swipe or use Back and Next and the page swings over on its ring edge, with a band of light crossing the cards as the next page lands. On a computer two pages face each other and turn across the spine.",
@@ -111,6 +157,7 @@
   {
     "id": "2026-11-28-coin-shine",
     "date": "2026-11-28",
+    "kind": "better",
     "title": "Coins shine like the real ones",
     "summary": "Every coin keeps its own colours under the light now, instead of turning into a rainbow.",
     "items": [
@@ -123,8 +170,12 @@
   {
     "id": "2026-11-28-mystery-tin-shelves",
     "date": "2026-11-28",
+    "kind": "new",
+    "big": 2,
     "title": "Mystery Tins move onto five shelves, with slab tins",
     "summary": "Tins are now sorted by price from the Bargain bin to High roller, each shelf says what comes back, and four new tins hold graded slabs.",
+    "link": "/casino/tins",
+    "linkLabel": "See the tins",
     "items": [
       "Five shelves, cheapest first: Bargain bin (1 to 2 coins, 65% comes back on average), Budget (5 coins, 75%), Mid (25 to 30, 85%), High (50 to 150, 90%) and High roller (300 to 650, 94%). The more a tin costs, the better its odds.",
       "Bargain bin tins are bulk or one of the big cards, nothing in between. Budget is one Pokémon's whole line. Mid drops everything under 2 coins. High is hits only. High roller holds nothing worth under 100 coins.",
@@ -139,8 +190,12 @@
   {
     "id": "2026-11-28-bold-themes",
     "date": "2026-11-28",
+    "kind": "new",
+    "big": 3,
     "title": "Twelve new themes, and Rocket is the new look",
     "summary": "Themes now repaint the whole site instead of nudging one colour, and the default look is Rocket: black and red.",
+    "link": "/settings",
+    "linkLabel": "Pick a theme",
     "items": [
       "Settings, Look has twelve new themes: Haunt, Rocket, Emerald, Magma, Gold star, Prism, Sunset, Dot matrix, Surf, Volt, Rival and Berry. Each one changes the page, the boxes, the lines, the key, the shadows and the pattern behind it all.",
       "Rocket is the look you get by default. If you never changed your look you'll see it now; if you chose dark mode or a theme, yours stays.",
@@ -151,6 +206,7 @@
   {
     "id": "2026-11-28-dark-keys-equipped-tag",
     "date": "2026-11-28",
+    "kind": "fix",
     "title": "Dark mode keys and the Equipped tag",
     "summary": "Two small visual fixes.",
     "items": [
@@ -161,6 +217,7 @@
   {
     "id": "2026-11-27-holo-every-card",
     "date": "2026-11-27",
+    "kind": "better",
     "title": "Real textures on Japanese cards, and a clearer Rayquaza δ",
     "summary": "Japanese full arts now carry an engraving drawn from their own art instead of a shared wavy pattern, and Holon Phantoms Rayquaza δ no longer drowns its art in a blue haze.",
     "items": [
@@ -175,6 +232,7 @@
   {
     "id": "2026-11-27-product-photos",
     "date": "2026-11-27",
+    "kind": "better",
     "title": "Cleaner product photos",
     "summary": "Over 200 boxes, tins, chests and blisters lose the white left around them in the shop.",
     "items": [
@@ -186,6 +244,7 @@
   {
     "id": "2026-11-27-fresh-tabs",
     "date": "2026-11-27",
+    "kind": "better",
     "title": "Old tabs catch up by themselves",
     "summary": "A tab left open on your phone now picks up site updates when you come back to it.",
     "items": [
@@ -195,6 +254,7 @@
   {
     "id": "2026-11-27-shop-show-all",
     "date": "2026-11-27",
+    "kind": "fix",
     "title": "Show all stays open",
     "summary": "Buying from a set's full sealed list no longer folds it shut.",
     "items": [
@@ -204,6 +264,7 @@
   {
     "id": "2026-11-27-japanese-packs-sharper",
     "date": "2026-11-27",
+    "kind": "better",
     "title": "Sharper Japanese packs that tear like English ones",
     "summary": "Paradise Dragona, Shiny Treasure ex and Terastal Festival ex packs now use the official Pokémon Center art, and no Japanese pack shows a hole when you tear it.",
     "items": [
@@ -214,6 +275,7 @@
   {
     "id": "2026-11-27-japanese-art-recut",
     "date": "2026-11-27",
+    "kind": "better",
     "title": "Cleaner Japanese packs and boxes",
     "summary": "Every Japanese pack and booster box is recut, with no white left around them.",
     "items": [
@@ -224,6 +286,7 @@
   {
     "id": "2026-11-27-japanese-batch-3",
     "date": "2026-11-27",
+    "kind": "new",
     "title": "Eevee Heroes and Paradise Dragona",
     "summary": "Two more Japanese sets, each with its 30-pack booster box.",
     "items": [
@@ -235,6 +298,7 @@
   {
     "id": "2026-11-27-japanese-batch-2",
     "date": "2026-11-27",
+    "kind": "new",
     "title": "VMAX Climax, Shiny Star V and Terastal Festival ex",
     "summary": "Three more Japanese high class sets, each with its booster box.",
     "items": [
@@ -247,6 +311,7 @@
   {
     "id": "2026-11-27-japanese-batch-1",
     "date": "2026-11-27",
+    "kind": "new",
     "title": "VSTAR Universe and Shiny Treasure ex",
     "summary": "Two more Japanese sets: VSTAR Universe and Shiny Treasure ex, with their booster boxes.",
     "items": [
@@ -259,6 +324,7 @@
   {
     "id": "2026-11-27-japanese-tab",
     "date": "2026-11-27",
+    "kind": "new",
     "title": "Japanese tab and real boxes",
     "summary": "Japanese sets have their own tab on the Packs page, and their booster boxes are the real ones.",
     "items": [
@@ -269,8 +335,12 @@
   {
     "id": "2026-11-27-japanese-sets",
     "date": "2026-11-27",
+    "kind": "new",
+    "big": 2,
     "title": "Japanese sets",
     "summary": "Two Japanese sets to open: Pokémon Card 151 and Tag All Stars.",
+    "link": "/packs",
+    "linkLabel": "See the Japanese packs",
     "items": [
       "New Japanese shelf on the Packs page, with two sets to start: Pokémon Card 151 (SV2a) and TAG TEAM GX Tag All Stars (SM12a), which never came out in English.",
       "Japanese 151 packs hold 7 cards with 2 foils, like the real ones. Every pack has a Poké Ball mirror or an Art Rare, and about one pack in twenty has a Master Ball mirror, a finish only Japan printed.",
@@ -282,6 +352,7 @@
   {
     "id": "2026-11-26-touch-ups",
     "date": "2026-11-26",
+    "kind": "fix",
     "title": "Phone touch-ups",
     "summary": "Small fixes for smaller iPhones and Safari.",
     "items": [
@@ -303,6 +374,7 @@
   {
     "id": "2026-11-26-theme-decks-sm-swsh",
     "date": "2026-11-26",
+    "kind": "new",
     "title": "Sun and Moon and Sword and Shield theme decks",
     "summary": "34 more theme decks, each with its real 60 cards and its Cracked Ice showcase card.",
     "items": [
@@ -314,8 +386,12 @@
   {
     "id": "2026-11-26-theme-decks",
     "date": "2026-11-26",
+    "kind": "new",
+    "big": 2,
     "title": "Theme decks from four eras and more 30th Celebration",
     "summary": "Over a hundred real theme decks join the shop, each with its real 60 cards, plus the 30th Celebration Mini Tins and more.",
+    "link": "/packs",
+    "linkLabel": "Browse the decks",
     "items": [
       "Every EX era theme deck is in the shop, from Ruby and Sapphire to Power Keepers: 33 decks.",
       "Diamond and Pearl, Platinum, HeartGold SoulSilver and Call of Legends theme decks are in too. The last three sets' decks come with a booster pack, like the real ones.",
@@ -328,8 +404,12 @@
   {
     "id": "2026-11-26-grading-overhaul",
     "date": "2026-11-26",
+    "kind": "new",
+    "big": 2,
     "title": "Slabs you can turn over and look up",
     "summary": "Every slab has a public cert page, slabs got a new case you can rotate, and there are 78 guards on five shelves.",
+    "link": "/grading",
+    "linkLabel": "Go to grading",
     "groups": [
       {
         "title": "Cert lookup",
@@ -369,6 +449,7 @@
   {
     "id": "2026-11-26-faster-site",
     "date": "2026-11-26",
+    "kind": "better",
     "title": "A faster site, most of all on phones",
     "summary": "Pages load sooner and big collections no longer slow everything down. Nothing looks or plays any different.",
     "items": [
@@ -381,6 +462,7 @@
   {
     "id": "2026-11-26-coin-toss",
     "date": "2026-11-26",
+    "kind": "fix",
     "title": "The coin flips again",
     "summary": "The Coinflip coin tosses every time, even with Lite or Idle shimmer switched off.",
     "items": [
@@ -390,6 +472,7 @@
   {
     "id": "2026-11-26-phone-polish",
     "date": "2026-11-26",
+    "kind": "fix",
     "title": "Phone fixes and a roomier stake box",
     "summary": "The Open and Rip keys sit on the first screen on shorter phones, and the Tall Grass and Rayquaza stake box has room to type again.",
     "items": [
@@ -402,6 +485,7 @@
   {
     "id": "2026-11-26-ex-reverse-holos",
     "date": "2026-11-26",
+    "kind": "better",
     "title": "Calmer EX-era reverse holos",
     "summary": "Reverse holos from Delta Species to Power Keepers now shine like the real cards: a soft silver sheen on the art instead of a loud rainbow.",
     "items": [
@@ -413,6 +497,7 @@
   {
     "id": "2026-11-26-upgrader-wishlist",
     "date": "2026-11-26",
+    "kind": "new",
     "title": "Wishlist in the Upgrader",
     "summary": "The Upgrader's Pick a target sheet has a Wishlist tab, so you can aim straight for a card you've hearted.",
     "items": [
@@ -423,6 +508,7 @@
   {
     "id": "2026-11-26-mastery-banner-fit",
     "date": "2026-11-26",
+    "kind": "fix",
     "title": "Set Master banners fit your profile",
     "summary": "The banner is taller and nothing covers it any more.",
     "items": [
@@ -434,6 +520,7 @@
   {
     "id": "2026-11-26-new-avatar-frames",
     "date": "2026-11-26",
+    "kind": "new",
     "title": "37 new avatar frames",
     "summary": "The Pokémon avatar frames are swapped for a bigger set of clean ones, and the Beta Tester frame is redrawn.",
     "items": [
@@ -446,6 +533,7 @@
   {
     "id": "2026-11-26-grass-rocket-look",
     "date": "2026-11-26",
+    "kind": "better",
     "title": "Tall Grass redrawn, and Rocket is now Rayquaza",
     "summary": "Both beta games have a new look built for a phone screen: a swaying field of grass with a Voltorb picker on the board, and Rayquaza takes over from the rocket, climbing through the clouds into the stars.",
     "items": [
@@ -460,6 +548,7 @@
   {
     "id": "2026-11-26-tear-and-backs",
     "date": "2026-11-26",
+    "kind": "fix",
     "title": "Packs no longer vanish when you tear them",
     "summary": "Grabbing a pack in the first half second after it landed froze it see-through, so the whole tear ran on an invisible pack. A grab now finishes the pack's entrance at once.",
     "items": [
@@ -469,6 +558,7 @@
   {
     "id": "2026-11-26-hud-face",
     "date": "2026-11-26",
+    "kind": "fix",
     "title": "Your picture sits in its level ring",
     "summary": "On phones the profile picture in the top left is round now, so it sits centred in the level ring instead of poking its corners into it.",
     "items": [
@@ -478,6 +568,7 @@
   {
     "id": "2026-11-26-holo-fit-stamped",
     "date": "2026-11-26",
+    "kind": "fix",
     "title": "22 more stamped cards have their holo lined up",
     "summary": "A second pass on cards whose foil sat slightly off the print. These are stamped, Pokémon Center and prerelease versions that were wearing the foil of the plain card.",
     "items": [
@@ -488,6 +579,7 @@
   {
     "id": "2026-11-26-grass-five-wide",
     "date": "2026-11-26",
+    "kind": "fix",
     "title": "Tall Grass is five tiles wide again",
     "summary": "The Tall Grass field had been squeezed into three wide columns. It is back to its five by five patch.",
     "items": [
@@ -497,6 +589,7 @@
   {
     "id": "2026-11-26-tins-no-pieces",
     "date": "2026-11-26",
+    "kind": "fix",
     "title": "No more card pieces in Mystery Tins",
     "summary": "Cards that are only one piece of a bigger card, like the four Pikachu V-UNION quarters, no longer come out of any tin.",
     "items": [
@@ -507,6 +600,7 @@
   {
     "id": "2026-11-26-holo-fit",
     "date": "2026-11-26",
+    "kind": "fix",
     "title": "Holos that didn't fit their cards now do",
     "summary": "Expedition holos stopped short of the edges of the art window, and some stamped promos had their foil sitting slightly off the print. Both are fixed.",
     "items": [
@@ -519,6 +613,7 @@
   {
     "id": "2026-11-26-tins-multi-open",
     "date": "2026-11-26",
+    "kind": "new",
     "title": "Open five Mystery Tins at once",
     "summary": "Pick 1 to 5 on a tin's page and every reel spins at the same time, stopping one after another.",
     "items": [
@@ -530,6 +625,7 @@
   {
     "id": "2026-11-26-dark-logo",
     "date": "2026-11-26",
+    "kind": "fix",
     "title": "The logo in dark mode",
     "summary": "In dark mode the .rip in the logo could show as a blank white box. It now sits on a yellow plate in ink, in every colour theme.",
     "items": [
@@ -539,6 +635,7 @@
   {
     "id": "2026-11-26-mystery-tins-themes",
     "date": "2026-11-26",
+    "kind": "new",
     "title": "Mystery Tins: 36 tins, type tins and high rollers",
     "summary": "Tins are now only about Pokémon, never about a set. There are 36 of them, with a new high roller shelf for tins that cost more and swing harder.",
     "items": [
@@ -553,6 +650,7 @@
   {
     "id": "2026-11-26-mystery-tins-chase",
     "date": "2026-11-26",
+    "kind": "new",
     "title": "Mystery Tins show off their chase cards, and eight more tins",
     "summary": "The tins are rebuilt around the cards you are chasing. Each tin on the shelf is its three best cards standing in an open tin, as real cards with their holo.",
     "items": [
@@ -566,6 +664,7 @@
   {
     "id": "2026-11-26-mystery-tins",
     "date": "2026-11-26",
+    "kind": "new",
     "title": "Mystery Tins get real tins, and six more",
     "summary": "Every Mystery Tin is now drawn as its own painted tin, and opening one is a proper moment: the tin shakes, the lid pops off, the cards spin past and your card rises out on a slab.",
     "items": [
@@ -578,6 +677,7 @@
   {
     "id": "2026-11-26-packs-fixes",
     "date": "2026-11-26",
+    "kind": "fix",
     "title": "Packs page fixes",
     "summary": "Sets inside each era are in release order, and the set strip shows the set you're on in full.",
     "items": [
@@ -590,8 +690,12 @@
   {
     "id": "2026-11-26-wishlist",
     "date": "2026-11-26",
+    "kind": "new",
+    "big": 1,
     "title": "Card wishlist",
     "summary": "Heart any card, owned or not, and the new Wishlist page lists them by set with the pack or product each one comes from, so you know what to rip.",
+    "link": "/wishlist",
+    "linkLabel": "Open your wishlist",
     "items": [
       "Tap the heart on a card's page, on any missing card in a set, or beside a card in search.",
       "Wishlist, under Binder in the menu, groups your cards by set. Each one says whether it comes from that set's packs or from a box or collection, and the set has an Open a pack key.",
@@ -603,6 +707,7 @@
   {
     "id": "2026-11-26-level-battle-rewards",
     "date": "2026-11-26",
+    "kind": "better",
     "title": "Level coins and bot battles rebalanced",
     "summary": "Level ups paid enough coins to buy the packs for the next level, so a new account could climb to level 47 in one sitting. Level coins and battles against bots now pay less.",
     "items": [
@@ -616,6 +721,7 @@
   {
     "id": "2026-11-26-happy-meal-pouches",
     "date": "2026-11-26",
+    "kind": "better",
     "title": "Better Happy Meal pouches",
     "summary": "The McDonald's Collections from 2011 to 2019 and 2026 never had a printed pack, so their pouch is drawn for the site. It is redrawn to sit beside the real 2023 and 2024 wrappers.",
     "items": [
@@ -626,6 +732,7 @@
   {
     "id": "2026-11-26-packs-page",
     "date": "2026-11-26",
+    "kind": "better",
     "title": "A tidier Packs page",
     "summary": "Packs now opens on one page of everything you can open, sorted into four kinds, and the set page is shorter and easier to get around.",
     "items": [
@@ -641,6 +748,7 @@
   {
     "id": "2026-11-26-beta-testing",
     "date": "2026-11-26",
+    "kind": "new",
     "title": "Beta testing: five new casino games",
     "summary": "The casino has a Beta testing section with five new games for invited testers. Ask for an invite code, enter it under Casino, Beta, and you're in.",
     "items": [
@@ -656,6 +764,7 @@
   {
     "id": "2026-11-26-xy-radiant-colours",
     "date": "2026-11-26",
+    "kind": "better",
     "title": "XY full arts and Radiant cards keep their colours too",
     "summary": "XY full arts were turning into a pale rainbow when lit, and Radiant cards were washed yellow. Both now keep their art and show the foil on top of it.",
     "items": [
@@ -667,6 +776,7 @@
   {
     "id": "2026-11-26-sets-and-extras",
     "date": "2026-11-26",
+    "kind": "better",
     "title": "Promos sorted: sets are their pack cards, the rest are extras",
     "summary": "A set now means what comes out of its booster packs. Promo binders, Happy Meal packs, Trick or Trade, POP Series, Trainer Kits and fixed decks are extras: they keep their collection pages and no longer have a mastery of their own.",
     "groups": [
@@ -693,6 +803,7 @@
   {
     "id": "2026-11-26-new-logo",
     "date": "2026-11-26",
+    "kind": "new",
     "title": "A new logo",
     "summary": "The card fan is redrawn with three foil cards of our own: a gold sunburst, a night foil and a rainbow foil.",
     "items": [
@@ -704,6 +815,7 @@
   {
     "id": "2026-11-26-casino-menu",
     "date": "2026-11-26",
+    "kind": "better",
     "title": "Every casino game in the menu",
     "summary": "Coinflip, Jackpot and the Upgrader now sit in the menu's Casino section next to Pack battles.",
     "items": [
@@ -713,6 +825,7 @@
   {
     "id": "2026-11-26-sir-colours-under-light",
     "date": "2026-11-26",
+    "kind": "better",
     "title": "Special Illustration Rares keep their colours under the light",
     "summary": "Special Illustration Rares were getting washed out when lit. The shine now stays on the engraved lines, so the art keeps its colour and the texture reads sharper.",
     "items": [
@@ -724,6 +837,7 @@
   {
     "id": "2026-11-25-iphone-holo-glitch",
     "date": "2026-11-25",
+    "kind": "fix",
     "title": "Holo glitch on iPhone fixed",
     "summary": "On iPhone, engraved cards could turn dark with a heavy rainbow frame and grey text while lit, then snap back. They now stay clean.",
     "items": [
@@ -735,6 +849,7 @@
   {
     "id": "2026-11-25-fixes-7",
     "date": "2026-11-25",
+    "kind": "fix",
     "title": "Empty binder pages leave your profile",
     "summary": "Taking the last card out of a page on your profile takes the page off it too.",
     "items": [
@@ -744,6 +859,7 @@
   {
     "id": "2026-11-25-fixes-6",
     "date": "2026-11-25",
+    "kind": "fix",
     "title": "Price chart ranges, guard shop and share sheet fixes",
     "summary": "Price charts, the guard shop and sharing a card work the way you'd expect.",
     "items": [
@@ -755,6 +871,7 @@
   {
     "id": "2026-11-25-engraving-over-art",
     "date": "2026-11-25",
+    "kind": "better",
     "title": "Engraved cards show their texture over the art, and phone tilt stops glitching",
     "summary": "Full-art cards whose Pokémon fills the card, like Mega Rayquaza ex 138/103, now show their engraved lines over the whole painting, and tilting your phone no longer makes the card flash and reset.",
     "items": [
@@ -768,6 +885,8 @@
   {
     "id": "2026-11-25-dark-mode-themes",
     "date": "2026-11-25",
+    "kind": "new",
+    "big": 1,
     "title": "Dark mode and colour themes",
     "summary": "Settings has a new Look section: light, dark or follow your device, and six colour themes that all work in both.",
     "groups": [
@@ -792,6 +911,7 @@
   {
     "id": "2026-11-25-fixes-5",
     "date": "2026-11-25",
+    "kind": "fix",
     "title": "Unequip gear, steadier coin tosses and Auto-regrade on results",
     "summary": "You can take off a sleeve or coin from its tile, coins no longer show a box around them mid-toss on iPhone, and Auto-regrade sits next to Regrade after a grade.",
     "items": [
@@ -809,6 +929,7 @@
   {
     "id": "2026-11-25-polish-4",
     "date": "2026-11-25",
+    "kind": "better",
     "title": "Smoother Friends, Rankings, Trades and Settings",
     "summary": "The community pages, sign-in, Settings, the rules pages and these notes got more motion and finish, and switches, level badges and picked tabs now match everywhere.",
     "groups": [
@@ -844,6 +965,7 @@
   {
     "id": "2026-11-25-price-history-picture",
     "date": "2026-11-25",
+    "kind": "fix",
     "title": "Price history shows the right picture",
     "summary": "A box's price history now shows the box, not a single booster pack.",
     "items": [
@@ -853,6 +975,7 @@
   {
     "id": "2026-11-25-own-engraving",
     "date": "2026-11-25",
+    "kind": "better",
     "title": "Trainer Gallery cards get their own engraving",
     "summary": "111 cards that shared one generic texture now carry an engraving drawn from their own art, so the new rainbow shine follows the picture.",
     "items": [
@@ -863,6 +986,7 @@
   {
     "id": "2026-11-25-bug-hunt-round-3",
     "date": "2026-11-25",
+    "kind": "fix",
     "title": "Bug hunt, round three",
     "summary": "Shared pull links, lost connections, signing out in another tab and very large binders all behave better.",
     "items": [
@@ -877,8 +1001,12 @@
   {
     "id": "2026-11-25-auto-regrade",
     "date": "2026-11-25",
+    "kind": "new",
+    "big": 1,
     "title": "Auto-regrade",
     "summary": "Pick a slab and the grade you want, and RIP Grading keeps cracking and regrading it until it lands.",
+    "link": "/grading",
+    "linkLabel": "Go to grading",
     "items": [
       "Open a slab and press Auto-regrade. Pick a target (any grade above the slab's, or a Black Label), then set how much you'll spend and how many tries at most.",
       "Each try costs the normal grading fee and uses the normal odds, exactly like pressing Regrade yourself. The page shows the chance of landing within your limits before you start.",
@@ -889,6 +1017,7 @@
   {
     "id": "2026-11-25-your-menu",
     "date": "2026-11-25",
+    "kind": "new",
     "title": "A new menu under your name, new icons",
     "summary": "Your name in the top corner now opens a clean menu, the phone menu was rebuilt, and every menu icon was redrawn. Pack battles, your account and profiles got more finish too.",
     "groups": [
@@ -914,6 +1043,7 @@
   {
     "id": "2026-11-25-etch-shine-all",
     "date": "2026-11-25",
+    "kind": "better",
     "title": "Every engraved card gets the moving rainbow",
     "summary": "The rainbow and glitter shine added to Sun & Moon's textured cards now covers every era.",
     "items": [
@@ -924,6 +1054,7 @@
   {
     "id": "2026-11-25-etch-shine",
     "date": "2026-11-25",
+    "kind": "better",
     "title": "Engraved cards shine with a moving rainbow",
     "summary": "Textured Sun & Moon cards showed their engraving but no real holo shine when you moved them.",
     "items": [
@@ -935,6 +1066,7 @@
   {
     "id": "2026-11-25-round-2-fixes",
     "date": "2026-11-25",
+    "kind": "fix",
     "title": "Messages and pack battle fixes",
     "summary": "Two small fixes from another bug sweep.",
     "items": [
@@ -945,6 +1077,7 @@
   {
     "id": "2026-11-25-character-rares",
     "date": "2026-11-25",
+    "kind": "better",
     "title": "Character rares and alternate arts shimmer",
     "summary": "Cosmic Eclipse's character rares and the Sun & Moon alternate-art Tag Teams looked flat on a phone.",
     "items": [
@@ -954,6 +1087,7 @@
   {
     "id": "2026-11-25-polish-2",
     "date": "2026-11-25",
+    "kind": "better",
     "title": "Livelier pack opening and casino",
     "summary": "The pack opening, your pulls, the card viewer and the casino games got more motion and finish.",
     "groups": [
@@ -992,6 +1126,7 @@
   {
     "id": "2026-11-25-shining-foil",
     "date": "2026-11-25",
+    "kind": "better",
     "title": "Shining Pokémon catch the light",
     "summary": "The Shining cards from Shining Legends and the yellow Pikachu and Meowth secret rares barely showed their foil on a phone.",
     "items": [
@@ -1002,6 +1137,7 @@
   {
     "id": "2026-11-25-chase-and-phone-fixes",
     "date": "2026-11-25",
+    "kind": "fix",
     "title": "Chase cards and phone fixes",
     "summary": "Chase cards on Home only show what a set's packs can pull, plus two fixes for phones.",
     "items": [
@@ -1013,6 +1149,7 @@
   {
     "id": "2026-11-25-polish-1",
     "date": "2026-11-25",
+    "kind": "better",
     "title": "Smoother menus, Home, Packs and Collection",
     "summary": "More motion and finish on the new look, and proper layouts for tablets.",
     "groups": [
@@ -1049,6 +1186,7 @@
   {
     "id": "2026-11-25-delta-shine",
     "date": "2026-11-25",
+    "kind": "better",
     "title": "Delta Species holos shine again",
     "summary": "The EX-era Delta Species holos, Pokémon-ex and Gold Stars from the Holon sets were too faint to notice on a phone.",
     "items": [
@@ -1058,6 +1196,7 @@
   {
     "id": "2026-11-25-sv-foil-shows",
     "date": "2026-11-25",
+    "kind": "better",
     "title": "Scarlet & Violet holos you can actually see",
     "summary": "A sweep of every finish on the site found the Scarlet & Violet holo Rares, Double Rares and Illustration Rares too faint on a phone. They shine properly now.",
     "items": [
@@ -1069,6 +1208,8 @@
   {
     "id": "2026-11-25-rotom-menu",
     "date": "2026-11-25",
+    "kind": "new",
+    "big": 1,
     "title": "A whole new look",
     "summary": "Every page rebuilt as a bright game menu in cyan, white and black, with smoother motion all the way through.",
     "groups": [
@@ -1105,6 +1246,7 @@
   {
     "id": "2026-11-23-new-type",
     "date": "2026-11-23",
+    "kind": "new",
     "title": "New lettering and a louder Home",
     "summary": "New typefaces across the whole site, and Home is staged like the front of a booster box.",
     "items": [
@@ -1118,6 +1260,7 @@
   {
     "id": "2026-11-23-bug-sweep-2",
     "date": "2026-11-23",
+    "kind": "fix",
     "title": "Bug fixes: friends, radio and battles",
     "summary": "More fixes from playing through the site.",
     "items": [
@@ -1129,6 +1272,7 @@
   {
     "id": "2026-11-23-lit-up",
     "date": "2026-11-23",
+    "kind": "new",
     "title": "Lights on",
     "summary": "The pack on show is lit in its own colours, and coins and keys answer when something happens.",
     "items": [
@@ -1143,6 +1287,7 @@
   {
     "id": "2026-11-23-bug-sweep-1",
     "date": "2026-11-23",
+    "kind": "fix",
     "title": "Bug fixes: new players, Claim and the cart",
     "summary": "A round of fixes from playing through the site on a phone.",
     "items": [
@@ -1155,6 +1300,7 @@
   {
     "id": "2026-11-23-new-look",
     "date": "2026-11-23",
+    "kind": "new",
     "title": "A new look",
     "summary": "poke-pack.rip has a new look: easier on the eyes and more like a game.",
     "items": [
@@ -1169,6 +1315,7 @@
   {
     "id": "2026-11-23-etch-back",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "Etched art is back on the big hits",
     "summary": "This morning's foil rebuilds left Special Illustration Rares too quiet: the etched lines over the art were almost invisible. They are back, with colour.",
     "items": [
@@ -1179,6 +1326,7 @@
   {
     "id": "2026-11-23-simpler-set-page",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "A shorter set page",
     "summary": "The pack and its button come first.",
     "items": [
@@ -1189,6 +1337,7 @@
   {
     "id": "2026-11-23-first-run-tour",
     "date": "2026-11-23",
+    "kind": "new",
     "title": "A quick tour for new players",
     "summary": "Four short steps the first time you visit.",
     "items": [
@@ -1199,6 +1348,7 @@
   {
     "id": "2026-11-23-simpler-site",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "A simpler poke-pack.rip",
     "summary": "Less on the screen at once, on phones and computers alike.",
     "items": [
@@ -1211,6 +1361,7 @@
   {
     "id": "2026-11-23-swsh-special",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "Celebrations, Radiant Pokémon and Amazing Rares",
     "summary": "55 special Sword & Shield cards were rebuilt against photos of the real cards.",
     "items": [
@@ -1222,6 +1373,7 @@
   {
     "id": "2026-11-23-swsh-sf-shiny",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "Shining Fates Shiny Vault",
     "summary": "120 Shiny Vault cards from Shining Fates were rebuilt against photos of the real cards.",
     "items": [
@@ -1232,6 +1384,7 @@
   {
     "id": "2026-11-23-sv-prismatic-promo",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "Prismatic Evolutions ball prints and Scarlet & Violet promos",
     "summary": "167 Poké Ball and Master Ball prints and 53 Cosmos Black Star promos were rebuilt against photos of the real cards.",
     "items": [
@@ -1242,6 +1395,7 @@
   {
     "id": "2026-11-23-sm-prism-rainbow",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "Prism Stars and Sun & Moon Rainbow Rares",
     "summary": "27 Prism Star cards were rebuilt against photos of the real cards, and 147 Sun & Moon Rainbow Rares got a small texture upgrade.",
     "items": [
@@ -1252,6 +1406,7 @@
   {
     "id": "2026-11-23-sv-shiny-acespec",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "Shiny Rares and ACE SPEC cards",
     "summary": "149 Paldean Fates Shiny Rares and 33 ACE SPEC cards were rebuilt against photos of the real cards.",
     "items": [
@@ -1262,6 +1417,7 @@
   {
     "id": "2026-11-23-sv-gold",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "Scarlet & Violet gold cards",
     "summary": "76 gold Hyper Rares from Scarlet & Violet were rebuilt against photos of the real cards.",
     "items": [
@@ -1272,6 +1428,7 @@
   {
     "id": "2026-11-23-swsh-rainbow-gallery",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "Sword & Shield Rainbow Rares and Trainer Gallery",
     "summary": "181 Rainbow Rares and 68 Trainer Gallery and Galarian Gallery cards were rebuilt against photos of the real cards.",
     "items": [
@@ -1282,6 +1439,7 @@
   {
     "id": "2026-11-23-sv-tera",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "Tera Pokémon ex sparkle like crystal",
     "summary": "103 Tera Pokémon ex from Scarlet & Violet were rebuilt against photos of the real cards.",
     "items": [
@@ -1292,6 +1450,7 @@
   {
     "id": "2026-11-23-sm-gx-golds",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "Sun & Moon Pokémon-GX and gold cards",
     "summary": "207 Pokémon-GX and 101 gold secret rares from Sun & Moon were rebuilt against photos of the real cards.",
     "items": [
@@ -1302,6 +1461,7 @@
   {
     "id": "2026-11-23-sv-holo-rares",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "Scarlet & Violet holo Rares",
     "summary": "All 319 Scarlet & Violet holo Rares were rebuilt against photos of the real cards.",
     "items": [
@@ -1313,6 +1473,7 @@
   {
     "id": "2026-11-23-sv-double-rares",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "Scarlet & Violet Double Rares",
     "summary": "All 221 Scarlet & Violet Pokémon ex Double Rares were rebuilt against photos of the real cards.",
     "items": [
@@ -1325,6 +1486,7 @@
   {
     "id": "2026-11-23-swsh-vmax-vstar",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "Sword & Shield VMAX and VSTAR",
     "summary": "All 167 regular VMAX and VSTAR cards were rebuilt against photos of the real cards.",
     "items": [
@@ -1336,6 +1498,7 @@
   {
     "id": "2026-11-23-account-room",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "Account, settings and gear spaced out",
     "summary": "More space between the panels on your account, in settings and in sleeves & coins.",
     "items": [
@@ -1346,6 +1509,7 @@
   {
     "id": "2026-11-23-swsh-v",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "Sword & Shield Pokémon V",
     "summary": "All 309 regular Pokémon V were rebuilt against photos of the real cards.",
     "items": [
@@ -1357,6 +1521,7 @@
   {
     "id": "2026-11-23-set-page-room",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "Calmer set page and collection on phones",
     "summary": "A set's sealed product reads as a list, and the collection grid lost its boxes.",
     "items": [
@@ -1369,6 +1534,7 @@
   {
     "id": "2026-11-23-sv-illustration-rares",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "Scarlet & Violet Illustration Rares",
     "summary": "All 441 Scarlet & Violet Illustration Rares were rebuilt against photos of the real cards.",
     "items": [
@@ -1380,6 +1546,7 @@
   {
     "id": "2026-11-23-room-to-breathe",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "More room on phones",
     "summary": "Pages on phones are less crowded, starting with Home.",
     "items": [
@@ -1390,6 +1557,7 @@
   {
     "id": "2026-11-23-sm-fullarts-shiny",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "Sun & Moon full arts and shiny cards",
     "summary": "281 Sun & Moon full arts and 89 Shining and shiny cards were rebuilt against photos of the real cards.",
     "items": [
@@ -1403,6 +1571,7 @@
   {
     "id": "2026-11-23-xy-ex-neo-genesis",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "XY Pokémon-EX and Neo Genesis holos",
     "summary": "Two older finishes were rebuilt against clips and photos of the real cards.",
     "items": [
@@ -1413,6 +1582,7 @@
   {
     "id": "2026-11-23-delta-reign-promos",
     "date": "2026-11-23",
+    "kind": "fix",
     "title": "Delta Reign promo foils",
     "summary": "Eight Delta Reign promos had foil washing over the Pokémon or the stamp.",
     "items": [
@@ -1423,6 +1593,7 @@
   {
     "id": "2026-11-23-swsh-golds",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "Sword & Shield gold cards",
     "summary": "All 106 Sword & Shield gold secret rares were rebuilt against photos of the real cards.",
     "items": [
@@ -1435,6 +1606,7 @@
   {
     "id": "2026-11-23-delta-reign-sir",
     "date": "2026-11-23",
+    "kind": "fix",
     "title": "Delta Reign Special Illustration Rares shine again",
     "summary": "The six Delta Reign Special Illustration Rares were drawing no foil at all. They now sparkle like the other Mega Evolution sets.",
     "items": [
@@ -1444,6 +1616,7 @@
   {
     "id": "2026-11-23-sv-swsh-reverses",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "Reverse holos for Scarlet & Violet and Sword & Shield",
     "summary": "Every reverse holo from the two newest finished eras was rebuilt against photos of the real cards.",
     "items": [
@@ -1454,6 +1627,7 @@
   {
     "id": "2026-11-23-bw-reverses-mcd-xy",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "More Black & White reverses, and McDonald's 2014 to 2016",
     "summary": "The last Black & White reverse holos and the XY-era McDonald's promos were brought in line with the real cards.",
     "items": [
@@ -1464,6 +1638,7 @@
   {
     "id": "2026-11-23-swsh-full-arts",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "Sword & Shield full arts match the real cards",
     "summary": "Full-art V cards, alternate arts and full-art Supporters from Sword & Shield lost their milky tint.",
     "items": [
@@ -1475,6 +1650,7 @@
   {
     "id": "2026-11-23-bw-ex-radiant",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "Black & White EX, ACE SPEC and Radiant Collection match the real cards",
     "summary": "The regular Pokémon-EX, the ACE SPEC cards and the Radiant Collection from the Black & White era were re-done against photos.",
     "items": [
@@ -1486,6 +1662,7 @@
   {
     "id": "2026-11-23-bw-secret-rares",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "Black & White secret rares cleaned up",
     "summary": "The secret rares from Black & White to Plasma Blast lost the rainbow column that crossed the art.",
     "items": [
@@ -1496,6 +1673,7 @@
   {
     "id": "2026-11-23-bw-holo-rares",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "Black & White holo Rares match the real cards",
     "summary": "Holo Rares from Black & White to Legendary Treasures lost the rainbow sheet over the art window.",
     "items": [
@@ -1507,6 +1685,7 @@
   {
     "id": "2026-11-23-me-special-illustration-rares",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "Mega Evolution Special Illustration Rares look like the real cards",
     "summary": "The 55 Mega Evolution Special Illustration Rares got the same treatment as the Scarlet & Violet ones.",
     "items": [
@@ -1518,6 +1697,7 @@
   {
     "id": "2026-11-23-dragon-majesty-energy",
     "date": "2026-11-23",
+    "kind": "new",
     "title": "Dragon Majesty reverse holo Energy",
     "summary": "Dragon Majesty packs can now hold a reverse holo Energy, like the real ones.",
     "items": [
@@ -1527,6 +1707,7 @@
   {
     "id": "2026-11-23-sm-holos",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "Sun & Moon holo Rares shine again",
     "summary": "Holo Rares and holo Trainers from Sun & Moon to Cosmic Eclipse looked flat. They now match photos of the real cards.",
     "items": [
@@ -1537,6 +1718,7 @@
   {
     "id": "2026-11-23-all-sets-legal",
     "date": "2026-11-23",
+    "kind": "fix",
     "title": "All sets and legal touch-ups",
     "summary": "Small fixes so these pages match the rest of the site.",
     "items": [
@@ -1547,6 +1729,7 @@
   {
     "id": "2026-11-23-sealed-collection",
     "date": "2026-11-23",
+    "kind": "new",
     "title": "Sealed collection, new look",
     "summary": "Your sealed product now stands on the page like it does in the shop.",
     "items": [
@@ -1558,6 +1741,7 @@
   {
     "id": "2026-11-23-battles-fixes",
     "date": "2026-11-23",
+    "kind": "fix",
     "title": "Pack battle fixes",
     "summary": "Recent results no longer spill off the screen.",
     "items": [
@@ -1569,6 +1753,7 @@
   {
     "id": "2026-11-23-swsh-holos",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "Sword & Shield holo Rares match the real cards",
     "summary": "Holo Rares from Sword & Shield to Crown Zenith were re-done against photos.",
     "items": [
@@ -1579,6 +1764,7 @@
   {
     "id": "2026-11-23-me-holos",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "Mega Evolution holos match the real cards",
     "summary": "Holo Rares, Mega ex, Tera ex and the cosmos promos from the Mega Evolution sets were re-done against photos.",
     "items": [
@@ -1590,6 +1776,7 @@
   {
     "id": "2026-11-23-30th-energy-pop7",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "30th Celebration Energy and a cleaner POP 7 pack",
     "summary": "The real Energy art in 30th Celebration packs, and a sharper POP Series 7 wrapper.",
     "items": [
@@ -1600,6 +1787,7 @@
   {
     "id": "2026-11-23-grading-redo",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "Grading, tidied up",
     "summary": "Grading reads faster on a phone and matches the rest of the site.",
     "items": [
@@ -1612,6 +1800,7 @@
   {
     "id": "2026-11-23-30th-celebration-foils",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "30th Celebration foils match the real cards",
     "summary": "Commons, Pikachu Rares, the Classic Collection and the RGB Mews were re-done against photos of the real cards.",
     "items": [
@@ -1624,6 +1813,7 @@
   {
     "id": "2026-11-23-casino-redo",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "The casino, redone",
     "summary": "The lobby, Coinflip, Jackpot and Upgrader rebuilt in the black and red look. Odds and payouts are exactly the same.",
     "items": [
@@ -1636,6 +1826,7 @@
   {
     "id": "2026-11-23-sv-ultra-rares",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "Scarlet & Violet full-art Ultra Rares match the real cards",
     "summary": "Full-art Pokémon ex and Supporters from Scarlet & Violet lost their neon glow.",
     "items": [
@@ -1646,6 +1837,7 @@
   {
     "id": "2026-11-23-bw-full-arts",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "Black & White full arts match the real cards",
     "summary": "The 58 full-art cards from Black & White to Plasma Blast lost the rainbow sheet that covered the Pokémon.",
     "items": [
@@ -1657,6 +1849,7 @@
   {
     "id": "2026-11-23-recovery-codes",
     "date": "2026-11-23",
+    "kind": "new",
     "title": "A way back in if you forget your password",
     "summary": "Make a recovery code, and a forgotten password is no longer a lost account.",
     "items": [
@@ -1669,6 +1862,7 @@
   {
     "id": "2026-11-23-sv-special-illustration-rares",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "Scarlet & Violet Special Illustration Rares look like the real cards",
     "summary": "The 172 Special Illustration Rares no longer wash out when the light hits them.",
     "items": [
@@ -1680,6 +1874,7 @@
   {
     "id": "2026-11-23-home-collection-details",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "A new front page on laptops, and tidier card details",
     "summary": "Home, the collection, card details, search and the box summary got another pass.",
     "items": [
@@ -1693,6 +1888,7 @@
   {
     "id": "2026-11-23-account-settings-shop",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "Account, Settings, Sleeves & coins and Cart, redone",
     "summary": "Four more screens rebuilt in the black and red look.",
     "items": [
@@ -1707,6 +1903,8 @@
   {
     "id": "2026-11-23-delta-reign",
     "date": "2026-11-23",
+    "kind": "new",
+    "big": 1,
     "title": "Delta Reign is here",
     "summary": "The newest Mega Evolution set, with all 141 cards and its boxes.",
     "items": [
@@ -1719,6 +1917,7 @@
   {
     "id": "2026-11-23-mcdonalds-2026",
     "date": "2026-11-23",
+    "kind": "new",
     "title": "McDonald's Collection 2026",
     "summary": "This year's Happy Meal cards are here to open.",
     "items": [
@@ -1731,6 +1930,8 @@
   {
     "id": "2026-11-23-trading",
     "date": "2026-11-23",
+    "kind": "new",
+    "big": 1,
     "title": "Trading is here",
     "summary": "Swap cards, slabs and coins with any trainer, friend or not.",
     "groups": [
@@ -1760,6 +1961,8 @@
   {
     "id": "2026-11-23-share-pulls",
     "date": "2026-11-23",
+    "kind": "new",
+    "big": 1,
     "title": "Share your pulls",
     "summary": "Show off a hit with a picture and a link that shows the card.",
     "items": [
@@ -1773,6 +1976,8 @@
   {
     "id": "2026-11-23-rankings-social",
     "date": "2026-11-23",
+    "kind": "new",
+    "big": 1,
     "title": "Rankings, and Social in one place",
     "summary": "Climb the boards against everyone or just your friends, with chat and messages beside them.",
     "groups": [
@@ -1806,6 +2011,7 @@
   {
     "id": "2026-11-23-profiles-tidied",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "Profiles tidied up",
     "summary": "Trainer profiles read more cleanly and show your best cards even before you pin any.",
     "items": [
@@ -1818,6 +2024,7 @@
   {
     "id": "2026-11-23-me-illustration-rares",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "Mega Evolution Illustration Rares shine like the real ones",
     "summary": "The foil sits behind the Pokémon now, not over it.",
     "items": [
@@ -1828,6 +2035,7 @@
   {
     "id": "2026-11-23-tilt-your-phone",
     "date": "2026-11-23",
+    "kind": "new",
     "title": "Tilt your phone to move the light",
     "summary": "Lean your phone and the light on a foil card moves with it.",
     "items": [
@@ -1839,6 +2047,7 @@
   {
     "id": "2026-11-23-signup",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "A quicker way in",
     "summary": "Making an account is shorter, and your first pack is one press away.",
     "items": [
@@ -1852,6 +2061,7 @@
   {
     "id": "2026-11-23-cards-light-themselves",
     "date": "2026-11-23",
+    "kind": "better",
     "title": "Foil cards light themselves",
     "summary": "A foil card you pull or open now shows its shine without you touching it.",
     "items": [
@@ -1864,6 +2074,7 @@
   {
     "id": "2026-11-23-sticky-top-bar",
     "date": "2026-11-23",
+    "kind": "fix",
     "title": "Phone fixes: the top bar stays put, lighter loading",
     "summary": "The top bar stays on screen while you scroll, and the site loads much less in the background.",
     "items": [
@@ -1875,6 +2086,8 @@
   {
     "id": "2026-10-31-hit-animation",
     "date": "2026-10-31",
+    "kind": "new",
+    "big": 1,
     "title": "A bigger moment for big pulls",
     "summary": "Pulling a hit looks and feels like one again.",
     "items": [
@@ -1887,6 +2100,7 @@
   {
     "id": "2026-10-31-pack-opening-fixes",
     "date": "2026-10-31",
+    "kind": "fix",
     "title": "Pack opening fixes",
     "summary": "A few fixes to opening packs on a phone.",
     "items": [
@@ -1900,6 +2114,7 @@
   {
     "id": "2026-10-30-handheld-pack-opening",
     "date": "2026-10-30",
+    "kind": "better",
     "title": "Opening packs, rebuilt",
     "summary": "Ripping a pack now matches the black and red design: one card at a time with what it's worth, a NEW stamp on cards you didn't have, and a Your pulls page when the pack is done.",
     "items": [
@@ -1915,6 +2130,7 @@
   {
     "id": "2026-10-30-handheld-collection",
     "date": "2026-10-30",
+    "kind": "better",
     "title": "The collection, rebuilt",
     "summary": "The collection now matches the black and red design: your count over a ticked bar, the set's rarities with counts, and a numbered slot for every card.",
     "items": [
@@ -1929,6 +2145,7 @@
   {
     "id": "2026-10-30-handheld-set-page",
     "date": "2026-10-30",
+    "kind": "better",
     "title": "Set pages, rebuilt",
     "summary": "Each set's page now matches the black and red design: the set's logo up top, its wrappers in a row, and the pack, odds and chase cards laid out like Home.",
     "items": [
@@ -1943,6 +2160,7 @@
   {
     "id": "2026-10-30-handheld-home",
     "date": "2026-10-30",
+    "kind": "better",
     "title": "Home and the top bar, rebuilt",
     "summary": "Home and the top bar now match the black and red design: a shelf of packs, your trainer in the corner and a Lite switch for older phones.",
     "items": [
@@ -1957,6 +2175,8 @@
   {
     "id": "2026-10-30-black-and-red",
     "date": "2026-10-30",
+    "kind": "new",
+    "big": 1,
     "title": "A new look in black and red",
     "summary": "The whole site has a new look: black, with red for the things you press and the cards you hit.",
     "items": [
@@ -1971,6 +2191,7 @@
   {
     "id": "2026-10-23-gold-star-holos",
     "date": "2026-10-23",
+    "kind": "better",
     "title": "Gold Stars that shine like the real cards",
     "summary": "All 25 Gold Star cards from EX Team Rocket Returns to EX Power Keepers were redone against photos of the real cards.",
     "items": [
@@ -1982,6 +2203,7 @@
   {
     "id": "2026-10-23-bw-reverse-holos",
     "date": "2026-10-23",
+    "kind": "better",
     "title": "Black & White reverse holos keep their colour",
     "summary": "Over a thousand Black & White era reverse holos were redone against photos of the real cards.",
     "items": [
@@ -1993,6 +2215,7 @@
   {
     "id": "2026-10-22-mcdonalds-holos",
     "date": "2026-10-22",
+    "kind": "better",
     "title": "McDonald's holos that look like the real cards",
     "summary": "The 2011 and 2012 McDonald's Collection holos were redone against photos of the real cards.",
     "items": [
@@ -2004,6 +2227,7 @@
   {
     "id": "2026-10-09-terms",
     "date": "2026-10-09",
+    "kind": "new",
     "title": "Terms, privacy and safer signup",
     "summary": "poke-pack.rip has Terms of use, a Privacy policy and a Legal page now, and signing up checks your age.",
     "items": [
@@ -2017,6 +2241,7 @@
   {
     "id": "2026-10-04-discord-link",
     "date": "2026-10-04",
+    "kind": "new",
     "title": "Join the Discord from the site",
     "summary": "The poke-pack.rip Discord server is one tap away now, with live pulls, patch notes and slash commands waiting inside.",
     "items": [
@@ -2029,6 +2254,7 @@
   {
     "id": "2026-10-03-discord-commands",
     "date": "2026-10-03",
+    "kind": "new",
     "title": "Slash commands in the Discord server",
     "summary": "The poke-pack.rip bot answers slash commands in the Discord server.",
     "items": [
@@ -2040,6 +2266,8 @@
   {
     "id": "2026-10-03-discord",
     "date": "2026-10-03",
+    "kind": "new",
+    "big": 1,
     "title": "Discord server and live pull feed",
     "summary": "poke-pack.rip has a Discord server now, and your biggest pulls can show up there as you rip.",
     "items": [
@@ -2052,6 +2280,7 @@
   {
     "id": "2026-10-02-xy-secret-rares",
     "date": "2026-10-02",
+    "kind": "better",
     "title": "XY secret rares remade",
     "summary": "XY secret rares are rebuilt from photos of the real cards: Dialga-EX 122/119 is engraved silver, the gold Items and gold Mega EX cards are engraved gold, and the shiny secret rares are engraved with one narrow rainbow beam, instead of a rainbow over the whole card.",
     "items": [
@@ -2066,6 +2295,7 @@
   {
     "id": "2026-10-02-dp-bw-secret-rares",
     "date": "2026-10-02",
+    "kind": "better",
     "title": "Diamond & Pearl and Black & White secret rares remade",
     "summary": "Diamond & Pearl and Black & White secret rares are rebuilt from photos of the real cards, with real glitter and texture and no rainbow glare over the top.",
     "items": [
@@ -2081,6 +2311,7 @@
   {
     "id": "2026-10-02-sv-me-secret-rares",
     "date": "2026-10-02",
+    "kind": "better",
     "title": "Gold secret rares that look like real gold",
     "summary": "Scarlet & Violet Hyper Rares and Mega Evolution Mega Hyper Rares now shine like mirror gold instead of a rainbow card, and Special Illustration Rares keep their colours under the light.",
     "items": [
@@ -2093,6 +2324,7 @@
   {
     "id": "2026-10-02-dp-bw-holos-finished",
     "date": "2026-10-02",
+    "kind": "better",
     "title": "Diamond & Pearl and Black & White holos finished",
     "summary": "Every Diamond & Pearl, HeartGold & SoulSilver and Black & White holo now has a finish matched to the real card, including LV.X cards, secret rares and Black & White reverse holos.",
     "items": [
@@ -2108,6 +2340,7 @@
   {
     "id": "2026-10-02-white-flare-black-bolt-texture",
     "date": "2026-10-02",
+    "kind": "better",
     "title": "Real texture on White Flare and Black Bolt",
     "summary": "White Flare and Black Bolt holos now use the foil and engraving of the real cards, so Special Illustration Rares like Hilda show their etched texture.",
     "items": [
@@ -2119,6 +2352,7 @@
   {
     "id": "2026-10-02-sm-secret-rares",
     "date": "2026-10-02",
+    "kind": "better",
     "title": "Sun & Moon secret rares remade",
     "summary": "Sun & Moon Rainbow Rares and gold secret rares are rebuilt from photos of the real cards, with their etched texture showing and no rainbow glare over the top.",
     "items": [
@@ -2130,6 +2364,7 @@
   {
     "id": "2026-10-02-calmer-rainbows",
     "date": "2026-10-02",
+    "kind": "better",
     "title": "Calmer rainbows on Double Rares and shiny VMAX",
     "summary": "The rainbow on Scarlet & Violet Double Rares and the Shining Fates shiny VMAX cards now drifts about one rainbow as you tilt across the card, like the real foil.",
     "items": [
@@ -2140,6 +2375,7 @@
   {
     "id": "2026-10-02-xy-holos-round-2",
     "date": "2026-10-02",
+    "kind": "better",
     "title": "XY EX, Double Crisis, Cosmos and Radiant Collection holos",
     "summary": "XY Pokémon-EX and Mega EX are rebuilt from the real cards with their names kept readable, the Double Crisis EX get a shattered-glass texture, sixty XY Black Star promos sparkle like the real Cosmos foil, and the Generations Radiant Collection has its shine back.",
     "items": [
@@ -2159,6 +2395,7 @@
   {
     "id": "2026-10-02-calmer-xy-rainbows",
     "date": "2026-10-02",
+    "kind": "better",
     "title": "Calmer rainbows on XY cards",
     "summary": "The rainbow on XY full arts, Generations holos and reverse holos now drifts as you tilt the card instead of racing your mouse.",
     "items": [
@@ -2170,6 +2407,8 @@
   {
     "id": "2026-10-02-levels-prestige",
     "date": "2026-10-02",
+    "kind": "new",
+    "big": 1,
     "title": "Harder levels, a level 200 cap and prestige",
     "summary": "Levels go to 200 and take far longer, prestige stars raise your hourly claim for good, sleeves and coins are for sale, and mastery banners and badges are redrawn.",
     "items": [
@@ -2185,6 +2424,7 @@
   {
     "id": "2026-10-02-pokemon-frames",
     "date": "2026-10-02",
+    "kind": "new",
     "title": "New avatar frames",
     "summary": "Twenty-four frames for your avatar: Pokémon, cards and a few extras, each drawn like a struck medal.",
     "groups": [
@@ -2208,6 +2448,7 @@
   {
     "id": "2026-10-02-binder-picker-search",
     "date": "2026-10-02",
+    "kind": "new",
     "title": "Search and filters when you pick a card for your binder",
     "summary": "Choose a card now has a search box, set, rarity and type filters, and four ways to sort.",
     "items": [
@@ -2219,6 +2460,7 @@
   {
     "id": "2026-10-02-no-promo-line",
     "date": "2026-10-02",
+    "kind": "fix",
     "title": "No more \"Promos worth 0 coins\"",
     "summary": "Boxes that never held a promo card no longer say they hold promos.",
     "items": [
@@ -2229,6 +2471,7 @@
   {
     "id": "2026-10-02-more-holos",
     "date": "2026-10-02",
+    "kind": "better",
     "title": "More holos rebuilt from the real cards",
     "summary": "Wizards of the Coast, EX, Black & White, Diamond & Pearl, HeartGold & SoulSilver, XY and McDonald's holos, redone one family at a time.",
     "groups": [
@@ -2274,6 +2517,7 @@
   {
     "id": "2026-10-02-card-details-links",
     "date": "2026-10-02",
+    "kind": "new",
     "title": "Find cards from the card details",
     "summary": "The set name in the card details opens the set's page at that card, and two links under the facts help you find more.",
     "items": [
@@ -2285,6 +2529,8 @@
   {
     "id": "2026-10-02-site-search",
     "date": "2026-10-02",
+    "kind": "new",
+    "big": 1,
     "title": "Search for any card or product",
     "summary": "Find a card by name, set or printed number, or a sealed product, from the header or the phone tab bar.",
     "items": [
@@ -2295,6 +2541,7 @@
   {
     "id": "2026-10-02-casino-bot-slabs",
     "date": "2026-10-02",
+    "kind": "better",
     "title": "Casino bots bring slabs of every grade",
     "summary": "Bots stake any grade of slab, you can type how many cards to put up, and the Upgrader can aim at a slab.",
     "items": [
@@ -2308,6 +2555,8 @@
   {
     "id": "2026-10-02-black-label",
     "date": "2026-10-02",
+    "kind": "new",
+    "big": 1,
     "title": "Black Label 10",
     "summary": "A grade far rarer than a 10, valued by what real Beckett Black Labels sell for.",
     "items": [
@@ -2320,6 +2569,7 @@
   {
     "id": "2026-10-02-3d-coins",
     "date": "2026-10-02",
+    "kind": "new",
     "title": "Coins are real 3D discs",
     "summary": "Tilt a coin with your finger, tap to flip it, and watch the holo only where the real coin is reflective.",
     "items": [
@@ -2331,6 +2581,7 @@
   {
     "id": "2026-10-02-vintage-holos",
     "date": "2026-10-02",
+    "kind": "better",
     "title": "Holos rebuilt from the real cards",
     "summary": "Base Set, Jungle, Fossil, Gym, Neo, Team Rocket, Crystal and Black & White full arts, plus 170 Mega Evolution prints.",
     "items": [
@@ -2344,6 +2595,7 @@
   {
     "id": "2026-10-02-prices-photos-cart",
     "date": "2026-10-02",
+    "kind": "new",
     "title": "Live prices everywhere, real product photos and a typeable cart",
     "summary": "Prices follow TCGplayer for every set, and sealed product shows the real box.",
     "items": [
@@ -2356,6 +2608,7 @@
   {
     "id": "2026-10-02-trainer-kits",
     "date": "2026-10-02",
+    "kind": "better",
     "title": "Trainer Kits and Base Set packs",
     "summary": "Kits list each card once, Wizards holos count as hits, and the Base Set wrappers are clean.",
     "items": [
@@ -2368,6 +2621,7 @@
   {
     "id": "2026-10-02-card-shop-after-hours",
     "date": "2026-10-02",
+    "kind": "new",
     "title": "The card shop after hours",
     "summary": "A new look for the whole site: a dark shop with the lights on over the pack wall, the counter and the glass case.",
     "groups": [
@@ -2392,6 +2646,8 @@
   {
     "id": "2026-10-01-every-era",
     "date": "2026-10-01",
+    "kind": "new",
+    "big": 1,
     "title": "Every older era is playable",
     "summary": "181 sets from Base Set to XY, each with real scans, prices, pull rates, wrappers and sealed products.",
     "groups": [
@@ -2443,6 +2699,8 @@
   {
     "id": "2026-10-01-upgrader-typed-stakes",
     "date": "2026-10-01",
+    "kind": "new",
+    "big": 1,
     "title": "Casino Upgrader, typed stakes and no ceiling",
     "summary": "A new game where the price gap sets the odds, and a stake you can type in.",
     "groups": [
@@ -2468,6 +2726,7 @@
   {
     "id": "2026-10-01-binders-profiles",
     "date": "2026-10-01",
+    "kind": "new",
     "title": "Binders and profiles, your way",
     "summary": "Eight cover materials, 24 colours, animated editions and a profile layout editor.",
     "items": [
@@ -2480,6 +2739,8 @@
   {
     "id": "2026-10-01-levels-xp",
     "date": "2026-10-01",
+    "kind": "new",
+    "big": 1,
     "title": "Levels, XP and perks",
     "summary": "Playing earns XP. Levels pay coins, gifts, frames and room on your profile.",
     "groups": [
@@ -2506,6 +2767,7 @@
   {
     "id": "2026-10-01-slab-guards",
     "date": "2026-10-01",
+    "kind": "new",
     "title": "42 slab guards",
     "summary": "Thirty-six new guards join the first six, in four shelves.",
     "items": [
@@ -2516,6 +2778,7 @@
   {
     "id": "2026-10-01-free-coins",
     "date": "2026-10-01",
+    "kind": "fix",
     "title": "Free coins pay in full",
     "summary": "Hourly, quest and achievement claims no longer cut a big wallet down to 1,000,000.",
     "items": [
@@ -2526,6 +2789,7 @@
   {
     "id": "2026-10-01-casino-promos",
     "date": "2026-10-01",
+    "kind": "new",
     "title": "Slabs in the casino, and Mega Evolution promos on their own",
     "summary": "Stake graded slabs in Coinflip and Jackpot, and the 115 MEP promos get a set of their own.",
     "items": [
@@ -2537,6 +2801,8 @@
   {
     "id": "2026-10-01-cart-sealed",
     "date": "2026-10-01",
+    "kind": "new",
+    "big": 1,
     "title": "Shopping cart and the Sealed collection",
     "summary": "Buy several products at once, then open them now or keep them sealed.",
     "items": [
@@ -2549,6 +2815,7 @@
   {
     "id": "2026-09-30-sleeves-coins",
     "date": "2026-09-30",
+    "kind": "new",
     "title": "Sleeves and coins",
     "summary": "Every sealed product now hands out its real sleeves and coins.",
     "items": [
@@ -2561,6 +2828,8 @@
   {
     "id": "2026-09-30-sun-moon",
     "date": "2026-09-30",
+    "kind": "new",
+    "big": 1,
     "title": "The Sun & Moon era",
     "summary": "Sixteen sets, the promos and McDonald's, with four finish families.",
     "items": [
@@ -2572,6 +2841,8 @@
   {
     "id": "2026-09-30-rip-grading",
     "date": "2026-09-30",
+    "kind": "new",
+    "big": 1,
     "title": "RIP Grading",
     "summary": "Send a card to be graded, keep it in a slab and show it on your profile.",
     "items": [
@@ -2585,6 +2856,7 @@
   {
     "id": "2026-09-30-box-contents",
     "date": "2026-09-30",
+    "kind": "better",
     "title": "Decks and boxes deal what's printed on them",
     "summary": "Products with fixed contents hand out the real cards.",
     "items": [
@@ -2596,6 +2868,8 @@
   {
     "id": "2026-09-30-casino",
     "date": "2026-09-30",
+    "kind": "new",
+    "big": 1,
     "title": "The casino: Coinflip and Jackpot",
     "summary": "Stake cards against a player or a bot, or pile into a shared pot.",
     "items": [
@@ -2608,6 +2882,8 @@
   {
     "id": "2026-09-29-pack-battles",
     "date": "2026-09-29",
+    "kind": "new",
+    "big": 1,
     "title": "Pack battles, rebuilt",
     "summary": "Free bots, quick battles and a reveal arena.",
     "items": [
@@ -2621,6 +2897,7 @@
   {
     "id": "2026-09-29-foil-seams",
     "date": "2026-09-29",
+    "kind": "fix",
     "title": "No more foil seams, and Safari fixes",
     "summary": "A hard line that moved as you tilted a card is gone from every finish.",
     "items": [
@@ -2633,6 +2910,7 @@
   {
     "id": "2026-09-29-swsh-promos-foil",
     "date": "2026-09-29",
+    "kind": "better",
     "title": "Sword & Shield promos, boxes and a better foil",
     "summary": "Every set's real collections, plus a foil tuned beside the best demos on the web.",
     "items": [
@@ -2646,6 +2924,8 @@
   {
     "id": "2026-09-28-sword-shield",
     "date": "2026-09-28",
+    "kind": "new",
+    "big": 1,
     "title": "The Sword & Shield era",
     "summary": "Seventeen sets, each with its own holo sheet.",
     "items": [
@@ -2657,6 +2937,7 @@
   {
     "id": "2026-09-28-pack-wall",
     "date": "2026-09-28",
+    "kind": "new",
     "title": "The pack wall",
     "summary": "A new look: one typeface, a phone tab bar and a pack opening rebuilt for speed.",
     "items": [
@@ -2670,6 +2951,7 @@
   {
     "id": "2026-09-28-foil-realism",
     "date": "2026-09-28",
+    "kind": "better",
     "title": "Foils that look like the real cards",
     "summary": "Etched full arts, golds and promos judged beside photos of real cards.",
     "items": [
@@ -2683,6 +2965,7 @@
   {
     "id": "2026-09-28-pack-opening",
     "date": "2026-09-28",
+    "kind": "better",
     "title": "A smoother pack opening",
     "summary": "Tear the top off as one foil lid, and a hit's tremble flows into the flip.",
     "items": [
@@ -2694,6 +2977,8 @@
   {
     "id": "2026-09-27-scarlet-violet",
     "date": "2026-09-27",
+    "kind": "new",
+    "big": 1,
     "title": "Every Scarlet & Violet set opens",
     "summary": "Real foils, real odds and TCGplayer prices for the whole era.",
     "items": [
@@ -2707,6 +2992,8 @@
   {
     "id": "2026-09-27-30th-celebration",
     "date": "2026-09-27",
+    "kind": "new",
+    "big": 1,
     "title": "30th Celebration",
     "summary": "Six-card all-foil packs with a Pikachu Rare in every one.",
     "items": [
@@ -2719,6 +3006,8 @@
   {
     "id": "2026-09-27-price-charts",
     "date": "2026-09-27",
+    "kind": "new",
+    "big": 1,
     "title": "A year of prices on every card",
     "summary": "Open a card to see its TCGplayer market price over time.",
     "items": [
@@ -2730,6 +3019,7 @@
   {
     "id": "2026-09-27-promo-products",
     "date": "2026-09-27",
+    "kind": "new",
     "title": "Promo boxes for every set",
     "summary": "Open the real products that came with promo cards.",
     "items": [
@@ -2742,6 +3032,7 @@
   {
     "id": "2026-09-27-small-fixes",
     "date": "2026-09-27",
+    "kind": "fix",
     "title": "Small fixes",
     "summary": "Music, phones, wrappers and the global chat.",
     "items": [
@@ -2755,6 +3046,7 @@
   {
     "id": "2026-09-26-links-and-graphite",
     "date": "2026-09-26",
+    "kind": "new",
     "title": "Set links and a new look",
     "summary": "Share a set or a binder page by link, and a new neutral theme.",
     "items": [
@@ -2765,6 +3057,8 @@
   {
     "id": "2026-09-30-quests-achievements",
     "date": "2026-09-30",
+    "kind": "new",
+    "big": 1,
     "title": "Quests, achievements and set mastery, rebuilt",
     "items": [
       "Quests are a board now: today, this week and this month, each with a chest that opens when you have claimed everything above it, and a streak for every day you claim at least one quest.",
@@ -2778,6 +3072,7 @@
   {
     "id": "2026-09-27-destined-rivals",
     "date": "2026-09-27",
+    "kind": "new",
     "title": "Destined Rivals is back",
     "items": [
       "Destined Rivals opens again, with all 244 cards and its four wrappers. Odds come from TCGplayer's 8,000-pack study: Double Rare 1 in 5, Ultra Rare 1 in 16, Illustration Rare 1 in 12, Special Illustration Rare 1 in 94, gold 1 in 149.",
@@ -2790,6 +3085,8 @@
   {
     "id": "2026-09-26-sealed-product",
     "date": "2026-09-26",
+    "kind": "new",
+    "big": 1,
     "title": "Open a whole box",
     "items": [
       "Packs now sells Booster Boxes (36 packs), Elite Trainer Boxes (9) and Booster Bundles (6) for each set that printed them, at their market price.",
@@ -2801,6 +3098,7 @@
   {
     "id": "2026-09-24-opening-overhaul",
     "date": "2026-09-24",
+    "kind": "new",
     "title": "A faster way into every pack",
     "items": [
       "The home page now puts a real featured wrapper and set switcher up front. Signed-in players can open that pack directly.",
@@ -2812,6 +3110,7 @@
   {
     "id": "2026-09-24-player-feedback",
     "date": "2026-09-24",
+    "kind": "new",
     "title": "A quieter lounge and more ways to collect",
     "items": [
       "The automated trainer roster has retired. The lounge now shows people who are actually playing.",
@@ -2823,6 +3122,7 @@
   {
     "id": "2026-09-08-foil-and-page-turns",
     "date": "2026-09-08",
+    "kind": "better",
     "title": "Softer foil, and a page at a time",
     "items": [
       "Removed the horizontal gaps and bright reflection bands from Double Rare holos. The full-card stars and moving colour remain, with less glare.",
@@ -2835,6 +3135,7 @@
   {
     "id": "2026-09-08-profile-binder",
     "date": "2026-09-08",
+    "kind": "new",
     "title": "Your binder, on your profile",
     "items": [
       "Display up to four binder pages from the button on each page. The public pages follow your edits, and you can remove them at any time.",
@@ -2847,6 +3148,7 @@
   {
     "id": "2026-09-03-holo-and-voice",
     "date": "2026-09-03",
+    "kind": "better",
     "title": "New foil engine, and the roster learns to talk",
     "items": [
       "Card effects are rebuilt on the pokemon-cards-css holofoil system. Pointer position now runs through a damped spring, so the foil lags and overshoots your cursor instead of being pinned to it. That lag is most of what makes a card read as foil rather than a printed gradient. The glare is a hard specular hotspot now rather than a soft haze.",
@@ -2860,6 +3162,7 @@
   {
     "id": "2026-08-22-sv-era",
     "date": "2026-08-22",
+    "kind": "new",
     "title": "Scarlet & Violet, Destined Rivals through Temporal Forces",
     "items": [
       "Eight live sets: Destined Rivals, Journey Together, Prismatic Evolutions, Surging Sparks, Stellar Crown, Shrouded Fable, Twilight Masquerade, Temporal Forces. Paldean Fates (shinies) is next.",
@@ -2872,6 +3175,7 @@
   {
     "id": "2026-08-22-account",
     "date": "2026-08-22",
+    "kind": "new",
     "title": "Achievements that pay, and a rebuilt account page",
     "items": [
       "Account is five tabs now (Overview, Achievements, Profile, Look, Security) behind a banner hero with your career numbers and a claim bar.",
@@ -2885,6 +3189,7 @@
   {
     "id": "2026-08-22-swirl-foil",
     "date": "2026-08-22",
+    "kind": "better",
     "title": "SAR and Black White Rare foil",
     "items": [
       "Special Illustration Rares and Black White Rares use a per-card etched stamp. The sheen catches on ridges that follow the painting, so you can still see the card."
@@ -2894,6 +3199,7 @@
   {
     "id": "2026-08-22-unova",
     "date": "2026-08-22",
+    "kind": "new",
     "title": "Black Bolt, White Flare, Mega Attack foil",
     "items": [
       "Scarlet & Violet starts with Black Bolt and White Flare, the Unova split sets, with Poké Ball / Master Ball reverses and the Black White Rare chase.",
@@ -2904,6 +3210,7 @@
   {
     "id": "2026-08-21-profiles",
     "date": "2026-08-21",
+    "kind": "new",
     "title": "Profiles, friends, and the lounge",
     "items": [
       "Every account has a public profile at /u/yourhandle. Pick a Pokémon still and a set banner. GIFs and custom art stay exclusive for premium later.",
@@ -2915,6 +3222,7 @@
   {
     "id": "2026-08-21-page-fade",
     "date": "2026-08-21",
+    "kind": "better",
     "title": "Smoother loads",
     "items": [
       "Refreshing no longer flashes empty layout. The page fades in after the first paint.",
@@ -2925,6 +3233,7 @@
   {
     "id": "2026-08-21-logo",
     "date": "2026-08-21",
+    "kind": "better",
     "title": "New mark",
     "items": [
       "The header carries the card fan on its own instead of the full lockup. At 44px a logo with the name in it was unreadable, and the header already says the name in type beside it.",
@@ -2936,6 +3245,7 @@
   {
     "id": "2026-08-21-pack-chrome",
     "date": "2026-08-21",
+    "kind": "better",
     "title": "Pack buttons and bulk toast",
     "items": [
       "Next / Reveal / Done on desktop are outlined with no fill so the card glow isn’t boxed off.",
@@ -2946,6 +3256,7 @@
   {
     "id": "2026-08-21-hourly-coins",
     "date": "2026-08-21",
+    "kind": "new",
     "title": "Hourly coins",
     "items": [
       "The header stack is 100 coins every hour instead of 10 coins once a day."
@@ -2955,6 +3266,8 @@
   {
     "id": "2026-08-21-cloud-accounts",
     "date": "2026-08-21",
+    "kind": "new",
+    "big": 1,
     "title": "Cloud accounts",
     "items": [
       "Ripping, daily coins, selling, and the binder now need an account. Cards live in the cloud so trading can be honest later.",
@@ -2967,6 +3280,7 @@
   {
     "id": "2026-08-21-mobile-pass",
     "date": "2026-08-21",
+    "kind": "better",
     "title": "Phone layout, take two",
     "items": [
       "Header, packs, and bulk are laid out for a phone instead of a squeezed desktop page.",
@@ -2987,6 +3301,7 @@
   {
     "id": "2026-08-21-pack-open",
     "date": "2026-08-21",
+    "kind": "better",
     "title": "Bigger pack reveals on phones",
     "items": [
       "Opening a pack on a phone uses the leftover screen for the card instead of squeezing it between the title, thumbs, and buttons.",
@@ -2997,6 +3312,7 @@
   {
     "id": "2026-08-21-mobile",
     "date": "2026-08-21",
+    "kind": "new",
     "title": "Phones can actually rip packs now",
     "items": [
       "The layout fits a phone instead of sitting zoomed in and clipped.",
