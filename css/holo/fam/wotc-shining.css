@@ -31,7 +31,7 @@
    Kabutops, Raichu, Steelix, Tyranitar and Noctowl show silver or gold, never a spectrum). Only Charizard and Mewtwo throw colour
    in tilted photos: .ws-spec is the full spectrum, .ws-spec-lite the part-of-the-figure band of the Mewtwo photo. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-shining.fam-wotc-shining.fam-wotc-shining.fam-wotc-shining.ws-mapped {
-  --ws-band: linear-gradient(112deg, transparent 0%, transparent 28%, hsla(var(--ws-h), var(--ws-s), 74%, 0.55) 44%, hsla(var(--ws-h), calc(var(--ws-s) * 0.4), 92%, 0.8) 50%, hsla(var(--ws-h), var(--ws-s), 74%, 0.55) 56%, transparent 72%, transparent 100%);
+  --ws-band: linear-gradient(112deg, transparent 0%, transparent 42%, hsla(var(--ws-h), var(--ws-s), 70%, 0.4) 47%, hsla(var(--ws-h), calc(var(--ws-s) * 0.4), 90%, 0.7) 50%, hsla(var(--ws-h), var(--ws-s), 70%, 0.4) 53%, transparent 58%, transparent 100%);
   --ws-spin: 0.6;
   --ws-ground: hsl(var(--ws-h) var(--ws-s) 13%); --ws-pool: hsl(var(--ws-h) var(--ws-s) var(--ws-l));
 }

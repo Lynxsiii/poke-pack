@@ -114,10 +114,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
   mix-blend-mode: plus-lighter;
   -webkit-mask-image:
     linear-gradient(104deg, rgba(0, 0, 0, 0.18) 8%, #000 20%, #000 27%, rgba(0, 0, 0, 0.18) 40%, rgba(0, 0, 0, 0.18) 56%, #000 68%, #000 74%, rgba(0, 0, 0, 0.18) 88%),
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.5) 90%);
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.6) 22%, rgba(0, 0, 0, 0.18) 50%, rgba(0, 0, 0, 0.08) 100%);
   mask-image:
     linear-gradient(104deg, rgba(0, 0, 0, 0.18) 8%, #000 20%, #000 27%, rgba(0, 0, 0, 0.18) 40%, rgba(0, 0, 0, 0.18) 56%, #000 68%, #000 74%, rgba(0, 0, 0, 0.18) 88%),
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.5) 90%);
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.6) 22%, rgba(0, 0, 0, 0.18) 50%, rgba(0, 0, 0, 0.08) 100%);
   -webkit-mask-composite: source-in, source-over;
   mask-composite: intersect, add;
   mask-mode: alpha, alpha;
@@ -126,15 +126,15 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
   -webkit-mask-position: calc(50% + (var(--background-x) - 50%) * 3.5) calc(50% + (var(--background-y) - 50%) * 3.5), center;
   mask-position: calc(50% + (var(--background-x) - 50%) * 3.5) calc(50% + (var(--background-y) - 50%) * 3.5), center;
   filter: hue-rotate(calc(var(--rotate-x) * 9 - var(--rotate-y) * 7)) saturate(1.25);
-  opacity: min(1, calc(var(--card-opacity) * 0.85 * max(1, var(--foil-strength, 1))));
+  opacity: min(1, calc(var(--card-opacity) * 0.6 * max(1, var(--foil-strength, 1))));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-neo-revelation.fam-wotc-neo-revelation.fam-wotc-neo-revelation.fam-wotc-neo-revelation .foil::after {
   -webkit-mask-image:
     linear-gradient(66deg, rgba(0, 0, 0, 0.18) 6%, #000 18%, #000 25%, rgba(0, 0, 0, 0.18) 38%, rgba(0, 0, 0, 0.18) 54%, #000 66%, #000 72%, rgba(0, 0, 0, 0.18) 86%),
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.5) 90%);
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.6) 22%, rgba(0, 0, 0, 0.18) 50%, rgba(0, 0, 0, 0.08) 100%);
   mask-image:
     linear-gradient(66deg, rgba(0, 0, 0, 0.18) 6%, #000 18%, #000 25%, rgba(0, 0, 0, 0.18) 38%, rgba(0, 0, 0, 0.18) 54%, #000 66%, #000 72%, rgba(0, 0, 0, 0.18) 86%),
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.5) 90%);
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.6) 22%, rgba(0, 0, 0, 0.18) 50%, rgba(0, 0, 0, 0.08) 100%);
   -webkit-mask-position: calc(50% + (var(--background-x) - 50%) * -3.5) calc(50% + (var(--background-y) - 50%) * 3.5), center;
   mask-position: calc(50% + (var(--background-x) - 50%) * -3.5) calc(50% + (var(--background-y) - 50%) * 3.5), center;
   filter: hue-rotate(calc(var(--rotate-y) * 9 - var(--rotate-x) * 7 + 140deg)) saturate(1.25);

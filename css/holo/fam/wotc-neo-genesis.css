@@ -50,9 +50,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
       hsla(44, 25%, 80%, 0.3) 0%, hsla(40, 25%, 70%, 0.1) 24%, hsla(40, 25%, 60%, 0) 44%),
     linear-gradient(118deg,
-      hsla(240, 40%, 50%, 0) 0%, hsla(240, 40%, 50%, 0) 37%, hsla(250, 40%, 44%, 0.3) 40.5%, hsla(228, 22%, 56%, 0.55) 43%,
-      hsl(44, 18%, 58%) 45.5%, hsl(44, 26%, 63%) 49%, hsla(40, 58%, 56%, 0.7) 51.5%, hsla(30, 62%, 44%, 0.42) 54%,
-      hsla(20, 62%, 36%, 0) 57.5%, hsla(20, 62%, 36%, 0) 100%);
+      hsla(240, 40%, 50%, 0) 0%, hsla(240, 40%, 50%, 0) 43%, hsla(250, 40%, 44%, 0.3) 44.7%, hsla(228, 22%, 56%, 0.5) 46%,
+      hsla(44, 18%, 56%, 0.85) 47.3%, hsla(44, 26%, 60%, 0.9) 49%, hsla(40, 58%, 54%, 0.65) 50.3%, hsla(30, 62%, 44%, 0.4) 51.6%,
+      hsla(20, 62%, 36%, 0) 53.4%, hsla(20, 62%, 36%, 0) 100%);
   background-size: 100% 100%, 300% 300%;
   background-position:
     center,
