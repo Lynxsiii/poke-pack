@@ -18,6 +18,9 @@ import { api, esc, coins, coinTag, plural } from "./casino-kit.js";
 
 const post = (path, body) => api(path, { method: "POST", body: JSON.stringify(body) });
 
+/* The padlock from js/app.js LOCK_GLYPH. The class is cs-kept: body.cs-locked already means "a sheet is open". */
+const LOCK_GLYPH = '<svg class="lock-glyph" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 7V5.2a3.5 3.5 0 0 1 7 0V7" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 7h10v7H3z" fill="currentColor"/></svg>';
+
 /** "3 cards at the market price", "1 slab at its graded value", or both. */
 function noteFor(info) {
   // a very big win is sold in parts, and only the first part is priced here
@@ -53,7 +56,7 @@ export async function mountWinnings(container, { source, id, ctx }) {
     const slabs = Number(info.slabs) || 0;
     // Won cards put in the binder are locked there (worker/binder-lock.js) and left out of the sale.
     const pocketed = Number(info.locked) || 0;
-    const lockNote = pocketed > 0 ? `<p class="cs-locked">${pocketed === 1 ? "1 card you won is" : `${pocketed} cards you won are`} in your binder, so ${pocketed === 1 ? "it stays" : "they stay"}.</p>` : "";
+    const lockNote = pocketed > 0 ? `<p class="cs-kept">${LOCK_GLYPH}${pocketed === 1 ? "1 card you won is" : `${pocketed} cards you won are`} in your binder, so ${pocketed === 1 ? "it stays" : "they stay"}.</p>` : "";
     if (cards > 0 || slabs > 0) {
       const sold = info.soldCoins > 0 ? `<p class="cs-sold">Winnings sold for ${coinTag(info.soldCoins)}.</p>` : "";
       container.innerHTML = `${sold}<button class="ghost cs-sell" type="button" data-sell ${busy ? "disabled" : ""}>${

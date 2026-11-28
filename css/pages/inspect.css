@@ -227,6 +227,28 @@
 #inspect .pc-sell-value { display: inline-flex; align-items: center; margin-left: 6px; font: 700 21px var(--font-h); font-style: normal; font-variant-numeric: tabular-nums; }
 #inspect .pc-sell-value .coin-i { width: 20px; height: 20px; margin-right: 4px; }
 #inspect .pc-grade-btn { text-decoration: none; }
+/* Binder lock (worker/binder-lock.js). Some copies pocketed: one line above the keys.
+   Every raw copy pocketed: a straight plate stands where the Sell key was. It is
+   information, so it does not lean and has no ledge. */
+.lock-glyph { flex: none; width: 1em; height: 1em; }
+#inspect .pc-lock-note { display: flex; align-items: flex-start; gap: 8px; margin-top: -6px; color: var(--k-2); font: 700 14px/1.4 var(--font); }
+#inspect .pc-lock-note .lock-glyph { width: 15px; height: 15px; margin-top: 2px; color: var(--k); }
+#inspect .pc-lock-note a,
+#inspect .pc-locked a { color: var(--k); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--cy-2); text-decoration-thickness: 2px; }
+#inspect .pc-locked {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  min-height: 58px;
+  margin: 0 -6px;
+  border: var(--line-w) solid var(--k);
+  background: var(--box);
+}
+#inspect .pc-locked-mark { display: grid; place-items: center; background: var(--k); color: var(--on-k); }
+#inspect .pc-locked-mark .lock-glyph { width: 22px; height: 22px; }
+#inspect .pc-locked-words { display: grid; align-content: center; gap: 3px; min-width: 0; padding: 9px 14px 10px; }
+#inspect .pc-locked-words b { color: var(--k); font: 700 18px/1.1 var(--font-h); }
+#inspect .pc-locked-words small { color: var(--k-2); font: 700 13.5px/1.35 var(--font); }
 #inspect .pc-graded { display: grid; gap: 10px; margin-top: 16px; }
 #inspect .pc-graded > .pc-own { color: var(--k-2); font-size: 14px; }
 #inspect .pc-slabs { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 14px; }
@@ -381,6 +403,7 @@ html body #inspect .price-card .pc-loading::after {
 /* Narrow phones: the two white keys keep their words on one line. */
 @media (max-width: 430px) {
   #inspect .pc-actions { gap: 12px 12px; padding: 0 4px; }
+  #inspect .pc-locked { margin: 0 -4px; }
   #inspect .pc-actions .ghost { padding-inline: 10px; font-size: 15.5px; line-height: 1; letter-spacing: -0.015em; white-space: normal; text-wrap: balance; }
 }
 

@@ -19,6 +19,10 @@
   #view-binder .bd-title h1 { font-size: clamp(30px, 8.6vw, 40px); line-height: 0.95; }
   #view-binder .bd-title p { margin-top: 5px; font-size: 14px; }
 }
+/* Binder lock (worker/binder-lock.js): one line under the head says it for every pocket,
+   so the cards themselves carry no mark. Two short lines beside the Arrange key on a phone. */
+#view-binder .binder-lock-line { display: flex; align-items: flex-start; gap: 7px; margin-top: 6px; color: var(--k-2); font: 700 13.5px/1.35 var(--font); text-wrap: balance; }
+#view-binder .binder-lock-line .lock-glyph { flex: none; width: 14px; height: 14px; margin-top: 2px; color: var(--k); }
 
 /* ---- pages ---- */
 /* No shared perspective here: each turning page carries its own perspective() in its keyframes,

@@ -2750,9 +2750,11 @@ function renderCollection({ refreshSets = true } = {}) {
         : `<button type="button" class="slot-face" data-face="${i}" ${inspectAttrs(faces[i])} aria-label="${esc(card.name)}, ${said}"></button>${gradeBadge(slabs)}${
             raw > 1 ? `<span class="slot-qty" title="${raw} copies">×${raw}</span>` : ""
           }`;
+      // Every copy sits in a binder pocket: a small padlock by the value (never on the art).
+      const locked = !missing && pocketedQty(card.id) >= count;
       const value = missing
         ? `<span class="slot-vl is-miss">Missing</span>`
-        : `<span class="slot-vl">${coin(sellValue(card))}<span class="sr-only"> coins</span></span>`;
+        : `<span class="slot-vl${locked ? " is-locked" : ""}"${locked ? ' title="Locked in your binder"' : ""}>${locked ? LOCK_GLYPH : ""}${coin(sellValue(card))}<span class="sr-only"> coins${locked ? ", locked in your binder" : ""}</span></span>`;
       // The heart sits on every card you're still missing, and on any card already hearted.
       const wish = missing || wishlist.has(card.id) ? wishlist.heart(card.id, card.name, { cls: "slot-wish" }) : "";
       return `<article class="cslot bulk-card${missing ? " missing" : ""}${card.id === foundCardId ? " is-found" : ""}"${i < 12 ? ` style="--i:${i}"` : ""}>
@@ -3151,7 +3153,7 @@ function renderBinder() {
   if (nameEl) nameEl.textContent = lookName || "Binder";
   if (els.binderCount) {
     els.binderCount.innerHTML = shown
-      ? `<b>${num(shown)}</b> card${shown === 1 ? "" : "s"} on show, worth <b class="binder-worth">${coinAmount(worth)}</b><span class="binder-lock-line">${LOCK_GLYPH}Locked in while ${shown === 1 ? "it's" : "they're"} here: no selling, staking or trading</span>`
+      ? `<b>${num(shown)}</b> card${shown === 1 ? "" : "s"} on show, worth <b class="binder-worth">${coinAmount(worth)}</b><span class="binder-lock-line">${LOCK_GLYPH}<span>Cards in here can't be sold, staked or traded.</span></span>`
       : "Tap an empty pocket to put a card on show. Cards in the binder are locked until you take them out.";
   }
   els.viewBinder?.classList.toggle("is-arranging", binderArranging);
@@ -8376,13 +8378,15 @@ function inspectSellRow(card) {
   const gradeHref = `/grading/send/${encodeURIComponent(heldId(card.id))}${card.reverse ? "?reverse=1" : ""}`;
   const pocketed = pocketedQty(card.id);
   const free = freeRawQty(card.id);
-  const lockNote = pocketed ? binderLockNote(pocketed, count + slabs.length) : "";
+  // Every raw copy pocketed: a plate stands where the Sell key was and says it all. Otherwise one line above the keys.
+  const allLocked = count > 0 && free < 1;
+  const lockNote = pocketed && !allLocked ? binderLockNote(pocketed, count + slabs.length) : "";
   return `<div class="pc-sell${pocketed ? " is-pocketed" : ""}">
     <span class="pc-own">${own}</span>${lockNote}
     <span class="pc-actions">
       ${count > 0 ? `${free > 0 ? `<button type="button" class="solid pc-sell-btn" data-inspect-sell="${esc(heldId(card.id))}">
         Sell one for <span class="pc-sell-value">${coinAmount(value)}</span>
-      </button>` : `<span class="pc-locked" role="note">${LOCK_GLYPH}<span>Locked in your binder</span></span>`}
+      </button>` : `<span class="pc-locked" role="note"><i class="pc-locked-mark">${LOCK_GLYPH}</i><span class="pc-locked-words"><b>Locked in your binder</b><small><a href="/binder">Take ${count === 1 ? "it" : "one"} out</a> to sell, stake or trade it.</small></span></span>`}
       <a class="ghost pc-grade-btn" href="${esc(gradeHref)}">Send for grading</a>` : ""}
       ${inspectShowcaseBtn(card)}
     </span>
@@ -10588,6 +10592,8 @@ els.dexGrid.addEventListener("click", (e) => {
 
 els.inspectClose.addEventListener("click", () => closeDialog(els.inspect));
 els.inspect.addEventListener("click", (e) => {
+  // The lock note's "Take it out" link: the binder is under this sheet, so the sheet closes and the link carries on.
+  if (e.target.closest('.pc-sell a[href="/binder"]')) { closeDialog(els.inspect); return; }
   if (e.target !== els.inspect) return;
   if (Date.now() - inspectOpenedAt < 500) return;
   closeDialog(els.inspect);
