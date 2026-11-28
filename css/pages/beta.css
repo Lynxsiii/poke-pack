@@ -267,46 +267,106 @@
 .bz-face { display: block; width: 100%; }
 .bz-face-img { display: block; width: 100%; aspect-ratio: 63 / 88; object-fit: contain; border-radius: 4.5%; }
 
-/* The shelf: three chase cards standing in an open tin. */
-.bz-tin-list { display: grid; gap: 16px; }
-@media (min-width: 640px) { .bz-tin-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (min-width: 1100px) { .bz-tin-list { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-.bz-tin { display: grid; grid-template-rows: auto 1fr; overflow: hidden; padding: 0; }
+/* The shelves (js/beta.js tinsPage): five by price, one on screen. The words pick the shelf; its head says what it
+   costs and what comes back, as an HP bar that runs red, yellow, green from the bargain bin to the high rollers. */
+.bz-tiers { display: flex; flex-wrap: wrap; gap: 2px 0; margin: 0 -6px 16px; }
+.bz-tiers .rt-word { min-height: 40px; padding: 3px 11px 4px; font-size: 16px; }
+.bz-shelf-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: 4px 12px; margin: 0 0 16px; }
+.bz-shelf-name { margin: 0; font: italic 800 28px/1.05 var(--font-xc); letter-spacing: -0.02em; }
+.bz-shelf-odds { font: italic 700 15px var(--font-xc); color: var(--k-2); }
+.bz-shelf-head > .bz-note, .bz-shelf-head > .bz-back { grid-column: 1 / -1; }
+.bz-shelf-head > .bz-note { margin: 0; max-width: 60ch; }
+.bz-back { margin-top: 6px; max-width: 440px; }
+.bz-back > em { font-size: 12.5px; }
+.bz-back[data-level="low"] .rt-track > i { background: var(--hp-low); }
+.bz-back[data-level="mid"] .rt-track > i { background: var(--hp-mid); }
+
+/* A tin on the shelf: a tile you tap. Three chase cards stand in the open tin, the price is stuck on its front. */
+.bz-tin-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (min-width: 640px) { .bz-tin-list { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 16px; } }
+.bz-tin { display: grid; grid-template-rows: auto 1fr; overflow: hidden; padding: 0; color: inherit; text-decoration: none; transition: transform 0.16s var(--ease-out); }
+.bz-tin:active { transform: translateY(2px); }
+.bz-tin:focus-visible { outline: 3px solid var(--yel); outline-offset: 3px; }
 .bz-tin-well, .bz-view-show {
   position: relative; isolation: isolate; display: block; overflow: hidden;
   background-color: var(--box-2); background-image: var(--dots); background-size: 14px 14px;
 }
-.bz-tin-well { height: 264px; border-bottom: var(--line-w) solid var(--k); color: inherit; text-decoration: none; }
+.bz-tin-well { padding: 10px 8px 0; border-bottom: var(--line-w) solid var(--k); }
 .bz-tin-well::before, .bz-view-show::before { content: ""; position: absolute; z-index: -1; top: -20px; bottom: -20px; left: 50%; width: 52%; background: var(--paint); opacity: 0.34; transform: translateX(-50%) skewX(var(--skew)); }
-.bz-fan { position: absolute; inset: 0; display: block; }
-.bz-fan-card { position: absolute; left: 50%; top: 14px; width: 142px; margin-left: -71px; filter: drop-shadow(var(--drop-sm)); transition: transform 0.24s var(--ease-out); }
-.bz-fan-card.is-l, .bz-fan-card.is-r { top: 34px; width: 120px; margin-left: -60px; }
-.bz-fan-card.is-l { transform: translateX(-88px) rotate(-9deg); }
-.bz-fan-card.is-r { transform: translateX(88px) rotate(9deg); }
+.bz-tin-well::before { width: 60%; }
+.bz-tin-copy { display: grid; align-content: start; gap: 1px; padding: 9px 11px 11px; min-width: 0; }
+.bz-tin-copy > b { font: italic 800 17px/1.12 var(--font-xc); letter-spacing: -0.015em; margin-bottom: 3px; }
+.bz-tin-top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 6px; font: 700 14.5px var(--font-h); font-variant-numeric: tabular-nums; }
+.bz-tin-top small, .bz-tin-odds { color: var(--k-2); font: 700 12.5px var(--font-h); font-variant-numeric: tabular-nums; }
+
+/* The tin. Everything is sized from the art's own width (cqw), so one drawing serves any tile. --paint is the tin's
+   colour, the shelf (data-tier) is its metal. Literal colours here are paint and metal: art, the same in every theme. */
+.bz-tinart {
+  position: relative; display: block; container-type: inline-size; aspect-ratio: 1 / 1; margin: 0 auto; max-width: 250px;
+  --rim: color-mix(in srgb, var(--paint) 52%, #fff); --body: var(--paint); --metal: #cfd6dc; --lid: color-mix(in srgb, var(--paint) 58%, #000);
+}
+.bz-tinart[data-tier="bargain"] { --rim: #9aa3ab; --body: color-mix(in srgb, var(--paint) 72%, #8a8f94); }
+.bz-tinart[data-tier="mid"] { --rim: #cfd6dc; }
+.bz-tinart[data-tier="high"] { --rim: #eef2f5; --metal: #eef2f5; }
+.bz-tinart[data-tier="roller"] { --rim: #f0bf2c; --metal: #f0bf2c; --body: color-mix(in srgb, var(--paint) 62%, #000); --lid: color-mix(in srgb, var(--paint) 34%, #000); }
+.bz-tinart[data-slab] { --body: #2b3038; --lid: #1b1e24; }
+.bz-tinart[data-slab]:not([data-tier="roller"]) { --rim: #c3cad1; }
+.bz-tin-lid { position: absolute; left: 5cqw; bottom: 31cqw; width: 90cqw; height: 66cqw; }
+.bz-tin-front { position: absolute; z-index: 2; left: 2cqw; bottom: 0; width: 96cqw; height: 37cqw; overflow: visible; }
+.bz-tinart svg :is(path, rect, circle) { stroke-width: 2px; stroke-linejoin: round; stroke-linecap: round; }
+.bz-t-body { fill: var(--body); stroke: var(--k0); }
+.bz-t-lid { fill: var(--lid); stroke: var(--k0); }
+.bz-t-lidline { fill: none; stroke: #fff; opacity: 0.16; }
+.bz-t-rim, .bz-t-latch { fill: var(--rim); stroke: var(--k0); }
+.bz-t-glint { fill: none; stroke: #fff; opacity: 0.7; }
+.bz-t-sheen { fill: #fff; opacity: 0.2; stroke: none; }
+.bz-t-shade { fill: #000; opacity: 0.2; stroke: none; }
+.bz-t-press { fill: none; stroke: #000; opacity: 0.22; }
+.bz-t-dent { fill: none; stroke: #000; opacity: 0.3; }
+.bz-t-bare { fill: #9aa3ab; stroke: none; }
+.bz-t-metal :is(path, circle) { fill: var(--metal); stroke: var(--k0); }
+.bz-t-pin { fill: none; stroke: var(--metal); opacity: 0.85; }
+.bz-t-key { fill: var(--k0); stroke: none; }
+.bz-t-band { fill: var(--paint); stroke: none; }
+.bz-t-rib { fill: none; stroke: #000; opacity: 0.35; }
+.bz-fan-card { position: absolute; z-index: 1; left: 25cqw; bottom: 15cqw; width: 50cqw; filter: drop-shadow(var(--drop-sm)); transition: transform 0.24s var(--ease-out); }
+.bz-fan-card.is-l, .bz-fan-card.is-r { z-index: 0; left: 29cqw; bottom: 17cqw; width: 42cqw; }
+.bz-fan-card.is-l { transform: translateX(-23cqw) rotate(-9deg); }
+.bz-fan-card.is-r { transform: translateX(23cqw) rotate(9deg); }
+.bz-tinart[data-slab] .bz-fan-card { bottom: 13cqw; }
 @media (hover: hover) {
-  .bz-tin:hover .bz-fan-card.is-c { transform: translateY(-8px); }
-  .bz-tin:hover .bz-fan-card.is-l { transform: translateX(-98px) translateY(-4px) rotate(-12deg); }
-  .bz-tin:hover .bz-fan-card.is-r { transform: translateX(98px) translateY(-4px) rotate(12deg); }
+  .bz-tin:hover .bz-fan-card.is-c { transform: translateY(-4cqw); }
+  .bz-tin:hover .bz-fan-card.is-l { transform: translateX(-27cqw) translateY(-2cqw) rotate(-12deg); }
+  .bz-tin:hover .bz-fan-card.is-r { transform: translateX(27cqw) translateY(-2cqw) rotate(12deg); }
 }
-/* The tin's front wall: the cards stand behind it. */
-.bz-tinfront {
-  position: absolute; z-index: 2; left: 50%; bottom: -3px; width: min(88%, 330px); height: 66px; transform: translateX(-50%);
-  display: grid; align-content: center; justify-items: center; gap: 1px; overflow: hidden;
-  border: var(--line-w) solid var(--k0); border-radius: 5px 5px 0 0; background: var(--paint); color: var(--paint-ink);
+/* The price, stuck on the tin like a shop sticker. A high roller's is a gold plate. */
+.bz-tin-tag {
+  position: absolute; z-index: 3; left: 50%; bottom: 7cqw; transform: translateX(-50%) rotate(-3deg);
+  display: inline-flex; align-items: center; padding: 1px 9px 2px 6px; border: 2px solid var(--k0); border-radius: 4px;
+  background: var(--w0); color: var(--k0); font: 700 16px/1.3 var(--font-h); font-variant-numeric: tabular-nums; white-space: nowrap;
 }
-.bz-tinfront::before { content: ""; position: absolute; inset: 0 0 auto; height: 9px; background: rgb(0 0 0 / 0.2); border-bottom: 2px solid var(--k0); }
-.bz-tinfront::after { content: ""; position: absolute; top: -10px; bottom: -10px; left: 9%; width: 16px; background: #fff; opacity: 0.24; transform: skewX(var(--skew)); }
-.bz-tinfront b { margin-top: 8px; font: italic 800 23px/1 var(--font-xc); letter-spacing: -0.02em; white-space: nowrap; }
-.bz-tinfront i { font: 700 11.5px/1 var(--font-h); letter-spacing: 0.04em; opacity: 0.85; }
-.bz-rollers { margin-top: 28px; }
-.bz-rollers > .bz-note { margin: 0 0 14px; max-width: 62ch; }
-.bz-tinfront b { max-width: 94%; overflow: hidden; text-overflow: ellipsis; }
-.bz-tin-copy { display: grid; gap: 12px; align-content: start; padding: 13px 16px 16px; }
-.bz-tin-best { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; margin: 0; font: 700 16px var(--font-h); }
-.bz-tin-best small { width: 100%; color: var(--k-2); font-size: 12.5px; }
-.bz-tin-keys { display: grid; gap: 10px; }
+.bz-tin-tag :is(.coin-tag, .cs-coin) { color: inherit; }
+.bz-tinart[data-tier="roller"] .bz-tin-tag { background: #f0bf2c; transform: translateX(-50%); bottom: 6cqw; }
+.bz-tinart[data-tier="bargain"] .bz-tin-tag { transform: translateX(-50%) rotate(-7deg); }
+
+/* A slab's grade, on a plain picture of its card (the reel, the list of everything inside). */
+.bz-cell-pic { position: relative; display: block; }
+.bz-grade {
+  position: absolute; top: 4%; right: 5%; min-width: 1.75em; padding: 0 0.3em; border: 2px solid var(--k0); border-radius: 4px;
+  background: var(--w0); color: var(--k0); font: 800 13px/1.45 var(--font-h); font-style: normal; text-align: center;
+}
+.bz-grade[data-g="10"] { background: #f0bf2c; }
+.bz-reel-card { position: relative; }
+.bz-reel-card .bz-grade { font-size: 16px; }
+
+/* The odds in three figures, under the key. */
+.bz-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: min(100%, 440px); margin: 18px auto 0; padding: 0; overflow: hidden; }
+.bz-stats > div { display: grid; gap: 1px; padding: 9px 6px 10px; text-align: center; min-width: 0; }
+.bz-stats > div + div { border-left: 2px solid var(--rule); }
+.bz-stats dt { color: var(--k-2); font: 700 12.5px var(--font-h); }
+.bz-stats dd { margin: 0; font: 700 19px/1.15 var(--font-h); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.bz-stats-note { width: min(100%, 440px); margin: 10px auto 0; text-align: center; }
 .bz-tin-all, .bz-view-back { color: var(--cy-2); font: 700 14px var(--font-h); text-decoration: underline; text-underline-offset: 3px; }
-.bz-tin .bz-open { min-height: 48px; font-size: 16px; }
 
 /* A tin's page: the chase cards in a row you swipe, each a real face. */
 .bz-view-head { display: grid; gap: 4px; margin: 0 0 14px; }
@@ -328,8 +388,8 @@
 .bz-view-keys .solid { min-height: 54px; font-size: 18px; }
 .bz-view-keys .bz-note { text-align: center; }
 .bz-all { margin-top: 26px; }
-.bz-all .bz-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px 10px; }
-@media (min-width: 640px) { .bz-all .bz-grid { grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: 20px 14px; } }
+.bz-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px 10px; }
+@media (min-width: 640px) { .bz-cards { grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: 20px 14px; } }
 .bz-cell { all: unset; display: grid; align-content: start; gap: 2px; cursor: pointer; min-width: 0; }
 .bz-cell:focus-visible { outline: 3px solid var(--yel); outline-offset: 3px; }
 .bz-cell img { width: 100%; aspect-ratio: 63 / 88; object-fit: contain; border-radius: 4.5%; margin-bottom: 5px; }
