@@ -86,11 +86,11 @@ button.tg-row:active { transform: translateX(4px); }
 .tg-dks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px 10px; }
 .tg-dk {
   display: flex; flex-direction: column; gap: 6px; min-width: 0; padding: 7px 7px 9px;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); color: var(--k);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); color: var(--k);
   font: inherit; text-align: left; cursor: pointer; -webkit-tap-highlight-color: transparent;
   transition: transform 0.14s var(--ease-out);
 }
-.tg-dk-art { display: block; aspect-ratio: 5 / 4; overflow: hidden; border-radius: 3px; background: var(--box-2); }
+.tg-dk-art { display: block; aspect-ratio: 5 / 4; overflow: hidden; border-radius: var(--r-tag); background: var(--box-2); }
 .tg-dk-art img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; transform: scale(1.3); transform-origin: 50% 30%; }
 .tg-dk-name, .tg-dk-state { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
 .tg-dk-name { font: 700 13px/1.2 var(--font-h); overflow-wrap: anywhere; }
@@ -147,8 +147,8 @@ body.no-motion .tg-fan img, body.no-motion .tg-dk, body.no-motion .tg-block > .t
    from the left and slides from where it stood (--f0) to where it is (--f); the ink cuts between parts ride along. */
 .tg-sum { display: grid; gap: 9px; margin-bottom: 16px; padding: 12px 14px 12px; }
 .tg-meter { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 12px; }
-.tg-meter-track { display: block; height: 16px; padding: 3px; border-radius: 8px; background: var(--k); }
-.tg-meter-track > span { position: relative; display: block; height: 100%; overflow: hidden; border-radius: 5px; container-type: inline-size; }
+.tg-meter-track { display: block; height: 16px; padding: 3px; border-radius: var(--r); background: var(--k); }
+.tg-meter-track > span { position: relative; display: block; height: 100%; overflow: hidden; border-radius: var(--r-tag); container-type: inline-size; }
 .tg-meter-track i {
   position: absolute; inset: 0; transform-origin: 0 50%; transform: scaleX(var(--f));
   animation: tg-meter 0.55s var(--ease-out) backwards;
@@ -169,7 +169,7 @@ body.no-motion .tg-fan img, body.no-motion .tg-dk, body.no-motion .tg-block > .t
 .tg-meter-n.is-bump { animation: tg-bump 0.3s var(--ease-pop); }
 @keyframes tg-bump { from { transform: scale(1.18); } }
 .tg-legend { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0; color: var(--k-2); font: 600 12.5px/1.3 var(--font-h); }
-.tg-legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; margin-right: 6px; border-radius: 2px; background: var(--c); vertical-align: -0.5px; }
+.tg-legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; margin-right: 6px; border-radius: var(--r-tag); background: var(--c); vertical-align: -0.5px; }
 .tg-legend .p { --c: var(--cy); }
 .tg-legend .t { --c: var(--yel); }
 .tg-legend .e { --c: var(--hp); }
@@ -201,7 +201,7 @@ body.no-motion .tg-fan img, body.no-motion .tg-dk, body.no-motion .tg-block > .t
 .tg-tile-face:active { transform: scale(0.97); }
 .tg-ct {
   position: relative; z-index: 1; display: flex; align-items: center; width: 88%; height: 26px; margin-top: -11px;
-  border-radius: 4px; background: var(--k); color: var(--on-k);
+  border-radius: var(--r-tag); background: var(--k); color: var(--on-k);
   font: 700 14px/1 var(--font-n); font-variant-numeric: tabular-nums;
 }
 .tg-ct button {
@@ -219,7 +219,7 @@ body.no-motion .tg-fan img, body.no-motion .tg-dk, body.no-motion .tg-block > .t
 .tg-tile:not(.in) .tg-ct [data-less] { visibility: hidden; }
 
 /* Steps for Basic Energy: the same strip on an ink plate. */
-.tg-step { display: inline-flex; align-items: center; height: 34px; border-radius: 5px; background: var(--k); color: var(--on-k); }
+.tg-step { display: inline-flex; align-items: center; height: 34px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k); }
 .tg-step button {
   width: 38px; height: 100%; padding: 0 0 2px; border: 0; background: none; color: inherit;
   font: 700 19px/1 var(--font-h); cursor: pointer; transition: transform 0.1s var(--ease-out); -webkit-tap-highlight-color: transparent;
@@ -301,7 +301,7 @@ body.no-motion .tg-meter-track i, body.no-motion .tg-meter-cut, body.no-motion .
 .tg-choose-card { position: relative; padding: 0; border: 0; border-radius: 4.5%/3.2%; background: none; cursor: pointer; transition: transform 0.18s var(--ease-out), opacity 0.18s ease; }
 .tg-choose-card img { display: block; width: 100%; aspect-ratio: 5 / 7; border-radius: 4.5%/3.2%; object-fit: cover; pointer-events: none; }
 .tg-choose-card.is-chosen { transform: translateY(-8px); }
-.tg-choose-card.is-chosen::after { content: ""; position: absolute; inset: -4px; border: 3px solid var(--yel); border-radius: 7px; pointer-events: none; }
+.tg-choose-card.is-chosen::after { content: ""; position: absolute; inset: -4px; border: 3px solid var(--yel); border-radius: var(--r); pointer-events: none; }
 .tg-choose-grid:has(.is-chosen) .tg-choose-card:not(.is-chosen) { opacity: 0.42; }
 .tg-choose > .tg-sheet-keys { margin-top: 2px; }
 
@@ -313,7 +313,7 @@ body.no-motion .tg-meter-track i, body.no-motion .tg-meter-cut, body.no-motion .
 .tg-look-meta, .tg-look-note { margin: 0; color: var(--k-2); font-size: 13.5px; font-weight: 500; line-height: 1.4; }
 .tg-look-meta .tg-pips, .tg-look-meta .tg-en { font-size: 14px; }
 .tg-look-note { padding-left: 9px; border-left: 3px solid var(--k-3); }
-.tg-look-facts { display: grid; margin: 2px 0; padding: 0 10px; width: 100%; border: 1.5px solid var(--rule-2); border-radius: 6px; }
+.tg-look-facts { display: grid; margin: 2px 0; padding: 0 10px; width: 100%; border: 1.5px solid var(--rule-2); border-radius: var(--r); }
 .tg-look-facts div { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--rule); }
 .tg-look-facts div:last-child { border-bottom: 0; }
 .tg-look-facts dt { color: var(--k-2); font: 600 13px var(--font-h); }
@@ -346,7 +346,7 @@ body.tg-playing { overflow: hidden; }
 .tg-who small { margin-left: 8px; font: 600 12px/1.2 var(--font-h); font-style: normal; color: var(--k-2); }
 .tg-leave { min-height: 30px; padding: 2px 2px 4px; border: 0; background: none; color: var(--k-2); font: 700 13px var(--font-h); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 .tg-count { display: inline-flex; align-items: center; gap: 5px; font: 700 15px var(--font-n); font-variant-numeric: tabular-nums; }
-.tg-ic { display: inline-block; width: 13px; height: 17px; border: 2px solid var(--k-2); border-radius: 2.5px; }
+.tg-ic { display: inline-block; width: 13px; height: 17px; border: 2px solid var(--k-2); border-radius: var(--r-tag); }
 .tg-ic.hand { transform: rotate(-12deg); box-shadow: 4px 1px 0 -1px var(--bg), 5px 2px 0 0 var(--k-2); margin-right: 4px; }
 
 /* The mat. Tilted as a whole; nothing on it animates anything but transform, opacity and filter. */
@@ -389,7 +389,7 @@ body.tg-playing { overflow: hidden; }
 .tg-hole.is-target { border: calc(var(--u) * 0.8) solid var(--yel); background: rgb(0 0 0 / 0.3); color: var(--yel); cursor: pointer; }
 .tg-mon.is-target, .tg-hole.is-target { animation: tg-nudge 0.9s var(--ease-out) infinite alternate; }
 .tg-dmg {
-  position: absolute; top: 6%; right: -8%; min-width: 2em; padding: 0 5px 1px; border: 2px solid var(--k0); border-radius: 4px;
+  position: absolute; top: 6%; right: -8%; min-width: 2em; padding: 0 5px 1px; border: 2px solid var(--k0); border-radius: var(--r-tag);
   background: var(--hp-low); color: var(--w0); font: 700 calc(var(--w) * 0.2) / 1.3 var(--font-n); text-align: center; transform: skewX(var(--skew));
 }
 .tg-mon.big .tg-dmg { font-size: calc(var(--w) * 0.14); }
@@ -451,10 +451,10 @@ body.tg-playing { overflow: hidden; }
 .tg-hud .tg-pips { flex-wrap: wrap; gap: calc(var(--u) * 0.6); font-size: calc(var(--u) * 3.9); min-height: 1.1em; }
 .tg-hud .tg-pips small { color: #aab4bc; font-size: calc(var(--u) * 2.8); line-height: 1.5; }
 .tg-conds { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: calc(var(--u) * 0.9); }
-.tg-cond { padding: 0 calc(var(--u) * 1.5) 1px; border-radius: 3px; background: var(--hp-low); color: var(--w0); font: italic 700 calc(var(--u) * 2.9) / 1.5 var(--font-h); }
+.tg-cond { padding: 0 calc(var(--u) * 1.5) 1px; border-radius: var(--r-tag); background: var(--hp-low); color: var(--w0); font: italic 700 calc(var(--u) * 2.9) / 1.5 var(--font-h); }
 .tg-cond[data-cond="mark"] { background: #2a3139; color: var(--w0); }
 .tg-cond[data-cond="tool"] { background: var(--w0); color: var(--k0); font-style: normal; }
-.tg-toolpip { background: var(--w0); color: var(--k0); border: 1.5px solid var(--k0); border-radius: 4px; }
+.tg-toolpip { background: var(--w0); color: var(--k0); border: 1.5px solid var(--k0); border-radius: var(--r-tag); }
 .tg-cond[data-cond="weak"] { background: var(--yel); color: var(--k0); } .tg-cond[data-cond="resist"] { background: #2a3139; color: var(--w0); }
 .tg-cond[data-cond="asleep"] { background: #5a63d8; } .tg-cond[data-cond="confused"] { background: var(--yel); color: var(--k0); }
 .tg-cond[data-cond="paralyzed"] { background: var(--hp-mid); color: var(--k0); } .tg-cond[data-cond="poisoned"] { background: #8a56d8; }
@@ -493,12 +493,12 @@ body.tg-playing { overflow: hidden; }
 .tg-card-n::before { content: "×"; font-weight: 600; }
 
 /* The bar that always says what to do, shows what you still have this turn, and holds the key that moves the turn on. */
-.tg-prompt { position: relative; z-index: 2; display: flex; align-items: center; gap: 10px; min-height: 54px; padding: 6px 12px 7px; border: var(--line-w) solid var(--on-k); border-radius: 6px; background: var(--box); }
+.tg-prompt { position: relative; z-index: 2; display: flex; align-items: center; gap: 10px; min-height: 54px; padding: 6px 12px 7px; border: var(--line-w) solid var(--on-k); border-radius: var(--r); background: var(--box); }
 .tg-say { flex: 1; min-width: 0; display: grid; gap: 4px; }
 .tg-say p { margin: 0; font: 600 14.5px/1.25 var(--font-h); }
 .tg-track { display: flex; gap: 12px; color: var(--k-2); font: 600 11.5px/1 var(--font-h); }
 .tg-track span { display: inline-flex; align-items: center; gap: 5px; transition: opacity 0.3s; }
-.tg-track span::before { content: ""; width: 9px; height: 9px; border-radius: 2px; background: var(--hp); transform: skewX(var(--skew)); }
+.tg-track span::before { content: ""; width: 9px; height: 9px; border-radius: var(--r-tag); background: var(--hp); transform: skewX(var(--skew)); }
 .tg-track span.used { opacity: 0.55; text-decoration: line-through; }
 .tg-track span.used::before { background: var(--rule-2); }
 .tg-keys { display: flex; gap: 8px; flex: none; }
@@ -517,7 +517,7 @@ body.tg-playing { overflow: hidden; }
   border: 0; background: none; color: var(--k0); text-align: left; cursor: pointer; transition: transform 0.1s var(--ease-out);
 }
 .tg-atk::before {
-  content: ""; position: absolute; inset: 0; z-index: -1; border: var(--line-w) solid var(--k0); border-bottom-width: 6px; border-radius: 6px;
+  content: ""; position: absolute; inset: 0; z-index: -1; border: var(--line-w) solid var(--k0); border-bottom-width: 6px; border-radius: var(--r);
   background: var(--yel); transform: skewX(-7deg);
 }
 .tg-atk:active:not(:disabled) { transform: translateY(3px); }
@@ -562,7 +562,7 @@ body.tg-playing { overflow: hidden; }
 .tg-over-card div { display: grid; gap: 2px; min-width: 0; animation: tg-row-in 0.32s var(--ease-out) 0.3s backwards; }
 .tg-over-card small { color: var(--k-2); font: 600 13px var(--font-h); }
 .tg-over-card b { overflow-wrap: anywhere; font: italic 800 27px/1.05 var(--font-xc); letter-spacing: -0.02em; }
-.tg-facts { display: grid; padding: 2px 16px; border: var(--line-w) solid var(--on-k); border-radius: 6px; background: var(--box); }
+.tg-facts { display: grid; padding: 2px 16px; border: var(--line-w) solid var(--on-k); border-radius: var(--r); background: var(--box); }
 .tg-facts > div, .tg-facts > p {
   display: flex; align-items: baseline; justify-content: space-between; gap: 14px; margin: 0; padding: 11px 0; border-bottom: 1px solid var(--rule);
   color: var(--k-2); font: 500 14px/1.3 var(--font); animation: tg-row-in 0.32s var(--ease-out) 0.34s backwards;
@@ -594,7 +594,7 @@ body.tg-playing { overflow: hidden; }
 .tg-opening, .tg-flip {
   top: 0; width: min(352px, calc(100% - 32px)); height: max-content; max-height: calc(100dvh - 32px); margin: auto;
   display: grid; justify-items: center; gap: 8px; padding: 18px 20px 20px; text-align: center;
-  border-bottom-width: var(--line-w); border-radius: 8px; box-shadow: var(--drop); animation: tg-stage-in 0.32s var(--ease-out);
+  border-bottom-width: var(--line-w); border-radius: var(--r); box-shadow: var(--drop); animation: tg-stage-in 0.32s var(--ease-out);
 }
 .tg-coin { display: grid; place-items: center; margin-top: -8px; }
 .tg-opening-lab { margin: 0; color: var(--k-2); font: 700 14px/1.2 var(--font-h); }
@@ -614,25 +614,25 @@ body.tg-playing { overflow: hidden; }
 .tg-coach {
   position: absolute; z-index: 61; top: calc(max(6px, env(safe-area-inset-top)) + 36px); left: max(8px, calc(50vw - var(--u) * 50)); right: max(8px, calc(50vw - var(--u) * 50));
   display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 8px 12px; padding: 10px 12px 12px;
-  border: var(--line-w) solid var(--k0); border-radius: 6px; background: var(--w0); color: var(--k0); box-shadow: var(--drop);
+  border: var(--line-w) solid var(--k0); border-radius: var(--r); background: var(--w0); color: var(--k0); box-shadow: var(--drop);
   animation: tg-rise-card 0.24s var(--ease-out);
 }
 .tg-coach-top { grid-column: 1 / -1; display: flex; align-items: center; gap: 10px; }
 .tg-coach-lab {
-  flex: none; padding: 2px 16px 3px 9px; border-radius: 3px 0 0 3px; background: var(--k0); color: var(--w0);
+  flex: none; padding: 2px 16px 3px 9px; border-radius: var(--r-tag) 0 0 var(--r-tag); background: var(--k0); color: var(--w0);
   font: italic 800 13px/1.3 var(--font-xc); clip-path: polygon(0 0, 100% 0, calc(100% - 7px) 100%, 0 100%);
 }
 .tg-coach-top small { flex: none; color: var(--k0); opacity: 0.7; font: 600 12.5px/1 var(--font-n); font-variant-numeric: tabular-nums; }
 .tg-coach p { margin: 0; font: 600 14.5px/1.3 var(--font-h); text-wrap: pretty; }
 .tg-table.has-coach .tg-half-foe .tg-row { visibility: hidden; }
-.tg-coach-bar { flex: 1; min-width: 0; height: 11px; padding: 2.5px; border-radius: 6px; background: var(--k0); overflow: hidden; }
-.tg-coach-bar i { display: block; height: 100%; border-radius: 4px; background: var(--hp); transform-origin: left; }
+.tg-coach-bar { flex: 1; min-width: 0; height: 11px; padding: 2.5px; border-radius: var(--r); background: var(--k0); overflow: hidden; }
+.tg-coach-bar i { display: block; height: 100%; border-radius: var(--r-tag); background: var(--hp); transform-origin: left; }
 .tg-coach .solid::before { background: var(--k0); border-color: var(--k0); }
 .tg-coach .solid, .tg-coach .solid:hover:not(:disabled) { color: var(--yel); }
 .tg-coach .solid:hover:not(:disabled)::before { background: var(--k0); }
 .tg-table.coach-hand .tg-hand .tg-card.can, .tg-table.coach-active .tg-spot-me .tg-mon, .tg-table.coach-key .tg-keys .solid, .tg-table.coach-key .tg-keys .ghost { animation: tg-nudge 0.7s var(--ease-out) infinite alternate; }
 .tg-table.coach-hand .tg-hand .tg-card.can:not(:has(+ .stk))::after, .tg-table.coach-active .tg-spot-me .tg-mon::after {
-  content: ""; position: absolute; inset: -4px; border: 3px solid var(--yel); border-radius: 7px; pointer-events: none;
+  content: ""; position: absolute; inset: -4px; border: 3px solid var(--yel); border-radius: var(--r); pointer-events: none;
 }
 
 /* Cues. */
@@ -641,7 +641,7 @@ body.tg-playing { overflow: hidden; }
 .tg-mon.hit { animation: tg-hit 0.4s linear; }
 .tg-mon.ko { animation: tg-ko 0.9s var(--ease-out) forwards; }
 .tg-pop {
-  position: absolute; z-index: 3; left: 50%; top: 30%; padding: 2px 12px 4px; border: var(--line-w) solid var(--k0); border-radius: 5px;
+  position: absolute; z-index: 3; left: 50%; top: 30%; padding: 2px 12px 4px; border: var(--line-w) solid var(--k0); border-radius: var(--r-tag);
   background: var(--hp-low); color: var(--w0); font: 700 calc(var(--w) * 0.24) / 1.2 var(--font-n); white-space: nowrap; pointer-events: none;
   animation: tg-number 0.9s var(--ease-out) forwards;
 }
@@ -727,12 +727,12 @@ body.no-motion .tg-table *, body.no-motion .tg-fx *, body.no-motion .tg-sheet, b
 /* Abilities: a row in the attack sheet, a tag on a Pokémon whose Ability is ready, a chip on the HUD. A row's
    small straight tag says what kind it is. One that is always on is a straight box, not a key. */
 .tg-tag {
-  flex: none; justify-self: start; padding: 2px 7px 3px; border-radius: 3px; background: var(--k0); color: var(--w0);
+  flex: none; justify-self: start; padding: 2px 7px 3px; border-radius: var(--r-tag); background: var(--k0); color: var(--w0);
   font: 700 12px/1.2 var(--font-h); font-style: normal; white-space: nowrap;
 }
 .tg-atk:disabled .tg-tag, .tg-abil.is-info .tg-tag { background: var(--w0); color: var(--k0); }
 .tg-atk-top .tg-atk-do { font: italic 800 18px/1.1 var(--font-xc); letter-spacing: -0.01em; }
-.tg-abil.is-info { display: grid; gap: 6px; width: calc(100% - 14px); justify-self: center; padding: 11px 14px 13px; border: 1.5px solid var(--rule-2); border-radius: 6px; background: var(--box-2); text-align: left; }
+.tg-abil.is-info { display: grid; gap: 6px; width: calc(100% - 14px); justify-self: center; padding: 11px 14px 13px; border: 1.5px solid var(--rule-2); border-radius: var(--r); background: var(--box-2); text-align: left; }
 .tg-abil.is-info .tg-atk-top b { font-size: 19px; }
 .tg-abil.is-info .tg-atk-top small { color: var(--k-2); font: 600 12.5px var(--font-h); white-space: nowrap; }
 .tg-abil.off { opacity: 0.6; }
@@ -746,7 +746,7 @@ body.no-motion .tg-table *, body.no-motion .tg-fx *, body.no-motion .tg-sheet, b
 /* Sheets outside the table (the deck editor's close look) keep still under reduced motion too. */
 body.no-motion .tg-sheet * { animation: none !important; transition: none !important; }
 @media (prefers-reduced-motion: reduce) { .tg-sheet * { animation: none !important; transition: none !important; } }
-.tg-abil-tag { position: absolute; left: 50%; top: -7px; transform: translateX(-50%); padding: 1px 6px; border-radius: 4px; background: var(--yel); color: var(--k0); box-shadow: 0 0 0 1.5px var(--k0); font-size: 10px; font-weight: 800; white-space: nowrap; pointer-events: none; animation: tg-abil-pulse 1.4s var(--ease-out) infinite alternate; }
+.tg-abil-tag { position: absolute; left: 50%; top: -7px; transform: translateX(-50%); padding: 1px 6px; border-radius: var(--r-tag); background: var(--yel); color: var(--k0); box-shadow: 0 0 0 1.5px var(--k0); font-size: 10px; font-weight: 800; white-space: nowrap; pointer-events: none; animation: tg-abil-pulse 1.4s var(--ease-out) infinite alternate; }
 .tg-mon.big .tg-abil-tag { display: none; }
 @keyframes tg-abil-pulse { from { opacity: 0.7; } to { opacity: 1; } }
 .tg-cond[data-cond="ability"] { background: var(--yel); color: var(--k0); font-style: normal; }
@@ -775,7 +775,7 @@ body.no-motion .tg-sheet * { animation: none !important; transition: none !impor
 /* Transform and opacity only. Still, it's a little fan; waiting, the backs deal one after another. */
 .tg-quick-scan { position: relative; width: 80px; height: 96px; }
 .tg-quick-scan i {
-  position: absolute; left: 50%; top: 14px; width: 46px; height: 64px; margin-left: -23px; border: var(--line-w) solid var(--k); border-radius: 4px; background: var(--box-2);
+  position: absolute; left: 50%; top: 14px; width: 46px; height: 64px; margin-left: -23px; border: var(--line-w) solid var(--k); border-radius: var(--r-tag); background: var(--box-2);
   transform-origin: 50% 120%; transform: rotate(var(--fan, 0deg));
 }
 .tg-quick-scan i:nth-child(2) { z-index: 1; background: var(--yel); }
@@ -809,7 +809,7 @@ body.no-motion .tg-quick-scan i { animation: none !important; }
 .rt-dark .tg-rematch-deck option { background: var(--box); color: inherit; }
 
 /* The move clock in a match against a friend: whose time is running, how much is left. */
-.tg-clock { min-width: 44px; padding: 2px 7px 3px; border-radius: 4px; background: rgb(var(--box-rgb) / 0.12); font: 700 14px var(--font-n); font-variant-numeric: tabular-nums; text-align: center; opacity: 0.75; }
+.tg-clock { min-width: 44px; padding: 2px 7px 3px; border-radius: var(--r-tag); background: rgb(var(--box-rgb) / 0.12); font: 700 14px var(--font-n); font-variant-numeric: tabular-nums; text-align: center; opacity: 0.75; }
 .tg-clock:empty { display: none; }
 .tg-clock.is-mine { background: var(--yel); color: var(--k0); opacity: 1; }
 .tg-clock.is-low { background: var(--bad); color: var(--w0); }

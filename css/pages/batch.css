@@ -66,7 +66,7 @@
 .bo-stat > b { font: 700 18px/1.1 var(--font-h); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .bo-hud-money .bo-stat > b { font-size: 21px; }
 .bo-stat .coin-i { width: 0.85em; height: 0.85em; margin-right: 2px; vertical-align: -0.08em; }
-.bo-net > span { align-self: flex-start; padding: 0 7px; border-radius: 3px; background: var(--k); color: var(--yel-k); font: italic 800 12px/1.5 var(--font-xc); }
+.bo-net > span { align-self: flex-start; padding: 0 7px; border-radius: var(--r-tag); background: var(--k); color: var(--yel-k); font: italic 800 12px/1.5 var(--font-xc); }
 .bo-net.is-up > span { background: var(--hp); color: var(--k0); }
 .bo-net.is-down > span { background: var(--hp-low); color: var(--w0); }
 .bo-types { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 12px 0 0; padding: 10px 0 0; border-top: 1.5px solid var(--rule); list-style: none; }
@@ -107,7 +107,7 @@
 .bo-face:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 3px; }
 .bo-name { display: flex; gap: 6px; margin: 7px 0 0; font: 600 13.5px/1.2 var(--font-h); }
 .bo-name span { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.bo-name small { flex: none; padding: 0 5px; border-radius: 3px; background: var(--k); color: var(--yel-k); font: italic 800 11.5px/1.5 var(--font-xc); font-variant-numeric: tabular-nums; }
+.bo-name small { flex: none; padding: 0 5px; border-radius: var(--r-tag); background: var(--k); color: var(--yel-k); font: italic 800 11.5px/1.5 var(--font-xc); font-variant-numeric: tabular-nums; }
 .bo-sub { display: flex; justify-content: space-between; gap: 6px; margin: 2px 0 0; color: var(--k-2); font-size: 12px; font-weight: 700; }
 .bo-sub > span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .bo-where { margin: 1px 0 0; overflow: hidden; color: var(--k-3); font-size: 11px; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
@@ -116,7 +116,7 @@
 .bo-list { display: grid; gap: 8px; margin: 10px 0 0; padding: 0; list-style: none; }
 .bo-row {
   display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 2px 14px; padding: 10px 14px 10px 10px;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box);
 }
 .bo-row-face .bo-face { width: 56px; }
 .bo-row-main { min-width: 0; }
@@ -134,7 +134,7 @@
   color: var(--k-2); font: italic 700 15px var(--font-xc); white-space: nowrap; cursor: pointer; transition: color 0.12s ease;
 }
 .bo-modes button::before {
-  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 4px; background: var(--k);
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: var(--r-tag); background: var(--k);
   transform: skewX(var(--skew)) scaleX(0.6); opacity: 0; transition: transform 0.2s var(--ease-out), opacity 0.14s ease;
 }
 .bo-modes button:hover { color: var(--k); }

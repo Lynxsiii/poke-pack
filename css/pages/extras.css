@@ -25,7 +25,7 @@
 #view-settings .set-groups { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
 #view-settings .set-group {
   min-width: 0; padding: 0; overflow: hidden;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box);
 }
 #view-settings .set-group .plate-head { display: flex; align-items: center; margin: 0; padding: 14px 16px 6px; border: 0; }
 #view-settings .set-group .plate-head h2 { margin: 0; color: var(--k); font: italic 800 23px/1 var(--font-xc); letter-spacing: -0.015em; }
@@ -54,7 +54,7 @@
    yellow cursor edge. Only transform moves. */
 #view-settings .switch {
   position: relative; flex: none; width: 60px; height: 32px; padding: 0;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box);
   box-shadow: none; overflow: hidden; transition: background-color 0.12s ease;
 }
 #view-settings .switch::before {
@@ -62,7 +62,7 @@
   transform: scaleX(0); transform-origin: 0 50%; transition: transform 0.24s var(--ease-out);
 }
 #view-settings .switch::after {
-  content: ""; position: absolute; top: 3px; bottom: 3px; left: 6px; width: 20px; border-radius: 3px;
+  content: ""; position: absolute; top: 3px; bottom: 3px; left: 6px; width: 20px; border-radius: var(--r-tag);
   background: var(--k); box-shadow: inset 0 0 0 var(--yel);
   transform: translateX(0) skewX(var(--skew));
   transition: transform 0.26s var(--ease-pop), box-shadow 0.16s ease;
@@ -565,7 +565,7 @@ body.no-motion #view-settings .set-group { animation: none; }
 .toast {
   position: fixed; left: 50%; bottom: 28px; z-index: 60;
   width: max-content; max-width: min(460px, calc(100vw - 32px));
-  padding: 11px 18px 12px; border: var(--line-w) solid var(--k); border-radius: 6px;
+  padding: 11px 18px 12px; border: var(--line-w) solid var(--k); border-radius: var(--r);
   background: var(--k); color: var(--on-k); box-shadow: var(--drop-sm);
   font: 600 15.5px/1.35 var(--font-h); text-align: center; letter-spacing: 0;
   opacity: 0; pointer-events: none;
@@ -574,7 +574,7 @@ body.no-motion #view-settings .set-group { animation: none; }
 }
 .toast::before {
   content: ""; position: absolute; left: -2.5px; top: -2.5px; bottom: -2.5px; width: 7px;
-  border-radius: 6px 0 0 6px; background: var(--yel);
+  border-radius: var(--r) 0 0 var(--r); background: var(--yel);
 }
 .toast.show, body > .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); animation: none; }
 @media (max-width: 960px) {
@@ -621,7 +621,7 @@ body > .site-footer .footer-links { display: flex; flex-wrap: wrap; gap: 0 20px;
 .radio-peek {
   position: relative; display: grid; place-items: center;
   width: 44px; height: 44px; padding: 0;
-  border: 0; border-radius: 6px; background: none; color: var(--k-2);
+  border: 0; border-radius: var(--r); background: none; color: var(--k-2);
 }
 .radio-peek:hover, .radio.is-open .radio-peek { color: var(--k); }
 .radio-peek svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
@@ -641,7 +641,7 @@ body > .site-footer .footer-links { display: flex; flex-wrap: wrap; gap: 0 20px;
 .radio-panel {
   display: none; position: absolute; top: calc(100% + 11px); right: 0; z-index: 36;
   width: 340px; max-width: calc(100vw - 32px); padding: 0 14px 12px; overflow: hidden;
-  border: var(--line-w) solid var(--k); border-radius: 8px; background: var(--box); box-shadow: var(--drop);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); box-shadow: var(--drop);
 }
 .radio.is-open .radio-panel { display: block; animation: radio-sheet 0.24s var(--ease-out); transform-origin: 80% 0; }
 @keyframes radio-sheet { from { opacity: 0; transform: translateY(10px) scale(0.98); } }
@@ -657,7 +657,7 @@ body > .site-footer .footer-links { display: flex; flex-wrap: wrap; gap: 0 20px;
 }
 .radio-copy { min-width: 0; padding: 8px 0; }
 .radio-kicker {
-  display: inline-block; margin: 0 0 4px; padding: 1px 7px; border-radius: 3px; background: var(--k); color: var(--yel-k);
+  display: inline-block; margin: 0 0 4px; padding: 1px 7px; border-radius: var(--r-tag); background: var(--k); color: var(--yel-k);
   font: italic 800 11.5px/1.5 var(--font-xc); letter-spacing: 0; text-transform: none;
 }
 .radio-copy b { display: block; overflow: hidden; color: var(--k); font: italic 800 21px/1.05 var(--font-xc); letter-spacing: -0.01em; text-overflow: ellipsis; white-space: nowrap; }
@@ -672,14 +672,14 @@ body > .site-footer .footer-links { display: flex; flex-wrap: wrap; gap: 0 20px;
 .radio-seek, .radio-vol input {
   -webkit-appearance: none; appearance: none; width: 100%; height: 26px; margin: 0; background: none; cursor: pointer; touch-action: none;
 }
-.radio-seek::-webkit-slider-runnable-track, .radio-vol input::-webkit-slider-runnable-track { height: 10px; border-radius: 5px; background: var(--k); }
-.radio-seek::-moz-range-track, .radio-vol input::-moz-range-track { height: 10px; border-radius: 5px; background: var(--k); }
-.radio-seek::-moz-range-progress, .radio-vol input::-moz-range-progress { height: 6px; margin: 2px; border-radius: 4px; background: var(--hp); }
+.radio-seek::-webkit-slider-runnable-track, .radio-vol input::-webkit-slider-runnable-track { height: 10px; border-radius: var(--r-tag); background: var(--k); }
+.radio-seek::-moz-range-track, .radio-vol input::-moz-range-track { height: 10px; border-radius: var(--r-tag); background: var(--k); }
+.radio-seek::-moz-range-progress, .radio-vol input::-moz-range-progress { height: 6px; margin: 2px; border-radius: var(--r-tag); background: var(--hp); }
 .radio-seek::-webkit-slider-thumb, .radio-vol input::-webkit-slider-thumb {
   -webkit-appearance: none; width: 20px; height: 20px; margin-top: -5px; border: 2.5px solid var(--k); border-radius: 50%; background: var(--yel);
 }
 .radio-seek::-moz-range-thumb, .radio-vol input::-moz-range-thumb { width: 15px; height: 15px; border: 2.5px solid var(--k); border-radius: 50%; background: var(--yel); }
-.radio-seek:focus-visible, .radio-vol input:focus-visible { outline: 3px solid var(--cy); outline-offset: 2px; border-radius: 6px; }
+.radio-seek:focus-visible, .radio-vol input:focus-visible { outline: 3px solid var(--cy); outline-offset: 2px; border-radius: var(--r); }
 
 .radio-controls { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
 .radio-controls button {
@@ -690,7 +690,7 @@ body > .site-footer .footer-links { display: flex; flex-wrap: wrap; gap: 0 20px;
   transition: transform 0.1s var(--ease-out);
 }
 .radio-controls button::after {
-  content: ""; position: absolute; inset: 0; z-index: -1; border: 2px solid var(--k); border-bottom-width: 4.5px; border-radius: 5px; background: var(--box);
+  content: ""; position: absolute; inset: 0; z-index: -1; border: 2px solid var(--k); border-bottom-width: 4.5px; border-radius: var(--r-tag); background: var(--box);
 }
 .radio-controls button:hover::after { background: var(--cy-3); }
 .radio-controls button:active { transform: translateY(2px); }
@@ -705,7 +705,7 @@ body > .site-footer .footer-links { display: flex; flex-wrap: wrap; gap: 0 20px;
   --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 2.2v11.6L14 8z'/%3E%3C/svg%3E");
   width: 66px; height: 50px; color: var(--k);
 }
-.radio-controls .radio-play::after { border-width: var(--line-w); border-bottom-width: 6px; border-radius: 6px; background: var(--yel); transform: skewX(var(--skew)); }
+.radio-controls .radio-play::after { border-width: var(--line-w); border-bottom-width: 6px; border-radius: var(--r); background: var(--yel); transform: skewX(var(--skew)); }
 .radio-controls .radio-play:hover::after { background: var(--yel-2); }
 .radio.is-playing .radio-play {
   --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 2.5h3.2v11H3.5zM9.3 2.5h3.2v11H9.3z'/%3E%3C/svg%3E");
@@ -730,10 +730,10 @@ body > .site-footer .footer-links { display: flex; flex-wrap: wrap; gap: 0 20px;
 }
 .radio-track {
   display: flex; align-items: center; gap: 10px; width: 100%; min-height: 48px; padding: 5px 10px 5px 6px;
-  border: 0; border-radius: 5px; background: transparent; color: var(--k); text-align: left;
+  border: 0; border-radius: var(--r-tag); background: transparent; color: var(--k); text-align: left;
   transition: transform 0.14s var(--ease-out), background-color 0.12s ease;
 }
-.radio-track img { width: 36px; height: 36px; flex: none; border: 2px solid var(--k); border-radius: 4px; object-fit: cover; }
+.radio-track img { width: 36px; height: 36px; flex: none; border: 2px solid var(--k); border-radius: var(--r-tag); object-fit: cover; }
 .radio-track span { display: flex; flex-direction: column; min-width: 0; }
 .radio-track b { overflow: hidden; color: var(--k); font: 600 15px/1.2 var(--font-h); text-overflow: ellipsis; white-space: nowrap; }
 .radio-track small { color: var(--k-2); font: 700 12px var(--font); }
@@ -787,7 +787,7 @@ body.no-motion #view-settings .switch::after { transition: none; }
   gap: 12px;
 }
 #inspect .pc-slab { display: block; text-decoration: none; color: inherit; }
-#inspect .pc-slab:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-radius: 8px; }
+#inspect .pc-slab:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-radius: var(--r); }
 
 /* Settings, Look: the colour themes. One flat tile each, painted in its own
    colours (data-palette on the tile, css/themes.css): its ground, the slab
@@ -797,15 +797,15 @@ body.no-motion #view-settings .switch::after { transition: none; }
 #view-settings .look-tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
 #view-settings .look-tile {
   position: relative; display: block; min-width: 0; padding: 0; overflow: hidden; cursor: pointer;
-  border: var(--line-w) solid var(--rule-2); border-radius: 6px; background: var(--bg); color: var(--k);
+  border: var(--line-w) solid var(--rule-2); border-radius: var(--r); background: var(--bg); color: var(--k);
   text-align: left; transition: transform 0.1s var(--ease-out);
 }
 #view-settings .look-tile:active { transform: translateY(2px); }
 #view-settings .look-tile.on { border-color: var(--k); }
 #view-settings .look-swatch { position: relative; display: block; height: 58px; overflow: hidden; background-image: var(--dots); background-size: 9px 9px; }
 #view-settings .look-slab { position: absolute; top: -6px; bottom: -6px; right: 8%; width: 34%; background: var(--slab, var(--cy)); transform: skewX(var(--skew)); }
-#view-settings .look-box { position: absolute; left: 10px; top: 12px; width: 44%; height: 20px; border: 2px solid var(--k); border-radius: 3px; background: var(--box); }
-#view-settings .look-key { position: absolute; left: 14px; bottom: 9px; width: 30%; height: 11px; border: 2px solid var(--k); border-bottom-width: 4px; border-radius: 3px; background: var(--yel); transform: skewX(var(--skew)); }
+#view-settings .look-box { position: absolute; left: 10px; top: 12px; width: 44%; height: 20px; border: 2px solid var(--k); border-radius: var(--r-tag); background: var(--box); }
+#view-settings .look-key { position: absolute; left: 14px; bottom: 9px; width: 30%; height: 11px; border: 2px solid var(--k); border-bottom-width: 4px; border-radius: var(--r-tag); background: var(--yel); transform: skewX(var(--skew)); }
 #view-settings .look-name {
   position: relative; isolation: isolate; display: block; padding: 5px 10px 7px;
   border-top: var(--line-w) solid var(--rule-2); background: var(--box); color: var(--k);
@@ -817,7 +817,7 @@ body.no-motion #view-settings .switch::after { transition: none; }
 #view-settings .look-tile.is-locked .look-swatch { opacity: 0.5; }
 #view-settings .look-tile.is-locked .look-name::after {
   content: ""; position: absolute; right: 10px; top: 50%; width: 10px; height: 8px; margin-top: -2px;
-  border-radius: 2px; background: var(--k-3); box-shadow: 0 -5px 0 -2px var(--box), 0 -5px 0 0 var(--k-3);
+  border-radius: var(--r-tag); background: var(--k-3); box-shadow: 0 -5px 0 -2px var(--box), 0 -5px 0 0 var(--k-3);
 }
 @media (hover: hover) { #view-settings .look-tile:not(.on, .is-locked):hover { border-color: var(--k); } }
 @media (min-width: 961px) { #view-settings .look-tiles { grid-template-columns: repeat(6, minmax(0, 1fr)); } }

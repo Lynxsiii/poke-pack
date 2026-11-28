@@ -33,7 +33,7 @@
 .nt-updates { display: grid; gap: 10px; }
 
 .nt-entry {
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box);
   transition: transform 0.14s var(--ease-out);
 }
 .nt-entry[open] { box-shadow: var(--drop-sm); }

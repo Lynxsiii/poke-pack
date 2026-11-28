@@ -13,7 +13,7 @@
      total   [label, value], printed large
      foot    lines at the bottom
    pullRow(card, { value, hit }) turns a pulled card into a row. */
-import { coinText } from "./money.js?v=2";
+import { coinText } from "./money.js?v=4";
 
 const esc = (value = "") =>
   String(value ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);

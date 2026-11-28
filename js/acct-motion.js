@@ -79,7 +79,7 @@ export function growBars(root, { arriving = false } = {}) {
    A claim sends a few coins from the button to the purse in the header, on a
    short arc, before the purse bumps (js/rotom.js). `from` is the claim button's
    rect, taken before the repaint replaced it. Decoration only. */
-const COIN_SRC = "/assets/coins/pp-coin-v1.svg";
+const COIN_SRC = "/assets/coins/pp-coin-v2.svg";
 
 export function flyCoins(from, { count = 5 } = {}) {
   if (!from || still() || typeof document.body.animate !== "function") return;
