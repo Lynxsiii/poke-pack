@@ -17,7 +17,7 @@
  */
 
 import { trainerAim } from "./trainers.js";
-import { ACTIVE, abilityOn, apply, attacksOf, chooseBlock, damageAfterTyping, defOf, energyFits, energyOf, hpLeft, unitsOn, inPlay, legalActions, other, retreatCost, statusOf, unpaid, usableAttacks } from "./engine.js";
+import { ACTIVE, abilityOn, apply, benchMax, attacksOf, chooseBlock, damageAfterTyping, defOf, energyFits, energyOf, hpLeft, unitsOn, inPlay, legalActions, other, retreatCost, statusOf, toolsIn, unpaid, usableAttacks } from "./engine.js";
 
 /** How much an attack is worth against this defender, before any coin flip. */
 function attackWorth(attack, def, foeDef, foeHp) {
@@ -313,7 +313,7 @@ function thinkAction(state, player, defs) {
     const inPlayNames = new Set(inPlay(state, player).map(([slot]) => defOf(state, slot.uid, defs).name));
     const worth = (uid) => {
       const def = defOf(state, uid, defs);
-      if (def.kind === "pokemon") return (def.evolvesFrom && inPlayNames.has(def.evolvesFrom) ? 100 : def.stage === "basic" && side.bench.length < state.rules.bench ? 50 : 20) + def.hp / 10;
+      if (def.kind === "pokemon") return (def.evolvesFrom && inPlayNames.has(def.evolvesFrom) ? 100 : def.stage === "basic" && side.bench.length < benchMax(state, player) ? 50 : 20) + def.hp / 10;
       if (def.kind === "energy") return side.hand.filter((u) => defOf(state, u, defs).kind === "energy").length > 1 && waiting.zone === "hand" ? 5 : 30;
       return 25;
     };
@@ -336,7 +336,7 @@ function thinkAction(state, player, defs) {
     // Tools, Special Energy or the Stadium in play: only the other side's, the ones worth most to them first;
     // its own Energy when it must (an attack's price): the ones worth least to it.
     if (waiting.effect.op === "dropInPlay" || (waiting.effect.op === "takeBack" && waiting.zone === "play")) {
-      const foeOwns = new Set(inPlay(state, other(player)).flatMap(([slot]) => [slot.tool, ...slot.energy].filter(Boolean)));
+      const foeOwns = new Set(inPlay(state, other(player)).flatMap(([slot]) => [...toolsIn(slot), ...slot.energy]));
       if (state.stadium && state.stadium.owner !== player) foeOwns.add(state.stadium.uid);
       const theirs = waiting.uids.filter((u) => foeOwns.has(u)).sort((x, y) => energyWorth(state, y, defs) - energyWorth(state, x, defs));
       const mine = waiting.uids.filter((u) => !foeOwns.has(u)).sort((x, y) => energyWorth(state, x, defs) - energyWorth(state, y, defs));
@@ -411,10 +411,12 @@ function thinkAction(state, player, defs) {
     // (declining only gives them 2 cards).
     if (waiting.why === "challenge") {
       const foeSide = state.players[other(player)];
-      const room = state.rules.bench - side.bench.length;
+      const room = benchMax(state, player) - side.bench.length;
       const basics = side.deck.filter((uid) => defOf(state, uid, defs).kind === "pokemon" && defOf(state, uid, defs).stage === "basic").length;
       return actions[room > 0 && basics > 0 && side.bench.length <= Math.min(2, foeSide.bench.length) ? 0 : 1];
     }
+    // Tyme: guess an HP. Most Pokémon have 60 to 130 HP: the range of 100 first when it has to pick a range, then a likely number.
+    if (waiting.why === "guess") return actions.length === 4 ? actions[1] : actions[Math.min(actions.length - 1, waiting.labels[0] === "10" ? 6 : 2)];
     // A Special Condition of its choosing: Paralyzed, which stops their next attack and retreat.
     if (waiting.why === "condition") return actions[waiting.labels.indexOf("Paralyzed")] || actions[0];
     // An attack's "you may": yes, except to take its own Pokémon out of play.
@@ -525,7 +527,7 @@ function thinkAction(state, player, defs) {
       return (hand.some((d) => d.evolvesFrom === def.name) ? 100 : 0) + (deck.some((d) => d.evolvesFrom === def.name) ? 40 : 0) + (def.ability?.use ? 30 : 0) + def.hp / 10;
     };
     const pick = benches.slice().sort((a, b) => score(b) - score(a))[0];
-    if (side.bench.length < state.rules.bench - 1 || score(pick) >= 100 || !side.bench.length) return pick;
+    if (side.bench.length < benchMax(state, player) - 1 || score(pick) >= 100 || !side.bench.length) return pick;
   }
 
   // A Fossil in play that nothing it holds will evolve is dead weight: off the Bench, and out of the Active Spot
