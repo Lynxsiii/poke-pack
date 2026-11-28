@@ -532,9 +532,9 @@ export const T_OPS = {
   // `fromWho`: only from your Pokémon that fit ("from 1 of your Team Rocket's Pokémon").
   moveCounters: {
     ready: (ctx, { to = "foe", fromWho = "" }) => !countersStay(ctx.state) && hurt(ctx).filter((spot) => !fromWho || fits(defOf(ctx.state, slotAt(ctx.state, ctx.player, spot).uid, ctx.defs), fromWho)).length > 0 && (to !== "foe" || inPlay(ctx.state, other(ctx.player)).length > 0) && (to === "foe" || inPlay(ctx.state, ctx.player).length > 1),
-    run(ctx, { n, to = "foe", fromWho = "" }) {
-      const spots = hurt(ctx).filter((spot) => !fromWho || fits(defOf(ctx.state, slotAt(ctx.state, ctx.player, spot).uid, ctx.defs), fromWho));
-      askPick(ctx.state, { player: ctx.player, side: ctx.player, spots, left: 1, effect: { op: "moveCountersFrom", n, to } });
+    run(ctx, { n, to = "foe", fromWho = "", bench = false }) {
+      const spots = hurt(ctx).filter((spot) => (!bench || spot !== ACTIVE) && (!fromWho || fits(defOf(ctx.state, slotAt(ctx.state, ctx.player, spot).uid, ctx.defs), fromWho)));
+      if (spots.length) askPick(ctx.state, { player: ctx.player, side: ctx.player, spots, left: 1, effect: { op: "moveCountersFrom", n, to } });
     },
   },
   /** Energy from the deck straight onto your Pokémon: `to` "self", "active", "one" (all on one) or "spread" (any way you like). */
@@ -543,11 +543,11 @@ export const T_OPS = {
     ready: (ctx, { to, where = null }) => hasDeck(ctx) && (to !== "self" || ctx.spot != null) && (where ? energySpots(ctx, where) : inPlay(ctx.state, ctx.player)).length > 0,
     // `rest` (with `top`): where the cards looked at and not taken go: "hand", "bottom", "discard", "shuffle" (back into the deck).
     // `rule`: what the cards taken together must keep ("a Basic Fire Energy card, a Basic Lightning Energy card, or 1 of each").
-    run(ctx, { what, n = 1, to, top = 0, where = null, mix = false, rest = "", rule = null, hurt = 0 }) {
+    run(ctx, { what, n = 1, to, top = 0, where = null, mix = false, rest = "", rule = null, hurt = 0, poison = false }) {
       const side = mine(ctx);
       const pool = top ? side.deck.slice(0, top) : side.deck;
       const after = !top ? {} : rest === "hand" ? { rest: "hand", top } : rest === "bottom" ? { restBottom: top } : rest === "discard" ? { restMill: top } : {};
-      askChoose(ctx.state, { player: ctx.player, zone: "deck", what, uids: fitting(ctx, pool, what), min: 0, max: n, effect: { op: "attach", to, spot: to === "self" ? ctx.spot : to === "active" ? ACTIVE : null, ...(where ? { spots: energySpots(ctx, where) } : {}), ...(hurt ? { hurt } : {}) }, shuffle: !top || mix || rest === "shuffle", ...after, ...(rule ? { rule } : {}) });
+      askChoose(ctx.state, { player: ctx.player, zone: "deck", what, uids: fitting(ctx, pool, what), min: 0, max: n, effect: { op: "attach", to, spot: to === "self" ? ctx.spot : to === "active" ? ACTIVE : null, ...(where ? { spots: energySpots(ctx, where) } : {}), ...(hurt ? { hurt } : {}), ...(poison ? { poison } : {}) }, shuffle: !top || mix || rest === "shuffle", ...after, ...(rule ? { rule } : {}) });
     },
   },
   /** Roxie's Performance: the other player's Poisoned Pokémon can't retreat during their next turn (engine.js canRetreat). */
