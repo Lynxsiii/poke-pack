@@ -1417,7 +1417,8 @@ export function initTcg(deps) {
   }
 
   /** A card image travels from one rect to another. `absorb`: it sinks into what it lands on. */
-  function ghost(src, from, to, { ms = 340, width = 0, absorb = false, show = false, delay = 0, flip = false } = {}) {
+  function ghost(src, from, to, opts = {}) {
+    const { ms = 340, width = 0, absorb = false, show = false, delay = 0, flip = false } = opts;
     if (!src || !from || !to || !fx || still() || !to.width) return;
     const w = width || to.width;
     const h = w * 1.4;
@@ -1438,6 +1439,12 @@ export function initTcg(deps) {
         el.src = src;
         return el.animate([{ transform: `${mid} rotateY(-90deg)` }, { transform: "none" }], { duration: ms * 0.5, easing: EASE, fill: "both" }).finished;
       }).catch(() => {}).then(() => el.remove());
+      return;
+    }
+    if (opts.toss) {
+      // Thrown to a pile: the card keeps its own size, shrinks and greys as it goes.
+      el.style.cssText = `left:${a.x - w / 2}px;top:${a.y - h / 2}px;width:${w}px;height:${h}px`;
+      el.animate([{ transform: "none", opacity: 1, filter: "grayscale(1) brightness(0.7)" }, { transform: `translate(${b.x - a.x}px, ${b.y - a.y}px) scale(${(to.width / w).toFixed(3)}) rotate(18deg)`, opacity: 0.2, filter: "grayscale(1) brightness(0.7)" }], { duration: ms, delay, easing: "cubic-bezier(0.5, 0, 0.8, 0.5)", fill: "both" }).finished.catch(() => {}).then(() => el.remove());
       return;
     }
     const frames = show
@@ -1536,7 +1543,7 @@ export function initTcg(deps) {
   function animate(event, from) {
     if (still()) return 0;
     if (event.t === "turn") {
-      banner(event.p === ME ? "Your turn" : `${foeName()}'s turn`, event.p === ME ? "me" : "foe");
+      banner(event.p === ME ? "Your turn" : `${foeName()}'s turn`, event.p === ME ? "me" : "foe", match.state.turn > 0 ? `Turn ${match.state.turn}` : "");
       return 0;
     }
     if (event.t === "draw" || (event.t === "search" && event.to === "hand")) {
@@ -1586,9 +1593,11 @@ export function initTcg(deps) {
     }
     if (event.t === "attach" || event.t === "tool") {
       const to = rectOf(`${monSel(event.p, event.spot)} img`);
-      if (to) ghost(img(match.state.cards[event.uid]), src, to, { ms: 320, width: to.width * 0.62, absorb: true });
-      setTimeout(() => cue(monSel(event.p, event.spot), "charged", 460), 230);
-      return 420;
+      if (to) ghost(img(match.state.cards[event.uid]), src, to, { ms: 360, width: to.width * 0.62, absorb: true });
+      setTimeout(() => cue(monSel(event.p, event.spot), "charged", 460), 260);
+      // The new symbol lands on the name plate (or under a Benched Pokémon) as the card sinks in.
+      if (event.t === "attach") cue(event.spot === ACTIVE ? `.tg-hud[data-p="${event.p}"] .tg-pips > :last-child` : `${monSel(event.p, event.spot)} .tg-pips > :last-child`, "landed", 700);
+      return 460;
     }
     if (event.t === "promote" || event.t === "retreat" || event.t === "switch") {
       flyIn(benchSpot(event.p), root.querySelector(monSel(event.p, ACTIVE)), { ms: 320 });
@@ -1728,10 +1737,19 @@ export function initTcg(deps) {
         } else if (event.t === "ko") {
           say(event);
           paintTable();
-          cue(event.spot === ACTIVE ? `.tg-spot[data-p="${event.p}"] .tg-mon` : `.tg-bench .tg-mon[data-p="${event.p}"][data-spot="${event.spot}"]`, "ko", 700);
+          const fallen = monSel(event.p, event.spot === ACTIVE ? ACTIVE : event.spot);
+          cue(fallen, "ko", 900);
           banner("Knocked Out", event.p === ME ? "foe" : "me");
           deps.buzz?.([24, 40, 24]);
-          await wait(680);
+          await wait(520);
+          // The card leaves for its owner's discard pile.
+          const pic = root.querySelector(`${fallen} > img`);
+          const bin = rectOf(`.tg-deckpile[data-p="${event.p}"] .tg-bin`);
+          if (pic && bin) {
+            ghost(pic.currentSrc || pic.src, pic.getBoundingClientRect(), { left: bin.left + bin.width / 2 - 12, top: bin.top - 8, width: 24, height: 34 }, { ms: 380, width: pic.getBoundingClientRect().width, toss: true });
+            setTimeout(() => cue(`.tg-deckpile[data-p="${event.p}"] .tg-bin`, "bump", 400), 340);
+          }
+          await wait(still() ? 160 : 400);
           // It leaves the table as it stood, so the beats that follow don't bring it back.
           if (event.spot === ACTIVE) before.players[event.p].active = null;
           else before.players[event.p].bench[event.spot] = null;
