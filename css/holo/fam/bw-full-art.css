@@ -140,9 +140,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full
   background-position: center, var(--background-x) 0, center;
   background-repeat: no-repeat, no-repeat, no-repeat;
   background-blend-mode: multiply, multiply, normal;
-  filter: brightness(calc(1.3 + var(--pointer-from-center) * 0.3 * max(1, var(--foil-strength, 1))));
+  filter: brightness(calc(1.8 + var(--pointer-from-center) * 0.4 * max(1, var(--foil-strength, 1))));
   mix-blend-mode: screen;
-  opacity: calc(var(--card-opacity) * 0.6 * var(--foil-strength, 1));
+  opacity: calc(var(--card-opacity) * 0.95 * var(--foil-strength, 1));
   /* The flanks baked into one map (make_lit.py: etch x (1 - etch shifted 1.3 px) x the scan's alpha, Live's dot fields
      redrawn as lines first): built here from three mask layers, WebKit dropped the whole lit layer on some cards. */
   -webkit-mask-image: var(--bwfa-flank);
@@ -193,7 +193,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full
   background-blend-mode: normal, normal;
   filter: none;
   mix-blend-mode: hard-light;
-  opacity: calc(var(--card-opacity) * 0.34 * var(--foil-strength, 1));
+  opacity: calc(var(--card-opacity) * var(--foil-strength, 1));
   /* Two layers, no gradient (WebKit dropped whole lit layers with three masks and a gradient): the ink map carries the
      scan's alpha, so it is the art mask too. */
   -webkit-mask-image: var(--bwfa-ink), var(--bwfa-etch);
@@ -284,9 +284,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full
   background-position: center, 0 0, center;
   background-repeat: no-repeat, repeat, no-repeat;
   background-blend-mode: multiply, multiply, normal;
-  filter: brightness(calc(1.0 + var(--pointer-from-center) * 0.25 * max(1, var(--foil-strength, 1))));
+  filter: brightness(calc(1.2 + var(--pointer-from-center) * 0.3 * max(1, var(--foil-strength, 1))));
   mix-blend-mode: screen;
-  opacity: calc(var(--card-opacity) * 0.5 * var(--foil-strength, 1));
+  opacity: calc(var(--card-opacity) * 0.7 * var(--foil-strength, 1));
   -webkit-mask-image: var(--bwfa-flank);
   -webkit-mask-composite: source-over;
   mask-image: var(--bwfa-flank);
@@ -335,12 +335,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full
   background-position: center, var(--background-x) 0;
   background-repeat: no-repeat, no-repeat;
   background-blend-mode: normal, normal;
-  /* 2026-11-28: the stripes blurred by about 1.4 % of the card, so each reads as a soft band of colour 4-5 % wide. As
-     crisp 2 % lines they were hairline rainbow pinstripes down the Pokemon at phone size (the full-site check failed
-     every bw1-bw3 full art for them). */
-  filter: blur(calc(var(--bwfa-px) * 10));
+  filter: none;
   mix-blend-mode: hard-light;
-  opacity: calc(var(--card-opacity) * 0.38 * var(--foil-strength, 1));
+  opacity: calc(var(--card-opacity) * 0.85 * var(--foil-strength, 1));
   /* The ink map alone: it carries the scan's own alpha (rounded corners), so it is the art mask too. */
   -webkit-mask-image: var(--bwfa-ink);
   -webkit-mask-composite: source-over;
@@ -365,13 +362,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full
   inset: 0;
   background-image:
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsla(0, 0%, 50%, 0.1) 0%, hsla(0, 0%, 50%, 0.3) 30%, hsla(0, 0%, 50%, 0.85) 75%, hsl(0, 0%, 50%) 100%),
-    /* 2026-11-28: one soft pastel cycle in about 1.2 card widths, fading to nothing away from the lamp. The full-strength
-       spectrum every 0.36 of the card read as rainbow stripes down the card's left edge at phone size (every bw1-bw3
-       full art in the full-site check). */
+      hsla(0, 0%, 50%, 0) 0%, hsla(0, 0%, 50%, 0) 35%, hsla(0, 0%, 50%, 0.35) 100%),
     repeating-linear-gradient(125deg,
-      hsl(330, 50%, 66%) 0%, hsl(275, 42%, 66%) 10%, hsl(215, 50%, 64%) 20%, hsl(185, 50%, 62%) 28%,
-      hsl(130, 42%, 62%) 37%, hsl(55, 55%, 64%) 45%, hsl(30, 55%, 66%) 52%, hsl(330, 50%, 66%) 60%);
+      hsl(330, 85%, 64%) 0%, hsl(275, 70%, 62%) 3%, hsl(215, 85%, 60%) 6%, hsl(185, 85%, 56%) 8.5%,
+      hsl(130, 70%, 58%) 11%, hsl(55, 90%, 60%) 13.5%, hsl(30, 90%, 62%) 15.5%, hsl(330, 85%, 64%) 18%);
   background-size: 100% 100%, 200% 200%;
   background-position: center, var(--background-x) var(--background-y);
   background-repeat: no-repeat, no-repeat;
@@ -397,7 +391,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full
    white stays white). No image mask: the printed card's radius rounds it. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art:is(.bwfa-sand, .bwfa-pebble) .glare {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(30, 10%, 42%, 0.5) 0%, hsla(30, 10%, 36%, 0.28) 24%, hsla(30, 10%, 30%, 0) 52%);
+    hsla(30, 10%, 42%, 0.9) 0%, hsla(30, 10%, 36%, 0.55) 24%, hsla(30, 10%, 30%, 0) 58%);
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -470,12 +464,4 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.bwfa-promo.lit .foil::before, body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.bwfa-promo.settling .foil::before {
   opacity: calc(0.55 * var(--card-opacity));
-}
-
-/* The shared etch shine (etch-shine.css) on this family: at its default strength the overlay spectrum re-coloured the
-   whole print (N's grey cap went pink, Cobalion's blue body green) and its flecks sat on the Pokémon as glitter. The
-   real card keeps its ink colours between the narrow stripes, so the family holds both parts faint. */
-body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art {
-  --shine-line: 0.1;
-  --shine-glit: 0.1;
 }

@@ -242,34 +242,30 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.s
     center;
   background-size: 24% auto, 31% auto, 700% 700%, cover;
   background-blend-mode: screen, multiply, multiply;
-  filter: brightness(calc(0.5 + var(--pointer-from-center) * 0.25)) contrast(1.7) saturate(0.6);
+  filter: brightness(calc(0.6 + var(--pointer-from-center) * 0.35)) contrast(1.7) saturate(0.6);
   mix-blend-mode: color-dodge;
-  /* 2026-11-28: 0.36 to 0.15, rest 0.1 to 0.03. With no map the flecks lie over the Pokémon as a crackle web (every
-     Classic Collection card of the per-card review); until each has a cut-out they are a faint sparkle near the light. */
-  opacity: calc(var(--card-opacity) * 0.15 * var(--foil-strength, 1));
+  opacity: calc(var(--card-opacity) * 0.6 * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-classic:not(.lit):not(.settling) .foil {
   filter: brightness(0.9) contrast(1.5) saturate(0.5);
-  opacity: calc(0.03 * var(--foil-strength, 1));
+  opacity: calc(0.28 * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-classic .foil::before {
   background-image: none;
 }
-/* 2026-11-28: the luminosity pool that sat here turned the dodge group white round the light ("white wash bleaches
-   the art", every Classic Collection card of the per-card review). The flecks alone carry the light now, and the
-   gloss is a faint soft-light pool with no dark end. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-classic .foil::after {
-  background-image: none;
-  mix-blend-mode: normal;
-  filter: none;
-  opacity: 0;
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 98%, 0.9) 0%, hsla(0, 0%, 70%, 0.6) 40%, hsla(0, 0%, 35%, 0.9) 100%);
+  background-size: cover;
+  mix-blend-mode: luminosity;
+  filter: brightness(0.8) contrast(1.8);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-classic .glare {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(0, 0%, 100%, 0.5) 0%, hsla(0, 0%, 100%, 0.14) 30%, hsla(0, 0%, 100%, 0) 60%);
-  mix-blend-mode: soft-light;
-  filter: none;
-  opacity: calc(var(--card-opacity) * 0.6);
+    hsl(0, 0%, 97%) 5%, hsla(0, 0%, 45%, 0.2) 55%, hsla(0, 0%, 0%, 0.3) 110%);
+  mix-blend-mode: overlay;
+  filter: brightness(0.85) contrast(1.3);
+  opacity: calc(var(--card-opacity) * 0.7);
 }
 
 /* ---- Pokémon V: the textured foil with diagonal streaks ---------------------

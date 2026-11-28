@@ -26,22 +26,19 @@
    and the spectrum at 88% alpha (the Live map holds the window at about half), two cycles over 300% of the card's width (two or three hues under the streak). The
    gap travels from 8% to 52% of the card's height (the art window) as the light moves down. */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-rare.meh-rare.has-foil-map .foil {
-  /* 2026-11-28 per-card review ("hard rainbow streak/band across the art", "pale art"): the hard-lit full-strength
-     spectrum through a 7% gap was a neon bar over the window. Now an overlay group (the tint scales with the ink
-     under it, dark ink stays dark): a broad soft band, clear at its middle and veiled to 0.86 away from it, with a
-     faint white core. */
   background-image:
     linear-gradient(172deg,
-      hsla(0, 0%, 100%, 0) 0%, hsla(0, 0%, 100%, 0) 47%, hsla(0, 0%, 100%, 0.3) 50%,
-      hsla(0, 0%, 100%, 0) 53%, hsla(0, 0%, 100%, 0) 100%),
+      hsla(0, 0%, 100%, 0) 0%, hsla(0, 0%, 100%, 0) 48.9%, hsla(0, 0%, 100%, 0.6) 50%,
+      hsla(0, 0%, 100%, 0) 51.1%, hsla(0, 0%, 100%, 0) 100%),
     linear-gradient(172deg,
-      hsla(0, 0%, 50%, 0.86) 0%, hsla(0, 0%, 50%, 0.86) 36%, hsla(0, 0%, 50%, 0.5) 45.5%, hsla(0, 0%, 50%, 0.15) 49%,
-      hsla(0, 0%, 50%, 0.15) 51%, hsla(0, 0%, 50%, 0.5) 54.5%, hsla(0, 0%, 50%, 0.86) 64%, hsla(0, 0%, 50%, 0.86) 100%),
+      #808080 0%, #808080 48%, hsla(0, 0%, 50%, 0) 48.8%, hsla(0, 0%, 50%, 0) 51.2%,
+      #808080 52%, #808080 100%),
     linear-gradient(95deg,
-      hsl(0, 85%, 58%), hsl(30, 90%, 57%), hsl(55, 90%, 56%), hsl(110, 75%, 52%), hsl(178, 85%, 52%),
-      hsl(212, 90%, 60%), hsl(268, 80%, 62%), hsl(322, 85%, 60%), hsl(360, 85%, 58%), hsl(30, 90%, 57%),
-      hsl(55, 90%, 56%), hsl(110, 75%, 52%), hsl(178, 85%, 52%), hsl(212, 90%, 60%), hsl(268, 80%, 62%),
-      hsl(322, 85%, 60%), hsl(360, 85%, 58%));
+      hsla(0, 95%, 60%, 0.88), hsla(28, 95%, 58%, 0.88), hsla(52, 95%, 56%, 0.88), hsla(100, 85%, 55%, 0.88),
+      hsla(175, 90%, 55%, 0.88), hsla(215, 95%, 62%, 0.88), hsla(270, 90%, 64%, 0.88), hsla(320, 95%, 62%, 0.88),
+      hsla(360, 95%, 60%, 0.88), hsla(28, 95%, 58%, 0.88), hsla(52, 95%, 56%, 0.88), hsla(100, 85%, 55%, 0.88),
+      hsla(175, 90%, 55%, 0.88), hsla(215, 95%, 62%, 0.88), hsla(270, 90%, 64%, 0.88), hsla(320, 95%, 62%, 0.88),
+      hsla(360, 95%, 60%, 0.88));
   background-size: 100% 300%, 100% 300%, 300% 100%;
   background-position:
     50% calc((0.71 - var(--py, 0.5) * 0.22) * 100%),
@@ -49,13 +46,12 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-rare.meh-rare.has-
     calc((0.1 + var(--px, 0.5) * 0.8) * 100%) 50%;
   background-repeat: no-repeat;
   background-blend-mode: normal;
-  /* 2026-11-28: pale art (Reshiram 017, Aurorus 024) took the band as a lilac wash over the whole window */
-  filter: saturate(0.7);
-  mix-blend-mode: overlay;
-  opacity: calc((0.3 + var(--card-opacity) * 0.42) * var(--foil-strength, 1));
+  filter: none;
+  mix-blend-mode: hard-light;
+  opacity: calc((0.18 + var(--card-opacity) * 0.82) * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-rare.meh-rare.has-foil-map:not(.lit):not(.settling) .foil {
-  opacity: calc(0.3 * var(--foil-strength, 1));
+  opacity: calc(0.18 * var(--foil-strength, 1));
 }
 /* The glitter: the era's screened silver points, a little fainter away from the light (no white snow at 30:25). */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-rare.meh-rare.has-foil-map .foil::before {
@@ -63,12 +59,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-rare.meh-rare.has-
     #000 0%, hsla(0, 0%, 0%, 0.6) 40%, hsla(0, 0%, 0%, 0.35) 100%);
   mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     #000 0%, hsla(0, 0%, 0%, 0.6) 40%, hsla(0, 0%, 0%, 0.35) 100%);
-  /* the screened points read as snow over a dark window (Tapu Koko 067, Lunatone MEP 004): well under half */
-  opacity: 0.4;
 }
 /* A Special Energy's art circle is nearly all foil in the Live map: the same streak, a little weaker. */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-rare.meh-energy.has-foil-map .foil {
-  opacity: calc((0.3 + var(--card-opacity) * 0.6) * 0.75 * var(--foil-strength, 1));
+  opacity: calc((0.18 + var(--card-opacity) * 0.82) * 0.75 * var(--foil-strength, 1));
 }
 
 /* ---- Mega ex / Tera ex Double Rare: SV_ULTRA / ETCHED ------------------------
@@ -86,7 +80,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-mega.meh-mega.has-
 body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-mega.meh-mega.has-foil-map .foil::before {
   background-image:
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      #6a6a6a 0%, #5c5c5c 22%, #2e2e2e 45%, #000 66%),
+      #8a8a8a 0%, #808080 25%, #404040 48%, #000 70%),
     var(--art);
   background-size: 100% 100%, contain;
   background-position: center, center;
@@ -94,38 +88,16 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-mega.meh-mega.has-
   background-blend-mode: darken, normal;
   filter: grayscale(1);
 }
-/* The grain. 2026-11-28 site review, 67 of 71 Mega ex and Tera ex bad: "glitter / sparkle dots (often dark) over the
-   art and text box lit, pale / pink / cyan wash". The white points over multicolour flecks sat over the whole face at
-   up to 0.55 with contrast 1.8, and the pool above ran to 54% grey, which dodged a pale text box to white. Now the
-   pool peaks at 42% (a tint, not a bleach) and the grain is the glitter on the engraving only (masked by the etch
-   map, the ridges catching the light), within reach of the lamp, pale and at a third of the strength: the etch
-   leads, the grain is noticed second (Noah: "the sparkles or dots on the holo take away from the texture"). */
-body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-mega.meh-mega.has-foil-map {
-  --shine-glit: 0.25;
-}
+/* The grain: the era's white points over multicolour flecks, still noticed second. */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-mega.meh-mega.has-foil-map .foil::after {
-  background-image: var(--holo-glitter);
-  background-size: 25% auto;
+  background-image: var(--holo-glitter), url("/assets/foil/glitter-flecks.webp");
+  background-size: 25% auto, 33% auto;
   background-position:
-    calc(50% + var(--pointer-from-left) * var(--shift)) calc(50% + var(--pointer-from-top) * var(--shift));
-  background-blend-mode: normal;
-  filter: brightness(1.15) contrast(1.3) saturate(0.6);
-  -webkit-mask-image: var(--etch-map, linear-gradient(#000, #000)),
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.5) 30%, rgba(0, 0, 0, 0) 62%);
-  -webkit-mask-composite: source-in, source-over;
-  mask-image: var(--etch-map, linear-gradient(#000, #000)),
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.5) 30%, rgba(0, 0, 0, 0) 62%);
-  mask-composite: intersect, add;
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  opacity: calc(0.1 + var(--pointer-from-center) * 0.12);
-}
-/* The etch lines' white pool: it ran at 0.95 to 60% of the card and paled the text box; a narrower, softer pool. */
-body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-mega.meh-mega.has-foil-map .glare::after {
-  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(0, 0%, 100%, 0.6) 0%, hsla(0, 0%, 100%, 0.22) 22%, hsla(0, 0%, 100%, 0) 48%);
+    calc(50% + var(--pointer-from-left) * var(--shift)) calc(50% + var(--pointer-from-top) * var(--shift)),
+    calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
+  background-blend-mode: screen, normal;
+  filter: brightness(1.3) contrast(1.8) saturate(1.6);
+  opacity: calc(0.22 + var(--pointer-from-center) * 0.33);
 }
 
 /* ---- Pixel cosmos promo (ME era): COSMOS / HOLO, `.cosmos-pixel` ----------------
@@ -140,66 +112,39 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-mega.meh-mega.has-
    `.foil` is one hard-light group (50% grey is neutral): a grey ground, darker off the light and silver under it, with
    the pixel texture laid on in pale grey at rest so every scan shows its specks. `::before` lights the same texture in a
    saturated hue (lightened onto the ground, so a speck only ever adds light), `::after` is the white glint stripe. */
-/* 2026-11-28 site review, 24 of 82 bad (and all 7 of the 30th Celebration's, then on promos.css, "show nothing lit"):
-   "dense white dots bury the art at rest", "glitter added over the scanned cosmos", "art darkened". The pixel texture
-   sat over the whole map at rest at 0.75 on a 44% ground (hard-light: every window a shade darker and snowed over,
-   twice over where the scan is a photo that already shows its cosmos) and lit to the far corner. Now the ground is
-   neutral 50% everywhere but a soft silver lift under the lamp, the resting texture is a faint 0.2, and lit the specks
-   exist only round the light: a grey veil closes over them 66% of the way from it, and the coloured specks and the
-   glint stripe carry the same pool in their masks. The far side of the card is the plain print. */
-body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-cosmos.meh-cosmos.has-foil-map {
-  --meh-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    #000 0%, rgba(0, 0, 0, 0.8) 25%, rgba(0, 0, 0, 0.25) 50%, rgba(0, 0, 0, 0) 66%);
-}
 body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-cosmos.meh-cosmos.has-foil-map .foil {
   background-image:
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsla(0, 0%, 50%, 0.05) 0%, hsla(0, 0%, 50%, 0.3) 25%, hsla(0, 0%, 50%, 0.8) 50%, #808080 66%),
-    var(--cosmos-pixel),
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsl(0, 0%, 63%) 0%, hsl(0, 0%, 55%) 22%, hsl(0, 0%, 50%) 48%);
-  background-size: 100% 100%, 125% auto, 100% 100%;
-  background-position: center, var(--cosmos-pos), center;
-  background-repeat: no-repeat, no-repeat, no-repeat;
+      hsl(0, 0%, 94%) 0%, hsl(0, 0%, 76%) 22%, hsl(0, 0%, 52%) 50%, hsl(0, 0%, 44%) 100%);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
   background-blend-mode: normal;
   filter: none;
   mix-blend-mode: hard-light;
-  opacity: calc((0.5 + var(--card-opacity) * 0.4) * var(--foil-strength, 1));
+  opacity: calc((0.55 + var(--card-opacity) * 0.4) * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-cosmos.meh-cosmos.has-foil-map:not(.lit):not(.settling) .foil {
   background-image:
     var(--cosmos-pixel),
-    linear-gradient(#808080, #808080);
+    linear-gradient(hsl(0, 0%, 44%), hsl(0, 0%, 44%));
   background-size: 125% auto, 100% 100%;
   background-position: var(--cosmos-pos), center;
   background-repeat: no-repeat, no-repeat;
   background-blend-mode: normal, normal;
   filter: none;
-  opacity: calc(0.2 * var(--foil-strength, 1));
+  opacity: calc(0.75 * var(--foil-strength, 1));
 }
 /* The specks in colour: a saturated spectrum, ten hues over three card widths (a hue patch about a third of the card),
-   drifting across as the card tips; lighten keeps the silver ground under the lamp. Only round the light. */
-body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-cosmos.meh-cosmos.has-foil-map .foil::before,
-body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-cosmos.meh-cosmos.has-foil-map .foil::after {
-  -webkit-mask-image: var(--foil-map), var(--cosmos-pixel), var(--meh-pool);
-  mask-image: var(--foil-map), var(--cosmos-pixel), var(--meh-pool);
-  -webkit-mask-size: 100% 100%, 125% auto, 100% 100%;
-  mask-size: 100% 100%, 125% auto, 100% 100%;
-  -webkit-mask-position: center, var(--cosmos-pos), center;
-  mask-position: center, var(--cosmos-pos), center;
-  -webkit-mask-repeat: no-repeat, no-repeat, no-repeat;
-  mask-repeat: no-repeat, no-repeat, no-repeat;
-  -webkit-mask-composite: source-in, source-in, source-over;
-  mask-composite: intersect, intersect, add;
-}
+   drifting across as the card tips; lighten keeps the silver ground under the lamp. */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-cosmos.meh-cosmos.has-foil-map .foil::before {
   background-image:
     linear-gradient(100deg,
-      hsl(0, 100%, 66%), hsl(40, 100%, 64%), hsl(70, 100%, 62%), hsl(130, 100%, 66%), hsl(180, 100%, 64%),
-      hsl(215, 100%, 68%), hsl(265, 100%, 70%), hsl(310, 100%, 68%), hsl(360, 100%, 66%), hsl(40, 100%, 64%),
-      hsl(70, 100%, 62%), hsl(130, 100%, 66%), hsl(180, 100%, 64%), hsl(215, 100%, 68%), hsl(265, 100%, 70%),
-      hsl(310, 100%, 68%), hsl(360, 100%, 66%), hsl(40, 100%, 64%), hsl(70, 100%, 62%), hsl(130, 100%, 66%),
-      hsl(180, 100%, 64%));
+      hsl(0, 100%, 60%), hsl(40, 100%, 60%), hsl(70, 100%, 60%), hsl(130, 100%, 60%), hsl(180, 100%, 60%),
+      hsl(215, 100%, 60%), hsl(265, 100%, 60%), hsl(310, 100%, 60%), hsl(360, 100%, 60%), hsl(40, 100%, 60%),
+      hsl(70, 100%, 60%), hsl(130, 100%, 60%), hsl(180, 100%, 60%), hsl(215, 100%, 60%), hsl(265, 100%, 60%),
+      hsl(310, 100%, 60%), hsl(360, 100%, 60%), hsl(40, 100%, 60%), hsl(70, 100%, 60%), hsl(130, 100%, 60%),
+      hsl(180, 100%, 60%));
   background-size: 300% 100%;
   background-position: calc((0.15 + var(--pointer-from-left, 0.5) * 0.7) * 100%) 50%;
   background-repeat: no-repeat;
@@ -210,28 +155,11 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-cosmos.meh-cosmos.
 }
 body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-cosmos.meh-cosmos.has-foil-map .foil::after {
   mix-blend-mode: lighten;
-  opacity: calc(var(--card-opacity) * 0.5);
+  opacity: calc(var(--card-opacity) * 0.7);
 }
 /* The gloss: soft, and never a veil over the art or a shade over it. */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-cosmos.meh-cosmos.has-foil-map .glare {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     hsla(0, 0%, 100%, 0.45) 5%, hsla(0, 0%, 100%, 0.1) 30%, hsla(0, 0%, 0%, 0.08) 90%);
   opacity: calc(var(--card-opacity) * 0.5);
-}
-
-/* ---- Regular-frame ex Double Rare (meh-ex): SUN_PILLAR --------------------------------------------------------------
-   Per-card review, 2026-11-28: "straight rainbow diagonal stripes over art/text" (Ethan's Ho-Oh ex 026, Voltorb ex 058,
-   Azumarill ex 084). The era's streaks (sv-double-rare.css) ran at full strength to the far corner. A steeper fall-off
-   keeps two or three near the lamp, the far side the plain print, and the streaks a step less saturated. */
-body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-ex.meh-ex.has-foil-map .foil {
-  filter: brightness(calc(0.9 + var(--pointer-from-center) * 0.2)) contrast(1.1) saturate(1.05);
-}
-body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-ex.meh-ex.has-foil-map .foil::before {
-  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    #e6e6e6 0%, #8c8c8c 14%, #333 32%, #0a0a0a 52%, #000 70%);
-  mix-blend-mode: multiply;
-}
-/* the gloss over a regular ex: half, so the pool round the lamp does not bleach a pale painting (Voltorb ex 058) */
-body.fx-holo.fx-holo.fx-holo .tcg.fam-me-holo.fam-me-holo.meh-ex.meh-ex.has-foil-map .glare {
-  opacity: calc(var(--card-opacity) * 0.4);
 }

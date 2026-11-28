@@ -13,15 +13,15 @@
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-prismatic.fam-sv-prismatic {
   --prism-wash: hsl(2, 10%, 52%), hsl(40, 12%, 53%), hsl(93, 8%, 51%),
     hsl(176, 10%, 52%), hsl(228, 12%, 53%), hsl(283, 10%, 52%), hsl(2, 10%, 52%);
-  --svpr-ball: hsl(14, 55%, 62%) 0%, hsl(45, 55%, 58%) 4.3%, hsl(110, 40%, 56%) 8.7%,
-    hsl(185, 50%, 57%) 13%, hsl(225, 55%, 64%) 17.3%, hsl(280, 45%, 64%) 21.7%, hsl(335, 50%, 64%) 26%;
-  --svpr-glint: 0.16;
+  --svpr-ball: hsl(14, 80%, 52%) 0%, hsl(45, 80%, 48%) 4.3%, hsl(110, 55%, 44%) 8.7%,
+    hsl(185, 70%, 44%) 13%, hsl(225, 75%, 56%) 17.3%, hsl(280, 60%, 56%) 21.7%, hsl(335, 70%, 56%) 26%;
+  --svpr-glint: 0.85;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-prismatic.fam-sv-prismatic.foil-rev-masterball {
   --prism-saturate: 1.1;
   --prism-strength: 1.1;
-  --svpr-ball: hsl(14, 58%, 57%) 0%, hsl(45, 56%, 54%) 4.3%, hsl(110, 42%, 51%) 8.7%,
-    hsl(185, 52%, 52%) 13%, hsl(225, 56%, 58%) 17.3%, hsl(280, 50%, 58%) 21.7%, hsl(335, 52%, 58%) 26%;
+  --svpr-ball: hsl(18, 72%, 44%) 0%, hsl(45, 70%, 42%) 4.3%, hsl(100, 52%, 38%) 8.7%,
+    hsl(180, 60%, 38%) 13%, hsl(225, 65%, 44%) 17.3%, hsl(285, 58%, 44%) 21.7%, hsl(340, 66%, 44%) 26%;
 }
 
 /* Ink knockout: art window, foil map and ink mask intersect. */
@@ -43,7 +43,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-prismatic.fam-sv-prismatic.svpr-ink.has
    ball's resting colours do not sit under the lit gradient and tint it one hue. */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-prismatic.fam-sv-prismatic.has-foil-map:is(.lit, .settling) .foil {
   background-image:
-    linear-gradient(hsla(0, 0%, 50%, 0.8), hsla(0, 0%, 50%, 0.8)),
+    linear-gradient(hsla(0, 0%, 50%, 0.45), hsla(0, 0%, 50%, 0.45)),
     var(--prism-shards),
     repeating-linear-gradient(110deg, var(--prism-wash));
   background-size: 100% 100%, 100% 100%, 400% 400%;
@@ -55,26 +55,15 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-prismatic.fam-sv-prismatic.has-foil-map
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-prismatic.fam-sv-prismatic.has-foil-map .foil::before {
   opacity: var(--svpr-glint);
 }
-/* The ball lit (per-card review, 2026-11-28: "hex-shard wallpaper outside the ball, oversaturated rainbow blob over
-   text"; the real ball is silver foil with a soft, fine, crinkled rainbow). A silver disc: a white pool round the
-   light, the shard tile at a quarter size soft-lit as the fine crinkle, and a pale pastel spectrum whose period is
-   about one ball, sliding under half a period with the tilt. The big shards outside it are held to a trace (the grey
-   veil above at 0.8 and --svpr-glint), so the frame reads as silver foil, not hexagon wallpaper. */
+/* The ball lit: one gradient period is about one ball across (the ball is ~45% of the card width), so four or
+   five hues always span it; it slides by under half a period with the tilt. */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-prismatic.fam-sv-prismatic.has-foil-map .foil::after {
-  background-image:
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsla(0, 0%, 100%, 0.55) 0%, hsla(0, 0%, 100%, 0.18) 28%, hsla(0, 0%, 100%, 0) 60%),
-    var(--prism-shards),
-    repeating-linear-gradient(125deg, var(--svpr-ball), hsl(14, 55%, 60%) 30.3%);
-  background-size: 100% 100%, 26% auto, 130% 130%;
-  background-position: center, calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%),
-    calc(100% - var(--background-x)) calc(100% - var(--background-y));
-  background-repeat: no-repeat, repeat, no-repeat;
-  background-blend-mode: normal, soft-light, normal;
+  background-image: repeating-linear-gradient(125deg, var(--svpr-ball), hsl(14, 80%, 52%) 30.3%);
+  background-size: 130% 130%;
+  background-position: calc(100% - var(--background-x)) calc(100% - var(--background-y));
   filter: none;
-  opacity: 0.92;
+  opacity: 0.9;
 }
-/* Resting, the shipped ball image is a full rainbow: drawn down to silver with a trace of its colours. */
-body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-prismatic.fam-sv-prismatic.has-foil-map:not(.lit):not(.settling) .foil {
-  filter: saturate(0.3) brightness(1.08);
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-prismatic.fam-sv-prismatic.foil-rev-masterball.has-foil-map .foil::after {
+  background-image: repeating-linear-gradient(125deg, var(--svpr-ball), hsl(18, 72%, 44%) 30.3%);
 }

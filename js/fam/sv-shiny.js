@@ -16,7 +16,6 @@
  */
 
 /** Scarlet & Violet set and promo ids (sv1-, sv4pt5-, rsv10pt5-, svp-; not me-). */
-const DIR = "assets/foil/fam/sv-shiny";
 const SV_ID = /^(?:[zrj]?sv\d|svp-)/;
 
 /** Whether a card face is this family's. */
@@ -29,11 +28,6 @@ export function claims(card) {
 export function famExtras(card, url, base) {
   if (!claims(card, base)) return null;
   const classes = card.rarity === "Shiny Ultra Rare" ? "fam-sv-shiny ssh-sur" : "fam-sv-shiny";
-  // The Pokémon cut out of Live's foil map (make_shiny_masks.py): set after the era's --foil-map, so it wins.
-  const id = String(card.id);
-  const cut = id.indexOf("-");
-  const map = `--foil-map:url('${url(`${DIR}/${id.slice(0, cut)}/${id.slice(cut + 1)}-foil-v1.webp`)}')`;
-  // The stamped promos' images are photos of the foil card (silver and glare baked in): a light touch only.
-  const style = /-stamp$/.test(id) ? `${map};--foil-strength:0.3` : map;
+  const style = card.id === "sv4pt5-svp072-stamp" ? "--foil-strength:0.55" : "";
   return { classes, style, cure: false };
 }

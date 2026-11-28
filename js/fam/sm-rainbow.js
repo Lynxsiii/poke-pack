@@ -25,7 +25,5 @@ export function claims(card) {
 
 export function famExtras(card, url, base) {
   if (!claims(card)) return null;
-  // a photographed print (the Japanese scans): the foil grain is already in the picture, so the sheet runs quieter
-  const photo = /^j/.test(String(card.id || ""));
-  return { classes: `fam-sm-rainbow${photo ? " smrb-photo" : ""}`, style: "", cure: false };
+  return { classes: "fam-sm-rainbow", style: "", cure: false };
 }

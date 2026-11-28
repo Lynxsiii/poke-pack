@@ -26,35 +26,28 @@
  */
 
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gold.foil-gold.has-foil-map {
-  /* 2026-11-28, the card-by-card review ("art turns green lit", "yellow-green cast", "glitter speckle at rest"): the
-     flare at 0.5 at most with its green and teal taken down to a warm olive, no glitter at rest (the etch alone) */
-  --sgv-flare-a: clamp(0, calc((var(--pointer-from-center) - 0.15) * 1.2 * max(1, var(--foil-strength, 1))), 0.5);
+  --sgv-flare-a: clamp(0, calc((var(--pointer-from-center) - 0.15) * 1.6 * max(1, var(--foil-strength, 1))), 0.85);
   --sgv-pool-mask: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     #000 0%, #000 16%, rgba(0, 0, 0, 0.5) 42%, rgba(0, 0, 0, 0.12) 75%, rgba(0, 0, 0, 0.05) 100%);
   /* what the dodge adds round the light: lemon near, little far (the far side keeps the print's brass) */
   --sgv-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    rgb(26, 21, 10) 0%, rgb(20, 16, 7) 16%, rgb(10, 8, 4) 40%, rgb(4, 3, 1) 70%, #000 100%);
+    rgb(84, 70, 38) 0%, rgb(58, 47, 22) 16%, rgb(28, 22, 10) 40%, rgb(10, 8, 4) 70%, #000 100%);
   --sgv-lamp: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    rgb(150, 137, 108) 0%, rgb(118, 107, 84) 16%, rgb(72, 64, 49) 36%, rgb(48, 43, 33) 65%, rgb(38, 34, 26) 100%);
-  --sgv-veil: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
+    rgb(205, 190, 155) 0%, rgb(150, 136, 106) 16%, rgb(76, 68, 52) 36%, rgb(46, 41, 32) 65%, rgb(36, 32, 25) 100%);
+  --sgv-veil: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
   --sgv-floor: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
   --sgv-glitter: url("/assets/foil/glitter-flecks.webp");
   --sgv-fine: url("/assets/foil/glitter-fine.webp");
-  /* 2026-11-28 per-card review ("hot yellow-white wash, pink Mew turns white, blacks brown, silver speckle"): the
-     dodge pool is halved, the overlay glare peaks at 62% not 74%, and the three glitter layers (the family's two and
-     the shared flecks) are held to a trace, so what catches the lamp is the etch and the ink keeps its colour. */
-  --shine-glit: 0.12;
-  --relief: 0.45;
   /* the flare as dodge light, a third to half the card wide (tile 260%) */
   --sgv-flare: linear-gradient(112deg,
-    transparent 34%, rgb(96, 24, 20) 38%, rgb(118, 56, 12) 42%, rgb(116, 100, 14) 46%, rgb(88, 96, 26) 50%,
-    rgb(40, 66, 52) 54%, rgb(26, 34, 60) 57%, transparent 61%);
+    transparent 34%, rgb(96, 24, 20) 38%, rgb(118, 56, 12) 42%, rgb(116, 100, 14) 46%, rgb(66, 110, 24) 50%,
+    rgb(20, 80, 70) 54%, rgb(22, 34, 70) 57%, transparent 61%);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gold.foil-gold.has-foil-map.sgv-energy {
   --sgv-flare-a: clamp(0, calc((var(--pointer-from-center) - 0.15) * 0.3), 0.12);
   /* the coloured field is ink, not gold: a softer pool so the purple, green, red stays itself near the lamp */
   --sgv-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    rgb(30, 26, 16) 0%, rgb(22, 19, 11) 16%, rgb(11, 9, 5) 40%, #000 80%);
+    rgb(52, 46, 30) 0%, rgb(36, 31, 18) 16%, rgb(18, 15, 8) 40%, #000 80%);
 }
 
 /* ---- .foil: the warm pool + the etch under its lamp, dodged ------------------------------------------------------- */
@@ -83,13 +76,12 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gol
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   clip-path: none;
-  /* 0.7: the dodge still browned near-black ink round the lamp at full (Iron Boulder ex 217) */
-  opacity: calc(0.7 * min(1, var(--foil-strength, 1)));
+  opacity: min(1, var(--foil-strength, 1));
 }
 /* Resting: the rings and the glitter, faint (both show in flat light: Mew 205, Koraidon 254). */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gold.foil-gold.has-foil-map:not(.foil-scodix):not(.lit):not(.settling) .foil {
   background-image:
-    linear-gradient(transparent, transparent),
+    var(--sgv-glitter),
     linear-gradient(rgba(0, 0, 0, 0.76), rgba(0, 0, 0, 0.76)),
     var(--etch-map, linear-gradient(transparent, transparent)),
     linear-gradient(#000, #000);
@@ -97,7 +89,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gol
   background-position: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%), center, center, center;
   background-repeat: repeat, no-repeat, no-repeat, no-repeat;
   background-blend-mode: screen, normal, normal, normal;
-  filter: brightness(0.42);
+  filter: brightness(0.7);
   opacity: min(1, var(--foil-strength, 1));
 }
 
@@ -140,15 +132,13 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gol
   -webkit-mask-image: none;
   mask-image: none;
   clip-path: none;
-  opacity: calc(0.1 + var(--pointer-from-center) * 0.12);
+  opacity: calc(0.35 + var(--pointer-from-center) * 0.3);
 }
 
 /* ---- .glare: champagne near the lamp, olive brass away from it; overlay leaves black black ------------------------- */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gold.foil-gold.has-foil-map:not(.foil-scodix) .glare {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsl(48, 30%, 60%) 0%, hsl(46, 16%, 54%) 20%, hsl(46, 6%, 50%) 48%, hsl(46, 4%, 49%) 100%);
-  /* 2026-11-28: the far side was an olive 46-49% over the whole face and turned teal, pink and black ink green
-     (Bellibolt ex sv9-188, Darkness Energy sv6pt5-98); now champagne at the lamp only, neutral from mid card */
+    hsl(50, 45%, 74%) 0%, hsl(48, 28%, 56%) 22%, hsl(52, 22%, 45%) 55%, hsl(56, 22%, 42%) 100%);
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -203,7 +193,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gol
   mask-repeat: no-repeat;
   clip-path: none;
   border-radius: 0;
-  opacity: calc(var(--card-opacity) * (0.16 + var(--pointer-from-center) * 0.14) * min(1, var(--foil-strength, 1)));
+  opacity: calc(var(--card-opacity) * (0.5 + var(--pointer-from-center) * 0.4) * min(1, var(--foil-strength, 1)));
 }
 
 /* ---- Scodix golds (sgv-pf Paldean Fates 240-245, sgv-pre Prismatic Evolutions 176-180) ----------------------------
@@ -213,21 +203,19 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gol
    the rainbow is a saturated level pillar about a fifth of the card tall (was 12.5% of the 300% layer at 0.55); the
    glitter is denser (the winks stronger, and `.cure` above screens the fleck tile on near the light). */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gold.foil-gold.foil-scodix.has-foil-map .foil {
-  /* 2026-11-28, the card-by-card review (all six: "strong rainbow band over lower half/text, gold dulled"): the
-     pillar at 0.3 and narrower, and the steel multiply lifted from 74% to 86% so the gold stays gold */
-  --pf-a: 0.3;
+  --pf-a: 0.72;
   background-image:
     linear-gradient(176deg,
-      transparent 44.5%,
-      hsla(0, 95%, 58%, var(--pf-a)) 46.5%,
-      hsla(30, 100%, 56%, var(--pf-a)) 48%,
-      hsla(55, 100%, 56%, var(--pf-a)) 49.4%,
-      hsla(110, 85%, 52%, var(--pf-a)) 50.8%,
-      hsla(180, 90%, 52%, var(--pf-a)) 52.2%,
-      hsla(225, 90%, 60%, var(--pf-a)) 53.6%,
-      transparent 55.5%),
+      transparent 42%,
+      hsla(0, 95%, 58%, var(--pf-a)) 45%,
+      hsla(30, 100%, 56%, var(--pf-a)) 47%,
+      hsla(55, 100%, 56%, var(--pf-a)) 49%,
+      hsla(110, 85%, 52%, var(--pf-a)) 51%,
+      hsla(180, 90%, 52%, var(--pf-a)) 53%,
+      hsla(225, 90%, 60%, var(--pf-a)) 55%,
+      transparent 58%),
     var(--pf-glitter-fine),
-    linear-gradient(hsl(198, 14%, 86%), hsl(198, 14%, 86%)),
+    linear-gradient(hsl(198, 16%, 74%), hsl(198, 16%, 74%)),
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
       hsl(0, 0%, 56%) 0%, hsl(0, 0%, 50%) 40%, hsl(0, 0%, 44%) 100%),
     linear-gradient(hsl(0, 0%, 40%), hsl(0, 0%, 40%)),
@@ -242,7 +230,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gol
   filter: saturate(0.8);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gold.foil-gold.foil-scodix.has-foil-map:not(.lit):not(.settling) .foil {
-  --pf-a: 0.08;
+  --pf-a: 0.15;
   filter: saturate(0.6);
   opacity: calc(0.75 * var(--foil-strength, 1));
 }
@@ -266,7 +254,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gol
     var(--pf-glitter-fine),
     linear-gradient(hsl(40, 34%, 80%), hsl(40, 34%, 80%)),
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsl(0, 0%, 66%) 0%, hsl(0, 0%, 56%) 22%, hsl(0, 0%, 49%) 50%, hsl(0, 0%, 46%) 100%),
+      hsl(0, 0%, 58%) 0%, hsl(0, 0%, 50%) 40%, hsl(0, 0%, 45%) 100%),
     linear-gradient(hsl(0, 0%, 40%), hsl(0, 0%, 40%)),
     var(--etch-soft, var(--etch-map, linear-gradient(transparent, transparent))),
     linear-gradient(#fff, #fff);
@@ -274,15 +262,6 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gol
 }
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gold.foil-gold.foil-scodix.has-foil-map.sgv-pre:not(.lit):not(.settling) .foil {
   --pf-a: 0;
-  /* no fine glitter at rest (2026-11-28: "uniform glitter sand over all"): the gold and the line art only */
-  background-image:
-    linear-gradient(transparent, transparent),
-    linear-gradient(transparent, transparent),
-    linear-gradient(hsl(40, 34%, 80%), hsl(40, 34%, 80%)),
-    linear-gradient(hsl(0, 0%, 50%), hsl(0, 0%, 50%)),
-    linear-gradient(hsl(0, 0%, 40%), hsl(0, 0%, 40%)),
-    var(--etch-soft, var(--etch-map, linear-gradient(transparent, transparent))),
-    linear-gradient(#fff, #fff);
   filter: saturate(0.75);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gold.foil-gold.foil-scodix.has-foil-map.sgv-pre .foil::before {
@@ -301,9 +280,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gol
   mask-size: 100% 100%;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-  /* 0.35, was 0.9 (2026-11-28: "uniform glitter sand over all, no highlight when lit"): the lamp's pool in .foil is
-     the highlight now (66% at the pointer), the grain a trace round it */
-  opacity: calc(var(--card-opacity) * 0.35);
+  opacity: calc(var(--card-opacity) * 0.9);
 }
 /* the raised-varnish sliver of shiny-vault.css would lift the new black strokes: off here */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gold.foil-gold.foil-scodix.has-foil-map.sgv-pre .foil::after {
@@ -334,10 +311,4 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gol
   clip-path: none;
   border-radius: 0;
   opacity: 1;
-}
-
-/* The gold Energies: the coloured field is ink, so the lamp is neutral there (no champagne: teal went green). */
-body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gold.fam-sv-gold.foil-gold.has-foil-map.sgv-energy:not(.foil-scodix) .glare {
-  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsl(0, 0%, 60%) 0%, hsl(0, 0%, 54%) 20%, hsl(0, 0%, 50%) 48%, hsl(0, 0%, 50%) 100%);
 }

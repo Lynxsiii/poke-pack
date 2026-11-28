@@ -100,25 +100,20 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
 body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos:is(.wp-win, .wp-rev) .foil {
   background-image:
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsla(205, 40%, 86%, 0.28) 0%, hsla(215, 35%, 70%, 0.09) 16%, hsla(230, 30%, 60%, 0) 34%),
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      #fff 0%, hsl(0, 0%, 60%) 15%, hsl(0, 0%, 16%) 32%, #000 50%),
+      hsl(205, 40%, 62%) 0%, hsl(215, 35%, 46%) 30%, hsl(230, 30%, 30%) 62%, hsl(240, 30%, 16%) 100%),
     linear-gradient(118deg, hsl(186, 80%, 50%), hsl(226, 80%, 56%) 22%, hsl(290, 70%, 54%) 44%, hsl(40, 85%, 50%) 66%,
       hsl(120, 70%, 46%) 84%, hsl(186, 80%, 50%));
-  background-size: 100% 100%, 100% 100%, 200% 200%;
+  background-size: 100% 100%, 200% 200%;
   background-position:
-    center,
     center,
     clamp(0%, calc((var(--background-x) - 50%) * 0.6 + 50%), 100%) clamp(0%, calc((var(--background-y) - 50%) * 0.6 + 50%), 100%);
   background-repeat: no-repeat;
-  /* spectrum x a pool round the lamp, the white pool screened on top: light only where the lamp hits, so the navy cosmos sky
-     keeps its blacks away from it (2026-11-28: the whole-window screen lifted it to grey-blue) */
-  background-blend-mode: screen, multiply, normal;
+  background-blend-mode: screen;
   mix-blend-mode: screen;
   filter: saturate(1.1);
   -webkit-mask: var(--wp-field, none) 0 0 / 100% 100% no-repeat;
   mask: var(--wp-field, none) 0 0 / 100% 100% no-repeat;
-  opacity: calc((0.1 + var(--wp-lift) * 0.4) * var(--foil-strength, 1));
+  opacity: calc((0.1 + var(--wp-lift) * 0.3) * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos.fam-wotc-promos:is(.wp-win, .wp-rev):not(.lit):not(.settling) .foil {
   opacity: calc(0.12 * var(--foil-strength, 1));

@@ -57,8 +57,6 @@ export function famExtras(card, url, base) {
       cure: false,
     };
   }
-  // the theme-deck "-cracked-ice" reprints are Cracked Ice, not the set's star holo (2026-11-28)
-  if (/-cracked-ice$/.test(String(card.id))) return { classes: "fam-xy-evolutions xy12-ice", style: "", cure: true };
   const map = HOLO_MAPS[card.id];
   return {
     classes: "fam-xy-evolutions xy12-star",

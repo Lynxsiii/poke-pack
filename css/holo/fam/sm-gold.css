@@ -30,14 +30,12 @@
 /* ---- Tokens ------------------------------------------------------------------------------------------------- */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold {
   --smg-etch: var(--etch-map, linear-gradient(transparent, transparent));
-  /* the light pool the dodge lifts: small, nothing from 52% out. 2026-11-28: was strongly warm (84, 56, 26), which
-     turned white and silver items sepia under the light (Tag Switch, Great Catcher's dish, Metal Energy); gold stays
-     amber under a near-neutral light because the print is gold. */
+  /* the light pool the dodge lifts: warm and small, nothing from 52% out */
   --smg-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    rgb(66, 56, 40) 0%, rgb(32, 27, 19) 15%, rgb(8, 7, 5) 34%, #000 52%);
+    rgb(84, 56, 26) 0%, rgb(40, 26, 12) 15%, rgb(10, 6, 3) 34%, #000 52%);
   /* what lights the ridges in the dodge: warm, full at the pointer, faint far away */
   --smg-lamp: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    rgb(250, 232, 200) 0%, rgb(166, 152, 128) 14%, rgb(64, 58, 48) 36%, rgb(22, 20, 16) 70%, rgb(16, 14, 11) 100%);
+    rgb(255, 214, 150) 0%, rgb(170, 140, 98) 14%, rgb(66, 54, 36) 36%, rgb(22, 18, 12) 70%, rgb(16, 13, 9) 100%);
   --smg-etch-veil: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55));
   --smg-floor: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
   /* the header band (TRAINER / ENERGY, a GX's name line: silver or grey ink on gold) at 45% */
@@ -57,26 +55,16 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gol
     #000 0%, #000 16%, rgba(0, 0, 0, 0.6) 36%, rgba(0, 0, 0, 0.15) 58%, rgba(0, 0, 0, 0) 75%);
   /* the darkened ridges (.cure, multiplied): about x0.86 on bright gold, under dark_specks.py's 40-level drop */
   --smg-ridge: rgb(196, 168, 128);
-  /* 2026-11-28: was 0.62; at that the multiplied ridges greyed white items and the burst behind them and darkened
-     the Energies' whole field (site review: "item greyed with speckle grain"). */
-  --smg-ridge-a: 0.3;
-  /* 2026-11-28: was 0.8 (0.32 on the GX): with the `color` blend that repainted the gold green, cyan and purple
-     (per-card review, 6 of 13). Gold stays gold: a hint of hue on the ridges near the light, no more. */
-  --smg-prism-a: 0.2;
-  --shine-line: 0.06;
-  /* No glitter on these cards (see the header), but the shared etch shine screened its fleck tile on every ridge at
-     0.6: coloured sparkle dots over black straps, red items and dark backgrounds (site review 2026-11-28, 37 of 99
-     bad). Off: the etch itself is the texture. */
-  --shine-glit: 0;
+  --smg-ridge-a: 0.62;
+  --smg-prism-a: 0.8;
 }
 /* the gold Pokémon-GX: the dense etch covers the field, so the rainbow is held to a tint (Tapu Koko SV93: amber gold,
    a green-cyan tint near the GX bar) */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.smg-gx {
-  --smg-prism-a: 0.12;
+  --smg-prism-a: 0.32;
 }
 /* the gold Energies: the stipple field turns cool, the rainbow biased to teal/green/yellow */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.fam-sm-gold.smg-energy {
-  --smg-prism-a: 0.1;
   --smg-prism: linear-gradient(112deg,
     rgb(60, 200, 160) 0%, rgb(40, 190, 231) 8%, rgb(140, 220, 90) 15%, rgb(231, 220, 70) 21%, rgb(60, 210, 190) 29%,
     rgb(50, 160, 240) 36%, rgb(110, 224, 120) 44%, rgb(220, 210, 79) 50%, rgb(60, 200, 200) 58%, rgb(60, 150, 240) 66%,

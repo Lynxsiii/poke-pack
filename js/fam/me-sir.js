@@ -22,8 +22,7 @@
  *   cure: true   the `.cure` span: the silver frame (a multiplied grey with the swirl engraving in it).
  */
 
-// me55 too since 2026-11-28 (the shared SIR recipe hazed the 30th Celebration SIRs white); those use Live's map as it is
-const ME_ID = /^j?me(\d(pt5)?[a-z]?|55)-/;
+const ME_ID = /^j?me\d(pt5)?[a-z]?-/;
 const DIR = "assets/foil/fam/me-sir";
 
 /** Prints whose frame is printed as a rainbow, not silver (frame chroma over 0.4 in the scan; the only one of the 55 on
@@ -50,7 +49,7 @@ export function famExtras(card, url, base) {
   if (!claims(card, base)) return null;
   // Every claimed face has a Live foil map (2026-10-23); one without paints through the white fallback, the sheet's
   // mask falling back to --foil-map.
-  const style = card.foilMap && !String(card.id).startsWith("me55-") ? `--mesir-map:url('${url(maskPath(card))}')` : "";
+  const style = card.foilMap ? `--mesir-map:url('${url(maskPath(card))}')` : "";
   const classes = PRISM_FRAME.has(String(card.id)) ? "fam-me-sir mesir-prism-frame" : "fam-me-sir";
   return { classes, style, cure: true };
 }

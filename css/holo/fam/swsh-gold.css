@@ -38,20 +38,15 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.f
   --sg-lamp: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     rgb(255, 208, 146) 0%, rgb(170, 138, 96) 14%, rgb(70, 56, 38) 36%, rgb(28, 22, 15) 70%, rgb(22, 17, 12) 100%);
   /* the etch strength under the lamp (1 - alpha of this veil) */
-  --sg-etch-veil: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+  --sg-etch-veil: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
   --sg-rest-veil: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8));
   --sg-floor: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
   /* the etch lines' own light (.cure): champagne at the pointer, nothing from 66% out */
   --sg-line-lamp: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     rgb(255, 240, 208) 0%, rgb(200, 188, 160) 14%, rgb(80, 74, 62) 34%, rgb(14, 13, 11) 54%, #000 66%);
-  --sg-line-veil: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55));
+  --sg-line-veil: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45));
   --sg-glitter: url("/assets/foil/glitter-flecks.webp");
   --sg-fine: url("/assets/foil/glitter-fine.webp");
-  /* gold stays gold. The shared etch shine's rainbow is 0.2 on gold, but a drawn etch (every Japanese gold) raised it
-     to 0.6 by a later rule: a pink-to-green sweep over the gold (per-card review, js8b 280-285). Held here. */
-  --shine-line: 0.06;
-  /* no loose glitter on gold (2026-11-28): the shared fleck layer off */
-  --shine-glit: 0;
   --sg-hot: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     hsla(44, 70%, 82%, 0.5) 0%, hsla(42, 60%, 72%, 0.2) 18%, hsla(42, 60%, 70%, 0) 38%);
 }
@@ -91,17 +86,17 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.f
   clip-path: none;
   opacity: min(1, var(--foil-strength, 1));
 }
-/* Resting: the relief, faint. */
+/* Resting: the relief and the glitter, faint (held flat the sparkle shows in every photo). */
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-gold.fam-swsh-gold.fam-swsh-gold.fam-swsh-gold.foil-gold.has-foil-map:not(.lit):not(.settling) .foil {
-  /* 2026-11-28: no glitter tile here any more (per-card review: "glitter grain over the Pokémon at rest" on 30 golds) */
   background-image:
+    var(--sg-glitter),
     var(--sg-rest-veil),
     var(--fa-etch, linear-gradient(transparent, transparent)),
     linear-gradient(#000, #000);
-  background-size: 100% 100%, var(--fa-etch-size, 100% 100%), 100% 100%;
-  background-position: center, var(--fa-etch-pos, center), center;
-  background-repeat: no-repeat, var(--fa-etch-repeat, no-repeat), no-repeat;
-  background-blend-mode: normal, normal, normal;
+  background-size: 46% auto, 100% 100%, var(--fa-etch-size, 100% 100%), 100% 100%;
+  background-position: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%), center, var(--fa-etch-pos, center), center;
+  background-repeat: repeat, no-repeat, var(--fa-etch-repeat, no-repeat), no-repeat;
+  background-blend-mode: screen, normal, normal, normal;
   filter: brightness(0.5);
   opacity: min(1, var(--foil-strength, 1));
 }
@@ -121,10 +116,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.f
   -webkit-mask-image: none;
   mask-image: none;
   clip-path: none;
-  /* 2026-11-28: off. The loose fleck tile read as white sparkle dots over the Pokémon, the items and the black fields
-     (per-card review, about 50 golds); the real gold's light is in its engraving. */
-  opacity: 0;
-  display: none;
+  opacity: calc(0.25 + var(--pointer-from-center) * 0.2);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-gold.fam-swsh-gold.fam-swsh-gold.fam-swsh-gold.foil-gold.has-foil-map .foil::before,
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-gold.fam-swsh-gold.fam-swsh-gold.fam-swsh-gold.foil-gold.has-foil-map .glare::after {
@@ -161,16 +153,15 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.f
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-gold.fam-swsh-gold.fam-swsh-gold.fam-swsh-gold.foil-gold.has-foil-map.sg-glitter .cure {
   /* the sparse fine sparkle, then the etch lines lit champagne near the lamp: screened, so they reach the saturated
      lemon ink a dodge cannot whiten (its blue channel is 0), and the black field (no etch there) keeps only the specks */
-  /* 2026-11-28: the sparse sparkle tile is gone (white dots over black fields and Energy symbols), and the lit lines
-     are multiplied by the scan itself, so a line over black ink stays black and a line over gold lights gold */
-  background-image: var(--art), var(--sg-line-lamp), var(--sg-line-veil),
+  background-image: var(--sg-fine), var(--sg-line-lamp), var(--sg-line-veil),
     var(--fa-etch, linear-gradient(transparent, transparent)), linear-gradient(#000, #000);
-  background-size: 100% 100%, 100% 100%, 100% 100%, var(--fa-etch-size, 100% 100%), 100% 100%;
-  background-position: center, center, center, var(--fa-etch-pos, center), center;
-  background-repeat: no-repeat, no-repeat, no-repeat, var(--fa-etch-repeat, no-repeat), no-repeat;
-  background-blend-mode: multiply, multiply, normal, normal, normal;
+  background-size: 52% auto, 100% 100%, 100% 100%, var(--fa-etch-size, 100% 100%), 100% 100%;
+  background-position: calc(var(--seed-y, 0.5) * 100% - var(--pointer-from-left) * 2px) calc(var(--seed-x, 0.5) * 100% - var(--pointer-from-top) * 2px),
+    center, center, var(--fa-etch-pos, center), center;
+  background-repeat: repeat, no-repeat, no-repeat, var(--fa-etch-repeat, no-repeat), no-repeat;
+  background-blend-mode: screen, multiply, normal, normal, normal;
   mix-blend-mode: screen;
-  filter: none;
+  filter: saturate(0.45);
   clip-path: none;
   border-radius: 0;
   opacity: calc(var(--card-opacity) * (0.5 + var(--pointer-from-center) * 0.3));

@@ -28,23 +28,17 @@
 /* ---- Shared ---------------------------------------------------------------------------------------------------- */
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-rainbow.fam-sm-rainbow.fam-sm-rainbow.fam-sm-rainbow.foil-ir {
   /* the groove depth: the grey the etch sits on (soft-light: under 128 darkens) */
-  --smrb-groove: rgb(92, 92, 92);
+  --smrb-groove: rgb(30, 30, 30);
   /* holds the crests below white at rest, so the light has headroom to lift them */
-  --smrb-veil: rgba(92, 92, 92, 0.45);
+  --smrb-veil: rgba(30, 30, 30, 0.3);
   /* the crests' light: bright warm white at the pointer, gone by 60% of the card */
   --smrb-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    rgb(210, 208, 200) 0%, rgb(170, 168, 160) 12%, rgb(96, 95, 90) 30%, rgb(34, 34, 32) 48%, #000 62%);
+    rgb(255, 246, 214) 0%, rgb(220, 212, 186) 12%, rgb(120, 116, 102) 30%, rgb(40, 38, 34) 48%, #000 62%);
   /* the hot spot under it: a soft warm lift, grooves included, so the area near the lamp reads brighter */
   --smrb-spot: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    rgb(48, 47, 42) 0%, rgb(34, 33, 30) 10%, rgb(14, 14, 12) 26%, #000 42%);
-  /* 2026-11-28: rest 0.35 and lit 0.72 before; the site review judged the early sets "rainbow foil barely visible
-     when lit" (the whole family measured the same: about 1.5 L* of change over the card) */
-  --smrb-rest: 0.5;
+    rgb(96, 90, 70) 0%, rgb(70, 66, 52) 10%, rgb(30, 28, 22) 26%, #000 42%);
+  --smrb-rest: 0.85;
   --smrb-lit: 1;
-  /* the shared etch shine: the print already carries the rainbow, so a faint colour on the lines and little glitter */
-  --shine-line: 0.15;
-  --shine-glit: 0.3;
-  --relief: 0.4;
 }
 
 /* ---- .foil: the etch as relief (at rest too) ---------------------------------------------------------------------- */
@@ -115,45 +109,23 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-rain
   opacity: calc(var(--card-opacity) * clamp(0, calc(0.6 + var(--pointer-from-center) * 0.6), 1));
 }
 
-/* ---- .glare: the ridges glinting round the light ------------------------------------------------------------------
-   2026-11-28: was a faint soft-light gloss with no mask, and the lit card looked like the resting one. Inside the
-   soft-light group above nothing can lift a pale pastel far, so the glint is drawn here: a white pool round the light,
-   overlaid (dark ink and text keep), on the etch's crests only (the etch twice in the mask: lines, not a milk). */
+/* ---- .glare: a faint gloss that fades to nothing ------------------------------------------------------------------ */
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-rainbow.fam-sm-rainbow.fam-sm-rainbow.fam-sm-rainbow.foil-ir .glare {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.7) 15%, rgba(255, 255, 255, 0.2) 36%, rgba(255, 255, 255, 0) 56%);
+    rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.15) 26%, rgba(255, 255, 255, 0) 55%);
   background-size: 100% 100%;
   background-position: center;
-  background-repeat: no-repeat;
-  mix-blend-mode: overlay;
+  mix-blend-mode: soft-light;
   filter: none;
   clip-path: none;
   border-radius: 0;
-  -webkit-mask-image: var(--art), var(--foil-map), var(--smr-etch), var(--smr-etch);
-  -webkit-mask-composite: source-in, source-in, source-in, source-over;
-  mask-image: var(--art), var(--foil-map), var(--smr-etch), var(--smr-etch);
-  mask-composite: intersect, intersect, intersect, add;
-  mask-mode: alpha;
-  -webkit-mask-size: contain, 100% 100%, var(--smr-etch-size), var(--smr-etch-size);
-  mask-size: contain, 100% 100%, var(--smr-etch-size), var(--smr-etch-size);
-  -webkit-mask-position: center, center, var(--smr-etch-pos), var(--smr-etch-pos);
-  mask-position: center, center, var(--smr-etch-pos), var(--smr-etch-pos);
-  -webkit-mask-repeat: no-repeat, no-repeat, var(--smr-etch-repeat), var(--smr-etch-repeat);
-  mask-repeat: no-repeat, no-repeat, var(--smr-etch-repeat), var(--smr-etch-repeat);
-  opacity: calc(var(--card-opacity) * var(--smrb-glint, 0.48));
+  -webkit-mask-image: none;
+  mask-image: none;
+  opacity: calc(var(--card-opacity) * 0.6);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-rainbow.fam-sm-rainbow.fam-sm-rainbow.fam-sm-rainbow.foil-ir .glare::after {
   background: none;
   -webkit-mask-image: none;
   mask-image: none;
   opacity: 0;
-}
-
-/* ---- A photographed print (the Japanese scans, `smrb-photo`): the photo already shows the foil's grain, so the
-   relief and the glint on top doubled it into a speckle (holo_check: fine grain x1.7). Quieter. ---------------------- */
-body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-rainbow.fam-sm-rainbow.fam-sm-rainbow.fam-sm-rainbow.foil-ir.smrb-photo {
-  --smrb-rest: 0.3;
-  --smrb-lit: 0.55;
-  --smrb-glint: 0.2;
-  --shine-glit: 0.1;
 }

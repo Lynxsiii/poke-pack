@@ -32,16 +32,6 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-sir.fam-sv-sir.fam-sv-sir.foil-sir.has-
   --svsir-glints: url("/assets/foil/fam/sv-sir/specks-v2.webp");
   /* one tile pixel per device pixel on a 220 px card at 3x (the tile is 256 px) */
   --svsir-tile: 38.8%;
-  /* 2026-11-28, the card-by-card review (58 of 130 bad: "uniform sparkle grain over whole art incl. subject",
-     "purple/teal grain wash", "diagonal hatch over the sky"; Noah: "the sparkles or dots on the holo take away from
-     the texture"). The grain is now a third of what it was, the etch sheen and its spectrum live in a pool round the
-     light instead of over the whole face, and the shared layers are turned down: the relief (which lands on the
-     Pokémon, where the foil map is shut) to a touch, the shared glitter nearly off, the shared spectrum faint. */
-  --svsir-near: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    #000 0%, #000 18%, rgba(0, 0, 0, 0.6) 36%, rgba(0, 0, 0, 0.2) 60%, rgba(0, 0, 0, 0.06) 100%);
-  --relief: 0.4;
-  --shine-glit: 0.12;
-  --shine-line: 0.22;
 }
 
 /* ---- .foil: the glitter grain ------------------------------------------------
@@ -50,12 +40,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-sir.fam-sv-sir.fam-sv-sir.foil-sir.has-
   clip-path: none;
   border-radius: 0;
   background-color: transparent;
-  /* the specks under a 62% black veil: in a colour-dodge black adds nothing, so the grain is dimmed without dimming
-     the etch sheen (::after) that shares the group's opacity */
-  background-image: linear-gradient(rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.62)), var(--svsir-specks);
-  background-size: 100% 100%, var(--svsir-tile) auto;
-  background-position: center, var(--seed-pos, center);
-  background-repeat: no-repeat, repeat;
+  background-image: var(--svsir-specks);
+  background-size: var(--svsir-tile) auto;
+  background-position: var(--seed-pos, center);
+  background-repeat: repeat;
   background-blend-mode: normal;
   filter: none;
   mix-blend-mode: color-dodge;
@@ -91,8 +79,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-sir.fam-sv-sir.fam-sv-sir.foil-sir.has-
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
       hsla(0, 0%, 100%, 0.75) 0%, hsla(0, 0%, 100%, 0.35) 24%, hsla(0, 0%, 100%, 0) 55%),
     repeating-linear-gradient(118deg,
-      hsla(350, 90%, 62%, 0.5) 0%, hsla(35, 95%, 58%, 0.5) 8%, hsla(60, 95%, 55%, 0.5) 16%, hsla(130, 85%, 52%, 0.5) 25%,
-      hsla(185, 90%, 55%, 0.5) 34%, hsla(225, 90%, 64%, 0.5) 42%, hsla(285, 85%, 66%, 0.5) 50%);
+      hsla(350, 90%, 62%, 0.6) 0%, hsla(35, 95%, 58%, 0.6) 8%, hsla(60, 95%, 55%, 0.6) 16%, hsla(130, 85%, 52%, 0.6) 25%,
+      hsla(185, 90%, 55%, 0.6) 34%, hsla(225, 90%, 64%, 0.6) 42%, hsla(285, 85%, 66%, 0.6) 50%);
   background-size: 100% 100%, 260% 260%;
   background-position: center, calc(100% - var(--background-x)) var(--background-y);
   background-repeat: no-repeat, repeat;
@@ -103,10 +91,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-sir.fam-sv-sir.fam-sv-sir.foil-sir.has-
      sheen draws the engraved lines instead of washing the painting. Once over, it added twice the brightness of the
      typical SIR on the palest cards (Chi-Yu ex, Wo-Chien ex) and almost no line detail (etch_zones.py, 2026-11-25:
      cubed takes about 40% off the wash and the texture score does not move). */
-  -webkit-mask-image: var(--svsir-near), var(--etch-map), var(--etch-map), var(--etch-map);
-  mask-image: var(--svsir-near), var(--etch-map), var(--etch-map), var(--etch-map);
-  -webkit-mask-composite: source-in, source-in, source-in, source-over;
-  mask-composite: intersect, intersect, intersect, add;
+  -webkit-mask-image: var(--etch-map), var(--etch-map), var(--etch-map);
+  mask-image: var(--etch-map), var(--etch-map), var(--etch-map);
+  -webkit-mask-composite: source-in, source-in, source-over;
+  mask-composite: intersect, intersect, add;
   -webkit-mask-size: 100% 100%;
   mask-size: 100% 100%;
   -webkit-mask-position: center;
@@ -177,7 +165,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.art-missing.fam-sv-sir.fam-sv-sir.fam-sv-sir.f
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-sir.fam-sv-sir.fam-sv-sir.foil-sir.has-foil-map .glare {
   --shift: 3px;
   --svsir-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    #000 0%, #000 20%, rgba(0, 0, 0, 0.3) 45%, rgba(0, 0, 0, 0.06) 75%, rgba(0, 0, 0, 0.06) 100%);
+    #000 0%, #000 24%, rgba(0, 0, 0, 0.3) 55%, rgba(0, 0, 0, 0.3) 100%);
   clip-path: none;
   border-radius: 0;
   background-color: hsl(0, 0%, 50%);
@@ -193,9 +181,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-sir.fam-sv-sir.fam-sv-sir.foil-sir.has-
     center;
   background-repeat: repeat, repeat, no-repeat;
   background-blend-mode: normal;
-  /* overlay, not hard-light (2026-11-28 per-card review: "sand grain and haze over dark art"): a hard-lit glint is
-     white on any ink; overlaid it lights the paint it sits on and leaves the darks dark */
-  mix-blend-mode: overlay;
+  mix-blend-mode: hard-light;
   filter: hue-rotate(calc(var(--rotate-x) * 5 + var(--rotate-y) * 3));
   -webkit-mask-image: var(--art), var(--svsir-pool), var(--svsir-mask), var(--svsir-mask);
   -webkit-mask-composite: source-in, source-in, source-over, source-over;
@@ -208,7 +194,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-sir.fam-sv-sir.fam-sv-sir.foil-sir.has-
   mask-position: center;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-  opacity: calc(var(--card-opacity) * 0.5 * var(--foil-strength, 1));
+  opacity: calc(var(--card-opacity) * var(--foil-strength, 1));
 }
 /* One spectral band, about a third of the card wide, that rides near the pointer and slides with the tilt; only
    near the light (its own pool, gone a third of the card away), at 0.2 and masked by the card's mask to the fourth
@@ -249,5 +235,5 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-sir.fam-sv-sir.fam-sv-sir.foil-sir.has-
 /* 2026-11-23, Noah: "a lot of cards lost their etched art". The etch sheen above was too dim to see on a phone, so
    under the light the dodge group runs near full and Live's etch lines read across the whole painting. */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-sir.fam-sv-sir.fam-sv-sir.foil-sir.has-foil-map:is(.lit, .settling) .foil {
-  opacity: calc((0.6 + var(--card-opacity) * 0.22) * var(--foil-strength, 1));
+  opacity: calc((0.6 + var(--card-opacity) * 0.4) * var(--foil-strength, 1));
 }

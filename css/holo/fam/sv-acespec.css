@@ -24,32 +24,27 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-acespec.fam-sv-acespec.fam-sv-acespec.f
      thin lines on each diagonal; the bundles sit at 0/50/100% of the gradient line so they continue from tile to tile */
   --ace-cell: 12.5% 8.95%;
   --ace-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    #000 0%, #000 16%, rgba(0, 0, 0, 0.5) 40%, rgba(0, 0, 0, 0.12) 70%, rgba(0, 0, 0, 0.05) 100%);
+    #000 0%, #000 20%, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.3) 80%, rgba(0, 0, 0, 0.22) 100%);
   --ace-shift: calc((var(--background-x) - 50%) * 2.5 + 50%) calc((var(--background-y) - 50%) * 1.5 + 50%);
 }
 
 /* The line stops resolve --ace-ink on each layer (a custom property that uses another resolves where it is set). */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-acespec.fam-sv-acespec.fam-sv-acespec.fam-sv-acespec.foil-acespec.has-foil-map .foil,
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-acespec.fam-sv-acespec.fam-sv-acespec.fam-sv-acespec.foil-acespec.has-foil-map .glare {
-  /* 2026-11-28 ("foil almost absent; faint grid only"): the lines half as wide again, so the lattice reads on a phone */
-  --ace-lines: transparent 1.6%, var(--ace-ink) 3%, transparent 4.4%,
-    transparent 45.6%, var(--ace-ink) 47%, transparent 48.3%,
-    transparent 48.7%, var(--ace-ink) 50%, transparent 51.3%,
-    transparent 51.7%, var(--ace-ink) 53%, transparent 54.4%,
-    transparent 95.6%, var(--ace-ink) 97%, transparent 98.4%;
+  --ace-lines: transparent 2.1%, var(--ace-ink) 3%, transparent 3.9%,
+    transparent 46.1%, var(--ace-ink) 47%, transparent 47.9%,
+    transparent 49%, var(--ace-ink) 50%, transparent 51%,
+    transparent 52.1%, var(--ace-ink) 53%, transparent 53.9%,
+    transparent 96.1%, var(--ace-ink) 97%, transparent 97.9%;
 }
 /* ---- .foil: the raspberry tint on the stock, lattice lines paler ----------------------------------------------- */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-acespec.fam-sv-acespec.fam-sv-acespec.fam-sv-acespec.foil-acespec.has-foil-map .foil {
-  /* 2026-11-28, the card-by-card review (19 of 30 bad: "diagonal checker hatch on pink", "green tint washes art"):
-     the lattice on the stock is a faint paler line near the light only (0.3, was 0.85 over the whole body), and the
-     window's lattice (.glare) keeps colour on its lines alone: the pastel spectrum that was multiplied over the whole
-     window, the green cast, is gone. */
-  --ace-ink: rgba(255, 255, 255, 0.3);
+  --ace-ink: rgba(255, 255, 255, 0.55);
   background-image:
     linear-gradient(45deg, var(--ace-lines)),
     linear-gradient(-45deg, var(--ace-lines)),
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      #fff 0%, rgb(240, 232, 236) 30%, rgb(200, 188, 194) 100%),
+      #fff 0%, rgb(246, 240, 242) 30%, rgb(222, 212, 216) 100%),
     linear-gradient(rgb(228, 250, 172), rgb(228, 250, 172));
   background-size: var(--ace-cell), var(--ace-cell), 100% 100%, 100% 100%;
   background-position: 0 0, 0 0, center, center;
@@ -74,7 +69,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-acespec.fam-sv-acespec.fam-sv-acespec.f
 }
 /* Resting: the tint and a fainter paler lattice, no light. */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-acespec.fam-sv-acespec.fam-sv-acespec.fam-sv-acespec.foil-acespec.has-foil-map:not(.lit):not(.settling) .foil {
-  --ace-ink: rgba(255, 255, 255, 0.16);
+  --ace-ink: rgba(255, 255, 255, 0.35);
   background-image:
     linear-gradient(45deg, var(--ace-lines)),
     linear-gradient(-45deg, var(--ace-lines)),
@@ -103,20 +98,17 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-acespec.fam-sv-acespec.fam-sv-acespec.f
    (on the stock .foil already draws the lattice as paler rose lines). */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-acespec.fam-sv-acespec.fam-sv-acespec.fam-sv-acespec.foil-acespec.has-foil-map .glare {
   --ace-ink: #000;
-  /* top: a pastel spectrum multiplied over everything, so the foil between the lines takes a soft rainbow sheen near
-     the lamp too (2026-11-28: with white between the lines, the lit card showed only hairlines) */
   background-image:
-    linear-gradient(#fff, #fff),
     linear-gradient(115deg,
-      rgb(250, 150, 185) 0%, rgb(255, 200, 120) 16%, rgb(246, 232, 130) 28%, rgb(190, 232, 170) 40%, rgb(150, 210, 250) 52%,
-      rgb(200, 170, 255) 64%, rgb(255, 160, 190) 78%, rgb(255, 212, 130) 100%),
+      rgb(250, 120, 170) 0%, rgb(255, 190, 90) 16%, rgb(245, 230, 90) 28%, rgb(130, 235, 140) 40%, rgb(110, 200, 255) 52%,
+      rgb(190, 150, 255) 64%, rgb(255, 130, 170) 78%, rgb(255, 205, 100) 100%),
     linear-gradient(45deg, var(--ace-lines)),
     linear-gradient(-45deg, var(--ace-lines)),
     linear-gradient(#fff, #fff);
-  background-size: 220% 220%, 300% 300%, var(--ace-cell), var(--ace-cell), 100% 100%;
-  background-position: var(--background-x) var(--background-y), var(--ace-shift), 0 0, 0 0, center;
-  background-repeat: no-repeat, no-repeat, repeat, repeat, no-repeat;
-  background-blend-mode: multiply, screen, normal, normal, normal;
+  background-size: 300% 300%, var(--ace-cell), var(--ace-cell), 100% 100%;
+  background-position: var(--ace-shift), 0 0, 0 0, center;
+  background-repeat: no-repeat, repeat, repeat, no-repeat;
+  background-blend-mode: screen, normal, normal, normal;
   mix-blend-mode: multiply;
   filter: none;
   clip-path: none;
@@ -132,5 +124,5 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-acespec.fam-sv-acespec.fam-sv-acespec.f
   mask-position: center;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-  opacity: calc(var(--card-opacity) * 0.6 * min(1, var(--foil-strength, 1)));
+  opacity: calc(var(--card-opacity) * 0.9 * min(1, var(--foil-strength, 1)));
 }

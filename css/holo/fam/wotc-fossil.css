@@ -40,18 +40,15 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
   background-image:
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
       hsla(48, 30%, 86%, 0.52) 0%, hsla(210, 20%, 74%, 0.16) 30%, hsla(240, 20%, 60%, 0) 55%),
-    /* site review 2: the spectrum is held to a pool round the lamp (multiplied), so a pale ground far from it is not dodged milky */
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #fff 0%, #999 35%, #2a2a2a 80%, #1c1c1c 100%),
     linear-gradient(118deg,
       hsl(48, 50%, 21%) 0%, hsl(78, 45%, 19%) 14%, hsl(140, 40%, 18%) 28%, hsl(186, 50%, 20%) 42%,
       hsl(218, 52%, 23%) 56%, hsl(262, 38%, 23%) 70%, hsl(300, 28%, 21%) 82%, hsl(48, 45%, 21%) 100%);
-  background-size: 100% 100%, 100% 100%, 300% 300%;
+  background-size: 100% 100%, 300% 300%;
   background-position:
     center,
-    center,
     calc(50% + (var(--background-x) - 50%) * -3) calc(50% + (var(--background-y) - 50%) * -3);
-  background-repeat: no-repeat, no-repeat, no-repeat;
-  background-blend-mode: normal, multiply, normal;
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: normal, normal;
   mix-blend-mode: color-dodge;
   filter: contrast(0.8);
   clip-path: none;
@@ -93,10 +90,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
   border-radius: 0;
   -webkit-mask-image:
     linear-gradient(104deg, rgba(0, 0, 0, 0.2) 8%, #000 20%, #000 27%, rgba(0, 0, 0, 0.2) 40%, rgba(0, 0, 0, 0.2) 56%, #000 68%, #000 74%, rgba(0, 0, 0, 0.2) 88%),
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.6) 35%, rgba(0, 0, 0, 0.15) 90%);
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.5) 90%);
   mask-image:
     linear-gradient(104deg, rgba(0, 0, 0, 0.2) 8%, #000 20%, #000 27%, rgba(0, 0, 0, 0.2) 40%, rgba(0, 0, 0, 0.2) 56%, #000 68%, #000 74%, rgba(0, 0, 0, 0.2) 88%),
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.6) 35%, rgba(0, 0, 0, 0.15) 90%);
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.5) 90%);
   -webkit-mask-composite: source-in, source-over;
   mask-composite: intersect, add;
   mask-mode: alpha, alpha;
@@ -112,10 +109,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
   background-image: var(--wf-glitter-b);
   -webkit-mask-image:
     linear-gradient(66deg, rgba(0, 0, 0, 0.2) 6%, #000 18%, #000 25%, rgba(0, 0, 0, 0.2) 38%, rgba(0, 0, 0, 0.2) 54%, #000 66%, #000 72%, rgba(0, 0, 0, 0.2) 86%),
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.6) 35%, rgba(0, 0, 0, 0.15) 90%);
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.5) 90%);
   mask-image:
     linear-gradient(66deg, rgba(0, 0, 0, 0.2) 6%, #000 18%, #000 25%, rgba(0, 0, 0, 0.2) 38%, rgba(0, 0, 0, 0.2) 54%, #000 66%, #000 72%, rgba(0, 0, 0, 0.2) 86%),
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.6) 35%, rgba(0, 0, 0, 0.15) 90%);
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.5) 90%);
   -webkit-mask-position: calc(50% + (var(--background-x) - 50%) * -3.5) calc(50% + (var(--background-y) - 50%) * 3.5), center;
   mask-position: calc(50% + (var(--background-x) - 50%) * -3.5) calc(50% + (var(--background-y) - 50%) * 3.5), center;
 }

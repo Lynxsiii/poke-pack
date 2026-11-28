@@ -76,16 +76,13 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-cosmos .foil {
   background-position: var(--cosmos-drift), center;
   background-repeat: repeat;
   background-blend-mode: normal, normal;
-  /* overlay, not screen (2026-11-28 per-card review: "green-cyan or milky wash, no cosmos circles visible"): a
-     screened spectrum lifted every dark window to a pastel sheet (Trick or Trade Gengar, 151 Abra). Overlaid, the
-     sweep tints the foil by the ink under it and the lit specks (::before) are what flashes. */
-  filter: saturate(0.55);
-  mix-blend-mode: overlay;
-  opacity: calc((0.2 + var(--card-opacity) * 0.3) * var(--cosmos-ground) * var(--foil-strength, 1));
+  filter: saturate(1.1);
+  mix-blend-mode: screen;
+  opacity: calc((0.3 + var(--card-opacity) * 0.7) * var(--cosmos-ground) * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.foil-cosmos:not(.lit):not(.settling) .foil {
   filter: saturate(0.8);
-  opacity: calc(0.25 * var(--cosmos-ground) * var(--foil-strength, 1));
+  opacity: calc(0.3 * var(--cosmos-ground) * var(--foil-strength, 1));
 }
 
 /* Clear what the older holo recipes put on the pseudo layers first. */
@@ -113,7 +110,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-cosmos .foil::before {
     calc(18% + var(--pointer-from-left, 0.5) * 64%) calc(18% + var(--pointer-from-top, 0.5) * 64%);
   background-repeat: no-repeat, repeat;
   background-blend-mode: normal, normal;
-  filter: brightness(1.2) saturate(0.8);
+  filter: brightness(1.3) saturate(1.2);
   -webkit-mask-image: var(--cosmos-middle), var(--cosmos-top);
   mask-image: var(--cosmos-middle), var(--cosmos-top);
   -webkit-mask-size: 200% 200%, 200% 200%;
@@ -205,12 +202,12 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-cosmos.cosmos-pixel .foil::after {
 /* Gloss on the varnish: a soft highlight under the lamp, a shade darker away. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-cosmos .glare {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(0, 0%, 100%, 0.4) 5%, hsla(0, 0%, 100%, 0.1) 30%, hsla(0, 0%, 0%, 0.1) 90%);
+    hsla(0, 0%, 100%, 0.65) 5%, hsla(0, 0%, 100%, 0.15) 30%, hsla(0, 0%, 0%, 0.25) 90%);
   background-size: cover;
   background-position: center;
   filter: none;
   mix-blend-mode: overlay;
-  opacity: calc(var(--card-opacity) * 0.6);
+  opacity: calc(var(--card-opacity) * 0.7);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.foil-cosmos .glare::after {
   background: none;
@@ -219,96 +216,4 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-cosmos .glare::after {
   filter: none;
   mix-blend-mode: normal;
   opacity: 0;
-}
-
-/* ---- Cosmos holo, round 2 (2026-11-28): the planets, not the dust -------------------------------------------------
-   The per-card review of every cosmos promo: "no cosmos visible in the art box, only glitter", "white speck noise
-   over the Pokémon", "teal haze". Three causes. (1) The galaxy tiles are nine tenths pinpoint specks, so at phone
-   size the foil read as glitter and no circle could be told: the shapes are now `cosmos-orbs-v1.webp` /
-   `cosmos-orbs-pixel-v1.webp` (scripts/make_cosmos_orbs.py: a few planets up to 9% of the card wide, more small
-   ones, sparse dust). (2) TCG Live's maps keep a 13% floor over the Pokémon and the text box, so every speck showed
-   there faintly: the map is intersected with itself (0.13 squared is under 2%, the background's 0.85
-   stays 0.7). (3) The sweep was overlaid over the whole foil as a ground: gone; the colour lives in the shapes.
-   `.foil` is a plain group: its background the shapes in faint white (what a card on a table shows), `::before` the
-   same shapes in the sweep's colour, strongest round the light and a fifth as strong far from it. Every older
-   rule above still serves the Costco reverse cosmos (sv151.css) and the Mega Evolution cosmos (fam/me-holo.css). */
-body.fx-holo.fx-holo.fx-holo .tcg.foil-holo.foil-cosmos.foil-cosmos.foil-cosmos.foil-cosmos:not(.fam-me-holo) {
-  --cosmos-orbs: url("/assets/foil/promo/cosmos-orbs-v1.webp");
-  --cosmos-orbs-size: 82% 82%;
-  --cosmos-map3: var(--foil-map, linear-gradient(#000, #000));
-}
-body.fx-holo.fx-holo.fx-holo .tcg.foil-holo.foil-cosmos.foil-cosmos.foil-cosmos.foil-cosmos:not(.fam-me-holo).cosmos-pixel {
-  --cosmos-orbs: url("/assets/foil/promo/cosmos-orbs-pixel-v1.webp");
-}
-body.fx-holo.fx-holo.fx-holo .tcg.foil-holo.foil-cosmos.foil-cosmos.foil-cosmos.foil-cosmos:not(.fam-me-holo) .foil,
-body.fx-holo.fx-holo.fx-holo .tcg.foil-holo.foil-cosmos.foil-cosmos.foil-cosmos.foil-cosmos:not(.fam-me-holo):not(.lit):not(.settling) .foil {
-  background-image: var(--cosmos-orbs);
-  background-size: var(--cosmos-orbs-size);
-  background-position: var(--cosmos-pos);
-  background-repeat: repeat;
-  background-blend-mode: normal;
-  filter: none;
-  mix-blend-mode: normal;
-  opacity: calc(0.32 * var(--foil-strength, 1));
-}
-body.fx-holo.fx-holo.fx-holo .tcg.foil-holo.foil-cosmos.foil-cosmos.foil-cosmos.foil-cosmos:not(.fam-me-holo):is(.lit, .settling) .foil {
-  background-image: none;
-  opacity: calc((0.25 + var(--card-opacity) * 0.75) * var(--foil-strength, 1));
-}
-body.fx-holo.fx-holo.fx-holo .tcg.foil-holo.foil-cosmos.foil-cosmos.foil-cosmos.foil-cosmos:not(.fam-me-holo).has-foil-map .foil {
-  -webkit-mask-image: var(--art), var(--foil-map), var(--foil-map);
-  -webkit-mask-composite: source-in, source-in, source-over;
-  mask-image: var(--art), var(--foil-map), var(--foil-map);
-  mask-composite: intersect, intersect, add;
-  -webkit-mask-size: contain, 100% 100%, 100% 100%;
-  mask-size: contain, 100% 100%, 100% 100%;
-  -webkit-mask-position: center;
-  mask-position: center;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-}
-/* The shapes, lit: the sweep's colour with a white core under the lamp, cut to the shapes and to a pool round the
-   light. */
-body.fx-holo.fx-holo.fx-holo .tcg.foil-holo.foil-cosmos.foil-cosmos.foil-cosmos.foil-cosmos:not(.fam-me-holo) .foil::before {
-  background-image:
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsla(0, 0%, 100%, 0.75) 0%, hsla(0, 0%, 100%, 0.25) 18%, hsla(0, 0%, 100%, 0) 40%),
-    var(--cosmos-rainbow),
-    linear-gradient(hsla(215, 30%, 92%, 0.35), hsla(215, 30%, 92%, 0.35));
-  background-size: cover, 400% 900%, cover;
-  background-position: center,
-    calc(18% + var(--pointer-from-left, 0.5) * 64%) calc(18% + var(--pointer-from-top, 0.5) * 64%), center;
-  background-repeat: no-repeat, repeat, no-repeat;
-  background-blend-mode: normal;
-  filter: none;
-  clip-path: none;
-  -webkit-mask-image: var(--cosmos-orbs),
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      #000 0%, rgba(0, 0, 0, 0.9) 22%, rgba(0, 0, 0, 0.5) 48%, rgba(0, 0, 0, 0.28) 75%);
-  mask-image: var(--cosmos-orbs),
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      #000 0%, rgba(0, 0, 0, 0.9) 22%, rgba(0, 0, 0, 0.5) 48%, rgba(0, 0, 0, 0.28) 75%);
-  -webkit-mask-size: var(--cosmos-orbs-size), 100% 100%;
-  mask-size: var(--cosmos-orbs-size), 100% 100%;
-  -webkit-mask-position: var(--cosmos-pos), center;
-  mask-position: var(--cosmos-pos), center;
-  -webkit-mask-repeat: repeat, no-repeat;
-  mask-repeat: repeat, no-repeat;
-  -webkit-mask-composite: source-in, source-over;
-  mask-composite: intersect, add;
-  mix-blend-mode: normal;
-  opacity: 0.85;
-}
-body.fx-holo.fx-holo.fx-holo .tcg.foil-holo.foil-cosmos.foil-cosmos.foil-cosmos.foil-cosmos:not(.fam-me-holo) .foil::after {
-  background-image: none;
-  -webkit-mask-image: none;
-  mask-image: none;
-  opacity: 0;
-}
-/* The gloss: a pool under the lamp only, nothing darker away from it. */
-body.fx-holo.fx-holo.fx-holo .tcg.foil-holo.foil-cosmos.foil-cosmos.foil-cosmos.foil-cosmos:not(.fam-me-holo) .glare {
-  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(0, 0%, 100%, 0.35) 0%, hsla(0, 0%, 100%, 0.1) 25%, hsla(0, 0%, 100%, 0) 50%);
-  mix-blend-mode: overlay;
-  opacity: calc(var(--card-opacity) * 0.5);
 }

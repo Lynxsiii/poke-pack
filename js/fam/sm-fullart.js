@@ -43,8 +43,6 @@ export function famExtras(card, url, base) {
   if (!kind) return null;
   const classes = ["fam-sm-fullart", `smf-${kind}`];
   if (!card.etchMap || !has(base?.classes, "has-etch-map")) classes.push("smf-noetch");
-  // a photographed print (the Japanese scans): the foil is already in the picture, so the sheet runs a quieter recipe
-  if (/^j/.test(String(card.id || ""))) classes.push("smf-photo");
   // `cure`: the second span carries the multiplied shade, silver frame and tint (css/holo/fam/sm-fullart.css)
   return { classes: classes.join(" "), style: "", cure: true };
 }
