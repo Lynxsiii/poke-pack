@@ -34,5 +34,5 @@ export function claims(card) {
 
 export function famExtras(card, url, base) {
   if (!claims(card)) return null;
-  return { classes: "fam-dp-lvx has-foil-map", style: `--foil-map:url('${url(`assets/foil/fam/dp-lvx/${card.id}.webp`)}')`, cure: false };
+  return { classes: "fam-dp-lvx has-foil-map", style: `--foil-map:url('${url(`assets/foil/fam/dp-lvx/${card.id}-f2.webp`)}')`, cure: false };
 }

@@ -256,6 +256,18 @@ cure"). The surface gloss throws a soft highlight.
   and sat 30 to 60 px off the print (a ghost silhouette beside the Pokémon); it was not a placement fault. Cut the Pokémon
   from the shipped scan itself (`make_figure_masks.figure_mask` with SAM; `scripts/cut_figure_from_maps.py` multiplies the
   cut into existing maps under a new version), view every preview, and keep the old map where the cut is wrong.
+- **A layer multiplied by an RGBA map leaks through the map's soft edge.** The DP cosmos families drew their flecks as
+  `background-image: <white pool>, var(--foil-map)` with `background-blend-mode: multiply`, masked by the same map's
+  alpha. Where the map is transparent the pool has nothing to multiply with and paints itself, white; the mask hides it
+  where alpha is 0, but at alpha a the layer shows a x (1 - a) of the white pool, which peaks at the half-transparent
+  rim: a pale halo tracing the Pokemon's cut-out, and a wash wherever the alpha is deliberately partial (2026-11-28
+  round 2: about 80 DP holos). Always put an opaque black layer under the map
+  (`..., var(--foil-map), linear-gradient(#000, #000)`, blend modes `multiply, normal, normal`).
+- **A sheen under a pool wider than the art window is a tint, not a highlight.** One saturated hue screened over the
+  whole window read as a "purple cast"; cutting it to nothing read as "holo shows nothing when lit". What passes: a pool
+  about half the window wide, pastel colours (lightness 72-80%), the whole spectrum fitted to about the card
+  (`background-size: 120%`) so the pool spans several hues, screened at 0.3-0.4. A fleck map drawn only from the scan's
+  grain is empty on a clean scan (Call of Legends, HGSS): give it a minimum cover (`make_cosmos_flecks.py`, MIN_COVER).
 
 - **A window holo lights round the lamp, not over the window.** The WotC Team Rocket, Legendary Collection, Gym and promo
   recipes screened a spectrum, a silver floor and a 0.55 rest sheen over the whole foil map, so every black or navy
