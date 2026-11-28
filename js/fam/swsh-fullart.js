@@ -99,6 +99,8 @@ export function famExtras(card, url, base) {
     return { classes: classes.join(" "), style: "", cure: false };
   }
   classes.push(kind === "tfa" ? "sfa-t" : "sfa-v");
+  // The Japanese scans are photos of the foil print (its bands and line screen are in the picture): a quieter recipe.
+  if (/^j/.test(id)) classes.push("sfa-photo");
   // the painted gallery V (Trainer Gallery TG, Galarian Gallery GG) and the alternate arts
   if (kind === "vfa" && (ALT.has(id) || card.gallery === "tg" || card.gallery === "gg" || /-(TG|GG)\d/.test(id))) {
     classes.push("sfa-alt");

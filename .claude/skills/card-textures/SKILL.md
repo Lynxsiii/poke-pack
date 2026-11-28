@@ -662,6 +662,16 @@ cure"). The surface gloss throws a soft highlight.
   spectral gradient goes on a card, find a tilted photo or video of
   that card that shows the colours. Without one, light the texture
   white or in the foil's own tint.
+- **A photographed scan already carries its foil.** The Japanese scans (`j…` ids) are photos of foil prints: bands,
+  silver and sparkle are in the picture. A full recipe on top doubles them (pastel wash near the light, glitter on
+  the figure). Give such faces a `-photo` class from the family module (`/^j/` on the id) and run band, tint and
+  sparkle at roughly a third (`sfs-photo`, `sgl-photo`, `sfa-photo`, `smf-photo`).
+- **`has-etch-drawn` raises `--shine-line` to 0.6 over everything.** etch-shine.css's rule out-ranks a gold or shiny
+  family's quieter value, so a gold with a drawn etch gets a rainbow sweep. Set `--shine-line` / `--shine-glit` /
+  `--relief` in the family sheet's own (longer) selector rather than trusting the shared default.
+- **A shiny-vault map covers the Pokémon; the card does not.** Build a background-only map per card from the scan
+  (`scripts/fam/swsh-sf-shiny/make_bg_maps.py`: Live map × scan whiteness × edge-connected regions) and mask the
+  foil with it; keep sparkle off the figure.
 
 ## What has shipped, set by set
 

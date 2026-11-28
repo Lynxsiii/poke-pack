@@ -32,25 +32,28 @@
 
 /* ---- Shared ---------------------------------------------------------------------------------------------------- */
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-rainbow.fam-swsh-rainbow.fam-swsh-rainbow.fam-swsh-rainbow.foil-ir.has-foil-map {
-  --srb-size: 46% auto;
-  --srb-size-b: 41% auto;
+  --srb-size: 34% auto;
+  --srb-size-b: 29% auto;
   /* the grain drifts a few px with the tilt (it sits in the foil, the print over it does not move) */
   --srb-pos: calc(var(--seed-x, 0.5) * 100% + (var(--pointer-from-left, 0.5) - 0.5) * 4px)
     calc(var(--seed-y, 0.5) * 100% + (var(--pointer-from-top, 0.5) - 0.5) * 4px);
   /* the grain between ridges, as a share of the grain on them */
-  --srb-floor: rgb(150, 150, 150);
+  --srb-floor: rgb(26, 26, 26);
+  /* the engraving catches the light round the pointer and fades away from it (2026-11-28: the grain no longer leads) */
+  --srb-line-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    rgb(190, 190, 190) 0%, rgb(160, 160, 160) 22%, rgb(110, 110, 110) 48%, rgb(70, 70, 70) 80%);
   /* the silver light: peak lift round the pointer */
   --srb-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    rgb(128, 128, 128) 0%, rgb(92, 92, 92) 16%, rgb(44, 44, 44) 40%, rgb(14, 14, 14) 66%, #000 90%);
+    rgb(72, 72, 72) 0%, rgb(50, 50, 50) 16%, rgb(22, 22, 22) 40%, rgb(6, 6, 6) 66%, #000 90%);
   /* the metallic cast it takes on the background: gold-green, silver, silver-cyan, never a full spectrum */
   --srb-cast: linear-gradient(110deg,
     rgb(238, 232, 168) 0%, rgb(226, 230, 228) 18%, rgb(176, 226, 236) 34%, rgb(222, 226, 232) 50%,
     rgb(214, 236, 176) 66%, rgb(226, 228, 232) 82%, rgb(238, 232, 168) 100%);
   --srb-wink-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     #000 0%, rgba(0, 0, 0, 0.85) 25%, rgba(0, 0, 0, 0.35) 55%, rgba(0, 0, 0, 0.12) 100%);
-  --srb-rest: 0.75;
-  --srb-lit: 1;
-  --srb-light: 1;
+  --srb-rest: 0.3;
+  --srb-lit: 0.8;
+  --srb-light: 0.5;
 }
 /* Crown Zenith Pikachu 160: a soft sparkle on the art's background and bolts only, neutral light. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-rainbow.fam-swsh-rainbow.fam-swsh-rainbow.fam-swsh-rainbow.foil-ir.has-foil-map.srb-show {
@@ -64,10 +67,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.f
 
 /* ---- .foil: the glitter on the etch, dodged (at rest too) ---------------------------------------------------------- */
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-rainbow.fam-swsh-rainbow.fam-swsh-rainbow.fam-swsh-rainbow.foil-ir.has-foil-map .foil {
-  background-image: var(--srb-grain), var(--etch-map, linear-gradient(#fff, #fff)), linear-gradient(var(--srb-floor), var(--srb-floor));
-  background-size: var(--srb-size), 100% 100%, 100% 100%;
-  background-position: var(--srb-pos), center, center;
-  background-repeat: repeat, no-repeat, no-repeat;
+  background-image: var(--srb-line-pool), var(--etch-map, linear-gradient(#fff, #fff)), linear-gradient(var(--srb-floor), var(--srb-floor));
+  background-size: 100% 100%, 100% 100%, 100% 100%;
+  background-position: center, center, center;
+  background-repeat: no-repeat, no-repeat, no-repeat;
   background-blend-mode: multiply, normal, normal;
   border-radius: 0;
   filter: none;
@@ -121,10 +124,13 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.f
   background-repeat: repeat, repeat;
   background-blend-mode: multiply, normal;
   border-radius: 0;
-  filter: brightness(2.6);
+  filter: brightness(2.2);
   mix-blend-mode: screen;
-  -webkit-mask-image: var(--srb-wink-pool);
-  mask-image: var(--srb-wink-pool);
+  /* the sparkle sits on the engraving's ridges, near the light only */
+  -webkit-mask-image: var(--srb-wink-pool), var(--etch-map, linear-gradient(#000, #000));
+  mask-image: var(--srb-wink-pool), var(--etch-map, linear-gradient(#000, #000));
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
   -webkit-mask-size: 100% 100%;
   mask-size: 100% 100%;
   -webkit-mask-repeat: no-repeat;
