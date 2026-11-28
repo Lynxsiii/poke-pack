@@ -140,9 +140,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full
   background-position: center, var(--background-x) 0, center;
   background-repeat: no-repeat, no-repeat, no-repeat;
   background-blend-mode: multiply, multiply, normal;
-  filter: brightness(calc(1.8 + var(--pointer-from-center) * 0.4 * max(1, var(--foil-strength, 1))));
+  filter: brightness(calc(1.3 + var(--pointer-from-center) * 0.3 * max(1, var(--foil-strength, 1))));
   mix-blend-mode: screen;
-  opacity: calc(var(--card-opacity) * 0.95 * var(--foil-strength, 1));
+  opacity: calc(var(--card-opacity) * 0.6 * var(--foil-strength, 1));
   /* The flanks baked into one map (make_lit.py: etch x (1 - etch shifted 1.3 px) x the scan's alpha, Live's dot fields
      redrawn as lines first): built here from three mask layers, WebKit dropped the whole lit layer on some cards. */
   -webkit-mask-image: var(--bwfa-flank);
@@ -193,7 +193,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full
   background-blend-mode: normal, normal;
   filter: none;
   mix-blend-mode: hard-light;
-  opacity: calc(var(--card-opacity) * var(--foil-strength, 1));
+  opacity: calc(var(--card-opacity) * 0.42 * var(--foil-strength, 1));
   /* Two layers, no gradient (WebKit dropped whole lit layers with three masks and a gradient): the ink map carries the
      scan's alpha, so it is the art mask too. */
   -webkit-mask-image: var(--bwfa-ink), var(--bwfa-etch);
@@ -284,9 +284,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full
   background-position: center, 0 0, center;
   background-repeat: no-repeat, repeat, no-repeat;
   background-blend-mode: multiply, multiply, normal;
-  filter: brightness(calc(1.2 + var(--pointer-from-center) * 0.3 * max(1, var(--foil-strength, 1))));
+  filter: brightness(calc(1.0 + var(--pointer-from-center) * 0.25 * max(1, var(--foil-strength, 1))));
   mix-blend-mode: screen;
-  opacity: calc(var(--card-opacity) * 0.7 * var(--foil-strength, 1));
+  opacity: calc(var(--card-opacity) * 0.5 * var(--foil-strength, 1));
   -webkit-mask-image: var(--bwfa-flank);
   -webkit-mask-composite: source-over;
   mask-image: var(--bwfa-flank);
@@ -337,7 +337,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full
   background-blend-mode: normal, normal;
   filter: none;
   mix-blend-mode: hard-light;
-  opacity: calc(var(--card-opacity) * 0.85 * var(--foil-strength, 1));
+  opacity: calc(var(--card-opacity) * 0.4 * var(--foil-strength, 1));
   /* The ink map alone: it carries the scan's own alpha (rounded corners), so it is the art mask too. */
   -webkit-mask-image: var(--bwfa-ink);
   -webkit-mask-composite: source-over;
@@ -464,4 +464,12 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.bwfa-promo.lit .foil::before, body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.bwfa-promo.settling .foil::before {
   opacity: calc(0.55 * var(--card-opacity));
+}
+
+/* The shared etch shine (etch-shine.css) on this family: at its default strength the overlay spectrum re-coloured the
+   whole print (N's grey cap went pink, Cobalion's blue body green) and its flecks sat on the Pokémon as glitter. The
+   real card keeps its ink colours between the narrow stripes, so the family holds both parts faint. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art.fam-bw-full-art {
+  --shine-line: 0.1;
+  --shine-glit: 0.1;
 }

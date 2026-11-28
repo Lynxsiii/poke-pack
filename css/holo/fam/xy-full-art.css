@@ -129,7 +129,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full
   background-blend-mode: multiply, normal;
   /* 2026-11-26: was 0.62 + 0.38 at saturate(1.35), which repainted dark art as a pale rainbow (Seismitoad-EX 106/111's
      navy went pink and cyan). The real cards keep their ink under the sheen (Lysandre 104/106 photo). */
-  filter: brightness(calc(0.40 + var(--pointer-from-center) * 0.28)) contrast(1.35) saturate(0.65) contrast(0.8);
+  /* 2026-11-28: 0.40 + 0.28 -> 0.28 + 0.16. The holo check still found the dodge bleaching the full-art Supporters
+     ("rainbow wash bleaches trainer art and faces", 11 cards): skin and pale clothes doubled to white. */
+  filter: brightness(calc(0.28 + var(--pointer-from-center) * 0.16)) contrast(1.35) saturate(0.65) contrast(0.8);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art:not(.xyf-silver).has-foil-map:not(.lit):not(.settling) .foil {
   filter: brightness(0.62) contrast(1.35) saturate(1.1) contrast(0.8);
@@ -177,7 +179,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art.fam-xy-full-art:not(.xyf-silver).has-foil-map .glare {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     hsla(0, 0%, 100%, 0.55) 0%, hsla(0, 0%, 100%, 0.22) 25%, hsla(0, 0%, 100%, 0) 60%);
-  opacity: calc(var(--card-opacity) * 0.8);
+  opacity: calc(var(--card-opacity) * 0.55);
 }
 
 /* ---- The stripe: gold Mega secrets, gold Items and the promos (`xyf-cure`, module `cure: true`) ------------------
@@ -211,7 +213,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-full
   background-blend-mode: normal;
   filter: none;
   mix-blend-mode: hard-light;
-  opacity: calc(var(--card-opacity) * 0.45 * var(--xyf-lift));
+  /* 0.45 -> 0.24 (2026-11-28): the stripe was a painted band across faces and item art */
+  opacity: calc(var(--card-opacity) * 0.24 * var(--xyf-lift));
   /* art silhouette, the card's Live foil map, and the scan's own luminance over a 55% floor: hard-light turns black
      ink coloured, so near-black lettering gets only the floor's share of the stripe and stays readable and matte */
   -webkit-mask-image: var(--art), var(--foil-map), var(--art), var(--xyf-floor-lt);
