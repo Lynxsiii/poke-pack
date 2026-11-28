@@ -160,6 +160,7 @@ export function fits(def, what) {
   if (what.endsWith("!rule")) return def.kind === "pokemon" && !def.rule && fits(def, what.slice(0, -5));
   if (what.endsWith("!ex")) return def.kind === "pokemon" && def.box !== "ex" && fits(def, what.slice(0, -3));
   if (what.endsWith("!gx")) return def.kind === "pokemon" && def.box !== "GX" && fits(def, what.slice(0, -3));
+  if (what.startsWith("resist=")) return def.kind === "pokemon" && def.resistance?.type === what.slice(7);
   if (what.startsWith("ability=")) return def.kind === "pokemon" && def.abilityName === what.slice(8);
   if (what.startsWith("name=")) return def.kind === "pokemon" && def.name === what.slice(5);
   // A card of any kind by its name ("an Ethan's Adventure card", "Spiky Energy cards"); "not:" what doesn't fit.
@@ -200,7 +201,7 @@ export const T_OPS = {
       const look = top === "prizes" ? side.prizes.length + theirs(ctx).prizes.length : top;
       const pool = look ? side.deck.slice(0, look) : bottom ? side.deck.slice(-bottom) : side.deck.slice(skipTop);
       const room = to === "bench" ? benchMax(ctx.state, ctx.player) - side.bench.length : Infinity;
-      const many = n === "all" ? pool.length : n;
+      const many = n === "all" ? pool.length : n === "bench" ? side.bench.length : n;
       askChoose(ctx.state, { player: ctx.player, zone: "deck", what, uids: fitting(ctx, pool, what), min: 0, max: Math.min(many, room), effect: { op: to === "bench" ? "toBench" : to === "top" ? "deckTop" : "toHand", ...(asBasic ? { asBasic } : {}) }, ...(rule ? { rule } : {}), ...(rest ? { restBottom: look } : { shuffle: true }) });
     },
   },
@@ -429,6 +430,17 @@ export const T_OPS = {
     run(ctx) {
       const uids = mine(ctx).deck.filter((uid) => defOf(ctx.state, uid, ctx.defs)?.line === 1 && evolveSpots(ctx.state, ctx.player, defOf(ctx.state, uid, ctx.defs), ctx.defs).length > 0);
       askChoose(ctx.state, { player: ctx.player, zone: "deck", what: "evolution", uids, min: 0, max: 1, effect: { op: "evolveFrom", how: {}, tree: true }, shuffle: true });
+    },
+  },
+  /** "For each of your Benched Pokémon, search your deck for a card that evolves from that Pokémon": a search for each. */
+  evolveEach: {
+    ready: (ctx) => hasDeck(ctx) && mine(ctx).bench.length > 0,
+    run(ctx) {
+      const side = mine(ctx);
+      side.bench.forEach((slot, spot) => {
+        const uids = side.deck.filter((uid) => evolveSpots(ctx.state, ctx.player, defOf(ctx.state, uid, ctx.defs), ctx.defs, {}, "").includes(spot));
+        if (uids.length) askChoose(ctx.state, { player: ctx.player, zone: "deck", what: "evolution", uids, min: 0, max: 1, effect: { op: "evolveFrom", how: {}, at: spot }, shuffle: true });
+      });
     },
   },
   evolveDeck: {
@@ -743,7 +755,7 @@ export const T_OPS = {
     ready: (ctx, step) => bounceSpots(ctx, step).length > 0,
     run(ctx, step) {
       const spots = bounceSpots(ctx, step);
-      if (spots.length) askPick(ctx.state, { player: ctx.player, side: ctx.player, spots, left: 1, effect: { op: "bounce", keep: step.keep } });
+      if (spots.length) askPick(ctx.state, { player: ctx.player, side: ctx.player, spots, left: 1, effect: step.to === "deck" ? { op: "shuffleIn" } : { op: "bounce", keep: step.keep } });
     },
   },
   /**
@@ -1785,10 +1797,12 @@ export const T_OPS = {
   /** Energy Swatter: their hand is revealed, and you put an Energy card from it on the bottom of their deck. */
   foeHandEnergyBottom: {
     ready: (ctx) => theirs(ctx).hand.length > 0,
-    run(ctx) {
+    // `what`: the kind of card that goes ("an Item card you find there"); Energy by default.
+    run(ctx, { what = "energy" } = {}) {
       const hand = theirs(ctx).hand.slice();
       ctx.events.push({ t: "reveal-hand", p: other(ctx.player), uids: hand });
-      askChoose(ctx.state, { player: ctx.player, owner: other(ctx.player), zone: "hand", what: "energy", uids: fitting(ctx, hand, "energy"), min: 1, max: 1, effect: { op: "toBottom" }, seen: hand });
+      const uids = fitting(ctx, hand, what);
+      askChoose(ctx.state, { player: ctx.player, owner: other(ctx.player), zone: "hand", what, uids, min: Math.min(1, uids.length), max: 1, effect: { op: "toBottom" }, seen: hand });
     },
   },
   /** A protection on 1 of your Pokémon until the end of your opponent's next turn (`mark` as engine.js marks read it). */
@@ -1925,10 +1939,10 @@ function healable(ctx, step) {
 }
 
 /** "Put 1 of your Pokémon into your hand": never the last one you have in play. */
-const bounceSpots = (ctx, { basicOnly = false, hurt: damaged = false }) => {
+const bounceSpots = (ctx, { basicOnly = false, hurt: damaged = false, bench = false }) => {
   const all = inPlay(ctx.state, ctx.player);
   if (all.length < 2) return [];
-  return all.filter(([slot]) => (!basicOnly || (!slot.under.length && defOf(ctx.state, slot.uid, ctx.defs).stage === "basic")) && (!damaged || slot.damage > 0)).map(([, spot]) => spot);
+  return all.filter(([slot, spot]) => (!bench || spot !== ACTIVE) && (!basicOnly || (!slot.under.length && defOf(ctx.state, slot.uid, ctx.defs).stage === "basic")) && (!damaged || slot.damage > 0)).map(([, spot]) => spot);
 };
 
 /**
