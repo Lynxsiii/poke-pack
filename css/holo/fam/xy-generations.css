@@ -60,7 +60,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-gene
       hsl(52, 95%, 60%) 8.4%, hsl(130, 80%, 54%) 10.6%, hsl(188, 95%, 58%) 12.8%, hsl(228, 95%, 66%) 15%,
       hsl(0, 0%, 24%) 17.2%, hsl(0, 0%, 24%) 19%),
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsl(0, 0%, 100%) 0%, hsl(0, 0%, 72%) 40%, hsl(0, 0%, 42%) 100%);
+      hsl(0, 0%, 100%) 0%, hsl(0, 0%, 66%) 22%, hsl(0, 0%, 36%) 50%, hsl(0, 0%, 22%) 100%);
+  /* round 2 (2026-11-28): the pool fell only to 42 % and the pale pictures dodged to white edge to edge (Dedenne RC10:
+     "art washed white"). 22 % at the far corner, and a quieter rest. */
   background-size: 220% 220%, 100% 100%;
   background-position:
     calc(((var(--background-x) - 50%) * 1.5) + 50%) calc(((var(--background-y) - 50%) * 1.5) + 50%),
@@ -88,8 +90,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-gene
   mask-repeat: no-repeat, no-repeat;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-generations.fam-xy-generations.fam-xy-generations.fam-xy-generations.xygen-rc.xygen-rc:not(.lit):not(.settling) .foil {
-  filter: brightness(0.5) saturate(0.5);
-  opacity: calc(0.45 * var(--foil-strength, 1));
+  filter: brightness(0.42) saturate(0.5);
+  opacity: calc(0.36 * var(--foil-strength, 1));
 }
 /* The white-hot core of the reflection (screened: it lifts dark ink too, the way the lamp shows in a mirror). */
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-generations.fam-xy-generations.fam-xy-generations.fam-xy-generations.xygen-rc.xygen-rc .cure {

@@ -706,6 +706,14 @@ cure"). The surface gloss throws a soft highlight.
   (`scripts/fam/swsh-sf-shiny/make_bg_maps.py`: Live map × scan whiteness × edge-connected regions) and mask the
   foil with it; keep sparkle off the figure.
 
+- **A lamp pool that only falls to 40-46 % is a wash (XY round 2, 2026-11-28).** A colour-dodge or screen layer
+  whose pointer pool stays near half strength at the far corner lifts and tints the whole face ("milky / pastel
+  wash", 40 XY full arts, the Sheen holos, the Radiant Collection). Let the pool fall to about 20 % and mask
+  stripes, sparkle and shard flashes by the same pool; give the rest state a flat ground of its own (the pointer
+  rests at the centre, so a lit pool would draw a bright middle). The shared `.shine` / `.relief` also need turning
+  down per family (`--shine-glit`, `--relief`) or they re-add the wash. A hard-light field under 30 % grey is a
+  multiply by half: it turned Evolutions' light backgrounds dark; keep a metal field within 10 % of mid grey.
+
 ## What has shipped, set by set
 
 Each set thread wrote its research and what it shipped in `reference/`.
