@@ -43,7 +43,7 @@ const LIVE_MAP = new Set([
 export function claims(card) {
   if (!card || card.reverse || card.pattern) return false;
   // me55 too since 2026-11-28: celebration.css's dodged sun-pillar washed the 30th Celebration IRs white under the lamp
-  if (!/^me(\d(pt5)?|55)-/.test(String(card.id || ""))) return false;
+  if (!/^j?me(\d(pt5)?[a-z]?|55)-/.test(String(card.id || ""))) return false;
   // (the three 30th Celebration promos with no map of their own, MEP 102, 103 and 106, are claimed too since the
   // recipe became an overlay round the light: celebration.css blew them out white and drew a diagonal sparkle stripe)
   return card.rarity === "Illustration Rare";
