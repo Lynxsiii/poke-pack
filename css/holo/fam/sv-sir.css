@@ -181,7 +181,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-sir.fam-sv-sir.fam-sv-sir.foil-sir.has-
     center;
   background-repeat: repeat, repeat, no-repeat;
   background-blend-mode: normal;
-  mix-blend-mode: hard-light;
+  /* overlay, not hard-light (2026-11-28 per-card review: "sand grain and haze over dark art"): a hard-lit glint is
+     white on any ink; overlaid it lights the paint it sits on and leaves the darks dark */
+  mix-blend-mode: overlay;
   filter: hue-rotate(calc(var(--rotate-x) * 5 + var(--rotate-y) * 3));
   -webkit-mask-image: var(--art), var(--svsir-pool), var(--svsir-mask), var(--svsir-mask);
   -webkit-mask-composite: source-in, source-in, source-over, source-over;
@@ -235,5 +237,5 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-sir.fam-sv-sir.fam-sv-sir.foil-sir.has-
 /* 2026-11-23, Noah: "a lot of cards lost their etched art". The etch sheen above was too dim to see on a phone, so
    under the light the dodge group runs near full and Live's etch lines read across the whole painting. */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-sir.fam-sv-sir.fam-sv-sir.foil-sir.has-foil-map:is(.lit, .settling) .foil {
-  opacity: calc((0.6 + var(--card-opacity) * 0.4) * var(--foil-strength, 1));
+  opacity: calc((0.6 + var(--card-opacity) * 0.22) * var(--foil-strength, 1));
 }
