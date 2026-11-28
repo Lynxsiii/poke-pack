@@ -37,8 +37,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-rain
   /* the hot spot under it: a soft warm lift, grooves included, so the area near the lamp reads brighter */
   --smrb-spot: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     rgb(48, 47, 42) 0%, rgb(34, 33, 30) 10%, rgb(14, 14, 12) 26%, #000 42%);
-  --smrb-rest: 0.35;
-  --smrb-lit: 0.72;
+  /* 2026-11-28: rest 0.35 and lit 0.72 before; the site review judged the early sets "rainbow foil barely visible
+     when lit" (the whole family measured the same: about 1.5 L* of change over the card) */
+  --smrb-rest: 0.5;
+  --smrb-lit: 1;
   /* the shared etch shine: the print already carries the rainbow, so a faint colour on the lines and little glitter */
   --shine-line: 0.15;
   --shine-glit: 0.3;
@@ -113,19 +115,32 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-rain
   opacity: calc(var(--card-opacity) * clamp(0, calc(0.6 + var(--pointer-from-center) * 0.6), 1));
 }
 
-/* ---- .glare: a faint gloss that fades to nothing ------------------------------------------------------------------ */
+/* ---- .glare: the ridges glinting round the light ------------------------------------------------------------------
+   2026-11-28: was a faint soft-light gloss with no mask, and the lit card looked like the resting one. Inside the
+   soft-light group above nothing can lift a pale pastel far, so the glint is drawn here: a white pool round the light,
+   overlaid (dark ink and text keep), on the etch's crests only (the etch twice in the mask: lines, not a milk). */
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-rainbow.fam-sm-rainbow.fam-sm-rainbow.fam-sm-rainbow.foil-ir .glare {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.15) 26%, rgba(255, 255, 255, 0) 55%);
+    rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.8) 18%, rgba(255, 255, 255, 0.3) 42%, rgba(255, 255, 255, 0) 68%);
   background-size: 100% 100%;
   background-position: center;
-  mix-blend-mode: soft-light;
+  background-repeat: no-repeat;
+  mix-blend-mode: overlay;
   filter: none;
   clip-path: none;
   border-radius: 0;
-  -webkit-mask-image: none;
-  mask-image: none;
-  opacity: calc(var(--card-opacity) * 0.6);
+  -webkit-mask-image: var(--art), var(--foil-map), var(--smr-etch), var(--smr-etch);
+  -webkit-mask-composite: source-in, source-in, source-in, source-over;
+  mask-image: var(--art), var(--foil-map), var(--smr-etch), var(--smr-etch);
+  mask-composite: intersect, intersect, intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%, var(--smr-etch-size), var(--smr-etch-size);
+  mask-size: contain, 100% 100%, var(--smr-etch-size), var(--smr-etch-size);
+  -webkit-mask-position: center, center, var(--smr-etch-pos), var(--smr-etch-pos);
+  mask-position: center, center, var(--smr-etch-pos), var(--smr-etch-pos);
+  -webkit-mask-repeat: no-repeat, no-repeat, var(--smr-etch-repeat), var(--smr-etch-repeat);
+  mask-repeat: no-repeat, no-repeat, var(--smr-etch-repeat), var(--smr-etch-repeat);
+  opacity: calc(var(--card-opacity) * 0.62);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.fam-sm-rainbow.fam-sm-rainbow.fam-sm-rainbow.fam-sm-rainbow.foil-ir .glare::after {
   background: none;
