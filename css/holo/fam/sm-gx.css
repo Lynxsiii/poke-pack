@@ -174,10 +174,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm
   filter: none;
   mix-blend-mode: color-dodge;
   /* a gain on the facets (the relief as alpha): pale ink and silver glint, dark ink stays dark */
-  /* the facets x (the map + a 0.45 floor): the Pokémon takes the relief at half, the GX bar keeps its print */
-  -webkit-mask-image: var(--art), var(--sgx-pebble-a), var(--foil-map), linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45));
+  /* the facets x (the map + a 0.18 floor): the Pokémon takes a trace of the relief, the GX bar keeps its print */
+  -webkit-mask-image: var(--art), var(--sgx-pebble-a), var(--foil-map), linear-gradient(rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.18));
   -webkit-mask-composite: source-in, source-in, source-over, source-over;
-  mask-image: var(--art), var(--sgx-pebble-a), var(--foil-map), linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45));
+  mask-image: var(--art), var(--sgx-pebble-a), var(--foil-map), linear-gradient(rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.18));
   mask-composite: intersect, intersect, add, add;
   mask-mode: alpha;
   -webkit-mask-size: contain, 30% auto, 100% 100%, 100% 100%;
@@ -186,7 +186,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm
   mask-position: center, var(--sgx-seed), center, center;
   -webkit-mask-repeat: no-repeat, repeat, no-repeat, no-repeat;
   mask-repeat: no-repeat, repeat, no-repeat, no-repeat;
-  opacity: calc(var(--card-opacity, 0) * 0.85);
+  /* 2026-11-28: floor 0.45 and 0.85 before: the facet gain hazed a pale Pokémon beside the light (Dedenne sm10 57's
+     face went grey, Venomoth sm10 12 pink-white). The Pokémon is matte: a trace only. */
+  opacity: calc(var(--card-opacity, 0) * 0.6);
 }
 /* ---- At rest: the grey-silver ring, a faint grain, a faint band tint ------------------------------------------ */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx:not(.lit):not(.settling) .foil {
