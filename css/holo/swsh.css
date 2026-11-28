@@ -244,11 +244,13 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.s
   background-blend-mode: screen, multiply, multiply;
   filter: brightness(calc(0.5 + var(--pointer-from-center) * 0.25)) contrast(1.7) saturate(0.6);
   mix-blend-mode: color-dodge;
-  opacity: calc(var(--card-opacity) * 0.36 * var(--foil-strength, 1));
+  /* 2026-11-28: 0.36 to 0.15, rest 0.1 to 0.03. With no map the flecks lie over the Pokémon as a crackle web (every
+     Classic Collection card of the per-card review); until each has a cut-out they are a faint sparkle near the light. */
+  opacity: calc(var(--card-opacity) * 0.15 * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-classic:not(.lit):not(.settling) .foil {
   filter: brightness(0.9) contrast(1.5) saturate(0.5);
-  opacity: calc(0.1 * var(--foil-strength, 1));
+  opacity: calc(0.03 * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-classic .foil::before {
   background-image: none;

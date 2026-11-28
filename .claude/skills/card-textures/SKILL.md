@@ -338,6 +338,18 @@ cure"). The surface gloss throws a soft highlight.
   A light that must stay off the border (the BW EX pillar) is clamped to the middle of the card: on the frame, with the
   Pokemon filling the rest, it reads as a rainbow stripe stuck to the card's edge. Crisp 2 % spectral lines (flat BW
   full arts) get a `filter: blur()` of about 1.4 % of the card so they read as bands.
+- **The shared etch shine is a saturated spectrum in `overlay`: it olive-tints dark ink and blotches a blurred etch.**
+  The 2026-11-28 full-site review of Sword & Shield traced four "different" faults to `.shine` (etch-shine.css) riding
+  on every `has-etch-map` face: black coats and hair gone olive/brown on full-art Supporters (overlay doubles two
+  channels of a dark grey and zeroes the third), a uniform diagonal rainbow stripe on their silver frames, cloud
+  blotches over every Radiant (their etch is a blurred `-etch-v3` map) and tinted wavy lines on Amazing Rares and VMAX.
+  A family that draws its own colour sets `--shine-line: 0; --shine-glit: 0` (and a small `--relief`) on its own
+  selector. Also: a periodic line strip, however band-limited, reads as a line screen at phone size (the SWSH Rare Holo:
+  use `scripts/fam/swsh-holo/make_grain.py`, noise with no period); a dodged etch needs the map squared and a low
+  opacity or its grey ground is a milky wash and its maze/diamond fields show white (rainbow rares); a `-etch-v3`
+  map is blotches, never ridges: give those faces a `-soft` class and nearly no relief; gold gets no glitter tile at
+  all, and lit etch lines multiplied by the scan (`var(--art)` as the top background layer, `multiply`) leave black
+  ink black.
 - **A Japanese full art with no map is foil edge to edge.** With no foilMap a full art gets the white `full.webp`, so
   skin and faces take every band and tint (Supporter full arts read as a diagonal hatch over the face). Since the
   English lettering can be painted out (`jp_twin_maps.py --clean-text`), full arts take their English twin's foil

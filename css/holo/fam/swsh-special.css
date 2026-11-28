@@ -17,10 +17,11 @@
  */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-cel.has-foil-map {
   --ssp-grain: url("/assets/foil/glitter-fine.webp");
-  --ssp-gap: rgb(218, 219, 222);
+  /* 2026-11-28: the silver multiply lightened (gap 218 to 234, far end 210 to 230): it muddied Mew 025's gold */
+  --ssp-gap: rgb(234, 235, 237);
   --ssp-light: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    rgb(254, 254, 254) 0%, rgb(244, 244, 245) 16%, rgb(222, 223, 226) 46%, rgb(210, 211, 214) 100%);
-  --ssp-rest: linear-gradient(rgb(234, 234, 236), rgb(226, 226, 229));
+    rgb(254, 254, 254) 0%, rgb(248, 248, 249) 16%, rgb(236, 237, 239) 46%, rgb(230, 231, 233) 100%);
+  --ssp-rest: linear-gradient(rgb(244, 244, 245), rgb(240, 240, 242));
   /* 2026-11-28: two broad rays and a thin one instead of one narrow streak that usually fell outside the window
      ("foil invisible when lit", per-card review), in a pool that reaches most of the window. */
   --ssp-tint: linear-gradient(112deg,
@@ -36,7 +37,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-spe
     rgb(88, 62, 156) 53.4%, transparent 56%,
     transparent 66%, rgb(130, 88, 38) 68%, rgb(38, 92, 136) 70.5%, rgb(96, 66, 150) 73%, transparent 75%);
   --ssp-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    #000 0%, #000 24%, rgba(0, 0, 0, 0.6) 46%, rgba(0, 0, 0, 0.22) 70%, rgba(0, 0, 0, 0.08) 100%);
+    #000 0%, #000 18%, rgba(0, 0, 0, 0.5) 36%, rgba(0, 0, 0, 0.1) 54%, transparent 70%);
+  /* 2026-11-28: the pool ends 70% out: the rays showed as a rainbow smear by the 25 stamp, far from the light */
   --ssp-size: 210% 210%;
   --ssp-pos: clamp(0%, calc((var(--background-x) - 50%) * 2.2 + 50%), 100%) clamp(0%, calc((var(--background-y) - 50%) * 1.2 + 50%), 100%);
 }
@@ -134,7 +136,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-spe
   mask-position: center;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-  opacity: calc(var(--card-opacity) * 0.85 * min(1, var(--foil-strength, 1)));
+  opacity: calc(var(--card-opacity) * 0.6 * min(1, var(--foil-strength, 1)));
 }
 
 /* ---- ssp-cc: Classic Collection window holos, "Confetti Holofoil" (7 faces) ---------------------------------------
@@ -155,10 +157,12 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-spe
   --ssp-flake-size: 100% 100%, 34% auto;
   --ssp-flake-pos: center, calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
   --ssp-flake-rep: no-repeat, repeat;
-  --ssp-gap: rgb(226, 227, 229);
+  /* 2026-11-28: the mottled silver nearly flat (gap 226 to 242) and the dodged flakes at 0.24: with no map the flakes
+     lay over the Pokémon as a crackle (per-card review) */
+  --ssp-gap: rgb(242, 242, 243);
   --ssp-light: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    rgb(254, 254, 254) 0%, rgb(246, 246, 247) 16%, rgb(230, 231, 233) 46%, rgb(220, 221, 224) 100%);
-  --ssp-rest: linear-gradient(rgb(240, 240, 241), rgb(234, 234, 236));
+    rgb(254, 254, 254) 0%, rgb(250, 250, 250) 16%, rgb(242, 242, 243) 46%, rgb(238, 238, 240) 100%);
+  --ssp-rest: linear-gradient(rgb(248, 248, 248), rgb(245, 245, 246));
   --ssp-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     #000 0%, #000 16%, rgba(0, 0, 0, 0.5) 38%, rgba(0, 0, 0, 0.1) 62%, transparent 80%);
 }
@@ -229,7 +233,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-spe
   mask-position: center;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-  opacity: calc(var(--card-opacity) * 0.5 * min(1, var(--foil-strength, 1)));
+  opacity: calc(var(--card-opacity) * 0.38 * min(1, var(--foil-strength, 1)));
 }
 
 /* ---- ssp-rad: Radiant Rares (15 faces) ------------------------------------------------------------------------------
@@ -255,7 +259,14 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-spe
 body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-rad.has-foil-map {
   /* inside the yellow border (plain print on the real card): 23 / 600 px across, 23 / 838 down on the scans */
   --ssp-rad-clip: inset(2.75% 3.85% round 1.2%);
-  --ssp-grain-lift: url("/assets/foil/fam/swsh-special/grain-v1.webp");
+  /* 2026-11-28: the shared etch shine and relief off: on the Radiants' blurred etch map they were cloud blotches over
+     the art and the text box */
+  --shine-line: 0;
+  --shine-glit: 0;
+  --relief: 0;
+  /* 2026-11-28: the sparkle grain tile is gone from the bands (flat grey in its place): it read as a blotchy glitter
+     wash over the art and the text box */
+  --ssp-grain-lift: linear-gradient(rgb(150, 150, 150), rgb(150, 150, 150));
   --ssp-band-a: repeating-linear-gradient(45deg, 
     rgb(0, 0, 0) 0cqw, rgb(0, 0, 0) 5cqw, rgb(156, 156, 156) 8.5cqw, rgb(232, 232, 232) 11.5cqw, 
     rgb(156, 156, 156) 14.5cqw, rgb(0, 0, 0) 18cqw, rgb(0, 0, 0) 23cqw);
@@ -297,7 +308,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-spe
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   /* 2026-11-26: x0.62, the bands at full strength washed the whole face yellow (Radiant Eternatus, Hawlucha) */
-  opacity: calc(min(1, 0.6 + var(--card-opacity) * 0.6) * 0.62 * min(1, var(--foil-strength, 1)));
+  /* 2026-11-28: 0.62 to 0.3 (a blotchy glitter wash over the art and the text box on every Radiant) */
+  opacity: calc(min(1, 0.6 + var(--card-opacity) * 0.6) * 0.38 * min(1, var(--foil-strength, 1)));
 }
 /* Resting: the bands dimly on the foil, no colour. */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-rad.has-foil-map:not(.lit):not(.settling) .foil {
@@ -308,7 +320,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-spe
   background-repeat: no-repeat, repeat, no-repeat, no-repeat;
   background-blend-mode: multiply, multiply, screen, normal;
   filter: none;
-  opacity: min(1, var(--foil-strength, 1));
+  opacity: calc(0.5 * min(1, var(--foil-strength, 1)));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-rad.has-foil-map .foil::before,
 body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-rad.has-foil-map .foil::after,
@@ -346,10 +358,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-spe
   mask-position: center;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-  opacity: calc(min(1, 0.7 + var(--card-opacity) * 0.4) * 0.6 * min(1, var(--foil-strength, 1)));
+  opacity: calc(min(1, 0.7 + var(--card-opacity) * 0.4) * 0.4 * min(1, var(--foil-strength, 1)));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-rad.has-foil-map:not(.lit):not(.settling) .glare {
-  opacity: calc(0.6 * min(1, var(--foil-strength, 1)));
+  opacity: calc(0.4 * min(1, var(--foil-strength, 1)));
 }
 
 /* ---- ssp-am: Amazing Rares (9 faces) --------------------------------------------------------------------------------
@@ -369,6 +381,11 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-spe
   --ssp-am-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     #fff 0%, rgb(225, 225, 225) 20%, rgb(150, 150, 150) 48%, rgb(90, 90, 90) 100%);
   --ssp-am-win: inset(9.8% 7% 51% 7%);
+  /* 2026-11-28: the etch over the Pokémon read as wavy lines, rings and a line screen: the shared spectrum and flecks
+     off, the relief and the family's own etch light a touch */
+  --shine-line: 0;
+  --shine-glit: 0;
+  --relief: 0.12;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.fam-swsh-special.era-swsh.ssp-am.has-foil-map .foil {
   background-color: transparent;
@@ -440,5 +457,5 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-swsh-special.fam-swsh-special.fam-swsh-spe
   mask-position: center;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-  opacity: calc(var(--card-opacity) * min(1, var(--foil-strength, 1)));
+  opacity: calc(var(--card-opacity) * 0.4 * min(1, var(--foil-strength, 1)));
 }

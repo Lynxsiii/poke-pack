@@ -41,6 +41,8 @@ export function famExtras(card, url, base) {
   if (!claims(card, base)) return null;
   const classes = ["fam-swsh-v"];
   if ((card.subtypes || []).includes("V-UNION")) classes.push("svv-union");
+  // The Japanese scans are photos of the foil print (its bands are in the picture): the added bands a touch only.
+  if (/^j/.test(String(card.id || ""))) classes.push("svv-photo");
   const style = `--svv-grain:url('${url(`${DIR}/grain-v1.webp`)}')`;
   return { classes: classes.join(" "), style, cure: false };
 }
