@@ -23,7 +23,7 @@
  *   coinFaces()         { heads, tails } art of the equipped coin, or null for the house coin
  */
 
-import { ACTIVE, FORMATS, RuleError, abilityBlock, abilityOn, apply, attacksOf, canRetreat, dropBlock, conditionsOn, createGame, damageAfterTyping, defOf, energyOf, hpLeft, legalActions, markOn, marksOn, maxHp, other, retreatCost, shieldOn, stadiumBlock, toolOf, trainerBlock, usableAttacks } from "./tcg/engine.js";
+import { ACTIVE, FORMATS, RuleError, abilityBlock, abilityOn, apply, attacksOf, canRetreat, costFor, dropBlock, conditionsOn, createGame, damageAfterTyping, defOf, energyOf, hpLeft, legalActions, markOn, marksOn, maxHp, other, retreatCost, shieldOn, stadiumBlock, toolOf, trainerBlock, unpaid, usableAttacks } from "./tcg/engine.js";
 import { ENERGY_TYPES, FREE_ENERGY, createDefs, isFreeEnergy } from "./tcg/cards.js";
 import { botAction } from "./tcg/bot.js";
 import { MAX_DECKS, buildBotDeck, buildDeck, checkDeck, deckList, deckSize, notLegal, roomFor, rulesOf } from "./tcg/decks.js";
@@ -527,7 +527,7 @@ export function initTcg(deps) {
           ${def.kind === "trainer" ? `<p class="tg-look-meta">${{ item: "Item", supporter: "Supporter: one a turn", stadium: "Stadium", tool: "Pokémon Tool" }[def.sub]}</p>${def.text ? `<p class="tg-look-text">${esc(def.text)}</p>` : ""}${def.why ? `<p class="tg-look-note">${esc(def.why)}</p>` : ""}` : ""}
           ${def.kind === "energy" && !def.basic ? `<p class="tg-look-meta">Special Energy</p>${def.text ? `<p class="tg-look-text">${esc(def.text)}</p>` : ""}${def.why ? `<p class="tg-look-note">${esc(def.why)}</p>` : ""}` : ""}
           ${extra}${body}
-          <button type="button" class="ghost sm" data-close>Close</button>
+          <div class="tg-links"><button type="button" class="tg-link" data-close>Close</button></div>
         </div>
       </div>`;
   }
@@ -635,7 +635,7 @@ export function initTcg(deps) {
     if (!step) return "";
     const talk = !step.want && !step.pick;
     return `<div class="tg-coach" role="status">
-      <span class="tg-coach-bar" aria-hidden="true"><i style="transform:scaleX(${((match.lesson + 1) / LESSON.length).toFixed(3)})"></i></span>
+      <span class="tg-coach-top"><em class="tg-coach-lab">Coach</em><span class="tg-coach-bar" aria-hidden="true"><i style="transform:scaleX(${((match.lesson + 1) / LESSON.length).toFixed(3)})"></i></span><small>${match.lesson + 1} of ${LESSON.length}</small></span>
       <p>${esc(step.say)}</p>
       ${talk ? `<button type="button" class="solid sm" data-act="coach-next">${step.free ? "Got it" : "Next"}</button>` : ""}
     </div>`;
@@ -672,11 +672,11 @@ export function initTcg(deps) {
     const how = slot && d(slot.uid).fossil?.drop;
     if (!how) return "";
     const why = !myTurn() ? "Wait for your turn." : dropWhy(match.state, spot);
-    return `<div class="tg-abil">
-      <span class="tg-abil-top"><em>Trainer</em><b>${how === "bottom" ? "To the bottom of your deck" : "Discard from play"}</b><button type="button" class="solid sm" data-act="drop" data-spot="${spot}"${why ? " disabled" : ""}>${how === "bottom" ? "Put back" : "Discard"}</button></span>
+    return `<button type="button" class="tg-atk tg-abil" data-act="drop" data-spot="${spot}"${why ? " disabled" : ""}>
+      <span class="tg-atk-top"><i class="tg-tag">Trainer</i><b>${how === "bottom" ? "To the bottom of your deck" : "Discard from play"}</b><em class="tg-atk-do">${how === "bottom" ? "Put back" : "Discard"}</em></span>
       <span class="tg-atk-text">${how === "bottom" ? "Its cards go to the discard pile and it goes to the bottom of your deck." : "It and its cards go to the discard pile. This isn't a Knock Out: no Prize card."}</span>
       ${why ? `<span class="tg-atk-why">${esc(why)}</span>` : ""}
-    </div>`;
+    </button>`;
   }
   const stadiumWhy = (state) => (match.online ? (serverLegal((a) => a.type === "stadium") ? "" : "Can't be used right now.") : stadiumBlock(state, ME, defs));
   const trainerWhy = (state, def) => (match.online ? "" : trainerBlock(state, ME, def, defs));
@@ -947,12 +947,28 @@ export function initTcg(deps) {
     if (!ability) return "";
     const why = !ability.use ? "" : !myTurn() ? "Wait for your turn." : abilityWhy(state, spot);
     const off = !abilityOn(state, slot, defs);
-    return `<div class="tg-abil${off ? " off" : ""}">
-      <span class="tg-abil-top"><em>${esc(ability.kind)}</em><b>${esc(ability.name)}</b>${ability.use ? `<button type="button" class="solid sm" data-act="ability-use" data-spot="${spot}"${why ? " disabled" : ""}>Use</button>` : ""}</span>
+    const tag = `<i class="tg-tag">${esc(ability.kind)}</i>`;
+    // One the player uses is a row to press, like an attack; one that just works is a straight box that says so.
+    if (ability.use) {
+      return `<button type="button" class="tg-atk tg-abil${off ? " off" : ""}" data-act="ability-use" data-spot="${spot}"${why ? " disabled" : ""}>
+      <span class="tg-atk-top">${tag}<b>${esc(ability.name)}</b><em class="tg-atk-do">Use</em></span>
       <span class="tg-atk-text">${esc(ability.text)}</span>
-      ${why ? `<span class="tg-atk-why">${esc(why)}</span>` : !ability.use && !ability.enter ? `<span class="tg-atk-why on">${off ? "Not working right now" : "Always on"}</span>` : ""}
+      ${why ? `<span class="tg-atk-why">${esc(why)}</span>` : ""}
+    </button>`;
+    }
+    return `<div class="tg-abil is-info${off ? " off" : ""}">
+      <span class="tg-atk-top">${tag}<b>${esc(ability.name)}</b>${ability.enter ? "" : `<small>${off ? "Not working right now" : "Always on"}</small>`}</span>
+      <span class="tg-atk-text">${esc(ability.text)}</span>
     </div>`;
   }
+
+  /** A sheet's head: the name large, a short fact at the right. */
+  const sheetHead = (name, meta = "") => `<header class="tg-sheet-head"><h3>${esc(name)}</h3>${meta ? `<span class="tg-sheet-meta">${meta}</span>` : ""}</header>`;
+  /** A Pokémon in play: its HP as words, and the Energy on it. */
+  const monMeta = (state, slot) => {
+    const units = energyOf(state, slot, defs);
+    return `${units.length ? `<span class="tg-pips">${pipRow(units, 5)}</span>` : ""}<span>${hpLeft(state, slot, defs)} of ${maxHp(state, slot, defs)} HP</span>`;
+  };
 
   /** A Benched Pokémon with an Ability to use: read it, use it, or look at the card. */
   function abilitySheetHtml() {
@@ -961,13 +977,12 @@ export function initTcg(deps) {
     if (!slot) return "";
     const def = d(slot.uid);
     return `<div class="tg-sheet-bg" data-act="cancel"></div>
-      <div class="tg-sheet tg-stadium-sheet tg-abil-sheet" role="dialog" aria-label="${esc(def.name)}">
-        <img src="${img(state.cards[slot.uid], true)}" alt="" draggable="false" />
-        <div>
-          <h3>${esc(def.name)}</h3>
+      <div class="tg-sheet tg-attacks tg-abil-sheet" role="dialog" aria-label="${esc(def.name)}">
+        ${sheetHead(def.name, monMeta(state, slot))}
+        <div class="tg-rows">
           ${abilityRowHtml(match.sheetSpot)}
           ${dropRowHtml(match.sheetSpot)}
-          <div class="tg-sheet-keys"><button type="button" class="ghost sm" data-act="look-spot">View card</button><button type="button" class="ghost sm" data-act="cancel">Close</button></div>
+          <div class="tg-links"><button type="button" class="tg-link" data-act="look-spot">View card</button><button type="button" class="tg-link" data-act="cancel">Close</button></div>
         </div>
       </div>`;
   }
@@ -978,14 +993,16 @@ export function initTcg(deps) {
     const why = def.stadium?.use ? (myTurn() ? stadiumWhy(state) : "Wait for your turn.") : "";
     return `<div class="tg-sheet-bg" data-act="cancel"></div>
       <div class="tg-sheet tg-stadium-sheet" role="dialog" aria-label="${esc(def.name)}">
-        <img src="${img(state.cards[state.stadium.uid], true)}" alt="" draggable="false" />
-        <div>
-          <h3>${esc(def.name)}</h3>
-          <p class="tg-look-meta">Stadium, played by ${state.stadium.owner === ME ? "you" : foeName()}. It affects both players.</p>
-          <p class="tg-look-text">${esc(def.text)}</p>
-          ${why && def.stadium?.use ? `<p class="tg-look-note">${esc(why)}</p>` : ""}
-          <div class="tg-sheet-keys">${def.stadium?.use ? `<button type="button" class="solid sm" data-act="stadium-use"${why ? " disabled" : ""}>Use</button>` : ""}<button type="button" class="ghost sm" data-act="cancel">Close</button></div>
+        ${sheetHead(def.name, `<span>Stadium</span>`)}
+        <div class="tg-stadium-body">
+          <img src="${img(state.cards[state.stadium.uid], true)}" alt="" draggable="false" />
+          <div>
+            <p class="tg-look-meta">Played by ${state.stadium.owner === ME ? "you" : foeName()}. It affects both players.</p>
+            <p class="tg-look-text">${esc(def.text)}</p>
+            ${why && def.stadium?.use ? `<p class="tg-look-note">${esc(why)}</p>` : ""}
+          </div>
         </div>
+        <div class="tg-sheet-keys">${def.stadium?.use ? `<button type="button" class="solid sm" data-act="stadium-use"${why ? " disabled" : ""}>Use</button>` : ""}<button type="button" class="tg-link" data-act="cancel">Close</button></div>
       </div>`;
   }
 
@@ -1019,17 +1036,21 @@ export function initTcg(deps) {
       if (typed.resist) notes.push(`Resistance -${foeDef.resistance.n}`);
       if (blocked) notes.push("Blocked this turn");
       else if (less) notes.push(`${less} less${theirs.less ? "" : " this turn"}`);
-      if (!blocked && real >= hpLeft(state, foeSlot, defs)) notes.push(`Knocks out ${foeDef.name}`);
+      if (!blocked && real >= hpLeft(state, foeSlot, defs)) notes.push(`Knocks Out ${foeDef.name}`);
       const tone = real > base ? "up" : real < base ? "down" : "";
       return {
         html: tone ? `<s>${base}</s><span class="${tone}">${real}${esc(more)}</span>` : esc(attack.damage),
-        note: notes.length ? `<span class="tg-atk-note ${tone || (notes.length ? "ko" : "")}">${esc(notes.join(" · "))}</span>` : "",
+        note: notes.length ? `<span class="tg-atk-note">${esc(notes.join(", "))}</span>` : "",
       };
     };
-    const whyNot = (attack) => (state.turn === 1 ? "No attack on the first turn" : held ? `${COND_NAME[held]}: can't attack` : markOn(state, slot, "noAttack") ? "Can't attack this turn" : barred(attack) ? "Can't be used this turn" : "Not enough Energy");
+    // Short of Energy says by how much; otherwise the rule that stops it.
+    const short = (attack) => unpaid(costFor(state, slot, attack, defs), units);
+    const whyNot = (attack) => (state.turn === 1 ? "No attack on the first turn" : held ? `${COND_NAME[held]}: can't attack` : markOn(state, slot, "noAttack") ? "Can't attack this turn" : barred(attack) ? "Can't be used this turn" : short(attack) ? `Needs ${short(attack)} more Energy` : "Can't be used right now");
+    const cost = retreatCost(state, slot, defs);
     return `<div class="tg-sheet-bg" data-act="cancel"></div>
       <div class="tg-sheet tg-attacks" role="dialog" aria-label="${esc(def.name)}">
-        <header><h3>${esc(def.name)}</h3><span class="tg-pips">${units.length ? pips(units) : "<small>No Energy attached</small>"}</span></header>
+        ${sheetHead(def.name, monMeta(state, slot))}
+        <div class="tg-rows">
         ${abilityRowHtml(ACTIVE)}
         ${dropRowHtml(ACTIVE)}
         ${attacksOf(state, slot, defs).map((attack, i) => `<button type="button" class="tg-atk" data-attack="${i}"${usable.has(i) && myTurn() ? "" : " disabled"}>
@@ -1039,9 +1060,10 @@ export function initTcg(deps) {
           ${attack.text ? `<span class="tg-atk-text${attack.plain ? " off" : ""}">${attack.plain ? "Text not live yet: " : ""}${esc(attack.text)}</span>` : ""}
           ${usable.has(i) || !myTurn() ? "" : `<span class="tg-atk-why">${whyNot(attack)}</span>`}
         </button>`).join("")}
-        <div class="tg-sheet-keys">
-          <button type="button" class="ghost sm" data-act="retreat"${retreat ? "" : " disabled"}>${markOn(state, slot, "noRetreat") || def.fossil?.noRetreat ? "Can't retreat" : `Retreat ${retreatCost(state, slot, defs) ? pips(Array(retreatCost(state, slot, defs)).fill("Colorless")) : "(free)"}`}</button>
-          <button type="button" class="ghost sm" data-act="look-active">View card</button>
+        <div class="tg-links">
+          <button type="button" class="tg-link" data-act="retreat"${retreat ? "" : " disabled"}>${markOn(state, slot, "noRetreat") || def.fossil?.noRetreat ? "Can't retreat" : cost ? `Retreat <span class="tg-pips">${pips(Array(cost).fill("Colorless"))}</span>` : "Retreat for free"}</button>
+          <button type="button" class="tg-link" data-act="look-active">View card</button>
+        </div>
         </div>
       </div>`;
   }
@@ -1064,23 +1086,34 @@ export function initTcg(deps) {
     // A match given up before anyone took a turn has no turns to count.
     const early = state.turn < 1;
     if (early && state.reason === "concede") why = won ? `${foeName()} gave up before the first turn.` : "You gave up before the first turn.";
-    const span = early ? "" : ` ${plural(state.turn, "turn")}.`;
+    // The facts box: only what the engine counted. Prize cards taken by each side, then the turns played.
+    const taken = (p) => Math.max(0, state.rules.prizes - (state.players[p].prizes?.length ?? state.rules.prizes));
+    const fact = (label, value) => `<div><span>${esc(label)}</span><b>${esc(String(value))}</b></div>`;
+    const facts = (more = "") => `<div class="tg-facts">${fact("Prize cards taken", `${taken(ME)} to ${taken(BOT)}`)}${early ? "" : fact("Turns", state.turn)}${more}</div>`;
+    // The screen's card: the Pokémon still in your Active Spot, else the one in theirs.
+    const side = [ME, BOT].find((p) => state.players[p].active?.uid && cardOf(state.cards[state.players[p].active.uid]));
+    const leadUid = side != null ? state.players[side].active.uid : "";
+    const hero = leadUid ? `<div class="tg-over-card"><img src="${img(state.cards[leadUid], true)}" alt="" draggable="false" /><div><small>${side === ME ? "Your" : "Their"} Active Pokémon</small><b>${esc(d(leadUid)?.name || "")}</b></div></div>` : "";
+    const head = (title, line) => `<div class="tg-over-head"><h2>${title}</h2><p class="tg-over-why">${line}</p></div>`;
     if (match.lesson != null) {
       return `<div class="tg-sheet-bg"></div>
       <div class="tg-sheet tg-over" role="dialog" aria-label="Lesson over">
-        <h2>${won ? "Lesson done" : "Lesson over"}</h2>
-        <p>${esc(why)} ${won ? "That's the whole loop: Energy, evolve, attack, prizes. Build a deck from your own cards and play it for real." : "Run it again, or build a deck from your own cards and learn as you go."}</p>
+        ${head(won ? "Lesson done" : "Lesson over", `${esc(why)} ${won ? "That's the whole loop: Energy, evolve, attack, prizes. Build a deck from your own cards and play it for real." : "Run it again, or build a deck from your own cards and learn as you go."}`)}
+        ${hero}
+        ${facts()}
         <div class="tg-sheet-keys">
           <button type="button" class="solid rt-go" data-act="lesson-build">Build a deck</button>
           <button type="button" class="ghost" data-act="again">Run it again</button>
         </div>
       </div>`;
     }
+    const title = tie ? "A tie" : won ? "You won" : "You lost";
     if (match.online) {
       return `<div class="tg-sheet-bg"></div>
       <div class="tg-sheet tg-over" role="dialog" aria-label="Match over">
-        <h2>${tie ? "A tie" : won ? "You win" : "You lose"}</h2>
-        <p>${esc(why)}${span}</p>
+        ${head(title, esc(why))}
+        ${hero}
+        ${facts()}
         <div class="tg-rematch" data-rematch aria-live="polite">${rematchHtml()}</div>
         <div class="tg-sheet-keys">
           <button type="button" class="ghost" data-go="/play/friends">Play online</button>
@@ -1092,15 +1125,16 @@ export function initTcg(deps) {
     const lv = match.level || "normal";
     const at = record.levels?.[lv];
     const up = won && LEVELS[LEVELS.findIndex((l) => l.id === lv) + 1];
-    const tally = at && at.wins + at.losses ? `${levelName(lv)}: ${at.wins} won, ${at.losses} lost${at.streak > 1 ? `, ${at.streak} wins in a row` : ""}.` : "";
+    const tally = at && at.wins + at.losses ? `${at.wins} won, ${at.losses} lost` : "";
+    const standing = tally ? `<p class="tg-over-tally"><span>Your record on ${esc(levelName(lv))}</span><b>${esc(tally)}</b></p>${at.streak > 1 ? fact("Wins in a row", at.streak) : ""}` : "";
     return `<div class="tg-sheet-bg"></div>
       <div class="tg-sheet tg-over" role="dialog" aria-label="Match over">
-        <h2>${tie ? "A tie" : won ? "You win" : "You lose"}</h2>
-        <p>${esc(why)}${span}</p>
-        ${tally ? `<p class="tg-over-tally">${esc(tally)}</p>` : ""}
+        ${head(title, esc(why))}
+        ${hero}
+        ${facts(standing)}
         <div class="tg-sheet-keys">
           ${up ? `<button type="button" class="solid rt-go" data-act="again-up">Try ${up.name}</button><button type="button" class="ghost" data-act="again">Play again</button>` : `<button type="button" class="solid rt-go" data-act="again">Play again</button>`}
-          <button type="button" class="ghost" data-go="/play">Decks</button>
+          <button type="button" class="tlink" data-go="/play">Decks</button>
         </div>
       </div>`;
   }
@@ -1120,10 +1154,10 @@ export function initTcg(deps) {
     const mull = mulliganLines(state);
     return `<div class="tg-sheet-bg"></div>
       <div class="tg-sheet tg-opening" role="dialog" aria-label="Coin flip">
+        <div class="tg-coin">${coinStageHTML({ heads: faces?.heads || null, tails: faces?.tails || null, size: 150, rest: "heads" })}</div>
         <p class="tg-opening-lab">Flip for the first turn</p>
-        <div class="tg-coin">${coinStageHTML({ heads: faces?.heads || null, tails: faces?.tails || null, size: 132, rest: "heads" })}</div>
         <h2 id="tg-first">&nbsp;</h2>
-        ${mull.map((m) => `<p>${esc(m)}</p>`).join("")}
+        ${mull.map((m) => `<p class="tg-opening-mull">${esc(m)}</p>`).join("")}
         <p class="tg-opening-note" hidden>Whoever goes first can't attack or play a Supporter on that turn.</p>
         <div class="tg-sheet-keys">${state.flipWinner === ME
           ? `<button type="button" class="solid rt-go" data-act="go-first" disabled>Go first</button><button type="button" class="ghost" data-act="go-second" disabled>Go second</button>`
@@ -1134,7 +1168,7 @@ export function initTcg(deps) {
   function flipSheetHtml() {
     const faces = deps.coinFaces();
     return `<div class="tg-sheet tg-flip" role="status">
-        <div class="tg-coin">${coinStageHTML({ heads: faces?.heads || null, tails: faces?.tails || null, size: 104, rest: "heads" })}</div>
+        <div class="tg-coin">${coinStageHTML({ heads: faces?.heads || null, tails: faces?.tails || null, size: 120, rest: "heads" })}</div>
         <h2 id="tg-flip-text">&nbsp;</h2>
       </div>`;
   }
@@ -1196,7 +1230,8 @@ export function initTcg(deps) {
     const picked = match.choice.size;
     return `<div class="tg-sheet-bg"></div>
       <div class="tg-sheet tg-choose" role="dialog" aria-label="${esc(title)}" data-min="${min}" data-max="${max}">
-        <header><h3>${esc(title)}</h3>${waiting.zone === "deck" ? `<p>Your deck is shuffled afterwards.</p>` : ""}</header>
+        <header class="tg-sheet-head"><h3>${esc(title)}</h3></header>
+        ${waiting.zone === "deck" || (max > 0 && cards.length) ? `<div class="tg-choose-sub">${waiting.zone === "deck" ? `<p class="tg-choose-note">Your deck is shuffled afterwards.</p>` : ""}${max > 0 && cards.length ? `<span class="tg-sheet-meta tg-choose-count">${picked} of ${max}</span>` : ""}</div>` : ""}
         ${cards.length ? `<div class="tg-choose-grid">${cards.map((uid) => `<button type="button" class="tg-choose-card${match.choice.has(uid) ? " is-chosen" : ""}" data-choose="${uid}" aria-pressed="${match.choice.has(uid)}" aria-label="${esc(d(uid).name)}"><img src="${img(state.cards[uid])}" alt="" draggable="false" decoding="async" /></button>`).join("")}</div>` : `<p class="tg-choose-none">${esc(none)}</p>`}
         <div class="tg-sheet-keys"><button type="button" class="solid rt-go" data-act="choose-done"${picked >= min ? "" : " disabled"}>${max === 0 ? "Done" : chooseLabel(picked, min)}</button></div>
       </div>`;
@@ -1225,6 +1260,8 @@ export function initTcg(deps) {
     const key = sheet.querySelector('[data-act="choose-done"]');
     key.disabled = chosen.size < min;
     key.textContent = chooseLabel(chosen.size, min);
+    const count = sheet.querySelector(".tg-choose-count");
+    if (count) count.textContent = `${chosen.size} of ${max}`;
   }
 
   function paintTable() {
@@ -1258,6 +1295,7 @@ export function initTcg(deps) {
     if (text) text.textContent = mine ? "You won the flip" : waiting ? `${foeName()} won the flip and is choosing who goes first` : `${foeName()} won the flip and ${match.state.first === ME ? "lets you go first" : "goes first"}`;
     const lab = root.querySelector(".tg-opening-lab");
     if (lab) lab.textContent = mine ? "Heads" : "Tails";
+    root.querySelector(".tg-opening")?.classList.add("is-landed");
     root.querySelector(".tg-opening-note")?.removeAttribute("hidden");
     if (!mine && waiting) return;
     root.querySelectorAll(".tg-opening .tg-sheet-keys button").forEach((key) => key.removeAttribute("disabled"));
@@ -1634,6 +1672,7 @@ export function initTcg(deps) {
       await flipCoin(coin, heads ? "heads" : "tails", { ms: 1100, motion: !deps.reduceMotion() });
       const text = root.querySelector("#tg-flip-text");
       if (text) text.textContent = heads ? "Heads" : "Tails";
+      root.querySelector(".tg-flip")?.classList.add("is-landed");
       await sleep(420);
     }
     match.sheet = "";
