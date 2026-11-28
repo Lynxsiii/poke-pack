@@ -182,7 +182,8 @@ export function initThisWeek(deps) {
       if (tab.dataset.wkSide !== side) {
         side = tab.dataset.wkSide;
         render();
-        root.querySelector(`[data-wk-side="${side}"]`)?.focus({ preventScroll: true });
+        // The row is redrawn, so a keyboard press would lose its place; a tap needs no ring.
+        if (!event.detail) root.querySelector(`[data-wk-side="${side}"]`)?.focus({ preventScroll: true });
       }
       return;
     }
