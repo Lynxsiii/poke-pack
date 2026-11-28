@@ -254,6 +254,16 @@ cure"). The surface gloss throws a soft highlight.
   flares fade to nearly nothing 40-50% of the way from the light. A band's width is its share of the oversized layer
   times the layer's size: 20% of a 300% layer is 60% of the card (Neo Genesis, the Shining band). Colour-dodge floors
   stay under about 40% grey or a red or magenta ink floods flat (Base Set Charizard, Clefairy).
+- **Before blaming a family recipe for a hue wash, hide `.shine`** (`foil_probe.mjs --css ".tcg .shine{display:none!important}"`).
+  The shared etch shine overlays a full spectrum on every `has-etch-map` face; on flat Black & White full arts it
+  re-coloured the print (N's grey cap pink) while the family's own stripes were innocent. A family turns it down
+  in its own sheet with `--shine-line` / `--shine-glit` on its `.tcg` selector; no shared edit is needed.
+- **Deck variants ride on an id suffix.** `<id>-cracked-ice` prints have no rarity or foil map of their own, so they
+  fell into the parent holo family and drew its tinsel, sheen or stars over the whole card. Route them by suffix in
+  the family module and give a window mask where `card.foilMap` is empty.
+- **An opaque painted sheet buries the print.** XY BREAK's grey checker replaced the white lightning background;
+  multiplied over the scan it keeps the ink. Likewise a spectrum finer than about 10% of the card per cycle, or
+  hard-edged prism bars, read as a comb of stripes at phone size: feather the bars and widen the cycle.
 - **Glitter belongs on the engraving, not spread over the foil.** Noah, 2026-11-28: "the sparkles or dots on the holo
   take away from the texture as i dont see the texture too much". The shared `.shine::after` fleck tile was masked by
   art x foil map only, so on every face whose map covers the Pokémon (shiny vault cards, Japanese twins) a uniform

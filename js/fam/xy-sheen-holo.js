@@ -127,7 +127,8 @@ export function claims(card) {
 export function famExtras(card, url, base) {
   if (!claims(card)) return null;
   const id = String(card.id || "");
-  const finish = COSMOS.has(id) ? (PALE.has(id) ? "xysh-cosmos xysh-pale" : "xysh-cosmos") : "xysh-sheen";
+  // the theme-deck "-cracked-ice" reprints are Cracked Ice, not Sheen (2026-11-28)
+  const finish = /-cracked-ice$/.test(id) ? "xysh-ice" : COSMOS.has(id) ? (PALE.has(id) ? "xysh-cosmos xysh-pale" : "xysh-cosmos") : "xysh-sheen";
   const map = DRAWN.has(id) ? `assets/foil/fam/xy-sheen-holo/win/${REDRAWN.get(id) || id}.webp` : !card.foilMap && LIVE_MAP.get(id);
   const style = map ? `--foil-map:url('${url(map)}')` : "";
   return { classes: `fam-xy-sheen-holo ${finish}`, style, cure: true };

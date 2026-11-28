@@ -60,19 +60,24 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-shee
   background-image:
     var(--xysh-spectrum),
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsl(0, 0%, 100%) 0%, hsl(0, 0%, 93%) 28%, hsl(0, 0%, 76%) 66%, hsl(0, 0%, 68%) 100%);
+      hsl(0, 0%, 100%) 0%, hsl(0, 0%, 90%) 24%, hsl(0, 0%, 58%) 60%, hsl(0, 0%, 40%) 100%);
   background-size: 300% 300%, 100% 100%;
   background-position: var(--xysh-sweep), center;
   background-repeat: no-repeat, no-repeat;
   background-blend-mode: multiply, normal;
-  filter: brightness(calc(0.9 + var(--pointer-from-center, 0) * 0.25)) saturate(1.55) contrast(0.8);
+  /* v4 (2026-11-28): a soft sheen. The holo check found 16 of 23 faces flooded ("saturated rainbow paints over art"):
+     the dodge source ran at full saturation and a 68 % floor far from the lamp, so every band painted the print in
+     its own hue edge to edge. The source is now about half as bright and half as saturated (a gain of at most about
+     2.2 in a band's own channel and 1.5 in the others: the ink keeps its colour and takes a pastel of the band), and
+     falls to 40 % away from the lamp, so the colour gathers round the light. */
+  filter: brightness(calc(0.56 + var(--pointer-from-center, 0) * 0.14)) saturate(0.6);
   mix-blend-mode: color-dodge;
-  opacity: calc((0.62 + var(--card-opacity, 0) * 0.38) * var(--foil-strength, 1));
+  opacity: calc((0.55 + var(--card-opacity, 0) * 0.45) * var(--foil-strength, 1));
 }
 /* At rest: a visible silvery shimmer with the bands showing through. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-sheen:not(.lit):not(.settling) .foil {
-  filter: brightness(0.88) saturate(1.15) contrast(0.8);
-  opacity: calc(0.5 * var(--foil-strength, 1));
+  filter: brightness(0.5) saturate(0.5);
+  opacity: calc(0.45 * var(--foil-strength, 1));
 }
 
 /* ---- Both finishes: the pseudo layers start clean (the era recipe's flecks and rays) -------------------------- */
@@ -151,7 +156,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-shee
   mask-repeat: no-repeat;
   filter: none;
   mix-blend-mode: multiply;
-  opacity: calc(var(--card-opacity, 0) * 0.9);
+  opacity: calc(var(--card-opacity, 0) * 0.45);
 }
 
 /* ---- Both finishes: the gloss on the varnish -------------------------------------------------------------------
@@ -324,4 +329,45 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-shee
 /* The sparkle is the photos' main texture on this card: about twice the Cosmos sheet's. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-cosmos.xysh-pale .foil::before {
   opacity: calc((0.62 + var(--card-opacity, 0) * 0.38) * var(--xysh-lit));
+}
+
+/* ---- Cracked Ice (`xysh-ice`: the 24 theme-deck reprints, ids ending -cracked-ice; 2026-11-28) ---------------------
+   The holo check found them drawn as Sheen, a rainbow flood over the whole window at rest ("rainbow wipes out
+   Zygarde"). The real foil is the Black & White decks' Cracked Ice (same printer, same pattern: Pokumon's scans of
+   the XY deck holos): large flat angular shards, each a small silver-blue mirror, over the whole window, Pokemon
+   included; dark and saturated ink stays as printed; a few shards flash at a time. The recipe and the two textures
+   are bw-tinsel-holo's (`bwt-ice`, scripts/fam/bw-tinsel-holo/make_cracked_ice.py): `.foil` the shards as mirrors in
+   overlay, `.cure` the shards whose angle the lamp picks out, colour-dodged at a gain of at most about 1.7. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-ice {
+  --xysi-tint: url("/assets/foil/fam/bw-tinsel-holo/ice-tint-v2.webp");
+  --xysi-facets: url("/assets/foil/fam/bw-tinsel-holo/ice-facets-v2.webp");
+  --xysi-g: calc(var(--pointer-from-left, 0.5) * 50% + var(--pointer-from-top, 0.5) * 50%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-ice .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-ice:not(.lit):not(.settling) .foil {
+  background-image: var(--xysi-tint);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: overlay;
+  filter: none;
+  opacity: calc(0.94 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-ice .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-ice .foil::after {
+  background-image: none;
+  opacity: 0;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.fam-xy-sheen-holo.xysh-ice:is(.lit, .settling) .cure {
+  background-image:
+    var(--xysi-facets),
+    linear-gradient(hsl(0, 0%, var(--xysi-g)), hsl(0, 0%, var(--xysi-g)));
+  background-size: 100% 100%, 100% 100%;
+  background-position: center, center;
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: difference, normal;
+  mix-blend-mode: color-dodge;
+  filter: invert(1) brightness(0.5263) contrast(19) brightness(0.42);
+  opacity: calc(var(--card-opacity, 0) * var(--foil-strength, 1));
 }

@@ -22,8 +22,11 @@
 
 /* ---- Tokens ------------------------------------------------------------------------------------------------- */
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo {
-  --bwt-crests: url("/assets/foil/fam/bw-tinsel-holo/tinsel-crests-v2.webp");
-  --bwt-gaps: url("/assets/foil/fam/bw-tinsel-holo/tinsel-gaps-v2.webp");
+  /* v3 (2026-11-28, make_tinsel_v3.py): the ridges as broken streaks of light in patches. v2's flat silver over every
+     ridge and its even dark gaps read as a CRT line screen at phone size (holo check: 17 of 22 faces). */
+  --bwt-crests: url("/assets/foil/fam/bw-tinsel-holo/tinsel-crests-v3.webp");
+  --bwt-gaps: url("/assets/foil/fam/bw-tinsel-holo/tinsel-gaps-v3.webp");
+  --bwt-streak: url("/assets/foil/fam/bw-tinsel-holo/tinsel-silver-v3.webp");
   --bwt-glints: url("/assets/foil/fam/bw-tinsel-holo/tinsel-glints-v2.webp");
   /* Every ridge's own pastel (make_tinsel.py): two card widths wide, slid along the ridges with the tilt. */
   --bwt-hue: url("/assets/foil/fam/bw-tinsel-holo/tinsel-hue-v2.webp");
@@ -39,6 +42,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tins
   --bwt-fh: 13%;
   /* The foil's own silver, a hard-light source a little over neutral: it lifts a crest a little and keeps its hue off. */
   --bwt-silver: 220, 6%, 64%;
+  /* The lamp's pool on the window (hard-light source at its centre; 50 % is no change). */
+  --bwt-pool: 0, 0%, 58%;
   /* "Intense" foil strength scales the held layers; opacity alone stops at 1. */
   --bwt-lit: max(1, var(--foil-strength, 1));
   /* The lamp's streak on the ridges: a wide flat ellipse on the pointer, its height squeezed into the art window (its
@@ -200,28 +205,29 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tins
    burn in the ink's colour, pale ink takes each ridge's pastel and black ink none. Pale-window faces (`bwt-pale`) and the
    Dragon Vault override the lit `.foil` below with a stronger hue in a wider band. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo:is(.bwt-tinsel, .bwt-vault) .foil {
+  /* v3: the streaks (each ridge's own pale pastel, alpha its light) and a faint shade beside them, over the hard-light
+     identity; held, a soft pool of light at the lamp's height, local, never a lift of the whole window */
   background-image:
     var(--bwt-gaps),
-    radial-gradient(ellipse calc(62% + var(--pointer-from-center, 0) * 22%) calc(15% + var(--pointer-from-center, 0) * 7%)
+    var(--bwt-streak),
+    radial-gradient(ellipse calc(62% + var(--pointer-from-center, 0) * 22%) calc(17% + var(--pointer-from-center, 0) * 7%)
       at var(--pointer-x) var(--bwt-sheen-y),
-      hsla(0, 0%, 50%, 0.92) 0%, hsla(0, 0%, 52%, 0.9) 30%, hsla(var(--bwt-silver), 0.88) 60%, hsla(var(--bwt-silver), 0.92) 100%),
-    var(--bwt-hue);
-  background-size: 100% 106%, 100% 100%, 200% 106%;
-  background-position: 0 var(--bwt-shift), center, var(--background-x) var(--bwt-shift);
+      hsl(var(--bwt-pool)) 0%, hsl(0, 0%, 53%) 45%, hsl(0, 0%, 50%) 100%);
+  background-size: 100% 106%, 100% 106%, 100% 100%;
+  background-position: 0 var(--bwt-shift), 0 var(--bwt-shift), center;
   background-repeat: no-repeat;
   background-blend-mode: normal, normal, normal;
   mix-blend-mode: hard-light;
   filter: none;
   opacity: calc((0.9 + var(--card-opacity) * 0.1) * var(--foil-strength, 1));
 }
-/* At rest: the ridges as light and dark rules in the ink's own colour, silver with a faint tint per ridge (the flat
-   scans of Reuniclus 57/114 and Venusaur 3/101 show the ridges tinted even in flat light), no rainbow band. */
+/* At rest: the same streaks a little quieter, no pool. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo:is(.bwt-tinsel, .bwt-vault):not(.lit):not(.settling) .foil {
   background-image:
     var(--bwt-gaps),
-    linear-gradient(hsla(var(--bwt-silver), 0.8), hsla(var(--bwt-silver), 0.8)),
-    var(--bwt-hue);
-  opacity: calc(0.95 * var(--foil-strength, 1));
+    var(--bwt-streak),
+    linear-gradient(hsl(0, 0%, 50%), hsl(0, 0%, 50%));
+  opacity: calc(0.8 * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo:is(.bwt-tinsel, .bwt-vault) .foil::before {
   background-image:
@@ -258,37 +264,13 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tins
   filter: brightness(0.5);
   opacity: calc(var(--card-opacity) * var(--foil-strength, 1));
 }
-/* Pale windows (`bwt-pale`, make_pale.py: Articuno 32/113, Oshawott BW03, Gardevoir 57/101 ...): hard-light tints pale ink
-   only weakly, so these faces take a stronger ridge hue in a wider band: grey 0.46 dodged by the tint texture
-   (channels about 0.49-1, one pastel per ridge, a third of the ridges near neutral), so the lit sky shows pink, peach,
-   mint and lavender ridges as on the tilted Articuno photo. Dark ink is at most an eighth of these windows. */
-body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-tinsel.bwt-pale:is(.lit, .settling) .foil {
-  background-image:
-    var(--bwt-gaps),
-    radial-gradient(ellipse calc(80% + var(--pointer-from-center, 0) * 25%) calc(22% + var(--pointer-from-center, 0) * 10%)
-      at var(--pointer-x) var(--bwt-sheen-y),
-      hsla(0, 0%, 80%, 0.35) 0%, hsla(var(--bwt-silver), 0.4) 30%, hsla(var(--bwt-silver), 0.68) 65%, hsla(var(--bwt-silver), 0.86) 100%),
-    var(--bwt-tint),
-    linear-gradient(hsl(0, 0%, 46%), hsl(0, 0%, 46%));
-  background-size: 100% 106%, 100% 100%, 200% 106%, 100% 100%;
-  background-position: 0 var(--bwt-shift), center, var(--background-x) var(--bwt-shift), center;
-  background-blend-mode: normal, normal, color-dodge, normal;
-}
-/* Dragon Vault: the same Tinsel, brighter and more coloured under the lamp (the Japanese Dragon Selection Shelgon scan:
-   rainbow ridges over the dark window; the English Kyurem 21/20 scan: pink at the top of the window, teal at the
-   bottom): the ridge hues show through a wider band with less silver over them. */
-body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-vault:is(.lit, .settling) .foil {
-  background-image:
-    var(--bwt-gaps),
-    radial-gradient(ellipse calc(85% + var(--pointer-from-center, 0) * 25%) calc(24% + var(--pointer-from-center, 0) * 10%)
-      at var(--pointer-x) var(--bwt-sheen-y),
-      hsla(0, 0%, 50%, 0.92) 0%, hsla(0, 0%, 52%, 0.9) 35%, hsla(var(--bwt-silver), 0.86) 65%, hsla(var(--bwt-silver), 0.92) 100%),
-    var(--bwt-hue);
-}
+/* Pale windows (`bwt-pale`) and the Dragon Vault took their own lit `.foil` until v3; the streak texture carries each
+   ridge's pastel on every window now. The Vault keeps a brighter pool, stronger flecks and a hotter dodge. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-vault .cure {
   filter: brightness(0.6);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-vault {
+  --bwt-pool: 0, 0%, 63%;
   --bwt-fk: 1;
   --bwt-fw: 74%;
   --bwt-fh: 19%;

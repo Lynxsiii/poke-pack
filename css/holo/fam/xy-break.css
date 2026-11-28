@@ -53,22 +53,27 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-brea
       hsla(0, 0%, 0%, calc(0.13 + var(--brk-co) * 0.1)) 272deg 358deg,
       hsla(0, 0%, 100%, calc(0.15 + var(--brk-co) * 0.18)) 360deg),
     repeating-conic-gradient(
-      hsla(250, 18%, 34%, calc(0.2 + var(--brk-co) * 0.07)) 0% 25%,
+      hsla(250, 18%, 34%, calc(0.1 + var(--brk-co) * 0.05)) 0% 25%,
       hsla(45, 20%, 96%, calc(0.2 + var(--brk-co) * 0.1)) 25% 50%),
-    linear-gradient(hsl(235, 6%, 79%), hsl(235, 6%, 79%));
+    radial-gradient(ellipse 80% 60% at var(--pointer-x) var(--pointer-y),
+      hsl(235, 8%, 97%) 0%, hsl(235, 7%, 91%) 45%, hsl(235, 6%, 86%) 100%);
   background-size: 100% 100%, var(--brk-cell), var(--brk-cell2), 100% 100%;
   background-position: center, 0 0, 0 0, center;
   background-repeat: no-repeat, repeat, repeat, no-repeat;
   background-blend-mode: normal;
   filter: none;
-  mix-blend-mode: normal;
+  /* 2026-11-28: multiplied onto the print, and a paler silver (it was an opaque 79 % grey sheet at 0.94). The cells
+     were painted over the scan, so the printed lightning and glow round the gold Pokemon disappeared under a grey
+     checkerboard (holo check, 4 of 6: "grey checker wallpaper replaces bg"). On the real card the lightning is ink
+     over the foil: a multiply keeps every printed colour and turns only the white stock into the pale silver cells. */
+  mix-blend-mode: multiply;
   clip-path: none;
   border-radius: 0;
-  opacity: calc(0.94 * var(--foil-strength, 1));
+  opacity: var(--foil-strength, 1);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-break.fam-xy-break.fam-xy-break.fam-xy-break:not(.lit):not(.settling) .foil {
   filter: none;
-  opacity: calc(0.94 * var(--foil-strength, 1));
+  opacity: calc(0.9 * var(--foil-strength, 1));
 }
 
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-break.fam-xy-break.fam-xy-break.fam-xy-break .foil::before,

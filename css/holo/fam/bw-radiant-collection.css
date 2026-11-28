@@ -220,7 +220,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-radi
   background-repeat: no-repeat;
   filter: none;
   mix-blend-mode: multiply;
-  opacity: min(1, var(--foil-strength, 1));
+  /* x0.5 (2026-11-28): at full strength the motifs were dark maroon and olive stamps that buried the attack text (holo
+     check, RC3, RC4, RC6, RC7); in the photos (RC7 in hand, RC10) they sit only a shade under the box's own colour */
+  opacity: calc(0.5 * min(1, var(--foil-strength, 1)));
   -webkit-mask-image: none;
   mask-image: none;
 }
