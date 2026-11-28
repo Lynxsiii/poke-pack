@@ -415,6 +415,8 @@ function thinkAction(state, player, defs) {
       const basics = side.deck.filter((uid) => defOf(state, uid, defs).kind === "pokemon" && defOf(state, uid, defs).stage === "basic").length;
       return actions[room > 0 && basics > 0 && side.bench.length <= Math.min(2, foeSide.bench.length) ? 0 : 1];
     }
+    // Tyme: guess an HP. Most Pokémon have 60 to 130 HP: the range of 100 first when it has to pick a range, then a likely number.
+    if (waiting.why === "guess") return actions.length === 4 ? actions[1] : actions[Math.min(actions.length - 1, waiting.labels[0] === "10" ? 6 : 2)];
     // A Special Condition of its choosing: Paralyzed, which stops their next attack and retreat.
     if (waiting.why === "condition") return actions[waiting.labels.indexOf("Paralyzed")] || actions[0];
     // An attack's "you may": yes, except to take its own Pokémon out of play.
