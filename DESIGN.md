@@ -18,12 +18,12 @@ colors:
 typography:
   titles: '"Kanit" italic 800 (the --font-xc family "Kanit Title"), sentence case, tight tracking'
   labels: '"Kanit" 600 and 700 (--font-h): names, figures, keys, tabs'
-  text: '"M PLUS Rounded 1c" 500, 700, 800 (--font), 14px to 16px'
+  text: '"M PLUS 1p" 500, 700, 800 (--font), 14px to 16px'
 rounded:
-  box: "6px"
-  key: "6px, on a 14 degree slant"
-  tag: "3px to 4px"
-  object: "the object's own corner (cards, slabs, coins)"
+  box: "0 (--r)"
+  key: "0, on a 14 degree slant"
+  tag: "0 (--r-tag)"
+  object: "the object's own corner (cards, slabs, coins, faces)"
 ---
 
 # Design System: poke-pack.rip
@@ -34,6 +34,63 @@ night-blue look as generated. Tokens and the shared parts live in
 sheets. `js/rotom.js` runs the page-change motion and the purse. Older sheets
 name old tokens (`--red`, `--paper`, `--carbon`, `--graphite`); rotom.css maps
 them onto this look, so `--red` is the yellow key and `--paper` is ink.
+
+## House style (2026-11-28)
+
+A friend of Noah's called the site "AI slop" and said it was easy to tell. The
+audit that followed found that the work was real and the wrapping was generic:
+one recipe stamped on every screen. These rules exist so it does not drift
+back. They win over anything older in this file. Before shipping a screen,
+read it against this list.
+
+**Shape**
+
+- Corners are square. `--r`, `--r-sm`, `--r-lg` and `--r-tag` are all 0 and
+  every box, key, tag, field and bar uses them; never write a pixel radius.
+  Noah: "all the round edges" read as generated. Round is kept for things that
+  are round or round-cornered in the hand: a card, a coin, a slab, a binder, a
+  player's face, a Poké Ball pip.
+- A box (the ink line around a group) is for a real object or a form. A list
+  is rows with a divider. A page is not a stack of boxes, and two boxes next
+  to each other must not be the same box with different words.
+- The slab and the ground art are the theme's, not decoration to repeat: a
+  page may move or drop its slab when it has a hero of its own.
+
+**Type**
+
+- The heavy italic (`--font-xc`) is the page title and the one main key.
+  Tabs, labels, tags and small notes are upright (`--font-h` 600 or 700).
+  If everything is italic 800 nothing is.
+- Reading text is M PLUS 1p, the square-ended sibling of the rounded face the
+  site used before. Do not bring a rounded face back.
+- No small tag above a heading unless it adds a fact the heading lacks (a
+  date, "New", "Beta"). "Continue" above "Welcome back" adds nothing.
+- At most one row of word tabs above a title.
+
+**Words**
+
+- No sentence under a title that says what the page is. "Wishlist" does not
+  need "Cards you want, and where to find them."
+- Rules of a game go on that game's page, once, as plain steps. A menu of
+  games lists names and what is happening there now (open tables, the pot),
+  not a tagline each.
+- Do not write lines to a rhythm. Three clipped beats joined by commas, on
+  four cards in a row, is the giveaway. Say the fact; let lines be uneven.
+- A notice (free play, not affiliated) appears once per page at most.
+- Write it the way you'd say it across the counter at a card shop.
+
+**Furniture**
+
+- Nothing starts by itself over the page: no tour, no welcome card, no
+  what's-new sheet. A new visitor's first screen is the pack and one key.
+- The menu arrow (`.rt-go`) is on one key per screen, never on rows or cards.
+- An empty place shows the thing itself, empty (a shelf, a binder page, two
+  seats at a table), not a dashed box with an icon, a sentence and a button.
+- No four-point sparkle anywhere: it is the mark AI products use for
+  themselves. The coin's face is a booster pack (`pp-coin-v2.svg`).
+- Icons are drawn for this site in the logo's thick line. No stock icon set.
+- Text never overlaps or runs under the tab bar, and a row of tabs that
+  scrolls shows that it does.
 
 ## The idea
 
@@ -46,8 +103,8 @@ Two kinds of thing, told apart by shape:
 
 - **Things you press are slanted.** Keys, tabs, the purse, the Rip key, the
   wrapper slots and the page you are on in the menu all lean 14 degrees.
-- **Things that hold information are straight.** White boxes with the ink
-  line and a 6px corner: a set's progress, a row in a list, a form.
+- **Things that hold information are straight.** Square boxes with the ink
+  line, only where the house style allows a box: a set's progress, a form.
 
 One yellow (`--yel`): the key that moves you forward on this screen, the
 cursor's edge on the chosen thing, the name plate of a hit. Never decoration.
@@ -130,7 +187,7 @@ both modes at phone size.
 | White key | `.ghost` | Every other key. |
 | Small key | `.solid.sm`, `.ghost.sm` | Straight, 38px. |
 | Main key with the cursor | add `.rt-go` | Draws the menu arrow at the left; the arrow nudges. The page's one main action only. |
-| Box | `.plate`, `.rt-box` | White, ink line, 6px. |
+| Box | `.plate`, `.rt-box` | White, ink line, square. |
 | Row | `.rt-row` with `.rt-row-lab`, `.rt-row-name` (+ `small`), `.rt-row-val` | A list entry: ink label cut on the slant, name, value. |
 | HP bar | `.bar > i`, `.meter > i`, or `.rt-hp` with `<em>` label and `.rt-track > i` | Ink track, green fill. Every progress meter on the site. |
 | Word tab | `.rt-word` (`.on` / `aria-pressed` / `aria-selected`) | Italic word; the chosen one stands on an ink plate. Segmented controls (`.seg-btn`, `.seg-key`) look the same. |
@@ -165,7 +222,7 @@ pseudo-element, or slant the element and counter-slant its one child
   largest text on the page: 36px to 54px on a phone, up to 92px on a
   computer's Home.
 - Names, figures and money: Kanit 600 or 700, upright, `tabular-nums`.
-- Reading text: M PLUS Rounded 1c 500; labels and small meta 700.
+- Reading text: M PLUS 1p 500; labels and small meta 700.
 - Figures in Kanit are always one width: "Kanit Tab" (digits cut from Kanit and
   re-spaced, `assets/fonts/kanit-tab-*`) sits in front of Kanit in `--font-h`,
   so amounts that roll or sit in columns never jitter. Titles (`--font-xc`)
@@ -177,7 +234,7 @@ pseudo-element, or slant the element and counter-slant its one child
 
 ## Shape and depth
 
-- One line weight: 2.5px ink. Boxes 6px corners. Tags 3px to 4px.
+- One line weight: 2.5px ink. Corners are square (see House style).
 - Depth is the hard offset shadow (`--drop`) under real objects and floating
   sheets, and the 6px ledge under a key. No blur shadows, no glows, no
   gradients as surfaces.
@@ -187,7 +244,7 @@ pseudo-element, or slant the element and counter-slant its one child
 
 ## Money
 
-The coin is `assets/coins/pp-coin-v1.svg`. Amounts are the coin then Kanit 700
+The coin is `assets/coins/pp-coin-v2.svg` (a booster pack on its face; v1 had a four-point star). Amounts are the coin then Kanit 700
 figures. The casino's house coin is `assets/casino/house-coin-v2.webp`.
 
 ## Copy
@@ -259,5 +316,5 @@ choose, bars fill, figures roll.
   slab colour that is; it never adds another.)
 - No box around everything: a box only where a group belongs together.
 - No walls of small tags or pills; pickers are slanted words or flat tiles.
-- No typefaces beyond Kanit and M PLUS Rounded 1c (and the slab label's own
+- No typefaces beyond Kanit and M PLUS 1p (and the slab label's own
   face). No emoji as icons.

@@ -80,7 +80,7 @@ body.no-motion .mm-glint::before { animation: none; transform: translate3d(90%, 
 .qm-set {
   position: relative; display: grid; grid-template-columns: 78px minmax(0, 1fr) auto; grid-template-rows: auto auto auto; column-gap: 30px; row-gap: 2px; align-items: center;
   min-width: 0; min-height: 0; padding: 0 12px 0 0; overflow: hidden;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box);
   color: var(--k); text-align: left; cursor: pointer;
   transition: transform 0.14s var(--ease-out);
 }
@@ -105,7 +105,7 @@ body.no-motion .mm-glint::before { animation: none; transform: translate3d(90%, 
 /* The rank: a plate. Ink once ranked, yellow when the claim is ready, a dashed tag before you start. */
 .qm-state {
   grid-column: 3; grid-row: 1 / span 2; align-self: center; justify-self: end; margin: 8px 0 0;
-  padding: 2px 9px 3px; border-radius: 3px; background: var(--k); color: var(--on-k);
+  padding: 2px 9px 3px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k);
   font: italic 700 12.5px/1.35 var(--font-h); white-space: nowrap;
 }
 .qm-set.is-new .qm-state { background: none; color: var(--k-3); box-shadow: inset 0 0 0 1.5px var(--rule-2); }
@@ -118,9 +118,9 @@ body.no-motion .mm-glint::before { animation: none; transform: translate3d(90%, 
 .qm-count { grid-column: 2; grid-row: 2; color: var(--k-2); font: 700 13px var(--font-h); font-variant-numeric: tabular-nums; line-height: 1.25; }
 .qm-track {
   grid-column: 2 / -1; grid-row: 3; align-self: start; position: relative; display: block;
-  height: 12px; margin: 6px 0 11px; padding: 2.5px; border-radius: 6px; background: var(--k); overflow: hidden;
+  height: 12px; margin: 6px 0 11px; padding: 2.5px; border-radius: var(--r); background: var(--k); overflow: hidden;
 }
-.qm-track i { display: block; height: 100%; border-radius: 4px; background: var(--hp); transform-origin: 0 50%; }
+.qm-track i { display: block; height: 100%; border-radius: var(--r-tag); background: var(--hp); transform-origin: 0 50%; }
 .qm-set.is-new .qm-track { background: var(--rule-2); }
 /* A notch at the quarter, half and three quarters: where the seal's rim gets struck. */
 .qm-track::after {
@@ -142,7 +142,7 @@ body.no-motion .mm-glint::before { animation: none; transform: translate3d(90%, 
 .qm-detail {
   --seal-bg: var(--box);
   margin: 4px 0 10px; overflow: hidden;
-  border: var(--line-w) solid var(--k); border-radius: 8px; background: var(--box); box-shadow: var(--drop);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); box-shadow: var(--drop);
   animation: rt-rise 0.3s var(--ease-out);
 }
 .qm-hero { position: relative; border-bottom: var(--line-w) solid var(--k); }
@@ -161,8 +161,8 @@ body.no-motion .mm-glint::before { animation: none; transform: translate3d(90%, 
 /* The four stops: an HP bar each, filling as the set does, with its seal and what it costs. */
 .qm-stops { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin: 18px 0 0; padding: 0; list-style: none; }
 .qm-stops li { display: grid; grid-template-columns: 28px minmax(0, 1fr); align-items: center; column-gap: 7px; }
-.qm-stop-bar { grid-column: 1 / -1; display: block; height: 10px; margin-bottom: 9px; padding: 2px; border-radius: 5px; background: var(--k); overflow: hidden; }
-.qm-stop-bar i { display: block; height: 100%; border-radius: 3px; background: var(--hp); }
+.qm-stop-bar { grid-column: 1 / -1; display: block; height: 10px; margin-bottom: 9px; padding: 2px; border-radius: var(--r-tag); background: var(--k); overflow: hidden; }
+.qm-stop-bar i { display: block; height: 100%; border-radius: var(--r-tag); background: var(--hp); }
 .qm-stop-copy { min-width: 0; }
 .qm-stop-copy b { display: block; color: var(--k-2); font: 600 13px/1.2 var(--font-h); }
 .qm-stop-copy small { display: block; color: var(--k-3); font: 700 12px/1.25 var(--font-h); font-variant-numeric: tabular-nums; }
@@ -175,13 +175,13 @@ body.no-motion .mm-glint::before { animation: none; transform: translate3d(90%, 
 .qm-rewards { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
 .qm-reward {
   display: grid; grid-template-columns: 76px minmax(0, 1fr) auto; align-items: center; gap: 0 14px;
-  padding: 8px 10px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  padding: 8px 10px; border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box);
 }
 .qm-reward.is-locked { border-style: dashed; border-color: var(--rule-2); background: rgb(var(--box-rgb) / 0.55); }
 .qm-reward-art { display: grid; place-items: center start; height: 48px; line-height: 0; }
 .qm-glyph {
   display: grid; place-items: center; width: 76px; height: 48px;
-  border-radius: 5px; background: var(--box-2); box-shadow: inset 0 0 0 1.5px var(--rule); color: var(--k-2);
+  border-radius: var(--r-tag); background: var(--box-2); box-shadow: inset 0 0 0 1.5px var(--rule); color: var(--k-2);
 }
 .qm-money { color: var(--k); font: 700 21px/1 var(--font-h); }
 .qm-art-banner { display: block; width: 76px; line-height: 0; }
@@ -189,7 +189,7 @@ body.no-motion .mm-glint::before { animation: none; transform: translate3d(90%, 
 .qm-reward-copy small { display: block; margin-top: 2px; color: var(--k-2); font-size: 12.5px; font-weight: 700; line-height: 1.4; }
 .qm-reward-state { display: inline-flex; align-items: center; gap: 5px; color: var(--k-2); font: italic 700 13px var(--font-h); white-space: nowrap; }
 .qm-reward.is-earned .qm-glyph { color: var(--k); box-shadow: inset 0 0 0 2px var(--k); }
-.qm-reward.is-earned .qm-reward-state { padding: 1px 8px; border-radius: 3px; background: var(--k); color: var(--on-k); }
+.qm-reward.is-earned .qm-reward-state { padding: 1px 8px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k); }
 .qm-reward.is-locked .qm-reward-art > * { opacity: 0.55; }
 .qm-detail .qa-own { display: none; }
 .qm-detail-rows .qa-grid { gap: 8px; }
@@ -201,7 +201,7 @@ body.no-motion .mm-glint::before { animation: none; transform: translate3d(90%, 
 .mb-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
 .mb-tile {
   display: grid; align-content: start; gap: 3px; min-height: 0; padding: 0 0 10px; overflow: hidden;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box);
   color: var(--k); text-align: left; cursor: pointer;
 }
 .mb-tile:hover:not(:disabled) { transform: translateY(-2px); }
@@ -217,12 +217,12 @@ body.no-motion .mm-glint::before { animation: none; transform: translate3d(90%, 
 .qa-fold > .mb-grid { padding: 0 0 12px; }
 
 /* The seal and the banner in the reward list sit on plaques the same size as the other rewards. */
-.qm-art-seal { display: grid; place-items: center; width: 76px; height: 48px; border-radius: 5px; background: var(--box-2); box-shadow: inset 0 0 0 1.5px var(--rule); }
+.qm-art-seal { display: grid; place-items: center; width: 76px; height: 48px; border-radius: var(--r-tag); background: var(--box-2); box-shadow: inset 0 0 0 1.5px var(--rule); }
 .qm-art-seal .mastery-emblem[data-size] { --me: 38px; }
-.qm-art-banner { border-radius: 5px; box-shadow: 0 0 0 1.5px var(--k); overflow: hidden; height: 48px; }
+.qm-art-banner { border-radius: var(--r-tag); box-shadow: 0 0 0 1.5px var(--k); overflow: hidden; height: 48px; }
 .qm-art-banner .mbn { height: 48px; border-radius: 0; }
 /* Gifts: the set's own sleeve or coin, shown as itself on a plaque the size of the other rewards. */
-.qm-gift { display: grid; place-items: center; width: 76px; height: 56px; border-radius: 5px; background: var(--box-2); box-shadow: inset 0 0 0 1.5px var(--rule); line-height: 0; overflow: hidden; }
+.qm-gift { display: grid; place-items: center; width: 76px; height: 56px; border-radius: var(--r-tag); background: var(--box-2); box-shadow: inset 0 0 0 1.5px var(--rule); line-height: 0; overflow: hidden; }
 .qm-gift .gsleeve { --w: 34px; }
 .qm-gift .gcoin { --s: 44px; }
 .qm-reward-art:has(.qm-gift) { height: 56px; }
@@ -235,11 +235,11 @@ body.no-motion .mm-glint::before { animation: none; transform: translate3d(90%, 
 .qm-crown-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px 12px; margin: 14px 0 0; }
 .qm-crown {
   display: grid; grid-template-columns: 38px minmax(0, 1fr) auto; align-content: start; align-items: center; column-gap: 12px; row-gap: 10px;
-  min-width: 0; padding: 12px 14px 14px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  min-width: 0; padding: 12px 14px 14px; border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box);
 }
 .qm-crown.is-locked { border-style: dashed; border-color: var(--rule-2); background: rgb(var(--box-rgb) / 0.55); }
 .qm-crown.is-ready { box-shadow: inset 6px 0 0 var(--yel); }
-.qm-crown-mark { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 5px; background: var(--box-2); box-shadow: inset 0 0 0 1.5px var(--rule-2); color: var(--k-3); }
+.qm-crown-mark { display: grid; place-items: center; width: 38px; height: 38px; border-radius: var(--r-tag); background: var(--box-2); box-shadow: inset 0 0 0 1.5px var(--rule-2); color: var(--k-3); }
 .qm-crown-copy { min-width: 0; }
 .qm-crown-copy b { display: block; color: var(--k); font: italic 800 20px/1.05 var(--font-xc); letter-spacing: -0.01em; }
 .qm-crown-copy small { display: block; margin-top: 3px; color: var(--k-2); font: 700 13px/1.3 var(--font-h); font-variant-numeric: tabular-nums; }

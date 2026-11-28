@@ -8,7 +8,7 @@
 .search-open {
   display: inline-flex; align-items: center; justify-content: center; gap: 10px;
   flex: none; min-width: 44px; min-height: 44px; padding: 0;
-  border: 0; border-radius: 6px; background: none; color: var(--k);
+  border: 0; border-radius: var(--r); background: none; color: var(--k);
   font: 700 14px var(--font);
 }
 .search-open:hover { color: var(--cy-2); background: none; }
@@ -49,7 +49,7 @@
 .search-bar > svg { position: absolute; left: 32px; top: calc(max(12px, env(safe-area-inset-top)) + 17px); width: 24px; height: 24px; color: var(--k); pointer-events: none; }
 .search-bar input {
   flex: 1 1 auto; min-width: 0; min-height: 58px; padding: 0 14px 0 50px;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); color: var(--k);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); color: var(--k);
   font: 600 19px var(--font-h); /* over 16px: iOS Safari would zoom into anything smaller */
   -webkit-appearance: none; appearance: none;
 }
@@ -64,7 +64,7 @@
 .search-bar input::-webkit-search-decoration, .search-bar input::-webkit-search-results-button, .search-bar input::-webkit-search-results-decoration { display: none; }
 .search-close {
   flex: none; display: grid; place-items: center; width: 52px; min-height: 52px; padding: 0;
-  border: var(--line-w) solid var(--k); border-bottom-width: 5px; border-radius: 6px; background: var(--box); color: var(--k); cursor: pointer;
+  border: var(--line-w) solid var(--k); border-bottom-width: 5px; border-radius: var(--r); background: var(--box); color: var(--k); cursor: pointer;
   transition: transform 0.1s var(--ease-out), background-color 0.12s ease;
 }
 .search-close:hover { background: var(--cy-3); }
@@ -94,7 +94,7 @@
 .search-hint ul { list-style: none; display: grid; gap: 8px; margin: 0; padding: 0; }
 .search-eg {
   display: flex; align-items: center; gap: 12px; width: 100%; min-height: 56px; padding: 0 14px 0 0; overflow: hidden;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); color: var(--k); text-align: left; cursor: pointer;
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); color: var(--k); text-align: left; cursor: pointer;
   transition: transform 0.14s var(--ease-out);
 }
 .search-eg::before {
@@ -110,7 +110,7 @@
 /* A group of results under a small italic head with its count. */
 .search-sec { margin-top: 22px; }
 .search-sec h3 { display: flex; align-items: center; gap: 8px; margin: 0 2px 10px; font: italic 800 19px/1 var(--font-xc); letter-spacing: -0.01em; }
-.search-sec h3 i { padding: 1px 7px; border-radius: 3px; background: var(--k); color: var(--yel-k); font: 700 12.5px/1.4 var(--font-h); font-style: normal; font-variant-numeric: tabular-nums; }
+.search-sec h3 i { padding: 1px 7px; border-radius: var(--r-tag); background: var(--k); color: var(--yel-k); font: 700 12.5px/1.4 var(--font-h); font-style: normal; font-variant-numeric: tabular-nums; }
 .search-list { list-style: none; display: grid; gap: 8px; margin: 0; padding: 0; }
 .search-more { display: block; width: 100%; min-height: 48px; margin-top: 8px; text-align: center; }
 
@@ -124,7 +124,7 @@
 .search-card {
   position: relative; display: grid; grid-template-columns: 50px minmax(0, 1fr) auto; align-items: center; gap: 12px;
   width: 100%; min-height: 86px; padding: 6px 12px 6px 6px;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); color: var(--k); text-align: left; cursor: pointer;
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); color: var(--k); text-align: left; cursor: pointer;
   transition: transform 0.14s var(--ease-out);
 }
 @media (hover: hover) { .search-card:hover { transform: translateX(4px); background: var(--box); } }
@@ -133,21 +133,21 @@
 :is(.search-card, .search-eg):focus-visible { outline: 3px solid var(--cy-2); outline-offset: 2px; }
 /* The cursor's yellow edge grows down the row you point at or tab to. */
 .search-card::after {
-  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 7px; border-radius: 3px 0 0 3px; background: var(--yel);
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 7px; border-radius: var(--r-tag) 0 0 var(--r-tag); background: var(--yel);
   transform: scaleY(0); transform-origin: 50% 0; transition: transform 0.18s var(--ease-out); pointer-events: none;
 }
 .search-card:focus-visible::after { transform: none; }
 @media (hover: hover) { .search-card:hover::after { transform: none; } }
-.search-thumb { display: block; width: 50px; height: 70px; overflow: hidden; border-radius: 3px; background: var(--box-2); }
+.search-thumb { display: block; width: 50px; height: 70px; overflow: hidden; border-radius: var(--r-tag); background: var(--box-2); }
 .search-thumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
-.search-owned { padding: 1px 7px 2px 6px; border-radius: 3px; background: var(--k); color: var(--on-k); font: italic 700 12px/1.3 var(--font-h); white-space: nowrap; }
+.search-owned { padding: 1px 7px 2px 6px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k); font: italic 700 12px/1.3 var(--font-h); white-space: nowrap; }
 
 /* A sealed product: its photo, what it is, what it costs; the cart and the shop page beside it. */
 .search-prod {
   display: grid; grid-template-columns: 62px minmax(0, 1fr); align-items: center; gap: 4px 12px; padding: 8px 12px 10px 8px;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box);
 }
-.search-box { display: grid; place-items: center; width: 62px; height: 62px; border-radius: 4px; background: var(--box-2); overflow: hidden; }
+.search-box { display: grid; place-items: center; width: 62px; height: 62px; border-radius: var(--r-tag); background: var(--box-2); overflow: hidden; }
 .search-box img { width: 100%; height: 100%; object-fit: contain; }
 .search-box img.search-symbol { width: 34px; height: 34px; }
 .search-acts { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 10px 14px; margin-top: 8px; padding-left: 6px; }
@@ -172,9 +172,9 @@
   #site-search { padding: 7vh 24px 6vh; background: rgb(20 23 27 / 0.62); }
   .search-stage {
     width: min(760px, 100%); min-height: 0; padding: 0 24px 24px;
-    border: var(--line-w) solid var(--k); border-radius: 8px; box-shadow: var(--drop);
+    border: var(--line-w) solid var(--k); border-radius: var(--r); box-shadow: var(--drop);
   }
-  .search-bar { top: 0; margin: 0 -24px; padding: 20px 24px 16px; border-radius: 8px 8px 0 0; }
+  .search-bar { top: 0; margin: 0 -24px; padding: 20px 24px 16px; border-radius: var(--r) var(--r) 0 0; }
   .search-bar > svg { left: 40px; top: 37px; }
   .search-body { min-height: 0; padding-bottom: 4px; }
   .search-prod { grid-template-columns: 62px minmax(0, 1fr) auto; }

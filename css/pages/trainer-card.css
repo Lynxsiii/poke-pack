@@ -15,13 +15,13 @@
   --face: 92px;
   position: relative; display: grid; grid-template-columns: minmax(0, 1fr); align-items: start;
   margin: 0; padding: 0 16px 16px;
-  border: var(--line-w) solid var(--k); border-radius: 8px; background: var(--box); color: var(--k);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); color: var(--k);
   box-shadow: var(--drop);
 }
 /* The banner: a band across the top of the card, an ink line under it. The art is the trainer's (banners.css). */
 .tcard-band {
   position: relative; height: 84px; margin: 0 -16px; overflow: hidden;
-  border-bottom: var(--line-w) solid var(--k); border-radius: 5.5px 5.5px 0 0; background: var(--k);
+  border-bottom: var(--line-w) solid var(--k); border-radius: var(--r-tag) var(--r-tag) 0 0; background: var(--k);
 }
 .tcard-band > .tcard-banner { position: absolute; inset: 0; height: auto; pointer-events: none; }
 /* The cut corner: a cyan slant across the band's right end, like the menu's slab. */
@@ -51,7 +51,7 @@
 .tcard-sub { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; margin: 6px 0 0; line-height: 1.3; }
 .tcard-sub .account-handle { color: var(--k-2); font: 700 14px var(--font); }
 .tcard-sub .account-title {
-  padding: 1px 8px 1px 7px; border-radius: 3px; background: var(--k); color: var(--on-k);
+  padding: 1px 8px 1px 7px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k);
   font: italic 700 12.5px/1.45 var(--font-h);
 }
 .tcard-idno { display: flex; flex-wrap: wrap; gap: 2px 16px; margin: 6px 0 0; }
@@ -62,7 +62,7 @@
 #view-account .tcard-xp {
   position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 4px 14px;
   width: 100%; min-height: 64px; margin: 14px 0 0; padding: 10px 12px 10px 10px;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box-2); color: var(--k);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box-2); color: var(--k);
   font: inherit; text-align: left; cursor: pointer;
   transition: transform 0.14s var(--ease-out), background-color 0.12s ease;
 }
@@ -154,7 +154,7 @@
   transition: color 0.12s ease;
 }
 #view-account .acct-tabs .acct-tab::before {
-  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 4px; background: var(--k);
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: var(--r-tag); background: var(--k);
   transform: skewX(var(--skew)) scaleX(0.55); opacity: 0;
   transition: transform 0.2s var(--ease-out), opacity 0.14s ease;
 }
@@ -167,7 +167,7 @@
 /* What waits to be claimed: an ink count tag; white on the chosen word's plate. */
 #view-account .acct-tabs .acct-dot {
   position: static; display: inline-grid; place-items: center; min-width: 20px; height: 19px; margin: 0; padding: 0 5px;
-  border-radius: 3px; background: var(--k); color: var(--on-k);
+  border-radius: var(--r-tag); background: var(--k); color: var(--on-k);
   font: normal 700 12px/1 var(--font-h); font-variant-numeric: tabular-nums;
 }
 #view-account .acct-tabs .acct-tab.on .acct-dot { background: var(--yel); color: var(--k0); }
@@ -234,7 +234,7 @@ body.no-motion .acct-swap .acct-chart::after { display: none; }
 .next-list { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
 .next-list > .next-row {
   display: grid; grid-template-columns: 46px minmax(0, 1fr); gap: 12px; align-items: center; padding: 10px 12px;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box);
 }
 .next-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
 .next-head b { font: 600 16px/1.2 var(--font-h); }
@@ -261,7 +261,7 @@ body.no-motion .acct-swap .acct-chart::after { display: none; }
 .acct-pull-empty { display: grid; grid-template-columns: repeat(3, 64px) minmax(0, 1fr); gap: 8px; align-items: center; }
 .acct-slot {
   position: relative; display: grid; place-items: center; aspect-ratio: 63 / 88;
-  border: var(--line-w) dashed var(--rule-2); border-radius: 5px; background: rgb(var(--box-rgb) / 0.5);
+  border: var(--line-w) dashed var(--rule-2); border-radius: var(--r-tag); background: rgb(var(--box-rgb) / 0.5);
 }
 .acct-slot::after {
   content: ""; width: 42%; aspect-ratio: 1; border: 2.5px solid #c3ccd1; border-radius: 50%;
@@ -274,7 +274,7 @@ body.no-motion .acct-swap .acct-chart::after { display: none; }
 .setc-rows { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
 .setc-rows > li > .setc-row {
   display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; align-items: center; gap: 6px 12px; width: 100%;
-  min-height: 0; padding: 10px 12px 12px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  min-height: 0; padding: 10px 12px 12px; border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box);
   color: var(--k); text-align: left; cursor: pointer;
   transition: transform 0.14s var(--ease-out);
 }
@@ -289,7 +289,7 @@ body.no-motion .acct-swap .acct-chart::after { display: none; }
 .set-rest { margin-top: 10px; }
 .set-rest > summary {
   display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 46px; padding: 0 14px;
-  border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: rgb(var(--box-rgb) / 0.5);
+  border: var(--line-w) dashed var(--rule-2); border-radius: var(--r); background: rgb(var(--box-rgb) / 0.5);
   cursor: pointer; list-style: none; color: var(--k); font: 600 15px var(--font-h);
 }
 .set-rest > summary::-webkit-details-marker { display: none; }

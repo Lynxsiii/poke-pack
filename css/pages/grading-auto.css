@@ -10,7 +10,7 @@
 .gd-auto-field > span:first-child { color: var(--k-3); font: italic 700 13px var(--font-h); }
 .gd-auto-input {
   display: flex; align-items: center; gap: 6px; min-width: 0; height: 46px; padding: 0 10px;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box);
 }
 .gd-auto-input:focus-within { box-shadow: 0 0 0 3px var(--yel); }
 .gd-auto-input .coin-i { flex: none; width: 18px; height: 18px; }

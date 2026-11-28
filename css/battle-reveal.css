@@ -160,7 +160,7 @@
   inset: 0;
   z-index: -1;
   border: 2px solid var(--k);
-  border-radius: 4px;
+  border-radius: var(--r-tag);
   background: var(--yel);
   transform: skewX(var(--skew));
 }
@@ -179,7 +179,7 @@
   right: -6px;
   top: calc(17% + 8px);
   bottom: -8px;
-  border-radius: 3px;
+  border-radius: var(--r-tag);
   background: rgb(0 0 0 / 0.38);
 }
 .rv-bob,
@@ -359,7 +359,7 @@
   z-index: 96;
   opacity: 0;
   padding: 1px 6px 2px;
-  border-radius: 3px;
+  border-radius: var(--r-tag);
   background: var(--k);
   color: #fff;
   font: 700 13px/1.2 var(--font-h);

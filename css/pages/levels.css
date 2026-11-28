@@ -12,15 +12,15 @@
 /* ---- Header readout ------------------------------------------------------- */
 .lvl-read {
   position: relative; flex: none; display: inline-flex; flex-direction: column; justify-content: center; gap: 4px;
-  min-width: 44px; min-height: 44px; padding: 0 4px; border: 0; border-radius: 4px; background: none;
+  min-width: 44px; min-height: 44px; padding: 0 4px; border: 0; border-radius: var(--r-tag); background: none;
   color: var(--k); font: inherit; cursor: pointer;
 }
 .lvl-read.hidden { display: none; }
 .lvl-read-top { display: flex; align-items: baseline; justify-content: center; gap: 3px; line-height: 1; }
 .lvl-read-top small { color: var(--k-2); font: italic 700 12px var(--font-h); }
 .lvl-read-top b { font: 700 17px var(--font-h); font-variant-numeric: tabular-nums; }
-.lvl-read-line { display: block; height: 7px; padding: 1.5px; border-radius: 4px; background: var(--k); overflow: hidden; }
-.lvl-read-line u { display: block; height: 100%; border-radius: 3px; background: var(--hp); text-decoration: none; }
+.lvl-read-line { display: block; height: 7px; padding: 1.5px; border-radius: var(--r-tag); background: var(--k); overflow: hidden; }
+.lvl-read-line u { display: block; height: 100%; border-radius: var(--r-tag); background: var(--hp); text-decoration: none; }
 /* Rewards waiting on the Levels tab. */
 .lvl-read-dot { position: absolute; top: 7px; right: -2px; width: 9px; height: 9px; border-radius: 50%; background: var(--yel); box-shadow: 0 0 0 2px var(--k); }
 .lvl-read-star {
@@ -56,7 +56,7 @@
 /* ---- The pass: your level on a white sheet ---------------------------------- */
 .lv-pass {
   position: relative; padding: 14px 16px 16px;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); box-shadow: var(--drop-sm);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); box-shadow: var(--drop-sm);
 }
 .lv-pass-top { position: relative; display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
 .lv-level { margin: 0; display: flex; align-items: baseline; gap: 6px; }
@@ -66,20 +66,20 @@
 }
 .lv-level b.is-rolling { color: var(--k); }
 /* The title: an ink tag. */
-.lv-seal { flex: none; max-width: 160px; margin: 4px 0 0; padding: 3px 10px 4px; border-radius: 3px; background: var(--k); color: var(--on-k); text-align: center; }
+.lv-seal { flex: none; max-width: 160px; margin: 4px 0 0; padding: 3px 10px 4px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k); text-align: center; }
 .lv-seal span { display: block; font: italic 700 14px/1.25 var(--font-h); text-wrap: balance; }
 /* Progress: an HP bar labelled XP. The ten squares become one ink track with a green fill. */
 .lv-punch {
   position: relative; display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 0; align-items: stretch;
-  height: 16px; margin: 18px 0 10px 40px; padding: 3px; border-radius: 8px; background: var(--k); overflow: visible;
+  height: 16px; margin: 18px 0 10px 40px; padding: 3px; border-radius: var(--r); background: var(--k); overflow: visible;
 }
 .lv-punch::before {
   content: "XP"; position: absolute; left: -40px; top: 50%; transform: translateY(-50%);
-  padding: 1px 7px; border-radius: 3px; background: var(--k); color: var(--yel-k); font: italic 800 12px/1.5 var(--font-xc);
+  padding: 1px 7px; border-radius: var(--r-tag); background: var(--k); color: var(--yel-k); font: italic 800 12px/1.5 var(--font-xc);
 }
 .lv-punch i { position: relative; display: block; height: 100%; background: transparent; overflow: hidden; }
-.lv-punch i:first-of-type { border-radius: 5px 0 0 5px; }
-.lv-punch i:last-of-type { border-radius: 0 5px 5px 0; }
+.lv-punch i:first-of-type { border-radius: var(--r-tag) 0 0 var(--r-tag); }
+.lv-punch i:last-of-type { border-radius: 0 var(--r-tag) var(--r-tag) 0; }
 .lv-punch i.on, .lv-punch u { background: var(--hp); }
 .lv-punch u { position: absolute; inset: 0 auto 0 0; text-decoration: none; }
 .lv-xpline { position: relative; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 16px; margin: 0; font-variant-numeric: tabular-nums; }
@@ -116,7 +116,7 @@
 .lv-claim-btn { margin-top: 12px; width: 100%; justify-content: flex-start; }
 .lv-claim-btn[aria-disabled="true"] { opacity: 0.55; pointer-events: none; }
 .lv-slip-cap { margin: 18px 0 0; color: var(--k-2); font: 700 13px var(--font); }
-.lv-slip { margin: 8px 0 0; padding: 4px 14px; list-style: none; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); }
+.lv-slip { margin: 8px 0 0; padding: 4px 14px; list-style: none; border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); }
 .lv-slip li {
   display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
   padding: 10px 0; border-bottom: 1.5px solid var(--rule);
@@ -134,7 +134,7 @@
 #view-account:has(.lv-claim-btn) .acct-hero-actions .claim-cta { display: none; }
 
 /* ---- Prestige: the next star and what it brings ------------------------------ */
-.lv-prestige { position: relative; padding: 14px 16px 16px; border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: rgb(var(--box-rgb) / 0.55); }
+.lv-prestige { position: relative; padding: 14px 16px 16px; border: var(--line-w) dashed var(--rule-2); border-radius: var(--r); background: rgb(var(--box-rgb) / 0.55); }
 .lv-prestige.is-ready { border: var(--line-w) solid var(--k); background: var(--box); box-shadow: var(--drop-sm); }
 .lv-prestige.is-done p { margin: 8px 0 0; color: var(--k-2); font-size: 14px; font-weight: 700; }
 .lv-pr-head { display: flex; align-items: center; gap: 12px; }
@@ -159,7 +159,7 @@
 .lv-src-list, .lv-try-list { display: grid; gap: 8px; margin: 8px 0 0; padding: 0; list-style: none; }
 .lv-src {
   display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: 2px 16px;
-  padding: 10px 14px 12px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  padding: 10px 14px 12px; border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box);
 }
 .lv-src-name { font: 600 16px/1.25 var(--font-h); }
 .lv-src-xp { font: 700 17px var(--font-h); font-variant-numeric: tabular-nums; }
@@ -168,11 +168,11 @@
   margin: 0; color: var(--k-2); font-size: 13px; font-weight: 700; line-height: 1.45;
 }
 .lv-src-note span { font-variant-numeric: tabular-nums; }
-.lv-bar { grid-column: 1 / -1; display: block; height: 12px; margin-top: 8px; padding: 2.5px; border-radius: 6px; background: var(--k); overflow: hidden; }
-.lv-bar i { display: block; min-width: 4px; height: 100%; border-radius: 4px; background: var(--hp); transform-origin: 0 50%; }
+.lv-bar { grid-column: 1 / -1; display: block; height: 12px; margin-top: 8px; padding: 2.5px; border-radius: var(--r); background: var(--k); overflow: hidden; }
+.lv-bar i { display: block; min-width: 4px; height: 100%; border-radius: var(--r-tag); background: var(--hp); transform-origin: 0 50%; }
 .lv-src.is-kept { border-color: var(--rule-2); background: var(--box-2); }
 .lv-src.is-kept .lv-src-name, .lv-src.is-kept .lv-src-xp { color: var(--k-2); }
-.lv-try { padding: 10px 14px 11px; border: var(--line-w) dashed var(--rule-2); border-radius: 6px; background: rgb(var(--box-rgb) / 0.55); }
+.lv-try { padding: 10px 14px 11px; border: var(--line-w) dashed var(--rule-2); border-radius: var(--r); background: rgb(var(--box-rgb) / 0.55); }
 .lv-try b { font: 600 15px var(--font-h); color: var(--k); }
 .lv-try p { margin: 3px 0 0; color: var(--k-2); font-size: 13px; font-weight: 700; line-height: 1.45; }
 .lv-try.is-shut b { color: var(--k-3); }
@@ -211,14 +211,14 @@
 .is-done > .lv-node.sm, .lv-past > .lv-node.sm { background: var(--k); }
 /* You are here: a yellow plate on the track. */
 .lv-node.here {
-  width: 26px; height: 26px; margin: 2px 0 0 -4px; border: var(--line-w) solid var(--k); border-radius: 4px;
+  width: 26px; height: 26px; margin: 2px 0 0 -4px; border: var(--line-w) solid var(--k); border-radius: var(--r-tag);
   background: var(--yel); transform: skewX(var(--skew));
 }
 .lv-stop-body { grid-column: 3; min-width: 0; padding: 1px 0 18px; }
 .lv-stop-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 12px; margin: 0 0 9px; }
 .lv-stop-head:has(em) { position: relative; padding-top: 24px; }
 .lv-stop-head em {
-  position: absolute; left: 0; top: 0; margin: 0; padding: 1px 7px; border-radius: 3px;
+  position: absolute; left: 0; top: 0; margin: 0; padding: 1px 7px; border-radius: var(--r-tag);
   background: var(--k); color: var(--yel-k); font: italic 800 12px/1.5 var(--font-xc); text-decoration: none;
 }
 .lv-stop-name { font: 600 19px/1.2 var(--font-h); }
@@ -226,7 +226,7 @@
 .lv-away { color: var(--k-2); font-size: 13px; font-weight: 700; }
 .lv-pay { margin-left: auto; color: var(--k); font: 700 15px var(--font-h); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .is-locked .lv-pay { color: var(--k-2); }
-.lv-pay.is-waiting { padding: 1px 8px; border-radius: 3px; background: var(--yel); box-shadow: inset 0 0 0 2px var(--k); }
+.lv-pay.is-waiting { padding: 1px 8px; border-radius: var(--r-tag); background: var(--yel); box-shadow: inset 0 0 0 2px var(--k); }
 
 .lv-gap, .lv-past { padding-bottom: 0; }
 .lv-gap p { grid-column: 3; margin: 0; padding: 4px 0 14px; color: var(--k-2); font-size: 13px; font-weight: 700; line-height: 1.4; font-variant-numeric: tabular-nums; }
@@ -239,24 +239,24 @@
 .lv-tiles { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; margin: 0; padding: 0; list-style: none; }
 .lv-tile {
   position: relative; display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; align-items: center; gap: 12px;
-  margin: 0; padding: 9px 12px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box);
+  margin: 0; padding: 9px 12px; border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box);
 }
 .lv-tile-copy b { display: block; font: 600 15px/1.25 var(--font-h); }
 .lv-tile-copy small { display: block; margin-top: 2px; color: var(--k-2); font-size: 12.5px; font-weight: 700; line-height: 1.35; }
 .lv-tile-state { color: var(--k-2); font: italic 700 13px var(--font-h); white-space: nowrap; }
-.lv-tile.is-won .lv-tile-state { display: inline-flex; align-items: center; gap: 6px; padding: 1px 8px 1px 7px; border-radius: 3px; background: var(--k); color: var(--on-k); }
+.lv-tile.is-won .lv-tile-state { display: inline-flex; align-items: center; gap: 6px; padding: 1px 8px 1px 7px; border-radius: var(--r-tag); background: var(--k); color: var(--on-k); }
 .lv-tile.is-won .lv-tile-state::before {
   content: ""; width: 9px; height: 5px; border-left: 2px solid var(--hp); border-bottom: 2px solid var(--hp); transform: rotate(-45deg) translateY(-2px);
 }
 .lv-tile.is-waiting { box-shadow: inset 6px 0 0 var(--yel); padding-left: 16px; }
-.lv-tile.is-waiting .lv-tile-state { padding: 1px 8px; border-radius: 3px; background: var(--yel); color: var(--k0); box-shadow: inset 0 0 0 2px var(--k); }
+.lv-tile.is-waiting .lv-tile-state { padding: 1px 8px; border-radius: var(--r-tag); background: var(--yel); color: var(--k0); box-shadow: inset 0 0 0 2px var(--k); }
 .lv-tile.is-locked { border: var(--line-w) dashed var(--rule-2); background: rgb(var(--box-rgb) / 0.55); }
 .lv-tile.is-locked .lv-tile-copy b { color: var(--k); }
 .is-next .lv-tile.is-locked { border-color: var(--k-3); }
 
 .lv-ic {
   display: grid; place-items: center; width: 40px; height: 40px; overflow: hidden;
-  border-radius: 5px; background: var(--box-2); box-shadow: inset 0 0 0 1.5px var(--rule); color: var(--k); font-size: 18px;
+  border-radius: var(--r-tag); background: var(--box-2); box-shadow: inset 0 0 0 1.5px var(--rule); color: var(--k); font-size: 18px;
 }
 .is-locked .lv-ic { color: var(--k-3); background: transparent; }
 .lv-ic-art > * { max-width: 100%; max-height: 100%; width: auto; height: auto; }
@@ -301,14 +301,14 @@
 .xp-toast-line b { font-family: var(--font-h); }
 .xp-toast-lv { font: italic 700 13px var(--font-h); white-space: nowrap; font-variant-numeric: tabular-nums; opacity: 0.8; }
 .xp-toast-lv small { font-size: inherit; }
-.xp-toast-bar { position: absolute; left: 10px; right: 10px; bottom: 6px; height: 7px; padding: 1.5px; border-radius: 4px; background: var(--k); box-shadow: 0 0 0 1.5px rgb(255 255 255 / 0.3); }
-.xp-toast-bar i { display: block; height: 100%; border-radius: 3px; background: var(--hp); }
+.xp-toast-bar { position: absolute; left: 10px; right: 10px; bottom: 6px; height: 7px; padding: 1.5px; border-radius: var(--r-tag); background: var(--k); box-shadow: 0 0 0 1.5px rgb(255 255 255 / 0.3); }
+.xp-toast-bar i { display: block; height: 100%; border-radius: var(--r-tag); background: var(--hp); }
 
 /* ---- Level-up card ----------------------------------------------------------------- */
 .lv-up {
   position: fixed; z-index: 45; left: 12px; right: 12px; top: calc(env(safe-area-inset-top) + 72px); max-width: 440px; margin-inline: auto;
   display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 4px 18px; padding: 16px 16px 14px;
-  border: var(--line-w) solid var(--k); border-radius: 8px; background: var(--box); color: var(--k); box-shadow: var(--drop);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); color: var(--k); box-shadow: var(--drop);
   opacity: 0; transform: translate3d(0, -30px, 0); pointer-events: none;
   transition: opacity 0.22s ease, transform 0.5s var(--ease-out);
 }
@@ -317,7 +317,7 @@
 .lv-up-stamp { grid-row: 1 / span 2; align-self: start; display: grid; place-items: center; width: 96px; height: 96px; margin: 2px 0 0; }
 .lv-up-stamp span {
   display: grid; place-items: center; align-content: center; gap: 2px; width: 90px; height: 90px;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--yel); opacity: 0;
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--yel); opacity: 0;
 }
 .lv-up.show .lv-up-stamp span { animation: lv-stamp 0.5s 0.2s var(--ease-pop) both; }
 .lv-up-stamp small { font: italic 800 15px/1 var(--font-xc); color: var(--k); }

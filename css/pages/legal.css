@@ -8,7 +8,7 @@
   position: relative; isolation: isolate; display: inline-block; margin: 0 0 16px 4px; padding: 2px 13px 3px;
   color: var(--on-k); font: italic 700 13.5px/1.4 var(--font-h); font-variant-numeric: tabular-nums;
 }
-.lg-date::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 4px; background: var(--k); transform: skewX(var(--skew)); }
+.lg-date::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: var(--r-tag); background: var(--k); transform: skewX(var(--skew)); }
 .lg-head h1, #view-legal .lg-head h1 {
   margin: 0 0 14px; color: var(--k); text-transform: none;
   font: italic 800 clamp(42px, 11vw, 72px)/0.92 var(--font-xc); letter-spacing: -0.03em;
@@ -16,19 +16,19 @@
 .lg-lede { max-width: 46ch; margin: 0; color: var(--k); font: 700 17px/1.5 var(--font); }
 
 /* Contents: a white box of numbered rows. */
-.lg-toc { margin: 0 0 34px; padding: 16px 16px 12px; border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); box-shadow: var(--drop-sm); }
+.lg-toc { margin: 0 0 34px; padding: 16px 16px 12px; border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); box-shadow: var(--drop-sm); }
 .lg-toc-h { margin: 0 0 8px 2px; color: var(--k); font: italic 800 20px/1.1 var(--font-xc); letter-spacing: -0.01em; }
 .lg-toc ol { display: grid; gap: 2px; margin: 0; padding: 0; list-style: none; }
 .lg-jump {
   display: flex; align-items: center; gap: 12px; width: 100%; min-height: 40px; padding: 4px 6px; margin: 0;
-  border: 0; border-radius: 4px; background: none; color: var(--k); text-align: left; cursor: pointer;
+  border: 0; border-radius: var(--r-tag); background: none; color: var(--k); text-align: left; cursor: pointer;
   font: 600 15.5px/1.25 var(--font-h); transition: transform 0.14s var(--ease-out), background-color 0.12s ease;
 }
 .lg-n {
   position: relative; isolation: isolate; flex: none; display: grid; place-items: center; min-width: 30px; height: 24px;
   color: var(--on-k); font: italic 700 13px/1 var(--font-h); font-variant-numeric: tabular-nums;
 }
-.lg-n::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 3px; background: var(--k); transform: skewX(var(--skew)); }
+.lg-n::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: var(--r-tag); background: var(--k); transform: skewX(var(--skew)); }
 .lg-t { text-decoration: underline; text-decoration-color: var(--cy-2); text-decoration-thickness: 2px; text-underline-offset: 3px; }
 @media (hover: hover) { .lg-jump:hover { transform: translateX(4px); background: var(--cy-3); } }
 @media (min-width: 720px) { .lg-toc ol { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 14px; } }
@@ -50,7 +50,7 @@
 .lg-toc ~ .lg-body h2::before {
   content: counter(lg-h); content: counter(lg-h) / "";
   flex: none; position: relative; top: -3px; display: inline-grid; place-items: center; min-width: 32px; height: 26px; padding: 0 6px;
-  border-radius: 3px; background: var(--k); color: var(--on-k); font: italic 700 14px/1 var(--font-h); font-variant-numeric: tabular-nums;
+  border-radius: var(--r-tag); background: var(--k); color: var(--on-k); font: italic 700 14px/1 var(--font-h); font-variant-numeric: tabular-nums;
   transform: skewX(var(--skew));
 }
 /* Arriving from the contents: the plate lands with a small overshoot and takes the yellow edge. */
@@ -67,7 +67,7 @@
   text-decoration-thickness: 2px; text-underline-offset: 3px; overflow-wrap: anywhere;
 }
 .lg-doc a:hover, .agree-row a:hover, .terms-card p a:hover { color: var(--cy-2); }
-.lg-doc code { padding: 1px 5px; border-radius: 3px; background: var(--box-2); font: 600 0.92em var(--font-h); color: var(--k); }
+.lg-doc code { padding: 1px 5px; border-radius: var(--r-tag); background: var(--box-2); font: 600 0.92em var(--font-h); color: var(--k); }
 /* The documents' own closing links: the rows below take their place. */
 .lg-doc .lg-links { display: none; }
 .lg-more { display: grid; gap: 10px; margin: 40px 0 0; padding-top: 22px; border-top: var(--line-w) solid var(--k); }
@@ -104,13 +104,13 @@
 body.terms-open { overflow: hidden; }
 .terms-card {
   width: min(460px, 100%); margin: 0; padding: 22px 22px 14px;
-  border: var(--line-w) solid var(--k); border-radius: 8px; background: var(--box); color: var(--k);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); color: var(--k);
   box-shadow: var(--drop); animation: rt-pop 0.26s var(--ease-out);
 }
 .terms-card::before {
   content: "Terms"; display: inline-block; margin: 0 0 12px; padding: 2px 12px 3px;
   color: var(--on-k); font: italic 700 13px/1.4 var(--font-h);
-  background: var(--k); border-radius: 3px; border-left: 6px solid var(--yel);
+  background: var(--k); border-radius: var(--r-tag); border-left: 6px solid var(--yel);
 }
 .terms-card h2 { margin: 0 0 10px; color: var(--k); font: italic 800 28px/1 var(--font-xc); letter-spacing: -0.02em; }
 .terms-card > p { margin: 0 0 18px; color: var(--k-2); font: 500 15px/1.55 var(--font); }

@@ -7,7 +7,7 @@
   position: relative; overflow: hidden;
   display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: stretch;
   max-width: 620px; margin: 0 0 24px;
-  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); color: var(--k);
+  border: var(--line-w) solid var(--k); border-radius: var(--r); background: var(--box); color: var(--k);
   box-shadow: var(--drop-sm);
   animation: gate-in 0.34s var(--ease-out) backwards;
 }
