@@ -587,7 +587,7 @@ a.rt-row, button.rt-row { transition: transform 0.14s var(--ease-out); }
   .tabbar .nav-btn, .tabbar .nav-more > summary { min-height: 62px; gap: 2px; color: var(--k-3); font: 600 11.5px var(--font-h); }
   .tabbar svg { stroke-width: 2.2; }
   .tabbar > .nav-btn.active { color: var(--k); }
-  .tabbar > .nav-btn.active svg { color: var(--k); animation: rt-hop 0.36s var(--ease-out); }
+  .tabbar > .nav-btn.active svg { color: var(--cy-2); animation: rt-hop 0.36s var(--ease-out); }
   .tabbar > .nav-btn.active::before { display: none; }
   .tabbar > .nav-btn:active svg { transform: scale(0.88); }
   .tabbar > .nav-btn svg { transition: transform 0.1s var(--ease-out); }
@@ -991,14 +991,6 @@ body.no-motion .rt-track > i[style*="--fill"] { transition: none !important; }
 /* The menu arrow is for the one main key, never for rows. */
 .hub-game-go { display: none; }
 /* Icons are drawn like the logo: square ends and mitred corners. */
-.nav-btn svg, .site-header .nav svg, .me-item svg, .tabbar svg, .tabbar .nav-more-list .menu-out svg,
-.cart-link svg, .search-open svg, .search-bar svg, .bt-icon { stroke-linecap: square; stroke-linejoin: miter; }
-/* The icon set (the sprite in index.html, js/battle-kit.js): one ink line, flat ends, mitred corners,
-   and one solid block per icon. `.ic-a` is that block: it takes --ico-a where a place sets it (the menus
-   paint it in the theme's colour) and is ink everywhere else. `.ic-f` is a solid ink part. */
-.ic-a { fill: var(--ico-a, currentColor); stroke: none; }
-.ic-f { fill: currentColor; stroke: none; }
-.nav-more-list, .nav-sub, .me-menu, .tabbar > .nav-btn.active { --ico-a: var(--cy-2); }
-.nav-more-list .nav-btn.active, .nav-sub .nav-btn.active { --ico-a: currentColor; }
+.nav-btn svg, .site-header .nav svg, .me-item svg, .tabbar svg, .tabbar .nav-more-list .menu-out svg { stroke-linecap: square; stroke-linejoin: miter; }
 /* Reading pages have no slab: it is wallpaper there. */
 body:is([data-view="legal"], [data-view="notes"], [data-view="settings"])::after { display: none; }

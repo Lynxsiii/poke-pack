@@ -23,20 +23,20 @@ const ICONS = {
   back: '<path d="m14 6-6 6 6 6"/>',
   close: '<path d="m6 6 12 12M18 6 6 18"/>',
   check: '<path d="m5 12 4 4L19 6"/>',
-  copy: '<path d="M8.5 8.5h11v12h-11z"/><path d="M15.5 5.5V3.5h-12v12h2"/>',
+  copy: '<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V4H4v12h4"/>',
   link: '<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
-  search: '<path d="M10.5 4.5a6 6 0 1 0 0 12a6 6 0 1 0 0-12z"/><path class="ic-a" d="M13.9 16.3l2.4-2.4 5.2 5.2-2.4 2.4z"/>',
+  search: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/>',
   play: '<path d="m8 5 11 7-11 7z"/>',
   skip: '<path d="m5 5 9 7-9 7zM17 5v14"/>',
-  users: '<path d="M9 6.5a3.2 3.2 0 1 0 0 6.4a3.2 3.2 0 1 0 0-6.4z"/><path d="M2.5 20.5v-2l2.5-3.5h8l2.5 3.5v2"/><path d="M16.5 7.5a3 3 0 0 1 0 5.2"/><path d="M17.5 15h1.5l2.5 3.5v2"/><path class="ic-a" d="M4.8 9.3a4.2 4.2 0 0 1 8.4 0h2.3v1.7H4.8z"/>',
-  bot: '<path d="M4.5 8.5h15v11h-15zM12 8V4"/><path class="ic-f" d="M10.5 2h3v3h-3zM8 12h2.5v3H8zM13.5 12H16v3h-2.5z"/>',
+  users: '<circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0M16 5a3 3 0 0 1 0 6M17.5 14a5 5 0 0 1 3.5 5"/>',
+  bot: '<rect x="4.5" y="7.5" width="15" height="12" rx="3.5"/><path d="M12 3.5v4M9 12.5v1.5M15 12.5v1.5M9.5 16.5h5"/>',
   swords: '<path d="m5 3 14 14-2 2L3 5zM19 3 5 17l2 2L21 5zM3 19l3-3M18 16l3 3"/>',
   crown: '<path d="m3 8 4.5 4L12 5l4.5 7L21 8l-2 11H5z"/>',
   refresh: '<path d="M20 11a8 8 0 0 0-14.3-4.9L4 8M4 4v4h4M4 13a8 8 0 0 0 14.3 4.9L20 16M20 20v-4h-4"/>',
   bolt: '<path d="M13 3 5 13.5h6L10 21l8-10.5h-6z"/>',
 };
 export const icon = (name, cls = "") =>
-  `<svg class="bt-icon ${cls}" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">${ICONS[name] || ""}</svg>`;
+  `<svg class="bt-icon ${cls}" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">${ICONS[name] || ""}</svg>`;
 
 /** Front wrapper art for a set, for products without their own picture. */
 const WRAPPERS = new Map(PLAYABLE_SETS.map((set) => [set.id, set.wrappers?.[0]?.art || ""]));
