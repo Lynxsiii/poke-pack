@@ -4,9 +4,18 @@
     "date": "2026-11-28",
     "kind": "new",
     "big": 1,
-    "title": "This week on Home, and patch notes you can skim",
-    "summary": "Home now shows the latest big update and the cards climbing in price, and every patch note says whether it is new, better or a fix.",
+    "title": "Live rips and This week on Home, and patch notes you can skim",
+    "summary": "Home now shows big pulls from other trainers as they happen, the latest big update and the cards climbing in price. Every patch note says whether it is new, better or a fix.",
     "groups": [
+      {
+        "title": "Live rips, on Home",
+        "items": [
+          "Under the pack, Live rips shows the newest big pulls from other trainers: the card, who pulled it, what it is worth and how long ago. Black Label 10s show too.",
+          "It is the same feed our Discord gets: a pull worth 100 coins or more, or a Special Illustration Rare or better. It updates every minute while you're on Home.",
+          "Tap a pull to open the card.",
+          "Only your handle and the card show. If you'd rather stay out, turn off Share big pulls in Settings and you're out of both Home and Discord."
+        ]
+      },
       {
         "title": "This week, on Home",
         "items": [

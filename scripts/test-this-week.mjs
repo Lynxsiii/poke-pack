@@ -9,6 +9,8 @@ import { DatabaseSync } from "node:sqlite";
 import { weekOf, rangeWords } from "../js/this-week.js";
 import { cardFromText, handleMovers, pickMovers } from "../worker/movers.js";
 import { getSet } from "../js/catalog.js";
+import { agoWords, smallImage } from "../js/live-rips.js";
+import { handleLiveRips, ripFromRow } from "../worker/live-rips.js";
 
 const root = new URL("..", import.meta.url);
 const notes = JSON.parse(readFileSync(new URL("data/patch-notes.json", root), "utf8"));
@@ -127,5 +129,67 @@ assert.equal(out.up[0].was, 10);
 assert.ok(out.up[0].img.endsWith(".webp"));
 assert.equal(out.day, day(0));
 assert.equal(out.since, day(8));
+
+// Live rips: a feed row becomes a handle and a card, and nothing else.
+const feedRow = (over = {}) => ({
+  id: 7,
+  kind: "pulls",
+  created_at: 1000,
+  handle: "misty",
+  feed_share: 1,
+  tester: 0,
+  payload: JSON.stringify({
+    name: "Real Name",
+    handle: "old_handle",
+    discordId: "123456789",
+    cards: [{ id: "me1-1", name: "Bulbasaur", rarity: "Common", price: 120, image: "assets/cards/me1/1.webp", set: "Mega Evolution" }, { id: "me1-2", name: "Ivysaur", price: 101 }],
+    more: 2,
+  }),
+  ...over,
+});
+const rip = ripFromRow(feedRow());
+assert.deepEqual(rip, {
+  id: 7,
+  kind: "pull",
+  handle: "misty",
+  at: 1000,
+  card: { id: "me1-1", name: "Bulbasaur", rarity: "Common", set: "Mega Evolution", price: 120, image: "assets/cards/me1/1.webp" },
+  more: 3,
+});
+assert.ok(!JSON.stringify(rip).includes("Real Name") && !JSON.stringify(rip).includes("123456789"), "a name or a Discord id got out");
+assert.equal(ripFromRow(feedRow({ feed_share: 0 })), null, "sharing turned off");
+assert.equal(ripFromRow(feedRow({ tester: 1 })), null, "a test account");
+assert.equal(ripFromRow(feedRow({ payload: "{" })), null);
+const black = ripFromRow(feedRow({ kind: "blacklabel", payload: JSON.stringify({ handle: "misty", card: { id: "me1-1", name: "Bulbasaur", price: 120, slab: 900 } }) }));
+assert.equal(black.kind, "blacklabel");
+assert.equal(black.card.price, 900);
+
+db.exec("CREATE TABLE users (id TEXT PRIMARY KEY, name TEXT, handle TEXT, tester INTEGER NOT NULL DEFAULT 0)");
+const ripsUrl = new URL("https://poke-pack.rip/api/rips/live");
+DB.exec = async (sql) => (db.exec(sql), {});
+DB.prepare = ((prepare) => (sql) => {
+  const st = prepare(sql);
+  st.first = async () => (await st.all()).results[0] || null;
+  return st;
+})(DB.prepare);
+const liveRips = async () => (await (await handleLiveRips(new Request(ripsUrl), env, ripsUrl)).json()).rips;
+assert.deepEqual(await liveRips(), [], "no pulls yet");
+db.exec("INSERT INTO users (id, name, handle) VALUES ('a', 'A', 'misty'), ('b', 'B', 'brock')");
+db.exec("UPDATE users SET feed_share = 0 WHERE id = 'b'");
+const feed = db.prepare("INSERT INTO discord_feed (kind, user_id, payload, created_at) VALUES ('pulls', ?, ?, ?)");
+feed.run("a", feedRow().payload, Date.now() - 60_000);
+feed.run("b", feedRow().payload, Date.now() - 30_000);
+feed.run("a", feedRow().payload, Date.now() - 30 * 86_400_000);
+const shown = await liveRips();
+assert.equal(shown.length, 1, "only the sharing trainer's pull from this week");
+assert.equal(shown[0].handle, "misty");
+
+assert.equal(agoWords(0, 30_000), "now");
+assert.equal(agoWords(0, 5 * 60_000), "5m");
+assert.equal(agoWords(0, 3 * 3_600_000), "3h");
+assert.equal(agoWords(0, 2 * 86_400_000), "2d");
+assert.equal(smallImage("assets/cards/me1/1.webp"), "assets/cards/me1/1-sm.webp");
+assert.equal(smallImage("assets/cards/me1/1-sm.webp"), "assets/cards/me1/1-sm.webp");
+assert.equal(smallImage("https://x.test/a.png"), "https://x.test/a.png");
 
 console.log("this week: ok");

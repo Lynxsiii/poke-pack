@@ -495,3 +495,58 @@ body.rt-enter #view-home .wk-card { animation: hh-rise 0.36s var(--ease-out) bac
   .wk-nm { font-size: 16px; }
   .wk-foot { margin-top: 14px; }
 }
+
+/* ---- Live rips (js/live-rips.js) -------------------------------------------
+   Between the hero and This week: the newest big pulls from other trainers,
+   one row you swipe. A tile is a box: the card, who pulled it and how long
+   ago, its name and what it is worth. */
+.home-rips { --lr-gutter: var(--gutter, 20px); position: relative; z-index: 3; margin-top: 40px; }
+.home-rips[hidden] { display: none; }
+.home-rips + .home-week { margin-top: 36px; }
+.lr-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 12px; margin: 0 0 12px; }
+.lr-head h2 { display: flex; align-items: center; gap: 10px; margin: 0; color: var(--k); font: italic 800 30px/1 var(--font-xc); letter-spacing: -0.02em; }
+.lr-dot { flex: none; width: 11px; height: 11px; border-radius: 50%; background: var(--hp-low); animation: lr-blink 1.6s ease-in-out infinite; }
+@keyframes lr-blink { 50% { opacity: 0.25; } }
+.lr-note { color: var(--k-2); font: 700 13px/1.2 var(--font); }
+.lr-row {
+  display: flex; gap: 10px; margin: 0 calc(var(--lr-gutter) * -1); padding: 2px var(--lr-gutter) 8px;
+  overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; scroll-padding-inline: var(--lr-gutter);
+  scrollbar-width: none; -webkit-overflow-scrolling: touch;
+}
+.lr-row::-webkit-scrollbar { display: none; }
+.lr-tile {
+  flex: 0 0 236px; display: flex; align-items: center; gap: 12px; min-width: 0; padding: 8px 12px 8px 9px;
+  border: var(--line-w) solid var(--k); border-radius: 6px; background: var(--box); color: var(--k);
+  font: inherit; text-align: left; cursor: pointer; scroll-snap-align: start; -webkit-tap-highlight-color: transparent;
+  transition: transform 0.14s var(--ease-out);
+}
+.lr-art { flex: none; width: 50px; aspect-ratio: 63 / 88; }
+.lr-art img { display: block; width: 100%; height: 100%; border-radius: 4.6% / 3.3%; background: var(--box-2); object-fit: cover; }
+.lr-body { flex: 1; min-width: 0; display: grid; gap: 2px; }
+.lr-who { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; color: var(--k-2); font: 700 12px/1.3 var(--font); }
+.lr-who b { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 700; }
+.lr-who time { flex: none; font-variant-numeric: tabular-nums; }
+.lr-card { font: 600 15.5px/1.15 var(--font-h); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lr-bl { margin-right: 6px; padding: 0 6px; border-radius: 3px; background: var(--k); color: var(--on-k); font: italic 700 11.5px/1.5 var(--font-h); }
+.lr-meta { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.lr-price { display: inline-flex; align-items: center; gap: 4px; flex: none; font: 700 16px/1.2 var(--font-h); font-variant-numeric: tabular-nums; }
+.lr-price .coin-i { width: 15px; height: 15px; }
+.lr-set, .lr-more { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--k-2); font: 700 11.5px/1.3 var(--font); }
+@media (hover: hover) { .lr-tile:hover { transform: translateY(-3px); } }
+.lr-tile:active { transform: translateY(1px); }
+.lr-tile:focus-visible { outline: 3px solid var(--cy-2); outline-offset: 2px; }
+/* A pull that was not there a minute ago slides in at the front. */
+.lr-tile.is-new { animation: lr-in 0.4s var(--ease-pop) backwards; }
+@keyframes lr-in { from { opacity: 0; transform: translateX(-26px); } }
+body.rt-enter #view-home .lr-tile { animation: hh-rise 0.34s var(--ease-out) backwards; animation-delay: calc(0.18s + min(var(--i, 0), 6) * 40ms); }
+
+@media (min-width: 961px) {
+  .home-rips { margin-top: 56px; }
+  .home-rips + .home-week { margin-top: 48px; }
+  .lr-head h2 { font-size: 38px; }
+  .lr-note { font-size: 14.5px; }
+  .lr-tile { flex-basis: 264px; }
+  .lr-art { width: 56px; }
+  /* The row runs off the page's right edge, so it reads as a feed and not a grid. */
+  .lr-row { margin-right: 0; mask-image: linear-gradient(90deg, #000 calc(100% - 70px), transparent); -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 70px), transparent); }
+}

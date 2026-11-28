@@ -71,7 +71,7 @@
     <link rel="stylesheet" href="css/app.css?v=71" />
     <link rel="stylesheet" href="css/theme.css?v=28" />
     <link rel="stylesheet" href="css/counter.css?v=4" />
-    <link rel="stylesheet" href="css/pages/home.css?v=15" />
+    <link rel="stylesheet" href="css/pages/home.css?v=16" />
     <link rel="stylesheet" href="css/pages/packs.css?v=22" />
     <link rel="stylesheet" href="css/pages/collection.css?v=20" />
     <!-- binder object (materials, hardware, plate): css/binder/ -->
@@ -376,6 +376,7 @@
     <link rel="modulepreload" href="js/binder-editor.js?v=4" />
     <link rel="modulepreload" href="js/notes-page.js?v=4" />
     <link rel="modulepreload" href="js/this-week.js?v=1" />
+    <link rel="modulepreload" href="js/live-rips.js?v=1" />
     <link rel="modulepreload" href="js/legal-page.js?v=6" />
     <link rel="modulepreload" href="js/terms-sheet.js?v=1" />
     <link rel="modulepreload" href="js/fam/mcd-promos.js?v=6" />
@@ -659,6 +660,8 @@
             </div>
           </div>
         </div>
+        <!-- Live rips (js/live-rips.js): the newest big pulls from trainers who share them -->
+        <section class="home-rips" id="home-rips" aria-labelledby="home-rips-h" hidden></section>
         <!-- This week (js/this-week.js): the newest big update and the cards whose price moved most -->
         <section class="home-week" id="home-week" aria-labelledby="home-week-h" hidden></section>
         <div id="home-body"></div>
@@ -1057,7 +1060,7 @@
       </nav>
     </footer>
     <script type="module" src="js/etch.js?v=1"></script>
-    <script type="module" src="js/app.js?v=418"></script>
+    <script type="module" src="js/app.js?v=419"></script>
     <script type="module" src="js/rotom.js?v=3"></script>
     <script type="module" src="js/phone-layout.js?v=1"></script>
   </body>
