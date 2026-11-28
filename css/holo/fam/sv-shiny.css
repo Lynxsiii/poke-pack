@@ -61,7 +61,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-shiny.fam-sv-shiny.fam-sv-shiny.fam-sv-
     transparent 57%);
   --ssh-pool: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     #000 0%, #000 22%, rgba(0, 0, 0, 0.65) 46%, rgba(0, 0, 0, 0.2) 72%, transparent 92%);
-  --ssh-dodge: 1;
+  /* 2026-11-28 per-card review (Charizard ex svp074: "green-gold tint over the figure"): the dodge at 0.55 and the
+     multiply tint at half saturation (rule after .foil::before below) */
+  --ssh-dodge: 0.55;
 }
 
 /* ---- .foil: grey silver + etch lines (+ light pool and band tint when held), multiplied ---------------------------- */
@@ -112,6 +114,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-shiny.fam-sv-shiny.fam-sv-shiny.fam-sv-
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   opacity: var(--card-opacity);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-shiny.fam-sv-shiny.fam-sv-shiny.fam-sv-shiny.foil-shiny.has-foil-map.ssh-sur .foil::before {
+  filter: saturate(0.5);
+  opacity: calc(var(--card-opacity) * 0.8);
 }
 /* ---- .foil::after: the whorl arcs facing the lamp flash pale --------------------------------------------------------
    Live's line-direction map (a grey per direction) differenced with a grey set by the pointer, inverted and pushed

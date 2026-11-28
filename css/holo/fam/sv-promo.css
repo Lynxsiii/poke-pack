@@ -12,7 +12,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-promo.fam-sv-promo.foil-cosmos {
   --svpm-specks: url("/assets/foil/fam/sv-promo/specks-hd.webp");
   --svpm-specks-size: 100% 100%;
   --svpm-specks-repeat: repeat;
-  --svpm-char: hsla(222, 7%, 17%, 0.74);
+  /* 2026-11-28 per-card review: "a black speckled border not in the print" on every face; the scans' border is silver
+     and stays silver. The charcoal ground is off. */
+  --svpm-char: hsla(222, 7%, 17%, 0);
   --svpm-sheen: hsla(0, 0%, 100%, 0);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-promo.fam-sv-promo.foil-cosmos.cosmos-pixel {
@@ -40,7 +42,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-promo.fam-sv-promo.foil-cosmos:not(.lit
   background-blend-mode: normal;
   filter: none;
   mix-blend-mode: normal;
-  opacity: var(--foil-strength, 1);
+  /* the speck field at under half: at full it was white snow over the Pokémon wherever the map is a flat window */
+  opacity: calc(0.42 * var(--foil-strength, 1));
 }
 
 /* Lit, the coloured specks (promos.css ::before) and the glints (::after) use the same galaxy at the same scale as
