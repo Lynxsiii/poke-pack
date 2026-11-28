@@ -160,7 +160,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-ex-a
   /* contrast pivots on 50% grey, so it strengthens the colour without touching the neutral */
   filter: contrast(calc(1.1 + var(--pointer-from-center) * 0.25)) saturate(1.2);
   mix-blend-mode: hard-light;
-  opacity: calc((0.3 + var(--card-opacity) * (0.5 + var(--pointer-from-center) * 0.2)) * var(--foil-strength, 1));
+  /* round 3 (2026-11-28): 0.5/0.2 to 0.36/0.14. In hard-light a 70 % top adds 0.4 to black ink, so the fan stood as
+     rainbow streaks with lifted blacks on the two Darkrai (bw5-63, bw11-88) */
+  opacity: calc((0.3 + var(--card-opacity) * (0.36 + var(--pointer-from-center) * 0.14)) * var(--foil-strength, 1));
 }
 /* At rest (diffuse light): no colour at all, the grey lifted, so the vertical line grain reads as a silver sheen. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-ex-ace.fam-bw-ex-ace.fam-bw-ex-ace.fam-bw-ex-ace.bw-ex:not(.lit):not(.settling) .foil {
@@ -228,7 +230,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-ex-a
   /* x0.7 and the flecks toned down (2026-11-28): at full strength the pillar read as a pasted RGB smear over a dark
      ground (holo check, Darkrai-EX 88/113) */
   filter: saturate(0.6);
-  opacity: calc(var(--card-opacity) * 0.45);
+  opacity: calc(var(--card-opacity) * 0.36);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-ex-ace.fam-bw-ex-ace.fam-bw-ex-ace.fam-bw-ex-ace.bw-ex .glare::after {
   background-image: var(--bxa-pillar);
