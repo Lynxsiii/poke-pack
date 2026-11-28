@@ -292,6 +292,16 @@ cure"). The surface gloss throws a soft highlight.
   fails (a plain-print scan, a dark figure on a dark sky), prompt SAM on the figure itself: `make_figure_masks.point_mask`,
   `cut_figure_from_maps.py --points "x,y;x,y"`.
 
+- **A reverse with no family is drawn by a dodge or by the cosmos tile, and neither is a mirror** (2026-11-28 reverse
+  round: about 2,300 faces). `rev-mirror` colour-dodges a 72% grey over the whole body: a pale text box blows to flat
+  white, a coloured one takes an even wash, and under the Scarlet & Violet window an older frame shows a foil strip
+  along its picture. A face with no finish at all (me55, Trick or Trade, Energy) gets rarities.css's cosmos tile:
+  white cracked blotches. One recipe covers them, generated per family by `scripts/fam/mirror-reverse/make_sheets.py`:
+  a pastel spectrum multiplied in through a veil that opens only round the pointer (one cycle about 1.35 cards, so
+  the pool spans three hues: at 2.6 cards it was one hue, a green cast), a low screened copy for dark ink, a white
+  overlay core, a faint cool floor at rest, and the frame's own mask. A patterned sheet (Sun & Moon's tiles) is
+  multiplied in faintly and gates the core by luminance. Colour-dodge suits saturated bodies only: on orange it
+  glares yellow, on near-white it clips.
 - **A window holo lights round the lamp, not over the window.** The WotC Team Rocket, Legendary Collection, Gym and promo
   recipes screened a spectrum, a silver floor and a 0.55 rest sheen over the whole foil map, so every black or navy
   background read as a blue-lavender or grey haze, at rest too (2026-11-28 site review: 30 of 40 bad). A real WotC holo
