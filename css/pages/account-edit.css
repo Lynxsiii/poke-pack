@@ -1,0 +1,124 @@
+/* Account, Edit profile (js/app.js renderAccountBody, js/avatar-picker.js).
+   One screen for everything you can change about how you look: a small trainer
+   card that stays in view, a word for each thing, and only that thing's picker
+   under it. Security uses the same head. Theme tokens only. */
+
+/* ---- The head: back, the screen's name, the public page -------------------- */
+.edit-top {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 4px 14px;
+  margin: 4px 0 16px;
+}
+.edit-back {
+  display: inline-flex; align-items: center; gap: 2px; min-height: 44px; margin-left: -6px; padding: 0 8px 0 2px;
+  border: 0; background: none; color: var(--k-2); font: 700 15px var(--font-h); cursor: pointer;
+}
+.edit-back svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.edit-back:hover { color: var(--k); }
+.edit-back:active { transform: translateX(-1px); }
+.edit-h { margin: 0; font: italic 800 clamp(24px, 6.4vw, 38px)/1 var(--font-xc); letter-spacing: -0.02em; white-space: nowrap; }
+.edit-view { min-height: 44px; display: inline-flex; align-items: center; white-space: nowrap; }
+
+/* The words of Edit profile sit right under the preview; one row that scrolls on a narrow phone. */
+#view-account .acct-tabs.edit-tabs { margin: 0 0 6px; }
+#view-account [data-mode="edit"] .look-controls { gap: 12px; }
+#view-account [data-mode="edit"] .acct-body { display: grid; gap: 18px; min-width: 0; }
+#view-account [data-mode="edit"] .look-controls .field { margin: 16px 0 0; }
+#view-account [data-mode="edit"] .look-controls .field:first-child { margin-top: 0; }
+#view-account [data-mode="security"] .acct-body { margin-top: 4px; }
+#view-account .page-extras { margin-top: 22px; }
+
+/* ---- Picture picker -------------------------------------------------------- */
+.av-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+.av-kinds.seg { flex: 1 1 220px; max-width: 360px; }
+/* Shiny: a switch drawn as a key. Off it is a quiet outline; on it stands on ink with its star lit. */
+.av-shiny {
+  display: inline-flex; align-items: center; gap: 7px; min-height: 40px; padding: 0 14px 0 11px;
+  border: var(--line-w) solid var(--rule-2); border-radius: 6px; background: none; color: var(--k-2);
+  font: italic 700 15px var(--font-h); cursor: pointer;
+  transition: color 0.12s ease, background-color 0.12s ease, border-color 0.12s ease;
+}
+.av-shiny i {
+  width: 15px; height: 15px; background: currentColor;
+  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+  transition: transform 0.24s var(--ease-pop);
+}
+.av-shiny:hover { color: var(--k); border-color: var(--k); }
+.av-shiny.on { border-color: var(--k); background: var(--k); color: var(--on-k); }
+.av-shiny.on i { background: var(--yel-k, var(--yel)); transform: rotate(90deg) scale(1.15); }
+.av-shiny:active { transform: translateY(1px); }
+
+#view-account .look-controls .field.av-search, .av-search { margin: 14px 0 0; max-width: 460px; }
+.av-groups {
+  display: flex; gap: 2px; margin: 10px calc(-1 * var(--gutter, 16px)) 0; padding: 3px var(--gutter, 16px);
+  overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none;
+  transition: opacity 0.14s ease;
+}
+.av-groups::-webkit-scrollbar { display: none; }
+.av-groups .av-group { flex: none; min-height: 40px; padding: 2px 12px 3px; font-size: 15.5px; white-space: nowrap; }
+.av-groups.is-off { opacity: 0.45; }
+
+.av-results { margin-top: 10px; }
+.av-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(86px, 1fr)); gap: 4px; }
+/* A pick: a flat tile; the chosen one wears the ink line and its yellow cursor edge. */
+.av-pick {
+  position: relative; display: grid; justify-items: center; align-content: start; gap: 3px; min-width: 0; padding: 7px 3px 6px;
+  border: 2px solid transparent; border-radius: 6px; background: transparent; color: inherit; cursor: pointer; overflow: hidden;
+  content-visibility: auto; contain-intrinsic-size: auto 96px;
+  transition: transform 0.12s var(--ease-out), background-color 0.12s ease;
+}
+.av-pick:hover { background: var(--box-2); border-color: var(--rule); }
+.av-pick:active { transform: translateY(1px); }
+.av-pick.on { background: var(--cy-3); border-color: var(--k); box-shadow: inset 5px 0 0 var(--yel); }
+.av-pick.rt-picked { animation: look-pick-in 0.3s var(--ease-pop); }
+.av-face { display: block; width: 64px; height: 64px; background-repeat: no-repeat; }
+img.av-face { object-fit: contain; image-rendering: pixelated; transform: scale(1.18); }
+.av-pick small {
+  max-width: 100%; color: var(--k-2); font-size: 11.5px; font-weight: 700; line-height: 1.2; text-align: center;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; overflow-wrap: anywhere;
+}
+.av-pick.on small { color: var(--k); }
+.av-pick.is-none { cursor: default; }
+.av-pick.is-none .av-face { opacity: 0.28; filter: grayscale(1); }
+.av-pick.is-none small { color: var(--k-3); }
+.av-note, .av-empty { margin: 12px 0 0; color: var(--k-2); font-size: 13px; font-weight: 700; line-height: 1.45; }
+
+/* Sprites (pixel and animated pictures) in a round face: whole, not cropped, hard-edged. */
+.user-face.pixel img, .trainer-mark.pixel img, .trainer-avatar.pixel img, .bt-avatar.pixel img { object-fit: contain; }
+
+body.no-motion .av-pick.rt-picked, body.no-motion .av-shiny i { animation: none; transition: none; }
+@media (prefers-reduced-motion: reduce) {
+  .av-pick.rt-picked, .av-shiny i { animation: none; transition: none; }
+}
+
+/* ---- Computer: the card on the left, the pickers on the right ---------------- */
+@media (min-width: 1041px) {
+  #view-account [data-mode="edit"] .look-layout { margin-top: 8px; }
+  .av-groups { margin-inline: 0; padding-inline: 0; flex-wrap: wrap; overflow: visible; }
+}
+
+/* ---- Phone ------------------------------------------------------------------ */
+@media (max-width: 720px) {
+  .edit-top { margin: 0 0 10px; }
+  #view-account .acct-tabs.edit-tabs { margin-top: 10px; }
+  .av-bar { flex-wrap: nowrap; gap: 8px; }
+  .av-kinds.seg { min-width: 0; }
+  #view-account .av-kinds .seg-btn { min-height: 44px; padding-inline: 6px; }
+  .av-shiny { flex: none; padding: 0 11px 0 9px; }
+  /* Five words fit a phone without scrolling: a little smaller, closer together. */
+  #view-account .acct-tabs.edit-tabs .acct-tabrow { justify-content: space-between; gap: 0; }
+  #view-account .acct-tabs.edit-tabs .acct-tab { padding-inline: 11px; }
+  .edit-h { font-size: 24px; }
+  .edit-top { gap: 4px 8px; }
+}
+@media (max-width: 480px) {
+  /* No room beside the title: the trainer card's Public profile key is one tap back. */
+  .edit-view { display: none; }
+  .edit-top { grid-template-columns: auto minmax(0, 1fr); }
+  .av-shiny { min-height: 44px; }
+  .av-groups .av-group { min-height: 44px; }
+  /* Four across on any phone, each tile wide enough for a thumb. */
+  .av-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2px; }
+  .av-face { width: 60px; height: 60px; }
+  /* The account's tab words: one row, the trainer card's edge to edge. */
+  #view-account [data-mode="play"] .acct-tabs { margin: 16px 0 16px; }
+}

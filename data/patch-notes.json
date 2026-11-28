@@ -1,5 +1,33 @@
 [
   {
+    "id": "2026-11-28-profile-pictures-account",
+    "date": "2026-11-28",
+    "title": "Every Pokémon as your picture, and a simpler account page",
+    "summary": "Pick from 1,307 pictures with shiny and animated versions, and edit your whole look on one screen.",
+    "groups": [
+      {
+        "title": "Profile pictures",
+        "items": [
+          "Your picture can now be any Pokémon, 1,025 of them, plus Megas, regional forms and other forms. That is 1,307 pictures, up from 200.",
+          "A Shiny switch turns your picture into its shiny. Nearly every Pokémon has one.",
+          "Three styles: Art, Pixel and Animated. Animated pictures move on your profile and trainer card and hold still in lists and chat. They also hold still if you turned motion off.",
+          "Pictures are sorted by generation, with groups for Mega, Regional and Forms, and you can search by name or Pokédex number.",
+          "Fixed: picking a picture threw the page and the list back to the top. Now only the picture changes."
+        ]
+      },
+      {
+        "title": "Account page",
+        "items": [
+          "The account page has one row of five tabs: Overview, Levels, Quests, Badges and Mastery.",
+          "Profile, Look and Layout are now one Edit profile screen with a tab each for Picture, Frame, Banner, Name and Page. Your trainer card stays in view while you pick.",
+          "Security has its own screen, reached from your trainer card.",
+          "Edit profile is in the menu under your name.",
+          "Removed Surprise me, Swap banner colours and the extra Copy link buttons."
+        ]
+      }
+    ]
+  },
+  {
     "id": "2026-11-28-mystery-tin-shelves",
     "date": "2026-11-28",
     "title": "Mystery Tins move onto five shelves, with slab tins",
