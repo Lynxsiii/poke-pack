@@ -1,3 +1,4 @@
+import { shownDiscord } from "./security.js";
 import { normalizeProfilePages, selectedProfilePages } from "../js/profile-pages.js";
 import { isTester, notTester } from "./testers.js";
 import {
@@ -488,6 +489,8 @@ async function publicProfile(request, env, helpers, rawHandle) {
     graded,
     gradedCount,
     masteries: masterySetIds(parseJson(profile?.claimed, [])),
+    // A linked Discord account, only when the trainer chose to show it (worker/security.js).
+    discord: await shownDiscord(env, user.id),
     // A trainer who turned their wall off keeps the notes (turn it back on and they return) but only they can read them.
     comments: (wallIsOff(user.profile_look) && auth.user?.id !== user.id ? [] : comments).map((row) => ({
       id: row.id,
