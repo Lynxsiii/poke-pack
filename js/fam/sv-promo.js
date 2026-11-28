@@ -21,7 +21,7 @@
 const SV_ID = /^(?:[zrj]?sv\d|svp-)/;
 const PIXEL = new Set(["sv2-svp023", "sv4-svp061", "sv6-svp119"]);
 /** Shipped maps that put the window's foil over the Pokémon; redrawn by scripts/fam/sv-promo/make_maps.py. */
-const OWN_MAP = new Set(); // 2026-11-28: the data now carries figure-cut maps for SVP 061-064 (make_cosmos_figure_maps.py)
+const OWN_MAP = new Set(["sv4-svp061", "sv4-svp063"]);
 
 /** Whether a card face is this family's. */
 export function claims(card) {

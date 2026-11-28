@@ -22,11 +22,8 @@
 
 /* ---- Tokens ------------------------------------------------------------------------------------------------- */
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo {
-  /* v3 (2026-11-28, make_tinsel_v3.py): the ridges as broken streaks of light in patches. v2's flat silver over every
-     ridge and its even dark gaps read as a CRT line screen at phone size (holo check: 17 of 22 faces). */
-  --bwt-crests: url("/assets/foil/fam/bw-tinsel-holo/tinsel-crests-v3.webp");
-  --bwt-gaps: url("/assets/foil/fam/bw-tinsel-holo/tinsel-gaps-v3.webp");
-  --bwt-streak: url("/assets/foil/fam/bw-tinsel-holo/tinsel-silver-v3.webp");
+  --bwt-crests: url("/assets/foil/fam/bw-tinsel-holo/tinsel-crests-v2.webp");
+  --bwt-gaps: url("/assets/foil/fam/bw-tinsel-holo/tinsel-gaps-v2.webp");
   --bwt-glints: url("/assets/foil/fam/bw-tinsel-holo/tinsel-glints-v2.webp");
   /* Every ridge's own pastel (make_tinsel.py): two card widths wide, slid along the ridges with the tilt. */
   --bwt-hue: url("/assets/foil/fam/bw-tinsel-holo/tinsel-hue-v2.webp");
@@ -42,8 +39,6 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tins
   --bwt-fh: 13%;
   /* The foil's own silver, a hard-light source a little over neutral: it lifts a crest a little and keeps its hue off. */
   --bwt-silver: 220, 6%, 64%;
-  /* The lamp's pool on the window (hard-light source at its centre; 50 % is no change). */
-  --bwt-pool: 0, 0%, 58%;
   /* "Intense" foil strength scales the held layers; opacity alone stops at 1. */
   --bwt-lit: max(1, var(--foil-strength, 1));
   /* The lamp's streak on the ridges: a wide flat ellipse on the pointer, its height squeezed into the art window (its
@@ -204,97 +199,99 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tins
    small coloured gain], gain at most about 2: a dodge scales the ink by its own brightness, so the crests near the lamp
    burn in the ink's colour, pale ink takes each ridge's pastel and black ink none. Pale-window faces (`bwt-pale`) and the
    Dragon Vault override the lit `.foil` below with a stronger hue in a wider band. */
-/* v4 (2026-11-28, make_tinsel_v4.py; the full-site check still read v3 as a line screen on 30 faces and as no foil on 13
-   pale windows). The foil is a field of scattered streaks, each its own dash, colour and brightness, in patches
-   (tinsel-streak-v4.webp), with a second field of longer streaks that slides with the tilt (tinsel-hot-v4.webp). No
-   ridge grid, no gap shading, no dots.
-   The streaks go on in `overlay`: the foil shows through the ink in proportion to how light the ink is, so a streak
-   tints pale and mid ink in its own colour and leaves black ink nearly black (in hard-light the same streaks were
-   rainbow static over every dark window: Virizion 13/101, Serperior 6/114, Dratini). At rest `.foil` shows them faintly
-   over the whole foiled background. Held, `.cure` shows them plainly inside a soft flat pool on the lamp (a third mask
-   layer) and nearly not at all on the far side of the window, and `.foil` adds the long streaks as silver light
-   (hard-light, desaturated, low) in a tighter pool, so a dark window still catches the lamp. */
-body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo:is(.bwt-tinsel, .bwt-vault) {
-  --bwt-streaks: url("/assets/foil/fam/bw-tinsel-holo/tinsel-streak-v4.webp");
-  --bwt-hot: url("/assets/foil/fam/bw-tinsel-holo/tinsel-hot-v4.webp");
-  --bwt-rest: 0.28;
-  --bwt-silver-k: 0.9;
-  --bwt-pw: 62%;
-  --bwt-ph: 30%;
-}
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo:is(.bwt-tinsel, .bwt-vault) .foil {
-  /* tinsel-silver-v4.webp (the long streaks as low silver light: a dark window still catches the lamp) over
-     tinsel-tint-v4.webp (the fine streaks as tints whose strongest channel is hard-light's neutral 0.5: a coloured
-     line on pale ink, where overlay can add nothing, and no change on dark ink) */
-  background-image: url("/assets/foil/fam/bw-tinsel-holo/tinsel-silver-v4.webp"), url("/assets/foil/fam/bw-tinsel-holo/tinsel-tint-v4.webp");
-  background-size: 120% 100%, 100% 100%;
-  background-position: var(--background-x) 0, center;
+  background-image:
+    var(--bwt-gaps),
+    radial-gradient(ellipse calc(62% + var(--pointer-from-center, 0) * 22%) calc(15% + var(--pointer-from-center, 0) * 7%)
+      at var(--pointer-x) var(--bwt-sheen-y),
+      hsla(0, 0%, 50%, 0.92) 0%, hsla(0, 0%, 52%, 0.9) 30%, hsla(var(--bwt-silver), 0.88) 60%, hsla(var(--bwt-silver), 0.92) 100%),
+    var(--bwt-hue);
+  background-size: 100% 106%, 100% 100%, 200% 106%;
+  background-position: 0 var(--bwt-shift), center, var(--background-x) var(--bwt-shift);
   background-repeat: no-repeat;
-  background-blend-mode: normal, normal;
+  background-blend-mode: normal, normal, normal;
   mix-blend-mode: hard-light;
   filter: none;
-  opacity: calc(var(--card-opacity) * min(1, var(--bwt-silver-k) * var(--bwt-lit)));
-  -webkit-mask-image: var(--art), var(--foil-map),
-    radial-gradient(ellipse calc(var(--bwt-pw) + var(--pointer-from-center, 0) * 16%) calc(var(--bwt-ph) + var(--pointer-from-center, 0) * 8%)
-      at var(--pointer-x) var(--bwt-sheen-y),
-      hsl(0, 0%, 0%) 0%, hsla(0, 0%, 0%, 0.75) 35%, hsla(0, 0%, 0%, 0.25) 70%, hsla(0, 0%, 0%, 0) 100%);
-  -webkit-mask-composite: source-in, source-in, source-over;
-  mask-image: var(--art), var(--foil-map),
-    radial-gradient(ellipse calc(var(--bwt-pw) + var(--pointer-from-center, 0) * 16%) calc(var(--bwt-ph) + var(--pointer-from-center, 0) * 8%)
-      at var(--pointer-x) var(--bwt-sheen-y),
-      hsl(0, 0%, 0%) 0%, hsla(0, 0%, 0%, 0.75) 35%, hsla(0, 0%, 0%, 0.25) 70%, hsla(0, 0%, 0%, 0) 100%);
-  mask-composite: intersect, intersect, add;
-  -webkit-mask-size: contain, 100% 100%, 100% 100%;
-  mask-size: contain, 100% 100%, 100% 100%;
+  opacity: calc((0.9 + var(--card-opacity) * 0.1) * var(--foil-strength, 1));
 }
+/* At rest: the ridges as light and dark rules in the ink's own colour, silver with a faint tint per ridge (the flat
+   scans of Reuniclus 57/114 and Venusaur 3/101 show the ridges tinted even in flat light), no rainbow band. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo:is(.bwt-tinsel, .bwt-vault):not(.lit):not(.settling) .foil {
-  background-image: var(--bwt-streaks);
-  background-size: 100% 100%;
-  background-position: center;
-  mix-blend-mode: overlay;
-  filter: none;
-  opacity: calc(var(--bwt-rest) * var(--foil-strength, 1));
-  -webkit-mask-image: var(--art), var(--foil-map);
-  -webkit-mask-composite: source-in, source-over;
-  mask-image: var(--art), var(--foil-map);
-  mask-composite: intersect, add;
-  -webkit-mask-size: contain, 100% 100%;
-  mask-size: contain, 100% 100%;
+  background-image:
+    var(--bwt-gaps),
+    linear-gradient(hsla(var(--bwt-silver), 0.8), hsla(var(--bwt-silver), 0.8)),
+    var(--bwt-hue);
+  opacity: calc(0.95 * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo:is(.bwt-tinsel, .bwt-vault) .foil::before {
-  background-image: none;
-  opacity: 0;
+  background-image:
+    radial-gradient(ellipse calc(var(--bwt-fw) + var(--pointer-from-center, 0) * 24%) calc(var(--bwt-fh) + var(--pointer-from-center, 0) * 4%)
+      at var(--pointer-x) var(--bwt-sheen-y),
+      hsl(0, 0%, 100%) 0%, hsl(0, 0%, 82%) 30%, hsl(0, 0%, 40%) 65%, hsl(0, 0%, 0%) 100%),
+    var(--bwt-fleck);
+  background-size: 100% 100%, 200% 106%;
+  background-position: center, var(--background-x) var(--bwt-shift);
+  background-blend-mode: multiply, normal;
+  mix-blend-mode: color-dodge;
+  /* the fleck dodges the layer's own grey (about 0.5 at the lamp): grey / (1 - fleck), so a fleck at 0.5 pushes its
+     channel to full and the hard-light then lifts the ink in that colour, dark ink most; capped under 1 so nothing
+     divides by zero (SKILL.md: Safari draws that as pixel blocks) */
+  filter: brightness(0.9) saturate(0.6);
+  opacity: calc(var(--card-opacity) * var(--bwt-fk) * var(--bwt-lit));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo:is(.bwt-tinsel, .bwt-vault) .cure {
-  background-image: var(--bwt-hot), var(--bwt-streaks);
-  background-size: 120% 100%, 100% 100%;
-  background-position: var(--background-x) 0, center;
-  background-repeat: no-repeat;
-  background-blend-mode: normal, normal;
-  mix-blend-mode: overlay;
-  filter: none;
-  opacity: calc(var(--card-opacity) * min(1, var(--bwt-cure-k, 0.72) * var(--bwt-lit)));
-  -webkit-mask-image: var(--art), var(--foil-map),
-    radial-gradient(ellipse calc(var(--bwt-pw) + var(--pointer-from-center, 0) * 16%) calc(var(--bwt-ph) + var(--pointer-from-center, 0) * 8%)
+  background-image:
+    var(--bwt-crests),
+    radial-gradient(ellipse calc(48% + var(--pointer-from-center, 0) * 20%) calc(11% + var(--pointer-from-center, 0) * 5%)
       at var(--pointer-x) var(--bwt-sheen-y),
-      hsl(0, 0%, 0%) 0%, hsla(0, 0%, 0%, 0.75) 35%, hsla(0, 0%, 0%, 0.25) 70%, hsla(0, 0%, 0%, 0.14) 100%);
-  -webkit-mask-composite: source-in, source-in, source-over;
-  mask-image: var(--art), var(--foil-map),
-    radial-gradient(ellipse calc(var(--bwt-pw) + var(--pointer-from-center, 0) * 16%) calc(var(--bwt-ph) + var(--pointer-from-center, 0) * 8%)
+      hsl(0, 0%, 80%) 0%, hsl(0, 0%, 40%) 45%, hsl(0, 0%, 0%) 100%),
+    radial-gradient(ellipse calc(90% + var(--pointer-from-center, 0) * 30%) calc(28% + var(--pointer-from-center, 0) * 10%)
       at var(--pointer-x) var(--bwt-sheen-y),
-      hsl(0, 0%, 0%) 0%, hsla(0, 0%, 0%, 0.75) 35%, hsla(0, 0%, 0%, 0.25) 70%, hsla(0, 0%, 0%, 0.14) 100%);
-  mask-composite: intersect, intersect, add;
-  -webkit-mask-size: contain, 100% 100%, 100% 100%;
-  mask-size: contain, 100% 100%, 100% 100%;
+      hsl(0, 0%, 100%) 0%, hsl(0, 0%, 70%) 40%, hsl(0, 0%, 25%) 100%),
+    var(--bwt-tint);
+  background-size: 100% 106%, 100% 100%, 100% 100%, 200% 106%;
+  background-position: 0 var(--bwt-shift), center, center, var(--background-x) var(--bwt-shift);
+  background-blend-mode: multiply, screen, multiply, normal;
+  mix-blend-mode: color-dodge;
+  /* scales the source to at most about 0.5 (a gain of 2 at the lamp's centre) and closes the dodge chain (SKILL.md:
+     Safari draws a divide by zero as pixel blocks) */
+  filter: brightness(0.5);
+  opacity: calc(var(--card-opacity) * var(--foil-strength, 1));
 }
-/* The Dragon Vault: the same Tinsel, stronger. */
+/* Pale windows (`bwt-pale`, make_pale.py: Articuno 32/113, Oshawott BW03, Gardevoir 57/101 ...): hard-light tints pale ink
+   only weakly, so these faces take a stronger ridge hue in a wider band: grey 0.46 dodged by the tint texture
+   (channels about 0.49-1, one pastel per ridge, a third of the ridges near neutral), so the lit sky shows pink, peach,
+   mint and lavender ridges as on the tilted Articuno photo. Dark ink is at most an eighth of these windows. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-tinsel.bwt-pale:is(.lit, .settling) .foil {
+  background-image:
+    var(--bwt-gaps),
+    radial-gradient(ellipse calc(80% + var(--pointer-from-center, 0) * 25%) calc(22% + var(--pointer-from-center, 0) * 10%)
+      at var(--pointer-x) var(--bwt-sheen-y),
+      hsla(0, 0%, 80%, 0.35) 0%, hsla(var(--bwt-silver), 0.4) 30%, hsla(var(--bwt-silver), 0.68) 65%, hsla(var(--bwt-silver), 0.86) 100%),
+    var(--bwt-tint),
+    linear-gradient(hsl(0, 0%, 46%), hsl(0, 0%, 46%));
+  background-size: 100% 106%, 100% 100%, 200% 106%, 100% 100%;
+  background-position: 0 var(--bwt-shift), center, var(--background-x) var(--bwt-shift), center;
+  background-blend-mode: normal, normal, color-dodge, normal;
+}
+/* Dragon Vault: the same Tinsel, brighter and more coloured under the lamp (the Japanese Dragon Selection Shelgon scan:
+   rainbow ridges over the dark window; the English Kyurem 21/20 scan: pink at the top of the window, teal at the
+   bottom): the ridge hues show through a wider band with less silver over them. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-vault:is(.lit, .settling) .foil {
+  background-image:
+    var(--bwt-gaps),
+    radial-gradient(ellipse calc(85% + var(--pointer-from-center, 0) * 25%) calc(24% + var(--pointer-from-center, 0) * 10%)
+      at var(--pointer-x) var(--bwt-sheen-y),
+      hsla(0, 0%, 50%, 0.92) 0%, hsla(0, 0%, 52%, 0.9) 35%, hsla(var(--bwt-silver), 0.86) 65%, hsla(var(--bwt-silver), 0.92) 100%),
+    var(--bwt-hue);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-vault .cure {
+  filter: brightness(0.6);
+}
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-vault {
-  /* after round 3: 0.36/1 smeared the pale windows (Bagon 6, Salamence 8, Axew 12) at rest and lit */
-  --bwt-rest: 0.26;
-  --bwt-silver-k: 0.8;
-  --bwt-cure-k: 0.5;
-  --bwt-pw: 80%;
-  --bwt-ph: 38%;
+  --bwt-fk: 1;
+  --bwt-fw: 74%;
+  --bwt-fh: 19%;
 }
 
 /* ---- Cosmos (the blister, box and tin promos) --------------------------------------------------------------------
@@ -313,14 +310,14 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tins
    times the lamp's glow times the spectrum, so the glints nearest the lamp burn bright in the ink's own colour. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-cosmos {
   /* pinpoints, dots and stars; the Sylveon Collection's large bubbles only with `bwt-bubbles` (below) */
-  --bwc-dots: url("/assets/foil/fam/bw-tinsel-holo/cosmos-dots-nb-v3.webp");
-  --bwc-lit: url("/assets/foil/fam/bw-tinsel-holo/cosmos-lit-nb-v3.webp");
+  --bwc-dots: url("/assets/foil/fam/bw-tinsel-holo/cosmos-dots-nb-v2.webp");
+  --bwc-lit: url("/assets/foil/fam/bw-tinsel-holo/cosmos-lit-nb-v2.webp");
   /* bare foil where the window is printed white (make_bare_foil.py; the module sets it for Eevee BW94): none here */
   --bwc-bare: linear-gradient(transparent, transparent);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-cosmos.bwt-bubbles {
-  --bwc-dots: url("/assets/foil/fam/bw-tinsel-holo/cosmos-dots-v3.webp");
-  --bwc-lit: url("/assets/foil/fam/bw-tinsel-holo/cosmos-lit-v3.webp");
+  --bwc-dots: url("/assets/foil/fam/bw-tinsel-holo/cosmos-dots-v2.webp");
+  --bwc-lit: url("/assets/foil/fam/bw-tinsel-holo/cosmos-lit-v2.webp");
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-cosmos .foil {
   background-image:
@@ -334,27 +331,21 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tins
   background-blend-mode: normal, normal, normal;
   mix-blend-mode: hard-light;
   filter: none;
-  /* v3 (2026-11-28): the glints are a sprinkle (make_cosmos_v3.py) and quiet over the window; they are plain only in
-     the lamp's pool (`::before` and `.cure`, both masked or multiplied by a radial that ends in nothing) */
-  opacity: calc((0.4 + var(--card-opacity) * 0.1) * var(--foil-strength, 1));
+  opacity: calc((0.85 + var(--card-opacity) * 0.15) * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-cosmos:not(.lit):not(.settling) .foil {
   background-image:
     var(--bwc-dots),
     var(--bwc-bare),
     linear-gradient(hsl(0, 0%, 50%), hsl(0, 0%, 50%));
-  opacity: calc(0.4 * var(--foil-strength, 1));
+  opacity: calc(0.85 * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-cosmos .foil::before {
   background-image: var(--bwt-spectrum);
   background-size: 400% 100%;
   background-position: calc(100% - var(--background-x)) 0;
-  -webkit-mask-image: var(--bwc-dots),
-    radial-gradient(ellipse 70% 48% at var(--pointer-x) var(--pointer-y), #000 0%, hsla(0, 0%, 0%, 0.6) 40%, transparent 100%);
-  mask-image: var(--bwc-dots),
-    radial-gradient(ellipse 70% 48% at var(--pointer-x) var(--pointer-y), #000 0%, hsla(0, 0%, 0%, 0.6) 40%, transparent 100%);
-  -webkit-mask-composite: source-in, source-over;
-  mask-composite: intersect, add;
+  -webkit-mask-image: var(--bwc-dots);
+  mask-image: var(--bwc-dots);
   -webkit-mask-size: 100% 100%;
   mask-size: 100% 100%;
   -webkit-mask-position: center;
@@ -367,8 +358,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tins
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-cosmos .cure {
   background-image:
     var(--bwc-lit),
-    radial-gradient(ellipse 76% 52% at var(--pointer-x) var(--pointer-y),
-      hsl(0, 0%, 100%) 0%, hsl(0, 0%, 55%) 40%, hsl(0, 0%, 0%) 100%),
+    radial-gradient(ellipse 92% 66% at var(--pointer-x) var(--pointer-y),
+      hsl(0, 0%, 100%) 0%, hsl(0, 0%, 62%) 40%, hsl(0, 0%, 22%) 100%),
     var(--bwt-flash);
   background-size: 100% 100%, 100% 100%, 400% 100%;
   background-position: center, center, var(--background-x) 0;
@@ -405,11 +396,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tins
   background-blend-mode: normal;
   mix-blend-mode: overlay;
   filter: none;
-  /* 2026-11-28: 1 held and 0.94 at rest washed white and black Pokemon cyan (Accelgor, Vanilluxe, Krookodile) */
-  opacity: calc(0.62 * var(--foil-strength, 1));
+  opacity: calc(1 * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-ice:not(.lit):not(.settling) .foil {
-  opacity: calc(0.42 * var(--foil-strength, 1));
+  opacity: calc(0.94 * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-ice .cure {
   background-image:
@@ -436,26 +426,20 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tins
   background-image:
     radial-gradient(ellipse 125% 52% at var(--pointer-x) var(--pointer-y),
       hsla(0, 0%, 50%, 0.1) 0%, hsla(0, 0%, 50%, 0.5) 50%, hsl(0, 0%, 50%) 100%),
-    var(--bwt-pastel);
+    var(--bwt-spectrum);
   background-size: 100% 100%, 400% 100%;
   background-position: center, var(--background-x) 0;
   background-repeat: no-repeat;
   background-blend-mode: normal, normal;
   mix-blend-mode: hard-light;
   filter: none;
-  opacity: calc((0.4 + var(--card-opacity) * 0.2) * var(--foil-strength, 1));
+  opacity: calc((0.55 + var(--card-opacity) * 0.35) * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo:is(.bwt-mirror, .bwt-rev-mirror, .bwt-rev-ball):not(.lit):not(.settling) .foil {
   background-image:
     radial-gradient(ellipse 125% 50% at 50% 38%, hsla(0, 0%, 50%, 0.55) 0%, hsl(0, 0%, 50%) 100%),
-    var(--bwt-pastel);
-  opacity: calc(0.4 * var(--foil-strength, 1));
-}
-/* After round 3 (2026-11-28): the reverse mirrors in overlay, not hard-light. A 64 % pastel in hard-light adds its
-   colour to black ink, so the name and the attack text went green near the lamp (Tornadus BW42, Lillipup BW52); overlay
-   scales with the ink under it and leaves black text black. */
-body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo:is(.bwt-rev-mirror, .bwt-rev-ball) .foil {
-  mix-blend-mode: overlay;
+    var(--bwt-spectrum);
+  opacity: calc(0.55 * var(--foil-strength, 1));
 }
 
 /* The plain mirrors (Genesect BW99 and the five Dragon Vault stamped blister prints) need a sheen you can see: the
@@ -513,13 +497,13 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tins
   background-blend-mode: normal, normal;
   mix-blend-mode: hard-light;
   filter: none;
-  opacity: calc((0.4 + var(--card-opacity) * 0.12) * var(--foil-strength, 1));
+  opacity: calc((0.88 + var(--card-opacity) * 0.12) * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-rev-cross:not(.lit):not(.settling) .foil {
   background-image:
     linear-gradient(transparent, transparent),
     var(--bwx-tex);
-  opacity: calc(0.4 * var(--foil-strength, 1));
+  opacity: calc(0.9 * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.fam-bw-tinsel-holo.bwt-rev-cross .foil::before {
   background-image:

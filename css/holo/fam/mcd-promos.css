@@ -208,19 +208,8 @@ body.fx-holo.fx-holo.fx-holo .tcg:is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.
      each chip (the "stained glass" lines of the first fix) */
   image-rendering: pixelated;
   mix-blend-mode: screen;
-  /* 2026-11-28 site review (2 of 13 good: "even shard confetti buries the background"): the sprinkle lit chips at the same
-     density over the whole window. Shattered-glass foil is mostly dark and catches the light in patches, so the sprinkle now
-     fades away from the pointer too (a gradient mask, no image: the WebKit lesson above), wider than the lamp's pool. */
-  -webkit-mask-image: radial-gradient(farthest-corner circle at calc((var(--pointer-x) - 6.6667%) * 1.1494) calc((var(--pointer-y) - 8.9499%) * 2.4503), hsl(0, 0%, 0%) 0%, hsla(0, 0%, 0%, 0.8) 24%, hsla(0, 0%, 0%, 0.34) 50%, hsla(0, 0%, 0%, 0.08) 76%, hsla(0, 0%, 0%, 0) 100%);
-  mask-image: radial-gradient(farthest-corner circle at calc((var(--pointer-x) - 6.6667%) * 1.1494) calc((var(--pointer-y) - 8.9499%) * 2.4503), hsl(0, 0%, 0%) 0%, hsla(0, 0%, 0%, 0.8) 24%, hsla(0, 0%, 0%, 0.34) 50%, hsla(0, 0%, 0%, 0.08) 76%, hsla(0, 0%, 0%, 0) 100%);
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
-  -webkit-mask-position: center;
-  mask-position: center;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-composite: source-over;
-  mask-composite: add;
+  -webkit-mask-image: none;
+  mask-image: none;
   clip-path: none;
   border-radius: 0;
   opacity: calc(var(--card-opacity) * 0.9 * var(--foil-strength, 1));
@@ -270,8 +259,7 @@ body.fx-holo.fx-holo.fx-holo .tcg:is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.
   filter: none;
   transform: none;
   mix-blend-mode: screen;
-  /* 0.45 before: the plate screened over itself read as a milky pink-grey wash over the whole window (2026-11-28 review) */
-  opacity: calc(var(--card-opacity) * var(--mcd-sheen, 0.2) * var(--foil-strength, 1));
+  opacity: calc(var(--card-opacity) * var(--mcd-sheen, 0.45) * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg:is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy).fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.mcd-bw .glare::after {
   display: none;
@@ -338,22 +326,11 @@ body.fx-holo.fx-holo.fx-holo .tcg:is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.
   filter: invert(1) brightness(var(--mcd-xsp-b, 0.53)) contrast(var(--mcd-xsp-c, 40)) saturate(1.1);
   image-rendering: pixelated;
   mix-blend-mode: screen;
-  /* 2026-11-28 site review (2 of 13 good: "even shard confetti buries the background"): the sprinkle lit chips at the same
-     density over the whole window. Shattered-glass foil is mostly dark and catches the light in patches, so the sprinkle now
-     fades away from the pointer too (a gradient mask, no image: the WebKit lesson above), wider than the lamp's pool. */
-  -webkit-mask-image: radial-gradient(farthest-corner circle at calc((var(--pointer-x) - 7.3333%) * 1.1719) calc((var(--pointer-y) - 9.0692%) * 2.4361), hsl(0, 0%, 0%) 0%, hsla(0, 0%, 0%, 0.8) 24%, hsla(0, 0%, 0%, 0.34) 50%, hsla(0, 0%, 0%, 0.08) 76%, hsla(0, 0%, 0%, 0) 100%);
-  mask-image: radial-gradient(farthest-corner circle at calc((var(--pointer-x) - 7.3333%) * 1.1719) calc((var(--pointer-y) - 9.0692%) * 2.4361), hsl(0, 0%, 0%) 0%, hsla(0, 0%, 0%, 0.8) 24%, hsla(0, 0%, 0%, 0.34) 50%, hsla(0, 0%, 0%, 0.08) 76%, hsla(0, 0%, 0%, 0) 100%);
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
-  -webkit-mask-position: center;
-  mask-position: center;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-composite: source-over;
-  mask-composite: add;
+  -webkit-mask-image: none;
+  mask-image: none;
   clip-path: none;
   border-radius: 0;
-  opacity: calc(var(--card-opacity) * 0.55 * var(--foil-strength, 1));
+  opacity: calc(var(--card-opacity) * 0.85 * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg:is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy).fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.mcd-xy .foil::after {
   background-image:
@@ -367,11 +344,11 @@ body.fx-holo.fx-holo.fx-holo .tcg:is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.
   background-blend-mode: screen, screen, difference, normal;
   /* a wide window: full within ~6%, off beyond ~21% (2026-11-23: was ~27%, which lit nearly every chip near the lamp and hid the print
      between them; the app now keeps an inspected card lit, so about half the chips under the lamp flash and dark print shows between) */
-  filter: invert(1) brightness(var(--mcd-xlamp-b, 0.58)) contrast(var(--mcd-xlamp-c, 18)) saturate(1.1);
+  filter: invert(1) brightness(var(--mcd-xlamp-b, 0.58)) contrast(var(--mcd-xlamp-c, 12)) saturate(1.1);
   image-rendering: pixelated;
   mix-blend-mode: screen;
-  -webkit-mask-image: radial-gradient(farthest-corner circle at calc((var(--pointer-x) - 7.3333%) * 1.1719) calc((var(--pointer-y) - 9.0692%) * 2.4361), hsl(0, 0%, 0%) 0%, hsla(0, 0%, 0%, 0.8) 24%, hsla(0, 0%, 0%, 0.3) 52%, hsla(0, 0%, 0%, 0) 86%);
-  mask-image: radial-gradient(farthest-corner circle at calc((var(--pointer-x) - 7.3333%) * 1.1719) calc((var(--pointer-y) - 9.0692%) * 2.4361), hsl(0, 0%, 0%) 0%, hsla(0, 0%, 0%, 0.8) 24%, hsla(0, 0%, 0%, 0.3) 52%, hsla(0, 0%, 0%, 0) 86%);
+  -webkit-mask-image: radial-gradient(farthest-corner circle at calc((var(--pointer-x) - 7.3333%) * 1.1719) calc((var(--pointer-y) - 9.0692%) * 2.4361), hsl(0, 0%, 0%) 0%, hsla(0, 0%, 0%, 0.85) 28%, hsla(0, 0%, 0%, 0.4) 62%, hsla(0, 0%, 0%, 0.1) 100%);
+  mask-image: radial-gradient(farthest-corner circle at calc((var(--pointer-x) - 7.3333%) * 1.1719) calc((var(--pointer-y) - 9.0692%) * 2.4361), hsl(0, 0%, 0%) 0%, hsla(0, 0%, 0%, 0.85) 28%, hsla(0, 0%, 0%, 0.4) 62%, hsla(0, 0%, 0%, 0.1) 100%);
   -webkit-mask-size: 100% 100%;
   mask-size: 100% 100%;
   -webkit-mask-position: center;
@@ -383,8 +360,7 @@ body.fx-holo.fx-holo.fx-holo .tcg:is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.
   mask-mode: alpha;
   clip-path: none;
   border-radius: 0;
-  /* 2026-11-28: window 12 -> 18 and 0.9 -> 0.62, fewer chips lit under the lamp so the print shows between them */
-  opacity: calc(var(--card-opacity) * var(--mcd-xlamp, 0.62) * var(--foil-strength, 1));
+  opacity: calc(var(--card-opacity) * var(--mcd-xlamp, 0.9) * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg:is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy):is(.era-bw, .era-xy).fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.fam-mcd-promos.mcd-xy .glare {
   display: none;

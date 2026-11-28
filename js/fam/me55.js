@@ -51,9 +51,6 @@ export function finishOf(card) {
       return "rgb";
     case "Futuristic Rare":
       return "future";
-    case "Double Rare":
-      // foil-ex foil-sunpillar on celebration.css; the family only pools its bars and glare round the light.
-      return card.foilMap ? "dr" : "";
     default:
       return "";
   }

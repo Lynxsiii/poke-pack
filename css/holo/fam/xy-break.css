@@ -20,21 +20,21 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-brea
   --brk-co: var(--card-opacity);
   /* the lobes' masks (below, with the layers that use them) */
   --brk-toward: conic-gradient(from calc(var(--brk-a) + 90deg),
-    #000 0deg, rgba(0, 0, 0, 0.7) 16deg, transparent 44deg, transparent 316deg, rgba(0, 0, 0, 0.7) 344deg, #000 360deg);
+    #000 0deg, #000 31deg, transparent 37deg, transparent 323deg, #000 329deg, #000 360deg);
   --brk-away: conic-gradient(from calc(var(--brk-a) + 270deg),
-    #000 0deg, rgba(0, 0, 0, 0.7) 16deg, transparent 44deg, transparent 316deg, rgba(0, 0, 0, 0.7) 344deg, #000 360deg);
+    #000 0deg, #000 31deg, transparent 37deg, transparent 323deg, #000 329deg, #000 360deg);
   --brk-even: repeating-conic-gradient(rgba(0, 0, 0, 0.5) 0% 25%, #000 0% 50%);
   --brk-odd: repeating-conic-gradient(#000 0% 25%, rgba(0, 0, 0, 0.5) 0% 50%);
   --brk-band: linear-gradient(calc(var(--brk-a) + 90deg),
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0) calc(50% + var(--pointer-from-center) * 36% - 26%),
-    rgba(0, 0, 0, 0.3) calc(50% + var(--pointer-from-center) * 36% - 9%),
-    rgba(0, 0, 0, 0.38) calc(50% + var(--pointer-from-center) * 36%),
-    rgba(0, 0, 0, 0.3) calc(50% + var(--pointer-from-center) * 36% + 9%),
-    rgba(0, 0, 0, 0) calc(50% + var(--pointer-from-center) * 36% + 26%),
-    rgba(0, 0, 0, 0) 100%);
+    rgba(0, 0, 0, 0.07) 0%,
+    rgba(0, 0, 0, 0.07) calc(50% + var(--pointer-from-center) * 36% - 34%),
+    rgba(0, 0, 0, 0.9) calc(50% + var(--pointer-from-center) * 36% - 12%),
+    #000 calc(50% + var(--pointer-from-center) * 36%),
+    rgba(0, 0, 0, 0.9) calc(50% + var(--pointer-from-center) * 36% + 12%),
+    rgba(0, 0, 0, 0.07) calc(50% + var(--pointer-from-center) * 36% + 34%),
+    rgba(0, 0, 0, 0.07) 100%);
   --brk-blob: radial-gradient(ellipse 60% 44% at var(--pointer-x) var(--pointer-y),
-    rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 38%, rgba(0, 0, 0, 0) 85%);
+    rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.32) 40%, rgba(0, 0, 0, 0.03) 100%);
 }
 /* ---- .foil: the silver cells, painted opaque (the scan's foil zone is a plain glow) ----
    Per cell: four facets (light right and left, dark top and bottom, the real foil's faint X); a two-cell checker
@@ -47,38 +47,28 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-brea
       hsla(0, 0%, 100%, calc(var(--brk-co) * 0.2)) 22%,
       hsla(0, 0%, 100%, 0) 60%),
     conic-gradient(from 45deg at 50% 50%,
-      hsla(0, 0%, 100%, calc(0.1 + var(--brk-co) * 0.12)) 0deg 80deg,
-      hsla(0, 0%, 0%, calc(0.02 + var(--brk-co) * 0.035)) 100deg 170deg,
-      hsla(0, 0%, 100%, calc(0.05 + var(--brk-co) * 0.07)) 190deg 260deg,
-      hsla(0, 0%, 0%, calc(0.035 + var(--brk-co) * 0.04)) 280deg 350deg,
-      hsla(0, 0%, 100%, calc(0.1 + var(--brk-co) * 0.12)) 360deg),
+      hsla(0, 0%, 100%, calc(0.15 + var(--brk-co) * 0.18)) 0deg 88deg,
+      hsla(0, 0%, 0%, calc(0.08 + var(--brk-co) * 0.09)) 92deg 178deg,
+      hsla(0, 0%, 100%, calc(0.07 + var(--brk-co) * 0.1)) 182deg 268deg,
+      hsla(0, 0%, 0%, calc(0.13 + var(--brk-co) * 0.1)) 272deg 358deg,
+      hsla(0, 0%, 100%, calc(0.15 + var(--brk-co) * 0.18)) 360deg),
     repeating-conic-gradient(
-      hsla(250, 14%, 40%, calc(0.03 + var(--brk-co) * 0.02)) 0% 25%,
-      hsla(45, 20%, 98%, calc(0.1 + var(--brk-co) * 0.06)) 25% 50%),
-    radial-gradient(ellipse 80% 60% at var(--pointer-x) var(--pointer-y),
-      hsl(235, 8%, 99%) 0%, hsl(235, 7%, 96%) 45%, hsl(235, 6%, 93%) 100%);
+      hsla(250, 18%, 34%, calc(0.2 + var(--brk-co) * 0.07)) 0% 25%,
+      hsla(45, 20%, 96%, calc(0.2 + var(--brk-co) * 0.1)) 25% 50%),
+    linear-gradient(hsl(235, 6%, 79%), hsl(235, 6%, 79%));
   background-size: 100% 100%, var(--brk-cell), var(--brk-cell2), 100% 100%;
   background-position: center, 0 0, 0 0, center;
   background-repeat: no-repeat, repeat, repeat, no-repeat;
   background-blend-mode: normal;
   filter: none;
-  /* 2026-11-28: multiplied onto the print, and a paler silver (it was an opaque 79 % grey sheet at 0.94). The cells
-     were painted over the scan, so the printed lightning and glow round the gold Pokemon disappeared under a grey
-     checkerboard (holo check, 4 of 6: "grey checker wallpaper replaces bg"). On the real card the lightning is ink
-     over the foil: a multiply keeps every printed colour and turns only the white stock into the pale silver cells. */
-  /* 2026-11-28 round 2: every card still read "grey checker grid at rest, rainbow checker squares lit". The photos
-     (refs/bc-raichu-xy8-50_flat-diffuse-a.jpg, _lamp-tilt.jpg) show the cells as a faint tone-on-tone weave on a
-     near-white silver, and the colour as soft pastel wedges in the cells nearest the lamp only. The cell tones are
-     now a third of what they were (a 2 to 4 % step between neighbours, soft facet edges), the ground is 93 to 99 %
-     white, and the lobes below are pastel, soft-edged and pooled at the light with no floor across the card. */
-  mix-blend-mode: multiply;
+  mix-blend-mode: normal;
   clip-path: none;
   border-radius: 0;
-  opacity: var(--foil-strength, 1);
+  opacity: calc(0.94 * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-break.fam-xy-break.fam-xy-break.fam-xy-break:not(.lit):not(.settling) .foil {
   filter: none;
-  opacity: calc(0.9 * var(--foil-strength, 1));
+  opacity: calc(0.94 * var(--foil-strength, 1));
 }
 
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-break.fam-xy-break.fam-xy-break.fam-xy-break .foil::before,
@@ -116,33 +106,33 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-brea
    broad blob round the light, with a floor, so some foil is always flashing and some is always silver. ---- */
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-break.fam-xy-break.fam-xy-break.fam-xy-break .foil::before {
   background-image: radial-gradient(ellipse 100% 72% at var(--pointer-x) var(--pointer-y),
-    hsl(205, 100%, 84%) 0%,
-    hsl(250, 100%, 79%) 9%,
-    hsl(222, 100%, 75%) 19%,
-    hsl(190, 100%, 72%) 30%,
-    hsl(150, 100%, 71%) 41%,
-    hsl(100, 100%, 71%) 51%,
-    hsl(56, 100%, 73%) 60%,
-    hsl(34, 100%, 74%) 69%,
-    hsl(354, 100%, 76%) 78%,
-    hsl(318, 100%, 76%) 88%,
-    hsl(275, 100%, 78%) 100%);
+    hsl(205, 100%, 80%) 0%,
+    hsl(250, 100%, 66%) 9%,
+    hsl(222, 100%, 54%) 19%,
+    hsl(190, 100%, 48%) 30%,
+    hsl(150, 100%, 44%) 41%,
+    hsl(100, 100%, 44%) 51%,
+    hsl(56, 100%, 50%) 60%,
+    hsl(34, 100%, 52%) 69%,
+    hsl(354, 100%, 58%) 78%,
+    hsl(318, 100%, 58%) 88%,
+    hsl(275, 100%, 62%) 100%);
   -webkit-mask-image: var(--brk-toward), var(--brk-even), var(--brk-band), var(--brk-blob);
   mask-image: var(--brk-toward), var(--brk-even), var(--brk-band), var(--brk-blob);
-  opacity: calc(var(--brk-co) * (0.8 + var(--pointer-from-center) * 0.2) * max(1, var(--foil-strength, 1)));
+  opacity: calc(var(--brk-co) * (0.88 + var(--pointer-from-center) * 0.12) * max(1, var(--foil-strength, 1)));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.fam-xy-break.fam-xy-break.fam-xy-break.fam-xy-break .foil::after {
   background-image: radial-gradient(ellipse 100% 72% at var(--pointer-x) var(--pointer-y),
-    hsl(48, 100%, 84%) 0%,
-    hsl(32, 100%, 75%) 9%,
-    hsl(352, 100%, 76%) 19%,
-    hsl(312, 100%, 75%) 30%,
-    hsl(268, 100%, 78%) 41%,
-    hsl(226, 100%, 75%) 51%,
-    hsl(192, 100%, 72%) 61%,
-    hsl(152, 100%, 71%) 71%,
-    hsl(98, 100%, 71%) 84%,
-    hsl(56, 100%, 73%) 100%);
+    hsl(48, 100%, 78%) 0%,
+    hsl(32, 100%, 54%) 9%,
+    hsl(352, 100%, 58%) 19%,
+    hsl(312, 100%, 56%) 30%,
+    hsl(268, 100%, 62%) 41%,
+    hsl(226, 100%, 56%) 51%,
+    hsl(192, 100%, 46%) 61%,
+    hsl(152, 100%, 44%) 71%,
+    hsl(98, 100%, 44%) 84%,
+    hsl(56, 100%, 50%) 100%);
   -webkit-mask-image: var(--brk-away), var(--brk-odd), var(--brk-band), var(--brk-blob);
   mask-image: var(--brk-away), var(--brk-odd), var(--brk-band), var(--brk-blob);
   opacity: calc(var(--brk-co) * (0.8 + var(--pointer-from-center) * 0.12) * max(1, var(--foil-strength, 1)));

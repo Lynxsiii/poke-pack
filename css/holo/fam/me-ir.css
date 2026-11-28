@@ -21,39 +21,29 @@
 
 body.fx-holo.fx-holo.fx-holo .tcg.fam-me-ir.foil-ir.has-foil-map {
   /* The band's strength; the "intense" foil setting (--foil-strength over 1) raises it, capped. */
-  --mir-a: min(1, calc(0.7 * max(1, var(--foil-strength, 1))));
+  --mir-a: min(0.95, calc(0.8 * max(1, var(--foil-strength, 1))));
   --mir-seed: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
 }
 
 /* ---- The rainbow: broad diagonal sun-pillar sweeps over neutral grey ------------------------------------------- */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-me-ir.foil-ir.has-foil-map .foil {
   background-image:
-    /* 2026-11-28 site review, 35 of 181 bad: "strong rainbow cast over the whole art, darks lifted", "dark eyes turned
-       teal / green" (Live's maps leave a black eye foil on the starter promos), "green-purple wash over the black
-       ground" (Bulbasaur 133). Hard-light screened the pale band colours onto black ink. The group now OVERLAYS
-       (black stays black, the tint scales with the ink) and a grey veil closes over the bands away from the lamp,
-       so the sweep is a local sheen round the light, not a cast over the painting. */
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsla(0, 0%, 50%, 0) 0%, hsla(0, 0%, 50%, 0.15) 30%, hsla(0, 0%, 50%, 0.7) 62%, hsla(0, 0%, 50%, 0.92) 85%),
-    /* 2026-11-28 per-card review ("one solid saturated rainbow band; the real card has soft light-pillar bands"): the
-       spectrum spread over twice the width, fading in and out over a quarter of it, at two thirds the strength */
     repeating-linear-gradient(133deg,
-      hsla(0, 0%, 50%, 0) 0%, hsla(0, 0%, 50%, 0) 6%,
-      hsla(55, 90%, 76%, calc(var(--mir-a) * 0.5)) 10%, hsla(105, 85%, 76%, var(--mir-a)) 13%,
-      hsla(178, 85%, 75%, var(--mir-a)) 16%, hsla(218, 90%, 78%, var(--mir-a)) 19%,
-      hsla(272, 90%, 79%, var(--mir-a)) 22%, hsla(322, 90%, 78%, var(--mir-a)) 25%,
-      hsla(28, 90%, 77%, calc(var(--mir-a) * 0.5)) 28%, hsla(0, 0%, 50%, 0) 33%, hsla(0, 0%, 50%, 0) 36%),
+      hsla(0, 0%, 50%, 0) 0%, hsla(0, 0%, 50%, 0) 14%,
+      hsla(55, 100%, 74%, var(--mir-a)) 15.5%, hsla(105, 100%, 74%, var(--mir-a)) 16.6%,
+      hsla(178, 100%, 73%, var(--mir-a)) 17.7%, hsla(218, 100%, 76%, var(--mir-a)) 18.8%,
+      hsla(272, 100%, 77%, var(--mir-a)) 19.9%, hsla(322, 100%, 76%, var(--mir-a)) 21%,
+      hsla(28, 100%, 75%, var(--mir-a)) 22%, hsla(0, 0%, 50%, 0) 24%, hsla(0, 0%, 50%, 0) 28%),
     linear-gradient(#808080, #808080);
-  background-size: 100% 100%, 250% 250%, 100% 100%;
+  background-size: 250% 250%, 100% 100%;
   background-position:
-    center,
     calc(((50% - var(--background-x)) * 2.5) + 50%) calc(((50% - var(--background-y)) * 1.6) + 50%),
     center;
   background-repeat: no-repeat;
   background-blend-mode: normal;
   filter: none;
-  mix-blend-mode: overlay;
-  opacity: calc((0.17 + var(--card-opacity) * 0.75) * var(--foil-strength, 1));
+  mix-blend-mode: hard-light;
+  opacity: calc((0.17 + var(--card-opacity) * 0.83) * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.fam-me-ir.foil-ir.has-foil-map:not(.lit):not(.settling) .foil {
   filter: saturate(0.75);
@@ -68,18 +58,17 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-me-ir.foil-ir.has-foil-map .foil::before {
   background-repeat: repeat;
   background-blend-mode: screen, normal;
   filter: saturate(0.4) brightness(1.3);
-  /* inside an overlay group a screened fleck only lifts the band under it; gone 60% of the way from the light */
   mix-blend-mode: screen;
   -webkit-mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    #000 0%, hsla(0, 0%, 0%, 0.5) 30%, hsla(0, 0%, 0%, 0) 60%);
+    #000 0%, hsla(0, 0%, 0%, 0.6) 45%, hsla(0, 0%, 0%, 0.35) 100%);
   mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    #000 0%, hsla(0, 0%, 0%, 0.5) 30%, hsla(0, 0%, 0%, 0) 60%);
+    #000 0%, hsla(0, 0%, 0%, 0.6) 45%, hsla(0, 0%, 0%, 0.35) 100%);
   -webkit-mask-size: 100% 100%;
   mask-size: 100% 100%;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   clip-path: none;
-  opacity: 0.14;
+  opacity: 0.22;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.fam-me-ir.foil-ir.has-foil-map .foil::after {
   background-image: none;
@@ -98,15 +87,13 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-me-ir.foil-ir.has-foil-map .foil::after {
 /* ---- The gloss: a soft specular pool under the light, on the foil only, no dark far end ------------------------- */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-me-ir.foil-ir.has-foil-map .glare {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(210, 30%, 92%, 0.3) 0%, hsla(210, 20%, 90%, 0.12) 20%, hsla(0, 0%, 100%, 0) 42%);
+    hsla(0, 0%, 100%, 0.5) 0%, hsla(0, 0%, 100%, 0.18) 22%, hsla(0, 0%, 100%, 0) 45%);
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
-  /* screened since 2026-11-28: with the bands overlaid, black ink no longer answers the lamp at all (Nidorina MEP 101
-     "almost no foil response"); a small silver pool on the foil does, without a hue */
-  mix-blend-mode: screen;
+  mix-blend-mode: soft-light;
   filter: none;
-  opacity: calc(var(--card-opacity) * 0.55);
+  opacity: calc(var(--card-opacity) * 0.5);
   -webkit-mask-image: var(--art), var(--foil-map);
   -webkit-mask-composite: source-in, source-over;
   mask-image: var(--art), var(--foil-map);
@@ -126,14 +113,4 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-me-ir.foil-ir.has-foil-map .glare::after {
   mix-blend-mode: normal;
   filter: none;
   opacity: 0;
-}
-
-/* ---- Flat poster-colour art (Ditto MEP 106): half strength ------------------------------------------------------
-   2026-11-28: a painting with no dark ink gives the overlaid bands nothing to sit under and the whole card went pale
-   and milky round the light. */
-body.fx-holo.fx-holo.fx-holo .tcg.fam-me-ir.mir-flat.foil-ir.has-foil-map .foil {
-  opacity: calc((0.12 + var(--card-opacity) * 0.34) * var(--foil-strength, 1));
-}
-body.fx-holo.fx-holo.fx-holo .tcg.fam-me-ir.mir-flat.foil-ir.has-foil-map .glare {
-  opacity: calc(var(--card-opacity) * 0.25);
 }

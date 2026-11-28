@@ -58,12 +58,6 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.f
   --svv-band: clamp(0, calc(0.2 + var(--pointer-from-center) * 0.6), 0.6);
 }
 
-/* A photographed print (the Japanese scans, `svv-photo`): the photo already shows the foil's diagonal bands, so the
-   added ones doubled into saturated rainbow stripes across the Pokémon (per-card review, 2026-11-28). A third. */
-body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-v.fam-swsh-v.fam-swsh-v.fam-swsh-v.has-foil-map.svv-photo {
-  --svv-band: clamp(0, calc(0.12 + var(--pointer-from-center) * 0.35), 0.33);
-}
-
 /* ---- .foil: the sparkle, dodged; lit, the light pool ---------------------------------------------------------------- */
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.fam-swsh-v.fam-swsh-v.fam-swsh-v.fam-swsh-v.has-foil-map .foil {
   background-image:

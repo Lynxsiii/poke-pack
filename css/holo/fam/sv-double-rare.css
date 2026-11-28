@@ -31,18 +31,18 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-double-rare.fam-sv-double-rare.fam-sv-d
   --svdr-shift-y: calc((var(--background-y) - 50%) * 0.6 + 50%);
   /* Broad bands: a full spectrum about 4.5% of the card wide with a white core, every 14% (4.25% of the line). */
   --svdr-broad: repeating-linear-gradient(128deg,
-    #000 0%, #000 2.3%,
-    hsl(0, 65%, 46%) 2.8%, hsl(35, 70%, 48%) 3.0%, hsl(58, 70%, 50%) 3.2%, hsl(0, 0%, 64%) 3.36%,
-    hsl(140, 60%, 48%) 3.52%, hsl(195, 70%, 50%) 3.72%, hsl(240, 70%, 56%) 3.92%, hsl(285, 65%, 50%) 4.08%,
+    #000 0%, #000 2.6%,
+    hsl(0, 100%, 56%) 2.8%, hsl(35, 100%, 56%) 3.0%, hsl(58, 100%, 58%) 3.2%, hsl(0, 0%, 88%) 3.36%,
+    hsl(140, 100%, 52%) 3.52%, hsl(195, 100%, 55%) 3.72%, hsl(240, 100%, 64%) 3.92%, hsl(285, 100%, 62%) 4.08%,
     #000 4.25%);
   /* Soft silver bands, 9% of the card feathered, every 22% (6.7% of the line). */
   --svdr-silver: repeating-linear-gradient(128deg,
-    #000 0%, #000 2.4%, hsl(0, 0%, 24%) 3.35%, #000 4.3%, #000 6.7%);
+    #000 0%, #000 2.4%, hsl(0, 0%, 30%) 3.35%, #000 4.3%, #000 6.7%);
   /* The same broad bands as pastel multiply tints for the pale-print layer (.glare); white is neutral there. */
   --svdr-tint: repeating-linear-gradient(128deg,
     #fff 0%, #fff 2.6%,
-    hsl(0, 70%, 86%) 2.8%, hsl(35, 75%, 85%) 3.0%, hsl(58, 75%, 84%) 3.2%, #fff 3.36%,
-    hsl(140, 55%, 84%) 3.52%, hsl(195, 70%, 85%) 3.72%, hsl(240, 70%, 88%) 3.92%, hsl(285, 65%, 88%) 4.08%,
+    hsl(0, 90%, 72%) 2.8%, hsl(35, 95%, 70%) 3.0%, hsl(58, 95%, 68%) 3.2%, #fff 3.36%,
+    hsl(140, 80%, 68%) 3.52%, hsl(195, 90%, 70%) 3.72%, hsl(240, 90%, 76%) 3.92%, hsl(285, 85%, 76%) 4.08%,
     #fff 4.25%);
 }
 
@@ -56,20 +56,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-double-rare.fam-sv-double-rare.fam-sv-d
     calc(100% - var(--svdr-shift-x)) var(--svdr-shift-y);
   background-repeat: repeat;
   background-blend-mode: soft-light, screen, normal;
-  filter: none;
+  filter: brightness(calc(0.86 + var(--pointer-from-center) * 0.12)) contrast(1.15) saturate(1.4);
   mix-blend-mode: color-dodge;
-  opacity: calc((0.3 + var(--card-opacity) * 0.55) * var(--foil-strength, 1));
-  /* Round 2 (2026-11-28, 69 of 111 judged bad: "diagonal rainbow stripes and sparkle stars over the Pokémon"): the
-     bands were full-saturation spectra dodged at contrast 1.15, neon bars at phone size, and TCG Live's map keeps a
-     13% floor over the Pokémon, so every bar crossed it faintly. The bands are now dim, half-saturated colours (a
-     dodge of a dim colour is a soft pale lift, not a neon line), feathered at their edges, and the map is
-     intersected with itself (0.13 squared is nothing; the text box's 0.55 stays 0.3). */
-  -webkit-mask-image: var(--art), var(--foil-map), var(--foil-map);
-  -webkit-mask-composite: source-in, source-in, source-over;
-  mask-image: var(--art), var(--foil-map), var(--foil-map);
-  mask-composite: intersect, intersect, add;
-  -webkit-mask-size: contain, 100% 100%, 100% 100%;
-  mask-size: contain, 100% 100%, 100% 100%;
+  opacity: calc((0.32 + var(--card-opacity) * 0.55) * var(--foil-strength, 1));
 }
 /* Bunches of three or four sharp lines 1.6% of the card wide and 4% apart, a bunch every 17% or so: a fine comb
    multiplied by a coarse gate whose period does not divide the broad bands', so the spacing never looks regular. */
@@ -79,8 +68,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-double-rare.fam-sv-double-rare.fam-sv-d
       #000 0%, #000 1.2%, #fff 1.9%, #fff 4.1%, #000 4.8%, #000 5.3%),
     repeating-linear-gradient(128deg,
       #000 0%, #000 0.72%,
-      hsl(0, 55%, 36%) 0.78%, hsl(50, 60%, 40%) 0.86%, hsl(130, 50%, 38%) 0.94%,
-      hsl(200, 60%, 40%) 1.02%, hsl(270, 55%, 42%) 1.1%, #000 1.2%);
+      hsl(0, 100%, 58%) 0.78%, hsl(50, 100%, 58%) 0.86%, hsl(130, 100%, 55%) 0.94%,
+      hsl(200, 100%, 58%) 1.02%, hsl(270, 100%, 64%) 1.1%, #000 1.2%);
   background-size: 200% 200%, 200% 200%;
   background-position:
     calc(100% - var(--svdr-shift-x)) var(--svdr-shift-y),
@@ -88,14 +77,12 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-double-rare.fam-sv-double-rare.fam-sv-d
   background-repeat: repeat;
   background-blend-mode: multiply, normal;
   mix-blend-mode: screen;
-  /* 2026-11-28 per-card review (Wigglytuff ex, Charizard ex 151: "uniform diagonal rainbow hatch"): the comb at a
-     third, so the broad bands lead and the fine lines are seen second */
-  opacity: 0.3;
+  opacity: 0.85;
 }
 /* The light: 3-6 bands near it, the far side nearly the plain print. */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-double-rare.fam-sv-double-rare.fam-sv-double-rare.fam-sv-double-rare.foil-sunpillar.has-foil-map .foil::after {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    #fff 0%, #c0c0c0 12%, #5e5e5e 28%, #1c1c1c 46%, #000 66%);
+    #fff 0%, #b4b4b4 10%, #4a4a4a 24%, #141414 40%, #000 62%);
   /* celebration.css's counter-tracked twin sets size, position, blend, filter and opacity here: clear them all */
   background-size: 100% 100%;
   background-position: center;
@@ -107,12 +94,11 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-double-rare.fam-sv-double-rare.fam-sv-d
 }
 /* Resting, as a card on a table in room light: faint soft silver bands and a few stars, nothing that moves. */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-double-rare.fam-sv-double-rare.fam-sv-double-rare.fam-sv-double-rare.foil-sunpillar.has-foil-map:not(.lit):not(.settling) .foil {
-  /* no stars at rest (they sat on the print as white specks in flat light): the soft silver bands alone */
-  background-image: var(--svdr-silver);
-  background-size: 200% 200%;
-  background-position: 50% 50%;
-  background-blend-mode: normal;
-  filter: none;
+  background-image: var(--c30-stars), var(--svdr-silver);
+  background-size: 62% auto, 200% 200%;
+  background-position: var(--seed-pos), 50% 50%;
+  background-blend-mode: screen, normal;
+  filter: brightness(0.9) saturate(1.2);
   opacity: calc(0.22 * var(--foil-strength, 1));
 }
 
@@ -121,12 +107,12 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-double-rare.fam-sv-double-rare.fam-sv-d
    (saturation of Amoonguss's top half 80 -> 64 at 30:25). White is neutral in multiply, so the tint shows only in the
    bands near the light and never darkens black ink further. */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-double-rare.fam-sv-double-rare.fam-sv-double-rare.fam-sv-double-rare.foil-sunpillar.has-foil-map .glare {
-  -webkit-mask-image: var(--art), var(--foil-map), var(--foil-map);
-  -webkit-mask-composite: source-in, source-in, source-over;
-  mask-image: var(--art), var(--foil-map), var(--foil-map);
-  mask-composite: intersect, intersect, add;
-  -webkit-mask-size: contain, 100% 100%, 100% 100%;
-  mask-size: contain, 100% 100%, 100% 100%;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
   background-image:
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
       hsla(0, 0%, 100%, 0) 0%, hsla(0, 0%, 100%, 0.2) 22%, #fff 48%),
@@ -137,7 +123,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-double-rare.fam-sv-double-rare.fam-sv-d
   background-blend-mode: normal, normal;
   mix-blend-mode: multiply;
   filter: none;
-  opacity: calc(var(--card-opacity) * 0.4 * var(--foil-strength, 1));
+  opacity: calc(var(--card-opacity) * 0.55 * var(--foil-strength, 1));
 }
 
 /* ---- Stars: the SouthernCross coat ------------------------------------------------------------------------------
@@ -153,12 +139,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-double-rare.fam-sv-double-rare.fam-sv-d
   background-repeat: repeat;
   background-blend-mode: normal;
   filter: hue-rotate(calc((var(--pointer-from-left) * 1.3 + var(--pointer-from-top) * 0.9) * 360deg))
-    brightness(calc(1 + var(--pointer-from-center) * 0.5)) saturate(1);
-  /* 2026-11-28: was full opacity, saturate 1.8, two thirds strength across the whole card: coloured stars sat on every
-     Pokémon's face (per-card review, 39 of 39 Japanese Double Rares; Noah: "the sparkles or dots on the holo take away
-     from the texture"). Now a clear coat that catches the light near the lamp only. */
-  /* Round 2: the coat is also cut to the squared Live map, so no star sits on the Pokémon, and runs a third lower. */
-  opacity: calc(var(--card-opacity) * 0.34 * var(--foil-strength, 1));
+    brightness(calc(1 + var(--pointer-from-center) * 0.5)) saturate(1.8);
+  opacity: calc(var(--card-opacity) * var(--foil-strength, 1));
   --svdr-patches:
     radial-gradient(circle at calc(18% + var(--seed-x, 0.5) * 30%) calc(22% + var(--seed-y, 0.5) * 20%),
       #000 0%, #000 9%, transparent 14%),
@@ -167,16 +149,16 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sv-double-rare.fam-sv-double-rare.fam-sv-d
     radial-gradient(circle at calc(30% + var(--seed-y, 0.5) * 40%) calc(80% + var(--seed-x, 0.5) * 8%),
       #000 0%, #000 4%, transparent 9%),
     linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
-  -webkit-mask-image: var(--art), var(--foil-map), var(--foil-map),
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.6) 22%, rgba(0, 0, 0, 0) 55%),
+  -webkit-mask-image: var(--art),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.9) 35%, rgba(0, 0, 0, 0.35) 90%),
     var(--svdr-patches);
-  -webkit-mask-composite: source-in, source-in, source-in, source-in, source-over, source-over, source-over, source-over;
-  mask-image: var(--art), var(--foil-map), var(--foil-map),
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.6) 22%, rgba(0, 0, 0, 0) 55%),
+  -webkit-mask-composite: source-in, source-in, source-over, source-over, source-over, source-over;
+  mask-image: var(--art),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.9) 35%, rgba(0, 0, 0, 0.35) 90%),
     var(--svdr-patches);
-  mask-composite: intersect, intersect, intersect, intersect, add, add, add, add;
-  -webkit-mask-size: contain, 100% 100%, 100% 100%, cover, cover, cover, cover, cover;
-  mask-size: contain, 100% 100%, 100% 100%, cover, cover, cover, cover, cover;
+  mask-composite: intersect, intersect, add, add, add, add;
+  -webkit-mask-size: contain, cover, cover, cover, cover, cover;
+  mask-size: contain, cover, cover, cover, cover, cover;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   -webkit-mask-position: center;

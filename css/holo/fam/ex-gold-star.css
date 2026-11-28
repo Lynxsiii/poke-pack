@@ -37,11 +37,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-ex.fam-ex-gold-star {
   --xg-map-pos: 49.3151% 13.5922%;
 }
 
-/* ---- .foil: the mirror ground (2026-11-28 rebuild: the screened sheet at half strength "barely differed from rest") --------
-   A mirror under ink multiplies what is printed on it: the ground is colour-dodged, so the lit sky gains contrast and its
-   printed cosmos dots (the lightest pixels of the scan) blow out to white first, while black ink stays black. Bottom to top:
-   a card's own wash (--xg-wash); one broad band, pastel at its edges, sliding against the tilt; a wide pool round the lamp.
-   Everything ends in black away from the light, so the far side of the window is the plain print. */
+/* ---- .foil: the mirror ground ------------------------------------------------------------------------------- */
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star .foil {
   clip-path: none;
   border-radius: 0;
@@ -56,26 +52,32 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold
   -webkit-mask-composite: source-over;
   mask-composite: add;
   mask-mode: alpha;
-  background-color: hsl(0, 0%, 0%);
+  background-color: transparent;
+  /* the pool at the lamp; one soft band about half the window wide, a pastel violet - blue - cyan | silver-white core | green -
+     lime - gold (JP Latias; the silver core alone on EN Rayquaza), sliding against the tilt; and the card's own wash
+     (--xg-wash: Regice's and Registeel's whole sky goes warm gold under a lamp), broad round the pointer */
   background-image:
-    radial-gradient(95% 62% at var(--pointer-x) var(--pointer-y),
-      hsla(40, 10%, 50%, 1) 0%, hsla(40, 8%, 44%, 0.9) 22%, hsla(220, 8%, 34%, 0.6) 50%, hsla(0, 0%, 20%, 0.25) 78%, hsla(0, 0%, 0%, 0) 100%),
-    linear-gradient(115deg, hsla(0, 0%, 0%, 0) 0%, hsla(0, 0%, 0%, 0) 34%, hsla(280, 70%, 44%, calc(0.85 * var(--xg-pastel, 0.4))) 39%,
-      hsla(228, 80%, 46%, calc(0.95 * var(--xg-pastel, 0.4))) 43%, hsla(192, 80%, 44%, var(--xg-pastel, 0.4)) 46.5%,
-      hsla(45, 12%, 50%, 0.8) 50%, hsla(150, 70%, 40%, var(--xg-pastel, 0.4)) 53.5%,
-      hsla(100, 65%, 40%, calc(0.9 * var(--xg-pastel, 0.4))) 57%, hsla(48, 80%, 44%, calc(0.8 * var(--xg-pastel, 0.4))) 61%,
-      hsla(0, 0%, 0%, 0) 66%, hsla(0, 0%, 0%, 0) 100%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 100%, 0.3) 0%, hsla(0, 0%, 100%, 0.15) 9%, hsla(0, 0%, 100%, 0.04) 22%, hsla(0, 0%, 100%, 0) 34%),
+    radial-gradient(46% 30% at var(--pointer-x) var(--pointer-y),
+      var(--xg-core, hsla(45, 18%, 92%, 0.85)) 0%, hsla(40, 14%, 82%, 0.4) 40%, hsla(0, 0%, 60%, 0.1) 75%, hsla(0, 0%, 0%, 0) 100%),
+    linear-gradient(115deg, hsla(0, 0%, 0%, 0) 0%, hsla(0, 0%, 0%, 0) 37%, hsla(280, 85%, 70%, calc(0.75 * var(--xg-pastel, 0.4))) 41%,
+      hsla(228, 90%, 68%, calc(0.95 * var(--xg-pastel, 0.4))) 44.5%, hsla(192, 85%, 66%, var(--xg-pastel, 0.4)) 47.5%,
+      var(--xg-core, hsla(45, 18%, 92%, 0.85)) 50%, hsla(150, 80%, 62%, var(--xg-pastel, 0.4)) 52.5%,
+      hsla(100, 75%, 62%, calc(0.9 * var(--xg-pastel, 0.4))) 55.5%, hsla(52, 85%, 66%, calc(0.7 * var(--xg-pastel, 0.4))) 59%,
+      hsla(0, 0%, 0%, 0) 63%, hsla(0, 0%, 0%, 0) 100%),
     radial-gradient(120% 110% at var(--pointer-x) var(--pointer-y), var(--xg-wash, hsla(0, 0%, 0%, 0)) 0%, hsla(0, 0%, 0%, 0) 100%);
-  background-size: 100% 100%, 250% 100%, 100% 100%;
+  background-size: 100% 100%, 100% 100%, 250% 100%, 100% 100%;
   background-position:
+    center,
     center,
     calc(100% - var(--pointer-from-left) * 100%) center,
     center;
   background-repeat: no-repeat;
   background-blend-mode: normal;
-  mix-blend-mode: color-dodge;
+  mix-blend-mode: screen;
   filter: none;
-  opacity: calc((0.25 + var(--card-opacity) * 0.75) * var(--foil-strength, 1));
+  opacity: calc((0.08 + var(--card-opacity) * 0.45) * var(--xg-sheen, 1) * var(--foil-strength, 1));
 }
 /* At rest: a faint even ground, the scan's own cosmos showing through (rest = the scan). */
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star:not(.lit):not(.settling) .foil {
@@ -83,8 +85,6 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold
     hsla(0, 0%, 50%, 0.8) 60%, hsla(0, 0%, 30%, 0.5) 100%);
   background-size: 100% 100%;
   background-position: center;
-  background-color: transparent;
-  mix-blend-mode: screen;
   opacity: calc(0.05 * var(--xg-sheen, 1) * var(--foil-strength, 1));
 }
 /* The foil's and the glare's own pseudo layers draw nothing (the era and the shared sheets paint them). */
@@ -125,8 +125,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold
   background-color: hsl(0, 0%, 0%);
   background-image:
     var(--foil-map-xg-dots),
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 100%) 0%, hsl(0, 0%, 80%) 16%,
-      hsl(0, 0%, 0%) 44%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 100%) 0%, hsl(0, 0%, 72%) 13%,
+      hsl(0, 0%, 0%) 32%),
     linear-gradient(105deg, hsl(0, 100%, 80%), hsl(50, 100%, 76%) 9%, hsl(110, 100%, 76%) 18%, hsl(185, 100%, 78%) 27%,
       hsl(230, 100%, 84%) 36%, hsl(300, 100%, 84%) 44%, hsl(360, 100%, 80%) 51%, hsl(50, 100%, 76%) 60%, hsl(110, 100%, 76%) 69%,
       hsl(185, 100%, 78%) 78%, hsl(230, 100%, 84%) 87%, hsl(300, 100%, 84%) 95%, hsl(360, 100%, 80%) 100%),
@@ -151,38 +151,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold
   display: none;
 }
 
-/* ---- .glare: the silver sheet. Facing the lamp the mirror reads silver-white through the ink (Rayquaza's sky in the PSA
-   photos, weebly-holobleeds/img-0975): a screened core round the pointer on the ground only, in the card's --xg-core, scaled
-   by --xg-sheen (dark windows take less: bark and night sky stay dark in hand). ---- */
+/* ---- .glare: nothing of its own (the lamp's white core is a layer of .foil: one masked buffer fewer per card) ---- */
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star .glare {
-  display: block;
-  clip-path: none;
-  border-radius: 0;
-  -webkit-mask-image: var(--foil-map-xg);
-  mask-image: var(--foil-map-xg);
-  -webkit-mask-size: var(--xg-map-size);
-  mask-size: var(--xg-map-size);
-  -webkit-mask-position: var(--xg-map-pos);
-  mask-position: var(--xg-map-pos);
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-composite: source-over;
-  mask-composite: add;
-  mask-mode: alpha;
-  background-color: transparent;
-  background-image:
-    radial-gradient(62% 40% at var(--pointer-x) var(--pointer-y),
-      var(--xg-core, hsla(45, 18%, 94%, 0.85)) 0%, hsla(40, 12%, 88%, 0.5) 30%, hsla(210, 14%, 80%, 0.2) 62%, hsla(0, 0%, 60%, 0) 100%);
-  background-size: 100% 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-blend-mode: normal;
-  mix-blend-mode: screen;
-  filter: none;
-  transform: none;
-  opacity: calc(var(--card-opacity) * 0.55 * var(--xg-sheen, 1) * var(--foil-strength, 1));
-}
-body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star.fam-ex-gold-star:not(.lit):not(.settling) .glare {
   display: none;
 }
 
@@ -236,49 +206,48 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refracto
    outside the body, make_refractor_star_maps.py) take a warm cycle instead (red-orange, orange, gold, yellow-green), the cool
    cycle multiplied by the inverted flame file (difference over white) and the warm one by the file itself on .foil::before. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor.gsr-dark {
-  --gsr-spectrum: hsl(140, 45%, 46%), hsl(176, 50%, 48%), hsl(200, 55%, 52%), hsl(226, 55%, 58%), hsl(262, 50%, 58%), hsl(300, 35%, 54%), hsl(40, 30%, 54%), hsl(140, 45%, 46%), hsl(176, 50%, 48%), hsl(200, 55%, 52%), hsl(226, 55%, 58%), hsl(262, 50%, 58%), hsl(300, 35%, 54%), hsl(40, 30%, 54%), hsl(140, 45%, 46%), hsl(176, 50%, 48%), hsl(200, 55%, 52%), hsl(226, 55%, 58%), hsl(262, 50%, 58%), hsl(300, 35%, 54%), hsl(40, 30%, 54%), hsl(140, 45%, 46%);
+  --gsr-spectrum: hsl(122, 82%, 42%), hsl(160, 90%, 40%), hsl(186, 95%, 44%), hsl(208, 95%, 50%), hsl(236, 85%, 58%), hsl(272, 80%, 54%),
+    hsl(236, 85%, 58%), hsl(208, 95%, 50%), hsl(186, 95%, 44%), hsl(160, 90%, 40%), hsl(122, 82%, 42%), hsl(160, 90%, 40%), hsl(186, 95%, 44%),
+    hsl(208, 95%, 50%), hsl(236, 85%, 58%), hsl(272, 80%, 54%), hsl(236, 85%, 58%), hsl(208, 95%, 50%), hsl(186, 95%, 44%), hsl(160, 90%, 40%),
+    hsl(122, 82%, 42%), hsl(160, 90%, 40%), hsl(186, 95%, 44%), hsl(208, 95%, 50%), hsl(236, 85%, 58%), hsl(272, 80%, 54%), hsl(236, 85%, 58%),
+    hsl(208, 95%, 50%), hsl(186, 95%, 44%), hsl(160, 90%, 40%), hsl(122, 82%, 42%);
   --gsr-warm: hsl(6, 92%, 50%), hsl(22, 96%, 52%), hsl(40, 96%, 52%), hsl(58, 92%, 50%), hsl(84, 78%, 44%), hsl(58, 92%, 50%), hsl(40, 96%, 52%),
     hsl(22, 96%, 52%), hsl(6, 92%, 50%), hsl(22, 96%, 52%), hsl(40, 96%, 52%), hsl(58, 92%, 50%), hsl(84, 78%, 44%), hsl(58, 92%, 50%),
     hsl(40, 96%, 52%), hsl(22, 96%, 52%), hsl(6, 92%, 50%);
-  --gsr-gain: 0.56;
+  --gsr-gain: 0.72;
 }
-/* 2026-11-28: the hard-light cycle repainted the whole body one flat cyan ("Charizard recoloured cyan"). A mirror under dark
-   ink only lights where it faces the lamp: the cycle is multiplied by a pool that ends in black and colour-dodged, so the
-   body's blue-grey highlights take the colour near the light, its black shading stays black and the far side is the print. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor.gsr-dark .foil {
-  background-color: hsl(0, 0%, 0%);
+  background-color: hsl(0, 0%, 100%);
   background-image:
-    radial-gradient(90% 60% at var(--pointer-x) var(--pointer-y),
-      hsl(0, 0%, 100%) 0%, hsl(0, 0%, 78%) 25%, hsl(0, 0%, 38%) 60%, hsl(0, 0%, 0%) 100%),
-    linear-gradient(112deg, var(--gsr-spectrum));
-  background-size: 100% 100%, 220% 220%;
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 100%, 0.3) 0%, hsla(200, 30%, 85%, 0.1) 18%, hsla(0, 0%, 100%, 0) 36%),
+    linear-gradient(112deg, var(--gsr-spectrum)),
+    var(--gsr-flame, linear-gradient(hsl(0, 0%, 0%), hsl(0, 0%, 0%)));
+  background-size: 100% 100%, 220% 220%, 100% 100%;
   background-position:
     center,
-    calc(20% + var(--pointer-from-left) * 60%) calc(20% + var(--pointer-from-top) * 60%);
+    calc(20% + var(--pointer-from-left) * 60%) calc(20% + var(--pointer-from-top) * 60%),
+    center;
   background-repeat: no-repeat;
-  background-blend-mode: multiply, normal;
-  mix-blend-mode: color-dodge;
-  opacity: calc((0.3 + var(--card-opacity) * 0.7) * var(--foil-strength, 1));
+  background-blend-mode: normal, multiply, difference;
+  mix-blend-mode: hard-light;
+  opacity: calc((0.38 + var(--card-opacity) * 0.3) * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor.gsr-dark .foil::before {
   content: "";
   background-color: hsl(0, 0%, 0%);
-  background-image:
-    radial-gradient(90% 60% at var(--pointer-x) var(--pointer-y),
-      hsl(0, 0%, 100%) 0%, hsl(0, 0%, 70%) 30%, hsl(0, 0%, 0%) 100%),
-    linear-gradient(118deg, var(--gsr-warm)), var(--gsr-flame, linear-gradient(hsl(0, 0%, 0%), hsl(0, 0%, 0%)));
-  background-size: 100% 100%, 200% 200%, 100% 100%;
+  background-image: linear-gradient(118deg, var(--gsr-warm)), var(--gsr-flame, linear-gradient(hsl(0, 0%, 0%), hsl(0, 0%, 0%)));
+  background-size: 200% 200%, 100% 100%;
   background-position:
-    center,
     calc(100% - var(--pointer-from-left) * 100%) calc(100% - var(--pointer-from-top) * 100%),
     center;
   background-repeat: no-repeat;
-  background-blend-mode: multiply, multiply, normal;
+  background-blend-mode: multiply, normal;
   -webkit-mask-image: none;
   mask-image: none;
   mix-blend-mode: screen;
   filter: none;
-  opacity: 0.6;
+  opacity: 1;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor.gsr-dark .foil::after {
   opacity: 0.3;
@@ -304,10 +273,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refracto
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor.gsr-pastel .foil {
   background-image:
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsla(0, 0%, 100%, 0.75) 0%, hsla(200, 25%, 94%, 0.45) 22%, hsla(0, 0%, 100%, 0) 52%),
-    linear-gradient(125deg, hsla(205, 30%, 96%, 0) 22%, hsla(205, 30%, 96%, 0.3) 40%, hsla(200, 25%, 98%, 0.6) 50%,
-      hsla(205, 30%, 96%, 0.3) 60%, hsla(205, 30%, 96%, 0) 78%),
-    linear-gradient(hsla(205, 25%, 94%, 0.08), hsla(205, 25%, 94%, 0.08)),
+      hsla(0, 0%, 100%, 0.3) 0%, hsla(200, 25%, 90%, 0.14) 20%, hsla(0, 0%, 100%, 0) 42%),
+    linear-gradient(125deg, hsla(205, 30%, 96%, 0) 22%, hsla(205, 30%, 96%, 0.42) 40%, hsla(200, 25%, 98%, 0.5) 50%,
+      hsla(205, 30%, 96%, 0.42) 60%, hsla(205, 30%, 96%, 0) 78%),
+    linear-gradient(hsla(205, 25%, 94%, 0.22), hsla(205, 25%, 94%, 0.22)),
     linear-gradient(112deg, var(--gsr-spectrum));
   background-size: 100% 100%, 200% 200%, 100% 100%, 220% 220%;
   background-position:
@@ -329,8 +298,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refracto
 /* the pale prints: the spectrum by overlay, so pink, yellow, green and blue stay readable on light ink */
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor.gsr-pale .foil {
   mix-blend-mode: overlay;
-  /* 0.95 repainted the cyan Mew pink from edge to edge (2026-11-28 review); at 0.6 the ink leads and the hues ride on it */
-  opacity: calc((0.4 + var(--card-opacity) * 0.2) * var(--gsr-gain, 1) * var(--foil-strength, 1));
+  opacity: calc((0.7 + var(--card-opacity) * 0.25) * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.fam-ex-gold-star-refractor.fam-ex-gold-star-refractor.gsr-pale:not(.lit):not(.settling) .foil {
   mix-blend-mode: screen;

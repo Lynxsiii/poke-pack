@@ -176,14 +176,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-hol
   background-image:
     radial-gradient(ellipse 26% 19% at var(--pointer-x) var(--pointer-y),
       rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.3) 45%, rgba(255, 255, 255, 0) 100%),
-    /* 2026-11-28: the colour gathers round the light and fades to white (no tint) away from it. Without this the
-       bands tinted the whole window at every pose: a pink/cyan/green wash on the promos, whose maps hold the whole
-       window (per-card review, 10 of 19). */
-    radial-gradient(ellipse 70% 56% at var(--pointer-x) var(--pointer-y),
-      rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.4) 35%, rgba(255, 255, 255, 0.8) 75%, rgba(255, 255, 255, 0.9) 100%),
     var(--smh-bands);
-  background-size: 100% 100%, 100% 100%, 280% 280%;
-  background-position: center, center, var(--smh-band-pos);
+  background-size: 100% 100%, 280% 280%;
+  background-position: center, var(--smh-band-pos);
   background-repeat: no-repeat;
   mix-blend-mode: multiply;
   opacity: var(--smh-hold);
@@ -205,25 +200,19 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-hol
   mask-position: center;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-  /* 2026-11-28: the gain was x1.5 everywhere (grey 84) and x2 in the hot spot, with the sparkle and streak tiles in
-     full: a pale window blew out to white (Shaymin sm11 26, Alolan Ninetales sm8 150), others went milky, and the
-     sparkle dots sat on top of the art (Noah: "the sparkles or dots on the holo take away from the texture"). Now
-     about x1.33 (grey 64), x1.6 in the hot spot, and a veil of the base grey over the tiles halves the sparkle. */
-  background-color: rgb(64, 64, 68);
+  background-color: rgb(84, 84, 88);
   background-image:
-    linear-gradient(rgba(64, 64, 68, 0.5), rgba(64, 64, 68, 0.5)),
     var(--smh-sparkle),
     var(--smh-streaks),
     radial-gradient(ellipse 34% 25% at var(--pointer-x) var(--pointer-y),
-      rgb(128, 120, 100) 0%, rgba(104, 100, 92, 0.7) 45%, rgba(64, 64, 68, 0) 100%);
-  background-size: 100% 100%, 100% auto, 100% auto, 100% 100%;
+      rgb(128, 120, 100) 0%, rgba(104, 100, 92, 0.7) 45%, rgba(84, 84, 88, 0) 100%);
+  background-size: 100% auto, 100% auto, 100% 100%;
   background-position:
-    center,
     calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%),
     calc(100% - var(--background-x, 50%)) calc(100% - var(--background-y, 50%)),
     center;
-  background-repeat: no-repeat, repeat, repeat, no-repeat;
-  background-blend-mode: normal, screen, screen, normal;
+  background-repeat: repeat, repeat, no-repeat;
+  background-blend-mode: screen, screen, normal;
   mix-blend-mode: color-dodge;
   filter: contrast(0.9);
   opacity: var(--smh-hold);
@@ -245,7 +234,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-holo.fam-sm-holo.fam-sm-holo.fam-sm-hol
   background-size: 280% 280%;
   background-position: 50% 50%;
   mix-blend-mode: soft-light;
-  opacity: calc(0.26 * var(--foil-strength, 1));
+  opacity: calc(0.42 * var(--foil-strength, 1));
 }
 
 /* ---- Confetti holo (smh-confetti) ---------------------------------------------------------------------------- */

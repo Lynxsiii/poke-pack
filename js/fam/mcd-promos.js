@@ -57,11 +57,10 @@ export function famExtras(card, url, base) {
     const chips = `url('${url(`${DIR}/${warm ? "chips-bw-warm-v3.png" : "chips-bw-v3.png"}`)}')`;
     // The chips' on-window (brightness, contrast of the crush: the narrower, the fewer chips lit at a time) and saturation. The 2012
     // cards light a sparse sprinkle of gold, white, pink and green chips with dark gaps even under the lamp (Servine, Purrloin, Dewott
-    // in hand); the 2011 dark art a dense mosaic of saturated chips under the lamp (Zorua, Alomomola). 2026-11-28: the 2011 lamp
-    // window narrowed (13.3 -> 19, 1 -> 0.66) after the site review ("uniform shard confetti buries the background").
+    // in hand); the 2011 dark art a dense mosaic of saturated chips under the lamp (Zorua, Alomomola).
     const tune = set(card) === "mcd12"
       ? `--mcd-sp-b:0.51;--mcd-sp-c:80;--mcd-lamp:0.6;--mcd-lamp-b:0.53;--mcd-lamp-c:45;--mcd-sat:${warm ? 1.1 : 1.25}`
-      : `--mcd-sp-b:0.518;--mcd-sp-c:55.7;--mcd-lamp:0.66;--mcd-lamp-b:0.565;--mcd-lamp-c:19;--mcd-sat:${warm ? 1.15 : 1.5}`;
+      : `--mcd-sp-b:0.518;--mcd-sp-c:55.7;--mcd-lamp:1;--mcd-lamp-b:0.578;--mcd-lamp-c:13.3;--mcd-sat:${warm ? 1.15 : 1.5}`;
     return {
       classes: "fam-mcd-promos mcd-bw has-foil-map",
       style: `--foil-map:${plate};--mcd-plate:${plate};--mcd-matte:${matte};--mcd-tile:${chips};${tune}`,

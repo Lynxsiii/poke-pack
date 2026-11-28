@@ -46,7 +46,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm
   --sgx-band-pos: clamp(0%, calc(((50% - var(--background-x, 50%)) * 1.5) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y, 50%)) * 1.0) + 50%), 100%);
   /* where the colour gathers: clear round the pointer, white (no tint) far from it */
   --sgx-fade: radial-gradient(ellipse 58% 44% at var(--pointer-x) var(--pointer-y),
-    rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.46) 35%, rgba(255, 255, 255, 0.8) 75%, rgba(255, 255, 255, 0.9) 100%);
+    rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 35%, rgba(255, 255, 255, 0.72) 75%, rgba(255, 255, 255, 0.86) 100%);
   /* the frame ring: four strips (sides 3.8% of the width, top and bottom 2.7% of the height), mid-grey silver */
   /* tinted silver along the frame (lavender, cyan, green, pink between greys), sliding with the tilt: the frame's
      rainbow glitter shows its colour all along, not only under the light */
@@ -64,10 +64,6 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm
   --sgx-ring-rest-pos: 0% 0%, 100% 0%, 0% 0%, 0% 100%;
   --sgx-seed: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
   --sgx-hold: min(1, calc((0.45 + var(--card-opacity, 0) * 0.55) * var(--foil-strength, 1)));
-  /* a few promos carry an etch map (White Kyurem SM141, Lucario & Melmetal SM139): the shared etch shine's spectrum and
-     glitter at their defaults read as heavy glitter and a rainbow tint over the art. A trace of colour, no glitter. */
-  --shine-line: 0.1;
-  --shine-glit: 0;
 }
 
 /* ---- Every layer reset: what base.css, rarities.css, realism.css, maps.css and sm-gx.css put here ------------- */
@@ -120,17 +116,13 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm
 
 /* ---- .foil (held): band patches x grain, gathered near the light, the ring grey, multiplied -------------------- */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx .foil {
-  /* 2026-11-28: the pebble tile is out of the colour (its slot holds mid grey, which overlay leaves alone) and the
-     colour is held to about 0.6 under the light. Overlaid on the saturated bands the grain tore them into a green or
-     rainbow glitter patch that sat on the Pokémon beside the light and recoloured eyes (site review: 49 of 203 bad).
-     The real card shows a soft rainbow sheen there; the grain is the faint relief `.glare` draws. */
   background-image:
     var(--sgx-ring-v), var(--sgx-ring-v), var(--sgx-ring-h), var(--sgx-ring-h),
     var(--sgx-fade),
-    linear-gradient(#808080, #808080),
+    var(--sgx-pebble),
     var(--sgx-cloud),
     var(--sgx-bands);
-  background-size: var(--sgx-ring-size), 100% 100%, 17% auto, 90% auto, 260% 260%;
+  background-size: var(--sgx-ring-size), 100% 100%, 30% auto, 90% auto, 260% 260%;
   background-position: var(--sgx-ring-pos), center, var(--sgx-seed),
     calc(var(--background-x, 50%) * 0.6) calc(var(--background-y, 50%) * 0.6), var(--sgx-band-pos);
   background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, repeat, repeat, no-repeat;
@@ -140,18 +132,13 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm
 }
 /* ---- .cure (held): the light gain with the facet glints, colour-dodged ---------------------------------------- */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx .cure {
-  /* 2026-11-28: gain x1.35 (grey 66) to x1.25 (grey 52), hot spot 94 to 78: a pale Pokémon inside the map's soft
-     edge went milky beside the light (Venomoth sm10 12, Dedenne sm10 57, Wigglytuff sm115 42). */
-  background-color: rgb(52, 52, 55);
+  background-color: rgb(66, 66, 70);
   /* the frame takes only a small gain (it stays mid-grey silver), its glints the rainbow flecks */
-  /* 2026-11-28: the coloured flake tile (--sgx-glint) is gone from here. At phone size it read as coarse confetti
-     over the art (per-card review, 13 of 19 cards); the real foil is a fine grain under a smooth sheen. The slot
-     holds black (screen: no change) so the layer lists below keep their order. */
   background-image:
-    linear-gradient(#000, #000),
+    var(--sgx-glint),
     var(--sgx-ring-dim), var(--sgx-ring-dim), var(--sgx-ring-dim), var(--sgx-ring-dim),
     radial-gradient(ellipse 34% 25% at var(--pointer-x) var(--pointer-y),
-      rgb(78, 76, 72) 0%, rgba(68, 67, 64, 0.7) 45%, rgba(52, 52, 55, 0) 100%);
+      rgb(124, 116, 98) 0%, rgba(100, 96, 88, 0.7) 45%, rgba(66, 66, 70, 0) 100%);
   background-size: 30% auto, var(--sgx-ring-size), 100% 100%;
   background-position: var(--sgx-seed), var(--sgx-ring-pos), center;
   background-repeat: repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
@@ -176,10 +163,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm
   filter: none;
   mix-blend-mode: color-dodge;
   /* a gain on the facets (the relief as alpha): pale ink and silver glint, dark ink stays dark */
-  /* the facets x (the map + a 0.18 floor): the Pokémon takes a trace of the relief, the GX bar keeps its print */
-  -webkit-mask-image: var(--art), var(--sgx-pebble-a), var(--foil-map), linear-gradient(rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.18));
+  /* the facets x (the map + a 0.45 floor): the Pokémon takes the relief at half, the GX bar keeps its print */
+  -webkit-mask-image: var(--art), var(--sgx-pebble-a), var(--foil-map), linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45));
   -webkit-mask-composite: source-in, source-in, source-over, source-over;
-  mask-image: var(--art), var(--sgx-pebble-a), var(--foil-map), linear-gradient(rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.18));
+  mask-image: var(--art), var(--sgx-pebble-a), var(--foil-map), linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45));
   mask-composite: intersect, intersect, add, add;
   mask-mode: alpha;
   -webkit-mask-size: contain, 30% auto, 100% 100%, 100% 100%;
@@ -188,9 +175,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm
   mask-position: center, var(--sgx-seed), center, center;
   -webkit-mask-repeat: no-repeat, repeat, no-repeat, no-repeat;
   mask-repeat: no-repeat, repeat, no-repeat, no-repeat;
-  /* 2026-11-28: floor 0.45 and 0.85 before: the facet gain hazed a pale Pokémon beside the light (Dedenne sm10 57's
-     face went grey, Venomoth sm10 12 pink-white). The Pokémon is matte: a trace only. */
-  opacity: calc(var(--card-opacity, 0) * 0.6);
+  opacity: calc(var(--card-opacity, 0) * 0.85);
 }
 /* ---- At rest: the grey-silver ring, a faint grain, a faint band tint ------------------------------------------ */
 body.fx-holo.fx-holo.fx-holo .tcg.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx.fam-sm-gx:not(.lit):not(.settling) .foil {

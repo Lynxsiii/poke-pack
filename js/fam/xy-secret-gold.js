@@ -44,8 +44,7 @@ export function famExtras(card, url, base) {
   if (!claims(card)) return null;
   const id = String(card.id);
   const item = ITEMS.has(id);
-  // the Items' ridges on the gold only (-ridge-v2, make_item_ridges_gold.py: v1 lit the painted object white)
-  const lines = `${DIR}/${id}-${item ? "ridge-v2" : "etch-v1"}.webp`;
+  const lines = `${DIR}/${id}-${item ? "ridge" : "etch"}-v1.webp`;
   const safe = `assets/foil/xy-safe-${item ? "item" : "mega"}-v1.webp`;
   return {
     classes: `fam-xy-secret-gold ${item ? "xsg-item" : "xsg-mega"}`,

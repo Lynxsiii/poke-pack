@@ -40,10 +40,11 @@ export function famExtras(card, url, base) {
   if (card.gallery === "tg") classes.push("swh-tg");
   else if ((card.subtypes || []).includes("Radiant")) classes.push("swh-radiant");
   else classes.push("swh-lines");
-  // the foil's fine texture as an image (scripts/fam/swsh-holo/make_grain.py): short vertical fibres with no period. The
-  // 140-line strip it replaces (make_lines.py) read as a line screen over the whole art box at phone size (2026-11-28)
+  // the line screen as an image (scripts/fam/swsh-holo/make_lines.py): 140 soft lines across the card, and the same at a
+  // third of the swing for screens of 1.5 dppx or less (the sheet's media rule), where a line is under two device pixels
   const style = [
-    `--swh-lines:url('${url(`${DIR}/grain-v2.webp`)}')`,
+    `--swh-lines:url('${url(`${DIR}/lines-v1.webp`)}')`,
+    `--swh-lines-soft:url('${url(`${DIR}/lines-soft-v1.webp`)}')`,
   ].join(";");
   return { classes: classes.join(" "), style, cure: false };
 }

@@ -45,8 +45,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
       hsl(318, 50%, 76%) 50%, hsl(30, 62%, 72%) 60%, hsl(60, 56%, 70%) 70%, hsl(150, 50%, 70%) 80%, hsl(210, 62%, 74%) 90%,
       hsl(280, 50%, 77%) 100%),
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsl(0, 0%, 80%) 0%, hsl(0, 0%, 48%) 13%, hsl(0, 0%, 16%) 32%, hsl(0, 0%, 0%) 56%),
-    linear-gradient(hsl(0, 0%, 36%), hsl(0, 0%, 36%));
+      hsl(0, 0%, 92%) 0%, hsl(0, 0%, 62%) 16%, hsl(0, 0%, 28%) 40%, hsl(0, 0%, 0%) 70%),
+    linear-gradient(hsl(0, 0%, 62%), hsl(0, 0%, 62%));
   background-size: 300% 300%, 100% 100%, 100% 100%;
   background-position: var(--wbs-slide-x) var(--wbs-slide-y), center, center;
   background-repeat: no-repeat, no-repeat, no-repeat;
