@@ -5,8 +5,8 @@
  *   GET  /api/me/shinies?set=<id>   the Pokémon a mastered set's pick can be spent on
  *   POST /api/me/shinies/pick       { setId, species } spends that set's one pick, for good
  *
- * A Black Label unlock is written down the first time it is seen, so it stays
- * after the slab is sold, cracked or lost in the casino.
+ * A Black Label unlock is written down the first time it is seen (on any page
+ * load), so it stays after the slab is sold, cracked or lost in the casino.
  */
 import { ALL_SETS } from "../js/catalog.js";
 import { avatarSpecies, cardSpecies, speciesInCards } from "../js/shiny.js";
@@ -50,20 +50,36 @@ const parse = (text) => {
   }
 };
 
-/** Writes down every Pokémon the player has a Black Label of and has not been credited for yet. */
-async function creditBlackLabels(env, request, userId, deps) {
+/**
+ * Writes down every Pokémon the player has a Black Label of and has not been credited for yet.
+ * Also run on every /api/me, so a Black Label counts from the next page load, before it can be staked and lost.
+ * Costs one read when there is nothing new.
+ */
+export async function creditBlackLabels(env, request, userId, deps) {
+  await ensureShinySchema(env);
   let rows = [];
   try {
-    rows = (await env.DB.prepare("SELECT DISTINCT card_id FROM graded_cards WHERE user_id = ? AND black_label = 1").bind(userId).all()).results || [];
+    rows =
+      (
+        await env.DB.prepare(
+          `SELECT DISTINCT card_id FROM graded_cards WHERE user_id = ?1 AND black_label = 1
+           AND ('bl:' || card_id) NOT IN (SELECT source FROM shiny_unlocks WHERE user_id = ?1)`
+        )
+          .bind(userId)
+          .all()
+      ).results || [];
   } catch {
     return; // no grading table yet: nobody has a Black Label
   }
   if (!rows.length) return;
+  const have = new Set(((await env.DB.prepare("SELECT species FROM shiny_unlocks WHERE user_id = ?").bind(userId).all()).results || []).map((row) => Number(row.species)));
   const now = Date.now();
   const writes = [];
   for (const row of rows) {
     const card = await deps.findCatalogCard(env, request, String(row.card_id)).catch(() => null);
     for (const species of cardSpecies(card?.name)) {
+      if (have.has(species)) continue;
+      have.add(species);
       writes.push(
         env.DB.prepare("INSERT OR IGNORE INTO shiny_unlocks (user_id, species, source, at) VALUES (?, ?, ?, ?)").bind(userId, species, `bl:${row.card_id}`, now)
       );

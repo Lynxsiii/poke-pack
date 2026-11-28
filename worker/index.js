@@ -21,7 +21,7 @@ import {
 import { drawPromos, isHit, ripPack, tallyRarity } from "../js/engine.js";
 import { homeSetId, PROMO_HOME_LIKE } from "../js/card-home.js";
 import { ensureTesterSchema, wantsTester } from "./testers.js";
-import { handleShiny, shinyError } from "./shiny.js";
+import { creditBlackLabels, handleShiny, shinyError } from "./shiny.js";
 import { handleSocial, socialUserFields, patchSocialFields, ensureSocialSchema, looksLikeMasteryBanner, masteryBannerError } from "./social.js";
 import { DEFAULT_BANNER, SHOWCASE_MAX, avatarKind, bannerId } from "../js/cosmetics.js";
 import { levelFields, levelOf, standingOf, frameChoice, bannerMotionError, slotError, slotPeak } from "./perks.js";
@@ -565,6 +565,8 @@ async function me(request, env) {
   const auth = await requireUser(request, env);
   if (auth.response) return auth.response;
   await applyRestores(env, auth.user.id);
+  // Earned shinies: a Black Label is credited here so it is kept even if the slab is gone by the time the picker opens.
+  await creditBlackLabels(env, request, auth.user.id, { findCatalogCard }).catch((err) => console.error("shiny credit", err));
   const save = await loadSave(env, auth.user.id);
   return json({ user: await trainerUser(env, auth.user, save), save });
 }
