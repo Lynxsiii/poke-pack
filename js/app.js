@@ -10647,7 +10647,7 @@ let tcgLoading = null;
 function showTcg() {
   if (tcgPage) return tcgPage.show(tcgPath);
   els.viewTcg.innerHTML = `<div class="tg-page"><div class="rt-skel tg-loading">Loading</div></div>`;
-  tcgLoading ||= import("./tcg-page.js?v=45")
+  tcgLoading ||= import("./tcg-page.js?v=46")
     .then(({ initTcg }) => {
       tcgPage = initTcg({
         root: els.viewTcg,
